@@ -17,19 +17,19 @@ public class GroupIncrementScores {
 //  }
 
   /**
-   * Liste des score incréments
+   * Liste des score incrï¿½ments
    */
   private List<IncrementScore> lstScoreIncrements;
 
   /**
-   * Constructor privé
+   * Constructor privÃ©
    */
   public GroupIncrementScores() {
     lstScoreIncrements = new ArrayList<>();
   }
 
   /**
-   * Ajout d'un score incrément
+   * Ajout d'un score incrÃ©ment
    * 
    * @param position
    * @param value
@@ -39,7 +39,7 @@ public class GroupIncrementScores {
   }
 
   /**
-   * Retourne tous les score incrémentés uniquement pour la View
+   * Retourne tous les scores incrÃ©mentÃ©s uniquement pour la View
    * 
    * @return
    */
@@ -49,7 +49,7 @@ public class GroupIncrementScores {
   }
 
   /**
-   * Suppression des score incrément qui sont en train de mourir
+   * Suppression des score incrÃ©ment qui sont en train de mourir
    */
   public void removeIfDying() {
     lstScoreIncrements.removeIf(IncrementScore::isDying);

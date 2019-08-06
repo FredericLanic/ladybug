@@ -6,53 +6,52 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Cinématique pour afficher / entendre lors de la mort de Pacman
+ * CinÃ©matique pour afficher / entendre lors de la mort de Pacman
  * 
  */
 public class KinematicPacmanDeath {
-  // bip de la cinématique
+  // bip de la cinÃ©matique
   private int                bip         = 0;
 
-// Liste des images des images à afficher lors de la cinématique
+  // Liste des images des images Ã  afficher lors de la cinÃ©matique
   private List<PicturesEnum> lstPictures = new ArrayList<>(
       Arrays.asList(PicturesEnum.PACMAN_DEFAULT, PicturesEnum.PACMAN_UP_2, PicturesEnum.PACMAN_UP_3,
           PicturesEnum.PACMAN_UP_4, PicturesEnum.PACMAN_UP_5, PicturesEnum.PACMAN_UP_6, PicturesEnum.PACMAN_UP_7,
           PicturesEnum.PACMAN_UP_8, PicturesEnum.PACMAN_UP_9, PicturesEnum.PACMAN_UP_10, PicturesEnum.PACMAN_UP_11));
 
-  // private GameSounds gameSounds;
   private long               timeInMMs   = 0;
 
   /**
-   * Contructeur privé
+   * Contructeur privÃ©
    */
   public KinematicPacmanDeath(long timeInMMs) {
     this.timeInMMs = timeInMMs;
   }
 
   /**
-   * Retourne le bip de la cinématique
+   * Retourne le bip de la cinÃ©matique
    */
   public int getBip() {
     return bip;
   }
 
   /**
-   * Retourne l'image à afficher quand Pacman meurt.
+   * Retourne l'image Ã  afficher quand Pacman meurt.
    * 
    * @return
    */
   public Image getImage() {
-    // échantillonnage en fonction du timer du modèle
+    // ï¿½chantillonnage en fonction du timer du modÃ¨le
     long nbrBips = timeInMMs / Constants.PACE;
-    // Récupération du nombre d'images
+    // Rï¿½cupï¿½ration du nombre d'images
     int nbrImages = lstPictures.size();
 
-    // Calcul du nombre de bip du timer du modèle par images
+    // Calcul du nombre de bip du timer du modÃ¨le par images
     long nbrBitPerImage = nbrBips / nbrImages;
-    // Calcule de l'index de l'image à afficher
+    // Calcule de l'index de l'image Ã  afficher
     int numImage = (int) (bip / nbrBitPerImage);
 
-    // si le calcul est long, il se peut que l'index dépasse... on le réajuste
+    // si le calcul est long, il se peut que l'index dÃ©passe... on le rajuste
     if (numImage >= nbrImages)
       numImage = nbrImages - 1;
 
@@ -60,21 +59,21 @@ public class KinematicPacmanDeath {
   }
 
   /**
-   * Incrémentation du Bip; utilisé par le modèle
+   * Incrï¿½mentation du Bip; utilisÃ© par le modÃ¨le
    */
   public void incrementBip() {
     bip++;
   }
 
   /**
-   * Initialise le bip de la cinématique
+   * Initialise le bip de la cinÃ©matique
    */
   public void initBip() {
     bip = 0;
   }
 
   /**
-   * Test la fin de la musique de la mort de Pacman; utilisé par le modèle
+   * Test la fin de la musique de la mort de Pacman; utilisÃ© par le modÃ¨le
    * 
    * @return
    */

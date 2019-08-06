@@ -12,7 +12,7 @@ import com.kycox.ladybug.level.ScreenData;
 import com.kycox.ladybug.tools.Utils;
 
 /**
- * Spécificité de Pacman
+ * SpÃ©cificitÃ©s de Pacman
  *
  */
 public class Pacman extends BodyMovedByUser {
@@ -45,7 +45,7 @@ public class Pacman extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement de Pacman et récupération du score obtenu Lancement du double
+   * DÃ©placement de Pacman et rÃ©cupÃ©ration du score obtenu Lancement du double
    * timer dans le cas du super power
    */
   public PacmanActions movePacman(ScreenData screenData) {
@@ -79,7 +79,7 @@ public class Pacman extends BodyMovedByUser {
   }
 
   /**
-   * Caractéristiques de Pacman en début de niveau
+   * CaractÃ©ristiques de Pacman en dÃ©but de niveau
    */
   public void setStartLevel(int numLevel, ScreenData screenData) {
     // attributs de pacman
@@ -92,7 +92,7 @@ public class Pacman extends BodyMovedByUser {
   }
 
   /**
-   * Mise à jour du statut de Pacman via le modèle
+   * Mise Ã  jour du statut de Pacman via le modÃ¨le
    * 
    * @param status
    */

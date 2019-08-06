@@ -15,15 +15,15 @@ public class Engine {
 
     // PAD CONTROLLER
 //    PadController pacmanController = new PadController(pacmanModel);
-    // Seulement gestion du clavier : on verra pour la manette après
+    // Seulement gestion du clavier : on verra pour la manette aprÃ¨s
     pacmanController = new KeyGameController(pacmanModel);
 
     // VIEW
     pacmanView = new GameView();
-    // On relie le modèle à la view : la view connait le modèle, le modèle ne
+    // On relie le modÃ¨le Ã  la view : la view connait le modÃ¨le, le modÃ¨le ne
     // connait pas la view
     pacmanView.setPacmanModel(pacmanModel);
-    // On applique le contrôleur à la vue
+    // On applique le contrÃ´leur Ã  la vue
     pacmanView.setController(pacmanController);
   }
 

@@ -14,7 +14,7 @@ public class GhostScaredView {
   }
 
   /**
-   * Constructeur privé pour assurer le singleton
+   * Constructeur privÃ© pour assurer le singleton
    */
 
   private GhostScaredView() {
@@ -25,10 +25,10 @@ public class GhostScaredView {
     Image ghostImg;
 
     if (ghost.getDirection().x > 0) {
-      // image générique du fantôme qui a peut : les yeux à droite
+      // image gÃ©nÃ©rique du fantÃ´me qui a peut : les yeux Ã  droite
       ghostImg = PicturesEnum.GHOST_SCARED_RIGHT_EYES.getImg();
     } else {
-      // image générique du fantôme qui a peut : les yeux à gauche
+      // image gÃ©nÃ©rique du fantÃ´me qui a peut : les yeux Ã© gauche
       ghostImg = PicturesEnum.GHOST_SCARED_LEFT_EYES.getImg();
     }
 

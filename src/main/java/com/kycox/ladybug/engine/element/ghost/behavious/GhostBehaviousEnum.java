@@ -1,10 +1,10 @@
 package com.kycox.ladybug.engine.element.ghost.behavious;
 
 /**
- * Enumération des comportements des fantômes
+ * EnumÃ©ration des comportements des fantÃ´mes
  *
  */
 public enum GhostBehaviousEnum {
-  // agressif, timide, débile, intelligent
+  // agressif, timide, dÃ©bile, intelligent
   AGGRESSIVE, SHY, SMART, STUPID;
 }

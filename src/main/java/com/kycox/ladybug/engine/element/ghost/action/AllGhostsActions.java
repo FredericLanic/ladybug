@@ -15,7 +15,7 @@ public class AllGhostsActions {
   }
 
   /**
-   * Création des Increments Score en fonction des fantômes mangés
+   * CrÃ©ation des Increments Score en fonction des fantÃ´mes mangÃ©s
    */
   public void addIncrementScores(GroupIncrementScores groupIncrementScores) {
     lstGhostActions.stream().filter(GhostActions::isEaten).forEach(ga -> groupIncrementScores
@@ -28,7 +28,7 @@ public class AllGhostsActions {
   }
 
   /**
-   * a mangé Pacman ?
+   * a mangÃ© Pacman ?
    * 
    * @return
    */
@@ -37,7 +37,7 @@ public class AllGhostsActions {
   }
 
   /**
-   * Retourne le nombres de fantômes mangés
+   * Retourne le nombres de fantÃ´mes mangÃ©s
    * 
    * @return
    */
@@ -45,14 +45,14 @@ public class AllGhostsActions {
     return (int) lstGhostActions.stream().filter(GhostActions::isEaten).count();
   }
 
-  // à mettre ailleurs ?
+  // Ã  mettre ailleurs ?
   /**
-   * Si le fantôme a été mangé, ses paramêtres changent
+   * Si le fantÃ´me a Ã©tÃ© mangÃ©, ses paramÃ¨tres changent
    * 
    * (voir Ghost.setSettingJustAfterBeEaten())
    */
   public void setGhostSettingAfterPacmanContact(int numLevel) {
-    // Mis à jour du statut
+    // Mis Ã  jour du statut
     lstGhostActions.stream().filter(GhostActions::isEaten)
         .forEach(ga -> ga.getGhost().setSettingJustAfterBeEaten(numLevel));
 

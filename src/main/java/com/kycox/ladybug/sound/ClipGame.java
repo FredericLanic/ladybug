@@ -10,7 +10,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * Chargement des clip en mémoire
+ * Chargement des clip en mÃ©moire
  *
  */
 public class ClipGame {

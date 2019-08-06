@@ -5,13 +5,13 @@ import java.util.Random;
 import com.kycox.ladybug.constant.Constants;
 
 /**
- * Probabilité de comportement
+ * ProbabilitÃ© de comportement
  * 
- * Fonction y = ax + b où x est le niveau
+ * Fonction y = ax + b oÃ¹ x est le niveau
  * 
- * Qui résoud : (1, 20); (nbrMaxNiveau, 90)
+ * Qui rï¿½soud : (1, 20); (nbrMaxNiveau, 90)
  * 
- * Retourne vrai si le nombre aléatoire (0-100) est en dessous de y
+ * Retourne vrai si le nombre alÃ©atoire (0-100) est en dessous de y
  *
  */
 public class GhostBehavious {
@@ -19,7 +19,7 @@ public class GhostBehavious {
   private double a               = 0;
   private double b               = 0;
 
-  // échelle de 1 à 10
+  // ï¿½chelle de 1 ï¿½ 10
   private double limiteBasse     = 20;
   private double limiteHaute     = 90;
 
@@ -30,7 +30,7 @@ public class GhostBehavious {
   private double y               = 0;
 
   /**
-   * Constructeur privé
+   * Constructeur privÃ©
    * 
    */
   public GhostBehavious(int numLevel) {
@@ -42,8 +42,8 @@ public class GhostBehavious {
 
   /**
    * 
-   * Créé un nombre aléatoire [0-100] et définie si ce nombre est inférieur à une
-   * règle spécifique [limiteBasse, limiteHaute]
+   * CrÃ©Ã© un nombre alï¿½atoire [0-100] et dÃ©finie si ce nombre est infÃ©rieur Ã  une
+   * rÃ¨gle spÃ©cifique [limiteBasse, limiteHaute]
    * 
    * @param numLevel
    * @return

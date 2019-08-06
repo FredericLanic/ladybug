@@ -9,7 +9,7 @@ public class GhostView {
   public Image getImage(Ghost ghost) {
 
     /**
-     * Affiche les images du fantômes "vivants"
+     * Affiche les images du fantÃ´mes "vivants"
      * 
      * @param ghost
      * @return

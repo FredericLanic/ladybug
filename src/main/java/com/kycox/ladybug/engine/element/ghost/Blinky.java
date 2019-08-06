@@ -6,7 +6,7 @@ import com.kycox.ladybug.engine.element.ghost.set.GhostsSettingsEnum;
 import com.kycox.ladybug.formules.BlinkyIncrementSpeed;
 
 /**
- * Setting du fantôme Blinky
+ * Setting du fantÃ´me Blinky
  *
  */
 public class Blinky extends Ghost {
@@ -44,7 +44,7 @@ public class Blinky extends Ghost {
     if (newIndex != getSpeedIndex() && changeBlock()) {
       setSpeedIndex(getStartIndexSpeed() + incrementSpeedIndex);
     }
-    // de toute manière on réaffecte
+    // de toute maniÃ¨re on rÃ©affecte
     setSpeedIndex(getSpeedIndex());
   }
 }

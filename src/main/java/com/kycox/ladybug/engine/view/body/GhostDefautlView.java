@@ -13,7 +13,7 @@ public class GhostDefautlView {
   }
 
   /**
-   * Constructeur privé pour assurer le singleton
+   * Constructeur privÃ© pour assurer le singleton
    */
 
   private GhostDefautlView() {
@@ -24,10 +24,10 @@ public class GhostDefautlView {
     Image ghostImg;
 
     if (ghost.getDirection().x > 0) {
-      // image générique du fantôme qui a peut : les yeux à droite
+      // image gÃ©nÃ©rique du fantÃ´me qui a peut : les yeux Ã  droite
       ghostImg = ghost.getGhostSettings().getGhostRightEyesImg();
     } else {
-      // image générique du fantôme qui a peut : les yeux à gauche
+      // image gÃ©nÃ©rique du fantÃ´me qui a peut : les yeux Ã  gauche
       ghostImg = ghost.getGhostSettings().getGhostLeftEyesImg();
     }
 

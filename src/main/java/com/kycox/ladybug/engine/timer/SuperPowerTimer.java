@@ -6,8 +6,8 @@ import java.util.TimerTask;
 import com.kycox.ladybug.constant.SuperPowerTimerEnum;
 
 /**
- * Double timer utilisé pour afficher les fantômes qui ont peur et qui
- * clignottent ensuite. 5 Secondes avant la fin, les fantômes vont clignoter
+ * Double timer utilisÃ© pour afficher les fantÃ´mes qui ont peur et qui
+ * clignottent ensuite. 5 Secondes avant la fin, les fantÃ´mes vont clignoter
  *
  */
 public class SuperPowerTimer {
@@ -32,12 +32,12 @@ public class SuperPowerTimer {
     }
   }
 
-  // délai en second de clignottements
+  // dÃ©lai en second de clignottements
   private static final int    FLASH_DELAY           = 5;
 
-  // numéro du timer
+  // numï¿½ro du timer
   private int                 numTimer;
-  // objet powerFlashTimer utilisé pour le 2ième timer
+  // objet powerFlashTimer utilisÃ© pour le 2iï¿½me timer
   private SuperPowerTimer     superPowerTimer       = null;
   // etat du superPower courant (1ier ou 2ieme selon le cas)
   private SuperPowerTimerEnum superPowerTimerStatus = SuperPowerTimerEnum.STOP;
@@ -47,23 +47,23 @@ public class SuperPowerTimer {
   /**
    * Constructeur
    * 
-   * @param numThread : numéro du thread (1: principal, autrement clignottement)
+   * @param numThread : numÃ©ro du thread (1: principal, autrement clignottement)
    */
   public SuperPowerTimer(int numThread) {
     this.numTimer = numThread;
   }
 
   /**
-   * Arrete le super power : le niveau est terminé, ou bien un autre super power a
-   * été pris
+   * Arrete le super power : le niveau est terminï¿½, ou bien un autre super power a
+   * Ã©tÃ© pris
    */
   public void forcedStop() {
-    // Arrêt forcé du premier timer
+    // ArrÃªt forcÃ© du premier timer
     if (timer != null) {
       timer.cancel();
       timer.purge();
     }
-    // Arrêt forcé du second timer s'il existe
+    // ArrÃªt forcÃ© du second timer s'il existe
     if (superPowerTimer != null) {
       superPowerTimer.forcedStop();
       superPowerTimer = null;
@@ -77,7 +77,7 @@ public class SuperPowerTimer {
    * @return
    */
   public SuperPowerTimerEnum getStatus() {
-    // Priorité au deuxième timer s'il existe
+    // PrioritÃ© au deuxiÃ¨me timer s'il existe
     if (superPowerTimer != null)
       return superPowerTimer.getStatus();
     return superPowerTimerStatus;
@@ -88,17 +88,17 @@ public class SuperPowerTimer {
    */
   public void launch(int seconds) {
     if (numTimer == 1) {
-      // Début du premier timer
+      // DÃ©but du premier timer
       seconds = seconds - FLASH_DELAY;
       superPowerTimerStatus = SuperPowerTimerEnum.RUN;
     } else {
-      // Début du second timer
+      // DÃ©but du second timer
       superPowerTimerStatus = SuperPowerTimerEnum.STOPPING;
     }
 
-    // Création du timer
+    // CrÃ©ation du timer
     timer = new Timer(true);
-    // lancement du timer après n secondes
+    // lancement du timer aprï¿½s n secondes
     timer.schedule(new PowerTimer(), (long) (seconds) * 1000);
   }
 }

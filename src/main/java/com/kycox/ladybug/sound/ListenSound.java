@@ -3,13 +3,13 @@ package com.kycox.ladybug.sound;
 import javax.sound.sampled.Clip;
 
 /**
- * Processus pour Ècouter le clip
+ * Processus pour √©couter le clip
  * 
  * @see Thread
  */
 public class ListenSound extends Thread {
 
-  // clip partagÈ par les Threads
+  // clip partag√© par les Threads
   private Clip clip = null;
 
   /**
@@ -29,7 +29,7 @@ public class ListenSound extends Thread {
     boolean end = false;
 
     try {
-      // Si le clip n'est pas dÈj‡ lancÈ
+      // Si le clip n'est pas d√©j√† lanc√©
       if (!clip.isRunning()) {
         clip.start();
 
@@ -39,7 +39,7 @@ public class ListenSound extends Thread {
             end = true;
         }
 
-        // RÈinitialisation du clip pour une prochaine fois
+        // R√©initialisation du clip pour une prochaine fois
         if (clip.isActive()) {
           clip.flush();
           clip.stop();

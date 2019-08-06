@@ -6,7 +6,7 @@ import java.util.TimerTask;
 import com.kycox.ladybug.score.IncrementScore;
 
 /**
- * Timer qui permet d'afficher le score un certain temps à l'écran
+ * Timer qui permet d'afficher le score un certain temps Ã  l'Ã©cran
  *
  */
 public class IncrementScoreTimer {
@@ -29,8 +29,8 @@ public class IncrementScoreTimer {
   /**
    * Constructeur
    * 
-   * @param scoreIncremenet : modèle du jeu
-   * @param numThread       : numéro du thread (1: principal, autrement
+   * @param scoreIncremenet : modÃ¨le du jeu
+   * @param numThread       : numÃ©ro du thread (1: principal, autrement
    *                        clignottement)
    */
   public IncrementScoreTimer(IncrementScore scoreIncremenet) {
@@ -38,8 +38,8 @@ public class IncrementScoreTimer {
   }
 
   /**
-   * Arrete le super power : le niveau est terminé, ou bien un autre super power a
-   * été pris
+   * Arrete le super power : le niveau est terminÃ©, ou bien un autre super power a
+   * Ã©tÃ© pris
    */
   public void forcedStop() {
     if (timer != null) {
@@ -49,7 +49,7 @@ public class IncrementScoreTimer {
   }
 
   /**
-   * Lance le timer du score incrément
+   * Lance le timer du score incrÃ©ment
    * 
    * @param duration temps en milli secondes
    */

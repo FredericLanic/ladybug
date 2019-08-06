@@ -4,7 +4,7 @@ import com.kycox.ladybug.engine.element.SpeedFunction;
 import com.kycox.ladybug.engine.element.ghost.set.GhostsSettingsEnum;
 
 /**
- * Spécificité du fantôme Clyde
+ * SpÃ©cificitÃ© du fantÃ´me Clyde
  *
  */
 public class Clyde extends Ghost {
@@ -22,7 +22,7 @@ public class Clyde extends Ghost {
   @Override
   public void getInitSpeed(int numLevel) {
     /*
-     * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
+     * IdÃ©e : faire accÃ©lerer ou ralentir Clyde de maniÃ¨re alÃ©atoire....
      */
     initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeed(numLevel));
   }

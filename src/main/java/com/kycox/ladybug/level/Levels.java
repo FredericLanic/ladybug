@@ -10,7 +10,7 @@ public final class Levels {
   private Random       random   = new Random();
 
   /**
-   * Constructeur : ajoute les différentes niveaux du jeu
+   * Constructeur : ajoute les diffÃ©rents niveaux du jeu
    */
   public Levels() {
     /*
@@ -21,9 +21,9 @@ public final class Levels {
   }
 
   /**
-   * Retourne le niveau demandé
+   * Retourne le niveau demandï¿½
    * 
-   * @param i : le numéro du niveau demandé
+   * @param i : le numÃ©ro du niveau demandÃ©
    */
   public ILevel getLevel(int i) {
     int num = i;

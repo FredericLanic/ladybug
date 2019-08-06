@@ -19,7 +19,7 @@ import com.kycox.ladybug.tools.Utils;
 import com.kycox.ladybug.tools.dijkstra.Dijkstra;
 
 /**
- * Spécificité d'un fantôme
+ * SpÃ©cificitÃ© d'un fantÃ´me
  *
  */
 public abstract class Ghost extends BodyMovedByUser {
@@ -35,16 +35,16 @@ public abstract class Ghost extends BodyMovedByUser {
    */
   public Ghost(int numLevel) {
     super();
-    // initialise le comportement du fantôme en fonction du niveau
+    // initialise le comportement du fantÃ´me en fonction du niveau
     behaviousGhost = new GhostBehavious(numLevel);
-    // statut de départ NORMAL
+    // statut de dÃ©part NORMAL
     setStatus(GhostStatusEnum.NORMAL);
     // immobile pour commencer
     setDirection(Constants.POINT_ZERO);
   }
 
   /**
-   * Retourne le setting du fantôme.
+   * Retourne le setting du fantï¿½me.
    * 
    * @return
    */
@@ -53,7 +53,7 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Cette fonction est a définir pour chaque fantôme nommé (Blinky, Inky, Clyde &
+   * Cette fonction est a dÃ©finir pour chaque fantÃ´me nommÃ© (Blinky, Inky, Clyde &
    * Pinky)
    * 
    * @param numLevel
@@ -61,7 +61,7 @@ public abstract class Ghost extends BodyMovedByUser {
   public abstract void getInitSpeed(int numLevel);
 
   /**
-   * Getters / Setters pour le statut du fantôme
+   * Getters / Setters pour le statut du fantÃ´me
    * 
    * @return
    */
@@ -70,7 +70,7 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Retourne true si le fantôme est géré par l'ordinateur
+   * Retourne true si le fantÃ´me est gÃ©rÃ© par l'ordinateur
    * 
    * @return
    */
@@ -79,14 +79,14 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement agressif du fantôme
+   * Dï¿½placement agressif du fantÃ´me
    * 
    * @param screenData
    * @param pacmanPosBlock
    */
   private void moveAgressive(Point pacmanPosBlock, ScreenData screenData) {
     /**
-     * Note : le fantôme peut changer de direction uniquement lorsqu'il rempli le
+     * Note : le fantÃ´me peut changer de direction uniquement lorsqu'il rempli le
      * block
      */
     if (changeBlock()) {
@@ -105,9 +105,9 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement d'un fantôme en fonction de son comportement
+   * DÃ©placement d'un fantÃ´me en fonction de son comportement
    * 
-   * (son état est NORMAL)
+   * (son Ã©tat est NORMAL)
    * 
    * @param screenData
    * @param pacmanPosBlock
@@ -125,11 +125,11 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement du Fantôme Renvoi un objet StateMoving A ce jour, cela ne sert à
-   * rien, mais je préfère le laisser pour les prochaines évolutions.
+   * DÃ©placement du fantÃ´me Renvoi un objet StateMoving A ce jour, cela ne sert Ã 
+   * rien, mais je prÃ©fÃ¨re le laisser pour les prochaines Ã©volutions.
    */
-  // FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
-  // nécessaire
+  // FIXME : c'est une fonction un peu alambiquÃ©e en fait; un refacto me semble
+  // nï¿½cessaire
   private void moveByDefault(ScreenData screenData) {
     int count = 0;
     int[] dx = new int[4];
@@ -184,13 +184,13 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement du fantôme (géré par l'ordinateur) en fonction de l'emplacement
+   * DÃ©placement du fantÃ´me (gÃ©rÃ© par l'ordinateur) en fonction de l'emplacement
    * de Pacman
    * 
    * @param pacmanPosBlock
    */
   public void moveGhostByComputer(Point pacmanPosBlock, ScreenData screenData) {
-    // Déplacement en fonction du status du fantôme
+    // DÃ©placement en fonction du status du fantÃ´me
     switch (getStatus()) {
     case DYING:
       moveToRegenerate(screenData);
@@ -206,13 +206,13 @@ public abstract class Ghost extends BodyMovedByUser {
         moveByDefault(screenData);
       break;
     default:
-      System.out.println("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
+      System.out.println("Le statut " + getStatus() + " n'est pas reconnu, le fantï¿½me est immobile !!");
       break;
     }
   }
 
   /**
-   * Déplacement du fantôme géré par l'utilisateur
+   * DÃ©placement du fantÃ´me gÃ©rÃ© par l'utilisateur
    * 
    * @param pacmanPosBlock
    * @param screenData
@@ -233,7 +233,7 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement quand le fantôme a peur
+   * DÃ©placement quand le fantÃ´me a peur
    * 
    * @param data
    * @param pacmanPosBlock
@@ -265,28 +265,28 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement du fantôme mangé
+   * DÃ©placement du fantÃ´me mangÃ©
    * 
    * @param data
    * @param coordinateRevivorGhost
    */
   private void moveToRegenerate(ScreenData screenData) {
-    // Le fantôme est arrivé au limite du block
+    // Le fantï¿½me est arrivï¿½ au limite du block
     if (changeBlock()) {
       // calcul du chemin le plus court :
       List<Point> shorterWay = Dijkstra.getShorterWay(Utils.convertPointToBlockUnit(getPosition()),
           Utils.convertPointToBlockUnit(screenData.getRevivorGhostPos()), screenData);
 
-      // S'il ne reste plus qu'un bloc à parcourir, le fantôme est arrivé
+      // S'il ne reste plus qu'un bloc ï¿½ parcourir, le fantï¿½me est arrivï¿½
       if (shorterWay.size() == 1) {
-        // Le fantôme est arrivé au point de regénération, il redevient "normal" avec
+        // Le fantï¿½me est arrivï¿½ au point de regï¿½nï¿½ration, il redevient "normal" avec
         // une vitesse "normale" aussi
         setSpeedIndex(getStartIndexSpeed());
         setStatus(GhostStatusEnum.REGENERATING);
       } else {
         // On prend le premier block cible
         Point currentPoint = shorterWay.get(0);
-        // calcul du prochain endroit à déplacer le fantôme mangé
+        // calcul du prochain endroit ï¿½ dï¿½placer le fantï¿½me mangï¿½
         Point nextPoint = shorterWay.get(1);
         int moveX = nextPoint.x - currentPoint.x;
         int moveY = nextPoint.y - currentPoint.y;
@@ -307,7 +307,7 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Retourne les actions détectées issu du fantôme.
+   * Retourne les actions dÃ©tectÃ©es issu du fantÃ´me.
    * 
    * @param pacman
    * @return
@@ -316,7 +316,7 @@ public abstract class Ghost extends BodyMovedByUser {
     GhostActions ghostActions = new GhostActions();
     ghostActions.setGhost(this);
 
-    // Détection de la collision avec un fantôme et pacman
+    // Dï¿½tection de la collision avec un fantï¿½me et pacman
     if (getPosition().distance(pacman.getPosition()) < Constants.DISTANCE_MIN
         && !getStatus().equals(GhostStatusEnum.DYING) && !getStatus().equals(GhostStatusEnum.REGENERATING)
         && !pacman.getStatus().equals(PacmanStatusEnum.DYING) && !pacman.getStatus().equals(PacmanStatusEnum.DEAD)) {
@@ -324,7 +324,7 @@ public abstract class Ghost extends BodyMovedByUser {
         // FANTOME
         ghostActions.setEaten(true);
       } else {
-        // Mise à mort de PackMan !!!
+        // Mise ï¿½ mort de PackMan !!!
         ghostActions.setEatPacman(true);
       }
     }
@@ -333,18 +333,18 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Affecte la configuration du fantôme
+   * Affecte la configuration du fantÃ´me
    */
   public void setGhostSettings(GhostsSettingsEnum ghostSettings) {
     this.ghostSettings = ghostSettings;
   }
 
   /**
-   * Affecte des paramètres au fantômes qui vient d'être mangé
+   * Affecte des paramÃ¨tres au fantÃ´mes qui vient d'Ãªtre mangÃ©
    */
   public void setSettingJustAfterBeEaten(int numLevel) {
     setPosition(Utils.convertPointToGraphicUnit(Utils.convertPointToBlockUnit(getPosition())));
-    // à déplacer dans
+    // ï¿½ dï¿½placer dans
     setStatus(GhostStatusEnum.DYING);
     setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedPlus(numLevel));
   }
@@ -352,7 +352,7 @@ public abstract class Ghost extends BodyMovedByUser {
   public abstract void setSpeedDuringGame();
 
   /**
-   * Affecte l'état du statut du fantôme
+   * Affecte l'Ã©tat du statut du fantÃ´me
    * 
    * @param status
    */

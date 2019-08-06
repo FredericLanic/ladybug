@@ -51,18 +51,18 @@ public class GameView extends JPanel implements Observer {
   private boolean              hasBeenDrawOnce  = false;
 
   /**
-   * Récupération de la JFrame parent
+   * Rï¿½cupï¿½ration de la JFrame parent
    */
   private JFrame               mainFrame        = (JFrame) SwingUtilities.getRoot(this);
 
-  // Données transitées par le pattern Observer
+  // DonnÃ©es transitÃ©es par le pattern Observer
   private transient GameModel  pacmanModel;
 
   private transient PacmanView pacmanView       = new PacmanView();
 
-  // font par défaut
+  // font par dÃ©faut
   private final Font           smallFont        = new Font("Helvetica", Font.BOLD, 14);
-
+ 
   /**
    * Constructor
    */
@@ -102,27 +102,30 @@ public class GameView extends JPanel implements Observer {
       // autre solution
       pacmanModel.getGameStatus().setStopGame();
     } else if (!pacmanModel.getGameStatus().isInGame()) {
-      // Arrêt de tous les sons
+      // ArrÃªt de tous les sons
+      // FIXME : Ã  mettre ailleurs
       pacmanModel.getGameSounds().stopAllSounds();
       drawGhosts(g2d);
       showIntroScreen(g2d);
     } else if (PacmanStatusEnum.isDying().test(pacmanModel.getPacman())) {
       drawGhosts(g2d);
       drawPacmanDying(g2d);
-      // aller ! on écoute les sons sélectionnés
+      // aller ! on Ã©coute les sons sÃ©lectionnÃ©s
+      // FIXME : Ã  mettre ailleurs
       pacmanModel.getGameSounds().playSound();
     } else if (!PacmanStatusEnum.isDead().test(pacmanModel.getPacman())) {
       // jeu en cours
       drawPacman(g2d);
       drawGhosts(g2d);
       drawScoresIncrement(g2d);
-      // aller ! on écoute les sons sélectionnés
+      // aller ! on Ã©coute les sons sÃ©lectionnÃ©s
+      // FIXME : Ã  mettre ailleurs
       pacmanModel.getGameSounds().playSound();
     }
   }
 
   /**
-   * Affiche les fantômes "vivants"
+   * Affiche les fantÃ´mes "vivants"
    * 
    * @param g2d
    */
@@ -172,7 +175,7 @@ public class GameView extends JPanel implements Observer {
    * @param g
    */
   private void drawScoreAndLevel(Graphics2D g) {
-    // parfois le modèle ne se charge pas tout de suite
+    // parfois le modï¿½le ne se charge pas tout de suite
     if (pacmanModel == null)
       return;
 
@@ -200,7 +203,7 @@ public class GameView extends JPanel implements Observer {
         g.drawString("x" + pacmanModel.getPacman().getLifesLeft(), 34, y + 20);
       }
 
-      // affichage des vies du fantômes
+      // affichage des vies du fantÃ´mes
       Ghost ghostNotComputed = pacmanModel.getGroupGhosts().getGhostNotComputed();
       if (ghostNotComputed != null && ghostNotComputed.getLifesLeft() < 5) {
         for (i = 0; i < ghostNotComputed.getLifesLeft(); i++) {
@@ -232,7 +235,7 @@ public class GameView extends JPanel implements Observer {
     int x;
     int y;
 
-    // Affichage des score incréments
+    // Affichage des scores incrÃ©ments
     for (IncrementScore scorePoint : pacmanModel.getGroupIncrementScores().getLstScoresIncrement()) {
       x = scorePoint.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(scorePoint.getValue()) / 2;
       y = scorePoint.getPosition().y + Constants.BLOCK_SIZE / 2;
@@ -241,19 +244,19 @@ public class GameView extends JPanel implements Observer {
   }
 
   /**
-   * Ecoute le jingle de début
+   * Ecoute le jingle de dÃ©but
    * 
    * C'est un contournement !!! Il faut que le niveau s'affiche pour pouvoir
    * entendre le jingle.
    * 
-   * Du coup, le jingle se lancera au deuxième affichage de la map fu niveaus.
+   * Du coup, le jingle se lancera au deuxiÃ¨me affichage de la map du niveau.
    * 
-   * Lorsque qu'on écoutera le jingle, le jeu est frisé.
+   * Lorsque qu'on Ã©coutera le jingle, le jeu est frisÃ©.
    */
   private void listenStartLevelJingle() {
-    // Utile pour entendre le jingle du début :
-    // Le modèle annonce le début du niveau. La vue dans ce cas là, n'a pas encore
-    // pu afficher le niveau à l'écran.
+    // Utile pour entendre le jingle du dÃ©but :
+    // Le modï¿½le annonce le dÃ©but du niveau. La vue dans ce cas lÃ , n'a pas encore
+    // pu afficher le niveau Ã  l'Ã©cran.
     // Elle doit faire un affichage et ensuite pouvoir lancer le jingle.
     if (pacmanModel.isBeginNewLevel()) {
       pacmanModel.setBeginNewLevel(false);
@@ -279,7 +282,7 @@ public class GameView extends JPanel implements Observer {
   }
 
   /**
-   * Applique le contrôleur
+   * Applique le contrÃ´leur
    * 
    * @param pacmanController
    */
@@ -288,7 +291,7 @@ public class GameView extends JPanel implements Observer {
   }
 
   /**
-   * Affecte le modèle Pacman
+   * Affecte le modÃ¨le Pacman
    * 
    * @param pacmanModel
    */
@@ -303,7 +306,7 @@ public class GameView extends JPanel implements Observer {
   }
 
   /**
-   * Affiche la fenêtre d'introduction
+   * Affiche la fenÃªtre d'introduction
    * 
    * @param g2d
    */
@@ -336,7 +339,7 @@ public class GameView extends JPanel implements Observer {
   }
 
   /**
-   * Récupère le PacmanModel envoyé par le modèle
+   * RÃ©cupÃ¨re le PacmanModel envoyÃ© par le modÃ¨le
    * 
    * @param pacmanModel
    */

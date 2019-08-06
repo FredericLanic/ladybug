@@ -3,7 +3,7 @@ package com.kycox.ladybug.constant;
 import java.net.URL;
 
 /**
- * Enumération des sons à écouter dans le jeu
+ * EnumÃ©ration des sons Ã  Ã©couter dans le jeu
  *
  */
 public enum SoundsEnum {
@@ -41,7 +41,7 @@ public enum SoundsEnum {
   }
 
   /**
-   * Retourne le chemin du fichier sond à émettre
+   * Retourne le chemin du fichier son Ã  Ã©mettre
    * 
    * @return
    */

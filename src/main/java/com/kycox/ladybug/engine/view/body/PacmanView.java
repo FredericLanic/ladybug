@@ -27,7 +27,7 @@ public class PacmanView extends TimerView {
   private BodyImg pacmanDown4        = new BodyImg(PicturesEnum.PACMAN_DOWN_4.getImg());
   private BodyImg pacmanDown5        = new BodyImg(PicturesEnum.PACMAN_DOWN_3.getImg());
   private BodyImg pacmanDown6        = new BodyImg(PicturesEnum.PACMAN_DOWN_2.getImg());
-  // liste d'images pacman regarde à gauche
+  // liste d'images pacman regarde Ã  gauche
   private BodyImg pacmanLeft1        = new BodyImg(PicturesEnum.PACMAN_DEFAULT.getImg());
   private BodyImg pacmanLeft2        = new BodyImg(PicturesEnum.PACMAN_LEFT_2.getImg());
   private BodyImg pacmanLeft3        = new BodyImg(PicturesEnum.PACMAN_LEFT_3.getImg());
@@ -35,7 +35,7 @@ public class PacmanView extends TimerView {
   private BodyImg pacmanLeft4        = new BodyImg(PicturesEnum.PACMAN_LEFT_4.getImg());
   private BodyImg pacmanLeft5        = new BodyImg(PicturesEnum.PACMAN_LEFT_3.getImg());
   private BodyImg pacmanLeft6        = new BodyImg(PicturesEnum.PACMAN_LEFT_2.getImg());
-  // liste d'images pacman regarde à doite
+  // liste d'images pacman regarde Ã  doite
   private BodyImg pacmanRight1       = new BodyImg(PicturesEnum.PACMAN_DEFAULT.getImg());
   private BodyImg pacmanRight2       = new BodyImg(PicturesEnum.PACMAN_RIGHT_2.getImg());
   private BodyImg pacmanRight3       = new BodyImg(PicturesEnum.PACMAN_RIGHT_3.getImg());
@@ -52,13 +52,13 @@ public class PacmanView extends TimerView {
   private BodyImg pacmanUp5          = new BodyImg(PicturesEnum.PACMAN_UP_3.getImg());
   private BodyImg pacmanUp6          = new BodyImg(PicturesEnum.PACMAN_UP_2.getImg());
 
-  // période en mms
+  // pÃ©riode en mms
   private int     period             = Constants.PACE * 4;
 
   /** Timer de l'affichage */
   private Timer   timer;
 
-  // View par défaut à la construction
+  // View par dÃ©faut Ã  la construction
   private Point   viewDirectionPoint = Constants.POINT_ZERO;
 
   public PacmanView() {

@@ -29,7 +29,7 @@ public class GhostDyingView extends TimerView {
   private Timer   timer;
 
   /**
-   * Constructeur privé pour assurer le singleton
+   * Constructeur privÃ© pour assurer le singleton
    */
   private GhostDyingView() {
     currentImg = leftEyes;
@@ -47,7 +47,7 @@ public class GhostDyingView extends TimerView {
   }
 
   /**
-   * Retourne l'image à afficher
+   * Retourne l'image Ã  afficher
    * 
    * @param ghost
    * @return

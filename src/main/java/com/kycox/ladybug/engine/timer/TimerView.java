@@ -11,7 +11,7 @@ public abstract class TimerView {
       doAction();
     };
 
-    // Création d'un timer qui génère un tic
+    // CrÃ©ation d'un timer qui gÃ©nÃ¨re un tic
     return new Timer(mms, action);
   }
 

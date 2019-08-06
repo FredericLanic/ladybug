@@ -5,7 +5,7 @@ import java.awt.Point;
 import com.kycox.ladybug.constant.Constants;
 
 /**
- * Class ScreenBlock Correspond à une case dans le ScreenData
+ * Class ScreenBlock correspond Ã  une case dans le ScreenData
  *
  */
 public class ScreenBlock {
@@ -60,8 +60,8 @@ public class ScreenBlock {
     return coordinate;
   }
 
-// Mis en commentaire; l'idée est bonne; 
-// je ne souhaite pas actuellement mettre en public les différentes valeurs static de la classe.
+// Mis en commentaire; l'idÃ©e est bonne; 
+// je ne souhaite pas actuellement mettre en public les diffÃ©rentes valeurs static de la classe.
 //  /**
 //   * Bordure en bas
 //   * 
@@ -85,7 +85,7 @@ public class ScreenBlock {
   }
 
   /**
-   * Bordure à gauche
+   * Bordure ï¿½ gauche
    * 
    * @return
    */
@@ -94,7 +94,7 @@ public class ScreenBlock {
   }
 
   /**
-   * Contient un méga point
+   * Contient un mÃ©ga point
    * 
    * @return
    */
@@ -112,7 +112,7 @@ public class ScreenBlock {
   }
 
   /**
-   * Contient un point de revie des fantômes
+   * Contient un point de revie des fantÃ´mes
    * 
    * @return
    */

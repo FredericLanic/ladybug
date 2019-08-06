@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
- * Enumération des images à afficher dans le jeu
+ * EnumÃ©ration des images Ã  afficher dans le jeu
  * 
  * @author kycox
  *
@@ -56,7 +56,7 @@ public enum PicturesEnum {
   }
 
   /**
-   * Retorune la valeur de l'image
+   * Retourne la valeur de l'image
    * 
    * @return
    */

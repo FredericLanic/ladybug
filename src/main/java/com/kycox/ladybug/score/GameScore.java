@@ -14,7 +14,7 @@ public class GameScore {
   private int score;
 
   /**
-   * Ajout du score et du score incrémental
+   * Ajout du score et du score incrÃ©mental
    * 
    * @param score
    */
@@ -24,7 +24,7 @@ public class GameScore {
   }
 
   /**
-   * Retourne le score incrémental
+   * Retourne le score incrÃ©mental
    * 
    * @return
    */
@@ -42,7 +42,7 @@ public class GameScore {
   }
 
   /**
-   * Initialise le score et le score incrémental
+   * Initialise le score et le score incrÃ©mental
    */
   public void init() {
     incrementScore = 0;
@@ -50,7 +50,7 @@ public class GameScore {
   }
 
   /**
-   * Initialise le score incrémental
+   * Initialise le score incrÃ©mental
    */
   public void initIncrementScore() {
     incrementScore = 0;

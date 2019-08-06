@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import com.kycox.ladybug.engine.element.ghost.Ghost;
 
 /**
- * Enumération des états des fantômes
+ * EnumÃ©ration des Ã©tats des fantÃ´mes
  *
  */
 public enum GhostStatusEnum {

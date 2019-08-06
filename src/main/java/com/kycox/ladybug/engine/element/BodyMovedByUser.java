@@ -7,26 +7,26 @@ import com.kycox.ladybug.level.ScreenBlock;
 
 public class BodyMovedByUser extends Body {
 
-  // Les direction de pacman (requête suite aux touches et la vue)
+  // Les direction de pacman (requÃªte suite aux touches et la vue)
   protected Point requeteDirectionPoint = Constants.POINT_ZERO;
 
   /**
-   * Retourne vrai si l'élément peut bouger en fonction des cases à côté
+   * Retourne vrai si l'Ã©lÃ©ment peut bouger en fonction des cases Ã  cÃ´tÃ©
    * 
    * @param direction
    * @param screenBlock
    * @return
    */
   protected boolean canMove(Point direction, ScreenBlock screenBlock) {
-    return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isLeft() // pacman est coincé à gauche
-        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isRight() // pacman est coincé en haut
-        || direction.equals(Constants.POINT_UP) && screenBlock.isUp() // pacman est coincé à droite
-        || direction.equals(Constants.POINT_DOWN) && screenBlock.isDown() // pacman est coincé en bas
+    return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isLeft() // pacman est coincÃ© Ã  gauche
+        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isRight() // pacman est coincÃ© en haut
+        || direction.equals(Constants.POINT_UP) && screenBlock.isUp() // pacman est coincÃ© Ã  droite
+        || direction.equals(Constants.POINT_DOWN) && screenBlock.isDown() // pacman est coincÃ© en bas
     );
   }
 
   /**
-   * Déplacement de l'élément
+   * DÃ©placement de l'Ã©lÃ©ment
    * 
    * @param screenBlock
    */
@@ -37,7 +37,7 @@ public class BodyMovedByUser extends Body {
         setDirection(requeteDirectionPoint);
       }
       /**
-       * Quand Pacman est coincé : au début ou quand il butte sur un mur.
+       * Quand Pacman est coincÃ© : au dÃ©but ou quand il butte sur un mur.
        */
       if (!canMove(getDirection(), screenBlock)) {
         setDirection(Constants.POINT_ZERO);
@@ -46,7 +46,7 @@ public class BodyMovedByUser extends Body {
   }
 
   /**
-   * SETTERS utilisés par le modèle (MVC)
+   * SETTERS utilisÃ©s par le modÃ¨le (MVC)
    * 
    * @param requeteDirection
    */

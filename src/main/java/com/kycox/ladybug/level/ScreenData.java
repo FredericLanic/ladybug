@@ -41,7 +41,7 @@ public final class ScreenData {
     boolean isUp = screenBlock.isUp();
     boolean isDown = screenBlock.isDown();
 
-    // vérification des bordures !!!
+    // vÃ©rification des bordures !!!
 
     if (point.x == 0 && !isLeft) {
       screenBlock.addLeft();
@@ -63,7 +63,7 @@ public final class ScreenData {
       hasChanged = true;
     }
 
-    // vérification de la bordure en haut
+    // vÃ©rification de la bordure en haut
     if (isUp && point.y > 0) {
       checkedPoint = new Point(point.x, point.y - 1);
       previousScreenBlock = getBlock(checkedPoint);
@@ -73,7 +73,7 @@ public final class ScreenData {
       }
     }
 
-    // vérification de la bordure en bas
+    // vÃ©rification de la bordure en bas
     if (isDown && point.y < nbrLines - 1) {
       checkedPoint = new Point(point.x, point.y + 1);
       previousScreenBlock = getBlock(checkedPoint);
@@ -83,7 +83,7 @@ public final class ScreenData {
       }
     }
 
-    // vérification de la bordure à droite
+    // vÃ©rification de la bordure Ã  droite
     if (isRight && point.x < nbrBlocksPerLine - 1) {
       checkedPoint = new Point(point.x + 1, point.y);
       previousScreenBlock = getBlock(checkedPoint);
@@ -93,7 +93,7 @@ public final class ScreenData {
       }
     }
 
-    // vérification de la bordure à gauche
+    // vÃ©rification de la bordure Ã  gauche
     if (isLeft && point.x > 0) {
       checkedPoint = new Point(point.x - 1, point.y);
       previousScreenBlock = getBlock(checkedPoint);
@@ -107,7 +107,7 @@ public final class ScreenData {
   }
 
   /**
-   * Vérifie les blocks
+   * VÃ©rifie les blocks
    */
   public void checkBlocks() {
     for (int x = 0; x < nbrBlocksPerLine; x++) {
@@ -133,9 +133,9 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne un objet de type ScreenBlock qui représente le block
+   * Retourne un objet de type ScreenBlock qui reprÃ©sente le block
    * 
-   * @param pointPos : coordonnées BLOCK (x,y) dans la fenêtre
+   * @param pointPos : coordonnÃ©es BLOCK (x,y) dans la fenÃªtre
    * @return
    */
   public ScreenBlock getBlock(Point posPoint) {
@@ -162,7 +162,7 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne le nombre de points à manger par pacman présents dans le IData
+   * Retourne le nombre de points Ã  manger par pacman prÃ©sents dans le IData
    */
   public int getNbrBlocksWithPoint() {
     return (int) lstBlocks.stream().filter(ScreenBlock::isPoint).count();
@@ -178,12 +178,12 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne le nombre de méga point à mettre aléatoirement dans la map
+   * Retourne le nombre de mÃ©ga point Ã  mettre alÃ©atoirement dans la map
    * 
    * @return
    */
   // FIXME : mettre ce nombre dans le Level ? ou bien faire un calcul du nombre de
-  // méga point en fonction du niveau
+  // mÃ©ga point en fonction du niveau
   public int getNbrMegaPoint() {
     return 2;
   }
@@ -198,7 +198,7 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne la position dans le IData du numéro du block ayant un point
+   * Retourne la position dans le IData du numÃ©ro du block ayant un point
    * 
    * @param numPoint
    * @return
@@ -217,7 +217,7 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne une position aléatoire du tableau où se trouve un point
+   * Retourne une position alÃ©atoire du tableau oÃ¹ se trouve un point
    */
   private int getRandomPosNumPoint() {
     // nombre de points dans le IData courant
@@ -227,8 +227,8 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne les coordonnées aléatoire GRAPHIQUE d'un block qui contient un point
-   * à manger par pacman
+   * Retourne les coordonnÃ©es alï¿½atoire GRAPHIQUE d'un block qui contient un point
+   * Ã  manger par pacman
    * 
    * @return
    */
@@ -240,7 +240,7 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne le point ou les fantômes renaissent
+   * Retourne le point ou les fantÃ´mes renaissent
    * 
    * @return
    */
@@ -280,10 +280,10 @@ public final class ScreenData {
     nbrLines = level.getNbrLines();
     // position initial de pacman
     initPacmanBlockPoint = level.getInitPacmanBlockPos();
-    // ajoute le point regenération des fantômes
+    // ajoute le point regenÃ©ration des fantÃ´mes
     regenBlockPoint = level.getGhostRegenerateBlockPoint();
     lstBlocks.stream().filter(b -> b.getCoordinate().equals(regenBlockPoint)).forEach(ScreenBlock::addSurvivorPoint);
-    // ajout des mega points aléatoires
+    // ajout des mega points alÃ©atoires
     if (isInGame) {
       for (int i = 0; i < level.getNbrMegaPoints(); i++) {
         Point randomPoint = getRandomPosOnAPoint();
@@ -296,7 +296,7 @@ public final class ScreenData {
   /**
    * Update Point
    * 
-   * FIXME : à mettre ailleurs
+   * FIXME : Ã  mettre ailleurs
    */
   public void updateScreenBlock(PacmanActions pacmanActions) {
     if (pacmanActions.hasEatenAMegaPoint() || pacmanActions.hasEatenAPoint()) {

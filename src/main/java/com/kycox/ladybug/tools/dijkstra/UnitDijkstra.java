@@ -13,7 +13,7 @@ import com.kycox.ladybug.level.ScreenBlock;
 public class UnitDijkstra {
   private Point coordinate;
   /**
-   * Valeurs des poids : 999_999_999 : jamais calculé 0 : initialisation
+   * Valeurs des poids : 999_999_999 : jamais calculÃ© Ã  : initialisation
    */
   private int   distance;
   UnitDijkstra  previousUnitDijkstra;
@@ -60,9 +60,9 @@ public class UnitDijkstra {
   }
 
   /**
-   * Détricote le résultat obtenu
+   * Dï¿½tricote le rÃ©sultat obtenu
    * 
-   * @return une liste de point à suivre pour aller du point A au point B (unités
+   * @return une liste de point ï¿½ suivre pour aller du point A au point B (unitÃ©s
    *         GRAPHIQUE)
    */
   public List<Point> getShorterWay() {
@@ -95,7 +95,7 @@ public class UnitDijkstra {
   }
 
   /**
-   * Affichage du chemin remontant depuis cet unité
+   * Affichage du chemin remontant depuis cet unitÃ©
    */
   @Override
   public String toString() {

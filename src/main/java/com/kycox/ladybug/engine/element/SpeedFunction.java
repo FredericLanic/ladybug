@@ -12,7 +12,7 @@ public class SpeedFunction {
   private double a           = 0;
   private double b           = 0;
 
-  // échelle de 1 à 10
+  // Ã©chelle de 1 Ã  10
   private double limiteBasse = 2;
 
   private double limiteHaute = Body.VALID_SPEEDS.size();
@@ -23,7 +23,7 @@ public class SpeedFunction {
   }
 
   /**
-   * Retourne la vitesse calculée de Pacman en fonction du niveau
+   * Retourne la vitesse calculÃ©e de Pacman en fonction du niveau
    * 
    * @param numLevel
    * @return
@@ -35,7 +35,7 @@ public class SpeedFunction {
   }
 
   /**
-   * Retourne la vitesse calculée -1 de Pacman en fonction du niveau
+   * Retourne la vitesse calculÃ©e -1 de Pacman en fonction du niveau
    * 
    * @param numLevel
    * @return
@@ -49,7 +49,7 @@ public class SpeedFunction {
   }
 
   /**
-   * Retourne la vitesse calculée +1 de Pacman en fonction du niveau
+   * Retourne la vitesse calculÃ©e +1 de Pacman en fonction du niveau
    * 
    * @param numLevel
    * @return
@@ -63,7 +63,7 @@ public class SpeedFunction {
   }
 
   /**
-   * Retourne la vitesse de Pacman spéficique
+   * Retourne la vitesse de Pacman spÃ©ficique
    * 
    */
   public int getSpecificIndexSpeed(int numLevel) {

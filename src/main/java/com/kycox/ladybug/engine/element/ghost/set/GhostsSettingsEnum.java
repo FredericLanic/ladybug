@@ -8,7 +8,7 @@ import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.engine.element.ghost.behavious.GhostBehaviousEnum;
 
 /**
- * Setting spécifique des Fantôme : Blinky, Clyde, Inky, Pinky
+ * Setting spÃ©cifique des fantÃ´mes : Blinky, Clyde, Inky, Pinky
  * 
  * @author kycox
  *
@@ -17,12 +17,12 @@ public enum GhostsSettingsEnum {
   // cf : https://fr.wikipedia.org/wiki/Pac-Man
   // Blinky (AGGRESIVE - rouge) attaque directement Pac Man. Il suit Pac-Man comme
   // son ombre.
-  // Pinky (SMART - rose) a tendance à se mettre en embuscade. Elle vise l'endroit
-  // où va se trouver Pac-Man.
+  // Pinky (SMART - rose) a tendance Ã  se mettre en embuscade. Elle vise l'endroit
+  // oÃ¹ va se trouver Pac-Man.
   // Inky (CAPRICIOUS - bleu) est capricieux. De temps en temps, il part dans la
-  // direction opposée à Pac-Man.
-  // Clyde (INDIFFERENT - orange) feint l'indifférence. De temps en temps, il
-  // choisit une direction au hasard (qui peut être celle de Pac-Man).
+  // direction opposÃ©e de Pac-Man.
+  // Clyde (INDIFFERENT - orange) feint l'indiffï¿½rence. De temps en temps, il
+  // choisit une direction au hasard (qui peut Ãªtre celle de Pac-Man).
   BLINKY(PicturesEnum.GHOST_BLINKY_RIGHT_EYES, PicturesEnum.GHOST_BLINKY_LEFT_EYES, GhostBehaviousEnum.AGGRESSIVE,
       true),
   CLYDE(PicturesEnum.GHOST_CLYDE_RIGHT_EYES, PicturesEnum.GHOST_CLYDE_LEFT_EYES, GhostBehaviousEnum.STUPID, true),
@@ -30,7 +30,7 @@ public enum GhostsSettingsEnum {
   PINKY(PicturesEnum.GHOST_PINKY_RIGHT_EYES, PicturesEnum.GHOST_PINKY_LEFT_EYES, GhostBehaviousEnum.SMART, true);
 
   /**
-   * Initialise la configuration isComputed pour tous les settings des fantômes
+   * Initialise la configuration isComputed pour tous les settings des fantÃ´mes
    * 
    * @param isComputed
    */
@@ -63,7 +63,7 @@ public enum GhostsSettingsEnum {
   }
 
   /**
-   * Retourne le comportement du fantôme
+   * Retourne le comportement du fantÃ´me
    * 
    * @return
    */
@@ -72,7 +72,7 @@ public enum GhostsSettingsEnum {
   }
 
   /**
-   * Retourne l'image du fantômes les yeux à gauche
+   * Retourne l'image du fantÃ´mes les yeux Ã  gauche
    * 
    * @return
    */
@@ -81,7 +81,7 @@ public enum GhostsSettingsEnum {
   }
 
   /**
-   * Retourne l'image du fantômes les yeux à droite
+   * Retourne l'image du fantÃ´mes les yeux Ã  droite
    * 
    * @return
    */

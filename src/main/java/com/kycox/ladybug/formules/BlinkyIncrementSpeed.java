@@ -13,7 +13,7 @@ public class BlinkyIncrementSpeed {
   private ScreenData screenData = null;
 
   /**
-   * aX²+bX+c (c=0)
+   * aXÂ²+bX+c (c=0)
    * 
    * Point (0,0) Point (R,1) Point (T,3) (ici T=100%)
    * 
@@ -28,7 +28,7 @@ public class BlinkyIncrementSpeed {
 
     // calcul de R en fonction du niveau
     // pour commencer : on met R = 80
-    // puis on devrait faire R = 80 pour le niveau 1, et R = 20 pour le dernier
+    // FIXME : puis on devrait faire R = 80 pour le niveau 1, et R = 20 pour le dernier
     // niveau
 
     a = (T - 3 * R) / (R * R * T - R * T * T);

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Level2 implements ILevel {
 
-  // FIXME : il y a des méga points qui trainent ....
+  // FIXME : il y a des mÃ©ga points qui trainent ....
   private static final int levelDATA[]      = { 19, 26, 26, 22, 9, 12, 19, 26, 22, 9, 12, 19, 26, 26, 22, 21, 11, 14,
       17, 26, 26, 20, 15, 17, 26, 26, 20, 11, 14, 21, 17, 26, 26, 20, 11, 6, 17, 26, 20, 3, 14, 17, 26, 26, 20, 21, 3,
       6, 25, 22, 5, 21, 7, 21, 5, 19, 28, 3, 6, 21, 21, 9, 8, 14, 21, 13, 21, 5, 21, 13, 21, 11, 8, 12, 21, 25, 18, 26,

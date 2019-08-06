@@ -48,13 +48,13 @@ public class GameSounds {
   private int     sounds;
 
   /**
-   * Constructeur privé
+   * Constructeur privï¿½
    */
   public GameSounds() {
 
     /**
      * Je ne comprend pas pourquoi pour charger les clip, j'ai besoin d'avoir une
-     * JFrame. Astuces : créé une JFrame invisible; c'est très moche mais pour
+     * JFrame. Astuces : crÃ©er une JFrame invisible; c'est trÃ¨s moche mais pour
      * l'instant, c'est la solution que je prends.
      */
     JFrame jFrame = new JFrame();
@@ -82,8 +82,8 @@ public class GameSounds {
   }
 
   /**
-   * Retourne le temps en millisecondes de la musique de la mort de Pacman Utilisé
-   * dans la cinématique KinematicPacmanDeath
+   * Retourne le temps en millisecondes de la musique de la mort de Pacman UtilisÃ©
+   * dans la cinÃ©matique KinematicPacmanDeath
    * 
    * @return
    */
@@ -99,7 +99,7 @@ public class GameSounds {
   }
 
   /**
-   * Lancement des sons sélectionnés par le modèle
+   * Lancement des sons sÃ©lectionnÃ©s par le modÃ¨le
    */
   public void playSound() {
     if (!listen)
@@ -140,13 +140,13 @@ public class GameSounds {
   }
 
   /**
-   * Start Jingle. Le jeu est figé le temps que le jingle est lancé
+   * Start Jingle. Le jeu est figÃ© le temps que le jingle est lancÃ©
    */
   public void playStartJingle() {
     stopAllSounds();
-    // lancement du jingle du début
+    // lancement du jingle du dï¿½but
     new ListenSound(clipBeginning).start();
-    // On attend le temps du jingle : le jeu est alors bloqué
+    // On attend le temps du jingle : le jeu est alors bloquï¿½
     try {
       Thread.sleep(clipBeginning.getMicrosecondLength() / 1000);
     } catch (InterruptedException e) {
@@ -155,12 +155,12 @@ public class GameSounds {
   }
 
   /**
-   * Ajoute des sons en fonction de l'état des fantômes
+   * Ajoute des sons en fonction de l'Ã©tat des fantÃ´mes
    */
   public void setSound(GhostsGroup groupGhosts, AllGhostsActions ghostsActions, Pacman pacman,
       PacmanActions pacmanActions, KinematicPacmanDeath kinematicPacmanDeath) {
 
-    // Son depuis les objets Fantômes
+    // Son depuis les objets Fantï¿½mes
     for (Ghost ghost : groupGhosts.getLstGhosts()) {
       if (ghost.getStatus().equals(GhostStatusEnum.DYING))
         addSounds(SoundsEnum.GHOST_SURVIVOR.getIndex());
@@ -195,7 +195,7 @@ public class GameSounds {
   }
 
   /**
-   * Stop tous les sons qui ont pu être lancés.
+   * Stop tous les sons qui ont pu Ãªtre lancÃ©s.
    */
   public void stopAllSounds() {
     clipBeginning.stop();

@@ -10,7 +10,7 @@ import com.kycox.ladybug.engine.Engine;
 /**
  * Classe principale du jeu
  * 
- * C'est elle à lancer :)
+ * C'est elle Ã  lancer :)
  */
 public class MainPacman {
 
@@ -27,13 +27,13 @@ public class MainPacman {
 
     System.out.println("***************************");
     System.out.println("*  LadyBug Survivor  v1.5 *");
-    System.out.println("*  for Java 12 by ©kycox  *");
+    System.out.println("*  for Java 12 by ï¿½kycox  *");
     if (javaVersion.feature() == 12) {
       System.out.println("***************************");
-      // Création du moteur Pacman
+      // CrÃ©ation du moteur Pacman
       engine = new Engine();
 
-      // Création de la vue
+      // CrÃ©ation de la vue
       SwingUtilities.invokeLater(() -> {
         mainFrame = new MainFrame();
 

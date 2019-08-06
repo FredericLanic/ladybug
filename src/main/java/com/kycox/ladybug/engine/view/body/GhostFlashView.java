@@ -17,7 +17,7 @@ public class GhostFlashView extends TimerView {
   }
 
   /**
-   * Période de clignottement
+   * PÃ©riode de clignottement
    */
   private int     period = Constants.PACE * 4;
 
@@ -29,7 +29,7 @@ public class GhostFlashView extends TimerView {
   private Timer   timer;
 
   /**
-   * Constructeur privé pour assurer le singleton
+   * Constructeur privÃ© pour assurer le singleton
    */
   private GhostFlashView() {
     timer = createTimer(period);
@@ -42,7 +42,7 @@ public class GhostFlashView extends TimerView {
   }
 
   /**
-   * Retourne le fantôme qui clignotte
+   * Retourne le fantÃ´me qui clignotte
    * 
    * @param ghost
    * @return

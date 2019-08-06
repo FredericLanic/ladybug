@@ -6,10 +6,10 @@ import java.util.List;
 
 public final class Level1 implements ILevel {
 
-//   Représentation du level initial 
-//   0000001 : barre à gauche     1 
+//   ReprÃ©sentation du level initial 
+//   0000001 : barre Ã  gauche     1 
 //   0000010 : barre en haut      2 
-//   0000100 : barre à droite     4 
+//   0000100 : barre Ã  droite     4 
 //   0001000 : barre en bas       8
 //   0010000 : point             16
 //   0100000 : superpower        32

@@ -10,7 +10,7 @@ import com.kycox.ladybug.engine.view.conf.ConfJDialog;
 /**
  * Frame principale du jeu.
  * 
- * FIXME : peut être utiliser une autre techno que swing
+ * FIXME : peut Ãªtre utiliser une autre techno que swing
  *
  */
 public class MainFrame extends JFrame {
@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
   }
 
   /**
-   * Initialisation de la fenêtre
+   * Initialisation de la fenÃªtre
    */
   private void init() {
     logger.trace("Entering application");

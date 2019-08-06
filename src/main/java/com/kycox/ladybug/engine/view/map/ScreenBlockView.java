@@ -24,7 +24,7 @@ public class ScreenBlockView {
     g2d.setColor(Color.GREEN);
     g2d.setStroke(new BasicStroke(2));
 
-    // affichage de la barre à gauche
+    // affichage de la barre Ã  gauche
     if (screenBlock.isLeft()) {
       g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE - 1);
     }
@@ -35,7 +35,7 @@ public class ScreenBlockView {
     }
 
     g2d.setColor(Color.YELLOW);
-    // affichage de la barre à droite
+    // affichage de la barre Ã  droite
     if (screenBlock.isRight()) {
       g2d.drawLine(x + Constants.BLOCK_SIZE - 1, y, x + Constants.BLOCK_SIZE - 1, y + Constants.BLOCK_SIZE - 1);
     }
@@ -82,7 +82,7 @@ public class ScreenBlockView {
     int x = position.x;
     int y = position.y;
 
-    // Gestion du trait double à l'intérieur - trait à gauche
+    // Gestion du trait double Ã  l'intÃ©rieur - trait Ã  gauche
     if (screenBlock.isLeft() && screenBlock.isUp() && screenBlock.isDown())
       g2d.drawLine(x + 4, y + 4, x + 4, y + Constants.BLOCK_SIZE - 1 - 4);
     else if (screenBlock.isLeft() && screenBlock.isUp())
@@ -113,7 +113,7 @@ public class ScreenBlockView {
     else if (screenBlock.isUp())
       g2d.drawLine(x, y + 4, x + Constants.BLOCK_SIZE - 1, y + 4);
 
-    // Gestion du trait double à l'intérieur - trait à droite
+    // Gestion du trait double Ã  l'intï¿½rieur - trait Ã  droite
     if (screenBlock.isRight() && screenBlock.isUp() && screenBlock.isDown())
       g2d.drawLine(x + Constants.BLOCK_SIZE - 1 - 4, y + 4, x + Constants.BLOCK_SIZE - 1 - 4,
           y + Constants.BLOCK_SIZE - 1 - 4);
@@ -128,7 +128,7 @@ public class ScreenBlockView {
   }
 
   /**
-   * Constructeur privé
+   * Constructeur privÃ©
    */
   private ScreenBlockView() {
   }

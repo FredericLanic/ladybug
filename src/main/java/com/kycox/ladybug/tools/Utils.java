@@ -27,7 +27,7 @@ public final class Utils {
   }
 
   /**
-   * Constructeur privé
+   * Constructeur privÃ©
    */
   private Utils() {
   }

@@ -55,7 +55,7 @@ public class ConfJDialog extends JDialog implements ActionListener {
 //    centerPanel.add(pacmanImg);
 //    centerPanel.add(new JLabel("Boutons Pacman"));
     centerPanel.add(ghostPanel);
-//    centerPanel.add(new JLabel("Boutons Fantôme"));
+//    centerPanel.add(new JLabel("Boutons FantÃ´me"));
 
     // Sud : les boutons 1 ou 2 joueurs
     JPanel southPanel = new JPanel();
@@ -87,7 +87,7 @@ public class ConfJDialog extends JDialog implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
     case "1 player":
-      // on met un fantôme jouable par les touches
+      // on met un fantÃ´me jouable par les touches
       GhostsSettingsEnum.CLYDE.setComputed(true);
       GhostsSettingsEnum.BLINKY.setComputed(true);
       GhostsSettingsEnum.INKY.setComputed(true);

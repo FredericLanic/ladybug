@@ -8,17 +8,17 @@ import java.util.List;
 import com.kycox.ladybug.constant.Constants;
 
 /**
- * Classe abstraite pour les éléments qui bouge dans le jeu
+ * Classe abstraite pour les Ã©lÃ©ments qui bouge dans le jeu
  * 
- * Le mouvement peut être calculé ou bien en fonction des joueurs
+ * Le mouvement peut Ãªtre calculÃ© ou bien en fonction des joueurs
  */
 public abstract class Body {
-  // Tableau des vitesses disponibles : les vitesses doivent être un multiple de
-  // 24 (taille d'un BLOCK_SIZE) pour que le programme puisse détecter le
+  // Tableau des vitesses disponibles : les vitesses doivent Ãªtre un multiple de
+  // 24 (taille d'un BLOCK_SIZE) pour que le programme puisse dÃ©tecter le
   // changement de ScreenBlock
   protected static final List<Integer> VALID_SPEEDS    = Collections
       .unmodifiableList(Arrays.asList(1, 2, 3, 4, 6, 8, 12, 24));
-  // Direction du fantôme
+  // Direction du fantÃ´me
   private Point                        dirPoint        = Constants.POINT_ZERO;
   // nombre de vie restant pour ce body
   private int                          lifesLeft       = 0;
@@ -36,9 +36,9 @@ public abstract class Body {
   }
 
   /**
-   * Le fantôme ou pacman change de block
+   * Le fantÃ´me ou pacman change de block
    * 
-   * @param pointPos : coordonnées DE L'ECRAN (x,y) dans la fenêtre
+   * @param pointPos : coordonnÃ©es DE L'ECRAN (x,y) dans la fenÃªtre
    * @return
    */
   public boolean changeBlock() {
@@ -91,7 +91,7 @@ public abstract class Body {
   }
 
   /**
-   * Initialise la vitesse du fantôme à la construction
+   * Initialise la vitesse du fantÃ´me Ã  la construction
    * 
    * (speed & startSpeed)
    * 
@@ -136,7 +136,7 @@ public abstract class Body {
    */
   public void setSpeedIndex(int speedIndex) {
     // FIXME : rajouter un test si speenIndex > VALID_SPEEDS.length
-    // ou pas, comme ça j'aurai une exception et je pourrai corriger le problème
+    // ou pas, comme Ã§a j'aurai une exception et je pourrai corriger le problÃ¨me
     this.speedIndex = speedIndex;
   }
 }

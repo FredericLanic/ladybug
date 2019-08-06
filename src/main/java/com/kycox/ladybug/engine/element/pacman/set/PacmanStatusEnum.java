@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import com.kycox.ladybug.engine.element.pacman.Pacman;
 
 /**
- * Enumération des états de pacman
+ * EnumÃ©ration des Ã©tats de pacman
  *
  * 
  */

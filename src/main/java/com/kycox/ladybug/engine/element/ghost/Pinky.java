@@ -4,7 +4,7 @@ import com.kycox.ladybug.engine.element.SpeedFunction;
 import com.kycox.ladybug.engine.element.ghost.set.GhostsSettingsEnum;
 
 /**
- * Spécificité du fantôme Pinky
+ * SpÃ©cificitÃ©s du fantÃ´me Pinky
  *
  */
 public class Pinky extends Ghost {
