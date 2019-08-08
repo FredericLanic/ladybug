@@ -23,7 +23,7 @@ public class GhostDefautlView {
 
     Image ghostImg;
 
-    if (ghost.getDirection().x > 0) {
+    if (ghost.getDirection().x < 0) {
       // image générique du fantôme qui a peut : les yeux à droite
       ghostImg = ghost.getGhostSettings().getGhostRightEyesImg();
     } else {

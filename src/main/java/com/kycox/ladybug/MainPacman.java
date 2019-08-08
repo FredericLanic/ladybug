@@ -16,13 +16,13 @@ public class MainPacman {
 
   /** Lancement du jeu */
   public static void main(String[] args) {
-    new MainPacman().lannchTheGame();
+    new MainPacman().launchTheGame();
   }
 
   Engine    engine;
   MainFrame mainFrame;
 
-  public void lannchTheGame() {
+  public void launchTheGame() {
     Version javaVersion = Runtime.version();
 
     System.out.println("***************************");
@@ -37,9 +37,9 @@ public class MainPacman {
       SwingUtilities.invokeLater(() -> {
         mainFrame = new MainFrame();
 
-        mainFrame.setLayout(new BorderLayout());
+//        mainFrame.setLayout(new BorderLayout());
 
-        mainFrame.add("Center", engine.getPacmanView());
+        mainFrame.add(engine.getPacmanView(), BorderLayout.CENTER);
         // Affichage de la MainFrame
         mainFrame.setVisible(true);
       });

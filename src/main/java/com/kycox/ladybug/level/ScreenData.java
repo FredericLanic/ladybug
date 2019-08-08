@@ -17,56 +17,49 @@ import com.kycox.ladybug.tools.dijkstra.UnitDijkstra;
 public final class ScreenData {
 
   // chargement des niveaux
-  private Levels            gameLevels = new Levels();
+  private Levels            gameLevels    = new Levels();
   private int               initNbrBlockPoint;
   private Point             initPacmanBlockPoint;
-  private List<ScreenBlock> lstBlocks  = new ArrayList<>();
+  private List<ScreenBlock> lstGameBlocks = new ArrayList<>();
+  private List<ScreenBlock> lstViewBlocks = new ArrayList<>();
   private int               nbrBlocksPerLine;
   private int               nbrLines;
   private Point             regenBlockPoint;
 
   // FIXME : un peu de refacto ?
   private boolean checkBlock(Point point) {
-    boolean hasChanged = false;
+    boolean     hasChanged  = false;
 
-    Point checkedPoint;
     ScreenBlock previousScreenBlock;
     ScreenBlock screenBlock = getBlock(point);
 
     if (screenBlock == null)
       return false;
 
-    boolean isLeft = screenBlock.isLeft();
-    boolean isRight = screenBlock.isRight();
-    boolean isUp = screenBlock.isUp();
-    boolean isDown = screenBlock.isDown();
-
-    // vérification des bordures !!!
-
-    if (point.x == 0 && !isLeft) {
+    // vérification des bordures principales !!!
+    if (point.x == 0 && !screenBlock.isLeft()) {
       screenBlock.addLeft();
       hasChanged = true;
     }
 
-    if (point.x == (nbrBlocksPerLine - 1) && !isRight) {
+    if (point.x == (nbrBlocksPerLine - 1) && !screenBlock.isRight()) {
       screenBlock.addRight();
       hasChanged = true;
     }
 
-    if (point.y == 0 && !isUp) {
+    if (point.y == 0 && !screenBlock.isUp()) {
       screenBlock.addUp();
       hasChanged = true;
     }
 
-    if (point.y == (nbrLines - 1) && !isDown) {
+    if (point.y == (nbrLines - 1) && !screenBlock.isDown()) {
       screenBlock.addDown();
       hasChanged = true;
     }
 
     // vérification de la bordure en haut
-    if (isUp && point.y > 0) {
-      checkedPoint = new Point(point.x, point.y - 1);
-      previousScreenBlock = getBlock(checkedPoint);
+    if (screenBlock.isUp() && point.y > 0) {
+      previousScreenBlock = getBlock(new Point(point.x, point.y - 1));
       if (previousScreenBlock != null && !previousScreenBlock.isDown()) {
         hasChanged = true;
         previousScreenBlock.addDown();
@@ -74,9 +67,8 @@ public final class ScreenData {
     }
 
     // vérification de la bordure en bas
-    if (isDown && point.y < nbrLines - 1) {
-      checkedPoint = new Point(point.x, point.y + 1);
-      previousScreenBlock = getBlock(checkedPoint);
+    if (screenBlock.isDown() && point.y < nbrLines - 1) {
+      previousScreenBlock = getBlock(new Point(point.x, point.y + 1));
       if (previousScreenBlock != null && !previousScreenBlock.isUp()) {
         hasChanged = true;
         previousScreenBlock.addUp();
@@ -84,9 +76,8 @@ public final class ScreenData {
     }
 
     // vérification de la bordure à droite
-    if (isRight && point.x < nbrBlocksPerLine - 1) {
-      checkedPoint = new Point(point.x + 1, point.y);
-      previousScreenBlock = getBlock(checkedPoint);
+    if (screenBlock.isRight() && point.x < nbrBlocksPerLine - 1) {
+      previousScreenBlock = getBlock(new Point(point.x + 1, point.y));
       if (previousScreenBlock != null && !previousScreenBlock.isLeft()) {
         hasChanged = true;
         previousScreenBlock.addLeft();
@@ -94,9 +85,8 @@ public final class ScreenData {
     }
 
     // vérification de la bordure à gauche
-    if (isLeft && point.x > 0) {
-      checkedPoint = new Point(point.x - 1, point.y);
-      previousScreenBlock = getBlock(checkedPoint);
+    if (screenBlock.isLeft() && point.x > 0) {
+      previousScreenBlock = getBlock(new Point(point.x - 1, point.y));
       if (previousScreenBlock != null && !previousScreenBlock.isRight()) {
         hasChanged = true;
         previousScreenBlock.addRight();
@@ -109,7 +99,7 @@ public final class ScreenData {
   /**
    * Vérifie les blocks
    */
-  public void checkBlocks() {
+  public void checkBorderBlocks() {
     for (int x = 0; x < nbrBlocksPerLine; x++) {
       for (int y = 0; y < nbrLines; y++) {
         checkBlock(new Point(x, y));
@@ -125,7 +115,7 @@ public final class ScreenData {
   public List<UnitDijkstra> convertToDjistraList() {
     List<UnitDijkstra> lstUnitDijkstra = new ArrayList<>();
     // java8 : faire un stream
-    for (ScreenBlock block : lstBlocks) {
+    for (ScreenBlock block : lstGameBlocks) {
       lstUnitDijkstra.add(new UnitDijkstra(block));
     }
 
@@ -140,7 +130,8 @@ public final class ScreenData {
    */
   public ScreenBlock getBlock(Point posPoint) {
     // java8 :
-    return lstBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
+    return lstGameBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst()
+        .orElse(null);
   }
 
   /**
@@ -165,7 +156,7 @@ public final class ScreenData {
    * Retourne le nombre de points à manger par pacman présents dans le IData
    */
   public int getNbrBlocksWithPoint() {
-    return (int) lstBlocks.stream().filter(ScreenBlock::isPoint).count();
+    return (int) lstGameBlocks.stream().filter(ScreenBlock::isPoint).count();
   }
 
   /**
@@ -205,9 +196,9 @@ public final class ScreenData {
    */
   private int getPosNumPoint(int numPoint) {
     int nbrPoint = 0;
-    int pos = 0;
-    for (int i = 0; i < lstBlocks.size(); i++) {
-      if (lstBlocks.get(i).isPoint()) {
+    int pos      = 0;
+    for (int i = 0; i < lstGameBlocks.size(); i++) {
+      if (lstGameBlocks.get(i).isPoint()) {
         nbrPoint++;
         if (nbrPoint == numPoint)
           pos = i;
@@ -221,19 +212,19 @@ public final class ScreenData {
    */
   private int getRandomPosNumPoint() {
     // nombre de points dans le IData courant
-    int nbrPoints = getNbrBlocksWithPoint();
+    int nbrPoints   = getNbrBlocksWithPoint();
     int randomPoint = new Random().nextInt(nbrPoints);
     return getPosNumPoint(randomPoint);
   }
 
   /**
-   * Retourne les coordonnées al�atoire GRAPHIQUE d'un block qui contient un point
-   * à manger par pacman
+   * Retourne les coordonnées al�atoire GRAPHIQUE d'un block qui contient un point à manger par
+   * pacman
    * 
    * @return
    */
   public Point getRandomPosOnAPoint() {
-    int pos = getRandomPosNumPoint();
+    int pos    = getRandomPosNumPoint();
     int yBlock = pos / getNbrBlocksPerLine();
     int xBlock = pos % getNbrBlocksPerLine();
     return new Point(xBlock, yBlock);
@@ -273,8 +264,9 @@ public final class ScreenData {
    */
   public void setLevelMap(int numLevel, boolean isInGame) {
     ILevel level = gameLevels.getLevel(numLevel);
-    lstBlocks = level.getLstBlocks();
-    checkBlocks();
+    lstGameBlocks = level.getLstBlocks();
+    // vérification des bordure des blocks
+    checkBorderBlocks();
     // nbr lignes / nbr colonnes
     nbrBlocksPerLine = level.getNbrBlocksByLine();
     nbrLines = level.getNbrLines();
@@ -282,12 +274,14 @@ public final class ScreenData {
     initPacmanBlockPoint = level.getInitPacmanBlockPos();
     // ajoute le point regenération des fantômes
     regenBlockPoint = level.getGhostRegenerateBlockPoint();
-    lstBlocks.stream().filter(b -> b.getCoordinate().equals(regenBlockPoint)).forEach(ScreenBlock::addSurvivorPoint);
+    lstGameBlocks.stream().filter(b -> b.getCoordinate().equals(regenBlockPoint))
+        .forEach(ScreenBlock::addSurvivorPoint);
     // ajout des mega points aléatoires
     if (isInGame) {
       for (int i = 0; i < level.getNbrMegaPoints(); i++) {
         Point randomPoint = getRandomPosOnAPoint();
-        lstBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint)).forEach(ScreenBlock::setMegaPoint);
+        lstGameBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
+            .forEach(ScreenBlock::setMegaPoint);
       }
     }
     initNbrBlockPoint = getNbrBlocksWithPoint();

@@ -37,7 +37,11 @@ public class MainFrame extends JFrame {
     logger.trace("Entering application");
     setTitle("LadyBug");
     setDefaultCloseOperation(EXIT_ON_CLOSE);
-    setSize(380, 440);
-    setLocationRelativeTo(null);
+//    setSize(380, 440);
+//    setLocationRelativeTo(null);
+
+    setExtendedState(JFrame.MAXIMIZED_BOTH);
+    setUndecorated(true);
+    setVisible(true);
   }
 }

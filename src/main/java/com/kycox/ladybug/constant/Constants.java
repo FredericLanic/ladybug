@@ -10,7 +10,7 @@ import java.awt.Point;
  */
 public final class Constants {
   // taille d'un block
-  public static final int   BLOCK_SIZE         = 24;
+  public static final int   BLOCK_SIZE         = 48;
   // distance min entre Pacman et un fantôme
   public static final int   DISTANCE_MIN       = 20;
   // Nouvelle vie en fonction du score incrémental
@@ -19,7 +19,7 @@ public final class Constants {
   public static final int   NIVEAU_MAX         = 100;
   public static final Point NO_POINT           = new Point(-1, -1);
   // Période du timer du jeu
-  public static final int   PACE               = 35;               // rythme en anglais :/
+  public static final int   PACE               = 25;               // rythme en anglais :/
   // Point en bas
   public static final Point POINT_DOWN         = new Point(0, 1);
   // Point à gauche

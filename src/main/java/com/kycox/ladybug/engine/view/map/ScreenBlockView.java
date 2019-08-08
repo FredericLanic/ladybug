@@ -21,49 +21,111 @@ public class ScreenBlockView {
   private static final Color revivorColor   = new Color(128, 255, 255);
 
   public static void display(Graphics2D g2d, ScreenBlock screenBlock, int x, int y) {
+
+    displayBorders(g2d, screenBlock, x, y);
+    displayPoints(g2d, screenBlock, x, y);
+
+//    if (screenBlock.isDoubleLines())
+//      displayInsideLines(g2d, screenBlock);
+  }
+
+  /**
+   * Display the points into the map
+   * 
+   * @param g2d
+   * @param screenBlock
+   * @param x
+   * @param y
+   */
+  private static void displayPoints(Graphics2D g2d, ScreenBlock screenBlock, int x, int y) {
+    // affichage du méga point
+    if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
+      g2d.setColor(megaPointColor);
+      g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 6, y + Constants.BLOCK_SIZE / 2 - 6, 8, 8);
+    }
+
+    // affichage du point de survie des fantômes
+    if (screenBlock.isReviverGhostPoint()) {
+      g2d.setColor(revivorColor);
+      g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 6, y + Constants.BLOCK_SIZE / 2 - 6, 8, 8);
+    }
+
+    // affichage des points
+    g2d.setColor(dotColor);
+    if (screenBlock.isPoint() && !screenBlock.isMegaPoint()) {
+      g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2, y + Constants.BLOCK_SIZE / 2 - 2, 2, 2);
+    }
+
+    if (screenBlock.isPoint() && !screenBlock.isUp()) {
+      g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2,
+          y + Constants.BLOCK_SIZE / 2 - 2 - Constants.BLOCK_SIZE / 3, 2, 2);
+    }
+
+    if (screenBlock.isPoint() && !screenBlock.isDown()) {
+      g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2,
+          y + Constants.BLOCK_SIZE / 2 - 2 + Constants.BLOCK_SIZE / 3, 2, 2);
+    }
+
+    if (screenBlock.isPoint() && !screenBlock.isLeft()) {
+      g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2 - Constants.BLOCK_SIZE / 3,
+          y + Constants.BLOCK_SIZE / 2 - 2, 2, 2);
+    }
+
+    if (screenBlock.isPoint() && !screenBlock.isRight()) {
+      g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2 + Constants.BLOCK_SIZE / 3,
+          y + Constants.BLOCK_SIZE / 2 - 2, 2, 2);
+    }
+  }
+
+  /**
+   * Display the borders into the map
+   * 
+   * @param g2d
+   * @param screenBlock
+   * @param x
+   * @param y
+   */
+  private static void displayBorders(Graphics2D g2d, ScreenBlock screenBlock, int x, int y) {
+
     g2d.setColor(Color.GREEN);
     g2d.setStroke(new BasicStroke(2));
 
     // affichage de la barre à gauche
     if (screenBlock.isLeft()) {
-      g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE - 1);
+      g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE);
     }
 
     // affichage de la barre en haut
     if (screenBlock.isUp()) {
-      g2d.drawLine(x, y, x + Constants.BLOCK_SIZE - 1, y);
+      g2d.drawLine(x, y, x + Constants.BLOCK_SIZE, y);
     }
 
-    g2d.setColor(Color.YELLOW);
     // affichage de la barre à droite
     if (screenBlock.isRight()) {
-      g2d.drawLine(x + Constants.BLOCK_SIZE - 1, y, x + Constants.BLOCK_SIZE - 1, y + Constants.BLOCK_SIZE - 1);
+      g2d.drawLine(x + Constants.BLOCK_SIZE, y, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE);
     }
 
     // affichage de la barre en bas
     if (screenBlock.isDown()) {
-      g2d.drawLine(x, y + Constants.BLOCK_SIZE - 1, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE - 1);
+      g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE);
     }
 
-    // affichage du point
-    if (screenBlock.isPoint() && !screenBlock.isMegaPoint()) {
-      g2d.setColor(dotColor);
-      g2d.fillRect(x + 11, y + 11, 2, 2);
+    int rayon = Constants.BLOCK_SIZE;
+
+    if (screenBlock.isLeft() && screenBlock.isUp()) {
+      g2d.drawArc(x, y, rayon, rayon, 90, 90);
     }
 
-    // affichage du point
-    if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
-      g2d.setColor(megaPointColor);
-      g2d.fillOval(x + 8, y + 7, 8, 8);
+    if (screenBlock.isLeft() && screenBlock.isDown()) {
+      g2d.drawArc(x, y, rayon, rayon, 270, -90);
     }
 
-    if (screenBlock.isReviverGhostPoint()) {
-      g2d.setColor(revivorColor);
-      g2d.fillOval(x + 8, y + 7, 8, 8);
+    if (screenBlock.isRight() && screenBlock.isUp()) {
+      g2d.drawArc(x, y, rayon, rayon, 0, 90);
     }
 
-    if (screenBlock.isDoubleLines()) {
-      displayInsideLines(g2d, screenBlock);
+    if (screenBlock.isRight() && screenBlock.isDown()) {
+      g2d.drawArc(x, y, rayon, rayon, 270, 90);
     }
   }
 
@@ -79,8 +141,8 @@ public class ScreenBlockView {
     g2d.setColor(Color.YELLOW);
 
     Point position = Utils.convertPointToGraphicUnit(screenBlock.getCoordinate());
-    int x = position.x;
-    int y = position.y;
+    int   x        = position.x;
+    int   y        = position.y;
 
     // Gestion du trait double à l'intérieur - trait à gauche
     if (screenBlock.isLeft() && screenBlock.isUp() && screenBlock.isDown())
@@ -102,7 +164,8 @@ public class ScreenBlockView {
       g2d.drawLine(x + 4, y + Constants.BLOCK_SIZE - 1 - 4, x + Constants.BLOCK_SIZE - 1,
           y + Constants.BLOCK_SIZE - 1 - 4);
     else if (screenBlock.isDown())
-      g2d.drawLine(x, y + Constants.BLOCK_SIZE - 1 - 4, x + Constants.BLOCK_SIZE - 1, y + Constants.BLOCK_SIZE - 1 - 4);
+      g2d.drawLine(x, y + Constants.BLOCK_SIZE - 1 - 4, x + Constants.BLOCK_SIZE - 1,
+          y + Constants.BLOCK_SIZE - 1 - 4);
 
     if (screenBlock.isUp() && screenBlock.isRight() && screenBlock.isLeft())
       g2d.drawLine(x + 4, y + 4, x + Constants.BLOCK_SIZE - 1 - 4, y + 4);
@@ -124,7 +187,8 @@ public class ScreenBlockView {
       g2d.drawLine(x + Constants.BLOCK_SIZE - 1 - 4, y, x + Constants.BLOCK_SIZE - 1 - 4,
           y + Constants.BLOCK_SIZE - 1 - 4);
     else if (screenBlock.isRight())
-      g2d.drawLine(x + Constants.BLOCK_SIZE - 1 - 4, y, x + Constants.BLOCK_SIZE - 1 - 4, y + Constants.BLOCK_SIZE - 1);
+      g2d.drawLine(x + Constants.BLOCK_SIZE - 1 - 4, y, x + Constants.BLOCK_SIZE - 1 - 4,
+          y + Constants.BLOCK_SIZE - 1);
   }
 
   /**

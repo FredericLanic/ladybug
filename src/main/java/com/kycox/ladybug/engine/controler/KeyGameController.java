@@ -9,17 +9,17 @@ import com.kycox.ladybug.engine.model.GameModel;
 import com.kycox.ladybug.engine.view.GameView;
 
 /**
- * Contrôleur du jeu : MVC
+ * Contrï¿½leur du jeu : MVC
  *
  */
 public class KeyGameController extends KeyAdapter {
 
   // voir https://github.com/marcelschoen/gamepad4j pour brancher une
   // manette usb pour le jeu
-  // Utiliser plutôt Jamepad qui me semble facilement utilisable;
+  // Utiliser plutÃ´t Jamepad qui me semble facilement utilisable;
 
   /**
-   * Le modèle
+   * Le modï¿½le
    */
   protected GameModel pacmanModel;
 
@@ -57,7 +57,7 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * Déplacement de blinky
+   * DÃ©placement de blinky
    * 
    * @param direction
    */
@@ -66,11 +66,16 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * Action sur les touches Gestion des touches pressées
+   * Action sur les touches Gestion des touches pressÃ©es
    */
   @Override
   public void keyPressed(KeyEvent e) {
     int keyCode = e.getKeyCode();
+
+    if (keyCode == KeyEvent.VK_ESCAPE) {
+      System.exit(0);
+    }
+
     if (pacmanModel.getGameStatus().isInGame()) {
       // Gestion des touches durant une partie
       manageKeysInGame(keyCode);
@@ -103,7 +108,7 @@ public class KeyGameController extends KeyAdapter {
     case KeyEvent.VK_DOWN:
       pacmanMove(Constants.POINT_DOWN);
       break;
-    // Mouvement du fantôme (joueur 2)
+    // Mouvement du fantï¿½me (joueur 2)
     case KeyEvent.VK_Z:
       ghostMove(Constants.POINT_UP);
       break;
@@ -135,12 +140,12 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * Gestion des touches durant la présentation
+   * Gestion des touches durant la prï¿½sentation
    * 
    * @param keyCode
    */
   private void manageKeysPresentation(int keyCode) {
-    // Gestion des touches durant la présentation
+    // Gestion des touches durant la prï¿½sentation
     switch (keyCode) {
     // Start Game
     case KeyEvent.VK_S: // 's' ou 'S'
@@ -150,7 +155,7 @@ public class KeyGameController extends KeyAdapter {
     case KeyEvent.VK_F2:
       startStopSound();
       break;
-    // Configuration du jeu : mode 1 ou 2 joueur, choix du fantôme pour le joueur 2
+    // Configuration du jeu : mode 1 ou 2 joueur, choix du fantï¿½me pour le joueur 2
     case KeyEvent.VK_C:
       setConfig();
       break;
@@ -177,7 +182,7 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * Début du jeu
+   * Dï¿½but du jeu
    */
   void startGame() {
     pacmanModel.getGameStatus().setInGame();
@@ -193,7 +198,7 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * Arret forcé du jeu
+   * Arret forcï¿½ du jeu
    */
   void stopGame() {
     if (pacmanModel.gameTimerIsRunning()) {
