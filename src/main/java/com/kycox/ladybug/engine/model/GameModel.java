@@ -102,7 +102,7 @@ public class GameModel extends Observable {
   }
 
   /**
-   * Cr�ation du timer du jeu (coeur du jeu)
+   * Création du timer du jeu (coeur du jeu)
    * 
    * @return
    */
@@ -184,7 +184,8 @@ public class GameModel extends Observable {
 
 // SONDS
         // affecte les sons
-        gameSounds.setSound(groupGhosts, allGhostsActions, pacman, pacmanActions, kinematicPacmanDeath);
+        gameSounds.setSound(groupGhosts, allGhostsActions, pacman, pacmanActions,
+            kinematicPacmanDeath);
       }
       // notifie la view qu'il y a eu du changement
       notifyObservers();
@@ -291,18 +292,12 @@ public class GameModel extends Observable {
     setBeginNewLevel(true);
     // initialisation de la cinématique de la mort de pacman
     kinematicPacmanDeath.initBip();
-
-//    // on met un fantôme jouable par les touches
-//    GhostsSettingsEnum.CLYDE.setComputed(false);
-//    ghostRequest = Constants.POINT_ZERO;
-
     // on continue le level
     continueLevel();
   }
 
   /**
-   * Vérifie c'est le jeu est au début du niveau Utilisé pour palier au soucis du
-   * jingle du début
+   * Vérifie c'est le jeu est au début du niveau Utilisé pour palier au soucis du jingle du début
    * 
    * @return
    */
@@ -323,8 +318,8 @@ public class GameModel extends Observable {
   }
 
   /**
-   * Pacman a rencontré un fantôme !! Le jeu est terminé si toutes les vies de
-   * pacman ont été utilisées.
+   * Pacman a rencontré un fantôme !! Le jeu est terminé si toutes les vies de pacman ont été
+   * utilisées.
    */
   private void pacmanIsDead() {
     pacman.minusLifesLeft();
@@ -357,8 +352,7 @@ public class GameModel extends Observable {
   }
 
   /**
-   * Suppression des tâches du niveau qui est terminé (succès, échec ou pas de
-   * niveau).
+   * Suppression des tâches du niveau qui est terminé (succès, échec ou pas de niveau).
    */
   private void removePreviousTasksLevel() {
     // arrêt des timers super power
@@ -379,8 +373,8 @@ public class GameModel extends Observable {
   }
 
   /**
-   * Affecte le fait que c'est le début du niveau. C'est un contournement pour
-   * écouter le Jingle de début
+   * Affecte le fait que c'est le début du niveau. C'est un contournement pour écouter le Jingle de
+   * début
    * 
    * @param beginNewLevel
    */

@@ -27,7 +27,7 @@ public class CheckLevelMap {
     for (int x = 0; x < nbrBlocksByLines; x++) {
       for (int y = 0; y < nbrLines; y++) {
         Point currentPoint = new Point(x, y);
-        ScreenBlock block = screenData.getBlock(currentPoint);
+        ScreenBlock block = screenData.getDataBlock(currentPoint);
         checkScreenBlock(block, screenData);
       }
     }
@@ -76,7 +76,7 @@ public class CheckLevelMap {
     // vérification de la bordure en haut
     if (isUp && block.getCoordinate().y > 0) {
       checkedPoint = new Point(block.getCoordinate().x, block.getCoordinate().y - 1);
-      previousScreenBlock = screenData.getBlock(checkedPoint);
+      previousScreenBlock = screenData.getDataBlock(checkedPoint);
       if (!previousScreenBlock.isDown()) {
         hasChanged = true;
         previousScreenBlock.addDown();
@@ -86,7 +86,7 @@ public class CheckLevelMap {
     // vérification de la bordure en bas
     if (isDown && block.getCoordinate().y < nbrLines - 1) {
       checkedPoint = new Point(block.getCoordinate().x, block.getCoordinate().y + 1);
-      previousScreenBlock = screenData.getBlock(checkedPoint);
+      previousScreenBlock = screenData.getDataBlock(checkedPoint);
       if (!previousScreenBlock.isUp()) {
         hasChanged = true;
         previousScreenBlock.addUp();
@@ -97,7 +97,7 @@ public class CheckLevelMap {
     // vérification de la bordure à droite
     if (isRight && block.getCoordinate().x < nbrBlocksByLines - 1) {
       checkedPoint = new Point(block.getCoordinate().x + 1, block.getCoordinate().y);
-      previousScreenBlock = screenData.getBlock(checkedPoint);
+      previousScreenBlock = screenData.getDataBlock(checkedPoint);
       if (!previousScreenBlock.isLeft()) {
         hasChanged = true;
         previousScreenBlock.addLeft();
@@ -107,7 +107,7 @@ public class CheckLevelMap {
     // vérification de la bordure à gauche
     if (isLeft && block.getCoordinate().x > 0) {
       checkedPoint = new Point(block.getCoordinate().x - 1, block.getCoordinate().y);
-      previousScreenBlock = screenData.getBlock(checkedPoint);
+      previousScreenBlock = screenData.getDataBlock(checkedPoint);
       if (!previousScreenBlock.isRight()) {
         hasChanged = true;
         previousScreenBlock.addRight();

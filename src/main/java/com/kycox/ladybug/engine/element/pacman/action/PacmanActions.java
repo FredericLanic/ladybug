@@ -19,7 +19,7 @@ public class PacmanActions {
           Integer.toString(Constants.SCORE_MEGA_POINT));
   }
 
-  public ScreenBlock getCurrentPoint() {
+  public ScreenBlock getCurrentScreenBlock() {
     return currentPoint;
   }
 

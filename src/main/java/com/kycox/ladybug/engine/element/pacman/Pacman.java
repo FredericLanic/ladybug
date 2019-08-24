@@ -61,7 +61,7 @@ public class Pacman extends BodyMovedByUser {
 
     // calcule uniquement lorsque Pacman rempli le block
     if (changeBlock()) {
-      ScreenBlock currentScreenBlock = screenData.getBlock(Utils.convertPointToBlockUnit(getPosition()));
+      ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
 
       pacmanActions.setCurrentPoint(currentScreenBlock);
       pacmanActions.setHasEatenAPoint(currentScreenBlock.isPoint());

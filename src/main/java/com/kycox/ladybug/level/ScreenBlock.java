@@ -8,8 +8,7 @@ import com.kycox.ladybug.constant.Constants;
  * Class ScreenBlock correspond à une case dans le ScreenData
  *
  */
-public class ScreenBlock {
-  private static final int DOUBLE_LINES   = 128;
+public class ScreenBlock implements Cloneable {
   private static final int DOWN           = 8;
   private static final int LEFT           = 1;
   private static final int MEGA_POINT     = 32;
@@ -17,13 +16,14 @@ public class ScreenBlock {
   private static final int RIGHT          = 4;
   private static final int SURVIVOR_POINT = 64;
   private static final int UP             = 2;
+  static final int         NOT_ACCESSIBLE = 128;
   private int              content;
 
   private Point            coordinate     = Constants.POINT_ZERO;
 
   /**
    * Constructeur
-   * 
+   *
    * @param content
    */
   public ScreenBlock(int content) {
@@ -52,32 +52,42 @@ public class ScreenBlock {
     content |= UP;
   }
 
+  /**
+   * Clone l'objet en cours
+   */
+  @Override
+  public Object clone() {
+    Object o = null;
+    try {
+      o = super.clone();
+    } catch (CloneNotSupportedException cnse) {
+      cnse.printStackTrace(System.err);
+    }
+    return o;
+  }
+
   public int getContent() {
     return content;
   }
 
-  public Point getCoordinate() {
-    return coordinate;
-  }
-
-// Mis en commentaire; l'idée est bonne; 
+// Mis en commentaire; l'idée est bonne;
 // je ne souhaite pas actuellement mettre en public les différentes valeurs static de la classe.
 //  /**
 //   * Bordure en bas
-//   * 
+//   *
 //   * @return
 //   */
 //  public boolean is(int check) {
 //    return (content & check) != 0;
 //  }
 
-  public boolean isDoubleLines() {
-    return (content & DOUBLE_LINES) != 0;
+  public Point getCoordinate() {
+    return coordinate;
   }
 
   /**
    * Bordure en bas
-   * 
+   *
    * @return
    */
   public boolean isDown() {
@@ -86,7 +96,7 @@ public class ScreenBlock {
 
   /**
    * Bordure � gauche
-   * 
+   *
    * @return
    */
   public boolean isLeft() {
@@ -95,16 +105,20 @@ public class ScreenBlock {
 
   /**
    * Contient un méga point
-   * 
+   *
    * @return
    */
   public boolean isMegaPoint() {
     return (content & MEGA_POINT) != 0;
   }
 
+  public boolean isNotAccessible() {
+    return (content & NOT_ACCESSIBLE) != 0;
+  }
+
   /**
    * Contient un point
-   * 
+   *
    * @return
    */
   public boolean isPoint() {
@@ -113,7 +127,7 @@ public class ScreenBlock {
 
   /**
    * Contient un point de revie des fantômes
-   * 
+   *
    * @return
    */
   public boolean isReviverGhostPoint() {
@@ -122,7 +136,7 @@ public class ScreenBlock {
 
   /**
    * Bordure droite
-   * 
+   *
    * @return
    */
   public boolean isRight() {
@@ -135,11 +149,19 @@ public class ScreenBlock {
 
   /**
    * Bordure en haut
-   * 
+   *
    * @return
    */
   public boolean isUp() {
     return (content & UP) != 0;
+  }
+
+  public void removeDown() {
+    content &= ~(DOWN);
+  }
+
+  public void removeLeft() {
+    content &= ~(LEFT);
   }
 
   /**
@@ -147,6 +169,14 @@ public class ScreenBlock {
    */
   public void removePoint() {
     content &= ~(POINT | MEGA_POINT);
+  }
+
+  public void removeRight() {
+    content &= ~(RIGHT);
+  }
+
+  public void removeUp() {
+    content &= ~(UP);
   }
 
   public void setContent(int content) {

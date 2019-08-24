@@ -1,12 +1,10 @@
 package com.kycox.ladybug.engine.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -24,27 +22,21 @@ import com.kycox.ladybug.engine.view.body.GhostView;
 import com.kycox.ladybug.engine.view.body.PacmanView;
 import com.kycox.ladybug.engine.view.conf.ConfJDialog;
 import com.kycox.ladybug.engine.view.map.ScreenBlockView;
-import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.score.IncrementScore;
-import com.kycox.ladybug.tools.Utils;
 
 /**
  * Vue du jeu MVC
- * 
+ *
  * @author kycox
  *
  */
 @SuppressWarnings("deprecation")
 public class GameView extends JPanel implements Observer {
-
   /**
    * Default serialVersionUID
    */
   private static final long    serialVersionUID = 1L;
   private ConfJDialog          confJDialog;
-
-  // Dimension du JPanel dans la JFrame
-  private Dimension            d                = new Dimension(400, 400);
 
   private transient GhostView  ghostView        = new GhostView();
 
@@ -62,7 +54,7 @@ public class GameView extends JPanel implements Observer {
 
   // font par défaut
   private final Font           smallFont        = new Font("Helvetica", Font.BOLD, 14);
- 
+
   /**
    * Constructor
    */
@@ -80,8 +72,52 @@ public class GameView extends JPanel implements Observer {
 //  }
 
   /**
+   * Dessine le composant
+   */
+  @Override
+  public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    doDrawing(g);
+  }
+
+  /**
+   * Applique le contrôleur
+   *
+   * @param pacmanController
+   */
+  public void setController(KeyGameController pacmanController) {
+    addKeyListener(pacmanController); // key listener pour les touches
+  }
+
+  /**
+   * Affecte le modèle Pacman
+   *
+   * @param pacmanModel
+   */
+  public void setPacmanModel(GameModel pacmanModel) {
+    if (this.pacmanModel != null) {
+      this.pacmanModel.deleteObserver(this);
+    }
+    this.pacmanModel = pacmanModel;
+    if (this.pacmanModel != null) {
+      this.pacmanModel.addObserver(this);
+    }
+  }
+
+  /**
+   * Récupère le PacmanModel envoyé par le modèle
+   *
+   * @param pacmanModel
+   */
+  @Override
+  public void update(Observable pacmanModel, Object used) {
+    this.pacmanModel = (GameModel) pacmanModel;
+    repaint();
+  }
+
+  /**
    * Lancement du dessin
-   * 
+   *
    * @param g
    */
   private void doDrawing(Graphics g) {
@@ -89,8 +125,9 @@ public class GameView extends JPanel implements Observer {
 
     Graphics2D g2d = (Graphics2D) g;
 
-    g2d.setColor(Color.black);
-    g2d.fillRect(0, 0, d.width, d.height);
+//    Dimension  d   = new Dimension(15 * Constants.BLOCK_SIZE, 15 * Constants.BLOCK_SIZE);
+//    g2d.setColor(Color.black);
+//    g2d.fillRect(0, 0, d.width, d.height);
 
     // Affichage du tableau de niveau et du score
     drawMaze(g2d);
@@ -126,52 +163,57 @@ public class GameView extends JPanel implements Observer {
 
   /**
    * Affiche les fantômes "vivants"
-   * 
+   *
    * @param g2d
    */
   private void drawGhosts(Graphics2D g2d) {
-    pacmanModel.getGroupGhosts().getLstGhosts().stream()
-        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
+    pacmanModel.getGroupGhosts().getLstGhosts().stream().forEach(g -> g2d
+        .drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
   }
 
   /**
    * Affichage du labyrinthe
-   * 
+   *
    * @param g2d
    */
   private void drawMaze(Graphics2D g2d) {
     for (int y = 0; y < pacmanModel.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
       for (int x = 0; x < pacmanModel.getScreenData().getNbrBlocksPerLine()
           * Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE) {
-        ScreenBlock screenBlock = pacmanModel.getScreenData().getBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
-        ScreenBlockView.display(g2d, screenBlock, x, y);
+        // Récupère le screenBlock dédié pour la vue
+//        ScreenBlock screenBlock = pacmanModel.getScreenData()
+//            .getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+        // Affichage du screenBlock dans la Vue
+        ScreenBlockView.display(g2d, pacmanModel.getScreenData(), x, y);
       }
     }
   }
 
   /**
    * Affichage de pacman selon sa direction
-   * 
+   *
    * @param g2d
    */
   private void drawPacman(Graphics2D g2d) {
-    g2d.drawImage(pacmanView.getNextImage(pacmanModel.getPacman()), pacmanModel.getPacman().getPosition().x + 1,
-        pacmanModel.getPacman().getPosition().y + 1, this);
+    g2d.drawImage(pacmanView.getNextImage(pacmanModel.getPacman()),
+        pacmanModel.getPacman().getPosition().x + 1, pacmanModel.getPacman().getPosition().y + 1,
+        this);
   }
 
   /**
    * Affichage de parman qui meurt
-   * 
+   *
    * @param g2d
    */
   private void drawPacmanDying(Graphics2D g2d) {
-    g2d.drawImage(pacmanModel.getKinematicPacmanDeath().getImage(), pacmanModel.getPacman().getPosition().x + 1,
-        pacmanModel.getPacman().getPosition().y + 1, this);
+    g2d.drawImage(pacmanModel.getKinematicPacmanDeath().getImage(),
+        pacmanModel.getPacman().getPosition().x + 1, pacmanModel.getPacman().getPosition().y + 1,
+        this);
   }
 
   /**
    * Dessine le nombre de pacman encore disponible et le score.
-   * 
+   *
    * @param g
    */
   private void drawScoreAndLevel(Graphics2D g) {
@@ -179,16 +221,17 @@ public class GameView extends JPanel implements Observer {
     if (pacmanModel == null)
       return;
 
-    int x = pacmanModel.getScreenData().getScreenWidth();
-    int y = pacmanModel.getScreenData().getScreenHeight();
+    int    x = pacmanModel.getScreenData().getScreenWidth();
+    int    y = pacmanModel.getScreenData().getScreenHeight();
 
-    int i;
+    int    i;
     String s = "";
 
     g.setFont(smallFont);
     g.setColor(new Color(96, 128, 255));
     if (pacmanModel.getGameStatus().isInGame()) {
-      s = "Level " + pacmanModel.getGameStatus().getNumLevel() + " - Score: " + pacmanModel.getGameScore().getScore();
+      s = "Level " + pacmanModel.getGameStatus().getNumLevel() + " - Score: "
+          + pacmanModel.getGameScore().getScore();
       g.drawString(s, x / 2 + 26, y + 16);
 
       // Affichage des vies de pacman
@@ -207,7 +250,8 @@ public class GameView extends JPanel implements Observer {
       Ghost ghostNotComputed = pacmanModel.getGroupGhosts().getGhostNotComputed();
       if (ghostNotComputed != null && ghostNotComputed.getLifesLeft() < 5) {
         for (i = 0; i < ghostNotComputed.getLifesLeft(); i++) {
-          g.drawImage(ghostNotComputed.getGhostSettings().getGhostLeftEyesImg(), i * 28 + 8, y + 20, this);
+          g.drawImage(ghostNotComputed.getGhostSettings().getGhostLeftEyesImg(), i * 28 + 8, y + 20,
+              this);
         }
       } else if (ghostNotComputed != null) {
         g.drawImage(ghostNotComputed.getGhostSettings().getGhostLeftEyesImg(), 8, y + 20, this);
@@ -224,7 +268,7 @@ public class GameView extends JPanel implements Observer {
 
   /**
    * Draw score increment
-   * 
+   *
    * @param g2d
    */
   private void drawScoresIncrement(Graphics2D g2d) {
@@ -232,12 +276,14 @@ public class GameView extends JPanel implements Observer {
     g2d.setFont(smallFont);
 
     FontMetrics metr = this.getFontMetrics(smallFont);
-    int x;
-    int y;
+    int         x;
+    int         y;
 
     // Affichage des scores incréments
-    for (IncrementScore scorePoint : pacmanModel.getGroupIncrementScores().getLstScoresIncrement()) {
-      x = scorePoint.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(scorePoint.getValue()) / 2;
+    for (IncrementScore scorePoint : pacmanModel.getGroupIncrementScores()
+        .getLstScoresIncrement()) {
+      x = scorePoint.getPosition().x + Constants.BLOCK_SIZE / 2
+          - metr.stringWidth(scorePoint.getValue()) / 2;
       y = scorePoint.getPosition().y + Constants.BLOCK_SIZE / 2;
       g2d.drawString(scorePoint.getValue() + " pt", x, y);
     }
@@ -245,12 +291,11 @@ public class GameView extends JPanel implements Observer {
 
   /**
    * Ecoute le jingle de début
-   * 
-   * C'est un contournement !!! Il faut que le niveau s'affiche pour pouvoir
-   * entendre le jingle.
-   * 
+   *
+   * C'est un contournement !!! Il faut que le niveau s'affiche pour pouvoir entendre le jingle.
+   *
    * Du coup, le jingle se lancera au deuxième affichage de la map du niveau.
-   * 
+   *
    * Lorsque qu'on écoutera le jingle, le jeu est frisé.
    */
   private void listenStartLevelJingle() {
@@ -273,51 +318,18 @@ public class GameView extends JPanel implements Observer {
   }
 
   /**
-   * Dessine le composant
-   */
-  @Override
-  public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    doDrawing(g);
-  }
-
-  /**
-   * Applique le contrôleur
-   * 
-   * @param pacmanController
-   */
-  public void setController(KeyGameController pacmanController) {
-    addKeyListener(pacmanController); // key listener pour les touches
-  }
-
-  /**
-   * Affecte le modèle Pacman
-   * 
-   * @param pacmanModel
-   */
-  public void setPacmanModel(GameModel pacmanModel) {
-    if (this.pacmanModel != null) {
-      this.pacmanModel.deleteObserver(this);
-    }
-    this.pacmanModel = pacmanModel;
-    if (this.pacmanModel != null) {
-      this.pacmanModel.addObserver(this);
-    }
-  }
-
-  /**
    * Affiche la fenêtre d'introduction
-   * 
+   *
    * @param g2d
    */
   private void showIntroScreen(Graphics2D g2d) {
-    int x = pacmanModel.getScreenData().getScreenWidth();
-    int y = pacmanModel.getScreenData().getScreenHeight();
-    int addXGameOver = pacmanModel.getOldScore() != -1 ? 30 : 0;
+    int    x            = pacmanModel.getScreenData().getScreenWidth();
+    int    y            = pacmanModel.getScreenData().getScreenHeight();
+    int    addXGameOver = pacmanModel.getOldScore() != -1 ? 30 : 0;
 
-    String gameOver = "Game Over, try again...";
+    String gameOver     = "Game Over, try again...";
     String yourOldScore = "Your Score : " + pacmanModel.getOldScore();
-    String s = "Press s to start, c to configurate";
+    String s            = "Press s to start, c to configurate";
 
     g2d.setColor(new Color(0, 32, 48));
     g2d.fillRect(50, x / 2 - 30, y - 100, 50 + addXGameOver);
@@ -333,19 +345,9 @@ public class GameView extends JPanel implements Observer {
       // Affichage de "Game Over"
       g2d.drawString(gameOver, (x - metr.stringWidth(gameOver)) / 2, y / 2);
       // Affichage du score
-      g2d.drawString(yourOldScore, (x - metr.stringWidth(yourOldScore)) / 2, y / 2 + addXGameOver / 2);
+      g2d.drawString(yourOldScore, (x - metr.stringWidth(yourOldScore)) / 2,
+          y / 2 + addXGameOver / 2);
     }
     g2d.drawString(s, (x - metr.stringWidth(s)) / 2, y / 2 + addXGameOver);
-  }
-
-  /**
-   * Récupère le PacmanModel envoyé par le modèle
-   * 
-   * @param pacmanModel
-   */
-  @Override
-  public void update(Observable pacmanModel, Object used) {
-    this.pacmanModel = (GameModel) pacmanModel;
-    repaint();
   }
 }

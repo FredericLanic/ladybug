@@ -1,15 +1,15 @@
 package com.kycox.ladybug;
 
-import java.awt.BorderLayout;
 import java.lang.Runtime.Version;
 
 import javax.swing.SwingUtilities;
 
 import com.kycox.ladybug.engine.Engine;
+import com.kycox.ladybug.engine.view.GameView;
 
 /**
  * Classe principale du jeu
- * 
+ *
  * C'est elle à lancer :)
  */
 public class MainPacman {
@@ -35,11 +35,12 @@ public class MainPacman {
 
       // Création de la vue
       SwingUtilities.invokeLater(() -> {
+
+        // Création du JPanel de la View du jeu
+        GameView gameView = engine.getPacmanView();
         mainFrame = new MainFrame();
+        mainFrame.addGameView(gameView);
 
-//        mainFrame.setLayout(new BorderLayout());
-
-        mainFrame.add(engine.getPacmanView(), BorderLayout.CENTER);
         // Affichage de la MainFrame
         mainFrame.setVisible(true);
       });

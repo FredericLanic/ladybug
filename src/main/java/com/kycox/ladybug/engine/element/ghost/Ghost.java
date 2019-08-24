@@ -138,7 +138,7 @@ public abstract class Ghost extends BodyMovedByUser {
     Point posPoint = getPosition();
 
     if (changeBlock()) {
-      ScreenBlock currentScreenBlock = screenData.getBlock(Utils.convertPointToBlockUnit(posPoint));
+      ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(posPoint));
       count = 0;
       if (!currentScreenBlock.isLeft() && getDirection().x != 1) {
         dx[count] = -1;
@@ -223,7 +223,7 @@ public abstract class Ghost extends BodyMovedByUser {
     switch (getStatus()) {
     case NORMAL:
       if (changeBlock())
-        move(screenData.getBlock(Utils.convertPointToBlockUnit(getPosition())));
+        move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
       getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
       break;
     default:
@@ -245,7 +245,7 @@ public abstract class Ghost extends BodyMovedByUser {
 
     if (changeBlock()) {
       Point ptCurrentBlockGhost = Utils.convertPointToBlockUnit(ptCurrentScreenGhost);
-      ScreenBlock currentBlockGhost = screenData.getBlock(ptCurrentBlockGhost);
+      ScreenBlock currentBlockGhost = screenData.getDataBlock(ptCurrentBlockGhost);
       List<Point> shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, pacmanPosBlock, screenData);
       if (shorterWay.size() != 1) {
         Point point0 = shorterWay.get(0);

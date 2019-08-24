@@ -16,13 +16,14 @@ public final class Levels {
     /*
      * Ici on peut ajouter d'autres niveaux
      */
-//    lstLevel.add(new Level1());
+    lstLevel.add(new Level1());
     lstLevel.add(new Level2());
+//    lstLevel.add(new Level3());
   }
 
   /**
    * Retourne le niveau demand�
-   * 
+   *
    * @param i : le numéro du niveau demandé
    */
   public ILevel getLevel(int i) {
