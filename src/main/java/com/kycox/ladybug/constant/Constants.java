@@ -4,7 +4,7 @@ import java.awt.Point;
 
 /**
  * Constantes utilisées pour le jeu
- * 
+ *
  * @author kycox
  *
  */
@@ -16,7 +16,7 @@ public final class Constants {
   // Nouvelle vie en fonction du score incrémental
   public static final int   NEW_LIFE_BY_SCORE  = 100;
   // Niveau max
-  public static final int   NIVEAU_MAX         = 100;
+  public static final int   NIVEAU_MAX         = 10;
   public static final Point NO_POINT           = new Point(-1, -1);
   // Période du timer du jeu
   public static final int   PACE               = 25;               // rythme en anglais :/

@@ -21,7 +21,7 @@ public class ClipGame {
 
   /**
    * Constructeur
-   * 
+   *
    * @param url
    */
   public ClipGame(URL url) {
@@ -38,7 +38,7 @@ public class ClipGame {
 
   /**
    * Retourne le clip
-   * 
+   *
    * @return
    */
   public Clip getClip() {

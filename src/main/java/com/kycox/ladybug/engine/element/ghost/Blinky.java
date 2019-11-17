@@ -40,10 +40,11 @@ public class Blinky extends Ghost {
     // Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
     // map
     int incrementSpeedIndex = blinkyIncrementSpeed.getIncrementSpeedIndex();
-    int newIndex = getStartIndexSpeed() + incrementSpeedIndex;
-    if (newIndex != getSpeedIndex() && changeBlock()) {
+
+    if (changeBlock()) {
       setSpeedIndex(getStartIndexSpeed() + incrementSpeedIndex);
     }
+
     // de toute manière on réaffecte
     setSpeedIndex(getSpeedIndex());
   }

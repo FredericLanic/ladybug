@@ -18,9 +18,11 @@ public final class ScreenData {
 
   private ILevel            currentLevel;
   // chargement des niveaux
-  private Levels            gameLevels    = new Levels();
+  private Levels            gameLevels             = new Levels();
 
-  private List<ScreenBlock> lstDataBlocks = new ArrayList<>();
+  private int               initNbrBlocksWithPoint = 0;
+
+  private List<ScreenBlock> lstDataBlocks          = new ArrayList<>();
 
   private List<ScreenBlock> lstViewBlocks;
 
@@ -115,7 +117,7 @@ public final class ScreenData {
    * @return
    */
   public int getPercentageEatenPoint() {
-    return (getNbrBlocksWithPoint() - getNbrBlocksWithPoint()) * 100 / getNbrBlocksWithPoint();
+    return (initNbrBlocksWithPoint - getNbrBlocksWithPoint()) * 100 / initNbrBlocksWithPoint;
   }
 
   /**
@@ -200,6 +202,8 @@ public final class ScreenData {
     // on clone la liste
     lstDataBlocks.stream().forEach(sb -> lstViewBlocks.add((ScreenBlock) sb.clone()));
     checkScreenBlockBorders.checkViewBlockBorder();
+
+    initNbrBlocksWithPoint = getNbrBlocksWithPoint();
   }
 
   /**

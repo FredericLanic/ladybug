@@ -12,6 +12,8 @@ import com.kycox.ladybug.tools.Utils;
 
 public class ScreenBlockView {
 
+  private static final Color bluePacman     = new Color(33, 33, 255);
+
   // Couleur d'un point
   private static final Color dotColor       = new Color(192, 192, 0);
 
@@ -34,7 +36,9 @@ public class ScreenBlockView {
   }
 
   /**
-   * Display the borders into the map
+   * Affichage des bordures
+   *
+   * Note : faire confiance, je sais c'est immaintenable :)
    *
    * @param g2d
    * @param screenBlock
@@ -46,7 +50,7 @@ public class ScreenBlockView {
     ScreenBlock screenBlock = screenData
         .getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 
-    g2d.setColor(Color.GREEN);
+    g2d.setColor(bluePacman);
     g2d.setStroke(new BasicStroke(2));
 
     Point currentCoord = screenBlock.getCoordinate();

@@ -14,11 +14,11 @@ public class BlinkyIncrementSpeed {
 
   /**
    * aX²+bX+c (c=0)
-   * 
+   *
    * Point (0,0) Point (R,1) Point (T,3) (ici T=100%)
-   * 
+   *
    * 1 < R < T
-   * 
+   *
    */
 
   private double     T          = 100.0;
@@ -37,7 +37,7 @@ public class BlinkyIncrementSpeed {
 
   /**
    * Return the number of index to increment
-   * 
+   *
    * @param x
    * @return
    */

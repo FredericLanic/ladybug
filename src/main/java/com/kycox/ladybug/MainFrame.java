@@ -8,9 +8,6 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.engine.view.GameView;
 import com.kycox.ladybug.engine.view.conf.ConfJDialog;
@@ -26,14 +23,14 @@ public class MainFrame extends JFrame {
   private static final long serialVersionUID = 1L;
 
   // Trace < Debug < info < Warn < Error < Fatal
-  final static Logger       logger           = LogManager.getLogger(MainFrame.class);
+//  final static Logger       logger           = LogManager.getLogger(MainFrame.class);
 
   private Toolkit           defaultToolKit   = Toolkit.getDefaultToolkit();
 
   private double            edge             = 15 * Constants.BLOCK_SIZE;
 
   private double            rightLeftWidth   = (defaultToolKit.getScreenSize().getWidth()
-      - 16 * Constants.BLOCK_SIZE) / 2;
+      - 15 * Constants.BLOCK_SIZE) / 2;
 
   private double            topBottomHeight  = (defaultToolKit.getScreenSize().getHeight()
       - 16 * Constants.BLOCK_SIZE) / 2;
@@ -48,16 +45,21 @@ public class MainFrame extends JFrame {
     new ConfJDialog(this);
   }
 
+  /**
+   * Création des JPanel de la JFrame
+   *
+   * @param gameView
+   */
   public void addGameView(GameView gameView) {
-    // Création du JPanel de la View du jeu
+    // organisation des panels
+
     Dimension dimension = new Dimension();
     dimension.setSize(edge, edge);
     gameView.setPreferredSize(dimension);
     gameView.setBackground(Color.BLACK);
-
-    // organisation des panels
     add(gameView, BorderLayout.CENTER);
 
+    // @FIXME : un peu de refacto !!
     JPanel jPanel = new JPanel();
     dimension = new Dimension();
     dimension.setSize(defaultToolKit.getScreenSize().getWidth(), topBottomHeight);
@@ -91,7 +93,7 @@ public class MainFrame extends JFrame {
    * Initialisation de la fenêtre
    */
   private void init() {
-    logger.trace("Entering application");
+//    logger.trace("Entering application");
     setTitle("LadyBug");
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setExtendedState(JFrame.MAXIMIZED_BOTH);

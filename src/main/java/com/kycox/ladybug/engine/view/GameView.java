@@ -53,7 +53,7 @@ public class GameView extends JPanel implements Observer {
   private transient PacmanView pacmanView       = new PacmanView();
 
   // font par défaut
-  private final Font           smallFont        = new Font("Helvetica", Font.BOLD, 14);
+  private final Font           smallFont        = new Font("CrackMan", Font.BOLD, 14);
 
   /**
    * Constructor
@@ -125,10 +125,6 @@ public class GameView extends JPanel implements Observer {
 
     Graphics2D g2d = (Graphics2D) g;
 
-//    Dimension  d   = new Dimension(15 * Constants.BLOCK_SIZE, 15 * Constants.BLOCK_SIZE);
-//    g2d.setColor(Color.black);
-//    g2d.fillRect(0, 0, d.width, d.height);
-
     // Affichage du tableau de niveau et du score
     drawMaze(g2d);
     drawScoreAndLevel(g2d);
@@ -180,9 +176,6 @@ public class GameView extends JPanel implements Observer {
     for (int y = 0; y < pacmanModel.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
       for (int x = 0; x < pacmanModel.getScreenData().getNbrBlocksPerLine()
           * Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE) {
-        // Récupère le screenBlock dédié pour la vue
-//        ScreenBlock screenBlock = pacmanModel.getScreenData()
-//            .getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
         // Affichage du screenBlock dans la Vue
         ScreenBlockView.display(g2d, pacmanModel.getScreenData(), x, y);
       }
@@ -235,7 +228,7 @@ public class GameView extends JPanel implements Observer {
       g.drawString(s, x / 2 + 26, y + 16);
 
       // Affichage des vies de pacman
-      if (pacmanModel.getPacman().getLifesLeft() < 5) {
+      if (pacmanModel.getPacman().getLifesLeft() < 1) {
         for (i = 0; i < pacmanModel.getPacman().getLifesLeft(); i++) {
           g.drawImage(PicturesEnum.PACMAN_LEFT_3.getImg(), i * 28 + 8, y + 1, this);
         }
@@ -243,7 +236,8 @@ public class GameView extends JPanel implements Observer {
         g.drawImage(PicturesEnum.PACMAN_LEFT_3.getImg(), 8, y + 1, this);
         g.setColor(Color.YELLOW);
         g.setFont(smallFont);
-        g.drawString("x" + pacmanModel.getPacman().getLifesLeft(), 34, y + 20);
+        g.drawString("x " + pacmanModel.getPacman().getLifesLeft(),
+            Constants.BLOCK_SIZE + Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2);
       }
 
       // affichage des vies du fantômes
@@ -261,7 +255,7 @@ public class GameView extends JPanel implements Observer {
       }
     } else {
       int nbrPlayers = pacmanModel.nbrNbrPlayers();
-      s = "Game conf : " + nbrPlayers + " player" + (nbrPlayers > 1 ? "s" : "");
+      s = "Game config : " + nbrPlayers + " player" + (nbrPlayers > 1 ? "s" : "");
       g.drawString(s, x / 2 + 26, y + 16);
     }
   }

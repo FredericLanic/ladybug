@@ -33,7 +33,7 @@ public class Pacman extends BodyMovedByUser {
 
   /**
    * Getters / Setters pour le statut de pacman
-   * 
+   *
    * @return
    */
   public PacmanStatusEnum getStatus() {
@@ -45,8 +45,8 @@ public class Pacman extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement de Pacman et récupération du score obtenu Lancement du double
-   * timer dans le cas du super power
+   * Déplacement de Pacman et récupération du score obtenu Lancement du double timer dans le cas du
+   * super power
    */
   public PacmanActions movePacman(ScreenData screenData) {
     PacmanActions pacmanActions = new PacmanActions();
@@ -61,7 +61,8 @@ public class Pacman extends BodyMovedByUser {
 
     // calcule uniquement lorsque Pacman rempli le block
     if (changeBlock()) {
-      ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+      ScreenBlock currentScreenBlock = screenData
+          .getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
 
       pacmanActions.setCurrentPoint(currentScreenBlock);
       pacmanActions.setHasEatenAPoint(currentScreenBlock.isPoint());
@@ -88,12 +89,12 @@ public class Pacman extends BodyMovedByUser {
     viewDirectionPoint = Constants.POINT_LEFT;
     setMovingRequete(Constants.POINT_ZERO);
     setStatus(PacmanStatusEnum.NORMAL);
-    initSpeedIndex(SpeedFunction.getInstance().getSpecificIndexSpeed(numLevel));
+    initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeed(numLevel));
   }
 
   /**
    * Mise à jour du statut de Pacman via le modèle
-   * 
+   *
    * @param status
    */
   public void setStatus(PacmanStatusEnum status) {

@@ -25,11 +25,11 @@ public class MainPacman {
   public void launchTheGame() {
     Version javaVersion = Runtime.version();
 
-    System.out.println("***************************");
-    System.out.println("*  LadyBug Survivor  v1.5 *");
-    System.out.println("*  for Java 12 by �kycox  *");
+    System.out.println("******************************");
+    System.out.println("*  LadyBug v0.0.1 SnapShot   *");
+    System.out.println("*  for Java 12 by �kycox     *");
     if (javaVersion.feature() == 12) {
-      System.out.println("***************************");
+      System.out.println("******************************");
       // Création du moteur Pacman
       engine = new Engine();
 
@@ -46,8 +46,8 @@ public class MainPacman {
       });
 
     } else {
-      System.out.println("* Please Check your JVM   *");
-      System.out.println("***************************");
+      System.out.println("*   Please Check your JVM    *");
+      System.out.println("******************************");
     }
   }
 }

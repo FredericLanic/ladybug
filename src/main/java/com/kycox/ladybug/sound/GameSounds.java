@@ -23,7 +23,7 @@ public class GameSounds {
 //
 //  /**
 //   * Retourne le singleton
-//   * 
+//   *
 //   * @return
 //   */
 //  public static GameSounds getInstance() {
@@ -53,9 +53,9 @@ public class GameSounds {
   public GameSounds() {
 
     /**
-     * Je ne comprend pas pourquoi pour charger les clip, j'ai besoin d'avoir une
-     * JFrame. Astuces : créer une JFrame invisible; c'est très moche mais pour
-     * l'instant, c'est la solution que je prends.
+     * Je ne comprend pas pourquoi pour charger les clip, j'ai besoin d'avoir une JFrame. Astuces :
+     * créer une JFrame invisible; c'est très moche mais pour l'instant, c'est la solution que je
+     * prends.
      */
     JFrame jFrame = new JFrame();
     jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,7 +74,7 @@ public class GameSounds {
 
   /**
    * Ajout du son
-   * 
+   *
    * @param sounds
    */
   public void addSounds(int sounds) {
@@ -82,9 +82,9 @@ public class GameSounds {
   }
 
   /**
-   * Retourne le temps en millisecondes de la musique de la mort de Pacman Utilisé
-   * dans la cinématique KinematicPacmanDeath
-   * 
+   * Retourne le temps en millisecondes de la musique de la mort de Pacman Utilisé dans la
+   * cinématique KinematicPacmanDeath
+   *
    * @return
    */
   public long getMicrosecondLengthPacmanDeath() {

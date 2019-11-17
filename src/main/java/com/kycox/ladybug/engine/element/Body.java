@@ -9,7 +9,7 @@ import com.kycox.ladybug.constant.Constants;
 
 /**
  * Classe abstraite pour les éléments qui bouge dans le jeu
- * 
+ *
  * Le mouvement peut être calculé ou bien en fonction des joueurs
  */
 public abstract class Body {
@@ -31,13 +31,16 @@ public abstract class Body {
   // Vitesse initiale : index dans le tableau VALID_SPEEDS
   private int                          startSpeedIndex = 0;
 
+  /**
+   * Ajout d'une nouvelle vie
+   */
   public void addNewLife() {
     lifesLeft++;
   }
 
   /**
    * Le fantôme ou pacman change de block
-   * 
+   *
    * @param pointPos : coordonnées DE L'ECRAN (x,y) dans la fenêtre
    * @return
    */
@@ -48,7 +51,7 @@ public abstract class Body {
 
   /**
    * Retourne la direction
-   * 
+   *
    * @return
    */
   public Point getDirection() {
@@ -61,7 +64,7 @@ public abstract class Body {
 
   /**
    * Retourne la position
-   * 
+   *
    * @return
    */
   public Point getPosition() {
@@ -70,7 +73,7 @@ public abstract class Body {
 
   /**
    * Getters et setters pour la vitesse
-   * 
+   *
    * @return
    */
   public int getSpeed() {
@@ -83,7 +86,7 @@ public abstract class Body {
 
   /**
    * Return the start speed
-   * 
+   *
    * @return
    */
   public int getStartIndexSpeed() {
@@ -92,9 +95,9 @@ public abstract class Body {
 
   /**
    * Initialise la vitesse du fantôme à la construction
-   * 
+   *
    * (speed & startSpeed)
-   * 
+   *
    * @param speedIndex
    */
   public void initSpeedIndex(int speedIndex) {
@@ -109,7 +112,7 @@ public abstract class Body {
 
   /**
    * Affecte une direction
-   * 
+   *
    * @param dirPoint
    */
   public void setDirection(Point dirPoint) {
@@ -122,7 +125,7 @@ public abstract class Body {
 
   /**
    * Affecte une position
-   * 
+   *
    * @param posPoint
    */
   public void setPosition(Point posPoint) {
@@ -131,7 +134,7 @@ public abstract class Body {
 
   /**
    * Affecte la vitesse
-   * 
+   *
    * @param speedIndex
    */
   public void setSpeedIndex(int speedIndex) {

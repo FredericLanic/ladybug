@@ -21,7 +21,7 @@ import com.kycox.ladybug.engine.element.ghost.set.GhostsSettingsEnum;
 public class ConfJDialog extends JDialog implements ActionListener {
 
   /**
-  * 
+  *
   */
   private static final long serialVersionUID = 1L;
 
@@ -78,9 +78,6 @@ public class ConfJDialog extends JDialog implements ActionListener {
     add(northPanel, BorderLayout.NORTH);
     add(centerPanel, BorderLayout.CENTER);
     add(southPanel, BorderLayout.SOUTH);
-
-    // set visibility of dialog
-//    setVisible(true);
   }
 
   @Override
