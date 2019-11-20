@@ -6,11 +6,11 @@ import com.kycox.ladybug.constant.Constants;
 
 /**
  * Probabilité de comportement
- * 
+ *
  * Fonction y = ax + b où x est le niveau
- * 
+ *
  * Qui r�soud : (1, 20); (nbrMaxNiveau, 90)
- * 
+ *
  * Retourne vrai si le nombre aléatoire (0-100) est en dessous de y
  *
  */
@@ -31,20 +31,20 @@ public class GhostBehavious {
 
   /**
    * Constructeur privé
-   * 
+   *
    */
   public GhostBehavious(int numLevel) {
     a = (limiteHaute - limiteBasse) / (Constants.NIVEAU_MAX - 1);
     b = limiteBasse - a;
 
-    y = (a * ++numLevel + b);
+    y = (a * numLevel + b);
   }
 
   /**
-   * 
-   * Créé un nombre al�atoire [0-100] et définie si ce nombre est inférieur à une
-   * règle spécifique [limiteBasse, limiteHaute]
-   * 
+   *
+   * Créé un nombre al�atoire [0-100] et définie si ce nombre est inférieur à une règle spécifique
+   * [limiteBasse, limiteHaute]
+   *
    * @param numLevel
    * @return
    */

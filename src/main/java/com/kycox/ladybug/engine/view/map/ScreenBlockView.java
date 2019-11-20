@@ -310,7 +310,7 @@ public class ScreenBlockView {
     // affichage des points
     g2d.setColor(dotColor);
     if (screenBlock.isPoint() && !screenBlock.isMegaPoint()) {
-      g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2, y + Constants.BLOCK_SIZE / 2 - 2, 2, 2);
+      g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 4, 4);
     }
 
     if (screenBlock.isPoint() && !screenBlock.isUp()) {

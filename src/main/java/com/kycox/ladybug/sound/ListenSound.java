@@ -4,7 +4,7 @@ import javax.sound.sampled.Clip;
 
 /**
  * Processus pour écouter le clip
- * 
+ *
  * @see Thread
  */
 public class ListenSound extends Thread {
@@ -14,7 +14,7 @@ public class ListenSound extends Thread {
 
   /**
    * Constructeur
-   * 
+   *
    * @param clip
    */
   public ListenSound(Clip clip) {

@@ -7,11 +7,12 @@ import java.net.URL;
  *
  */
 public enum SoundsEnum {
-  GHOST_REGENERATE(256, "ghost_regenerate.wav"), GHOST_SURVIVOR(128, "ghost_survivor.wav"),
-  PACMAN_BEGINNING(1, "pacman_beginning.wav"), PACMAN_CHOMP(2, "pacman_chomp.wav"),
-  PACMAN_EAT_FRUIT(8, "pacman_eatfruit.wav"), PACMAN_EAT_GHOST(16, "pacman_eatghost.wav"),
-  PACMAN_EXTRA_PAC(32, "pacman_extrapac.wav"), PACMAN_INTER_MISSION(64, "pacman_intermission.wav"),
-  PACMAN_IS_DYING(4, "pacman_death.wav");
+  GHOST_EATEN(512, "ghost_eaten.wav"), GHOST_REGENERATE(256, "ghost_regenerate.wav"),
+  GHOST_SURVIVOR(128, "ghost_survivor.wav"), PACMAN_BEGINNING(1, "pacman_beginning.wav"),
+  PACMAN_CHOMP(2, "pacman_chomp.wav"), PACMAN_EAT_FRUIT(8, "pacman_eatfruit.wav"),
+  PACMAN_EAT_GHOST(16, "pacman_eatghost.wav"), PACMAN_EXTRA_PAC(32, "pacman_extrapac.wav"),
+  PACMAN_INTER_MISSION(64, "pacman_intermission.wav"), PACMAN_IS_DYING(4, "pacman_death.wav"),
+  PACMAN_SIREN(1024, "pacman_siren.wav");
 
   private int index = 0;
 

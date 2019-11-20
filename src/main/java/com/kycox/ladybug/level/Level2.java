@@ -25,7 +25,7 @@ public class Level2 extends Level {
 
   @Override
   public Point getGhostRegenerateBlockPoint() {
-    return new Point(2, 2);
+    return new Point(7, 2);
   }
 
   @Override

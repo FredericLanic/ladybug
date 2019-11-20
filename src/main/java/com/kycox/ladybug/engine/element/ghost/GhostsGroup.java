@@ -14,7 +14,7 @@ import com.kycox.ladybug.tools.Utils;
 
 /**
  * Gestion des actions sur l'ensemble des fantômes
- * 
+ *
  * Singleton
  *
  */
@@ -29,7 +29,7 @@ public class GhostsGroup {
     BlinkyIncrementSpeed blinkyIncrementSpeed = new BlinkyIncrementSpeed(numLevel, screenData);
 
     // Création de Blink
-    Blinky blinky = new Blinky(numLevel);
+    Blinky               blinky               = new Blinky(numLevel);
     // Affectation de l'objet de gestion de sa vitesse incrémentale
     blinky.setBlinkyIncrementSpeed(blinkyIncrementSpeed);
 
@@ -43,7 +43,7 @@ public class GhostsGroup {
 
   /**
    * Retourne le fantôme qui est géré par un utilisateur
-   * 
+   *
    * ou null si aucun fantôme n'est géré par un utilisateur
    */
   public Ghost getGhostNotComputed() {
@@ -55,7 +55,7 @@ public class GhostsGroup {
 
   /**
    * Retourne la liste des fantômes; uniquement pour la View (en théorie)
-   * 
+   *
    * @return
    */
   public List<Ghost> getLstGhosts() {
@@ -64,7 +64,7 @@ public class GhostsGroup {
 
   /**
    * Initialise le nombre de vie des fantômes
-   * 
+   *
    * @param numLeftLives
    */
   public void initLifeLeft(int numLeftLives) {
@@ -75,12 +75,12 @@ public class GhostsGroup {
    * Initialise les positions des fantômes
    */
   public void initPositions(ScreenData screenData) {
-    lstGhosts.stream().forEach(g -> g.setPosition(Utils.convertPointToGraphicUnit(screenData.getRandomPosOnAPoint())));
+    lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
   }
 
   /**
    * Initialise les vitesses des fantômes
-   * 
+   *
    * @param numLevel
    */
   public void initSpeeds(int numLevel) {
@@ -91,29 +91,37 @@ public class GhostsGroup {
    * Retourne vrai si le fantôme n'a plus de vie
    */
   public boolean isDeadKeyGhost() {
-    long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLifesLeft() <= 0))
-        .count();
+    long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed())
+        .filter(g -> (g.getLifesLeft() <= 0)).count();
     return (nbrDeadKeyGhosts >= 1);
   }
 
   /**
-   * D&placement des fantômes
-   * 
+   *
+   *
    * @param numLevel
+   */
+  /**
+   * Déplacement des fantômes
+   *
+   * @param screenData   : la map
+   * @param pacman       : pacman
+   * @param ghostRequest : requête du fantôme non computé
    */
   public void moveGhosts(ScreenData screenData, Pacman pacman, Point ghostRequest) {
     // Déplacement des fantômes gérés par l'ordinateur
-    lstGhosts.stream().filter(Ghost::isComputed)
-        .forEach(g -> g.moveGhostByComputer(Utils.convertPointToBlockUnit(pacman.getPosition()), screenData));
+    lstGhosts.stream().filter(Ghost::isComputed).forEach(g -> g
+        .moveGhostByComputer(Utils.convertPointToBlockUnit(pacman.getPosition()), screenData));
 
     // Déplacement des fantômes gérés par l'humain
     lstGhosts.stream().filter(g -> !g.isComputed())
-        .forEach(g -> g.moveGhostByUser(Utils.convertPointToBlockUnit(pacman.getPosition()), screenData, ghostRequest));
+        .forEach(g -> g.moveGhostByUser(Utils.convertPointToBlockUnit(pacman.getPosition()),
+            screenData, ghostRequest));
   }
 
   /**
    * Vérication des fantômes
-   * 
+   *
    * @param inGame
    * @param numLevel
    */
@@ -125,7 +133,7 @@ public class GhostsGroup {
 
   /**
    * Informe tous les fantômes (non mangés) qu'ils ont peur ou pas
-   * 
+   *
    * @param active
    */
   public void setFear(boolean fear) {
@@ -142,7 +150,8 @@ public class GhostsGroup {
    * Tous les fantômes doivent clignotter
    */
   public void setGhostFlashActive() {
-    lstGhosts.stream().filter(GhostStatusEnum.isScared()).forEach(g -> g.setStatus(GhostStatusEnum.FLASH));
+    lstGhosts.stream().filter(GhostStatusEnum.isScared())
+        .forEach(g -> g.setStatus(GhostStatusEnum.FLASH));
   }
 
   /**
@@ -156,13 +165,18 @@ public class GhostsGroup {
   /**
    * Affecte la vitesse de chaque fantôme au cours du niveau en cours
    */
-  public void setSpeedDuringGame() {
-    lstGhosts.stream().forEach(Ghost::setSpeedDuringGame);
+  public void setSpeedDuringGame(int numLevel) {
+    lstGhosts.stream().forEach(g -> g.setSpeedDuringGame(numLevel));
+
+//    lstGhosts.stream().filter(g -> GhostStatusEnum.isScared().test(g)).forEach(
+//        g -> g.setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1));
+
+//
   }
 
   /**
    * Initialise les fantômes lors du début de niveau
-   * 
+   *
    * @param numLevel
    */
   public void setStartLevel(int numLevel, ScreenData screenData) {
@@ -173,7 +187,7 @@ public class GhostsGroup {
 
   /**
    * Affecte le même status à tous les fantômes
-   * 
+   *
    * @param status
    */
   public void setStatus(GhostStatusEnum status) {

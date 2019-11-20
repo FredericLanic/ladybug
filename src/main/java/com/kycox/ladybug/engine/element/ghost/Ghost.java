@@ -44,8 +44,8 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Retourne le setting du fant�me.
-   * 
+   * Retourne le setting du fantôme.
+   *
    * @return
    */
   public GhostsSettingsEnum getGhostSettings() {
@@ -53,16 +53,15 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Cette fonction est a définir pour chaque fantôme nommé (Blinky, Inky, Clyde &
-   * Pinky)
-   * 
+   * Cette fonction est a définir pour chaque fantôme nommé (Blinky, Inky, Clyde & Pinky)
+   *
    * @param numLevel
    */
   public abstract void getInitSpeed(int numLevel);
 
   /**
    * Getters / Setters pour le statut du fantôme
-   * 
+   *
    * @return
    */
   public GhostStatusEnum getStatus() {
@@ -71,7 +70,7 @@ public abstract class Ghost extends BodyMovedByUser {
 
   /**
    * Retourne true si le fantôme est géré par l'ordinateur
-   * 
+   *
    * @return
    */
   public boolean isComputed() {
@@ -79,21 +78,130 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * D�placement agressif du fantôme
-   * 
+   * Déplacement du fantôme (géré par l'ordinateur) en fonction de l'emplacement de Pacman
+   *
+   * @param pacmanPosBlock
+   */
+  public void moveGhostByComputer(Point pacmanPosBlock, ScreenData screenData) {
+    // Déplacement en fonction du status du fantôme
+    switch (getStatus()) {
+    case DYING:
+      moveToRegenerate(screenData);
+      break;
+    case FLASH:
+    case SCARED:
+      if (Utils.convertPointToGraphicUnit(pacmanPosBlock).distance(getPosition()) < 5
+          * Constants.BLOCK_SIZE)
+        moveScared(pacmanPosBlock, screenData);
+      else
+        moveByDefault(screenData);
+      break;
+    case NORMAL:
+      if (behaviousGhost.isActive())
+        moveByBehaviour(pacmanPosBlock, screenData);
+      else
+        moveByDefault(screenData);
+      break;
+    default:
+      System.out
+          .println("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
+      break;
+    }
+  }
+
+  /**
+   * Déplacement du fantôme géré par l'utilisateur
+   *
+   * @param pacmanPosBlock
+   * @param screenData
+   * @param blinkyRequest
+   */
+  public void moveGhostByUser(Point pacmanPosBlock, ScreenData screenData, Point blinkyRequest) {
+    requeteDirectionPoint = blinkyRequest;
+    switch (getStatus()) {
+    case NORMAL:
+      if (changeBlock())
+        move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
+      getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+      break;
+    default:
+      moveGhostByComputer(pacmanPosBlock, screenData);
+      break;
+    }
+  }
+
+  /**
+   * Retourne les actions détectées issu du fantôme.
+   *
+   * @param pacman
+   * @return
+   */
+  public GhostActions setGhostActions(Pacman pacman) {
+    GhostActions ghostActions = new GhostActions();
+    ghostActions.setGhost(this);
+
+    // D�tection de la collision avec un fantôme et pacman
+    if (getPosition().distance(pacman.getPosition()) < (Constants.BLOCK_SIZE / 2)
+        && !getStatus().equals(GhostStatusEnum.DYING)
+        && !getStatus().equals(GhostStatusEnum.REGENERATING)
+        && !pacman.getStatus().equals(PacmanStatusEnum.DYING)
+        && !pacman.getStatus().equals(PacmanStatusEnum.DEAD)) {
+      if (GhostStatusEnum.isScared().test(this) || GhostStatusEnum.isFlashing().test(this)) {
+        // FANTOME
+        ghostActions.setEaten(true);
+      } else {
+        // Mise à mort de PackMan !!!
+        ghostActions.setHasEatenPacman(true);
+      }
+    }
+
+    return ghostActions;
+  }
+
+  /**
+   * Affecte la configuration du fantôme
+   */
+  public void setGhostSettings(GhostsSettingsEnum ghostSettings) {
+    this.ghostSettings = ghostSettings;
+  }
+
+  /**
+   * Affecte des paramètres au fantômes qui vient d'être mangé
+   */
+  public void setSettingAfterBeEaten(int numLevel) {
+    setPosition(Utils.convertPointToGraphicUnit(Utils.convertPointToBlockUnit(getPosition())));
+    // � d�placer dans
+    setStatus(GhostStatusEnum.DYING);
+    setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedPlus(numLevel));
+  }
+
+  public abstract void setSpeedDuringGame(int numLevel);
+
+  /**
+   * Affecte l'état du statut du fantôme
+   *
+   * @param status
+   */
+  public void setStatus(GhostStatusEnum status) {
+    this.status = status;
+  }
+
+  /**
+   * Déplacement agressif du fantôme
+   *
    * @param screenData
    * @param pacmanPosBlock
    */
   private void moveAgressive(Point pacmanPosBlock, ScreenData screenData) {
     /**
-     * Note : le fantôme peut changer de direction uniquement lorsqu'il rempli le
-     * block
+     * Note : le fantôme peut changer de direction uniquement lorsqu'il rempli le block
      */
     if (changeBlock()) {
-      Point ptCurrentBlockGhost = Utils.convertPointToBlockUnit(getPosition());
-      List<Point> shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, pacmanPosBlock, screenData);
+      Point       ptCurrentBlockGhost = Utils.convertPointToBlockUnit(getPosition());
+      List<Point> shorterWay          = Dijkstra.getShorterWay(ptCurrentBlockGhost, pacmanPosBlock,
+          screenData);
 
-      Point point0 = shorterWay.get(0);
+      Point       point0              = shorterWay.get(0);
       if (shorterWay.size() != 1) {
         Point point1 = shorterWay.get(1);
         setDirection(new Point(point1.x - point0.x, point1.y - point0.y));
@@ -106,9 +214,9 @@ public abstract class Ghost extends BodyMovedByUser {
 
   /**
    * Déplacement d'un fantôme en fonction de son comportement
-   * 
+   *
    * (son état est NORMAL)
-   * 
+   *
    * @param screenData
    * @param pacmanPosBlock
    */
@@ -125,20 +233,21 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement du fantôme Renvoi un objet StateMoving A ce jour, cela ne sert à
-   * rien, mais je préfère le laisser pour les prochaines évolutions.
+   * Déplacement du fantôme Renvoi un objet StateMoving A ce jour, cela ne sert à rien, mais je
+   * préfère le laisser pour les prochaines évolutions.
    */
   // FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
   // n�cessaire
   private void moveByDefault(ScreenData screenData) {
-    int count = 0;
-    int[] dx = new int[4];
-    int[] dy = new int[4];
+    int   count    = 0;
+    int[] dx       = new int[4];
+    int[] dy       = new int[4];
 
     Point posPoint = getPosition();
 
     if (changeBlock()) {
-      ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(posPoint));
+      ScreenBlock currentScreenBlock = screenData
+          .getDataBlock(Utils.convertPointToBlockUnit(posPoint));
       count = 0;
       if (!currentScreenBlock.isLeft() && getDirection().x != 1) {
         dx[count] = -1;
@@ -184,69 +293,21 @@ public abstract class Ghost extends BodyMovedByUser {
   }
 
   /**
-   * Déplacement du fantôme (géré par l'ordinateur) en fonction de l'emplacement
-   * de Pacman
-   * 
-   * @param pacmanPosBlock
-   */
-  public void moveGhostByComputer(Point pacmanPosBlock, ScreenData screenData) {
-    // Déplacement en fonction du status du fantôme
-    switch (getStatus()) {
-    case DYING:
-      moveToRegenerate(screenData);
-      break;
-    case FLASH:
-    case SCARED:
-      moveScared(pacmanPosBlock, screenData);
-      break;
-    case NORMAL:
-      if (behaviousGhost.isActive())
-        moveByBehaviour(pacmanPosBlock, screenData);
-      else
-        moveByDefault(screenData);
-      break;
-    default:
-      System.out.println("Le statut " + getStatus() + " n'est pas reconnu, le fant�me est immobile !!");
-      break;
-    }
-  }
-
-  /**
-   * Déplacement du fantôme géré par l'utilisateur
-   * 
-   * @param pacmanPosBlock
-   * @param screenData
-   * @param blinkyRequest
-   */
-  public void moveGhostByUser(Point pacmanPosBlock, ScreenData screenData, Point blinkyRequest) {
-    requeteDirectionPoint = blinkyRequest;
-    switch (getStatus()) {
-    case NORMAL:
-      if (changeBlock())
-        move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
-      getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-      break;
-    default:
-      moveGhostByComputer(pacmanPosBlock, screenData);
-      break;
-    }
-  }
-
-  /**
    * Déplacement quand le fantôme a peur
-   * 
+   *
    * @param data
    * @param pacmanPosBlock
    */
   private void moveScared(Point pacmanPosBlock, ScreenData screenData) {
-    Point ptCurrentScreenGhost = getPosition();
-    boolean canScaredMove = false;
-    Point scaredDirection = Constants.POINT_ZERO;
+    Point   ptCurrentScreenGhost = getPosition();
+    boolean canScaredMove        = false;
+    Point   scaredDirection      = Constants.POINT_ZERO;
 
     if (changeBlock()) {
-      Point ptCurrentBlockGhost = Utils.convertPointToBlockUnit(ptCurrentScreenGhost);
-      ScreenBlock currentBlockGhost = screenData.getDataBlock(ptCurrentBlockGhost);
-      List<Point> shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, pacmanPosBlock, screenData);
+      Point       ptCurrentBlockGhost = Utils.convertPointToBlockUnit(ptCurrentScreenGhost);
+      ScreenBlock currentBlockGhost   = screenData.getDataBlock(ptCurrentBlockGhost);
+      List<Point> shorterWay          = Dijkstra.getShorterWay(ptCurrentBlockGhost, pacmanPosBlock,
+          screenData);
       if (shorterWay.size() != 1) {
         Point point0 = shorterWay.get(0);
         Point point1 = shorterWay.get(1);
@@ -266,7 +327,7 @@ public abstract class Ghost extends BodyMovedByUser {
 
   /**
    * Déplacement du fantôme mangé
-   * 
+   *
    * @param data
    * @param coordinateRevivorGhost
    */
@@ -277,19 +338,19 @@ public abstract class Ghost extends BodyMovedByUser {
       List<Point> shorterWay = Dijkstra.getShorterWay(Utils.convertPointToBlockUnit(getPosition()),
           Utils.convertPointToBlockUnit(screenData.getRevivorGhostPos()), screenData);
 
-      // S'il ne reste plus qu'un bloc � parcourir, le fant�me est arriv�
+      // S'il ne reste plus qu'un bloc � parcourir, le fantôme est arrivé
       if (shorterWay.size() == 1) {
-        // Le fant�me est arriv� au point de reg�n�ration, il redevient "normal" avec
+        // Le fantôme est arrivé au point de regénération, il redevient "normal" avec
         // une vitesse "normale" aussi
         setSpeedIndex(getStartIndexSpeed());
         setStatus(GhostStatusEnum.REGENERATING);
       } else {
         // On prend le premier block cible
         Point currentPoint = shorterWay.get(0);
-        // calcul du prochain endroit � d�placer le fant�me mang�
-        Point nextPoint = shorterWay.get(1);
-        int moveX = nextPoint.x - currentPoint.x;
-        int moveY = nextPoint.y - currentPoint.y;
+        // calcul du prochain endroit à déplacer le fantôme mangé
+        Point nextPoint    = shorterWay.get(1);
+        int   moveX        = nextPoint.x - currentPoint.x;
+        int   moveY        = nextPoint.y - currentPoint.y;
 
         if (moveX > 0) {
           setDirection(Constants.POINT_RIGHT);
@@ -304,59 +365,5 @@ public abstract class Ghost extends BodyMovedByUser {
     }
 
     getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-  }
-
-  /**
-   * Retourne les actions détectées issu du fantôme.
-   * 
-   * @param pacman
-   * @return
-   */
-  public GhostActions setGhostActions(Pacman pacman) {
-    GhostActions ghostActions = new GhostActions();
-    ghostActions.setGhost(this);
-
-    // D�tection de la collision avec un fant�me et pacman
-    if (getPosition().distance(pacman.getPosition()) < Constants.DISTANCE_MIN
-        && !getStatus().equals(GhostStatusEnum.DYING) && !getStatus().equals(GhostStatusEnum.REGENERATING)
-        && !pacman.getStatus().equals(PacmanStatusEnum.DYING) && !pacman.getStatus().equals(PacmanStatusEnum.DEAD)) {
-      if (GhostStatusEnum.isScared().test(this) || GhostStatusEnum.isFlashing().test(this)) {
-        // FANTOME
-        ghostActions.setEaten(true);
-      } else {
-        // Mise � mort de PackMan !!!
-        ghostActions.setEatPacman(true);
-      }
-    }
-
-    return ghostActions;
-  }
-
-  /**
-   * Affecte la configuration du fantôme
-   */
-  public void setGhostSettings(GhostsSettingsEnum ghostSettings) {
-    this.ghostSettings = ghostSettings;
-  }
-
-  /**
-   * Affecte des paramètres au fantômes qui vient d'être mangé
-   */
-  public void setSettingJustAfterBeEaten(int numLevel) {
-    setPosition(Utils.convertPointToGraphicUnit(Utils.convertPointToBlockUnit(getPosition())));
-    // � d�placer dans
-    setStatus(GhostStatusEnum.DYING);
-    setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedPlus(numLevel));
-  }
-
-  public abstract void setSpeedDuringGame();
-
-  /**
-   * Affecte l'état du statut du fantôme
-   * 
-   * @param status
-   */
-  public void setStatus(GhostStatusEnum status) {
-    this.status = status;
   }
 }

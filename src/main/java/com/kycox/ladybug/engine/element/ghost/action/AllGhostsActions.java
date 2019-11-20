@@ -23,7 +23,7 @@ public class AllGhostsActions {
   }
 
   public void addNewLifeToKeyGhost() {
-    lstGhostActions.stream().filter(GhostActions::isEatPacman).filter(ga -> !ga.getGhost().isComputed())
+    lstGhostActions.stream().filter(GhostActions::hasEatenPacman).filter(ga -> !ga.getGhost().isComputed())
         .forEach(g -> g.getGhost().addNewLife());
   }
 
@@ -33,7 +33,7 @@ public class AllGhostsActions {
    * @return
    */
   public boolean eatPacman() {
-    return lstGhostActions.stream().filter(GhostActions::isEatPacman).count() > 0;
+    return lstGhostActions.stream().filter(GhostActions::hasEatenPacman).count() > 0;
   }
 
   /**
@@ -54,7 +54,7 @@ public class AllGhostsActions {
   public void setGhostSettingAfterPacmanContact(int numLevel) {
     // Mis à jour du statut
     lstGhostActions.stream().filter(GhostActions::isEaten)
-        .forEach(ga -> ga.getGhost().setSettingJustAfterBeEaten(numLevel));
+        .forEach(ga -> ga.getGhost().setSettingAfterBeEaten(numLevel));
 
     lstGhostActions.stream().filter(GhostActions::isEaten).forEach(ga -> ga.getGhost().minusLifesLeft());
   }

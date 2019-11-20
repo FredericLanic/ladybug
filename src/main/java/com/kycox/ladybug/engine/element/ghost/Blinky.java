@@ -32,20 +32,19 @@ public class Blinky extends Ghost {
   }
 
   @Override
-  public void setSpeedDuringGame() {
-    if (!getStatus().equals(GhostStatusEnum.NORMAL)) {
+  public void setSpeedDuringGame(int numLevel) {
+    if (!changeBlock()) {
       setSpeedIndex(getSpeedIndex());
       return;
     }
-    // Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
-    // map
-    int incrementSpeedIndex = blinkyIncrementSpeed.getIncrementSpeedIndex();
 
-    if (changeBlock()) {
+    if (GhostStatusEnum.isScared().test(this))
+      setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);
+    else {
+      // Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
+      // map
+      int incrementSpeedIndex = blinkyIncrementSpeed.getIncrementSpeedIndex();
       setSpeedIndex(getStartIndexSpeed() + incrementSpeedIndex);
     }
-
-    // de toute manière on réaffecte
-    setSpeedIndex(getSpeedIndex());
   }
 }

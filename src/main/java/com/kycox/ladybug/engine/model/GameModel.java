@@ -73,131 +73,8 @@ public class GameModel extends Observable {
   }
 
   /**
-   * Vérifier si le labyrinthe est terminé
-   */
-  private void checkMaze() {
-    // Niveau termin�
-    if (screenData.getNbrBlocksWithPoint() == 0) {
-      gameScore.addScore(Constants.SCORE_END_LEVEL);
-      initLevel();
-    }
-  }
-
-  /**
-   * Param�trage des fant�mes dans le niveau actuel
-   * 
-   * Initialisation des directions et de la vue de pacman
-   * 
-   * suite de l'initialisation du niveau ou quand pacman meurt
-   */
-  private void continueLevel() {
-    // arrêt de tous les sons avant de continuer
-    gameSounds.stopAllSounds();
-
-    // initialise Pacman pour le niveau
-    pacman.setStartLevel(gameStatus.getNumLevel(), screenData);
-
-    // initialise les fantômes
-    groupGhosts.setStartLevel(gameStatus.getNumLevel(), screenData);
-  }
-
-  /**
-   * Création du timer du jeu (coeur du jeu)
-   * 
-   * @return
-   */
-  private Timer createTimer() {
-    ActionListener action = event -> {
-      setChanged();
-      // initialisation du con
-      gameSounds.init();
-
-      if (gameStatus.isInGame() && PacmanStatusEnum.isDead().test(pacman)) {
-        pacmanIsDead();
-      } else if (gameStatus.isInGame() && PacmanStatusEnum.isDying().test(pacman)) {
-        pacmanIsDying();
-      } else if (gameStatus.isInGame() && groupGhosts.isDeadKeyGhost()) {
-        gameStatus.setStopGame();
-        System.out.println("Le fant�me a perdu");
-      } else {
-// Déplacement de Pacman et récupération de ses actions
-        PacmanActions pacmanActions = pacman.movePacman(screenData);
-
-// Déplacement des fantômes
-        groupGhosts.moveGhosts(screenData, pacman, ghostRequest);
-
-// Détections des actions des fantômes
-        AllGhostsActions allGhostsActions = groupGhosts.setAllGhostsActions(pacman);
-
-// GESTION DES INCREMENTS SCORES
-        pacmanActions.addIncrementScores(groupIncrementScores);
-        allGhostsActions.addIncrementScores(groupIncrementScores);
-        groupIncrementScores.removeIfDying();
-
-// GESTION DE L'ETAT DES FANTOMES
-        // Etats des fantômes
-        allGhostsActions.setGhostSettingAfterPacmanContact(gameStatus.getNumLevel());
-        // Etat des fantômes de REGENERATING à NORMAL
-        groupGhosts.setGhostStatusAfterRegeneration();
-        // modifier la vitesse des fantôme en cours de partie
-        groupGhosts.setSpeedDuringGame();
-
-// GESTION DE LA MORT DE PACMAN 
-        // modification de l'état de Pacman en fonction des actions détectées des
-        // fantômes
-        if (allGhostsActions.eatPacman()) {
-          pacman.setStatus(PacmanStatusEnum.DYING);
-          allGhostsActions.addNewLifeToKeyGhost();
-        }
-
-// GESTION DU SUPER POWER
-        // mise à jour des status des fantômes en fonction du timer
-        // Peut être le déplacer de là ??
-        if (superPowerTimer.getStatus() == SuperPowerTimerEnum.STOPPING) {
-          groupGhosts.setGhostFlashActive();
-        } else if ((superPowerTimer.getStatus() == SuperPowerTimerEnum.STOP)) {
-          groupGhosts.setFear(false);
-        }
-        // Active le timer du super power si Pacman a mangé un méga point
-        // Peut être le déplacer de là ??
-        if (pacmanActions.hasEatenAMegaPoint()) {
-          runSuperPowerTimer();
-          groupGhosts.setFear(true);
-        }
-
-// SCORE
-        // Ajoute du score
-        gameScore.setScore(allGhostsActions, pacmanActions);
-        // ajout d'une vie supplémentaire si besoin
-        if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
-          gameScore.initIncrementScore();
-          pacman.addNewLife();
-          // Ajout du son Extra pac
-          gameSounds.addSounds(SoundsEnum.PACMAN_EXTRA_PAC.getIndex());
-        }
-
-// SCREENDATA 
-        // Mise à jour du ScreenData
-        screenData.updateScreenBlock(pacmanActions);
-        // vérification de la fin du tableau
-        checkMaze();
-
-// SONDS
-        // affecte les sons
-        gameSounds.setSound(groupGhosts, allGhostsActions, pacman, pacmanActions,
-            kinematicPacmanDeath);
-      }
-      // notifie la view qu'il y a eu du changement
-      notifyObservers();
-    };
-
-    // Création d'un timer qui génère un tic
-    return new Timer(PACE, action);
-  }
-
-  /**
    * Vérifie si le timer qui rythme le jeu est en cours
-   * 
+   *
    * @return
    */
   public boolean gameTimerIsRunning() {
@@ -248,8 +125,6 @@ public class GameModel extends Observable {
    */
   public void initGame() {
 
-    int levelPresentation = 3;
-
     // initialisation du numéro du niveau; incrémenté dans initLevel
     gameStatus.setNumLevel(0);
     // utilisé juste pour l'affichage de la fenêtre d'initialisation
@@ -259,25 +134,24 @@ public class GameModel extends Observable {
     checkData.check(screenData);
     // 3 vies par défaut
     pacman.setLifesLeft(3);
+    // Pacman n'est pas en vie lors de l'initialisation du jeu
+    pacman.setStatus(PacmanStatusEnum.DEAD);
     // initialise les score
     gameScore.init();
     // Initialise le groupe de fantôme
-    groupGhosts = new GhostsGroup(levelPresentation, screenData);
+    groupGhosts = new GhostsGroup(Constants.PRESENTATION_LEVEL, screenData);
     // mise de la vitesse du niveau 3 pour la présentation
-    groupGhosts.initSpeeds(levelPresentation);
+    groupGhosts.initSpeeds(Constants.PRESENTATION_LEVEL);
     // initialise les positions des fantômes
     groupGhosts.initPositions(screenData);
     // initialise les fantômes pour la présentation
     groupGhosts.setStatus(GhostStatusEnum.NORMAL);
     // initialise les vies de fantômes
     groupGhosts.initLifeLeft(3);
-
-    // Pacman n'est pas en vie lors de l'initialisation du jeu
-    pacman.setStatus(PacmanStatusEnum.DEAD);
   }
 
   /**
-   * Initialise le niveau en fonction du niveau pr�c�dent
+   * Initialise le niveau en fonction du niveau précédent
    */
   public void initLevel() {
     // suppression des composants techniques du niveau précédent
@@ -298,7 +172,7 @@ public class GameModel extends Observable {
 
   /**
    * Vérifie c'est le jeu est au début du niveau Utilisé pour palier au soucis du jingle du début
-   * 
+   *
    * @return
    */
   public boolean isBeginNewLevel() {
@@ -307,7 +181,7 @@ public class GameModel extends Observable {
 
   /**
    * Retourne le nombre de joueurs : 1 ou 2
-   * 
+   *
    * @return
    */
   public int nbrNbrPlayers() {
@@ -315,6 +189,169 @@ public class GameModel extends Observable {
       return 1;
     }
     return 2;
+  }
+
+  /**
+   * Affecte le fait que c'est le début du niveau. C'est un contournement pour écouter le Jingle de
+   * début
+   *
+   * @param beginNewLevel
+   */
+  public void setBeginNewLevel(boolean beginNewLevel) {
+    this.beginNewLevel = beginNewLevel;
+  }
+
+  public void setGhostRequest(Point ghostRequest) {
+    this.ghostRequest = ghostRequest;
+  }
+
+  /**
+   * Sauvegarde de l'ancien score
+   *
+   * @param oldScore
+   */
+  public void setOldScore(int oldScore) {
+    this.oldScore = oldScore;
+  }
+
+  /**
+   * Lancement du timer qui rythme le jeu
+   */
+  public void startGameTimer() {
+    gameTimer.start();
+  }
+
+  /**
+   * Arrêt du timer qui rythme le jeu
+   */
+  public void stopGameTimer() {
+    gameTimer.stop();
+  }
+
+  /**
+   * Vérifier si le labyrinthe est terminé
+   */
+  private void checkMaze() {
+    // Niveau termin�
+    if (screenData.getNbrBlocksWithPoint() == 0) {
+      gameScore.addScore(Constants.SCORE_END_LEVEL);
+      initLevel();
+    }
+  }
+
+  /**
+   * Paramêtrage des fantômes dans le niveau actuel
+   *
+   * Initialisation des directions et de la vue de pacman
+   *
+   * suite de l'initialisation du niveau ou quand pacman meurt
+   */
+  private void continueLevel() {
+    // arrêt de tous les sons avant de continuer
+    gameSounds.stopAllSounds();
+
+    // initialise Pacman pour le niveau
+    pacman.setStartLevel(gameStatus.getNumLevel(), screenData);
+
+    // initialise les fantômes
+    groupGhosts.setStartLevel(gameStatus.getNumLevel(), screenData);
+  }
+
+  /**
+   * Création du timer du jeu (coeur du jeu)
+   *
+   * @return
+   */
+  private Timer createTimer() {
+    ActionListener action = event -> {
+      setChanged();
+      // initialisation du con
+      gameSounds.init();
+
+      if (gameStatus.isInGame() && PacmanStatusEnum.isDead().test(pacman)) {
+        pacmanIsDead();
+      } else if (gameStatus.isInGame() && PacmanStatusEnum.isDying().test(pacman)) {
+        pacmanIsDying();
+      } else if (gameStatus.isInGame() && groupGhosts.isDeadKeyGhost()) {
+        gameStatus.setStopGame();
+        System.out.println("Le fantôme a perdu");
+      } else {
+
+        // Etat des fantômes de REGENERATING à NORMAL
+        groupGhosts.setGhostStatusAfterRegeneration();
+
+// Déplacement de Pacman et récupération de ses actions
+        PacmanActions pacmanActions = pacman.movePacman(screenData);
+
+// Déplacement des fantômes
+        groupGhosts.moveGhosts(screenData, pacman, ghostRequest);
+
+// Détections des actions des fantômes
+        AllGhostsActions allGhostsActions = groupGhosts.setAllGhostsActions(pacman);
+
+// GESTION DES INCREMENTS SCORES
+        pacmanActions.addIncrementScores(groupIncrementScores);
+        allGhostsActions.addIncrementScores(groupIncrementScores);
+        groupIncrementScores.removeIfDying();
+
+// GESTION DE L'ETAT DES FANTOMES
+        // Etats des fantômes
+        allGhostsActions.setGhostSettingAfterPacmanContact(gameStatus.getNumLevel());
+
+        // modifier la vitesse des fantôme en cours de partie
+        groupGhosts.setSpeedDuringGame(gameStatus.getNumLevel());
+
+// GESTION DE LA MORT DE PACMAN
+        // modification de l'état de Pacman en fonction des actions détectées des
+        // fantômes
+        if (allGhostsActions.eatPacman()) {
+          pacman.setStatus(PacmanStatusEnum.DYING);
+          allGhostsActions.addNewLifeToKeyGhost();
+        }
+
+// GESTION DU SUPER POWER
+        // mise à jour des status des fantômes en fonction du timer
+        // Peut être le déplacer de là ??
+        if (superPowerTimer.getStatus() == SuperPowerTimerEnum.STOPPING) {
+          groupGhosts.setGhostFlashActive();
+        } else if ((superPowerTimer.getStatus() == SuperPowerTimerEnum.STOP)) {
+          groupGhosts.setFear(false);
+        }
+        // Active le timer du super power si Pacman a mangé un méga point
+        // Peut être le déplacer de là ??
+        if (pacmanActions.hasEatenAMegaPoint()) {
+          runSuperPowerTimer();
+          groupGhosts.setFear(true);
+        }
+
+// SCORE
+        // Ajoute du score
+        gameScore.setScore(allGhostsActions, pacmanActions);
+        // ajout d'une vie supplémentaire si besoin
+        if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
+          gameScore.initIncrementScore();
+          pacman.addNewLife();
+          // Ajout du son Extra pac
+          gameSounds.addSounds(SoundsEnum.PACMAN_EXTRA_PAC.getIndex());
+        }
+
+// SCREENDATA
+        // Mise à jour du ScreenData
+        screenData.updateScreenBlock(pacmanActions);
+        // vérification de la fin du tableau
+        checkMaze();
+
+// SONDS
+        // affecte les sons
+        gameSounds.setSound(groupGhosts, allGhostsActions, pacman, pacmanActions,
+            kinematicPacmanDeath);
+      }
+      // notifie la view qu'il y a eu du changement
+      notifyObservers();
+    };
+
+    // Création d'un timer qui génère un tic
+    return new Timer(PACE, action);
   }
 
   /**
@@ -330,8 +367,9 @@ public class GameModel extends Observable {
       // à mettre ailleurs :
       initGame();
       System.out.println("Pacman a perdu");
+    } else {
+      continueLevel();
     }
-    continueLevel();
   }
 
   /**
@@ -370,42 +408,5 @@ public class GameModel extends Observable {
     // FIXME MAGIC NUMBER !! : 15 seconds
     // Il serait bien de d'apporter une notion du temps en fonction du niveau
     superPowerTimer.launch(15);
-  }
-
-  /**
-   * Affecte le fait que c'est le début du niveau. C'est un contournement pour écouter le Jingle de
-   * début
-   * 
-   * @param beginNewLevel
-   */
-  public void setBeginNewLevel(boolean beginNewLevel) {
-    this.beginNewLevel = beginNewLevel;
-  }
-
-  public void setGhostRequest(Point ghostRequest) {
-    this.ghostRequest = ghostRequest;
-  }
-
-  /**
-   * Sauvegarde de l'ancien score
-   * 
-   * @param oldScore
-   */
-  public void setOldScore(int oldScore) {
-    this.oldScore = oldScore;
-  }
-
-  /**
-   * Lancement du timer qui rythme le jeu
-   */
-  public void startGameTimer() {
-    gameTimer.start();
-  }
-
-  /**
-   * Arrêt du timer qui rythme le jeu
-   */
-  public void stopGameTimer() {
-    gameTimer.stop();
   }
 }

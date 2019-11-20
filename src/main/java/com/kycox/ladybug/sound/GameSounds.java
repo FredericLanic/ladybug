@@ -31,24 +31,23 @@ public class GameSounds {
 //  }
 
   private Clip    clipBeginning       = null;
-
   private Clip    clipChomp           = null;
   private Clip    clipDeath           = null;
   private Clip    clipEatFruit        = null;
   private Clip    clipEatGhost        = null;
   private Clip    clipExtraPac        = null;
+  private Clip    clipGhostEaten      = null;
   private Clip    clipGhostRegenerate = null;
-
   private Clip    clipGhostSurvivor   = null;
-
   private Clip    clipInterMission    = null;
+  private Clip    clipSiren           = null;
 
   private boolean listen              = true;
 
   private int     sounds;
 
   /**
-   * Constructeur priv�
+   * Constructeur privé
    */
   public GameSounds() {
 
@@ -70,6 +69,8 @@ public class GameSounds {
     clipInterMission = new ClipGame(SoundsEnum.PACMAN_INTER_MISSION.getUrl()).getClip();
     clipGhostSurvivor = new ClipGame(SoundsEnum.GHOST_SURVIVOR.getUrl()).getClip();
     clipGhostRegenerate = new ClipGame(SoundsEnum.GHOST_REGENERATE.getUrl()).getClip();
+    clipGhostEaten = new ClipGame(SoundsEnum.GHOST_EATEN.getUrl()).getClip();
+    clipSiren = new ClipGame(SoundsEnum.PACMAN_SIREN.getUrl()).getClip();
   }
 
   /**
@@ -137,6 +138,13 @@ public class GameSounds {
     if ((sounds & SoundsEnum.GHOST_REGENERATE.getIndex()) != 0) {
       new ListenSound(clipGhostRegenerate).start();
     }
+
+    if ((sounds & SoundsEnum.GHOST_EATEN.getIndex()) != 0) {
+      new ListenSound(clipGhostEaten).start();
+    }
+
+    new ListenSound(clipSiren).start();
+
   }
 
   /**
@@ -146,7 +154,7 @@ public class GameSounds {
     stopAllSounds();
     // lancement du jingle du d�but
     new ListenSound(clipBeginning).start();
-    // On attend le temps du jingle : le jeu est alors bloqu�
+    // On attend le temps du jingle : le jeu est alors bloqué
     try {
       Thread.sleep(clipBeginning.getMicrosecondLength() / 1000);
     } catch (InterruptedException e) {
@@ -160,7 +168,7 @@ public class GameSounds {
   public void setSound(GhostsGroup groupGhosts, AllGhostsActions ghostsActions, Pacman pacman,
       PacmanActions pacmanActions, KinematicPacmanDeath kinematicPacmanDeath) {
 
-    // Son depuis les objets Fant�mes
+    // Son depuis les objets Fantômes
     for (Ghost ghost : groupGhosts.getLstGhosts()) {
       if (ghost.getStatus().equals(GhostStatusEnum.DYING))
         addSounds(SoundsEnum.GHOST_SURVIVOR.getIndex());
@@ -170,6 +178,9 @@ public class GameSounds {
 
       if (GhostStatusEnum.isRegenerating().test(ghost))
         addSounds(SoundsEnum.GHOST_REGENERATE.getIndex());
+
+      if (GhostStatusEnum.isDying().test(ghost))
+        addSounds(SoundsEnum.GHOST_EATEN.getIndex());
     }
 
     if (ghostsActions.getNbrEatenGhost() > 0)
@@ -214,5 +225,9 @@ public class GameSounds {
     clipInterMission.setFramePosition(0);
     clipGhostSurvivor.stop();
     clipGhostSurvivor.setFramePosition(0);
+    clipGhostRegenerate.stop();
+    clipGhostRegenerate.setFramePosition(0);
+    clipSiren.stop();
+    clipSiren.setFramePosition(0);
   }
 }

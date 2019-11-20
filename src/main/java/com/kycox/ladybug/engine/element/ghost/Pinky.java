@@ -1,6 +1,7 @@
 package com.kycox.ladybug.engine.element.ghost;
 
 import com.kycox.ladybug.engine.element.SpeedFunction;
+import com.kycox.ladybug.engine.element.ghost.set.GhostStatusEnum;
 import com.kycox.ladybug.engine.element.ghost.set.GhostsSettingsEnum;
 
 /**
@@ -20,8 +21,16 @@ public class Pinky extends Ghost {
   }
 
   @Override
-  public void setSpeedDuringGame() {
-    setSpeedIndex(getSpeedIndex());
+  public void setSpeedDuringGame(int numLevel) {
+    if (!changeBlock()) {
+      setSpeedIndex(getSpeedIndex());
+      return;
+    }
+
+    if (GhostStatusEnum.isScared().test(this))
+      setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);
+    else
+      setSpeedIndex(getStartIndexSpeed());
   }
 
 }
