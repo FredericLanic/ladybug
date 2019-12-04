@@ -26,7 +26,7 @@ public class Level3 extends Level {
   }
 
   @Override
-  public Point getInitPacmanBlockPos() {
+  public Point getInitLadybugBlockPos() {
     return new Point(2, 3);
   }
 

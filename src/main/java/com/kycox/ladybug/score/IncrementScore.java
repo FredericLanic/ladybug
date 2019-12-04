@@ -5,26 +5,26 @@ import java.awt.Point;
 import com.kycox.ladybug.engine.timer.IncrementScoreTimer;
 
 /**
- * Contenu des valeurs afficées dans la map, lorsque pacman fait des exploits
- * 
+ * Contenu des valeurs afficées dans la map, lorsque ladybug fait des exploits
+ *
  * @author kycox
  *
  */
 public class IncrementScore {
-  private boolean    dying;
+  private boolean             dying;
 
   /** Position dans la fenêtre où le score est affiché */
-  private Point      position;
+  private Point               position;
 
   /** Timer d'affichage du score dans la fenêtre */
   private IncrementScoreTimer scoreTimer;
 
   /** Valeurà� afficher */
-  private String     value;
+  private String              value;
 
   /**
    * Constructeur
-   * 
+   *
    * @param position : position d'affichage du score
    * @param value    : valeur à afficher
    */
@@ -52,7 +52,7 @@ public class IncrementScore {
 
   /**
    * Vérifie si l'objet est en train de mourir
-   * 
+   *
    * @return
    */
   public boolean isDying() {
@@ -61,7 +61,7 @@ public class IncrementScore {
 
   /**
    * Affecte à l'objet le fait qu'il va disparaitre
-   * 
+   *
    * @param dying
    */
   public void setDying(boolean dying) {

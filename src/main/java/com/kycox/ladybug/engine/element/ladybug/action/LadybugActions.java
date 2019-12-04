@@ -1,11 +1,11 @@
-package com.kycox.ladybug.engine.element.pacman.action;
+package com.kycox.ladybug.engine.element.ladybug.action;
 
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.score.GroupIncrementScores;
 import com.kycox.ladybug.tools.Utils;
 
-public class PacmanActions {
+public class LadybugActions {
 
   private ScreenBlock currentPoint;
 

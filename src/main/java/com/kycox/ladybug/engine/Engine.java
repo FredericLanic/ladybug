@@ -5,34 +5,34 @@ import com.kycox.ladybug.engine.model.GameModel;
 import com.kycox.ladybug.engine.view.GameView;
 
 public class Engine {
-  private KeyGameController pacmanController;
-  private GameModel     pacmanModel;
-  private GameView      pacmanView;
+  private GameModel         gameModel;
+  private GameView          gameView;
+  private KeyGameController keyGameController;
 
   public Engine() {
     // MODEL
-    pacmanModel = new GameModel();
+    gameModel = new GameModel();
 
     // PAD CONTROLLER
-//    PadController pacmanController = new PadController(pacmanModel);
+//    PadController padController = new PadController(gameModel);
     // Seulement gestion du clavier : on verra pour la manette après
-    pacmanController = new KeyGameController(pacmanModel);
+    keyGameController = new KeyGameController(gameModel);
 
     // VIEW
-    pacmanView = new GameView();
+    gameView = new GameView();
     // On relie le modèle à la view : la view connait le modèle, le modèle ne
     // connait pas la view
-    pacmanView.setPacmanModel(pacmanModel);
+    gameView.setGameModel(gameModel);
     // On applique le contrôleur à la vue
-    pacmanView.setController(pacmanController);
+    gameView.setController(keyGameController);
   }
 
   /**
    * Retourne la view
-   * 
+   *
    * @return
    */
-  public GameView getPacmanView() {
-    return pacmanView;
+  public GameView getGameView() {
+    return gameView;
   }
 }

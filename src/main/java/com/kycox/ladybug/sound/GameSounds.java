@@ -3,15 +3,15 @@ package com.kycox.ladybug.sound;
 import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
-import com.kycox.ladybug.constant.KinematicPacmanDeath;
+import com.kycox.ladybug.constant.KinematicLadybugDeath;
 import com.kycox.ladybug.constant.SoundsEnum;
 import com.kycox.ladybug.engine.element.ghost.Ghost;
 import com.kycox.ladybug.engine.element.ghost.GhostsGroup;
 import com.kycox.ladybug.engine.element.ghost.action.AllGhostsActions;
 import com.kycox.ladybug.engine.element.ghost.set.GhostStatusEnum;
-import com.kycox.ladybug.engine.element.pacman.Pacman;
-import com.kycox.ladybug.engine.element.pacman.action.PacmanActions;
-import com.kycox.ladybug.engine.element.pacman.set.PacmanStatusEnum;
+import com.kycox.ladybug.engine.element.ladybug.Ladybug;
+import com.kycox.ladybug.engine.element.ladybug.action.LadybugActions;
+import com.kycox.ladybug.engine.element.ladybug.set.LadybugStatusEnum;
 
 /**
  * Gestion du son dans le jeu
@@ -60,17 +60,17 @@ public class GameSounds {
     jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     jFrame.setVisible(false);
 
-    clipBeginning = new ClipGame(SoundsEnum.PACMAN_BEGINNING.getUrl()).getClip();
-    clipChomp = new ClipGame(SoundsEnum.PACMAN_CHOMP.getUrl()).getClip();
-    clipDeath = new ClipGame(SoundsEnum.PACMAN_IS_DYING.getUrl()).getClip();
-    clipEatFruit = new ClipGame(SoundsEnum.PACMAN_EAT_FRUIT.getUrl()).getClip();
-    clipEatGhost = new ClipGame(SoundsEnum.PACMAN_EAT_GHOST.getUrl()).getClip();
-    clipExtraPac = new ClipGame(SoundsEnum.PACMAN_EXTRA_PAC.getUrl()).getClip();
-    clipInterMission = new ClipGame(SoundsEnum.PACMAN_INTER_MISSION.getUrl()).getClip();
+    clipBeginning = new ClipGame(SoundsEnum.LADYBUG_BEGINNING.getUrl()).getClip();
+    clipChomp = new ClipGame(SoundsEnum.LADYBUG_CHOMP.getUrl()).getClip();
+    clipDeath = new ClipGame(SoundsEnum.LADYBUG_IS_DYING.getUrl()).getClip();
+    clipEatFruit = new ClipGame(SoundsEnum.LADYBUG_EAT_FRUIT.getUrl()).getClip();
+    clipEatGhost = new ClipGame(SoundsEnum.LADYBUG_EAT_GHOST.getUrl()).getClip();
+    clipExtraPac = new ClipGame(SoundsEnum.LADYBUG_EXTRA_PAC.getUrl()).getClip();
+    clipInterMission = new ClipGame(SoundsEnum.LADYBUG_INTER_MISSION.getUrl()).getClip();
     clipGhostSurvivor = new ClipGame(SoundsEnum.GHOST_SURVIVOR.getUrl()).getClip();
     clipGhostRegenerate = new ClipGame(SoundsEnum.GHOST_REGENERATE.getUrl()).getClip();
     clipGhostEaten = new ClipGame(SoundsEnum.GHOST_EATEN.getUrl()).getClip();
-    clipSiren = new ClipGame(SoundsEnum.PACMAN_SIREN.getUrl()).getClip();
+    clipSiren = new ClipGame(SoundsEnum.LADYBUG_SIREN.getUrl()).getClip();
   }
 
   /**
@@ -83,12 +83,12 @@ public class GameSounds {
   }
 
   /**
-   * Retourne le temps en millisecondes de la musique de la mort de Pacman Utilisé dans la
-   * cinématique KinematicPacmanDeath
+   * Retourne le temps en millisecondes de la musique de la mort de ladybug Utilisé dans la
+   * cinématique KinematicLadybugDeath
    *
    * @return
    */
-  public long getMicrosecondLengthPacmanDeath() {
+  public long getMicrosecondLengthLadybugDeath() {
     return clipDeath.getMicrosecondLength() / 1000;
   }
 
@@ -106,28 +106,28 @@ public class GameSounds {
     if (!listen)
       return;
 
-    if ((sounds & SoundsEnum.PACMAN_CHOMP.getIndex()) != 0) {
+    if ((sounds & SoundsEnum.LADYBUG_CHOMP.getIndex()) != 0) {
       new ListenSound(clipChomp).start();
     }
 
-    if ((sounds & SoundsEnum.PACMAN_IS_DYING.getIndex()) != 0) {
+    if ((sounds & SoundsEnum.LADYBUG_IS_DYING.getIndex()) != 0) {
       stopAllSounds();
       new ListenSound(clipDeath).start();
     }
 
-    if ((sounds & SoundsEnum.PACMAN_EAT_FRUIT.getIndex()) != 0) {
+    if ((sounds & SoundsEnum.LADYBUG_EAT_FRUIT.getIndex()) != 0) {
       new ListenSound(clipEatFruit).start();
     }
 
-    if ((sounds & SoundsEnum.PACMAN_EAT_GHOST.getIndex()) != 0) {
+    if ((sounds & SoundsEnum.LADYBUG_EAT_GHOST.getIndex()) != 0) {
       new ListenSound(clipEatGhost).start();
     }
 
-    if ((sounds & SoundsEnum.PACMAN_EXTRA_PAC.getIndex()) != 0) {
+    if ((sounds & SoundsEnum.LADYBUG_EXTRA_PAC.getIndex()) != 0) {
       new ListenSound(clipExtraPac).start();
     }
 
-    if ((sounds & SoundsEnum.PACMAN_INTER_MISSION.getIndex()) != 0) {
+    if ((sounds & SoundsEnum.LADYBUG_INTER_MISSION.getIndex()) != 0) {
       new ListenSound(clipInterMission).start();
     }
 
@@ -165,8 +165,8 @@ public class GameSounds {
   /**
    * Ajoute des sons en fonction de l'état des fantômes
    */
-  public void setSound(GhostsGroup groupGhosts, AllGhostsActions ghostsActions, Pacman pacman,
-      PacmanActions pacmanActions, KinematicPacmanDeath kinematicPacmanDeath) {
+  public void setSound(GhostsGroup groupGhosts, AllGhostsActions ghostsActions, Ladybug ladybug,
+      LadybugActions ladybugActions, KinematicLadybugDeath kinematicLadybugDeath) {
 
     // Son depuis les objets Fantômes
     for (Ghost ghost : groupGhosts.getLstGhosts()) {
@@ -174,7 +174,7 @@ public class GameSounds {
         addSounds(SoundsEnum.GHOST_SURVIVOR.getIndex());
 
       if (GhostStatusEnum.isScared().test(ghost) || GhostStatusEnum.isFlashing().test(ghost))
-        addSounds(SoundsEnum.PACMAN_INTER_MISSION.getIndex());
+        addSounds(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
 
       if (GhostStatusEnum.isRegenerating().test(ghost))
         addSounds(SoundsEnum.GHOST_REGENERATE.getIndex());
@@ -184,17 +184,18 @@ public class GameSounds {
     }
 
     if (ghostsActions.getNbrEatenGhost() > 0)
-      addSounds(SoundsEnum.PACMAN_EAT_GHOST.getIndex());
+      addSounds(SoundsEnum.LADYBUG_EAT_GHOST.getIndex());
 
-    // Son depuis l'objet Pacman
-    if (pacmanActions.hasEatenAMegaPoint())
-      addSounds(SoundsEnum.PACMAN_INTER_MISSION.getIndex());
+    // Son depuis l'objet ladybug
+    if (ladybugActions.hasEatenAMegaPoint())
+      addSounds(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
 
-    if (pacmanActions.hasEatenAPoint())
-      addSounds(SoundsEnum.PACMAN_CHOMP.getIndex());
+    if (ladybugActions.hasEatenAPoint())
+      addSounds(SoundsEnum.LADYBUG_CHOMP.getIndex());
 
-    if (pacman.getStatus().equals(PacmanStatusEnum.DYING) && kinematicPacmanDeath.getBip() == 0) {
-      addSounds(SoundsEnum.PACMAN_IS_DYING.getIndex());
+    if (ladybug.getStatus().equals(LadybugStatusEnum.DYING)
+        && kinematicLadybugDeath.getBip() == 0) {
+      addSounds(SoundsEnum.LADYBUG_IS_DYING.getIndex());
     }
   }
 

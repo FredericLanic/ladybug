@@ -49,13 +49,10 @@ public class ConfJDialog extends JDialog implements ActionListener {
     JPanel ghostPanel = new JGhostChoice(group);
     ghostPanel.setBackground(Color.BLACK);
 
-    JLabel pacmanImg = new JLabel(new ImageIcon(PicturesEnum.PACMAN_RIGHT_2.getImg()));
-    pacmanImg.setHorizontalAlignment(JLabel.CENTER);
+    JLabel ladybugImg = new JLabel(new ImageIcon(PicturesEnum.LADYBUG_RIGHT_2.getImg()));
+    ladybugImg.setHorizontalAlignment(JLabel.CENTER);
     centerPanel.setLayout(new GridLayout(1, 2));
-//    centerPanel.add(pacmanImg);
-//    centerPanel.add(new JLabel("Boutons Pacman"));
     centerPanel.add(ghostPanel);
-//    centerPanel.add(new JLabel("Boutons Fantôme"));
 
     // Sud : les boutons 1 ou 2 joueurs
     JPanel southPanel = new JPanel();

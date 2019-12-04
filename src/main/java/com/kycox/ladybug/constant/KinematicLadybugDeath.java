@@ -6,25 +6,26 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Cinématique pour afficher / entendre lors de la mort de Pacman
- * 
+ * Cinématique pour afficher / entendre lors de la mort de Ladybug
+ *
  */
-public class KinematicPacmanDeath {
+public class KinematicLadybugDeath {
   // bip de la cinématique
   private int                bip         = 0;
 
   // Liste des images des images à afficher lors de la cinématique
   private List<PicturesEnum> lstPictures = new ArrayList<>(
-      Arrays.asList(PicturesEnum.PACMAN_DEFAULT, PicturesEnum.PACMAN_UP_2, PicturesEnum.PACMAN_UP_3,
-          PicturesEnum.PACMAN_UP_4, PicturesEnum.PACMAN_UP_5, PicturesEnum.PACMAN_UP_6, PicturesEnum.PACMAN_UP_7,
-          PicturesEnum.PACMAN_UP_8, PicturesEnum.PACMAN_UP_9, PicturesEnum.PACMAN_UP_10, PicturesEnum.PACMAN_UP_11));
+      Arrays.asList(PicturesEnum.LADYBUG_DEFAULT, PicturesEnum.LADYBUG_UP_2,
+          PicturesEnum.LADYBUG_UP_3, PicturesEnum.LADYBUG_UP_4, PicturesEnum.LADYBUG_UP_5,
+          PicturesEnum.LADYBUG_UP_6, PicturesEnum.LADYBUG_UP_7, PicturesEnum.LADYBUG_UP_8,
+          PicturesEnum.LADYBUG_UP_9, PicturesEnum.LADYBUG_UP_10, PicturesEnum.LADYBUG_UP_11));
 
   private long               timeInMMs   = 0;
 
   /**
    * Contructeur privé
    */
-  public KinematicPacmanDeath(long timeInMMs) {
+  public KinematicLadybugDeath(long timeInMMs) {
     this.timeInMMs = timeInMMs;
   }
 
@@ -36,20 +37,20 @@ public class KinematicPacmanDeath {
   }
 
   /**
-   * Retourne l'image à afficher quand Pacman meurt.
-   * 
+   * Retourne l'image à afficher quand Ladybug meurt.
+   *
    * @return
    */
   public Image getImage() {
     // �chantillonnage en fonction du timer du modèle
-    long nbrBips = timeInMMs / Constants.PACE;
+    long nbrBips        = timeInMMs / Constants.PACE;
     // R�cup�ration du nombre d'images
-    int nbrImages = lstPictures.size();
+    int  nbrImages      = lstPictures.size();
 
     // Calcul du nombre de bip du timer du modèle par images
     long nbrBitPerImage = nbrBips / nbrImages;
     // Calcule de l'index de l'image à afficher
-    int numImage = (int) (bip / nbrBitPerImage);
+    int  numImage       = (int) (bip / nbrBitPerImage);
 
     // si le calcul est long, il se peut que l'index dépasse... on le rajuste
     if (numImage >= nbrImages)
@@ -73,8 +74,8 @@ public class KinematicPacmanDeath {
   }
 
   /**
-   * Test la fin de la musique de la mort de Pacman; utilisé par le modèle
-   * 
+   * Test la fin de la musique de la mort de Ladybug; utilisé par le modèle
+   *
    * @return
    */
   public boolean isEnd() {

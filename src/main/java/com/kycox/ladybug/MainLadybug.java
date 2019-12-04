@@ -12,11 +12,11 @@ import com.kycox.ladybug.engine.view.GameView;
  *
  * C'est elle à lancer :)
  */
-public class MainPacman {
+public class MainLadybug {
 
   /** Lancement du jeu */
   public static void main(String[] args) {
-    new MainPacman().launchTheGame();
+    new MainLadybug().launchTheGame();
   }
 
   Engine    engine;
@@ -27,17 +27,17 @@ public class MainPacman {
 
     System.out.println("******************************");
     System.out.println("*  LadyBug v0.0.1 SnapShot   *");
-    System.out.println("*  for Java 12 by �kycox     *");
+    System.out.println("*  for Java 12 by kycox      *");
     if (javaVersion.feature() == 12) {
       System.out.println("******************************");
-      // Création du moteur Pacman
+      // Création du moteur du jeu
       engine = new Engine();
 
       // Création de la vue
       SwingUtilities.invokeLater(() -> {
 
         // Création du JPanel de la View du jeu
-        GameView gameView = engine.getPacmanView();
+        GameView gameView = engine.getGameView();
         mainFrame = new MainFrame();
         mainFrame.addGameView(gameView);
 

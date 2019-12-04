@@ -6,7 +6,7 @@ import java.util.List;
 public interface ILevel {
   public Point getGhostRegenerateBlockPoint();
 
-  public Point getInitPacmanBlockPos();
+  public Point getInitLadybugBlockPos();
 
   public List<ScreenBlock> getLstBlocks();
 

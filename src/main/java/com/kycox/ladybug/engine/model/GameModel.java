@@ -9,15 +9,15 @@ import java.util.Observable;
 import javax.swing.Timer;
 
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.constant.KinematicPacmanDeath;
+import com.kycox.ladybug.constant.KinematicLadybugDeath;
 import com.kycox.ladybug.constant.SoundsEnum;
 import com.kycox.ladybug.constant.SuperPowerTimerEnum;
 import com.kycox.ladybug.engine.element.ghost.GhostsGroup;
 import com.kycox.ladybug.engine.element.ghost.action.AllGhostsActions;
 import com.kycox.ladybug.engine.element.ghost.set.GhostStatusEnum;
-import com.kycox.ladybug.engine.element.pacman.Pacman;
-import com.kycox.ladybug.engine.element.pacman.action.PacmanActions;
-import com.kycox.ladybug.engine.element.pacman.set.PacmanStatusEnum;
+import com.kycox.ladybug.engine.element.ladybug.Ladybug;
+import com.kycox.ladybug.engine.element.ladybug.action.LadybugActions;
+import com.kycox.ladybug.engine.element.ladybug.set.LadybugStatusEnum;
 import com.kycox.ladybug.engine.timer.SuperPowerTimer;
 import com.kycox.ladybug.level.ScreenData;
 import com.kycox.ladybug.score.GameScore;
@@ -32,36 +32,36 @@ import com.kycox.ladybug.tools.map.CheckLevelMap;
 
 @SuppressWarnings("deprecation")
 public class GameModel extends Observable {
-  private boolean              beginNewLevel        = false;
+  private boolean               beginNewLevel         = false;
 
   /** Objet Score du jeu */
-  private GameScore            gameScore            = new GameScore();
+  private GameScore             gameScore             = new GameScore();
 
-  private GameSounds           gameSounds           = new GameSounds();
+  private GameSounds            gameSounds            = new GameSounds();
 
-  private GameStatus           gameStatus           = new GameStatus();
+  private GameStatus            gameStatus            = new GameStatus();
 
   /** Coeur du jeu */
-  private final Timer          gameTimer            = createTimer();
+  private final Timer           gameTimer             = createTimer();
 
-  private Point                ghostRequest         = Constants.POINT_ZERO;
+  private Point                 ghostRequest          = Constants.POINT_ZERO;
 
-  private GhostsGroup          groupGhosts          = null;
+  private GhostsGroup           groupGhosts           = null;
 
-  private GroupIncrementScores groupIncrementScores = new GroupIncrementScores();
+  private GroupIncrementScores  groupIncrementScores  = new GroupIncrementScores();
 
-  private KinematicPacmanDeath kinematicPacmanDeath = new KinematicPacmanDeath(
-      gameSounds.getMicrosecondLengthPacmanDeath());
+  private KinematicLadybugDeath kinematicLadybugDeath = new KinematicLadybugDeath(
+      gameSounds.getMicrosecondLengthLadybugDeath());
+
+  private Ladybug               ladybug               = new Ladybug();
 
   /** Score de l'ancienne partie */
-  private int                  oldScore             = -1;
+  private int                   oldScore              = -1;
 
-  private Pacman               pacman               = new Pacman();
+  private ScreenData            screenData            = new ScreenData();
 
-  private ScreenData           screenData           = new ScreenData();
-
-  /** Timer pour le super power de Pacman */
-  private SuperPowerTimer      superPowerTimer      = new SuperPowerTimer(1);
+  /** Timer pour le super power de ladybug */
+  private SuperPowerTimer       superPowerTimer       = new SuperPowerTimer(1);
 
   /**
    * Constructeur
@@ -101,8 +101,12 @@ public class GameModel extends Observable {
     return groupIncrementScores;
   }
 
-  public KinematicPacmanDeath getKinematicPacmanDeath() {
-    return kinematicPacmanDeath;
+  public KinematicLadybugDeath getKinematicLadybugDeath() {
+    return kinematicLadybugDeath;
+  }
+
+  public Ladybug getLadybug() {
+    return ladybug;
   }
 
   /**
@@ -110,10 +114,6 @@ public class GameModel extends Observable {
    */
   public int getOldScore() {
     return oldScore;
-  }
-
-  public Pacman getPacman() {
-    return pacman;
   }
 
   public ScreenData getScreenData() {
@@ -133,9 +133,9 @@ public class GameModel extends Observable {
     CheckLevelMap checkData = new CheckLevelMap();
     checkData.check(screenData);
     // 3 vies par défaut
-    pacman.setLifesLeft(3);
-    // Pacman n'est pas en vie lors de l'initialisation du jeu
-    pacman.setStatus(PacmanStatusEnum.DEAD);
+    ladybug.setLifesLeft(3);
+    // ladybug n'est pas en vie lors de l'initialisation du jeu
+    ladybug.setStatus(LadybugStatusEnum.DEAD);
     // initialise les score
     gameScore.init();
     // Initialise le groupe de fantôme
@@ -164,8 +164,8 @@ public class GameModel extends Observable {
     groupGhosts.setFear(false);
     // début du level : utile pour le son du jingle
     setBeginNewLevel(true);
-    // initialisation de la cinématique de la mort de pacman
-    kinematicPacmanDeath.initBip();
+    // initialisation de la cinématique de la mort de ladybug
+    kinematicLadybugDeath.initBip();
     // on continue le level
     continueLevel();
   }
@@ -232,7 +232,7 @@ public class GameModel extends Observable {
    * Vérifier si le labyrinthe est terminé
    */
   private void checkMaze() {
-    // Niveau termin�
+    // Niveau terminé
     if (screenData.getNbrBlocksWithPoint() == 0) {
       gameScore.addScore(Constants.SCORE_END_LEVEL);
       initLevel();
@@ -242,16 +242,16 @@ public class GameModel extends Observable {
   /**
    * Paramêtrage des fantômes dans le niveau actuel
    *
-   * Initialisation des directions et de la vue de pacman
+   * Initialisation des directions et de la vue de ladybug
    *
-   * suite de l'initialisation du niveau ou quand pacman meurt
+   * suite de l'initialisation du niveau ou quand ladybug meurt
    */
   private void continueLevel() {
     // arrêt de tous les sons avant de continuer
     gameSounds.stopAllSounds();
 
-    // initialise Pacman pour le niveau
-    pacman.setStartLevel(gameStatus.getNumLevel(), screenData);
+    // initialise ladybug pour le niveau
+    ladybug.setStartLevel(gameStatus.getNumLevel(), screenData);
 
     // initialise les fantômes
     groupGhosts.setStartLevel(gameStatus.getNumLevel(), screenData);
@@ -268,10 +268,10 @@ public class GameModel extends Observable {
       // initialisation du con
       gameSounds.init();
 
-      if (gameStatus.isInGame() && PacmanStatusEnum.isDead().test(pacman)) {
-        pacmanIsDead();
-      } else if (gameStatus.isInGame() && PacmanStatusEnum.isDying().test(pacman)) {
-        pacmanIsDying();
+      if (gameStatus.isInGame() && LadybugStatusEnum.isDead().test(ladybug)) {
+        ladybugIsDead();
+      } else if (gameStatus.isInGame() && LadybugStatusEnum.isDying().test(ladybug)) {
+        ladybugIsDying();
       } else if (gameStatus.isInGame() && groupGhosts.isDeadKeyGhost()) {
         gameStatus.setStopGame();
         System.out.println("Le fantôme a perdu");
@@ -280,32 +280,32 @@ public class GameModel extends Observable {
         // Etat des fantômes de REGENERATING à NORMAL
         groupGhosts.setGhostStatusAfterRegeneration();
 
-// Déplacement de Pacman et récupération de ses actions
-        PacmanActions pacmanActions = pacman.movePacman(screenData);
+// Déplacement de ladybug et récupération de ses actions
+        LadybugActions ladybugActions = ladybug.moveLadybug(screenData);
 
 // Déplacement des fantômes
-        groupGhosts.moveGhosts(screenData, pacman, ghostRequest);
+        groupGhosts.moveGhosts(screenData, ladybug, ghostRequest);
 
 // Détections des actions des fantômes
-        AllGhostsActions allGhostsActions = groupGhosts.setAllGhostsActions(pacman);
+        AllGhostsActions allGhostsActions = groupGhosts.setAllGhostsActions(ladybug);
 
 // GESTION DES INCREMENTS SCORES
-        pacmanActions.addIncrementScores(groupIncrementScores);
+        ladybugActions.addIncrementScores(groupIncrementScores);
         allGhostsActions.addIncrementScores(groupIncrementScores);
         groupIncrementScores.removeIfDying();
 
 // GESTION DE L'ETAT DES FANTOMES
         // Etats des fantômes
-        allGhostsActions.setGhostSettingAfterPacmanContact(gameStatus.getNumLevel());
+        allGhostsActions.setGhostSettingAfterLadybugContact(gameStatus.getNumLevel());
 
         // modifier la vitesse des fantôme en cours de partie
         groupGhosts.setSpeedDuringGame(gameStatus.getNumLevel());
 
-// GESTION DE LA MORT DE PACMAN
-        // modification de l'état de Pacman en fonction des actions détectées des
+// GESTION DE LA MORT DE LADYBUG
+        // modification de l'état de ladybug en fonction des actions détectées des
         // fantômes
-        if (allGhostsActions.eatPacman()) {
-          pacman.setStatus(PacmanStatusEnum.DYING);
+        if (allGhostsActions.eatLadybug()) {
+          ladybug.setStatus(LadybugStatusEnum.DYING);
           allGhostsActions.addNewLifeToKeyGhost();
         }
 
@@ -317,34 +317,34 @@ public class GameModel extends Observable {
         } else if ((superPowerTimer.getStatus() == SuperPowerTimerEnum.STOP)) {
           groupGhosts.setFear(false);
         }
-        // Active le timer du super power si Pacman a mangé un méga point
+        // Active le timer du super power si ladybug a mangé un méga point
         // Peut être le déplacer de là ??
-        if (pacmanActions.hasEatenAMegaPoint()) {
+        if (ladybugActions.hasEatenAMegaPoint()) {
           runSuperPowerTimer();
           groupGhosts.setFear(true);
         }
 
 // SCORE
         // Ajoute du score
-        gameScore.setScore(allGhostsActions, pacmanActions);
+        gameScore.setScore(allGhostsActions, ladybugActions);
         // ajout d'une vie supplémentaire si besoin
         if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
           gameScore.initIncrementScore();
-          pacman.addNewLife();
+          ladybug.addNewLife();
           // Ajout du son Extra pac
-          gameSounds.addSounds(SoundsEnum.PACMAN_EXTRA_PAC.getIndex());
+          gameSounds.addSounds(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
         }
 
 // SCREENDATA
         // Mise à jour du ScreenData
-        screenData.updateScreenBlock(pacmanActions);
+        screenData.updateScreenBlock(ladybugActions);
         // vérification de la fin du tableau
         checkMaze();
 
 // SONDS
         // affecte les sons
-        gameSounds.setSound(groupGhosts, allGhostsActions, pacman, pacmanActions,
-            kinematicPacmanDeath);
+        gameSounds.setSound(groupGhosts, allGhostsActions, ladybug, ladybugActions,
+            kinematicLadybugDeath);
       }
       // notifie la view qu'il y a eu du changement
       notifyObservers();
@@ -355,37 +355,37 @@ public class GameModel extends Observable {
   }
 
   /**
-   * Pacman a rencontré un fantôme !! Le jeu est terminé si toutes les vies de pacman ont été
+   * Ladybug a rencontré un fantôme !! Le jeu est terminé si toutes les vies de ladybug ont été
    * utilisées.
    */
-  private void pacmanIsDead() {
-    pacman.minusLifesLeft();
+  private void ladybugIsDead() {
+    ladybug.minusLifesLeft();
     // test fin du jeu
-    if (pacman.getLifesLeft() == 0) {
+    if (ladybug.getLifesLeft() == 0) {
       oldScore = gameScore.getScore();
       gameStatus.setStopGame();
       // à mettre ailleurs :
       initGame();
-      System.out.println("Pacman a perdu");
+      System.out.println("Ladybug a perdu");
     } else {
       continueLevel();
     }
   }
 
   /**
-   * Cin�matique de la mort de Pacman
+   * Cinématique de la mort de ladybug
    */
-  private void pacmanIsDying() {
+  private void ladybugIsDying() {
     // déplacement des fantômes
-    groupGhosts.moveGhosts(screenData, pacman, ghostRequest);
+    groupGhosts.moveGhosts(screenData, ladybug, ghostRequest);
 
     // Incrémentation du bip pour la cinématique
-    kinematicPacmanDeath.incrementBip();
+    kinematicLadybugDeath.incrementBip();
 
-    // Fin de la cinématique de la mort de Pacman
-    if (kinematicPacmanDeath.isEnd()) {
-      pacman.setStatus(PacmanStatusEnum.DEAD);
-      kinematicPacmanDeath.initBip();
+    // Fin de la cinématique de la mort de ladybug
+    if (kinematicLadybugDeath.isEnd()) {
+      ladybug.setStatus(LadybugStatusEnum.DEAD);
+      kinematicLadybugDeath.initBip();
     }
   }
 
@@ -398,7 +398,7 @@ public class GameModel extends Observable {
   }
 
   /**
-   * Lancement du timer pour le super power de Pacman
+   * Lancement du timer pour le super power de ladybug
    */
   private void runSuperPowerTimer() {
     // on force l'arrêt des timers qui ont pu être démarrés dans la partie

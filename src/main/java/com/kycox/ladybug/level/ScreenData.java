@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.engine.element.pacman.action.PacmanActions;
+import com.kycox.ladybug.engine.element.ladybug.action.LadybugActions;
 import com.kycox.ladybug.tools.Utils;
 import com.kycox.ladybug.tools.dijkstra.UnitDijkstra;
 
@@ -58,12 +58,12 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne la position initiale de Pacman
+   * Retourne la position initiale de ladybug
    *
    * @return
    */
-  public Point getInitPacmanPos() {
-    return Utils.convertPointToGraphicUnit(currentLevel.getInitPacmanBlockPos());
+  public Point getInitLadybugPos() {
+    return Utils.convertPointToGraphicUnit(currentLevel.getInitLadybugBlockPos());
   }
 
   /**
@@ -85,7 +85,7 @@ public final class ScreenData {
   }
 
   /**
-   * Retourne le nombre de points à manger par pacman présents dans le IData
+   * Retourne le nombre de points à manger par ladybug présents dans le IData
    */
   public int getNbrBlocksWithPoint() {
     return (int) lstDataBlocks.stream().filter(ScreenBlock::isPoint).count();
@@ -122,7 +122,7 @@ public final class ScreenData {
 
   /**
    * Retourne les coordonnées aléatoire GRAPHIQUE d'un block qui contient un point à manger par
-   * pacman
+   * ladybug
    *
    * @return
    */
@@ -211,10 +211,10 @@ public final class ScreenData {
    *
    * FIXME : à mettre ailleurs
    */
-  public void updateScreenBlock(PacmanActions pacmanActions) {
-    if (pacmanActions.hasEatenAMegaPoint() || pacmanActions.hasEatenAPoint()) {
+  public void updateScreenBlock(LadybugActions ladybugActions) {
+    if (ladybugActions.hasEatenAMegaPoint() || ladybugActions.hasEatenAPoint()) {
       // Suppression du point dans le ScreenBlock de lstDataBlocks
-      ScreenBlock currentScreenBlock = pacmanActions.getCurrentScreenBlock();
+      ScreenBlock currentScreenBlock = ladybugActions.getCurrentScreenBlock();
       currentScreenBlock.removePoint();
 
       // Suppression du point dans de ScreenBlock de lstViewBlocks

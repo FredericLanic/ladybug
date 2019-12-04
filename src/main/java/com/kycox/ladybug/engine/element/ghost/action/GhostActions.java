@@ -6,7 +6,7 @@ public class GhostActions {
 
   private boolean eaten       = false;
 
-  private boolean hasEatenPacman   = false;
+  private boolean hasEatenLadybug   = false;
 
   private Ghost   ghost;
 
@@ -20,8 +20,8 @@ public class GhostActions {
     return eaten;
   }
 
-  public boolean hasEatenPacman() {
-    return hasEatenPacman;
+  public boolean hasEatenLadybug() {
+    return hasEatenLadybug;
   }
 
   public boolean isRegenerated() {
@@ -32,8 +32,8 @@ public class GhostActions {
     this.eaten = eaten;
   }
 
-  public void setHasEatenPacman(boolean eatPacman) {
-    this.hasEatenPacman = eatPacman;
+  public void setHasEatenLadybug(boolean eatLadybug) {
+    this.hasEatenLadybug = eatLadybug;
   }
 
   public void setGhost(Ghost ghost) {

@@ -37,8 +37,6 @@ public class MainFrame extends JFrame {
 
   /**
    * Constructeur
-   *
-   * @param pacmanController
    */
   public MainFrame() {
     init();

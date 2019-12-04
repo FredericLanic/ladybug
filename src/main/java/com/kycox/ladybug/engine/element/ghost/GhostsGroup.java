@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import com.kycox.ladybug.engine.element.ghost.action.AllGhostsActions;
 import com.kycox.ladybug.engine.element.ghost.set.GhostStatusEnum;
-import com.kycox.ladybug.engine.element.pacman.Pacman;
+import com.kycox.ladybug.engine.element.ladybug.Ladybug;
 import com.kycox.ladybug.formules.BlinkyIncrementSpeed;
 import com.kycox.ladybug.level.ScreenData;
 import com.kycox.ladybug.tools.Utils;
@@ -105,17 +105,17 @@ public class GhostsGroup {
    * Déplacement des fantômes
    *
    * @param screenData   : la map
-   * @param pacman       : pacman
+   * @param ladybug      : ladybug
    * @param ghostRequest : requête du fantôme non computé
    */
-  public void moveGhosts(ScreenData screenData, Pacman pacman, Point ghostRequest) {
+  public void moveGhosts(ScreenData screenData, Ladybug ladybug, Point ghostRequest) {
     // Déplacement des fantômes gérés par l'ordinateur
     lstGhosts.stream().filter(Ghost::isComputed).forEach(g -> g
-        .moveGhostByComputer(Utils.convertPointToBlockUnit(pacman.getPosition()), screenData));
+        .moveGhostByComputer(Utils.convertPointToBlockUnit(ladybug.getPosition()), screenData));
 
     // Déplacement des fantômes gérés par l'humain
     lstGhosts.stream().filter(g -> !g.isComputed())
-        .forEach(g -> g.moveGhostByUser(Utils.convertPointToBlockUnit(pacman.getPosition()),
+        .forEach(g -> g.moveGhostByUser(Utils.convertPointToBlockUnit(ladybug.getPosition()),
             screenData, ghostRequest));
   }
 
@@ -125,9 +125,9 @@ public class GhostsGroup {
    * @param inGame
    * @param numLevel
    */
-  public AllGhostsActions setAllGhostsActions(Pacman pacman) {
+  public AllGhostsActions setAllGhostsActions(Ladybug ladybug) {
     AllGhostsActions ghostsActions = new AllGhostsActions();
-    lstGhosts.stream().forEach(g -> ghostsActions.addGhostAction(g.setGhostActions(pacman)));
+    lstGhosts.stream().forEach(g -> ghostsActions.addGhostAction(g.setGhostActions(ladybug)));
     return ghostsActions;
   }
 

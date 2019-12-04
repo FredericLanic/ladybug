@@ -3,10 +3,10 @@ package com.kycox.ladybug.engine.element;
 import com.kycox.ladybug.constant.Constants;
 
 public class SpeedFunction {
-  private static final SpeedFunction pacmanSpeed = new SpeedFunction();
+  private static final SpeedFunction ladybugSpeed = new SpeedFunction();
 
   public static SpeedFunction getInstance() {
-    return pacmanSpeed;
+    return ladybugSpeed;
   }
 
   private double a           = 0;
@@ -23,8 +23,8 @@ public class SpeedFunction {
   }
 
   /**
-   * Retourne la vitesse calculée de Pacman en fonction du niveau
-   * 
+   * Retourne la vitesse calculée de ladybug en fonction du niveau
+   *
    * @param numLevel
    * @return
    */
@@ -35,8 +35,8 @@ public class SpeedFunction {
   }
 
   /**
-   * Retourne la vitesse calculée -1 de Pacman en fonction du niveau
-   * 
+   * Retourne la vitesse calculée -1 de ladybug en fonction du niveau
+   *
    * @param numLevel
    * @return
    */
@@ -49,8 +49,8 @@ public class SpeedFunction {
   }
 
   /**
-   * Retourne la vitesse calculée +1 de Pacman en fonction du niveau
-   * 
+   * Retourne la vitesse calculée +1 de ladybug en fonction du niveau
+   *
    * @param numLevel
    * @return
    */
@@ -63,8 +63,8 @@ public class SpeedFunction {
   }
 
   /**
-   * Retourne la vitesse de Pacman spéficique
-   * 
+   * Retourne la vitesse de ladybug spéficique
+   *
    */
   public int getSpecificIndexSpeed(int numLevel) {
     int id = (int) (a * numLevel + b);

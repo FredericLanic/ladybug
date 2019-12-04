@@ -19,50 +19,31 @@ public class KeyGameController extends KeyAdapter {
   // Utiliser plutôt Jamepad qui me semble facilement utilisable;
 
   /**
-   * Le mod�le
-   */
-  protected GameModel pacmanModel;
-
-  /**
    * La vue
    */
-  private GameView    pacmanView;
+  private GameView    gameView;
+
+  /**
+   * Le mod�le
+   */
+  protected GameModel gameModel;
 
   /**
    * Constructeur
-   * 
-   * @param pacmanModel
+   *
+   * @param gameModel
    */
-  public KeyGameController(GameModel pacmanModel) {
-    this.pacmanModel = pacmanModel;
-  }
-
-  /**
-   * Jeu en pause
-   */
-  void gameInPause() {
-    if (pacmanModel.gameTimerIsRunning())
-      pacmanModel.stopGameTimer();
-    else
-      pacmanModel.startGameTimer();
+  public KeyGameController(GameModel gameModel) {
+    this.gameModel = gameModel;
   }
 
   /**
    * Retourne la vue
-   * 
+   *
    * @return
    */
-  public GameView getPacmanView() {
-    return pacmanView;
-  }
-
-  /**
-   * Déplacement de blinky
-   * 
-   * @param direction
-   */
-  void ghostMove(Point direction) {
-    pacmanModel.setGhostRequest(direction);
+  public GameView getGameView() {
+    return gameView;
   }
 
   /**
@@ -76,7 +57,7 @@ public class KeyGameController extends KeyAdapter {
       System.exit(0);
     }
 
-    if (pacmanModel.getGameStatus().isInGame()) {
+    if (gameModel.getGameStatus().isInGame()) {
       // Gestion des touches durant une partie
       manageKeysInGame(keyCode);
     } else {
@@ -90,23 +71,23 @@ public class KeyGameController extends KeyAdapter {
 
   /**
    * Gestion des touches in game
-   * 
+   *
    * @param keyCode
    */
   private void manageKeysInGame(int keyCode) {
     switch (keyCode) {
-    // Mouvement Pacman
+    // Mouvement L
     case KeyEvent.VK_LEFT:
-      pacmanMove(Constants.POINT_LEFT);
+      ladybugMove(Constants.POINT_LEFT);
       break;
     case KeyEvent.VK_RIGHT:
-      pacmanMove(Constants.POINT_RIGHT);
+      ladybugMove(Constants.POINT_RIGHT);
       break;
     case KeyEvent.VK_UP:
-      pacmanMove(Constants.POINT_UP);
+      ladybugMove(Constants.POINT_UP);
       break;
     case KeyEvent.VK_DOWN:
-      pacmanMove(Constants.POINT_DOWN);
+      ladybugMove(Constants.POINT_DOWN);
       break;
     // Mouvement du fant�me (joueur 2)
     case KeyEvent.VK_Z:
@@ -141,11 +122,11 @@ public class KeyGameController extends KeyAdapter {
 
   /**
    * Gestion des touches durant la pr�sentation
-   * 
+   *
    * @param keyCode
    */
   private void manageKeysPresentation(int keyCode) {
-    // Gestion des touches durant la pr�sentation
+    // Gestion des touches durant la présentation
     switch (keyCode) {
     // Start Game
     case KeyEvent.VK_S: // 's' ou 'S'
@@ -166,45 +147,64 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * Pacman is moving
-   * 
+   * Jeu en pause
+   */
+  void gameInPause() {
+    if (gameModel.gameTimerIsRunning())
+      gameModel.stopGameTimer();
+    else
+      gameModel.startGameTimer();
+  }
+
+  /**
+   * Déplacement de blinky
+   *
    * @param direction
    */
-  void pacmanMove(Point direction) {
-    pacmanModel.getPacman().setMovingRequete(direction);
+  void ghostMove(Point direction) {
+    gameModel.setGhostRequest(direction);
+  }
+
+  /**
+   * Ladybug is moving
+   *
+   * @param direction
+   */
+  void ladybugMove(Point direction) {
+    gameModel.getLadybug().setMovingRequete(direction);
   }
 
   /**
    * Jeu en mode configuration
    */
   void setConfig() {
-    pacmanModel.getGameStatus().setToConfigutation();
+    gameModel.getGameStatus().setToConfigutation();
   }
 
   /**
    * D�but du jeu
    */
   void startGame() {
-    pacmanModel.getGameStatus().setInGame();
-    pacmanModel.initGame();
-    pacmanModel.initLevel();
+    gameModel.getGameStatus().setInGame();
+    gameModel.initGame();
+    gameModel.initLevel();
   }
 
   /**
    * Start / Stop les sons
    */
   void startStopSound() {
-    pacmanModel.getGameSounds().startStop();
+    gameModel.getGameSounds().startStop();
   }
 
   /**
    * Arret forc� du jeu
    */
   void stopGame() {
-    if (pacmanModel.gameTimerIsRunning()) {
-      pacmanModel.setOldScore(-1);
-      pacmanModel.getGameStatus().setStopGame();
-      pacmanModel.initGame();
+    if (gameModel.gameTimerIsRunning()) {
+      gameModel.setOldScore(-1);
+      gameModel.getGameStatus().setStopGame();
+      gameModel.initGame();
     }
   }
 }

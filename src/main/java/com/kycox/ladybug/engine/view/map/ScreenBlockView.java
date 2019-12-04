@@ -12,7 +12,7 @@ import com.kycox.ladybug.tools.Utils;
 
 public class ScreenBlockView {
 
-  private static final Color bluePacman     = new Color(33, 33, 255);
+  private static final Color blueLadybug     = new Color(33, 33, 255);
 
   // Couleur d'un point
   private static final Color dotColor       = new Color(192, 192, 0);
@@ -50,7 +50,7 @@ public class ScreenBlockView {
     ScreenBlock screenBlock = screenData
         .getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 
-    g2d.setColor(bluePacman);
+    g2d.setColor(blueLadybug);
     g2d.setStroke(new BasicStroke(2));
 
     Point currentCoord = screenBlock.getCoordinate();

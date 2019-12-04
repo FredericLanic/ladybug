@@ -39,7 +39,7 @@ public abstract class Body {
   }
 
   /**
-   * Le fantôme ou pacman change de block
+   * Le fantôme ou ladybug change de block
    *
    * @param pointPos : coordonnées DE L'ECRAN (x,y) dans la fenêtre
    * @return

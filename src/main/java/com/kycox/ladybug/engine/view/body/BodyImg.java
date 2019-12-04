@@ -3,8 +3,8 @@ package com.kycox.ladybug.engine.view.body;
 import java.awt.Image;
 
 public class BodyImg {
-  // Image de Pacman
-  private Image     img  = null;
+  // Image de Ladybug
+  private Image   img  = null;
   private BodyImg next = null;
 
   public BodyImg(Image img) {

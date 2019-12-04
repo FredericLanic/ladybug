@@ -23,7 +23,7 @@ public class Blinky extends Ghost {
 
   @Override
   public void getInitSpeed(int numLevel) {
-    // Vitesse de Pacman moins 1
+    // Vitesse de Ladybug moins 1
     initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel));
   }
 
