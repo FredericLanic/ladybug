@@ -1,3 +1,19 @@
+/**
+  Copyright (C) 2019  Frédéric Lanic frederic.lanic@outlook.fr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package com.kycox.ladybug.tools.map;
 
 import java.awt.Point;
@@ -17,7 +33,7 @@ public class CheckLevelMap {
 
   /**
    * Vérifie le ScreenData
-   * 
+   *
    * @param data
    */
   public void check(ScreenData screenData) {
@@ -26,30 +42,30 @@ public class CheckLevelMap {
 
     for (int x = 0; x < nbrBlocksByLines; x++) {
       for (int y = 0; y < nbrLines; y++) {
-        Point currentPoint = new Point(x, y);
-        ScreenBlock block = screenData.getDataBlock(currentPoint);
+        Point       currentPoint = new Point(x, y);
+        ScreenBlock block        = screenData.getDataBlock(currentPoint);
         checkScreenBlock(block, screenData);
       }
     }
   }
 
   /**
-   * 
+   *
    * Vérifie le block
-   * 
+   *
    * @param block
    * @return
    */
   private boolean checkScreenBlock(ScreenBlock block, ScreenData screenData) {
-    boolean hasChanged = false;
+    boolean     hasChanged = false;
 
-    Point checkedPoint;
+    Point       checkedPoint;
     ScreenBlock previousScreenBlock;
 
-    boolean isLeft = block.isLeft();
-    boolean isRight = block.isRight();
-    boolean isUp = block.isUp();
-    boolean isDown = block.isDown();
+    boolean     isLeft     = block.isLeft();
+    boolean     isRight    = block.isRight();
+    boolean     isUp       = block.isUp();
+    boolean     isDown     = block.isDown();
 
     // vérification des bordures !!!
 

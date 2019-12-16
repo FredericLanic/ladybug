@@ -1,3 +1,19 @@
+/**
+  Copyright (C) 2019  Frédéric Lanic frederic.lanic@outlook.fr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package com.kycox.ladybug.engine.timer;
 
 import java.util.Timer;
@@ -6,8 +22,8 @@ import java.util.TimerTask;
 import com.kycox.ladybug.constant.SuperPowerTimerEnum;
 
 /**
- * Double timer utilisé pour afficher les fantômes qui ont peur et qui
- * clignottent ensuite. 5 Secondes avant la fin, les fantômes vont clignoter
+ * Double timer utilisé pour afficher les fantômes qui ont peur et qui clignottent ensuite. 5
+ * Secondes avant la fin, les fantômes vont clignoter
  *
  */
 public class SuperPowerTimer {
@@ -46,7 +62,7 @@ public class SuperPowerTimer {
 
   /**
    * Constructeur
-   * 
+   *
    * @param numThread : numéro du thread (1: principal, autrement clignottement)
    */
   public SuperPowerTimer(int numThread) {
@@ -54,8 +70,7 @@ public class SuperPowerTimer {
   }
 
   /**
-   * Arrete le super power : le niveau est termin�, ou bien un autre super power a
-   * été pris
+   * Arrete le super power : le niveau est termin�, ou bien un autre super power a été pris
    */
   public void forcedStop() {
     // Arrêt forcé du premier timer
@@ -73,7 +88,7 @@ public class SuperPowerTimer {
 
   /**
    * Return the status of the super power time : see SuperPowerEnum
-   * 
+   *
    * @return
    */
   public SuperPowerTimerEnum getStatus() {

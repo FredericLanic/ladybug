@@ -1,3 +1,19 @@
+/**
+  Copyright (C) 2019  Frédéric Lanic frederic.lanic@outlook.fr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package com.kycox.ladybug.engine.model;
 
 import com.kycox.ladybug.constant.GameStatusEnum;
@@ -17,16 +33,12 @@ public class GameStatus {
     return numLevel;
   }
 
-  public boolean isToConfiguration() {
-    return gameStatusEnum == GameStatusEnum.TO_CONF_LOCAL_USR;
-  }
-
   public boolean isInGame() {
     return gameStatusEnum == GameStatusEnum.IN_GAME;
   }
 
-  public void setToConfigutation() {
-    gameStatusEnum = GameStatusEnum.TO_CONF_LOCAL_USR;
+  public boolean isToConfiguration() {
+    return gameStatusEnum == GameStatusEnum.TO_CONF_LOCAL_USR;
   }
 
   public void setInGame() {
@@ -39,5 +51,9 @@ public class GameStatus {
 
   public void setStopGame() {
     gameStatusEnum = GameStatusEnum.NO_GAME;
+  }
+
+  public void setToConfigutation() {
+    gameStatusEnum = GameStatusEnum.TO_CONF_LOCAL_USR;
   }
 }
