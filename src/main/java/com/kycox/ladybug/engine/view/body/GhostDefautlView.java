@@ -37,16 +37,15 @@ public class GhostDefautlView {
 
   public Image getImage(Ghost ghost) {
 
-    Image ghostImg;
+    if (ghost.getDirection().x < 0)
+      return ghost.getGhostSettings().getGhostRightEyesImg();
 
-    if (ghost.getDirection().x < 0) {
-      // image générique du fantôme qui a peut : les yeux à droite
-      ghostImg = ghost.getGhostSettings().getGhostRightEyesImg();
-    } else {
-      // image générique du fantôme qui a peut : les yeux à gauche
-      ghostImg = ghost.getGhostSettings().getGhostLeftEyesImg();
-    }
+    if (ghost.getDirection().x > 0)
+      return ghost.getGhostSettings().getGhostLeftEyesImg();
 
-    return ghostImg;
+    if (ghost.getDirection().y > 0)
+      return ghost.getGhostSettings().getGhostDownEyesImg();
+
+    return ghost.getGhostSettings().getGhostUpEyesImg();
   }
 }

@@ -40,12 +40,16 @@ public enum GhostsSettingsEnum {
   // Clyde (INDIFFERENT - orange) feint l'indifférence. De temps en temps, il
   // choisit une direction au hasard (qui peut être celle de Pac-Man).
   BLINKY(PicturesEnum.GHOST_BLINKY_RIGHT_EYES, PicturesEnum.GHOST_BLINKY_LEFT_EYES,
+      PicturesEnum.GHOST_BLINKY_UP_EYES, PicturesEnum.GHOST_BLINKY_DOWN_EYES,
       GhostBehaviousEnum.AGGRESSIVE, true),
   CLYDE(PicturesEnum.GHOST_CLYDE_RIGHT_EYES, PicturesEnum.GHOST_CLYDE_LEFT_EYES,
+      PicturesEnum.GHOST_CLYDE_UP_EYES, PicturesEnum.GHOST_CLYDE_DOWN_EYES,
       GhostBehaviousEnum.STUPID, true),
   INKY(PicturesEnum.GHOST_INKY_RIGHT_EYES, PicturesEnum.GHOST_INKY_LEFT_EYES,
-      GhostBehaviousEnum.STUPID, true),
+      PicturesEnum.GHOST_INKY_UP_EYES, PicturesEnum.GHOST_INKY_DOWN_EYES, GhostBehaviousEnum.STUPID,
+      true),
   PINKY(PicturesEnum.GHOST_PINKY_RIGHT_EYES, PicturesEnum.GHOST_PINKY_LEFT_EYES,
+      PicturesEnum.GHOST_PINKY_UP_EYES, PicturesEnum.GHOST_PINKY_DOWN_EYES,
       GhostBehaviousEnum.SMART, true);
 
   /**
@@ -60,11 +64,12 @@ public enum GhostsSettingsEnum {
 
   private GhostBehaviousEnum behavious;
 
+  private PicturesEnum       downEyesImg;
+
   private boolean            isComputed;
-
   private PicturesEnum       leftEyesImg;
-
   private PicturesEnum       rightEyesImg;
+  private PicturesEnum       upEyesImg;
 
   /**
    * Constructeur
@@ -74,9 +79,12 @@ public enum GhostsSettingsEnum {
    * @param rightEyesImg
    */
   private GhostsSettingsEnum(PicturesEnum leftEyesImg, PicturesEnum rightEyesImg,
-      GhostBehaviousEnum behavious, boolean isComputed) {
+      PicturesEnum upEyesImg, PicturesEnum downEyesImg, GhostBehaviousEnum behavious,
+      boolean isComputed) {
     this.leftEyesImg = leftEyesImg;
     this.rightEyesImg = rightEyesImg;
+    this.upEyesImg = upEyesImg;
+    this.downEyesImg = downEyesImg;
     this.behavious = behavious;
     this.isComputed = isComputed;
   }
@@ -88,6 +96,15 @@ public enum GhostsSettingsEnum {
    */
   public GhostBehaviousEnum getBehavious() {
     return behavious;
+  }
+
+  /**
+   * Retourne l'image du fantômes les yeux en bas
+   *
+   * @return
+   */
+  public Image getGhostDownEyesImg() {
+    return downEyesImg.getImg();
   }
 
   /**
@@ -106,6 +123,15 @@ public enum GhostsSettingsEnum {
    */
   public Image getGhostRightEyesImg() {
     return rightEyesImg.getImg();
+  }
+
+  /**
+   * Retourne l'image du fantômes les yeux en haut
+   *
+   * @return
+   */
+  public Image getGhostUpEyesImg() {
+    return upEyesImg.getImg();
   }
 
   public boolean isComputed() {

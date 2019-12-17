@@ -27,11 +27,20 @@ import javax.swing.ImageIcon;
  *
  */
 public enum PicturesEnum {
-  GHOST_BLINKY_LEFT_EYES("GhostRedLeft.png"), GHOST_BLINKY_RIGHT_EYES("GhostRedRight.png"),
-  GHOST_CLYDE_LEFT_EYES("GhostOrangeLeft.png"), GHOST_CLYDE_RIGHT_EYES("GhostOrangeRight.png"),
-  GHOST_INKY_LEFT_EYES("GhostBlueLeft.png"), GHOST_INKY_RIGHT_EYES("GhostBlueRight.png"),
-  GHOST_PINKY_LEFT_EYES("GhostPinkLeft.png"), GHOST_PINKY_RIGHT_EYES("GhostPinkRight.png"),
+  GHOST_BLINKY_DOWN_EYES("GhostRedDown.png"), GHOST_BLINKY_LEFT_EYES("GhostRedLeft.png"),
+  GHOST_BLINKY_RIGHT_EYES("GhostRedRight.png"), GHOST_BLINKY_UP_EYES("GhostRedUp.png"),
+
+  GHOST_CLYDE_DOWN_EYES("GhostOrangeDown.png"), GHOST_CLYDE_LEFT_EYES("GhostOrangeLeft.png"),
+  GHOST_CLYDE_RIGHT_EYES("GhostOrangeRight.png"), GHOST_CLYDE_UP_EYES("GhostOrangeUp.png"),
+
+  GHOST_INKY_DOWN_EYES("GhostBlueDown.png"), GHOST_INKY_LEFT_EYES("GhostBlueLeft.png"),
+  GHOST_INKY_RIGHT_EYES("GhostBlueRight.png"), GHOST_INKY_UP_EYES("GhostBlueUp.png"),
+
+  GHOST_PINKY_DOWN_EYES("GhostPinkDown.png"), GHOST_PINKY_LEFT_EYES("GhostPinkLeft.png"),
+  GHOST_PINKY_RIGHT_EYES("GhostPinkRight.png"), GHOST_PINKY_UP_EYES("GhostPinkUp.png"),
+
   GHOST_SCARED_LEFT_EYES("GhostScared1.png"), GHOST_SCARED_RIGHT_EYES("GhostScared2.png"),
+
   LADYBUG_DEFAULT("Ladybug1.gif"), LADYBUG_DOWN_2("Ladybug2down.gif"),
   LADYBUG_DOWN_3("Ladybug3down.gif"), LADYBUG_DOWN_4("Ladybug4down.gif"),
   LADYBUG_LEFT_2("Ladybug2left.gif"), LADYBUG_LEFT_3("Ladybug3left.gif"),
