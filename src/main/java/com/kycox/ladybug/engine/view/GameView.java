@@ -82,11 +82,6 @@ public class GameView extends JPanel implements Observer {
     confJDialog = new ConfJDialog(mainFrame);
   }
 
-//  @Override
-//  public void addNotify() {
-//    super.addNotify();
-//  }
-
   /**
    * Dessine le composant
    */
@@ -226,7 +221,7 @@ public class GameView extends JPanel implements Observer {
    * @param g
    */
   private void drawScoreAndLevel(Graphics2D g) {
-    // parfois le mod�le ne se charge pas tout de suite
+    // parfois le modèle ne se charge pas tout de suite
     if (gameModel == null)
       return;
 

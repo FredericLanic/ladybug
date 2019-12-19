@@ -20,14 +20,6 @@ import com.kycox.ladybug.level.ScreenData;
 
 public class BlinkyIncrementSpeed {
 
-  private double     a;
-
-  private double     b;
-
-  private double     R          = 80.0;
-
-  private ScreenData screenData = null;
-
   /**
    * aX²+bX+c (c=0)
    *
@@ -37,7 +29,15 @@ public class BlinkyIncrementSpeed {
    *
    */
 
-  private double     T          = 100.0;
+  private static double centPerCent          = 100.0;
+
+  private double        a;
+
+  private double        b;
+
+  private double        levelPerCent          = 80.0;
+
+  private ScreenData    screenData = null;
 
   public BlinkyIncrementSpeed(int numLevel, ScreenData screenData) {
     this.screenData = screenData;
@@ -47,8 +47,8 @@ public class BlinkyIncrementSpeed {
     // FIXME : puis on devrait faire R = 80 pour le niveau 1, et R = 20 pour le dernier
     // niveau
 
-    a = (T - 3 * R) / (R * R * T - R * T * T);
-    b = (T * T - 3 * R * R) / (R * T * (T - R));
+    a = (centPerCent - 3 * levelPerCent) / (levelPerCent * levelPerCent * centPerCent - levelPerCent * centPerCent * centPerCent);
+    b = (centPerCent * centPerCent - 3 * levelPerCent * levelPerCent) / (levelPerCent * centPerCent * (centPerCent - levelPerCent));
   }
 
   /**

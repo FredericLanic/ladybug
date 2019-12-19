@@ -34,18 +34,6 @@ import com.kycox.ladybug.engine.element.ladybug.set.LadybugStatusEnum;
  *
  */
 public class GameSounds {
-
-//  private static GameSounds gameSounds = new GameSounds();
-//
-//  /**
-//   * Retourne le singleton
-//   *
-//   * @return
-//   */
-//  public static GameSounds getInstance() {
-//    return gameSounds;
-//  }
-
   private Clip    clipBeginning       = null;
   private Clip    clipChomp           = null;
   private Clip    clipDeath           = null;

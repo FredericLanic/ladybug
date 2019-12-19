@@ -24,7 +24,7 @@ import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.engine.timer.TimerView;
 
-public class GhostDyingView extends TimerView {
+public class GhostDyingView implements TimerView {
 
   private static GhostDyingView ghostEatenlView = new GhostDyingView();
 

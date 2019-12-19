@@ -20,12 +20,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-public abstract class TimerView {
+public interface TimerView {
 
-  public Timer createTimer(int mms) {
-    ActionListener action = event -> {
-      doAction();
-    };
+  public default Timer createTimer(int mms) {
+    ActionListener action = event -> doAction();
 
     // Création d'un timer qui génère un tic
     return new Timer(mms, action);

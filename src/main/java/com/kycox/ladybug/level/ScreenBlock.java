@@ -86,17 +86,6 @@ public class ScreenBlock implements Cloneable {
     return content;
   }
 
-// Mis en commentaire; l'idée est bonne;
-// je ne souhaite pas actuellement mettre en public les différentes valeurs static de la classe.
-//  /**
-//   * Bordure en bas
-//   *
-//   * @return
-//   */
-//  public boolean is(int check) {
-//    return (content & check) != 0;
-//  }
-
   public Point getCoordinate() {
     return coordinate;
   }

@@ -198,7 +198,7 @@ public final class ScreenData {
     currentLevel = gameLevels.getLevel(numLevel);
     // Création des blocks
     lstDataBlocks = currentLevel.getLstBlocks();
-    // FIXME : vérification des bordure des blocks
+    // vérification des bordure des blocks
     CheckScreenBlockBorders checkScreenBlockBorders = new CheckScreenBlockBorders(this);
     checkScreenBlockBorders.checkDataBlockBorder();
     lstDataBlocks.stream()

@@ -30,7 +30,7 @@ public class Engine {
     gameModel = new GameModel();
 
     // PAD CONTROLLER
-//    PadController padController = new PadController(gameModel);
+    // PadController padController = new PadController(gameModel);
     // Seulement gestion du clavier : on verra pour la manette après
     keyGameController = new KeyGameController(gameModel);
 

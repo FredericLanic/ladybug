@@ -24,7 +24,7 @@ import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.engine.element.ghost.Ghost;
 import com.kycox.ladybug.engine.timer.TimerView;
 
-public class GhostFlashView extends TimerView {
+public class GhostFlashView implements TimerView {
 
   private static GhostFlashView ghostFlashView = new GhostFlashView();
 

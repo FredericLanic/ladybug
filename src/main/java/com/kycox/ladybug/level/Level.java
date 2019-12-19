@@ -23,13 +23,13 @@ import java.util.List;
 public abstract class Level implements ILevel {
 
   // Map
-  protected int levelDATA[];
+  protected int[] levelDATA;
 
   // Nombre de blocks par ligne
-  protected int nbrBlocksPerLine;
+  protected int   nbrBlocksPerLine;
 
   // Nombre de lignes
-  protected int nbrLines;
+  protected int   nbrLines;
 
   @Override
   public List<ScreenBlock> getLstBlocks() {

@@ -46,8 +46,7 @@ public class SpeedFunction {
    */
   public int getRealIndexSpeed(int numLevel) {
     // calcul de l'index de la vitesse
-    int id = (int) (a * numLevel + b);
-    return id;
+    return (int) (a * numLevel + b);
   }
 
   /**

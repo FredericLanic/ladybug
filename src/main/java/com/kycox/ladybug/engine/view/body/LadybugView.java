@@ -26,7 +26,7 @@ import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.engine.element.ladybug.Ladybug;
 import com.kycox.ladybug.engine.timer.TimerView;
 
-public class LadybugView extends TimerView {
+public class LadybugView implements TimerView {
   // Suite de body image
   private BodyImg bodyDownCurrent;
   private BodyImg bodyLeftCurrent;

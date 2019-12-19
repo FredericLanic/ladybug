@@ -132,7 +132,6 @@ public class ConfJDialog extends JDialog implements ActionListener {
     default:
       break;
     }
-    System.out.println(e);
 
     this.dispose();
 

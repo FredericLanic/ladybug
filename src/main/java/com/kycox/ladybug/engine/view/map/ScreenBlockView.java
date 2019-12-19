@@ -40,15 +40,8 @@ public class ScreenBlockView {
   private static final Color revivorColor   = new Color(128, 255, 255);
 
   public static void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
-
-//    g2d.setColor(Color.LIGHT_GRAY);
-//    g2d.drawRect(x, y, Constants.BLOCK_SIZE, Constants.BLOCK_SIZE);
-
     displayBorders(g2d, screenData, x, y);
     displayPoints(g2d, screenData, x, y);
-
-//    if (screenBlock.isNotAccessible())
-//      displayInsideLines(g2d, screenBlock);
   }
 
   /**
@@ -119,8 +112,6 @@ public class ScreenBlockView {
       g2d.drawArc(x, y, rayon, rayon, 270, 90);
     }
 
-//    g2d.setColor(Color.BLUE);
-
     if (screenBlock.isLeft() && screenBlock.isUp()
         && currentCoord.x < screenData.getNbrBlocksPerLine() - 1
         && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y)).isUp()) {
@@ -132,8 +123,6 @@ public class ScreenBlockView {
         && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y - 1)).isLeft()) {
       g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y, x + Constants.BLOCK_SIZE, y);
     }
-
-//    g2d.setColor(Color.RED);
 
     if (screenBlock.isLeft() && screenBlock.isDown()
         && currentCoord.x < screenData.getNbrBlocksPerLine() - 1
@@ -149,8 +138,6 @@ public class ScreenBlockView {
           y + Constants.BLOCK_SIZE);
     }
 
-//    g2d.setColor(Color.YELLOW);
-
     if (screenBlock.isRight() && screenBlock.isUp() && currentCoord.x > 0
         && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y)).isUp()) {
       g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
@@ -160,8 +147,6 @@ public class ScreenBlockView {
         && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isRight()) {
       g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
     }
-
-//    g2d.setColor(Color.WHITE);
 
     ScreenBlock sbTmp  = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y));
     ScreenBlock sbTmp1 = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1));
@@ -180,8 +165,6 @@ public class ScreenBlockView {
 
     // ********************//
 
-//    g2d.setColor(Color.BLUE);
-
     if (screenBlock.isRight() && screenBlock.isUp() && currentCoord.y < screenData.getNbrLines() - 1
         && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y + 1)).isRight()) {
       g2d.drawLine(x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2, x + Constants.BLOCK_SIZE,
@@ -195,8 +178,6 @@ public class ScreenBlockView {
           y + Constants.BLOCK_SIZE);
     }
 
-//    g2d.setColor(Color.RED);
-
     if (screenBlock.isLeft() && screenBlock.isUp() && currentCoord.y < screenData.getNbrLines() - 1
         && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y + 1)).isLeft()) {
       g2d.drawLine(x, y + Constants.BLOCK_SIZE / 2, x, y + Constants.BLOCK_SIZE);
@@ -206,8 +187,6 @@ public class ScreenBlockView {
         && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1)).isUp()) {
       g2d.drawLine(x, y + Constants.BLOCK_SIZE / 2, x, y + Constants.BLOCK_SIZE);
     }
-
-//    g2d.setColor(Color.WHITE);
 
     if (screenBlock.isRight() && screenBlock.isDown() && currentCoord.y > 0
         && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y - 1)).isRight()) {
@@ -222,8 +201,6 @@ public class ScreenBlockView {
           y + Constants.BLOCK_SIZE / 2);
     }
 
-//    g2d.setColor(Color.YELLOW);
-
     if (screenBlock.isLeft() && screenBlock.isDown() && currentCoord.y > 0
         && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y - 1)).isLeft()) {
       g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE / 2);
@@ -235,68 +212,6 @@ public class ScreenBlockView {
     }
 
   }
-
-//  /**
-//   * Display double lines
-//   *
-//   * @param g2d
-//   * @param screenBlock
-//   * @param x
-//   * @param y
-//   */
-//  private static void displayInsideLines(Graphics2D g2d, ScreenBlock screenBlock) {
-//    g2d.setColor(Color.YELLOW);
-//
-//    Point position = Utils.convertPointToGraphicUnit(screenBlock.getCoordinate());
-//    int   x        = position.x;
-//    int   y        = position.y;
-//
-//    // Gestion du trait double à l'intérieur - trait à gauche
-//    if (screenBlock.isLeft() && screenBlock.isUp() && screenBlock.isDown())
-//      g2d.drawLine(x + 4, y + 4, x + 4, y + Constants.BLOCK_SIZE - 1 - 4);
-//    else if (screenBlock.isLeft() && screenBlock.isUp())
-//      g2d.drawLine(x + 4, y + 4, x + 4, y + Constants.BLOCK_SIZE - 1);
-//    else if (screenBlock.isLeft() && screenBlock.isDown())
-//      g2d.drawLine(x + 4, y, x + 4, y + Constants.BLOCK_SIZE - 1 - 4);
-//    else if (screenBlock.isLeft())
-//      g2d.drawLine(x + 4, y, x + 4, y + Constants.BLOCK_SIZE - 1);
-//
-//    if (screenBlock.isDown() && screenBlock.isRight() && screenBlock.isLeft())
-//      g2d.drawLine(x + 4, y + Constants.BLOCK_SIZE - 1 - 4, x + Constants.BLOCK_SIZE - 1 - 4,
-//          y + Constants.BLOCK_SIZE - 1 - 4);
-//    else if (screenBlock.isDown() && screenBlock.isRight())
-//      g2d.drawLine(x, y + Constants.BLOCK_SIZE - 1 - 4, x + Constants.BLOCK_SIZE - 1 - 4,
-//          y + Constants.BLOCK_SIZE - 1 - 4);
-//    else if (screenBlock.isDown() && screenBlock.isLeft())
-//      g2d.drawLine(x + 4, y + Constants.BLOCK_SIZE - 1 - 4, x + Constants.BLOCK_SIZE - 1,
-//          y + Constants.BLOCK_SIZE - 1 - 4);
-//    else if (screenBlock.isDown())
-//      g2d.drawLine(x, y + Constants.BLOCK_SIZE - 1 - 4, x + Constants.BLOCK_SIZE - 1,
-//          y + Constants.BLOCK_SIZE - 1 - 4);
-//
-//    if (screenBlock.isUp() && screenBlock.isRight() && screenBlock.isLeft())
-//      g2d.drawLine(x + 4, y + 4, x + Constants.BLOCK_SIZE - 1 - 4, y + 4);
-//    else if (screenBlock.isUp() && screenBlock.isRight())
-//      g2d.drawLine(x, y + 4, x + Constants.BLOCK_SIZE - 1 - 4, y + 4);
-//    else if (screenBlock.isUp() && screenBlock.isLeft())
-//      g2d.drawLine(x + 4, y + 4, x + Constants.BLOCK_SIZE - 1, y + 4);
-//    else if (screenBlock.isUp())
-//      g2d.drawLine(x, y + 4, x + Constants.BLOCK_SIZE - 1, y + 4);
-//
-//    // Gestion du trait double à l'int�rieur - trait à droite
-//    if (screenBlock.isRight() && screenBlock.isUp() && screenBlock.isDown())
-//      g2d.drawLine(x + Constants.BLOCK_SIZE - 1 - 4, y + 4, x + Constants.BLOCK_SIZE - 1 - 4,
-//          y + Constants.BLOCK_SIZE - 1 - 4);
-//    else if (screenBlock.isRight() && screenBlock.isUp())
-//      g2d.drawLine(x + Constants.BLOCK_SIZE - 1 - 4, y + 4, x + Constants.BLOCK_SIZE - 1 - 4,
-//          y + Constants.BLOCK_SIZE - 1);
-//    else if (screenBlock.isRight() && screenBlock.isDown())
-//      g2d.drawLine(x + Constants.BLOCK_SIZE - 1 - 4, y, x + Constants.BLOCK_SIZE - 1 - 4,
-//          y + Constants.BLOCK_SIZE - 1 - 4);
-//    else if (screenBlock.isRight())
-//      g2d.drawLine(x + Constants.BLOCK_SIZE - 1 - 4, y, x + Constants.BLOCK_SIZE - 1 - 4,
-//          y + Constants.BLOCK_SIZE - 1);
-//  }
 
   /**
    * Display the points into the map

@@ -27,16 +27,10 @@ import com.kycox.ladybug.engine.element.ghost.Ghost;
 public enum GhostStatusEnum {
   DYING, FLASH, NORMAL, REGENERATING, SCARED;
 
-  /**
-   * Predicate
-   *
-   * @return
-   */
   public static Predicate<Ghost> isDying() {
     return g -> g.getStatus().equals(GhostStatusEnum.DYING);
   }
 
-  // FIXME : to remove
   public static Predicate<Ghost> isFlashing() {
     return g -> g.getStatus().equals(GhostStatusEnum.FLASH);
   }
@@ -49,7 +43,6 @@ public enum GhostStatusEnum {
     return g -> g.getStatus().equals(GhostStatusEnum.REGENERATING);
   }
 
-  // FIXME : to remove
   public static Predicate<Ghost> isScared() {
     return g -> g.getStatus().equals(GhostStatusEnum.SCARED);
   }

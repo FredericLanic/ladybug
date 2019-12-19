@@ -65,7 +65,6 @@ public enum GhostsSettingsEnum {
   private GhostBehaviousEnum behavious;
 
   private PicturesEnum       downEyesImg;
-
   private boolean            isComputed;
   private PicturesEnum       leftEyesImg;
   private PicturesEnum       rightEyesImg;

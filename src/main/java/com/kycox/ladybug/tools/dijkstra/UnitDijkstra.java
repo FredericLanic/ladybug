@@ -35,15 +35,6 @@ public class UnitDijkstra {
   UnitDijkstra  previousUnitDijkstra;
   ScreenBlock   screenBlock;
 
-//  /**
-//   * Constructeur simple
-//   */
-//  public UnitDijkstra() {
-//    distance = 999_999_999;
-//    previousUnitDijkstra = null;
-//    screenBlock = null;
-//  }
-
   /**
    * Constructeur
    *

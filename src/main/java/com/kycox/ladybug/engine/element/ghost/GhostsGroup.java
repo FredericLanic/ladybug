@@ -183,11 +183,6 @@ public class GhostsGroup {
    */
   public void setSpeedDuringGame(int numLevel) {
     lstGhosts.stream().forEach(g -> g.setSpeedDuringGame(numLevel));
-
-//    lstGhosts.stream().filter(g -> GhostStatusEnum.isScared().test(g)).forEach(
-//        g -> g.setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1));
-
-//
   }
 
   /**

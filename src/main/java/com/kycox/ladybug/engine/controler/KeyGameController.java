@@ -32,7 +32,7 @@ public class KeyGameController extends KeyAdapter {
 
   // voir https://github.com/marcelschoen/gamepad4j pour brancher une
   // manette usb pour le jeu
-  // Utiliser plutôt Jamepad qui me semble facilement utilisable;
+  // utiliser plutôt Jamepad qui me semble facilement utilisable;
 
   /**
    * La vue
@@ -81,10 +81,6 @@ public class KeyGameController extends KeyAdapter {
     }
   }
 
-  @Override
-  public void keyReleased(KeyEvent e) {
-  }
-
   /**
    * Gestion des touches in game
    *
@@ -105,7 +101,7 @@ public class KeyGameController extends KeyAdapter {
     case KeyEvent.VK_DOWN:
       ladybugMove(Constants.POINT_DOWN);
       break;
-    // Mouvement du fant�me (joueur 2)
+    // Mouvement du fantôme (joueur 2)
     case KeyEvent.VK_Z:
       ghostMove(Constants.POINT_UP);
       break;
@@ -198,7 +194,7 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * D�but du jeu
+   * Début du jeu
    */
   void startGame() {
     gameModel.getGameStatus().setInGame();
@@ -214,7 +210,7 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * Arret forc� du jeu
+   * Arret forcé du jeu
    */
   void stopGame() {
     if (gameModel.gameTimerIsRunning()) {

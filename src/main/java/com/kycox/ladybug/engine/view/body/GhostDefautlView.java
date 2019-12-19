@@ -31,7 +31,6 @@ public class GhostDefautlView {
   /**
    * Constructeur privé pour assurer le singleton
    */
-
   private GhostDefautlView() {
   }
 

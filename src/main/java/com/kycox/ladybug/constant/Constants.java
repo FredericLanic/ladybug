@@ -35,9 +35,8 @@ public final class Constants {
   public static final int   NEW_LIFE_BY_SCORE      = 100;
   // Niveau max
   public static final int   NIVEAU_MAX             = 10;
-  public static final Point NO_POINT               = new Point(-1, -1);
   // Période du timer du jeu
-  public static final int   PACE                   = 25;               // rythme en anglais :/
+  public static final int   PACE                   = 25;              // rythme en anglais :/
   // Point en bas
   public static final Point POINT_DOWN             = new Point(0, 1);
   // Point à gauche

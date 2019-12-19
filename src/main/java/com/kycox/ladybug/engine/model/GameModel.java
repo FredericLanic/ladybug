@@ -280,8 +280,8 @@ public class GameModel extends Observable {
    */
   private Timer createTimer() {
     ActionListener action = event -> {
-      setChanged();
-      // initialisation du con
+
+      // initialisation du son
       gameSounds.init();
 
       if (gameStatus.isInGame() && LadybugStatusEnum.isDead().test(ladybug)) {
@@ -363,6 +363,7 @@ public class GameModel extends Observable {
             kinematicLadybugDeath);
       }
       // notifie la view qu'il y a eu du changement
+      setChanged();
       notifyObservers();
     };
 
