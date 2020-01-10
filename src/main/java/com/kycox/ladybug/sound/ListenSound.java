@@ -60,7 +60,7 @@ public class ListenSound extends Thread {
           clip.flush();
           clip.stop();
         }
-        clip.setFramePosition(0);
+        clip.setFramePosition(1);
       }
     } catch (InterruptedException e) {
       e.printStackTrace();

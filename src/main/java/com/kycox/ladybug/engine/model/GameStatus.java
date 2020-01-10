@@ -19,7 +19,7 @@ package com.kycox.ladybug.engine.model;
 import com.kycox.ladybug.constant.GameStatusEnum;
 
 public class GameStatus {
-  private GameStatusEnum gameStatusEnum = GameStatusEnum.NO_GAME;
+  private GameStatusEnum gameStatusEnum;
   private int            numLevel;
 
   GameStatus() {
@@ -33,27 +33,39 @@ public class GameStatus {
     return numLevel;
   }
 
+  public boolean isBeginningGame() {
+    return gameStatusEnum == GameStatusEnum.BEGINNING_GAME;
+  }
+
   public boolean isInGame() {
     return gameStatusEnum == GameStatusEnum.IN_GAME;
+  }
+
+  public boolean isNoGame() {
+    return gameStatusEnum == GameStatusEnum.NO_GAME;
   }
 
   public boolean isToConfiguration() {
     return gameStatusEnum == GameStatusEnum.TO_CONF_LOCAL_USR;
   }
 
+  public void setBeginningGame() {
+    gameStatusEnum = GameStatusEnum.BEGINNING_GAME;
+  }
+
+  public void setConfiguration() {
+    gameStatusEnum = GameStatusEnum.TO_CONF_LOCAL_USR;
+  }
+
   public void setInGame() {
     gameStatusEnum = GameStatusEnum.IN_GAME;
   }
 
-  public void setNumLevel(int numLevel) {
-    this.numLevel = numLevel;
-  }
-
-  public void setStopGame() {
+  public void setNoGame() {
     gameStatusEnum = GameStatusEnum.NO_GAME;
   }
 
-  public void setToConfigutation() {
-    gameStatusEnum = GameStatusEnum.TO_CONF_LOCAL_USR;
+  public void setNumLevel(int numLevel) {
+    this.numLevel = numLevel;
   }
 }

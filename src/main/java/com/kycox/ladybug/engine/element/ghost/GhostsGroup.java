@@ -78,35 +78,23 @@ public class GhostsGroup {
     return lstGhosts;
   }
 
-  /**
-   * Initialise le nombre de vie des fantômes
-   *
-   * @param numLeftLives
-   */
-  public void initLifeLeft(int numLeftLives) {
-    lstGhosts.stream().forEach(g -> g.setLifesLeft(numLeftLives));
+  public boolean hasDyingGhost() {
+    return (lstGhosts.stream().filter(g -> GhostStatusEnum.isDying().test(g)).count() > 0);
   }
 
-  /**
-   * Initialise les positions des fantômes
-   */
-  public void initPositions(ScreenData screenData) {
-    lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
+  public boolean hasRegeneratedGhost() {
+    return (lstGhosts.stream().filter(g -> GhostStatusEnum.isRegenerating().test(g)).count() > 0);
   }
 
-  /**
-   * Initialise les vitesses des fantômes
-   *
-   * @param numLevel
-   */
-  public void initSpeeds(int numLevel) {
-    lstGhosts.stream().forEach(g -> g.getInitSpeed(numLevel));
+  public boolean hasScaredGhost() {
+    return ((lstGhosts.stream().filter(g -> GhostStatusEnum.isScared().test(g)).count()
+        + lstGhosts.stream().filter(g -> GhostStatusEnum.isFlashing().test(g)).count()) > 0);
   }
 
   /**
    * Retourne vrai si le fantôme n'a plus de vie
    */
-  public boolean isDeadKeyGhost() {
+  public boolean KeyGhostIsDead() {
     long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed())
         .filter(g -> (g.getLifesLeft() <= 0)).count();
     return (nbrDeadKeyGhosts >= 1);
@@ -179,10 +167,35 @@ public class GhostsGroup {
   }
 
   /**
+   * Initialise le nombre de vie des fantômes
+   *
+   * @param numLeftLives
+   */
+  public void setLeftLifes(int numLeftLives) {
+    lstGhosts.stream().forEach(g -> g.setLeftLifes(numLeftLives));
+  }
+
+  /**
+   * Initialise les positions des fantômes
+   */
+  public void setPositions(ScreenData screenData) {
+    lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
+  }
+
+  /**
    * Affecte la vitesse de chaque fantôme au cours du niveau en cours
    */
-  public void setSpeedDuringGame(int numLevel) {
-    lstGhosts.stream().forEach(g -> g.setSpeedDuringGame(numLevel));
+  public void setSpeed(int numLevel) {
+    lstGhosts.stream().forEach(g -> g.setSpeed(numLevel));
+  }
+
+  /**
+   * Initialise les vitesses des fantômes
+   *
+   * @param numLevel
+   */
+  public void setInitSpeeds(int numLevel) {
+    lstGhosts.stream().forEach(g -> g.getInitSpeed(numLevel));
   }
 
   /**
@@ -192,8 +205,8 @@ public class GhostsGroup {
    */
   public void setStartLevel(int numLevel, ScreenData screenData) {
     setStatus(GhostStatusEnum.NORMAL);
-    initSpeeds(numLevel);
-    initPositions(screenData);
+    setInitSpeeds(numLevel);
+    setPositions(screenData);
   }
 
   /**

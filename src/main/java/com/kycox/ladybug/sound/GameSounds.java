@@ -16,24 +16,19 @@
  */
 package com.kycox.ladybug.sound;
 
-import javax.sound.sampled.Clip;
-import javax.swing.JFrame;
+import java.util.Observable;
+import java.util.Observer;
 
-import com.kycox.ladybug.constant.KinematicLadybugDeath;
+import javax.sound.sampled.Clip;
+
 import com.kycox.ladybug.constant.SoundsEnum;
-import com.kycox.ladybug.engine.element.ghost.Ghost;
-import com.kycox.ladybug.engine.element.ghost.GhostsGroup;
-import com.kycox.ladybug.engine.element.ghost.action.AllGhostsActions;
-import com.kycox.ladybug.engine.element.ghost.set.GhostStatusEnum;
-import com.kycox.ladybug.engine.element.ladybug.Ladybug;
-import com.kycox.ladybug.engine.element.ladybug.action.LadybugActions;
-import com.kycox.ladybug.engine.element.ladybug.set.LadybugStatusEnum;
+import com.kycox.ladybug.engine.model.GameModel;
 
 /**
  * Gestion du son dans le jeu
  *
  */
-public class GameSounds {
+public class GameSounds implements Observer {
   private Clip    clipBeginning       = null;
   private Clip    clipChomp           = null;
   private Clip    clipDeath           = null;
@@ -50,20 +45,7 @@ public class GameSounds {
 
   private int     sounds;
 
-  /**
-   * Constructeur privé
-   */
   public GameSounds() {
-
-    /**
-     * Je ne comprend pas pourquoi pour charger les clip, j'ai besoin d'avoir une JFrame. Astuces :
-     * créer une JFrame invisible; c'est très moche mais pour l'instant, c'est la solution que je
-     * prends.
-     */
-    JFrame jFrame = new JFrame();
-    jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    jFrame.setVisible(false);
-
     clipBeginning = new ClipGame(SoundsEnum.LADYBUG_BEGINNING.getUrl()).getClip();
     clipChomp = new ClipGame(SoundsEnum.LADYBUG_CHOMP.getUrl()).getClip();
     clipDeath = new ClipGame(SoundsEnum.LADYBUG_IS_DYING.getUrl()).getClip();
@@ -75,15 +57,6 @@ public class GameSounds {
     clipGhostRegenerate = new ClipGame(SoundsEnum.GHOST_REGENERATE.getUrl()).getClip();
     clipGhostEaten = new ClipGame(SoundsEnum.GHOST_EATEN.getUrl()).getClip();
     clipSiren = new ClipGame(SoundsEnum.LADYBUG_SIREN.getUrl()).getClip();
-  }
-
-  /**
-   * Ajout du son
-   *
-   * @param sounds
-   */
-  public void addSounds(int sounds) {
-    this.sounds |= sounds;
   }
 
   /**
@@ -99,7 +72,7 @@ public class GameSounds {
   /**
    * Initialise l'objet son. A chaque bip du timer du jeu
    */
-  public void init() {
+  public void initSounds() {
     sounds = 0;
   }
 
@@ -147,8 +120,9 @@ public class GameSounds {
       new ListenSound(clipGhostEaten).start();
     }
 
-    new ListenSound(clipSiren).start();
-
+    if ((sounds & SoundsEnum.LADYBUG_SIREN.getIndex()) != 0) {
+      new ListenSound(clipSiren).start();
+    }
   }
 
   /**
@@ -167,40 +141,13 @@ public class GameSounds {
   }
 
   /**
-   * Ajoute des sons en fonction de l'état des fantômes
+   * Affecte le modèle du jeu
+   *
+   * @param gameModel
    */
-  public void setSound(GhostsGroup groupGhosts, AllGhostsActions ghostsActions, Ladybug ladybug,
-      LadybugActions ladybugActions, KinematicLadybugDeath kinematicLadybugDeath) {
-
-    // Son depuis les objets Fantômes
-    for (Ghost ghost : groupGhosts.getLstGhosts()) {
-      if (ghost.getStatus().equals(GhostStatusEnum.DYING))
-        addSounds(SoundsEnum.GHOST_SURVIVOR.getIndex());
-
-      if (GhostStatusEnum.isScared().test(ghost) || GhostStatusEnum.isFlashing().test(ghost))
-        addSounds(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
-
-      if (GhostStatusEnum.isRegenerating().test(ghost))
-        addSounds(SoundsEnum.GHOST_REGENERATE.getIndex());
-
-      if (GhostStatusEnum.isDying().test(ghost))
-        addSounds(SoundsEnum.GHOST_EATEN.getIndex());
-    }
-
-    if (ghostsActions.getNbrEatenGhost() > 0)
-      addSounds(SoundsEnum.LADYBUG_EAT_GHOST.getIndex());
-
-    // Son depuis l'objet ladybug
-    if (ladybugActions.hasEatenAMegaPoint())
-      addSounds(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
-
-    if (ladybugActions.hasEatenAPoint())
-      addSounds(SoundsEnum.LADYBUG_CHOMP.getIndex());
-
-    if (ladybug.getStatus().equals(LadybugStatusEnum.DYING)
-        && kinematicLadybugDeath.getBip() == 0) {
-      addSounds(SoundsEnum.LADYBUG_IS_DYING.getIndex());
-    }
+  public void setObservable(Observable gameModel) {
+    if (gameModel != null)
+      gameModel.addObserver(this);
   }
 
   public void startStop() {
@@ -234,5 +181,14 @@ public class GameSounds {
     clipGhostRegenerate.setFramePosition(0);
     clipSiren.stop();
     clipSiren.setFramePosition(0);
+  }
+
+  @Override
+  public void update(Observable gameModel, Object arg) {
+    if (gameModel == null)
+      return;
+
+    sounds = ((GameModel) gameModel).getSounds();
+    playSound();
   }
 }

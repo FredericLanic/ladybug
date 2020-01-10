@@ -130,19 +130,16 @@ public abstract class Ghost extends BodyMovedByUser {
    *
    * @param ladybugPosBlock
    * @param screenData
-   * @param blinkyRequest
+   * @param ghostRequest
    */
-  public void moveGhostByUser(Point ladybugPosBlock, ScreenData screenData, Point blinkyRequest) {
-    requeteDirectionPoint = blinkyRequest;
-    switch (getStatus()) {
-    case NORMAL:
-      if (changeBlock())
-        move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
+  public void moveGhostByUser(Point ladybugPosBlock, ScreenData screenData, Point ghostRequest) {
+    setMovingRequete(ghostRequest);
+
+    if (changeBlock() && getStatus().equals(GhostStatusEnum.NORMAL)) {
+      move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
       getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-      break;
-    default:
+    } else {
       moveGhostByComputer(ladybugPosBlock, screenData);
-      break;
     }
   }
 
@@ -156,7 +153,7 @@ public abstract class Ghost extends BodyMovedByUser {
     GhostActions ghostActions = new GhostActions();
     ghostActions.setGhost(this);
 
-    // D�tection de la collision avec un fantôme et ladybug
+    // Détection de la collision avec un fantôme et ladybug
     if (getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2)
         && !getStatus().equals(GhostStatusEnum.DYING)
         && !getStatus().equals(GhostStatusEnum.REGENERATING)
@@ -191,7 +188,7 @@ public abstract class Ghost extends BodyMovedByUser {
     setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedPlus(numLevel));
   }
 
-  public abstract void setSpeedDuringGame(int numLevel);
+  public abstract void setSpeed(int numLevel);
 
   /**
    * Affecte l'état du statut du fantôme

@@ -135,7 +135,7 @@ public abstract class Body {
     this.dirPoint = dirPoint;
   }
 
-  public void setLifesLeft(int lifesLeft) {
+  public void setLeftLifes(int lifesLeft) {
     this.lifesLeft = lifesLeft;
   }
 

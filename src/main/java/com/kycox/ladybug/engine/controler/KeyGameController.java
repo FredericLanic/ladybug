@@ -22,7 +22,6 @@ import java.awt.event.KeyEvent;
 
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.engine.model.GameModel;
-import com.kycox.ladybug.engine.view.GameView;
 
 /**
  * Contrôleur du jeu : MVC
@@ -35,12 +34,7 @@ public class KeyGameController extends KeyAdapter {
   // utiliser plutôt Jamepad qui me semble facilement utilisable;
 
   /**
-   * La vue
-   */
-  private GameView    gameView;
-
-  /**
-   * Le mod�le
+   * Le modèle
    */
   protected GameModel gameModel;
 
@@ -51,15 +45,6 @@ public class KeyGameController extends KeyAdapter {
    */
   public KeyGameController(GameModel gameModel) {
     this.gameModel = gameModel;
-  }
-
-  /**
-   * Retourne la vue
-   *
-   * @return
-   */
-  public GameView getGameView() {
-    return gameView;
   }
 
   /**
@@ -133,7 +118,7 @@ public class KeyGameController extends KeyAdapter {
   }
 
   /**
-   * Gestion des touches durant la pr�sentation
+   * Gestion des touches durant la présentation
    *
    * @param keyCode
    */
@@ -148,7 +133,7 @@ public class KeyGameController extends KeyAdapter {
     case KeyEvent.VK_F2:
       startStopSound();
       break;
-    // Configuration du jeu : mode 1 ou 2 joueur, choix du fant�me pour le joueur 2
+    // Configuration du jeu : mode 1 ou 2 joueur, choix du fantôme pour le joueur 2
     case KeyEvent.VK_C:
       setConfig();
       break;
@@ -190,14 +175,13 @@ public class KeyGameController extends KeyAdapter {
    * Jeu en mode configuration
    */
   void setConfig() {
-    gameModel.getGameStatus().setToConfigutation();
+    gameModel.getGameStatus().setConfiguration();
   }
 
   /**
    * Début du jeu
    */
   void startGame() {
-    gameModel.getGameStatus().setInGame();
     gameModel.initGame();
     gameModel.initLevel();
   }
@@ -215,7 +199,6 @@ public class KeyGameController extends KeyAdapter {
   void stopGame() {
     if (gameModel.gameTimerIsRunning()) {
       gameModel.setOldScore(-1);
-      gameModel.getGameStatus().setStopGame();
       gameModel.initGame();
     }
   }

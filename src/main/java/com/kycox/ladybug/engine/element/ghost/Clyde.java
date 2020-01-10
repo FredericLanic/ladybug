@@ -45,7 +45,7 @@ public class Clyde extends Ghost {
   }
 
   @Override
-  public void setSpeedDuringGame(int numLevel) {
+  public void setSpeed(int numLevel) {
     if (!changeBlock()) {
       setSpeedIndex(getSpeedIndex());
       return;

@@ -105,11 +105,8 @@ public class GameView extends JPanel implements Observer {
    *
    * @param gameModel
    */
-  public void setGameModel(GameModel gameModel) {
-    if (this.gameModel != null) {
-      this.gameModel.deleteObserver(this);
-    }
-    this.gameModel = gameModel;
+  public void setObservable(Observable gameModel) {
+    this.gameModel = (GameModel) gameModel;
     if (this.gameModel != null) {
       this.gameModel.addObserver(this);
     }
@@ -144,27 +141,19 @@ public class GameView extends JPanel implements Observer {
       confJDialog.setVisible(true);
       // FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
       // autre solution
-      gameModel.getGameStatus().setStopGame();
-    } else if (!gameModel.getGameStatus().isInGame()) {
-      // Arrêt de tous les sons
-      // FIXME : à mettre ailleurs
-      gameModel.getGameSounds().stopAllSounds();
+      drawGhosts(g2d);
+      gameModel.getGameStatus().setNoGame();
+    } else if (gameModel.getGameStatus().isNoGame()) {
       drawGhosts(g2d);
       showIntroScreen(g2d);
     } else if (LadybugStatusEnum.isDying().test(gameModel.getLadybug())) {
       drawGhosts(g2d);
       drawLadybugDying(g2d);
-      // aller ! on écoute les sons sélectionnés
-      // FIXME : à mettre ailleurs
-      gameModel.getGameSounds().playSound();
     } else if (!LadybugStatusEnum.isDead().test(gameModel.getLadybug())) {
       // jeu en cours
       drawLadybug(g2d);
       drawGhosts(g2d);
       drawScoresIncrement(g2d);
-      // aller ! on écoute les sons sélectionnés
-      // FIXME : à mettre ailleurs
-      gameModel.getGameSounds().playSound();
     }
   }
 
@@ -304,7 +293,7 @@ public class GameView extends JPanel implements Observer {
    */
   private void listenStartLevelJingle() {
     // Utile pour entendre le jingle du début :
-    // Le mod�le annonce le début du niveau. La vue dans ce cas là, n'a pas encore
+    // Le modèle annonce le début du niveau. La vue dans ce cas là, n'a pas encore
     // pu afficher le niveau à l'écran.
     // Elle doit faire un affichage et ensuite pouvoir lancer le jingle.
     if (gameModel.isBeginNewLevel()) {
@@ -312,7 +301,7 @@ public class GameView extends JPanel implements Observer {
       hasBeenDrawOnce = true;
     } else if (hasBeenDrawOnce) {
       hasBeenDrawOnce = false;
-      gameModel.getGameSounds().init();
+      gameModel.getGameSounds().initSounds();
       // stop timer
       gameModel.stopGameTimer();
       gameModel.getGameSounds().playStartJingle();
