@@ -18,7 +18,7 @@ package com.kycox.ladybug.score;
 
 import java.awt.Point;
 
-import com.kycox.ladybug.engine.timer.IncrementScoreTimer;
+import com.kycox.ladybug.timer.IncrementScoreTimer;
 
 /**
  * Contenu des valeurs afficées dans la map, lorsque ladybug fait des exploits

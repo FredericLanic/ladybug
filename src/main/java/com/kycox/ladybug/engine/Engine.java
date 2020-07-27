@@ -16,10 +16,10 @@
  */
 package com.kycox.ladybug.engine;
 
-import com.kycox.ladybug.engine.controler.KeyGameController;
-import com.kycox.ladybug.engine.model.GameModel;
-import com.kycox.ladybug.engine.view.GameView;
+import com.kycox.ladybug.controler.KeyGameController;
+import com.kycox.ladybug.model.GameModel;
 import com.kycox.ladybug.sound.GameSounds;
+import com.kycox.ladybug.view.GameView;
 
 public class Engine {
   private GameModel         gameModel  = new GameModel();

@@ -16,9 +16,9 @@
  */
 package com.kycox.ladybug.score;
 
+import com.kycox.ladybug.action.ghost.GhostsGroupActions;
+import com.kycox.ladybug.action.ladybug.LadybugActions;
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.engine.element.ghost.action.AllGhostsActions;
-import com.kycox.ladybug.engine.element.ladybug.action.LadybugActions;
 
 /**
  * Score du jeu
@@ -75,7 +75,7 @@ public class GameScore {
   /**
    * Adjust the score number
    */
-  public void setScore(AllGhostsActions allGhostsActions, LadybugActions ladybugActions) {
+  public void setScore(GhostsGroupActions allGhostsActions, LadybugActions ladybugActions) {
     if (ladybugActions.hasEatenAMegaPoint())
       addScore(Constants.SCORE_MEGA_POINT);
     if (ladybugActions.hasEatenAPoint())

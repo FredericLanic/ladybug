@@ -22,7 +22,7 @@ import java.util.Observer;
 import javax.sound.sampled.Clip;
 
 import com.kycox.ladybug.constant.SoundsEnum;
-import com.kycox.ladybug.engine.model.GameModel;
+import com.kycox.ladybug.model.GameModel;
 
 /**
  * Gestion du son dans le jeu
