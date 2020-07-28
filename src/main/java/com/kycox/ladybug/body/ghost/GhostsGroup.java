@@ -45,7 +45,7 @@ public class GhostsGroup {
 		Blinky blinky = new Blinky(numLevel);
 		// Affectation de l'objet de gestion de sa vitesse incrémentale
 		BlinkySpeedIndex blinkyIncrementSpeed = new BlinkySpeedIndex(numLevel, screenData);
-		blinky.setBlinkyIncrementSpeed(blinkyIncrementSpeed);
+		blinky.setIncrementSpeed(blinkyIncrementSpeed);
 		// Affectation des fantômes dans la liste
 		lstGhosts = new ArrayList<>();
 		lstGhosts.add(blinky);

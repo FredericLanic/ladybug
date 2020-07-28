@@ -103,7 +103,7 @@ public abstract class Ghost extends BodyMovedByUser {
 		case DYING -> moveToRegenerate(screenData);
 		case FLASH, SCARED -> flashOrScaredMoving(ladybugPosBlock, screenData);
 		case NORMAL -> normalMoving(ladybugPosBlock, screenData);
-		default -> System.out.println("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
+		default -> System.err.println("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
 		}
 	}
 
@@ -153,7 +153,6 @@ public abstract class Ghost extends BodyMovedByUser {
 		        && !ladybug.getStatus().equals(LadybugStatusEnum.DYING)
 		        && !ladybug.getStatus().equals(LadybugStatusEnum.DEAD)) {
 			if (GhostStatusEnum.isScared().test(this) || GhostStatusEnum.isFlashing().test(this)) {
-				// FANTOME
 				ghostActions.setEaten(true);
 			} else {
 				// Mise à mort de Ladybug !!!
@@ -161,6 +160,10 @@ public abstract class Ghost extends BodyMovedByUser {
 			}
 		}
 		return ghostActions;
+	}
+
+	private boolean couldBeEaten() {
+		return !getStatus().equals(GhostStatusEnum.DYING) && !getStatus().equals(GhostStatusEnum.REGENERATING);
 	}
 
 	/**
@@ -180,6 +183,12 @@ public abstract class Ghost extends BodyMovedByUser {
 		setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedPlus(numLevel));
 	}
 
+	/**
+	 * Cette fonction est a définir pour chaque fantôme nommé (Blinky, Inky, Clyde &
+	 * Pinky)
+	 *
+	 * @param numLevel, int perCent
+	 */
 	public abstract void setSpeed(int numLevel, int perCent);
 
 	/**
@@ -236,7 +245,7 @@ public abstract class Ghost extends BodyMovedByUser {
 	 * rien, mais je préfère le laisser pour les prochaines évolutions.
 	 */
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
-	// n�cessaire
+	// nécessaire
 	private void moveByDefault(ScreenData screenData) {
 		int	  count	   = 0;
 		int[] dx	   = new int[4];
@@ -319,16 +328,15 @@ public abstract class Ghost extends BodyMovedByUser {
 	 * @param coordinateRevivorGhost
 	 */
 	private void moveToRegenerate(ScreenData screenData) {
-		// Le fant�me est arriv� au limite du block
+		// Le fantôme est arrivé au limite du block
 		if (changeBlock()) {
 			// calcul du chemin le plus court :
 			List<Point> shorterWay = Dijkstra.getShorterWay(Utils.convertPointToBlockUnit(getPosition()),
 			        Utils.convertPointToBlockUnit(screenData.getRevivorGhostPos()), screenData);
-			// S'il ne reste plus qu'un bloc � parcourir, le fantôme est arrivé
+			// S'il ne reste plus qu'un bloc, le fantôme est arrivé
 			if (shorterWay.size() == 1) {
 				// Le fantôme est arrivé au point de regénération, il redevient "normal" avec
 				// une vitesse "normale" aussi
-				// setSpeedIndex(getStartIndexSpeed());
 				setStatus(GhostStatusEnum.REGENERATING);
 			} else {
 				// On prend le premier block cible

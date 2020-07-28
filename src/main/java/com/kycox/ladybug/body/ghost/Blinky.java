@@ -42,23 +42,20 @@ public class Blinky extends Ghost {
 		initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel));
 	}
 
-	public void setBlinkyIncrementSpeed(BlinkySpeedIndex blinkyIncrementSpeed) {
+	public void setIncrementSpeed(BlinkySpeedIndex blinkyIncrementSpeed) {
 		this.blinkyIncrementSpeed = blinkyIncrementSpeed;
 	}
 
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
-		if (!changeBlock()) {
-			// setSpeedIndex(getSpeedIndex());
+		if (!changeBlock())
 			return;
-		}
 		if (GhostStatusEnum.isScared().test(this))
 			setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);
 		else {
 			// Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
 			// map
-			int incrementSpeedIndex = blinkyIncrementSpeed.getIncrementSpeedIndex();
-			setSpeedIndex(getStartIndexSpeed() + incrementSpeedIndex);
+			setSpeedIndex(getStartIndexSpeed() + blinkyIncrementSpeed.getIncrementSpeedIndex());
 		}
 	}
 }
