@@ -22,31 +22,32 @@ import com.kycox.ladybug.sound.GameSounds;
 import com.kycox.ladybug.view.GameView;
 
 public class Engine {
-  private GameModel         gameModel  = new GameModel();
-  private GameSounds        gameSounds = new GameSounds();
-  private GameView          gameView   = new GameView();
-  private KeyGameController keyGameController;
+	private GameModel		  gameModel	 = new GameModel();
+	private GameSounds		  gameSounds = new GameSounds();
+	private GameView		  gameView	 = new GameView();
+	private KeyGameController keyGameController;
 
-  public Engine() {
-    // PAD CONTROLLER
-    // PadController padController = new PadController(gameModel);
-    // Seulement gestion du clavier : on verra pour la manette après
-    keyGameController = new KeyGameController(gameModel);
+	public Engine() {
+		// PAD CONTROLLER
+		// PadController padController = new PadController(gameModel);
+		// Seulement gestion du clavier : on verra pour la manette après
+		keyGameController = new KeyGameController(gameModel);
+		// initialisation des observers
+		gameView.setObservable(gameModel);
+		gameSounds.setObservable(gameModel);
+		// On applique le contrôleur à la vue
+		gameView.setController(keyGameController);
+		// on récupère la longeur du son de la mort de ladybug et on l'affecte au
+		// gameModel
+		gameModel.setKinematicLadybugDeathMillisecond(gameSounds.getMicrosecondLengthLadybugDeath());
+	}
 
-    // initialisation des observers
-    gameView.setObservable(gameModel);
-    gameSounds.setObservable(gameModel);
-
-    // On applique le contrôleur à la vue
-    gameView.setController(keyGameController);
-  }
-
-  /**
-   * Retourne la view
-   *
-   * @return
-   */
-  public GameView getGameView() {
-    return gameView;
-  }
+	/**
+	 * Retourne la view
+	 *
+	 * @return
+	 */
+	public GameView getGameView() {
+		return gameView;
+	}
 }

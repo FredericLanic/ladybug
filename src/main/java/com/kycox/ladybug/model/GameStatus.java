@@ -19,53 +19,58 @@ package com.kycox.ladybug.model;
 import com.kycox.ladybug.constant.GameStatusEnum;
 
 public class GameStatus {
-  private GameStatusEnum gameStatusEnum;
-  private int            numLevel;
+	private GameStatusEnum gameStatusEnum;
+	private int			   numLevel;
 
-  GameStatus() {
-  }
+	public void addNumLevel() {
+		numLevel++;
+	}
 
-  public void addNumLevel() {
-    numLevel++;
-  }
+	public int getNumLevel() {
+		return numLevel;
+	}
 
-  public int getNumLevel() {
-    return numLevel;
-  }
+	public boolean isBeginningGame() {
+		return gameStatusEnum == GameStatusEnum.BEGINNING_GAME;
+	}
 
-  public boolean isBeginningGame() {
-    return gameStatusEnum == GameStatusEnum.BEGINNING_GAME;
-  }
+	public boolean isBeginningLevel() {
+		return gameStatusEnum == GameStatusEnum.BEGINING_LEVEL;
+	}
 
-  public boolean isInGame() {
-    return gameStatusEnum == GameStatusEnum.IN_GAME;
-  }
+	public boolean isInGame() {
+		return gameStatusEnum == GameStatusEnum.IN_GAME;
+	}
 
-  public boolean isNoGame() {
-    return gameStatusEnum == GameStatusEnum.NO_GAME;
-  }
+	public boolean isNoGame() {
+		return gameStatusEnum == GameStatusEnum.NO_GAME;
+	}
 
-  public boolean isToConfiguration() {
-    return gameStatusEnum == GameStatusEnum.TO_CONF_LOCAL_USR;
-  }
+	public boolean isToConfiguration() {
+		return gameStatusEnum == GameStatusEnum.TO_CONF_LOCAL_USR;
+	}
 
-  public void setBeginningGame() {
-    gameStatusEnum = GameStatusEnum.BEGINNING_GAME;
-  }
+	public void setBeginingLevel() {
+		gameStatusEnum = GameStatusEnum.BEGINING_LEVEL;
+	}
 
-  public void setConfiguration() {
-    gameStatusEnum = GameStatusEnum.TO_CONF_LOCAL_USR;
-  }
+	public void setBeginningGame() {
+		gameStatusEnum = GameStatusEnum.BEGINNING_GAME;
+	}
 
-  public void setInGame() {
-    gameStatusEnum = GameStatusEnum.IN_GAME;
-  }
+	public void setConfiguration() {
+		gameStatusEnum = GameStatusEnum.TO_CONF_LOCAL_USR;
+	}
 
-  public void setNoGame() {
-    gameStatusEnum = GameStatusEnum.NO_GAME;
-  }
+	public void setInGame() {
+		gameStatusEnum = GameStatusEnum.IN_GAME;
+	}
 
-  public void setNumLevel(int numLevel) {
-    this.numLevel = numLevel;
-  }
+	public void setNoGame() {
+		gameStatusEnum = GameStatusEnum.NO_GAME;
+	}
+
+	public void setNumLevel(int numLevel) {
+		this.numLevel = numLevel;
+	}
 }

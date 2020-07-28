@@ -28,11 +28,9 @@ import com.kycox.ladybug.model.GameModel;
  *
  */
 public class KeyGameController extends KeyAdapter {
-
 	// voir https://github.com/marcelschoen/gamepad4j pour brancher une
 	// manette usb pour le jeu
 	// utiliser plutôt Jamepad qui me semble facilement utilisable;
-
 	/**
 	 * Le modèle
 	 */
@@ -53,11 +51,9 @@ public class KeyGameController extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-
 		if (keyCode == KeyEvent.VK_ESCAPE) {
 			System.exit(0);
 		}
-
 		if (gameModel.getGameStatus().isInGame()) {
 			// Gestion des touches durant une partie
 			manageKeysInGame(keyCode);
@@ -73,22 +69,22 @@ public class KeyGameController extends KeyAdapter {
 	 */
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
-		// Mouvement L
-		case KeyEvent.VK_LEFT -> ladybugMove(Constants.POINT_LEFT);
-		case KeyEvent.VK_RIGHT -> ladybugMove(Constants.POINT_RIGHT);
-		case KeyEvent.VK_UP -> ladybugMove(Constants.POINT_UP);
-		case KeyEvent.VK_DOWN -> ladybugMove(Constants.POINT_DOWN);
-		// Mouvement du fantôme (joueur 2)
-		case KeyEvent.VK_Z -> ghostMove(Constants.POINT_UP);
-		case KeyEvent.VK_S -> ghostMove(Constants.POINT_DOWN);
-		case KeyEvent.VK_Q -> ghostMove(Constants.POINT_LEFT);
-		case KeyEvent.VK_D -> ghostMove(Constants.POINT_RIGHT);
-		// Son
-		case KeyEvent.VK_F2 -> startStopSound();
-		// Arret de la partie
-		case KeyEvent.VK_ESCAPE -> stopGame();
-		// Partie en pause
-		case KeyEvent.VK_PAUSE -> gameInPause();
+			// Mouvement L
+			case KeyEvent.VK_LEFT -> ladybugMove(Constants.POINT_LEFT);
+			case KeyEvent.VK_RIGHT -> ladybugMove(Constants.POINT_RIGHT);
+			case KeyEvent.VK_UP -> ladybugMove(Constants.POINT_UP);
+			case KeyEvent.VK_DOWN -> ladybugMove(Constants.POINT_DOWN);
+			// Mouvement du fantôme (joueur 2)
+			case KeyEvent.VK_Z -> ghostMove(Constants.POINT_UP);
+			case KeyEvent.VK_S -> ghostMove(Constants.POINT_DOWN);
+			case KeyEvent.VK_Q -> ghostMove(Constants.POINT_LEFT);
+			case KeyEvent.VK_D -> ghostMove(Constants.POINT_RIGHT);
+			// Son
+			case KeyEvent.VK_F2 -> startStopSoundActive();
+			// Arret de la partie
+			case KeyEvent.VK_ESCAPE -> stopGame();
+			// Partie en pause
+			case KeyEvent.VK_PAUSE -> gameInPause();
 		}
 	}
 
@@ -100,9 +96,9 @@ public class KeyGameController extends KeyAdapter {
 	private void manageKeysPresentation(int keyCode) {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
-		case KeyEvent.VK_S -> startGame();
-		case KeyEvent.VK_F2 -> startStopSound();
-		case KeyEvent.VK_C -> setConfig();
+			case KeyEvent.VK_S -> startGame();
+			case KeyEvent.VK_F2 -> startStopSoundActive();
+			case KeyEvent.VK_C -> setConfig();
 		}
 	}
 
@@ -152,8 +148,8 @@ public class KeyGameController extends KeyAdapter {
 	/**
 	 * Start / Stop les sons
 	 */
-	void startStopSound() {
-		gameModel.getGameSounds().startStop();
+	void startStopSoundActive() {
+		gameModel.startStopSoundActive();
 	}
 
 	/**
