@@ -33,7 +33,8 @@ public final class Levels {
      * Ici on peut ajouter d'autres niveaux => Kyky aide moi !!! :)
      */
 //    lstLevel.add(new Level1());
-    lstLevel.add(new Level2());
+    lstLevel.add(new Level2NG());
+//    lstLevel.add(new Level2());
 //    lstLevel.add(new Level3());
   }
 
