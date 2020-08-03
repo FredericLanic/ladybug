@@ -16,7 +16,6 @@
  */
 package com.kycox.ladybug.controler;
 
-import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -34,7 +33,7 @@ public class KeyGameController extends KeyAdapter {
 	/**
 	 * Le modèle
 	 */
-	protected GameModel gameModel;
+	private GameModel gameModel;
 
 	/**
 	 * Constructeur
@@ -70,21 +69,21 @@ public class KeyGameController extends KeyAdapter {
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
 			// Mouvement L
-			case KeyEvent.VK_LEFT -> ladybugMove(Constants.POINT_LEFT);
-			case KeyEvent.VK_RIGHT -> ladybugMove(Constants.POINT_RIGHT);
-			case KeyEvent.VK_UP -> ladybugMove(Constants.POINT_UP);
-			case KeyEvent.VK_DOWN -> ladybugMove(Constants.POINT_DOWN);
+			case KeyEvent.VK_LEFT -> gameModel.getLadybug().setUserRequest(Constants.POINT_LEFT);
+			case KeyEvent.VK_RIGHT -> gameModel.getLadybug().setUserRequest(Constants.POINT_RIGHT);
+			case KeyEvent.VK_UP -> gameModel.getLadybug().setUserRequest(Constants.POINT_UP);
+			case KeyEvent.VK_DOWN -> gameModel.getLadybug().setUserRequest(Constants.POINT_DOWN);
 			// Mouvement du fantôme (joueur 2)
-			case KeyEvent.VK_Z -> ghostMove(Constants.POINT_UP);
-			case KeyEvent.VK_S -> ghostMove(Constants.POINT_DOWN);
-			case KeyEvent.VK_Q -> ghostMove(Constants.POINT_LEFT);
-			case KeyEvent.VK_D -> ghostMove(Constants.POINT_RIGHT);
+			case KeyEvent.VK_Z -> gameModel.setGhostRequest(Constants.POINT_UP);
+			case KeyEvent.VK_S -> gameModel.setGhostRequest(Constants.POINT_DOWN);
+			case KeyEvent.VK_Q -> gameModel.setGhostRequest(Constants.POINT_LEFT);
+			case KeyEvent.VK_D -> gameModel.setGhostRequest(Constants.POINT_RIGHT);
 			// Son
-			case KeyEvent.VK_F2 -> startStopSoundActive();
+			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
 			// Arret de la partie
-			case KeyEvent.VK_ESCAPE -> stopGame();
+			case KeyEvent.VK_ESCAPE -> gameModel.stopGame();
 			// Partie en pause
-			case KeyEvent.VK_PAUSE -> gameInPause();
+			case KeyEvent.VK_PAUSE -> gameModel.gameInPause();
 		}
 	}
 
@@ -96,69 +95,9 @@ public class KeyGameController extends KeyAdapter {
 	private void manageKeysPresentation(int keyCode) {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
-			case KeyEvent.VK_S -> startGame();
-			case KeyEvent.VK_F2 -> startStopSoundActive();
-			case KeyEvent.VK_C -> setConfig();
-		}
-	}
-
-	/**
-	 * Jeu en pause
-	 */
-	void gameInPause() {
-		if (gameModel.gameTimerIsRunning())
-			gameModel.stopGameTimer();
-		else
-			gameModel.startGameTimer();
-	}
-
-	/**
-	 * Déplacement de blinky
-	 *
-	 * @param direction
-	 */
-	void ghostMove(Point direction) {
-		gameModel.setGhostRequest(direction);
-	}
-
-	/**
-	 * Ladybug is moving
-	 *
-	 * @param direction
-	 */
-	void ladybugMove(Point direction) {
-		gameModel.getLadybug().setMovingRequete(direction);
-	}
-
-	/**
-	 * Jeu en mode configuration
-	 */
-	void setConfig() {
-		gameModel.getGameStatus().setConfiguration();
-	}
-
-	/**
-	 * Début du jeu
-	 */
-	void startGame() {
-		gameModel.initGame();
-		gameModel.initLevel();
-	}
-
-	/**
-	 * Start / Stop les sons
-	 */
-	void startStopSoundActive() {
-		gameModel.startStopSoundActive();
-	}
-
-	/**
-	 * Arret forcé du jeu
-	 */
-	void stopGame() {
-		if (gameModel.gameTimerIsRunning()) {
-			gameModel.setOldScore(-1);
-			gameModel.initGame();
+			case KeyEvent.VK_S -> gameModel.startGame();
+			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
+			case KeyEvent.VK_C -> gameModel.getGameStatus().setConfiguration();
 		}
 	}
 }

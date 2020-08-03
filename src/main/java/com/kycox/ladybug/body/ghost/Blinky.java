@@ -21,12 +21,15 @@ import com.kycox.ladybug.constant.ghost.GhostsSettingsEnum;
 import com.kycox.ladybug.maths.BlinkySpeedIndex;
 import com.kycox.ladybug.maths.SpeedFunction;
 
+import lombok.Setter;
+
 /**
  * Setting du fantôme Blinky
  *
  */
 public class Blinky extends Ghost {
-	private BlinkySpeedIndex blinkyIncrementSpeed = null;
+	@Setter
+	private BlinkySpeedIndex incrementSpeed = null;
 
 	/**
 	 * Constructeur
@@ -42,10 +45,6 @@ public class Blinky extends Ghost {
 		initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel));
 	}
 
-	public void setIncrementSpeed(BlinkySpeedIndex blinkyIncrementSpeed) {
-		this.blinkyIncrementSpeed = blinkyIncrementSpeed;
-	}
-
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
 		if (!changeBlock())
@@ -55,7 +54,7 @@ public class Blinky extends Ghost {
 		else {
 			// Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
 			// map
-			setSpeedIndex(getStartIndexSpeed() + blinkyIncrementSpeed.getIncrementSpeedIndex());
+			setSpeedIndex(getStartSpeedIndex() + incrementSpeed.getIncrementSpeedIndex());
 		}
 	}
 }

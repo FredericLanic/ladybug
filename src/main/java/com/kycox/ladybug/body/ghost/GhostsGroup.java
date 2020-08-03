@@ -28,13 +28,16 @@ import com.kycox.ladybug.level.ScreenData;
 import com.kycox.ladybug.maths.BlinkySpeedIndex;
 import com.kycox.ladybug.tools.Utils;
 
+import lombok.Getter;
+
 /**
  * Gestion des actions sur l'ensemble des fantômes
- * 
+ *
  * Singleton
  *
  */
 public class GhostsGroup {
+	@Getter
 	private List<Ghost> lstGhosts = null;
 
 	/**
@@ -67,12 +70,12 @@ public class GhostsGroup {
 	}
 
 	/**
-	 * Retourne la liste des fantômes; uniquement pour la View (en théorie)
-	 *
-	 * @return
+	 * Retourne vrai si le fantôme n'a plus de vie
 	 */
-	public List<Ghost> getLstGhosts() {
-		return lstGhosts;
+	public boolean GhostUserIsDead() {
+		long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
+		        .count();
+		return (nbrDeadKeyGhosts >= 1);
 	}
 
 	public boolean hasDyingGhost() {
@@ -86,15 +89,6 @@ public class GhostsGroup {
 	public boolean hasScaredGhost() {
 		return ((lstGhosts.stream().filter(g -> GhostStatusEnum.isScared().test(g)).count()
 		        + lstGhosts.stream().filter(g -> GhostStatusEnum.isFlashing().test(g)).count()) > 0);
-	}
-
-	/**
-	 * Retourne vrai si le fantôme n'a plus de vie
-	 */
-	public boolean GhostUserIsDead() {
-		long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLifesLeft() <= 0))
-		        .count();
-		return (nbrDeadKeyGhosts >= 1);
 	}
 
 	/**
@@ -156,6 +150,15 @@ public class GhostsGroup {
 	}
 
 	/**
+	 * Initialise les vitesses des fantômes
+	 *
+	 * @param numLevel
+	 */
+	public void setInitSpeeds(int numLevel) {
+		lstGhosts.stream().forEach(g -> g.getInitSpeed(numLevel));
+	}
+
+	/**
 	 * Initialise le nombre de vie des fantômes
 	 *
 	 * @param numLeftLives
@@ -176,15 +179,6 @@ public class GhostsGroup {
 	 */
 	public void setSpeed(int numLevel, int perCent) {
 		lstGhosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
-	}
-
-	/**
-	 * Initialise les vitesses des fantômes
-	 *
-	 * @param numLevel
-	 */
-	public void setInitSpeeds(int numLevel) {
-		lstGhosts.stream().forEach(g -> g.getInitSpeed(numLevel));
 	}
 
 	/**

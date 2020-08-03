@@ -20,45 +20,33 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 public abstract class Level implements ILevel {
+	// Map
+	protected int[] levelDATA;
+	// Nombre de blocks par ligne
+	@Getter
+	protected int nbrBlocksByLine;
+	// Nombre de lignes
+	@Getter
+	protected int nbrLines;
 
-  // Map
-  protected int[] levelDATA;
+	@Override
+	public List<ScreenBlock> getLstBlocks() {
+		List<ScreenBlock> lstBlocks = new ArrayList<>();
+		for (int i = 0; i < levelDATA.length; i++) {
+			int			x	  = i % nbrBlocksByLine;
+			int			y	  = i / nbrBlocksByLine;
+			ScreenBlock	block = new ScreenBlock(levelDATA[i]);
+			block.setCoordinate(new Point(x, y));
+			lstBlocks.add(block);
+		}
+		return lstBlocks;
+	}
 
-  // Nombre de blocks par ligne
-  protected int   nbrBlocksPerLine;
-
-  // Nombre de lignes
-  protected int   nbrLines;
-
-  @Override
-  public List<ScreenBlock> getLstBlocks() {
-    List<ScreenBlock> lstBlocks = new ArrayList<>();
-
-    for (int i = 0; i < levelDATA.length; i++) {
-      int         x     = i % nbrBlocksPerLine;
-      int         y     = i / nbrBlocksPerLine;
-
-      ScreenBlock block = new ScreenBlock(levelDATA[i]);
-      block.setCoordinate(new Point(x, y));
-      lstBlocks.add(block);
-    }
-
-    return lstBlocks;
-  }
-
-  @Override
-  public int[] getMapLevel() {
-    return levelDATA.clone();
-  }
-
-  @Override
-  public int getNbrBlocksByLine() {
-    return nbrBlocksPerLine;
-  }
-
-  @Override
-  public int getNbrLines() {
-    return nbrLines;
-  }
+	@Override
+	public int[] getMapLevel() {
+		return levelDATA.clone();
+	}
 }

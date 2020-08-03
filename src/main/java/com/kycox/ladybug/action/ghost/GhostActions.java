@@ -18,46 +18,12 @@ package com.kycox.ladybug.action.ghost;
 
 import com.kycox.ladybug.body.ghost.Ghost;
 
+import lombok.Data;
+
+@Data
 public class GhostActions {
-
-  private boolean eaten           = false;
-
-  private Ghost   ghost;
-
-  private boolean hasEatenLadybug = false;
-
-  private boolean regenerated     = false;
-
-  public Ghost getGhost() {
-    return ghost;
-  }
-
-  public boolean hasEatenLadybug() {
-    return hasEatenLadybug;
-  }
-
-  public boolean isEaten() {
-    return eaten;
-  }
-
-  public boolean isRegenerated() {
-    return regenerated;
-  }
-
-  public void setEaten(boolean eaten) {
-    this.eaten = eaten;
-  }
-
-  public void setGhost(Ghost ghost) {
-    this.ghost = ghost;
-  }
-
-  public void setHasEatenLadybug(boolean eatLadybug) {
-    this.hasEatenLadybug = eatLadybug;
-  }
-
-  public void setRegenerated(boolean regenerated) {
-    this.regenerated = regenerated;
-  }
-
+	private boolean	eaten		= false;
+	private boolean	eatLadybug	= false;
+	private Ghost	ghost;
+	private boolean	regenerated	= false;
 }

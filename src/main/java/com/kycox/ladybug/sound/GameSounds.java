@@ -116,7 +116,8 @@ public class GameSounds implements Observer {
 
 	/**
 	 * Start Jingle. Le jeu est figé le temps que le jingle est lancé
-	 * @FIXME : le timer devrait être géré ailleurs
+	 *
+	 * @FIXME : la gestion du timer devrait être gérée ailleurs
 	 */
 	public void playStartJingle() {
 		stopAllSounds();
@@ -129,7 +130,7 @@ public class GameSounds implements Observer {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		gameModel.setInGame();
+		gameModel.getGameStatus().setInGame();
 		gameModel.startGameTimer();
 	}
 
@@ -148,7 +149,7 @@ public class GameSounds implements Observer {
 		if (gameModel == null)
 			return;
 		this.gameModel = (GameModel) gameModel;
-		sounds		   = this.gameModel.getSounds();
+		sounds		   = this.gameModel.getNewSounds();
 		listen		   = this.gameModel.isSoundActive();
 		if ((sounds & SoundsEnum.LADYBUG_LEVEL_BEGINNING.getIndex()) != 0) {
 			playStartJingle();

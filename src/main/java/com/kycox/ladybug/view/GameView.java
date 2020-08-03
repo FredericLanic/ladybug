@@ -184,7 +184,7 @@ public class GameView extends JPanel implements Observer {
 	 */
 	private void drawMaze(Graphics2D g2d) {
 		for (int y = 0; y < gameModel.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
-			for (int x = 0; x < gameModel.getScreenData().getNbrBlocksPerLine()
+			for (int x = 0; x < gameModel.getScreenData().getCurrentLevel().getNbrBlocksByLine()
 			        * Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE) {
 				// Affichage du screenBlock dans la Vue
 				ScreenBlockView.display(g2d, gameModel.getScreenData(), x, y);
@@ -211,31 +211,31 @@ public class GameView extends JPanel implements Observer {
 			s = "Level " + gameModel.getGameStatus().getNumLevel() + " - Score: " + gameModel.getGameScore().getScore();
 			g.drawString(s, x / 2 + 26, y + 16);
 			// Affichage des vies de ladybug
-			if (gameModel.getLadybug().getLifesLeft() < 1) {
-				for (i = 0; i < gameModel.getLadybug().getLifesLeft(); i++) {
+			if (gameModel.getLadybug().getLeftLifes() < 1) {
+				for (i = 0; i < gameModel.getLadybug().getLeftLifes(); i++) {
 					g.drawImage(PicturesEnum.LADYBUG_LEFT_3.getImg(), i * 28 + 8, y + 1, this);
 				}
 			} else {
 				g.drawImage(PicturesEnum.LADYBUG_LEFT_3.getImg(), 8, y + 1, this);
 				g.setColor(Color.YELLOW);
 				g.setFont(smallFont);
-				g.drawString("x " + gameModel.getLadybug().getLifesLeft(),
+				g.drawString("x " + gameModel.getLadybug().getLeftLifes(),
 				        Constants.BLOCK_SIZE + Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2);
 			}
 			// affichage des vies du fantômes
 			Ghost ghostNotComputed = gameModel.getGroupGhosts().getGhostNotComputed();
-			if (ghostNotComputed != null && ghostNotComputed.getLifesLeft() < 5) {
-				for (i = 0; i < ghostNotComputed.getLifesLeft(); i++) {
+			if (ghostNotComputed != null && ghostNotComputed.getLeftLifes() < 5) {
+				for (i = 0; i < ghostNotComputed.getLeftLifes(); i++) {
 					g.drawImage(ghostNotComputed.getGhostSettings().getGhostLeftEyesImg(), i * 28 + 8, y + 20, this);
 				}
 			} else if (ghostNotComputed != null) {
 				g.drawImage(ghostNotComputed.getGhostSettings().getGhostLeftEyesImg(), 8, y + 20, this);
 				g.setColor(Color.GRAY);
 				g.setFont(smallFont);
-				g.drawString("x" + ghostNotComputed.getLifesLeft(), 34, y + 38);
+				g.drawString("x" + ghostNotComputed.getLeftLifes(), 34, y + 38);
 			}
 		} else {
-			int nbrPlayers = gameModel.nbrNbrPlayers();
+			int nbrPlayers = gameModel.getNbrPlayers();
 			s = "Game config : " + nbrPlayers + " player" + (nbrPlayers > 1 ? "s" : "");
 			g.drawString(s, x / 2 + 26, y + 16);
 		}
@@ -253,7 +253,7 @@ public class GameView extends JPanel implements Observer {
 		int			x;
 		int			y;
 		// Affichage des scores incréments
-		for (IncrementScore scorePoint : gameModel.getGroupIncrementScores().getLstScoresIncrement()) {
+		for (IncrementScore scorePoint : gameModel.getGroupIncrementScores().getLstIncrementScore()) {
 			x = scorePoint.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(scorePoint.getValue()) / 2;
 			y = scorePoint.getPosition().y + Constants.BLOCK_SIZE / 2;
 			g2d.drawString(scorePoint.getValue() + " pt", x, y);
@@ -280,7 +280,8 @@ public class GameView extends JPanel implements Observer {
 			hasBeenDrawOnce = true;
 		} else if (hasBeenDrawOnce) {
 			hasBeenDrawOnce = false;
-			gameModel.setJingle();
+			// FIXME : changement du status du jeu à partir de la vue : c'est le mal !!
+			gameModel.getGameStatus().setBeginingLevel();
 		}
 	}
 
@@ -292,9 +293,9 @@ public class GameView extends JPanel implements Observer {
 	private void showIntroScreen(Graphics2D g2d) {
 		int	   x			= gameModel.getScreenData().getScreenWidth();
 		int	   y			= gameModel.getScreenData().getScreenHeight();
-		int	   addXGameOver	= gameModel.getOldScore() != -1 ? 30 : 0;
+		int	   addXGameOver	= gameModel.getGameScore().getOldScore() != -1 ? 30 : 0;
 		String gameOver		= "Game Over, try again...";
-		String yourOldScore	= "Your Score : " + gameModel.getOldScore();
+		String yourOldScore	= "Your Score : " + gameModel.getGameScore().getOldScore();
 		String s			= "Press s to start, c to configurate";
 		g2d.setColor(new Color(0, 32, 48));
 		g2d.fillRect(50, x / 2 - 30, y - 100, 50 + addXGameOver);
@@ -303,7 +304,7 @@ public class GameView extends JPanel implements Observer {
 		FontMetrics metr = this.getFontMetrics(smallFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(smallFont);
-		if (gameModel.getOldScore() > 0) {
+		if (gameModel.getGameScore().getOldScore() > 0) {
 			// Affichage de "Game Over"
 			g2d.drawString(gameOver, (x - metr.stringWidth(gameOver)) / 2, y / 2);
 			// Affichage du score

@@ -34,16 +34,13 @@ import com.kycox.ladybug.view.conf.ConfJDialog;
  *
  */
 public class MainFrame extends JFrame {
-
 	private static final long serialVersionUID = 1L;
-
-	private transient Toolkit defaultToolKit = Toolkit.getDefaultToolkit();
-
-	private double edge = (double) 15 * Constants.BLOCK_SIZE;
-
-	private double rightLeftWidth = (defaultToolKit.getScreenSize().getWidth() - 15 * Constants.BLOCK_SIZE) / 2;
-
-	private double topBottomHeight = (defaultToolKit.getScreenSize().getHeight() - 16 * Constants.BLOCK_SIZE) / 2;
+	private transient Toolkit defaultToolKit   = Toolkit.getDefaultToolkit();
+	private double			  edge			   = (double) 15 * Constants.BLOCK_SIZE;
+	private double			  rightLeftWidth   = (defaultToolKit.getScreenSize().getWidth() - 15 * Constants.BLOCK_SIZE)
+	        / 2;
+	private double			  topBottomHeight  = (defaultToolKit.getScreenSize().getHeight()
+	        - 16 * Constants.BLOCK_SIZE) / 2;
 
 	/**
 	 * Constructeur
@@ -60,13 +57,11 @@ public class MainFrame extends JFrame {
 	 */
 	public void addGameView(GameView gameView) {
 		// organisation des panels
-
 		Dimension dimension = new Dimension();
 		dimension.setSize(edge, edge);
 		gameView.setPreferredSize(dimension);
 		gameView.setBackground(Color.BLACK);
 		add(gameView, BorderLayout.CENTER);
-
 		// @FIXME : un peu de refacto !!
 		JPanel jPanel = new JPanel();
 		dimension = new Dimension();
@@ -74,22 +69,19 @@ public class MainFrame extends JFrame {
 		jPanel.setBackground(Color.BLACK);
 		jPanel.setPreferredSize(dimension);
 		add(jPanel, BorderLayout.PAGE_START);
-
-		jPanel = new JPanel();
+		jPanel	  = new JPanel();
 		dimension = new Dimension();
 		dimension.setSize(rightLeftWidth, edge);
 		jPanel.setBackground(Color.BLACK);
 		jPanel.setPreferredSize(dimension);
 		add(jPanel, BorderLayout.LINE_START);
-
-		jPanel = new JPanel();
+		jPanel	  = new JPanel();
 		dimension = new Dimension();
 		dimension.setSize(defaultToolKit.getScreenSize().getWidth(), topBottomHeight);
 		jPanel.setBackground(Color.BLACK);
 		jPanel.setPreferredSize(dimension);
 		add(jPanel, BorderLayout.PAGE_END);
-
-		jPanel = new JPanel();
+		jPanel	  = new JPanel();
 		dimension = new Dimension();
 		dimension.setSize(rightLeftWidth, edge);
 		jPanel.setBackground(Color.BLACK);
@@ -106,5 +98,4 @@ public class MainFrame extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setUndecorated(true);
 	}
-
 }

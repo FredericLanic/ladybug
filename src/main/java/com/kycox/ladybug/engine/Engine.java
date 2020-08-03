@@ -21,9 +21,12 @@ import com.kycox.ladybug.model.GameModel;
 import com.kycox.ladybug.sound.GameSounds;
 import com.kycox.ladybug.view.GameView;
 
+import lombok.Getter;
+
 public class Engine {
 	private GameModel		  gameModel	 = new GameModel();
 	private GameSounds		  gameSounds = new GameSounds();
+	@Getter
 	private GameView		  gameView	 = new GameView();
 	private KeyGameController keyGameController;
 
@@ -39,15 +42,6 @@ public class Engine {
 		gameView.setController(keyGameController);
 		// on récupère la longeur du son de la mort de ladybug et on l'affecte au
 		// gameModel
-		gameModel.setKinematicLadybugDeathMillisecond(gameSounds.getMicrosecondLengthLadybugDeath());
-	}
-
-	/**
-	 * Retourne la view
-	 *
-	 * @return
-	 */
-	public GameView getGameView() {
-		return gameView;
+		gameModel.getKinematicLadybugDeath().setMillisecondLenght(gameSounds.getMicrosecondLengthLadybugDeath());
 	}
 }

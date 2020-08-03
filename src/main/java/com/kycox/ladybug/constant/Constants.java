@@ -34,6 +34,10 @@ public final class Constants {
 	public static final int DISTANCE_GHOST_SCARED = 100;
 	// distance min entre Ladybug et un fantôme => provoque la mort de Ladybug
 	public static final int DISTANCE_LADYBUG_DEATH = 20;
+	// nombre de vie au début du jeu
+	public static final int NBR_INIT_LIFE = 3;
+	// nombre de secondes de super pouvoir de pacman
+	public static final int NBR_SECONDS_SUPER_POWER = 15;
 	// Nouvelle vie en fonction du score incrémental
 	public static final int NEW_LIFE_BY_SCORE = 100;
 	// Niveau max
@@ -60,10 +64,6 @@ public final class Constants {
 	public static final int SCORE_MEGA_POINT = 10;
 	// Score quand Ladybug mange un point simpe
 	public static final int SCORE_SIMPLE_POINT = 1;
-	// nombre de vie au début du jeu
-	public static final int NBR_INIT_LIFE = 3;
-	// nombre de secondes de super pouvoir de pacman
-	public static final int NBR_SECONDS_SUPER_POWER = 15;
 	// Tableau des vitesses disponibles : les vitesses doivent être un multiple de
 	// 24 (taille d'un BLOCK_SIZE) pour que le programme puisse détecter le
 	// changement de ScreenBlock

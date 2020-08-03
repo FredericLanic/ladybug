@@ -21,30 +21,25 @@ import java.awt.Image;
 import com.kycox.ladybug.body.ghost.Ghost;
 
 public class GhostDefautlView {
+	private static GhostDefautlView ghostDefautlView = new GhostDefautlView();
 
-  private static GhostDefautlView ghostDefautlView = new GhostDefautlView();
+	public static GhostDefautlView getInstance() {
+		return ghostDefautlView;
+	}
 
-  public static GhostDefautlView getInstance() {
-    return ghostDefautlView;
-  }
+	/**
+	 * Constructeur privé pour assurer le singleton
+	 */
+	private GhostDefautlView() {
+	}
 
-  /**
-   * Constructeur privé pour assurer le singleton
-   */
-  private GhostDefautlView() {
-  }
-
-  public Image getImage(Ghost ghost) {
-
-    if (ghost.getDirection().x < 0)
-      return ghost.getGhostSettings().getGhostRightEyesImg();
-
-    if (ghost.getDirection().x > 0)
-      return ghost.getGhostSettings().getGhostLeftEyesImg();
-
-    if (ghost.getDirection().y > 0)
-      return ghost.getGhostSettings().getGhostDownEyesImg();
-
-    return ghost.getGhostSettings().getGhostUpEyesImg();
-  }
+	public Image getImage(Ghost ghost) {
+		if (ghost.getDirection().x < 0)
+			return ghost.getGhostSettings().getGhostRightEyesImg();
+		if (ghost.getDirection().x > 0)
+			return ghost.getGhostSettings().getGhostLeftEyesImg();
+		if (ghost.getDirection().y > 0)
+			return ghost.getGhostSettings().getGhostDownEyesImg();
+		return ghost.getGhostSettings().getGhostUpEyesImg();
+	}
 }

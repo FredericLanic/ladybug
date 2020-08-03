@@ -26,17 +26,17 @@ import com.kycox.ladybug.body.ladybug.Ladybug;
  *
  */
 public enum LadybugStatusEnum {
-  DEAD, DYING, NORMAL;
+	DEAD, DYING, NORMAL;
 
-  public static Predicate<Ladybug> isDead() {
-    return p -> p.getStatus().equals(LadybugStatusEnum.DEAD);
-  }
+	public static Predicate<Ladybug> isDead() {
+		return p -> p.getStatus().equals(LadybugStatusEnum.DEAD);
+	}
 
-  public static Predicate<Ladybug> isDying() {
-    return p -> p.getStatus().equals(LadybugStatusEnum.DYING);
-  }
+	public static Predicate<Ladybug> isDying() {
+		return p -> p.getStatus().equals(LadybugStatusEnum.DYING);
+	}
 
-  public static Predicate<Ladybug> isNormal() {
-    return p -> p.getStatus().equals(LadybugStatusEnum.NORMAL);
-  }
+	public static Predicate<Ladybug> isNormal() {
+		return p -> p.getStatus().equals(LadybugStatusEnum.NORMAL);
+	}
 }

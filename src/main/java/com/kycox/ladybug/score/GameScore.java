@@ -20,67 +20,55 @@ import com.kycox.ladybug.action.ghost.GhostsGroupActions;
 import com.kycox.ladybug.action.ladybug.LadybugActions;
 import com.kycox.ladybug.constant.Constants;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Score du jeu
  *
  */
 public class GameScore {
-  private int incrementScore;
+	@Getter
+	private int	incrementScore;
+	@Getter
+	@Setter
+	private int	oldScore = -1;
+	@Getter
+	private int	score;
 
-  private int score;
+	/**
+	 * Ajout du score et du score incrémental
+	 *
+	 * @param score
+	 */
+	public void addScore(int score) {
+		this.score			+= score;
+		this.incrementScore	+= score;
+	}
 
-  /**
-   * Ajout du score et du score incrémental
-   *
-   * @param score
-   */
-  public void addScore(int score) {
-    this.score += score;
-    this.incrementScore += score;
-  }
+	/**
+	 * Initialise le score et le score incrémental
+	 */
+	public void init() {
+		incrementScore = 0;
+		score		   = 0;
+	}
 
-  /**
-   * Retourne le score incrémental
-   *
-   * @return
-   */
-  public int getIncrementScore() {
-    return incrementScore;
-  }
+	/**
+	 * Initialise le score incrémental
+	 */
+	public void initIncrementScore() {
+		incrementScore = 0;
+	}
 
-  /**
-   * Retourne le score
-   *
-   * @return
-   */
-  public int getScore() {
-    return score;
-  }
-
-  /**
-   * Initialise le score et le score incrémental
-   */
-  public void init() {
-    incrementScore = 0;
-    score = 0;
-  }
-
-  /**
-   * Initialise le score incrémental
-   */
-  public void initIncrementScore() {
-    incrementScore = 0;
-  }
-
-  /**
-   * Adjust the score number
-   */
-  public void setScore(GhostsGroupActions allGhostsActions, LadybugActions ladybugActions) {
-    if (ladybugActions.hasEatenAMegaPoint())
-      addScore(Constants.SCORE_MEGA_POINT);
-    if (ladybugActions.hasEatenAPoint())
-      addScore(Constants.SCORE_SIMPLE_POINT);
-
-    addScore(allGhostsActions.getNbrEatenGhost() * Constants.SCORE_EATEN_GHOST);
-  }
+	/**
+	 * Adjust the score number
+	 */
+	public void setScore(GhostsGroupActions allGhostsActions, LadybugActions ladybugActions) {
+		if (ladybugActions.isEatenAMegaPoint())
+			addScore(Constants.SCORE_MEGA_POINT);
+		if (ladybugActions.isEatenAPoint())
+			addScore(Constants.SCORE_SIMPLE_POINT);
+		addScore(allGhostsActions.getNbrEatenGhost() * Constants.SCORE_EATEN_GHOST);
+	}
 }

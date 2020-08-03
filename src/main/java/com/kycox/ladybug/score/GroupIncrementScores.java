@@ -20,43 +20,36 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 public class GroupIncrementScores {
-  /**
-   * Liste des score incréments
-   */
-  private List<IncrementScore> lstScoreIncrements;
+	/**
+	 * Liste des score incréments
+	 */
+	@Getter
+	private List<IncrementScore> lstIncrementScore;
 
-  /**
-   * Constructor privé
-   */
-  public GroupIncrementScores() {
-    lstScoreIncrements = new ArrayList<>();
-  }
+	/**
+	 * Constructor privé
+	 */
+	public GroupIncrementScores() {
+		lstIncrementScore = new ArrayList<>();
+	}
 
-  /**
-   * Ajout d'un score incrément
-   *
-   * @param position
-   * @param value
-   */
-  public void add(Point position, String value) {
-    lstScoreIncrements.add(new IncrementScore(position, value));
-  }
+	/**
+	 * Ajout d'un score incrément
+	 *
+	 * @param position
+	 * @param value
+	 */
+	public void add(Point position, String value) {
+		lstIncrementScore.add(new IncrementScore(position, value));
+	}
 
-  /**
-   * Retourne tous les scores incrémentés uniquement pour la View
-   *
-   * @return
-   */
-  public List<IncrementScore> getLstScoresIncrement() {
-    return lstScoreIncrements;
-
-  }
-
-  /**
-   * Suppression des score incrément qui sont en train de mourir
-   */
-  public void removeIfDying() {
-    lstScoreIncrements.removeIf(IncrementScore::isDying);
-  }
+	/**
+	 * Suppression des score incrément qui sont en train de mourir
+	 */
+	public void removeIfDying() {
+		lstIncrementScore.removeIf(IncrementScore::isDying);
+	}
 }

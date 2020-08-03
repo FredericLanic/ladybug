@@ -25,40 +25,31 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import lombok.Getter;
+
 /**
  * Chargement des clip en mémoire
  *
  */
 public class ClipGame {
+	private AudioInputStream audioInputStream = null;
+	@Getter
+	private Clip			 clip			  = null;
 
-  private AudioInputStream audioInputStream = null;
-
-  private Clip             clip             = null;
-
-  /**
-   * Constructeur
-   *
-   * @param url
-   */
-  public ClipGame(URL url) {
-    try {
-      audioInputStream = AudioSystem.getAudioInputStream(url);
-      // Get a sound clip resource.
-      clip = AudioSystem.getClip();
-      // Open audio clip and load samples from the audio input stream.
-      clip.open(audioInputStream);
-    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-      e.printStackTrace();
-    }
-  }
-
-  /**
-   * Retourne le clip
-   *
-   * @return
-   */
-  public Clip getClip() {
-    return clip;
-  }
-
+	/**
+	 * Constructeur
+	 *
+	 * @param url
+	 */
+	public ClipGame(URL url) {
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(url);
+			// Get a sound clip resource.
+			clip = AudioSystem.getClip();
+			// Open audio clip and load samples from the audio input stream.
+			clip.open(audioInputStream);
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
 }

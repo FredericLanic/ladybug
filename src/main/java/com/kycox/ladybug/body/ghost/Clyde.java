@@ -25,8 +25,6 @@ import com.kycox.ladybug.maths.SpeedFunction;
  *
  */
 public class Clyde extends Ghost {
-	public static final int ID = 2;
-
 	/**
 	 * Constructeur lors du jeu
 	 */
@@ -51,6 +49,6 @@ public class Clyde extends Ghost {
 		if (GhostStatusEnum.isScared().test(this))
 			setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);
 		else
-			setSpeedIndex(getStartIndexSpeed());
+			setSpeedIndex(getStartSpeedIndex());
 	}
 }

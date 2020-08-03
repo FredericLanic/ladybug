@@ -25,25 +25,25 @@ import com.kycox.ladybug.body.ghost.Ghost;
  *
  */
 public enum GhostStatusEnum {
-  DYING, FLASH, NORMAL, REGENERATING, SCARED;
+	DYING, FLASH, NORMAL, REGENERATING, SCARED;
 
-  public static Predicate<Ghost> isDying() {
-    return g -> g.getStatus().equals(GhostStatusEnum.DYING);
-  }
+	public static Predicate<Ghost> isDying() {
+		return g -> g.getStatus().equals(GhostStatusEnum.DYING);
+	}
 
-  public static Predicate<Ghost> isFlashing() {
-    return g -> g.getStatus().equals(GhostStatusEnum.FLASH);
-  }
+	public static Predicate<Ghost> isFlashing() {
+		return g -> g.getStatus().equals(GhostStatusEnum.FLASH);
+	}
 
-  public static Predicate<Ghost> isNormal() {
-    return g -> g.getStatus().equals(GhostStatusEnum.NORMAL);
-  }
+	public static Predicate<Ghost> isNormal() {
+		return g -> g.getStatus().equals(GhostStatusEnum.NORMAL);
+	}
 
-  public static Predicate<Ghost> isRegenerating() {
-    return g -> g.getStatus().equals(GhostStatusEnum.REGENERATING);
-  }
+	public static Predicate<Ghost> isRegenerating() {
+		return g -> g.getStatus().equals(GhostStatusEnum.REGENERATING);
+	}
 
-  public static Predicate<Ghost> isScared() {
-    return g -> g.getStatus().equals(GhostStatusEnum.SCARED);
-  }
+	public static Predicate<Ghost> isScared() {
+		return g -> g.getStatus().equals(GhostStatusEnum.SCARED);
+	}
 }

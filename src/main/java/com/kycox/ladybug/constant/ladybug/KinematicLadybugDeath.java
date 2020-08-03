@@ -24,12 +24,16 @@ import java.util.List;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.PicturesEnum;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Cinématique pour afficher / entendre lors de la mort de Ladybug
  *
  */
 public class KinematicLadybugDeath {
 	// bip de la cinématique
+	@Getter
 	private int bip = 0;
 	// Liste des images des images à afficher lors de la cinématique
 	private List<PicturesEnum> lstPictures = new ArrayList<>(Arrays.asList(PicturesEnum.LADYBUG_DEFAULT,
@@ -37,14 +41,8 @@ public class KinematicLadybugDeath {
 	        PicturesEnum.LADYBUG_UP_6, PicturesEnum.LADYBUG_UP_7, PicturesEnum.LADYBUG_UP_8, PicturesEnum.LADYBUG_UP_9,
 	        PicturesEnum.LADYBUG_UP_10, PicturesEnum.LADYBUG_UP_11));
 	// private long timeInMMs = 0;
+	@Setter
 	private long millisecondLenght = 0;
-
-	/**
-	 * Retourne le bip de la cinématique
-	 */
-	public int getBip() {
-		return bip;
-	}
 
 	/**
 	 * Retourne l'image à afficher quand Ladybug meurt.
@@ -87,14 +85,5 @@ public class KinematicLadybugDeath {
 	 */
 	public boolean isEnd() {
 		return bip * Constants.PACE >= millisecondLenght;
-	}
-
-	/**
-	 * Mise à jour de la durée de la cinématique
-	 *
-	 * @param millisecondLenght
-	 */
-	public void setMillisecondLenght(long millisecondLenght) {
-		this.millisecondLenght = millisecondLenght;
 	}
 }

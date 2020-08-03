@@ -21,18 +21,12 @@ import java.awt.Point;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.level.ScreenBlock;
 
-public abstract class BodyMovedByUser extends Body {
-	// Les direction de ladyBug (requête suite aux touches et la vue)
-	protected Point requeteDirectionPoint = Constants.POINT_ZERO;
+import lombok.Setter;
 
-	/**
-	 * SETTERS utilisés par le modèle (MVC)
-	 *
-	 * @param requeteDirection
-	 */
-	public void setMovingRequete(Point requeteDirection) {
-		this.requeteDirectionPoint = requeteDirection;
-	}
+public abstract class UserBody extends Body {
+	// Les direction de ladyBug (requête suite aux touches et la vue)
+	@Setter
+	protected Point userRequest = Constants.POINT_ZERO;
 
 	/**
 	 * Retourne vrai si l'élément peut bouger en fonction des cases à côté
@@ -59,12 +53,11 @@ public abstract class BodyMovedByUser extends Body {
 	 */
 	protected void move(ScreenBlock screenBlock) {
 		if (changeBlock()) {
-			if ((requeteDirectionPoint.x != 0 || requeteDirectionPoint.y != 0)
-			        && canMove(requeteDirectionPoint, screenBlock)) {
-				setDirection(requeteDirectionPoint);
+			if ((userRequest.x != 0 || userRequest.y != 0) && canMove(userRequest, screenBlock)) {
+				setDirection(userRequest);
 			}
 			/**
-			 * Quand ladybug est coincé : au début ou quand il butte sur un mur.
+			 * Quand le body est coincé : au début ou quand il butte sur un mur.
 			 */
 			if (!canMove(getDirection(), screenBlock)) {
 				setDirection(Constants.POINT_ZERO);

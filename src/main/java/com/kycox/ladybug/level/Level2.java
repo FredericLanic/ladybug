@@ -22,7 +22,7 @@ public class Level2 extends Level {
 
   public Level2() {
     // nombre de blocks par ligne
-    nbrBlocksPerLine = 15;
+    nbrBlocksByLine = 15;
     // nombre de lignes
     nbrLines = 15;
 

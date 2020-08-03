@@ -25,8 +25,6 @@ import com.kycox.ladybug.maths.SpeedFunction;
  *
  */
 public class Inky extends Ghost {
-	public static final int ID = 3;
-
 	public Inky(int numLevel) {
 		super(numLevel);
 		setGhostSettings(GhostsSettingsEnum.INKY);
@@ -45,6 +43,6 @@ public class Inky extends Ghost {
 		if (GhostStatusEnum.isScared().test(this))
 			setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);
 		else
-			setSpeedIndex(getStartIndexSpeed());
+			setSpeedIndex(getStartSpeedIndex());
 	}
 }

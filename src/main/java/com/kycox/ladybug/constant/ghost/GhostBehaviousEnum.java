@@ -21,6 +21,6 @@ package com.kycox.ladybug.constant.ghost;
  *
  */
 public enum GhostBehaviousEnum {
-  // agressif, timide, débile, intelligent
-  AGGRESSIVE, SHY, SMART, STUPID;
+    // agressif, timide, débile, intelligent
+	AGGRESSIVE, SHY, SMART, STUPID;
 }

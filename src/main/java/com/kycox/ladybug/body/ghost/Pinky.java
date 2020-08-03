@@ -43,6 +43,6 @@ public class Pinky extends Ghost {
 		if (GhostStatusEnum.isScared().test(this))
 			setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);
 		else
-			setSpeedIndex(getStartIndexSpeed());
+			setSpeedIndex(getStartSpeedIndex());
 	}
 }

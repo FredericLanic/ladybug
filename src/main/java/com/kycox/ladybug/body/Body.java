@@ -20,6 +20,9 @@ import java.awt.Point;
 
 import com.kycox.ladybug.constant.Constants;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Classe abstraite pour les éléments qui bouge dans le jeu
  *
@@ -27,21 +30,30 @@ import com.kycox.ladybug.constant.Constants;
  */
 public abstract class Body {
 	// Direction du fantôme
-	private Point dirPoint = Constants.POINT_ZERO;
+	@Getter
+	@Setter
+	private Point direction = Constants.POINT_ZERO;
 	// nombre de vie restant pour ce body
-	private int lifesLeft = 0;
+	@Getter
+	@Setter
+	private int leftLifes = 0;
 	// Position dans le JPanel
-	private Point posPoint = Constants.POINT_ZERO;
+	@Getter
+	@Setter
+	private Point position = Constants.POINT_ZERO;
 	// Vitesse : index dans le tableau VALID_SPEEDS
+	@Getter
+	@Setter
 	private int speedIndex = 0;
 	// Vitesse initiale : index dans le tableau VALID_SPEEDS
+	@Getter
 	private int startSpeedIndex = 0;
 
 	/**
 	 * Ajout d'une nouvelle vie
 	 */
 	public void addNewLife() {
-		lifesLeft++;
+		leftLifes++;
 	}
 
 	/**
@@ -56,47 +68,12 @@ public abstract class Body {
 	}
 
 	/**
-	 * Retourne la direction
-	 *
-	 * @return
-	 */
-	public Point getDirection() {
-		return dirPoint;
-	}
-
-	public int getLifesLeft() {
-		return lifesLeft;
-	}
-
-	/**
-	 * Retourne la position
-	 *
-	 * @return
-	 */
-	public Point getPosition() {
-		return posPoint;
-	}
-
-	/**
 	 * Getters et setters pour la vitesse
 	 *
 	 * @return
 	 */
 	public int getSpeed() {
 		return Constants.VALID_SPEEDS.get(speedIndex);
-	}
-
-	public int getSpeedIndex() {
-		return speedIndex;
-	}
-
-	/**
-	 * Return the start speed
-	 *
-	 * @return
-	 */
-	public int getStartIndexSpeed() {
-		return startSpeedIndex;
 	}
 
 	/**
@@ -112,40 +89,7 @@ public abstract class Body {
 	}
 
 	public void minusLifesLeft() {
-		lifesLeft--;
-		System.out.println("lifesLeft:" + lifesLeft);
-	}
-
-	/**
-	 * Affecte une direction
-	 *
-	 * @param dirPoint
-	 */
-	public void setDirection(Point dirPoint) {
-		this.dirPoint = dirPoint;
-	}
-
-	public void setLeftLifes(int lifesLeft) {
-		this.lifesLeft = lifesLeft;
-	}
-
-	/**
-	 * Affecte une position
-	 *
-	 * @param posPoint
-	 */
-	public void setPosition(Point posPoint) {
-		this.posPoint = posPoint;
-	}
-
-	/**
-	 * Affecte la vitesse
-	 *
-	 * @param speedIndex
-	 */
-	public void setSpeedIndex(int speedIndex) {
-		// FIXME : rajouter un test si speenIndex > VALID_SPEEDS.length
-		// ou pas, comme ça j'aurai une exception et je pourrai corriger le problème
-		this.speedIndex = speedIndex;
+		leftLifes--;
+		System.out.println("lifesLeft:" + leftLifes);
 	}
 }

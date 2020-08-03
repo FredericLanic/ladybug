@@ -1,13 +1,8 @@
 package com.kycox.ladybug.constant;
 
 public enum LevelConstructEnum {
-B("BASIC_POINT"),
-S("START_POINT"),
-G("GHOST_POINT"),
-M("MEGA_POINT"),
-N("NOT_ACCESSIBLE");
+	B("BASIC_POINT"), G("GHOST_POINT"), M("MEGA_POINT"), N("NOT_ACCESSIBLE"), S("START_POINT");
 
-LevelConstructEnum(String string) {
-	// TODO Auto-generated constructor stub
-}
+	private LevelConstructEnum(String string) {
+	}
 }

@@ -18,16 +18,15 @@ package com.kycox.ladybug.model;
 
 import com.kycox.ladybug.constant.GameStatusEnum;
 
+import lombok.Getter;
+
 public class GameStatus {
 	private GameStatusEnum gameStatusEnum;
+	@Getter
 	private int			   numLevel;
 
 	public void addNumLevel() {
 		numLevel++;
-	}
-
-	public int getNumLevel() {
-		return numLevel;
 	}
 
 	public boolean isBeginningGame() {
