@@ -32,7 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.kycox.ladybug.constant.PicturesEnum;
-import com.kycox.ladybug.constant.ghost.GhostsSettingsEnum;
+import com.kycox.ladybug.constant.ghost.GhostsImagesEnum;
 
 public class ConfJDialog extends JDialog implements ActionListener {
 	/**
@@ -89,29 +89,29 @@ public class ConfJDialog extends JDialog implements ActionListener {
 		switch (e.getActionCommand()) {
 			case "1 player":
 				// on met un fantôme jouable par les touches
-				GhostsSettingsEnum.CLYDE.setComputed(true);
-				GhostsSettingsEnum.BLINKY.setComputed(true);
-				GhostsSettingsEnum.INKY.setComputed(true);
-				GhostsSettingsEnum.PINKY.setComputed(true);
+				GhostsImagesEnum.ORANGE.setComputed(true);
+				GhostsImagesEnum.RED.setComputed(true);
+				GhostsImagesEnum.BLUE.setComputed(true);
+				GhostsImagesEnum.PINK.setComputed(true);
 				this.dispose();
 				break;
 			case "2 players":
-				GhostsSettingsEnum.CLYDE.setComputed(true);
-				GhostsSettingsEnum.BLINKY.setComputed(true);
-				GhostsSettingsEnum.INKY.setComputed(true);
-				GhostsSettingsEnum.PINKY.setComputed(true);
+				GhostsImagesEnum.ORANGE.setComputed(true);
+				GhostsImagesEnum.RED.setComputed(true);
+				GhostsImagesEnum.BLUE.setComputed(true);
+				GhostsImagesEnum.PINK.setComputed(true);
 				switch (group.getSelection().getActionCommand()) {
 					case JGhostChoice.BLINKY_CHOICE:
-						GhostsSettingsEnum.BLINKY.setComputed(false);
+						GhostsImagesEnum.RED.setComputed(false);
 						break;
 					case JGhostChoice.INKY_CHOICE:
-						GhostsSettingsEnum.INKY.setComputed(false);
+						GhostsImagesEnum.BLUE.setComputed(false);
 						break;
 					case JGhostChoice.CLYDE_CHOICE:
-						GhostsSettingsEnum.CLYDE.setComputed(false);
+						GhostsImagesEnum.ORANGE.setComputed(false);
 						break;
 					case JGhostChoice.PINKY_CHOICE:
-						GhostsSettingsEnum.PINKY.setComputed(false);
+						GhostsImagesEnum.PINK.setComputed(false);
 						break;
 					default:
 						System.out.println("Erreur de configuration :" + group.getSelection().getActionCommand());

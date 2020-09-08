@@ -17,7 +17,6 @@
 package com.kycox.ladybug.body.ghost;
 
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
-import com.kycox.ladybug.constant.ghost.GhostsSettingsEnum;
 import com.kycox.ladybug.maths.SpeedFunction;
 
 /**
@@ -25,9 +24,8 @@ import com.kycox.ladybug.maths.SpeedFunction;
  *
  */
 public class Inky extends Ghost {
-	public Inky(int numLevel) {
-		super(numLevel);
-		setGhostSettings(GhostsSettingsEnum.INKY);
+	public Inky() {
+		super();
 	}
 
 	@Override

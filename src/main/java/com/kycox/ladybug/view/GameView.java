@@ -226,10 +226,10 @@ public class GameView extends JPanel implements Observer {
 			Ghost ghostNotComputed = gameModel.getGroupGhosts().getGhostNotComputed();
 			if (ghostNotComputed != null && ghostNotComputed.getLeftLifes() < 5) {
 				for (i = 0; i < ghostNotComputed.getLeftLifes(); i++) {
-					g.drawImage(ghostNotComputed.getGhostSettings().getGhostLeftEyesImg(), i * 28 + 8, y + 20, this);
+					g.drawImage(ghostNotComputed.getImages().getGhostLeftEyesImg(), i * 28 + 8, y + 20, this);
 				}
 			} else if (ghostNotComputed != null) {
-				g.drawImage(ghostNotComputed.getGhostSettings().getGhostLeftEyesImg(), 8, y + 20, this);
+				g.drawImage(ghostNotComputed.getImages().getGhostLeftEyesImg(), 8, y + 20, this);
 				g.setColor(Color.GRAY);
 				g.setFont(smallFont);
 				g.drawString("x" + ghostNotComputed.getLeftLifes(), 34, y + 38);

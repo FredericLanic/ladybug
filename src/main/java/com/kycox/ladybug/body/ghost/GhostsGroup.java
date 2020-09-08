@@ -25,10 +25,10 @@ import com.kycox.ladybug.action.ghost.GhostsGroupActions;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
 import com.kycox.ladybug.level.ScreenData;
-import com.kycox.ladybug.maths.BlinkySpeedIndex;
 import com.kycox.ladybug.tools.Utils;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Gestion des actions sur l'ensemble des fantômes
@@ -38,24 +38,8 @@ import lombok.Getter;
  */
 public class GhostsGroup {
 	@Getter
-	private List<Ghost> lstGhosts = null;
-
-	/**
-	 * Constructeur : les 4 fantômes
-	 */
-	public GhostsGroup(int numLevel, ScreenData screenData) {
-		// Création de Blink
-		Blinky blinky = new Blinky(numLevel);
-		// Affectation de l'objet de gestion de sa vitesse incrémentale
-		BlinkySpeedIndex blinkyIncrementSpeed = new BlinkySpeedIndex(numLevel, screenData);
-		blinky.setIncrementSpeed(blinkyIncrementSpeed);
-		// Affectation des fantômes dans la liste
-		lstGhosts = new ArrayList<>();
-		lstGhosts.add(blinky);
-		lstGhosts.add(new Clyde(numLevel));
-		lstGhosts.add(new Inky(numLevel));
-		lstGhosts.add(new Pinky(numLevel));
-	}
+	@Setter
+	private List<Ghost> lstGhosts = new ArrayList<>();
 
 	/**
 	 * Retourne le fantôme qui est géré par un utilisateur
@@ -165,6 +149,10 @@ public class GhostsGroup {
 	 */
 	public void setLeftLifes(int numLeftLives) {
 		lstGhosts.stream().forEach(g -> g.setLeftLifes(numLeftLives));
+	}
+
+	public void setNumLevel(int numLevel) {
+		lstGhosts.stream().forEach(g -> g.setNumLevel(numLevel));
 	}
 
 	/**

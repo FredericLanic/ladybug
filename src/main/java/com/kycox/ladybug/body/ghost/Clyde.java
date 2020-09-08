@@ -17,7 +17,6 @@
 package com.kycox.ladybug.body.ghost;
 
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
-import com.kycox.ladybug.constant.ghost.GhostsSettingsEnum;
 import com.kycox.ladybug.maths.SpeedFunction;
 
 /**
@@ -25,12 +24,8 @@ import com.kycox.ladybug.maths.SpeedFunction;
  *
  */
 public class Clyde extends Ghost {
-	/**
-	 * Constructeur lors du jeu
-	 */
-	public Clyde(int numLevel) {
-		super(numLevel);
-		setGhostSettings(GhostsSettingsEnum.CLYDE);
+	public Clyde() {
+		super();
 	}
 
 	@Override

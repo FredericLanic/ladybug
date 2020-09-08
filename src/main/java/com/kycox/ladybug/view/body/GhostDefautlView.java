@@ -35,11 +35,11 @@ public class GhostDefautlView {
 
 	public Image getImage(Ghost ghost) {
 		if (ghost.getDirection().x < 0)
-			return ghost.getGhostSettings().getGhostRightEyesImg();
+			return ghost.getImages().getGhostRightEyesImg();
 		if (ghost.getDirection().x > 0)
-			return ghost.getGhostSettings().getGhostLeftEyesImg();
+			return ghost.getImages().getGhostLeftEyesImg();
 		if (ghost.getDirection().y > 0)
-			return ghost.getGhostSettings().getGhostDownEyesImg();
-		return ghost.getGhostSettings().getGhostUpEyesImg();
+			return ghost.getImages().getGhostDownEyesImg();
+		return ghost.getImages().getGhostUpEyesImg();
 	}
 }

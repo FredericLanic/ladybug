@@ -28,12 +28,13 @@ import com.kycox.ladybug.action.ghost.GhostActions;
 import com.kycox.ladybug.body.UserBody;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
+import com.kycox.ladybug.constant.ghost.GhostBehaviousEnum;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
-import com.kycox.ladybug.constant.ghost.GhostsSettingsEnum;
+import com.kycox.ladybug.constant.ghost.GhostsImagesEnum;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
 import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.level.ScreenData;
-import com.kycox.ladybug.maths.GhostBehavious;
+import com.kycox.ladybug.maths.GhostSensitiveBehavious;
 import com.kycox.ladybug.maths.SpeedFunction;
 import com.kycox.ladybug.tools.Utils;
 import com.kycox.ladybug.tools.dijkstra.Dijkstra;
@@ -46,14 +47,28 @@ import lombok.Setter;
  *
  */
 public abstract class Ghost extends UserBody {
-	private static final Log   logger		  = LogFactory.getLog(Ghost.class);
-	private GhostBehavious	   behaviousGhost = null;
+	private static final Log		logger			   = LogFactory.getLog(Ghost.class);
+	@Setter
+	private GhostSensitiveBehavious	sensitiveBehavious = null;
 	@Getter
 	@Setter
-	private GhostsSettingsEnum ghostSettings  = null;
+	private GhostStatusEnum			status			   = null;
 	@Getter
 	@Setter
-	private GhostStatusEnum	   status		  = null;
+	protected GhostBehaviousEnum	behavious		   = null;
+	// Note : "protected" pour que Spring puisse affecter à partir de Clyde, Inky,
+	// Pinky ou Blinky
+	@Getter
+	@Setter
+	protected GhostsImagesEnum images = null;
+
+	public Ghost() {
+		super();
+		// statut de départ NORMAL
+		setStatus(GhostStatusEnum.NORMAL);
+		// immobile pour commencer
+		setDirection(Constants.POINT_ZERO);
+	}
 
 	/**
 	 * Constructor
@@ -61,7 +76,7 @@ public abstract class Ghost extends UserBody {
 	public Ghost(int numLevel) {
 		super();
 		// initialise le comportement du fantôme en fonction du niveau
-		behaviousGhost = new GhostBehavious(numLevel);
+		sensitiveBehavious = new GhostSensitiveBehavious(numLevel);
 		// statut de départ NORMAL
 		setStatus(GhostStatusEnum.NORMAL);
 		// immobile pour commencer
@@ -82,7 +97,7 @@ public abstract class Ghost extends UserBody {
 	 * @return
 	 */
 	public boolean isComputed() {
-		return ghostSettings.isComputed();
+		return images.isComputed();
 	}
 
 	/**
@@ -141,6 +156,11 @@ public abstract class Ghost extends UserBody {
 			}
 		}
 		return ghostActions;
+	}
+
+	public void setNumLevel(int numLevel) {
+		// initialise le comportement du fantôme en fonction du niveau
+		sensitiveBehavious = new GhostSensitiveBehavious(numLevel);
 	}
 
 	/**
@@ -202,7 +222,7 @@ public abstract class Ghost extends UserBody {
 	 * @param ladybugPosBlock
 	 */
 	private void moveByBehaviour(Point ladybugPosBlock, ScreenData screenData) {
-		switch (ghostSettings.getBehavious()) {
+		switch (behavious) {
 			case SMART, AGGRESSIVE -> moveAgressive(ladybugPosBlock, screenData);
 			default -> moveByDefault(screenData);
 		}
@@ -315,7 +335,7 @@ public abstract class Ghost extends UserBody {
 	}
 
 	private void normalMoving(Point ladybugPosBlock, ScreenData screenData) {
-		if (behaviousGhost.isActive())
+		if (sensitiveBehavious.isActive())
 			moveByBehaviour(ladybugPosBlock, screenData);
 		else
 			moveByDefault(screenData);

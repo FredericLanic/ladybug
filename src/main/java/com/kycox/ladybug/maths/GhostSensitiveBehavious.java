@@ -30,7 +30,7 @@ import com.kycox.ladybug.constant.Constants;
  * Retourne vrai si le nombre aléatoire (0-100) est en dessous de y
  *
  */
-public class GhostBehavious {
+public class GhostSensitiveBehavious {
 	// Echelle de 1 à 10
 	private final double LOW_LIMIT		  = 20;
 	private final double HIGH_LIMIT		  = 90;
@@ -38,7 +38,7 @@ public class GhostBehavious {
 	private final int	 SCALE			  = 100;
 	private double		 y				  = 0;
 
-	public GhostBehavious(int numLevel) {
+	public GhostSensitiveBehavious(int numLevel) {
 		double a = 0;
 		double b = 0;
 		a = (HIGH_LIMIT - LOW_LIMIT) / (Constants.NIVEAU_MAX - 1);

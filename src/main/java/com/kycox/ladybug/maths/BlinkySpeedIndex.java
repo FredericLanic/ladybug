@@ -16,8 +16,6 @@
  */
 package com.kycox.ladybug.maths;
 
-import com.kycox.ladybug.level.ScreenData;
-
 public class BlinkySpeedIndex {
 	/**
 	 * aX²+bX+c (c=0)
@@ -31,15 +29,11 @@ public class BlinkySpeedIndex {
 	private double		  a;
 	private double		  b;
 	private double		  levelPerCent = 80.0;
-	private ScreenData	  screenData   = null;
 
-	public BlinkySpeedIndex(int numLevel, ScreenData screenData) {
-		this.screenData = screenData;
-		// calcul de R en fonction du niveau
-		// pour commencer : on met R = 80
+	public BlinkySpeedIndex(int numLevel) {
+		// calcul de R en fonction du niveau pour commencer : on met R = 80
 		// FIXME : puis on devrait faire R = 80 pour le niveau 1, et R = 20 pour le
-		// dernier
-		// niveau
+		// dernier niveau
 		a = (centPerCent - 3 * levelPerCent)
 		        / (levelPerCent * levelPerCent * centPerCent - levelPerCent * centPerCent * centPerCent);
 		b = (centPerCent * centPerCent - 3 * levelPerCent * levelPerCent)
@@ -52,8 +46,7 @@ public class BlinkySpeedIndex {
 	 * @param x
 	 * @return
 	 */
-	public int getIncrementSpeedIndex() {
-		int x = screenData.getPercentageEatenPoint();
-		return (int) (a * x * x + b * x);
+	public int getIncrementSpeedIndex(int perCent) {
+		return (int) (a * perCent * perCent + b * perCent);
 	}
 }

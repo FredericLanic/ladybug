@@ -26,6 +26,8 @@ import javax.swing.Timer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.kycox.ladybug.action.ghost.GhostsGroupActions;
 import com.kycox.ladybug.action.ladybug.LadybugActions;
@@ -53,6 +55,9 @@ import lombok.Setter;
 @SuppressWarnings("deprecation")
 public class GameModel extends Observable {
 	private static final Log			logger				  = LogFactory.getLog(GameModel.class);
+	/** lecture du contexte de l'application */
+	private ApplicationContext			applicationContext	  = new ClassPathXmlApplicationContext(
+	        "application-context.xml", "application-context-*.xml");
 	private boolean						beginNewLevel		  = false;
 	/** Objet Score du jeu */
 	@Getter
@@ -65,7 +70,8 @@ public class GameModel extends Observable {
 	@Getter
 	private GhostsGroupActions			ghostsActions;
 	@Getter
-	private GhostsGroup					groupGhosts;
+	private GhostsGroup					groupGhosts			  = applicationContext.getBean("beanGroupGhost",
+	        GhostsGroup.class);
 	@Getter
 	private final GroupIncrementScores	groupIncrementScores  = new GroupIncrementScores();
 	@Getter
@@ -127,7 +133,7 @@ public class GameModel extends Observable {
 		// initialise les score
 		gameScore.init();
 		// Initialise le groupe de fantôme
-		groupGhosts = new GhostsGroup(Constants.PRESENTATION_LEVEL, screenData);
+		groupGhosts.setNumLevel(Constants.PRESENTATION_LEVEL);
 		// mise de la vitesse du niveau 3 pour la présentation
 		groupGhosts.setInitSpeeds(Constants.PRESENTATION_LEVEL);
 		// initialise les positions des fantômes

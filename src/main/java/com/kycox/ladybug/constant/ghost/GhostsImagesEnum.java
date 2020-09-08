@@ -28,7 +28,13 @@ import com.kycox.ladybug.constant.PicturesEnum;
  * @author kycox
  *
  */
-public enum GhostsSettingsEnum {
+public enum GhostsImagesEnum {
+	BLUE(PicturesEnum.GHOST_BLUE_RIGHT_EYES, PicturesEnum.GHOST_BLUE_LEFT_EYES, PicturesEnum.GHOST_BLUE_UP_EYES,
+	        PicturesEnum.GHOST_BLUE_DOWN_EYES, true),
+	ORANGE(PicturesEnum.GHOST_ORANGE_RIGHT_EYES, PicturesEnum.GHOST_ORANGE_LEFT_EYES, PicturesEnum.GHOST_ORANGE_UP_EYES,
+	        PicturesEnum.GHOST_ORANGE_DOWN_EYES, true),
+	PINK(PicturesEnum.GHOST_PINK_RIGHT_EYES, PicturesEnum.GHOST_PINK_LEFT_EYES, PicturesEnum.GHOST_PINK_UP_EYES,
+	        PicturesEnum.GHOST_PINK_DOWN_EYES, true),
     // cf : https://fr.wikipedia.org/wiki/Pac-Man
     // Blinky (AGGRESIVE - rouge) attaque directement Pac Man. Il suit Pac-Man comme
     // son ombre.
@@ -38,14 +44,8 @@ public enum GhostsSettingsEnum {
     // direction opposée de Pac-Man.
     // Clyde (INDIFFERENT - orange) feint l'indifférence. De temps en temps, il
     // choisit une direction au hasard (qui peut être celle de Pac-Man).
-	BLINKY(PicturesEnum.GHOST_BLINKY_RIGHT_EYES, PicturesEnum.GHOST_BLINKY_LEFT_EYES, PicturesEnum.GHOST_BLINKY_UP_EYES,
-	        PicturesEnum.GHOST_BLINKY_DOWN_EYES, GhostBehaviousEnum.AGGRESSIVE, true),
-	CLYDE(PicturesEnum.GHOST_CLYDE_RIGHT_EYES, PicturesEnum.GHOST_CLYDE_LEFT_EYES, PicturesEnum.GHOST_CLYDE_UP_EYES,
-	        PicturesEnum.GHOST_CLYDE_DOWN_EYES, GhostBehaviousEnum.STUPID, true),
-	INKY(PicturesEnum.GHOST_INKY_RIGHT_EYES, PicturesEnum.GHOST_INKY_LEFT_EYES, PicturesEnum.GHOST_INKY_UP_EYES,
-	        PicturesEnum.GHOST_INKY_DOWN_EYES, GhostBehaviousEnum.STUPID, true),
-	PINKY(PicturesEnum.GHOST_PINKY_RIGHT_EYES, PicturesEnum.GHOST_PINKY_LEFT_EYES, PicturesEnum.GHOST_PINKY_UP_EYES,
-	        PicturesEnum.GHOST_PINKY_DOWN_EYES, GhostBehaviousEnum.SMART, true);
+	RED(PicturesEnum.GHOST_RED_RIGHT_EYES, PicturesEnum.GHOST_RED_LEFT_EYES, PicturesEnum.GHOST_RED_UP_EYES,
+	        PicturesEnum.GHOST_RED_DOWN_EYES, true);
 
 	/**
 	 * Initialise la configuration isComputed pour tous les settings des fantômes
@@ -53,16 +53,15 @@ public enum GhostsSettingsEnum {
 	 * @param isComputed
 	 */
 	public static void initIsComputed(boolean isComputed) {
-		List<GhostsSettingsEnum> lstEnum = Arrays.asList(GhostsSettingsEnum.class.getEnumConstants());
+		List<GhostsImagesEnum> lstEnum = Arrays.asList(GhostsImagesEnum.class.getEnumConstants());
 		lstEnum.stream().forEach(e -> e.isComputed = isComputed);
 	}
 
-	private GhostBehaviousEnum behavious;
-	private PicturesEnum	   downEyesImg;
-	private boolean			   isComputed;
-	private PicturesEnum	   leftEyesImg;
-	private PicturesEnum	   rightEyesImg;
-	private PicturesEnum	   upEyesImg;
+	private PicturesEnum downEyesImg;
+	private boolean		 isComputed;
+	private PicturesEnum leftEyesImg;
+	private PicturesEnum rightEyesImg;
+	private PicturesEnum upEyesImg;
 
 	/**
 	 * Constructeur
@@ -71,23 +70,13 @@ public enum GhostsSettingsEnum {
 	 * @param leftEyesImg
 	 * @param rightEyesImg
 	 */
-	private GhostsSettingsEnum(PicturesEnum leftEyesImg, PicturesEnum rightEyesImg, PicturesEnum upEyesImg,
-	        PicturesEnum downEyesImg, GhostBehaviousEnum behavious, boolean isComputed) {
+	private GhostsImagesEnum(PicturesEnum leftEyesImg, PicturesEnum rightEyesImg, PicturesEnum upEyesImg,
+	        PicturesEnum downEyesImg, boolean isComputed) {
 		this.leftEyesImg  = leftEyesImg;
 		this.rightEyesImg = rightEyesImg;
 		this.upEyesImg	  = upEyesImg;
 		this.downEyesImg  = downEyesImg;
-		this.behavious	  = behavious;
 		this.isComputed	  = isComputed;
-	}
-
-	/**
-	 * Retourne le comportement du fantôme
-	 *
-	 * @return
-	 */
-	public GhostBehaviousEnum getBehavious() {
-		return behavious;
 	}
 
 	/**

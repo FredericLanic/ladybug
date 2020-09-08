@@ -17,8 +17,8 @@
 package com.kycox.ladybug.body.ghost;
 
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
-import com.kycox.ladybug.constant.ghost.GhostsSettingsEnum;
 import com.kycox.ladybug.maths.BlinkySpeedIndex;
+import com.kycox.ladybug.maths.GhostSensitiveBehavious;
 import com.kycox.ladybug.maths.SpeedFunction;
 
 import lombok.Setter;
@@ -34,15 +34,23 @@ public class Blinky extends Ghost {
 	/**
 	 * Constructeur
 	 */
-	public Blinky(int numLevel) {
-		super(numLevel);
-		setGhostSettings(GhostsSettingsEnum.BLINKY);
+	public Blinky() {
+		super();
 	}
 
 	@Override
 	public void getInitSpeed(int numLevel) {
 		// Vitesse de Ladybug moins 1
 		initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel));
+	}
+
+	@Override
+	public void setNumLevel(int numLevel) {
+		// initialise le comportement du fantôme en fonction du niveau
+		setSensitiveBehavious(new GhostSensitiveBehavious(numLevel));
+		// Affectation de l'objet de gestion de sa vitesse incrémentale
+		BlinkySpeedIndex blinkyIncrementSpeed = new BlinkySpeedIndex(numLevel);
+		setIncrementSpeed(blinkyIncrementSpeed);
 	}
 
 	@Override
@@ -54,7 +62,7 @@ public class Blinky extends Ghost {
 		else {
 			// Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
 			// map
-			setSpeedIndex(getStartSpeedIndex() + incrementSpeed.getIncrementSpeedIndex());
+			setSpeedIndex(getStartSpeedIndex() + incrementSpeed.getIncrementSpeedIndex(perCent));
 		}
 	}
 }
