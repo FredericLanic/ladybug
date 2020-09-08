@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:lang="http://www.springframework.org/schema/lang"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/lang 
+    http://www.springframework.org/schema/lang/spring-lang.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+       
+	<bean id="beanClyde" class="com.kycox.ladybug.body.ghost.Clyde" scope="prototype">
+		<property name="images" value="ORANGE"/>
+		<property name="behavious" value="STUPID"/>
+	</bean>
+	
+	<bean id="beanBlinky" class="com.kycox.ladybug.body.ghost.Blinky" scope="prototype">
+		<property name="images" value="RED"/>
+		<property name="behavious" value="AGGRESSIVE"/>
+	</bean>
+	
+	<bean id="beanInky" class="com.kycox.ladybug.body.ghost.Inky" scope="prototype">
+		<property name="images" value="BLUE"/>
+		<property name="behavious" value="STUPID"/>
+	</bean>
+	
+	<bean id="beanPinky" class="com.kycox.ladybug.body.ghost.Pinky" scope="prototype">
+		<property name="images" value="PINK"/>
+		<property name="behavious" value="SMART"/>
+	</bean>
+
+	<bean id="beanGroupGhost" class="com.kycox.ladybug.body.ghost.GhostsGroup">
+		<property name="lstGhosts">
+			<list>
+				<ref bean="beanClyde"/>
+				<ref bean="beanBlinky"/>
+				<ref bean="beanInky"/>
+				<ref bean="beanPinky"/>
+			</list>
+		</property>
+	</bean>
+
+</beans>
