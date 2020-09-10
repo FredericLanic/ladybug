@@ -48,35 +48,20 @@ import lombok.Setter;
  */
 public abstract class Ghost extends UserBody {
 	private static final Log		logger			   = LogFactory.getLog(Ghost.class);
+	@Getter
+	@Setter
+	private GhostBehaviousEnum		behavious		   = null;
+	@Getter
+	@Setter
+	private GhostsImagesEnum		images			   = null;
 	@Setter
 	private GhostSensitiveBehavious	sensitiveBehavious = null;
 	@Getter
 	@Setter
 	private GhostStatusEnum			status			   = null;
-	@Getter
-	@Setter
-	protected GhostBehaviousEnum	behavious		   = null;
-	// Note : "protected" pour que Spring puisse affecter à partir de Clyde, Inky,
-	// Pinky ou Blinky
-	@Getter
-	@Setter
-	protected GhostsImagesEnum images = null;
 
 	public Ghost() {
 		super();
-		// statut de départ NORMAL
-		setStatus(GhostStatusEnum.NORMAL);
-		// immobile pour commencer
-		setDirection(Constants.POINT_ZERO);
-	}
-
-	/**
-	 * Constructor
-	 */
-	public Ghost(int numLevel) {
-		super();
-		// initialise le comportement du fantôme en fonction du niveau
-		sensitiveBehavious = new GhostSensitiveBehavious(numLevel);
 		// statut de départ NORMAL
 		setStatus(GhostStatusEnum.NORMAL);
 		// immobile pour commencer

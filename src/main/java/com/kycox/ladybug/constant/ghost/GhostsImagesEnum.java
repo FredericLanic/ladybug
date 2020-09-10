@@ -29,12 +29,6 @@ import com.kycox.ladybug.constant.PicturesEnum;
  *
  */
 public enum GhostsImagesEnum {
-	BLUE(PicturesEnum.GHOST_BLUE_RIGHT_EYES, PicturesEnum.GHOST_BLUE_LEFT_EYES, PicturesEnum.GHOST_BLUE_UP_EYES,
-	        PicturesEnum.GHOST_BLUE_DOWN_EYES, true),
-	ORANGE(PicturesEnum.GHOST_ORANGE_RIGHT_EYES, PicturesEnum.GHOST_ORANGE_LEFT_EYES, PicturesEnum.GHOST_ORANGE_UP_EYES,
-	        PicturesEnum.GHOST_ORANGE_DOWN_EYES, true),
-	PINK(PicturesEnum.GHOST_PINK_RIGHT_EYES, PicturesEnum.GHOST_PINK_LEFT_EYES, PicturesEnum.GHOST_PINK_UP_EYES,
-	        PicturesEnum.GHOST_PINK_DOWN_EYES, true),
     // cf : https://fr.wikipedia.org/wiki/Pac-Man
     // Blinky (AGGRESIVE - rouge) attaque directement Pac Man. Il suit Pac-Man comme
     // son ombre.
@@ -44,6 +38,12 @@ public enum GhostsImagesEnum {
     // direction opposée de Pac-Man.
     // Clyde (INDIFFERENT - orange) feint l'indifférence. De temps en temps, il
     // choisit une direction au hasard (qui peut être celle de Pac-Man).
+	BLUE(PicturesEnum.GHOST_BLUE_RIGHT_EYES, PicturesEnum.GHOST_BLUE_LEFT_EYES, PicturesEnum.GHOST_BLUE_UP_EYES,
+	        PicturesEnum.GHOST_BLUE_DOWN_EYES, true),
+	ORANGE(PicturesEnum.GHOST_ORANGE_RIGHT_EYES, PicturesEnum.GHOST_ORANGE_LEFT_EYES, PicturesEnum.GHOST_ORANGE_UP_EYES,
+	        PicturesEnum.GHOST_ORANGE_DOWN_EYES, true),
+	PINK(PicturesEnum.GHOST_PINK_RIGHT_EYES, PicturesEnum.GHOST_PINK_LEFT_EYES, PicturesEnum.GHOST_PINK_UP_EYES,
+	        PicturesEnum.GHOST_PINK_DOWN_EYES, true),
 	RED(PicturesEnum.GHOST_RED_RIGHT_EYES, PicturesEnum.GHOST_RED_LEFT_EYES, PicturesEnum.GHOST_RED_UP_EYES,
 	        PicturesEnum.GHOST_RED_DOWN_EYES, true);
 
