@@ -29,13 +29,13 @@ public class Inky extends Ghost {
 	}
 
 	@Override
-	public void getInitSpeed(int numLevel) {
+	public void setInitSpeed(int numLevel) {
 		initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel));
 	}
 
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
-		if (!changeBlock()) {
+		if (!hasChangeBlock()) {
 			return;
 		}
 		if (GhostStatusEnum.isScared().test(this))

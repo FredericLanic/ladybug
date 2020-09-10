@@ -139,7 +139,7 @@ public class GhostsGroup {
 	 * @param numLevel
 	 */
 	public void setInitSpeeds(int numLevel) {
-		lstGhosts.stream().forEach(g -> g.getInitSpeed(numLevel));
+		lstGhosts.stream().forEach(g -> g.setInitSpeed(numLevel));
 	}
 
 	/**

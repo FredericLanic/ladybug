@@ -64,7 +64,7 @@ public class Ladybug extends UserBody {
 			this.viewDirection = getDirection();
 		}
 		// calcule uniquement lorsque ladybug rempli le block
-		if (changeBlock()) {
+		if (hasChangeBlock()) {
 			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());

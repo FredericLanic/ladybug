@@ -69,14 +69,6 @@ public abstract class Ghost extends UserBody {
 	}
 
 	/**
-	 * Cette fonction est a définir pour chaque fantôme nommé (Blinky, Inky, Clyde &
-	 * Pinky)
-	 *
-	 * @param numLevel
-	 */
-	public abstract void getInitSpeed(int numLevel);
-
-	/**
 	 * Retourne true si le fantôme est géré par l'ordinateur
 	 *
 	 * @return
@@ -111,7 +103,7 @@ public abstract class Ghost extends UserBody {
 	 */
 	public void moveGhostByUser(Point ladybugPosBlock, ScreenData screenData, Point ghostRequest) {
 		setUserRequest(ghostRequest);
-		if (changeBlock() && getStatus().equals(GhostStatusEnum.NORMAL)) {
+		if (hasChangeBlock() && getStatus().equals(GhostStatusEnum.NORMAL)) {
 			move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
 			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		} else {
@@ -142,6 +134,14 @@ public abstract class Ghost extends UserBody {
 		}
 		return ghostActions;
 	}
+
+	/**
+	 * Cette fonction est a définir pour chaque fantôme nommé (Blinky, Inky, Clyde &
+	 * Pinky)
+	 *
+	 * @param numLevel
+	 */
+	public abstract void setInitSpeed(int numLevel);
 
 	public void setNumLevel(int numLevel) {
 		// initialise le comportement du fantôme en fonction du niveau
@@ -184,7 +184,7 @@ public abstract class Ghost extends UserBody {
 		 * Note : le fantôme peut changer de direction uniquement lorsqu'il rempli le
 		 * block
 		 */
-		if (changeBlock()) {
+		if (hasChangeBlock()) {
 			Point		ptCurrentBlockGhost	= Utils.convertPointToBlockUnit(getPosition());
 			List<Point>	shorterWay			= Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
 			Point		point0				= shorterWay.get(0);
@@ -222,7 +222,7 @@ public abstract class Ghost extends UserBody {
 	private void moveByDefault(ScreenData screenData) {
 		List<Point>	lstDirections = new ArrayList<>();
 		Point		posPoint	  = getPosition();
-		if (changeBlock()) {
+		if (hasChangeBlock()) {
 			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(posPoint));
 			if (!currentScreenBlock.isLeft() && getDirection().x != 1) {
 				lstDirections.add(Constants.POINT_LEFT);
@@ -262,7 +262,7 @@ public abstract class Ghost extends UserBody {
 		Point	ptCurrentScreenGhost = getPosition();
 		boolean	canScaredMove		 = false;
 		Point	scaredDirection		 = Constants.POINT_ZERO;
-		if (changeBlock()) {
+		if (hasChangeBlock()) {
 			Point		ptCurrentBlockGhost	= Utils.convertPointToBlockUnit(ptCurrentScreenGhost);
 			ScreenBlock	currentBlockGhost	= screenData.getDataBlock(ptCurrentBlockGhost);
 			List<Point>	shorterWay			= Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
@@ -289,7 +289,7 @@ public abstract class Ghost extends UserBody {
 	 */
 	private void moveToRegenerate(ScreenData screenData) {
 		// Le fantôme est arrivé au limite du block
-		if (changeBlock()) {
+		if (hasChangeBlock()) {
 			// calcul du chemin le plus court :
 			List<Point> shorterWay = Dijkstra.getShorterWay(Utils.convertPointToBlockUnit(getPosition()),
 			        Utils.convertPointToBlockUnit(screenData.getRevivorGhostPos()), screenData);

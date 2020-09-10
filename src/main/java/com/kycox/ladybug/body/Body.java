@@ -62,7 +62,7 @@ public abstract class Body {
 	 * @param pointPos : coordonnées DE L'ECRAN (x,y) dans la fenêtre
 	 * @return
 	 */
-	public boolean changeBlock() {
+	public boolean hasChangeBlock() {
 		Point pointPos = getPosition();
 		return pointPos.x % Constants.BLOCK_SIZE == 0 && pointPos.y % Constants.BLOCK_SIZE == 0;
 	}

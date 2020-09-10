@@ -39,7 +39,7 @@ public class Blinky extends Ghost {
 	}
 
 	@Override
-	public void getInitSpeed(int numLevel) {
+	public void setInitSpeed(int numLevel) {
 		// Vitesse de Ladybug moins 1
 		initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel));
 	}
@@ -55,7 +55,7 @@ public class Blinky extends Ghost {
 
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
-		if (!changeBlock())
+		if (!hasChangeBlock())
 			return;
 		if (GhostStatusEnum.isScared().test(this))
 			setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);

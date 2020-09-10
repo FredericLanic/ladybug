@@ -52,7 +52,7 @@ public abstract class UserBody extends Body {
 	 * @param screenBlock
 	 */
 	protected void move(ScreenBlock screenBlock) {
-		if (changeBlock()) {
+		if (hasChangeBlock()) {
 			if ((userRequest.x != 0 || userRequest.y != 0) && canMove(userRequest, screenBlock)) {
 				setDirection(userRequest);
 			}

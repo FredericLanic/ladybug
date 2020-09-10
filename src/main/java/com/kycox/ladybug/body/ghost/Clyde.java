@@ -29,7 +29,7 @@ public class Clyde extends Ghost {
 	}
 
 	@Override
-	public void getInitSpeed(int numLevel) {
+	public void setInitSpeed(int numLevel) {
 		/*
 		 * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
 		 */
@@ -38,7 +38,7 @@ public class Clyde extends Ghost {
 
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
-		if (!changeBlock()) {
+		if (!hasChangeBlock()) {
 			return;
 		}
 		if (GhostStatusEnum.isScared().test(this))
