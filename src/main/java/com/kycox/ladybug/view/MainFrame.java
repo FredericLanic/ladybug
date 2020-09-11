@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.view.conf.ConfJDialog;
 
+import lombok.Setter;
+
 /**
  * Frame principale du jeu.
  *
@@ -37,31 +39,28 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private transient Toolkit defaultToolKit   = Toolkit.getDefaultToolkit();
 	private double			  edge			   = (double) 15 * Constants.BLOCK_SIZE;
+	@Setter
+	private GameView		  gameView;
 	private double			  rightLeftWidth   = (defaultToolKit.getScreenSize().getWidth() - 15 * Constants.BLOCK_SIZE)
 	        / 2;
 	private double			  topBottomHeight  = (defaultToolKit.getScreenSize().getHeight()
 	        - 16 * Constants.BLOCK_SIZE) / 2;
 
 	/**
-	 * Constructeur
-	 */
-	public MainFrame() {
-		init();
-		new ConfJDialog(this);
-	}
-
-	/**
 	 * Création des JPanel de la JFrame
 	 *
 	 * @param gameView
 	 */
-	public void addGameView(GameView gameView) {
+	public void init() {
+		setTitle("LadyBug");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setUndecorated(true);
+		new ConfJDialog(this);
 		// organisation des panels
 		Dimension dimension = new Dimension();
 		dimension.setSize(edge, edge);
-		gameView.setPreferredSize(dimension);
-		gameView.setBackground(Color.BLACK);
-		add(gameView, BorderLayout.CENTER);
+		initGameView(dimension);
 		// @FIXME : un peu de refacto !!
 		JPanel jPanel = new JPanel();
 		dimension = new Dimension();
@@ -89,13 +88,9 @@ public class MainFrame extends JFrame {
 		add(jPanel, BorderLayout.LINE_END);
 	}
 
-	/**
-	 * Initialisation de la fenêtre
-	 */
-	private void init() {
-		setTitle("LadyBug");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setUndecorated(true);
+	private void initGameView(Dimension dimension) {
+		gameView.setPreferredSize(dimension);
+		gameView.setBackground(Color.BLACK);
+		add(gameView, BorderLayout.CENTER);
 	}
 }

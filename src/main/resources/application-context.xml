@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:lang="http://www.springframework.org/schema/lang"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xmlns:aop="http://www.springframework.org/schema/aop"
-  xsi:schemaLocation="
-  		http://www.springframework.org/schema/beans 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:lang="http://www.springframework.org/schema/lang"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:aop="http://www.springframework.org/schema/aop"
+ xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/lang
 		http://www.springframework.org/schema/lang/spring-lang.xsd
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/aop 
-		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
-     
-    <bean id="logAdvice" name="logAdvice" class="com.kycox.ladybug.utils.aop.TraceurAdvice"/>
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
+		default-lazy-init="false">  
 	
-	<!--  Les fantômes -->	
+	<!-- Ghost beans in beanGroupGhost -->	
 	<bean id="beanClyde" class="com.kycox.ladybug.body.ghost.Clyde" scope="prototype">
 		<property name="images" value="ORANGE"/>
 		<property name="behavious" value="STUPID"/>
@@ -33,6 +32,8 @@
 		<property name="images" value="PINK"/>
 		<property name="behavious" value="SMART"/>
 	</bean>
+	
+	<!-- Ghosts list in beanGameModel -->
 	<bean id="beanGroupGhost" class="com.kycox.ladybug.body.ghost.GhostsGroup">
 		<property name="lstGhosts">
 			<list>
@@ -44,21 +45,49 @@
 		</property>
 	</bean>
 
-	<!--  LadyBug -->
+	<!-- LadyBug in beanGameModel -->
 	<bean id="beanLadybug" class="com.kycox.ladybug.body.ladybug.Ladybug" scope="singleton"/>
 	<bean id="beanKinematicLadybugDeath" class="com.kycox.ladybug.constant.ladybug.KinematicLadybugDeath" scope="singleton"/>
 	
-	<!--  The Game -->
+	<!-- The Game beans in beanGameModel -->
 	<bean id="beanGameScore" class="com.kycox.ladybug.score.GameScore" scope="singleton"/>
 	<bean id="beanGameStatus" class="com.kycox.ladybug.model.GameStatus" scope="singleton"/>
 	<bean id="beanScreenData" class="com.kycox.ladybug.level.ScreenData" scope="singleton"/>
-	<bean id="beanSuperPowerTimer" class="com.kycox.ladybug.timer.SuperPowerTimer" scope="singleton">
-	</bean>
-		
-	<!--  Score -->
+	<bean id="beanSuperPowerTimer" class="com.kycox.ladybug.timer.SuperPowerTimer" scope="singleton"/>	
 	<bean id="beanGroupIncrementScores" class="com.kycox.ladybug.score.GroupIncrementScores" scope="singleton"/>
 
+	<!-- beanGameModel in beanEngine -->
+	<bean id="beanGameModel" class="com.kycox.ladybug.model.GameModel" scope="singleton" init-method="init">
+		<property name="groupGhosts" ref="beanGroupGhost"/>
+		<property name="gameScore" ref="beanGameScore"/>
+		<property name="gameStatus" ref="beanGameStatus"/>
+		<property name="groupIncrementScores" ref="beanGroupIncrementScores"/>
+		<property name="kinematicLadybugDeath" ref="beanKinematicLadybugDeath"/>				
+		<property name="ladybug" ref="beanLadybug"/>
+		<property name="screenData" ref="beanScreenData"/>
+		<property name="superPowerTimer" ref="beanSuperPowerTimer"/>				
+	</bean>
+	
+	<!-- beanGameView in beanEngine -->
+	<bean id="beanGameView" class="com.kycox.ladybug.view.GameView" scope="singleton" init-method="init"/>
+	
+	<!-- beanGameSound in beanEngine -->
+	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton"/>
+	
+	<!-- beanEngine -->
+	<bean id="beanEngine" class="com.kycox.ladybug.engine.Engine" scope="singleton" init-method="init">
+		<property name="gameModel" ref="beanGameModel"/>
+		<property name="gameSounds" ref="beanGameSounds"/>
+		<property name="gameView" ref="beanGameView"/>
+	</bean>
+	
+	<!-- beanMainFrame -->
+	<bean id="beanMainFrame" class="com.kycox.ladybug.view.MainFrame" scope="singleton" init-method="init">
+		<property name="gameView" ref="beanGameView"/>
+	</bean> 
+		
 	<!-- Test AOP pour logger dans la console -->
+	<bean id="logAdvice" name="logAdvice" class="com.kycox.ladybug.utils.aop.TraceurAdvice"/>
 	<aop:config>
 		<aop:pointcut id="changeBlock" expression="execution(* com.kycox.ladybug.body.ghost.*.setNumLevel(..))"/>
  		<aop:advisor advice-ref="logAdvice" pointcut-ref="changeBlock" />

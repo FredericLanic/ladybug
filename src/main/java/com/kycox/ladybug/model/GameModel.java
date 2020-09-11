@@ -26,8 +26,6 @@ import javax.swing.Timer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.kycox.ladybug.action.ghost.GhostsGroupActions;
 import com.kycox.ladybug.action.ladybug.LadybugActions;
@@ -54,54 +52,51 @@ import lombok.Setter;
  */
 @SuppressWarnings("deprecation")
 public class GameModel extends Observable {
-	private static final Log			logger				  = LogFactory.getLog(GameModel.class);
-	/** lecture du contexte Spring de l'application */
-	private ApplicationContext			applicationContext	  = new ClassPathXmlApplicationContext(
-	        "application-context.xml", "application-context-*.xml");
+	private static final Log	  logger		= LogFactory.getLog(GameModel.class);
 	@Getter
 	@Setter
-	private boolean						beginNewLevel		  = false;
-	/** Objet Score du jeu */
-	@Getter
-	private final GameScore				gameScore			  = applicationContext.getBean("beanGameScore",
-	        GameScore.class);
-	@Getter
-	private final GameStatus			gameStatus			  = applicationContext.getBean("beanGameStatus",
-	        GameStatus.class);;
-	private final Timer					gameTimer			  = createTimer();
-	@Setter
-	private Point						ghostRequest		  = Constants.POINT_ZERO;
-	@Getter
-	private GhostsGroupActions			ghostsActions;
-	@Getter
-	private GhostsGroup					groupGhosts			  = applicationContext.getBean("beanGroupGhost",
-	        GhostsGroup.class);
-	@Getter
-	private final GroupIncrementScores	groupIncrementScores  = applicationContext.getBean("beanGroupIncrementScores",
-	        GroupIncrementScores.class);
-	@Getter
-	private final KinematicLadybugDeath	kinematicLadybugDeath = applicationContext.getBean("beanKinematicLadybugDeath",
-	        KinematicLadybugDeath.class);
-	@Getter
-	private final Ladybug				ladybug				  = applicationContext.getBean("beanLadybug",
-	        Ladybug.class);
-	@Getter
-	private LadybugActions				ladybugActions;
-	@Getter
-	private int							newSounds;
-	@Getter
-	private final ScreenData			screenData			  = applicationContext.getBean("beanScreenData",
-	        ScreenData.class);
+	private boolean				  beginNewLevel	= false;
 	@Getter
 	@Setter
-	private boolean						soundActive			  = false;
-	private final SuperPowerTimer		superPowerTimer		  = applicationContext.getBean("beanSuperPowerTimer",
-	        SuperPowerTimer.class);
+	private GameScore			  gameScore;
+	@Getter
+	@Setter
+	private GameStatus			  gameStatus;
+	private final Timer			  gameTimer		= createTimer();
+	@Setter
+	private Point				  ghostRequest	= Constants.POINT_ZERO;
+	@Getter
+	private GhostsGroupActions	  ghostsActions;
+	@Getter
+	@Setter
+	private GhostsGroup			  groupGhosts;
+	@Getter
+	@Setter
+	private GroupIncrementScores  groupIncrementScores;
+	@Getter
+	@Setter
+	private KinematicLadybugDeath kinematicLadybugDeath;
+	@Getter
+	@Setter
+	private Ladybug				  ladybug;
+	@Getter
+	private LadybugActions		  ladybugActions;
+	@Getter
+	private int					  newSounds;
+	@Getter
+	@Setter
+	private ScreenData			  screenData;
+	@Getter
+	@Setter
+	private boolean				  soundActive	= false;
+	@Setter
+	private SuperPowerTimer		  superPowerTimer;
 
-	public GameModel() {
-		super();
-		initGame();
-		startGameTimer();
+	public void forceStopGame() {
+		if (gameTimer.isRunning()) {
+			gameScore.setOldScore(-1);
+			initGame();
+		}
 	}
 
 	/**
@@ -176,21 +171,18 @@ public class GameModel extends Observable {
 		continueLevel();
 	}
 
-	/**
-	 * Ajout du son
-	 *
-	 * @param sounds
-	 */
 	public void setNewSounds(int sounds) {
 		newSounds |= sounds;
 	}
 
-	/**
-	 * Début du jeu
-	 */
 	public void startGame() {
 		initGame();
 		initLevel();
+	}
+
+	public void init() {
+		initGame();
+		startGameTimer();
 	}
 
 	/**
@@ -210,19 +202,6 @@ public class GameModel extends Observable {
 		soundActive = !soundActive;
 	}
 
-	/**
-	 * Arret forcé du jeu
-	 */
-	public void stopGame() {
-		if (gameTimer.isRunning()) {
-			gameScore.setOldScore(-1);
-			initGame();
-		}
-	}
-
-	/**
-	 * Arrêt du timer qui rythme le jeu
-	 */
 	public void stopGameTimer() {
 		gameTimer.stop();
 	}

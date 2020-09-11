@@ -22,15 +22,19 @@ import com.kycox.ladybug.sound.GameSounds;
 import com.kycox.ladybug.view.GameView;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class Engine {
-	private GameModel		  gameModel	 = new GameModel();
-	private GameSounds		  gameSounds = new GameSounds();
+	@Setter
+	private GameModel		  gameModel;
+	@Setter
+	private GameSounds		  gameSounds;
+	@Setter
 	@Getter
-	private GameView		  gameView	 = new GameView();
+	private GameView		  gameView;
 	private KeyGameController keyGameController;
 
-	public Engine() {
+	public void init() {
 		// PAD CONTROLLER
 		// PadController padController = new PadController(gameModel);
 		// Seulement gestion du clavier : on verra pour la manette après

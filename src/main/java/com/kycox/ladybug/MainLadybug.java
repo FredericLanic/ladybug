@@ -20,8 +20,9 @@ import java.lang.Runtime.Version;
 
 import javax.swing.SwingUtilities;
 
-import com.kycox.ladybug.engine.Engine;
-import com.kycox.ladybug.view.GameView;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.kycox.ladybug.view.MainFrame;
 
 /**
@@ -35,8 +36,10 @@ public class MainLadybug {
 		new MainLadybug().launchTheGame();
 	}
 
-	Engine	  engine;
-	MainFrame mainFrame;
+	/** lecture du contexte Spring de l'application */
+	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml",
+	        "application-context-*.xml");
+	private MainFrame		   mainFrame		  = applicationContext.getBean("beanMainFrame", MainFrame.class);
 
 	public void launchTheGame() {
 		Version javaVersion = Runtime.version();
@@ -45,17 +48,12 @@ public class MainLadybug {
 		System.out.println("*  for Java 14+ by kycox     *");
 		if (javaVersion.feature() >= 14) {
 			System.out.println("******************************");
-			// Création du moteur du jeu
-			engine = new Engine();
 			// Création de la vue
 			SwingUtilities.invokeLater(() -> {
-				// Création du JPanel de la View du jeu
-				GameView gameView = engine.getGameView();
-				mainFrame = new MainFrame();
 //				mainFrame.setOpacity(0.75F);
-				mainFrame.addGameView(gameView);
-				// Affichage de la MainFrame
-				mainFrame.setVisible(true);
+//			    mainFrame.initMainFrame();
+			    // Affichage de la MainFrame
+			    mainFrame.setVisible(true);
 			});
 		} else {
 			System.out.println("*   Please Check your JVM    *");

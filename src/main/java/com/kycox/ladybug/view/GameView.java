@@ -70,6 +70,10 @@ public class GameView extends JPanel implements Observer {
 	 */
 	public GameView() {
 		super();
+		
+	}
+	
+	public void init() {
 		setFocusable(true);
 		setBackground(Color.black);
 		confJDialog = new ConfJDialog(mainFrame);

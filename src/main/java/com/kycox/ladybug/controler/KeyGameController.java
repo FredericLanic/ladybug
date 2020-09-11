@@ -81,7 +81,7 @@ public class KeyGameController extends KeyAdapter {
 			// Son
 			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
 			// Arret de la partie
-			case KeyEvent.VK_ESCAPE -> gameModel.stopGame();
+			case KeyEvent.VK_ESCAPE -> gameModel.forceStopGame();
 			// Partie en pause
 			case KeyEvent.VK_PAUSE -> gameModel.gameInPause();
 		}
