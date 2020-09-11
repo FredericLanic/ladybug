@@ -16,26 +16,23 @@
      
     <bean id="logAdvice" name="logAdvice" class="com.kycox.ladybug.utils.aop.TraceurAdvice"/>
 	
+	<!--  Les fantômes -->	
 	<bean id="beanClyde" class="com.kycox.ladybug.body.ghost.Clyde" scope="prototype">
 		<property name="images" value="ORANGE"/>
 		<property name="behavious" value="STUPID"/>
-	</bean>
-	
+	</bean>	
 	<bean id="beanBlinky" class="com.kycox.ladybug.body.ghost.Blinky" scope="prototype">
 		<property name="images" value="RED"/>
 		<property name="behavious" value="AGGRESSIVE"/>
-	</bean>
-	
+	</bean>	
 	<bean id="beanInky" class="com.kycox.ladybug.body.ghost.Inky" scope="prototype">
 		<property name="images" value="BLUE"/>
 		<property name="behavious" value="STUPID"/>
-	</bean>
-	
+	</bean>	
 	<bean id="beanPinky" class="com.kycox.ladybug.body.ghost.Pinky" scope="prototype">
 		<property name="images" value="PINK"/>
 		<property name="behavious" value="SMART"/>
 	</bean>
-
 	<bean id="beanGroupGhost" class="com.kycox.ladybug.body.ghost.GhostsGroup">
 		<property name="lstGhosts">
 			<list>
@@ -46,6 +43,20 @@
 			</list>
 		</property>
 	</bean>
+
+	<!--  LadyBug -->
+	<bean id="beanLadybug" class="com.kycox.ladybug.body.ladybug.Ladybug" scope="singleton"/>
+	<bean id="beanKinematicLadybugDeath" class="com.kycox.ladybug.constant.ladybug.KinematicLadybugDeath" scope="singleton"/>
+	
+	<!--  The Game -->
+	<bean id="beanGameScore" class="com.kycox.ladybug.score.GameScore" scope="singleton"/>
+	<bean id="beanGameStatus" class="com.kycox.ladybug.model.GameStatus" scope="singleton"/>
+	<bean id="beanScreenData" class="com.kycox.ladybug.level.ScreenData" scope="singleton"/>
+	<bean id="beanSuperPowerTimer" class="com.kycox.ladybug.timer.SuperPowerTimer" scope="singleton">
+	</bean>
+		
+	<!--  Score -->
+	<bean id="beanGroupIncrementScores" class="com.kycox.ladybug.score.GroupIncrementScores" scope="singleton"/>
 
 	<!-- Test AOP pour logger dans la console -->
 	<aop:config>

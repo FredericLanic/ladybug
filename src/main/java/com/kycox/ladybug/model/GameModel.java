@@ -55,15 +55,19 @@ import lombok.Setter;
 @SuppressWarnings("deprecation")
 public class GameModel extends Observable {
 	private static final Log			logger				  = LogFactory.getLog(GameModel.class);
-	/** lecture du contexte de l'application */
+	/** lecture du contexte Spring de l'application */
 	private ApplicationContext			applicationContext	  = new ClassPathXmlApplicationContext(
 	        "application-context.xml", "application-context-*.xml");
+	@Getter
+	@Setter
 	private boolean						beginNewLevel		  = false;
 	/** Objet Score du jeu */
 	@Getter
-	private final GameScore				gameScore			  = new GameScore();
+	private final GameScore				gameScore			  = applicationContext.getBean("beanGameScore",
+	        GameScore.class);
 	@Getter
-	private final GameStatus			gameStatus			  = new GameStatus();
+	private final GameStatus			gameStatus			  = applicationContext.getBean("beanGameStatus",
+	        GameStatus.class);;
 	private final Timer					gameTimer			  = createTimer();
 	@Setter
 	private Point						ghostRequest		  = Constants.POINT_ZERO;
@@ -73,21 +77,26 @@ public class GameModel extends Observable {
 	private GhostsGroup					groupGhosts			  = applicationContext.getBean("beanGroupGhost",
 	        GhostsGroup.class);
 	@Getter
-	private final GroupIncrementScores	groupIncrementScores  = new GroupIncrementScores();
+	private final GroupIncrementScores	groupIncrementScores  = applicationContext.getBean("beanGroupIncrementScores",
+	        GroupIncrementScores.class);
 	@Getter
-	private final KinematicLadybugDeath	kinematicLadybugDeath = new KinematicLadybugDeath();
+	private final KinematicLadybugDeath	kinematicLadybugDeath = applicationContext.getBean("beanKinematicLadybugDeath",
+	        KinematicLadybugDeath.class);
 	@Getter
-	private final Ladybug				ladybug				  = new Ladybug();
+	private final Ladybug				ladybug				  = applicationContext.getBean("beanLadybug",
+	        Ladybug.class);
 	@Getter
 	private LadybugActions				ladybugActions;
 	@Getter
 	private int							newSounds;
 	@Getter
-	private final ScreenData			screenData			  = new ScreenData();
+	private final ScreenData			screenData			  = applicationContext.getBean("beanScreenData",
+	        ScreenData.class);
 	@Getter
 	@Setter
 	private boolean						soundActive			  = false;
-	private final SuperPowerTimer		superPowerTimer		  = new SuperPowerTimer(1);
+	private final SuperPowerTimer		superPowerTimer		  = applicationContext.getBean("beanSuperPowerTimer",
+	        SuperPowerTimer.class);
 
 	public GameModel() {
 		super();
@@ -165,26 +174,6 @@ public class GameModel extends Observable {
 		kinematicLadybugDeath.initBip();
 		// on continue le level
 		continueLevel();
-	}
-
-	/**
-	 * Vérifie c'est le jeu est au début du niveau Utilisé pour palier au soucis du
-	 * jingle du début
-	 *
-	 * @return
-	 */
-	public boolean isBeginNewLevel() {
-		return beginNewLevel;
-	}
-
-	/**
-	 * Affecte le fait que c'est le début du niveau. C'est un contournement pour
-	 * écouter le Jingle de début
-	 *
-	 * @param beginNewLevel
-	 */
-	public void setBeginNewLevel(boolean beginNewLevel) {
-		this.beginNewLevel = beginNewLevel;
 	}
 
 	/**
