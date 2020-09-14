@@ -51,7 +51,9 @@
 	
 	<!-- The Game beans in beanGameModel -->
 	<bean id="beanGameScore" class="com.kycox.ladybug.score.GameScore" scope="singleton"/>
-	<bean id="beanGameStatus" class="com.kycox.ladybug.model.GameStatus" scope="singleton"/>
+	<bean id="beanGameStatus" class="com.kycox.ladybug.model.GameStatus" scope="singleton">
+		<property name="numLevel" value="3"/>
+	</bean>
 	<bean id="beanScreenData" class="com.kycox.ladybug.level.ScreenData" scope="singleton"/>
 	<bean id="beanSuperPowerTimer" class="com.kycox.ladybug.timer.SuperPowerTimer" scope="singleton"/>	
 	<bean id="beanGroupIncrementScores" class="com.kycox.ladybug.score.GroupIncrementScores" scope="singleton"/>

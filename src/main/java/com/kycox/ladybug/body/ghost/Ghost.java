@@ -89,8 +89,7 @@ public abstract class Ghost extends UserBody {
 			case DYING -> moveToRegenerate(screenData);
 			case FLASH, SCARED -> flashOrScaredMoving(ladybugPosBlock, screenData);
 			case NORMAL -> normalMoving(ladybugPosBlock, screenData);
-			default -> System.err
-			        .println("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
+			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
 		}
 	}
 

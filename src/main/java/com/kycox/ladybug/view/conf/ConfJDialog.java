@@ -31,13 +31,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.constant.ghost.GhostsImagesEnum;
 
 public class ConfJDialog extends JDialog implements ActionListener {
-	/**
-	*
-	*/
+	private static final Log  logger		   = LogFactory.getLog(ConfJDialog.class);
 	private static final long serialVersionUID = 1L;
 	private ButtonGroup		  group			   = new ButtonGroup();
 
@@ -114,7 +115,7 @@ public class ConfJDialog extends JDialog implements ActionListener {
 						GhostsImagesEnum.PINK.setComputed(false);
 						break;
 					default:
-						System.out.println("Erreur de configuration :" + group.getSelection().getActionCommand());
+						logger.error("Erreur de configuration :" + group.getSelection().getActionCommand());
 						break;
 				}
 				this.dispose();

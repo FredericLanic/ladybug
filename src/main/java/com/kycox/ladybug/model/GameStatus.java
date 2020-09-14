@@ -19,10 +19,12 @@ package com.kycox.ladybug.model;
 import com.kycox.ladybug.constant.GameStatusEnum;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class GameStatus {
 	private GameStatusEnum gameStatusEnum;
 	@Getter
+	@Setter
 	private int			   numLevel;
 
 	public void addNumLevel() {
@@ -67,9 +69,5 @@ public class GameStatus {
 
 	public void setNoGame() {
 		gameStatusEnum = GameStatusEnum.NO_GAME;
-	}
-
-	public void setNumLevel(int numLevel) {
-		this.numLevel = numLevel;
 	}
 }

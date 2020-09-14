@@ -121,33 +121,9 @@ public class GameModel extends Observable {
 		return 2;
 	}
 
-	/**
-	 * Initialise les variables au lancement du programme
-	 */
-	public void initGame() {
-		gameStatus.setNoGame();
-		// initialisation du numéro du niveau; incrémenté dans initLevel
-		gameStatus.setNumLevel(1);
-		// utilisé juste pour l'affichage de la fenêtre d'initialisation
-		screenData.setLevelMap(1, gameStatus.isInGame());
-		// 3 vies par défaut
-		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
-		// ladybug n'est pas en vie lors de l'initialisation du jeu
-		ladybug.setStatus(LadybugStatusEnum.DEAD);
-		// initialise les score
-		gameScore.init();
-		// Initialise le groupe de fantôme
-		groupGhosts.setNumLevel(Constants.PRESENTATION_LEVEL);
-		// mise de la vitesse du niveau 3 pour la présentation
-		groupGhosts.setInitSpeeds(Constants.PRESENTATION_LEVEL);
-		// initialise les positions des fantômes
-		groupGhosts.setPositions(screenData);
-		// initialise les fantômes pour la présentation
-		groupGhosts.setStatus(GhostStatusEnum.NORMAL);
-		// initialise les vies de fantômes
-		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
-		// active sound
-		setSoundActive(true);
+	public void init() {
+		initGame();
+		startGameTimer();
 	}
 
 	/**
@@ -178,11 +154,6 @@ public class GameModel extends Observable {
 	public void startGame() {
 		initGame();
 		initLevel();
-	}
-
-	public void init() {
-		initGame();
-		startGameTimer();
 	}
 
 	/**
@@ -310,6 +281,35 @@ public class GameModel extends Observable {
 	}
 
 	/**
+	 * Initialise les variables au lancement du programme
+	 */
+	private void initGame() {
+		gameStatus.setNoGame();
+		// initialisation du numéro du niveau; incrémenté dans initLevel
+		// gameStatus.setNumLevel(1);
+		// utilisé juste pour l'affichage de la fenêtre d'initialisation
+		screenData.setLevelMap(1, gameStatus.isInGame());
+		// 3 vies par défaut
+		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
+		// ladybug n'est pas en vie lors de l'initialisation du jeu
+		ladybug.setStatus(LadybugStatusEnum.DEAD);
+		// initialise les score
+		gameScore.init();
+		// Initialise le groupe de fantôme
+		groupGhosts.setNumLevel(Constants.PRESENTATION_LEVEL);
+		// mise de la vitesse du niveau 3 pour la présentation
+		groupGhosts.setInitSpeeds(Constants.PRESENTATION_LEVEL);
+		// initialise les positions des fantômes
+		groupGhosts.setPositions(screenData);
+		// initialise les fantômes pour la présentation
+		groupGhosts.setStatus(GhostStatusEnum.NORMAL);
+		// initialise les vies de fantômes
+		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
+		// active sound
+		setSoundActive(true);
+	}
+
+	/**
 	 * Ladybug a rencontré un fantôme !! Le jeu est terminé si toutes les vies de
 	 * ladybug ont été utilisées.
 	 */
@@ -317,7 +317,7 @@ public class GameModel extends Observable {
 		ladybug.minusLifesLeft();
 		// test fin du jeu
 		if (ladybug.getLeftLifes() == 0) {
-			System.out.println("Ladybug a perdu");
+			logger.info("Ladybug a perdu");
 			gameScore.setOldScore(gameScore.getScore());
 			// à mettre ailleurs :
 			initGame();

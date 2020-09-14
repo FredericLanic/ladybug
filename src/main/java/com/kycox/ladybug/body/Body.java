@@ -18,6 +18,9 @@ package com.kycox.ladybug.body;
 
 import java.awt.Point;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.kycox.ladybug.constant.Constants;
 
 import lombok.Getter;
@@ -29,6 +32,7 @@ import lombok.Setter;
  * Le mouvement peut être calculé ou bien en fonction des joueurs
  */
 public abstract class Body {
+	private static final Log logger = LogFactory.getLog(Body.class);
 	// Direction du fantôme
 	@Getter
 	@Setter
@@ -57,6 +61,15 @@ public abstract class Body {
 	}
 
 	/**
+	 * Getters et setters pour la vitesse
+	 *
+	 * @return
+	 */
+	public int getSpeed() {
+		return Constants.VALID_SPEEDS.get(speedIndex);
+	}
+
+	/**
 	 * Le fantôme ou ladybug change de block
 	 *
 	 * @param pointPos : coordonnées DE L'ECRAN (x,y) dans la fenêtre
@@ -65,15 +78,6 @@ public abstract class Body {
 	public boolean hasChangeBlock() {
 		Point pointPos = getPosition();
 		return pointPos.x % Constants.BLOCK_SIZE == 0 && pointPos.y % Constants.BLOCK_SIZE == 0;
-	}
-
-	/**
-	 * Getters et setters pour la vitesse
-	 *
-	 * @return
-	 */
-	public int getSpeed() {
-		return Constants.VALID_SPEEDS.get(speedIndex);
 	}
 
 	/**
@@ -90,6 +94,6 @@ public abstract class Body {
 
 	public void minusLifesLeft() {
 		leftLifes--;
-		System.out.println("lifesLeft:" + leftLifes);
+		logger.info("lifesLeft:" + leftLifes);
 	}
 }
