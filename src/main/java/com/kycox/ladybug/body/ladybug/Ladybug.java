@@ -24,7 +24,6 @@ import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
 import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.level.ScreenData;
-import com.kycox.ladybug.maths.SpeedFunction;
 import com.kycox.ladybug.tools.Utils;
 
 import lombok.Getter;
@@ -38,18 +37,10 @@ public class Ladybug extends UserBody {
 	// statut de ladybug
 	@Setter
 	@Getter
-	private LadybugStatusEnum status;
+	private LadybugStatusEnum status = LadybugStatusEnum.NORMAL;
 	// direction de ladybug
 	@Getter
 	private Point viewDirection = Constants.POINT_ZERO;
-
-	/**
-	 * Constructeur
-	 */
-	public Ladybug() {
-		super();
-		status = LadybugStatusEnum.NORMAL;
-	}
 
 	/**
 	 * Déplacement de ladybug et récupération du score obtenu Lancement du double
@@ -87,6 +78,6 @@ public class Ladybug extends UserBody {
 		viewDirection = Constants.POINT_LEFT;
 		setUserRequest(Constants.POINT_ZERO);
 		setStatus(LadybugStatusEnum.NORMAL);
-		initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeed(numLevel));
+		initSpeedIndex(speedFunction.getRealIndexSpeed(numLevel));
 	}
 }

@@ -35,7 +35,6 @@ import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
 import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.level.ScreenData;
 import com.kycox.ladybug.maths.GhostSensitiveBehavious;
-import com.kycox.ladybug.maths.SpeedFunction;
 import com.kycox.ladybug.tools.Utils;
 import com.kycox.ladybug.tools.dijkstra.Dijkstra;
 
@@ -58,15 +57,7 @@ public abstract class Ghost extends UserBody {
 	private GhostSensitiveBehavious	sensitiveBehavious = null;
 	@Getter
 	@Setter
-	private GhostStatusEnum			status			   = null;
-
-	public Ghost() {
-		super();
-		// statut de départ NORMAL
-		setStatus(GhostStatusEnum.NORMAL);
-		// immobile pour commencer
-		setDirection(Constants.POINT_ZERO);
-	}
+	private GhostStatusEnum			status			   = GhostStatusEnum.NORMAL;
 
 	/**
 	 * Retourne true si le fantôme est géré par l'ordinateur
@@ -154,7 +145,7 @@ public abstract class Ghost extends UserBody {
 		setPosition(Utils.convertPointToGraphicUnit(Utils.convertPointToBlockUnit(getPosition())));
 		// � d�placer dans
 		setStatus(GhostStatusEnum.DYING);
-		setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedPlus(numLevel));
+		setSpeedIndex(speedFunction.getRealIndexSpeedPlus(numLevel));
 	}
 
 	/**

@@ -44,7 +44,17 @@ public class GameSounds implements Observer {
 	private boolean				listen				= true;
 	private int					sounds;
 
-	public GameSounds() {
+	/**
+	 * Retourne le temps en millisecondes de la musique de la mort de ladybug
+	 * Utilisé dans la cinématique KinematicLadybugDeath
+	 *
+	 * @return
+	 */
+	public long getMicrosecondLengthLadybugDeath() {
+		return clipDeath.getMicrosecondLength() / 1000;
+	}
+
+	public void init() {
 		clipBeginning		= new ClipGame(SoundsEnum.LADYBUG_LEVEL_BEGINNING.getUrl()).getClip();
 		clipChomp			= new ClipGame(SoundsEnum.LADYBUG_CHOMP.getUrl()).getClip();
 		clipDeath			= new ClipGame(SoundsEnum.LADYBUG_IS_DYING.getUrl()).getClip();
@@ -56,16 +66,6 @@ public class GameSounds implements Observer {
 		clipGhostRegenerate	= new ClipGame(SoundsEnum.GHOST_REGENERATE.getUrl()).getClip();
 		clipGhostEaten		= new ClipGame(SoundsEnum.GHOST_EATEN.getUrl()).getClip();
 		clipSiren			= new ClipGame(SoundsEnum.LADYBUG_SIREN.getUrl()).getClip();
-	}
-
-	/**
-	 * Retourne le temps en millisecondes de la musique de la mort de ladybug
-	 * Utilisé dans la cinématique KinematicLadybugDeath
-	 *
-	 * @return
-	 */
-	public long getMicrosecondLengthLadybugDeath() {
-		return clipDeath.getMicrosecondLength() / 1000;
 	}
 
 	/**

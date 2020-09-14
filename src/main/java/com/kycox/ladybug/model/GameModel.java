@@ -218,6 +218,8 @@ public class GameModel extends Observable {
 			} else {
 // Etat des fantômes de REGENERATING à NORMAL
 				groupGhosts.setGhostStatusAfterRegeneration();
+// Gestion de la nouvelle vie à Ladybug
+				ladybug.addNewLife();
 // Déplacement de ladybug et récupération de ses actions
 				ladybugActions = ladybug.moveLadybug(screenData);
 // Déplacement des fantômes
@@ -257,13 +259,15 @@ public class GameModel extends Observable {
 // SCORE
 				// Ajoute du score
 				gameScore.setScore(ghostsActions, ladybugActions);
+				logger.info("new life : " + (Constants.NEW_LIFE_BY_SCORE - gameScore.getIncrementScore()));
 				// ajout d'une vie supplémentaire si besoin
 				if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
 					gameScore.initIncrementScore();
-					ladybug.addNewLife();
+					// ladybug.addNewLife();
+					ladybug.setNewLife(true);
 					// Ajout du son Extra pac
 					// FIXME : a mettre ailleurs
-					setNewSounds(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
+					// setNewSounds(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
 				}
 // SCREENDATA
 				// Mise à jour du ScreenData
@@ -381,6 +385,7 @@ public class GameModel extends Observable {
 			setNewSounds(SoundsEnum.GHOST_EATEN.getIndex());
 		if (ghostsActions.getNbrEatenGhost() > 0)
 			setNewSounds(SoundsEnum.LADYBUG_EAT_GHOST.getIndex());
+		// son depuis Ladybug
 		if (ladybugActions.isEatenAMegaPoint())
 			setNewSounds(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
 		if (ladybugActions.isEatenAPoint())
@@ -389,5 +394,7 @@ public class GameModel extends Observable {
 			setNewSounds(SoundsEnum.LADYBUG_IS_DYING.getIndex());
 		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL))
 			setNewSounds(SoundsEnum.LADYBUG_SIREN.getIndex());
+		if (ladybug.isNewLife())
+			setNewSounds(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
 	}
 }

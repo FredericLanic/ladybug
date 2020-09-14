@@ -18,23 +18,20 @@ package com.kycox.ladybug.maths;
 
 import com.kycox.ladybug.constant.Constants;
 
+import lombok.Setter;
+
 public class SpeedFunction {
-	private static final SpeedFunction ladybugSpeed = new SpeedFunction();
-
-	public static SpeedFunction getInstance() {
-		return ladybugSpeed;
-	}
-
-	private double a = 0;
-	private double b = 0;
-	// échelle de 1 à 10
-	private final double LOW_LIMIT	 = 2;
+//	private static final SpeedFunction speedFunction = new SpeedFunction();
+//
+//	public static SpeedFunction getInstance() {
+//		return speedFunction;
+//	}
+	private double		 a			 = 0;
+	private double		 b			 = 0;
 	private final double HIGHT_LIMIT = Constants.VALID_SPEEDS.size();
-
-	private SpeedFunction() {
-		a = (HIGHT_LIMIT - LOW_LIMIT) / (Constants.NIVEAU_MAX - 1);
-		b = LOW_LIMIT - a;
-	}
+	// échelle de 1 à 10
+	@Setter
+	private double lowLimit;
 
 	/**
 	 * Retourne la vitesse calculée de ladybug en fonction du niveau
@@ -84,5 +81,10 @@ public class SpeedFunction {
 		if (id < HIGHT_LIMIT - 1 && numLevel <= Constants.NIVEAU_MAX / 2)
 			id++;
 		return id;
+	}
+
+	public void init() {
+		a = (HIGHT_LIMIT - lowLimit) / (Constants.NIVEAU_MAX - 1);
+		b = lowLimit - a;
 	}
 }

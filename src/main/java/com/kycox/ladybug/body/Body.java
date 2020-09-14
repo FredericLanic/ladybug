@@ -22,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kycox.ladybug.constant.Constants;
+import com.kycox.ladybug.maths.SpeedFunction;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +41,10 @@ public abstract class Body {
 	// nombre de vie restant pour ce body
 	@Getter
 	@Setter
-	private int leftLifes = 0;
+	private int		leftLifes = 0;
+	@Getter
+	@Setter
+	private boolean	newLife	  = false;
 	// Position dans le JPanel
 	@Getter
 	@Setter
@@ -51,13 +55,18 @@ public abstract class Body {
 	private int speedIndex = 0;
 	// Vitesse initiale : index dans le tableau VALID_SPEEDS
 	@Getter
-	private int startSpeedIndex = 0;
+	private int				startSpeedIndex	= 0;
+	@Setter
+	protected SpeedFunction	speedFunction;
 
 	/**
 	 * Ajout d'une nouvelle vie
 	 */
 	public void addNewLife() {
-		leftLifes++;
+		if (isNewLife()) {
+			setNewLife(false);
+			leftLifes++;
+		}
 	}
 
 	/**

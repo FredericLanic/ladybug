@@ -15,22 +15,35 @@
 		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
 		default-lazy-init="false">  
 	
+	<bean id="beanSpeedFunctionLadybug" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
+		<property name="lowLimit" value="4"/>
+	</bean>
+
+	<bean id="beanSpeedFunctionGhost" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
+		<property name="lowLimit" value="2"/>
+	</bean>
+
+	
 	<!-- Ghost beans in beanGroupGhost -->	
 	<bean id="beanClyde" class="com.kycox.ladybug.body.ghost.Clyde" scope="prototype">
 		<property name="images" value="ORANGE"/>
 		<property name="behavious" value="STUPID"/>
+		<property name="speedFunction" ref="beanSpeedFunctionGhost"/>
 	</bean>	
 	<bean id="beanBlinky" class="com.kycox.ladybug.body.ghost.Blinky" scope="prototype">
 		<property name="images" value="RED"/>
 		<property name="behavious" value="AGGRESSIVE"/>
+		<property name="speedFunction" ref="beanSpeedFunctionGhost"/>
 	</bean>	
 	<bean id="beanInky" class="com.kycox.ladybug.body.ghost.Inky" scope="prototype">
 		<property name="images" value="BLUE"/>
 		<property name="behavious" value="STUPID"/>
+		<property name="speedFunction" ref="beanSpeedFunctionGhost"/>
 	</bean>	
 	<bean id="beanPinky" class="com.kycox.ladybug.body.ghost.Pinky" scope="prototype">
 		<property name="images" value="PINK"/>
 		<property name="behavious" value="SMART"/>
+		<property name="speedFunction" ref="beanSpeedFunctionGhost"/>
 	</bean>
 	
 	<!-- Ghosts list in beanGameModel -->
@@ -39,20 +52,22 @@
 			<list>
 				<ref bean="beanClyde"/>
 				<ref bean="beanBlinky"/>
-				<ref bean="beanInky"/>
+				<ref bean="beanInky"/>				
 				<ref bean="beanPinky"/>
 			</list>
 		</property>
 	</bean>
 
 	<!-- LadyBug in beanGameModel -->
-	<bean id="beanLadybug" class="com.kycox.ladybug.body.ladybug.Ladybug" scope="singleton"/>
+	<bean id="beanLadybug" class="com.kycox.ladybug.body.ladybug.Ladybug" scope="singleton">
+		<property name="speedFunction" ref="beanSpeedFunctionLadybug"/>
+	</bean>
 	<bean id="beanKinematicLadybugDeath" class="com.kycox.ladybug.constant.ladybug.KinematicLadybugDeath" scope="singleton"/>
 	
 	<!-- The Game beans in beanGameModel -->
 	<bean id="beanGameScore" class="com.kycox.ladybug.score.GameScore" scope="singleton"/>
 	<bean id="beanGameStatus" class="com.kycox.ladybug.model.GameStatus" scope="singleton">
-		<property name="numLevel" value="3"/>
+		<property name="numLevel" value="0"/>
 	</bean>
 	<bean id="beanScreenData" class="com.kycox.ladybug.level.ScreenData" scope="singleton"/>
 	<bean id="beanSuperPowerTimer" class="com.kycox.ladybug.timer.SuperPowerTimer" scope="singleton"/>	
@@ -74,7 +89,7 @@
 	<bean id="beanGameView" class="com.kycox.ladybug.view.GameView" scope="singleton" init-method="init"/>
 	
 	<!-- beanGameSound in beanEngine -->
-	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton"/>
+	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton" init-method="init"/>
 	
 	<!-- beanEngine -->
 	<bean id="beanEngine" class="com.kycox.ladybug.engine.Engine" scope="singleton" init-method="init">

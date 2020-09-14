@@ -17,7 +17,6 @@
 package com.kycox.ladybug.body.ghost;
 
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
-import com.kycox.ladybug.maths.SpeedFunction;
 
 /**
  * Spécificité du fantôme Clyde
@@ -33,7 +32,7 @@ public class Clyde extends Ghost {
 		/*
 		 * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
 		 */
-		initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeed(numLevel));
+		initSpeedIndex(speedFunction.getRealIndexSpeed(numLevel));
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class Clyde extends Ghost {
 			return;
 		}
 		if (GhostStatusEnum.isScared().test(this))
-			setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);
+			setSpeedIndex(speedFunction.getRealIndexSpeedMinus(numLevel) - 1);
 		else
 			setSpeedIndex(getStartSpeedIndex());
 	}

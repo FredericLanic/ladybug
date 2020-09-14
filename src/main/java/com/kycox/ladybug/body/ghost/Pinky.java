@@ -17,7 +17,6 @@
 package com.kycox.ladybug.body.ghost;
 
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
-import com.kycox.ladybug.maths.SpeedFunction;
 
 /**
  * Spécificités du fantôme Pinky
@@ -30,7 +29,7 @@ public class Pinky extends Ghost {
 
 	@Override
 	public void setInitSpeed(int numLevel) {
-		initSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel));
+		initSpeedIndex(speedFunction.getRealIndexSpeedMinus(numLevel));
 	}
 
 	@Override
@@ -39,7 +38,7 @@ public class Pinky extends Ghost {
 			return;
 		}
 		if (GhostStatusEnum.isScared().test(this))
-			setSpeedIndex(SpeedFunction.getInstance().getRealIndexSpeedMinus(numLevel) - 1);
+			setSpeedIndex(speedFunction.getRealIndexSpeedMinus(numLevel) - 1);
 		else
 			setSpeedIndex(getStartSpeedIndex());
 	}
