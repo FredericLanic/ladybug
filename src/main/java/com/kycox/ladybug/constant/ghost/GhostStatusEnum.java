@@ -46,4 +46,7 @@ public enum GhostStatusEnum {
 	public static Predicate<Ghost> isScared() {
 		return g -> g.getStatus().equals(GhostStatusEnum.SCARED);
 	}
+
+	private GhostStatusEnum() {
+	}
 }

@@ -22,6 +22,8 @@ import java.awt.event.KeyEvent;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.model.GameModel;
 
+import lombok.Setter;
+
 /**
  * Contrôleur du jeu : MVC
  *
@@ -30,19 +32,8 @@ public class KeyGameController extends KeyAdapter {
 	// voir https://github.com/marcelschoen/gamepad4j pour brancher une
 	// manette usb pour le jeu
 	// utiliser plutôt Jamepad qui me semble facilement utilisable;
-	/**
-	 * Le modèle
-	 */
+	@Setter
 	private GameModel gameModel;
-
-	/**
-	 * Constructeur
-	 *
-	 * @param gameModel
-	 */
-	public KeyGameController(GameModel gameModel) {
-		this.gameModel = gameModel;
-	}
 
 	/**
 	 * Action sur les touches Gestion des touches pressées

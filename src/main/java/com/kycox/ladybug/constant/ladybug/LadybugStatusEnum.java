@@ -39,4 +39,7 @@ public enum LadybugStatusEnum {
 	public static Predicate<Ladybug> isNormal() {
 		return p -> p.getStatus().equals(LadybugStatusEnum.NORMAL);
 	}
+
+	private LadybugStatusEnum() {
+	}
 }

@@ -100,11 +100,17 @@
 	<!-- beanGameSound in beanEngine -->
 	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton" init-method="init"/>
 	
+	<!--  beanGameController in beanEngine  -->
+	<bean id="beanGameController" class="com.kycox.ladybug.controler.KeyGameController" scope="singleton">
+		<property name="gameModel" ref="beanGameModel"/>
+	</bean>
+	
 	<!-- beanEngine -->
 	<bean id="beanEngine" class="com.kycox.ladybug.engine.Engine" scope="singleton" init-method="init">
 		<property name="gameModel" ref="beanGameModel"/>
 		<property name="gameSounds" ref="beanGameSounds"/>
 		<property name="gameView" ref="beanGameView"/>
+		<property name="keyGameController" ref="beanGameController"/>
 	</bean>
 	
 	<!-- beanMainFrame -->

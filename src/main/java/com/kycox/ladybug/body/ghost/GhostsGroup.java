@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.kycox.ladybug.action.ghost.GhostsGroupActions;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
@@ -37,9 +40,10 @@ import lombok.Setter;
  *
  */
 public class GhostsGroup {
+	private static final Log logger	   = LogFactory.getLog(GhostsGroup.class);
 	@Getter
 	@Setter
-	private List<Ghost> lstGhosts = new ArrayList<>();
+	private List<Ghost>		 lstGhosts = new ArrayList<>();
 
 	/**
 	 * Retourne le fantôme qui est géré par un utilisateur
@@ -79,7 +83,6 @@ public class GhostsGroup {
 	 * Initialise les positions des fantômes
 	 */
 	public void initPositions(ScreenData screenData) {
-		Point startPoint = screenData.getRevivorGhostPos();
 		lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
 	}
 

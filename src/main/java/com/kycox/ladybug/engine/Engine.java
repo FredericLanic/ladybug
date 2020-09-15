@@ -32,13 +32,13 @@ public class Engine {
 	@Setter
 	@Getter
 	private GameView		  gameView;
+	@Setter
 	private KeyGameController keyGameController;
 
 	public void init() {
 		// PAD CONTROLLER
 		// PadController padController = new PadController(gameModel);
 		// Seulement gestion du clavier : on verra pour la manette après
-		keyGameController = new KeyGameController(gameModel);
 		// initialisation des observers
 		gameView.setObservable(gameModel);
 		gameSounds.setObservable(gameModel);

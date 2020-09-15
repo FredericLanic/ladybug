@@ -18,4 +18,7 @@ package com.kycox.ladybug.constant;
 
 public enum GameStatusEnum {
 	BEGINING_LEVEL, BEGINNING_GAME, IN_GAME, NO_GAME, TO_CONF_LOCAL_USR;
+
+	private GameStatusEnum() {
+	}
 }
