@@ -43,7 +43,7 @@ public final class Constants {
 	// Niveau max
 	public static final int NIVEAU_MAX = 10;
 	// Période du timer du jeu
-	public static final int PACE = 25; // rythme en anglais :/
+	public static final int PACE = 40; // rythme en anglais :/
 	// Point en bas
 	public static final Point POINT_DOWN = new Point(0, 1);
 	// Point à gauche

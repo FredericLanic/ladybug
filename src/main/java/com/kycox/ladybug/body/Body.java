@@ -48,16 +48,17 @@ public abstract class Body {
 	// Position dans le JPanel
 	@Getter
 	@Setter
-	private Point position = Constants.POINT_ZERO;
+	private Point		  position = Constants.POINT_ZERO;
+	@Setter
+	@Getter
+	private SpeedFunction speedFunction;
 	// Vitesse : index dans le tableau VALID_SPEEDS
 	@Getter
 	@Setter
 	private int speedIndex = 0;
 	// Vitesse initiale : index dans le tableau VALID_SPEEDS
 	@Getter
-	private int				startSpeedIndex	= 0;
-	@Setter
-	protected SpeedFunction	speedFunction;
+	private int startSpeedIndex = 0;
 
 	/**
 	 * Ajout d'une nouvelle vie

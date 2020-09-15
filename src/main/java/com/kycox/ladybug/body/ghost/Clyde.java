@@ -32,7 +32,7 @@ public class Clyde extends Ghost {
 		/*
 		 * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
 		 */
-		initSpeedIndex(speedFunction.getRealIndexSpeed(numLevel));
+		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class Clyde extends Ghost {
 			return;
 		}
 		if (GhostStatusEnum.isScared().test(this))
-			setSpeedIndex(speedFunction.getRealIndexSpeedMinus(numLevel) - 1);
+			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
 		else
 			setSpeedIndex(getStartSpeedIndex());
 	}

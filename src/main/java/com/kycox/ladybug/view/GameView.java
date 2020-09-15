@@ -40,6 +40,8 @@ import com.kycox.ladybug.view.body.LadybugView;
 import com.kycox.ladybug.view.conf.ConfJDialog;
 import com.kycox.ladybug.view.map.ScreenBlockView;
 
+import lombok.Setter;
+
 /**
  * Vue du jeu MVC
  *
@@ -55,9 +57,11 @@ public class GameView extends JPanel implements Observer {
 	private ConfJDialog		  confJDialog;
 	// Données transitées par le pattern Observer
 	private transient GameModel	  gameModel;
-	private transient GhostView	  ghostView		  = new GhostView();
+	@Setter
+	private transient GhostView	  ghostView;
 	private boolean				  hasBeenDrawOnce = false;
-	private transient LadybugView ladybugView	  = new LadybugView();
+	@Setter
+	private transient LadybugView ladybugView;
 	/**
 	 * R�cup�ration de la JFrame parent
 	 */
@@ -65,14 +69,6 @@ public class GameView extends JPanel implements Observer {
 	// font par défaut
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
 
-	/**
-	 * Constructor
-	 */
-	public GameView() {
-		super();
-		
-	}
-	
 	public void init() {
 		setFocusable(true);
 		setBackground(Color.black);

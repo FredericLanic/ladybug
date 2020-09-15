@@ -145,7 +145,7 @@ public abstract class Ghost extends UserBody {
 		setPosition(Utils.convertPointToGraphicUnit(Utils.convertPointToBlockUnit(getPosition())));
 		// � d�placer dans
 		setStatus(GhostStatusEnum.DYING);
-		setSpeedIndex(speedFunction.getRealIndexSpeedPlus(numLevel));
+		setSpeedIndex(getSpeedFunction().getRealIndexSpeedPlus(numLevel));
 	}
 
 	/**

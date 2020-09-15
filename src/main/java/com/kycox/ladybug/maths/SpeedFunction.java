@@ -21,17 +21,11 @@ import com.kycox.ladybug.constant.Constants;
 import lombok.Setter;
 
 public class SpeedFunction {
-//	private static final SpeedFunction speedFunction = new SpeedFunction();
-//
-//	public static SpeedFunction getInstance() {
-//		return speedFunction;
-//	}
 	private double		 a			 = 0;
 	private double		 b			 = 0;
 	private final double HIGHT_LIMIT = Constants.VALID_SPEEDS.size();
-	// échelle de 1 à 10
 	@Setter
-	private double lowLimit;
+	private double		 lowLimit;
 
 	/**
 	 * Retourne la vitesse calculée de ladybug en fonction du niveau
@@ -68,17 +62,6 @@ public class SpeedFunction {
 		// calcul de l'index de la vitesse
 		int id = getRealIndexSpeed(numLevel);
 		if (id < HIGHT_LIMIT - 1)
-			id++;
-		return id;
-	}
-
-	/**
-	 * Retourne la vitesse de ladybug spéficique
-	 *
-	 */
-	public int getSpecificIndexSpeed(int numLevel) {
-		int id = (int) (a * numLevel + b);
-		if (id < HIGHT_LIMIT - 1 && numLevel <= Constants.NIVEAU_MAX / 2)
 			id++;
 		return id;
 	}

@@ -27,134 +27,113 @@ import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.timer.TimerView;
 
 public class LadybugView implements TimerView {
-  // Suite de body image
-  private BodyImg bodyDownCurrent;
-  private BodyImg bodyLeftCurrent;
-  private BodyImg bodyRightCurrent;
+	// Suite de body image
+	private BodyImg	bodyDownCurrent;
+	private BodyImg	bodyLeftCurrent;
+	private BodyImg	bodyRightCurrent;
+	private BodyImg	bodyUpCurrent;
+	// liste d'images ladybug regarde en bas
+	private BodyImg	ladybugDown1 = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
+	private BodyImg	ladybugDown2 = new BodyImg(PicturesEnum.LADYBUG_DOWN_2.getImg());
+	private BodyImg	ladybugDown3 = new BodyImg(PicturesEnum.LADYBUG_DOWN_3.getImg());
+	private BodyImg	ladybugDown4 = new BodyImg(PicturesEnum.LADYBUG_DOWN_4.getImg());
+	private BodyImg	ladybugDown5 = new BodyImg(PicturesEnum.LADYBUG_DOWN_3.getImg());
+	private BodyImg	ladybugDown6 = new BodyImg(PicturesEnum.LADYBUG_DOWN_2.getImg());
+	// liste d'images ladybug regarde à gauche
+	private BodyImg	ladybugLeft1 = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
+	private BodyImg	ladybugLeft2 = new BodyImg(PicturesEnum.LADYBUG_LEFT_2.getImg());
+	private BodyImg	ladybugLeft3 = new BodyImg(PicturesEnum.LADYBUG_LEFT_3.getImg());
+	private BodyImg	ladybugLeft4 = new BodyImg(PicturesEnum.LADYBUG_LEFT_4.getImg());
+	private BodyImg	ladybugLeft5 = new BodyImg(PicturesEnum.LADYBUG_LEFT_3.getImg());
+	private BodyImg	ladybugLeft6 = new BodyImg(PicturesEnum.LADYBUG_LEFT_2.getImg());
+	// liste d'images ladybug regarde à doite
+	private BodyImg	ladybugRight1 = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
+	private BodyImg	ladybugRight2 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_2.getImg());
+	private BodyImg	ladybugRight3 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_3.getImg());
+	private BodyImg	ladybugRight4 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_4.getImg());
+	private BodyImg	ladybugRight5 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_3.getImg());
+	private BodyImg	ladybugRight6 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_2.getImg());
+	// liste d'images ladybug regarde en haut
+	private BodyImg	ladybugUp1 = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
+	private BodyImg	ladybugUp2 = new BodyImg(PicturesEnum.LADYBUG_UP_2.getImg());
+	private BodyImg	ladybugUp3 = new BodyImg(PicturesEnum.LADYBUG_UP_3.getImg());
+	private BodyImg	ladybugUp4 = new BodyImg(PicturesEnum.LADYBUG_UP_4.getImg());
+	private BodyImg	ladybugUp5 = new BodyImg(PicturesEnum.LADYBUG_UP_3.getImg());
+	private BodyImg	ladybugUp6 = new BodyImg(PicturesEnum.LADYBUG_UP_2.getImg());
+	// période en mms
+	private int	  period = Constants.PACE * 4;
+	/** Timer de l'affichage */
+	private Timer timer;
+	// View par défaut à la construction
+	private Point viewDirectionPoint = Constants.POINT_ZERO;
 
-  private BodyImg bodyUpCurrent;
+	/**
+	 * Change la vue de ladybug
+	 */
+	@Override
+	public void doAction() {
+		if (viewDirectionPoint == Constants.POINT_UP) {
+			bodyUpCurrent = bodyUpCurrent.getNext();
+		}
+		if (viewDirectionPoint == Constants.POINT_RIGHT) {
+			bodyRightCurrent = bodyRightCurrent.getNext();
+		}
+		if (viewDirectionPoint == Constants.POINT_LEFT) {
+			bodyLeftCurrent = bodyLeftCurrent.getNext();
+		}
+		bodyDownCurrent = bodyDownCurrent.getNext();
+	}
 
-  // liste d'images ladybug regarde en bas
-  private BodyImg ladybugDown1       = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
-  private BodyImg ladybugDown2       = new BodyImg(PicturesEnum.LADYBUG_DOWN_2.getImg());
-  private BodyImg ladybugDown3       = new BodyImg(PicturesEnum.LADYBUG_DOWN_3.getImg());
-  private BodyImg ladybugDown4       = new BodyImg(PicturesEnum.LADYBUG_DOWN_4.getImg());
-  private BodyImg ladybugDown5       = new BodyImg(PicturesEnum.LADYBUG_DOWN_3.getImg());
-  private BodyImg ladybugDown6       = new BodyImg(PicturesEnum.LADYBUG_DOWN_2.getImg());
+	/**
+	 * Retourne l'image de ladybug
+	 *
+	 * @param viewDirectionPoint
+	 * @return
+	 */
+	public Image getNextImage(Ladybug ladybug) {
+		this.viewDirectionPoint = ladybug.getViewDirection();
+		if (viewDirectionPoint == Constants.POINT_UP) {
+			return bodyUpCurrent.getImg();
+		}
+		if (viewDirectionPoint == Constants.POINT_RIGHT) {
+			return bodyRightCurrent.getImg();
+		}
+		if (viewDirectionPoint == Constants.POINT_LEFT) {
+			return bodyLeftCurrent.getImg();
+		}
+		return bodyDownCurrent.getImg();
+	}
 
-  // liste d'images ladybug regarde à gauche
-  private BodyImg ladybugLeft1       = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
-  private BodyImg ladybugLeft2       = new BodyImg(PicturesEnum.LADYBUG_LEFT_2.getImg());
-  private BodyImg ladybugLeft3       = new BodyImg(PicturesEnum.LADYBUG_LEFT_3.getImg());
-  private BodyImg ladybugLeft4       = new BodyImg(PicturesEnum.LADYBUG_LEFT_4.getImg());
-  private BodyImg ladybugLeft5       = new BodyImg(PicturesEnum.LADYBUG_LEFT_3.getImg());
-  private BodyImg ladybugLeft6       = new BodyImg(PicturesEnum.LADYBUG_LEFT_2.getImg());
-
-  // liste d'images ladybug regarde à doite
-  private BodyImg ladybugRight1      = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
-  private BodyImg ladybugRight2      = new BodyImg(PicturesEnum.LADYBUG_RIGHT_2.getImg());
-  private BodyImg ladybugRight3      = new BodyImg(PicturesEnum.LADYBUG_RIGHT_3.getImg());
-  private BodyImg ladybugRight4      = new BodyImg(PicturesEnum.LADYBUG_RIGHT_4.getImg());
-  private BodyImg ladybugRight5      = new BodyImg(PicturesEnum.LADYBUG_RIGHT_3.getImg());
-  private BodyImg ladybugRight6      = new BodyImg(PicturesEnum.LADYBUG_RIGHT_2.getImg());
-
-  // liste d'images ladybug regarde en haut
-  private BodyImg ladybugUp1         = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
-  private BodyImg ladybugUp2         = new BodyImg(PicturesEnum.LADYBUG_UP_2.getImg());
-  private BodyImg ladybugUp3         = new BodyImg(PicturesEnum.LADYBUG_UP_3.getImg());
-  private BodyImg ladybugUp4         = new BodyImg(PicturesEnum.LADYBUG_UP_4.getImg());
-  private BodyImg ladybugUp5         = new BodyImg(PicturesEnum.LADYBUG_UP_3.getImg());
-  private BodyImg ladybugUp6         = new BodyImg(PicturesEnum.LADYBUG_UP_2.getImg());
-
-  // période en mms
-  private int     period             = Constants.PACE * 4;
-
-  /** Timer de l'affichage */
-  private Timer   timer;
-
-  // View par défaut à la construction
-  private Point   viewDirectionPoint = Constants.POINT_ZERO;
-
-  public LadybugView() {
-    ladybugLeft1.setNext(ladybugLeft2);
-    ladybugLeft2.setNext(ladybugLeft3);
-    ladybugLeft3.setNext(ladybugLeft4);
-    ladybugLeft4.setNext(ladybugLeft5);
-    ladybugLeft5.setNext(ladybugLeft6);
-    ladybugLeft6.setNext(ladybugLeft1);
-
-    ladybugRight1.setNext(ladybugRight2);
-    ladybugRight2.setNext(ladybugRight3);
-    ladybugRight3.setNext(ladybugRight4);
-    ladybugRight4.setNext(ladybugRight5);
-    ladybugRight5.setNext(ladybugRight6);
-    ladybugRight6.setNext(ladybugRight1);
-
-    ladybugUp1.setNext(ladybugUp2);
-    ladybugUp2.setNext(ladybugUp3);
-    ladybugUp3.setNext(ladybugUp4);
-    ladybugUp4.setNext(ladybugUp5);
-    ladybugUp5.setNext(ladybugUp6);
-    ladybugUp6.setNext(ladybugUp1);
-
-    ladybugDown1.setNext(ladybugDown2);
-    ladybugDown2.setNext(ladybugDown3);
-    ladybugDown3.setNext(ladybugDown4);
-    ladybugDown4.setNext(ladybugDown5);
-    ladybugDown5.setNext(ladybugDown6);
-    ladybugDown5.setNext(ladybugDown1);
-
-    bodyDownCurrent = ladybugDown1;
-    bodyLeftCurrent = ladybugLeft1;
-    bodyRightCurrent = ladybugRight1;
-    bodyUpCurrent = ladybugUp1;
-
-    timer = createTimer(period);
-    timer.start();
-  }
-
-  /**
-   * Change la vue de ladybug
-   */
-  @Override
-  public void doAction() {
-    if (viewDirectionPoint == Constants.POINT_UP) {
-      bodyUpCurrent = bodyUpCurrent.getNext();
-    }
-
-    if (viewDirectionPoint == Constants.POINT_RIGHT) {
-      bodyRightCurrent = bodyRightCurrent.getNext();
-    }
-
-    if (viewDirectionPoint == Constants.POINT_LEFT) {
-      bodyLeftCurrent = bodyLeftCurrent.getNext();
-    }
-
-    bodyDownCurrent = bodyDownCurrent.getNext();
-  }
-
-  /**
-   * Retourne l'image de ladybug
-   *
-   * @param viewDirectionPoint
-   * @return
-   */
-  public Image getNextImage(Ladybug ladybug) {
-    this.viewDirectionPoint = ladybug.getViewDirection();
-
-    if (viewDirectionPoint == Constants.POINT_UP) {
-      return bodyUpCurrent.getImg();
-    }
-
-    if (viewDirectionPoint == Constants.POINT_RIGHT) {
-      return bodyRightCurrent.getImg();
-    }
-
-    if (viewDirectionPoint == Constants.POINT_LEFT) {
-      return bodyLeftCurrent.getImg();
-    }
-
-    return bodyDownCurrent.getImg();
-  }
-
+	public void init() {
+		ladybugLeft1.setNext(ladybugLeft2);
+		ladybugLeft2.setNext(ladybugLeft3);
+		ladybugLeft3.setNext(ladybugLeft4);
+		ladybugLeft4.setNext(ladybugLeft5);
+		ladybugLeft5.setNext(ladybugLeft6);
+		ladybugLeft6.setNext(ladybugLeft1);
+		ladybugRight1.setNext(ladybugRight2);
+		ladybugRight2.setNext(ladybugRight3);
+		ladybugRight3.setNext(ladybugRight4);
+		ladybugRight4.setNext(ladybugRight5);
+		ladybugRight5.setNext(ladybugRight6);
+		ladybugRight6.setNext(ladybugRight1);
+		ladybugUp1.setNext(ladybugUp2);
+		ladybugUp2.setNext(ladybugUp3);
+		ladybugUp3.setNext(ladybugUp4);
+		ladybugUp4.setNext(ladybugUp5);
+		ladybugUp5.setNext(ladybugUp6);
+		ladybugUp6.setNext(ladybugUp1);
+		ladybugDown1.setNext(ladybugDown2);
+		ladybugDown2.setNext(ladybugDown3);
+		ladybugDown3.setNext(ladybugDown4);
+		ladybugDown4.setNext(ladybugDown5);
+		ladybugDown5.setNext(ladybugDown6);
+		ladybugDown5.setNext(ladybugDown1);
+		bodyDownCurrent	 = ladybugDown1;
+		bodyLeftCurrent	 = ladybugLeft1;
+		bodyRightCurrent = ladybugRight1;
+		bodyUpCurrent	 = ladybugUp1;
+		timer			 = createTimer(period);
+		timer.start();
+	}
 }

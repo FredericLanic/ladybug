@@ -25,20 +25,14 @@ import lombok.Data;
 
 @Data
 public class LadybugActions {
-	private ScreenBlock	currentScreenBlock;
-	private boolean		eatenAMegaPoint;
-	private boolean		eatenAPoint;
+	private ScreenBlock	currentScreenBlock = null;
+	private boolean		eatenAMegaPoint	   = false;
+	private boolean		eatenAPoint		   = false;
 
 	public void addIncrementScores(GroupIncrementScores groupIncrementScores) {
 		if (isEatenAMegaPoint()) {
 			groupIncrementScores.add(Utils.convertPointToGraphicUnit(currentScreenBlock.getCoordinate()),
 			        Integer.toString(Constants.SCORE_MEGA_POINT));
 		}
-	}
-
-	public void init() {
-		currentScreenBlock = null;
-		eatenAMegaPoint	   = false;
-		eatenAPoint		   = false;
 	}
 }

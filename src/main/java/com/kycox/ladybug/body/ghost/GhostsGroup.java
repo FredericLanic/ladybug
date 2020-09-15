@@ -76,6 +76,14 @@ public class GhostsGroup {
 	}
 
 	/**
+	 * Initialise les positions des fantômes
+	 */
+	public void initPositions(ScreenData screenData) {
+		Point startPoint = screenData.getRevivorGhostPos();
+		lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
+	}
+
+	/**
 	 * Déplacement des fantômes
 	 *
 	 * @param screenData   : la map
@@ -156,13 +164,6 @@ public class GhostsGroup {
 	}
 
 	/**
-	 * Initialise les positions des fantômes
-	 */
-	public void setPositions(ScreenData screenData) {
-		lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
-	}
-
-	/**
 	 * Affecte la vitesse de chaque fantôme au cours du niveau en cours
 	 */
 	public void setSpeed(int numLevel, int perCent) {
@@ -177,7 +178,7 @@ public class GhostsGroup {
 	public void setStartLevel(int numLevel, ScreenData screenData) {
 		setStatus(GhostStatusEnum.NORMAL);
 		setInitSpeeds(numLevel);
-		setPositions(screenData);
+		initPositions(screenData);
 	}
 
 	/**

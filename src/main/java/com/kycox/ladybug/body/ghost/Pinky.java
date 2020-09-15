@@ -29,7 +29,7 @@ public class Pinky extends Ghost {
 
 	@Override
 	public void setInitSpeed(int numLevel) {
-		initSpeedIndex(speedFunction.getRealIndexSpeedMinus(numLevel));
+		initSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class Pinky extends Ghost {
 			return;
 		}
 		if (GhostStatusEnum.isScared().test(this))
-			setSpeedIndex(speedFunction.getRealIndexSpeedMinus(numLevel) - 1);
+			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
 		else
 			setSpeedIndex(getStartSpeedIndex());
 	}

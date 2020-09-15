@@ -71,13 +71,13 @@ public class Ladybug extends UserBody {
 	/**
 	 * Caractéristiques de ladybug en début de niveau
 	 */
-	public void setStartLevel(int numLevel, ScreenData screenData) {
+	public void setStartLevel(int numLevel, Point startPosition) {
 		// attributs de ladybug
-		setPosition(screenData.getInitLadybugPos());
+		setPosition(startPosition);
 		setDirection(Constants.POINT_ZERO);
 		viewDirection = Constants.POINT_LEFT;
 		setUserRequest(Constants.POINT_ZERO);
 		setStatus(LadybugStatusEnum.NORMAL);
-		initSpeedIndex(speedFunction.getRealIndexSpeed(numLevel));
+		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 }

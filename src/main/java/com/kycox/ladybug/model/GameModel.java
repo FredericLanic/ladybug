@@ -197,7 +197,7 @@ public class GameModel extends Observable {
 	 */
 	private void continueLevel() {
 		// initialise ladybug pour le niveau
-		ladybug.setStartLevel(gameStatus.getNumLevel(), screenData);
+		ladybug.setStartLevel(gameStatus.getNumLevel(), screenData.getInitLadybugPos());
 		// initialise les fantômes
 		groupGhosts.setStartLevel(gameStatus.getNumLevel(), screenData);
 	}
@@ -257,17 +257,12 @@ public class GameModel extends Observable {
 					groupGhosts.setFear(true);
 				}
 // SCORE
-				// Ajoute du score
+				// Ajout du score
 				gameScore.setScore(ghostsActions, ladybugActions);
-				logger.info("new life : " + (Constants.NEW_LIFE_BY_SCORE - gameScore.getIncrementScore()));
 				// ajout d'une vie supplémentaire si besoin
 				if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
-					gameScore.initIncrementScore();
-					// ladybug.addNewLife();
+					gameScore.setIncrementScore(0);
 					ladybug.setNewLife(true);
-					// Ajout du son Extra pac
-					// FIXME : a mettre ailleurs
-					// setNewSounds(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
 				}
 // SCREENDATA
 				// Mise à jour du ScreenData
@@ -304,7 +299,7 @@ public class GameModel extends Observable {
 		// mise de la vitesse du niveau 3 pour la présentation
 		groupGhosts.setInitSpeeds(Constants.PRESENTATION_LEVEL);
 		// initialise les positions des fantômes
-		groupGhosts.setPositions(screenData);
+		groupGhosts.initPositions(screenData);
 		// initialise les fantômes pour la présentation
 		groupGhosts.setStatus(GhostStatusEnum.NORMAL);
 		// initialise les vies de fantômes

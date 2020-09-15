@@ -14,15 +14,10 @@
 		http://www.springframework.org/schema/aop 
 		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
 		default-lazy-init="false">  
-	
-	<bean id="beanSpeedFunctionLadybug" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
-		<property name="lowLimit" value="4"/>
-	</bean>
-
+		
 	<bean id="beanSpeedFunctionGhost" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
 		<property name="lowLimit" value="2"/>
 	</bean>
-
 	
 	<!-- Ghost beans in beanGroupGhost -->	
 	<bean id="beanClyde" class="com.kycox.ladybug.body.ghost.Clyde" scope="prototype">
@@ -59,6 +54,11 @@
 	</bean>
 
 	<!-- LadyBug in beanGameModel -->
+	
+	<bean id="beanSpeedFunctionLadybug" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
+		<property name="lowLimit" value="4"/>
+	</bean>
+	
 	<bean id="beanLadybug" class="com.kycox.ladybug.body.ladybug.Ladybug" scope="singleton">
 		<property name="speedFunction" ref="beanSpeedFunctionLadybug"/>
 	</bean>
@@ -85,8 +85,17 @@
 		<property name="superPowerTimer" ref="beanSuperPowerTimer"/>				
 	</bean>
 	
-	<!-- beanGameView in beanEngine -->
-	<bean id="beanGameView" class="com.kycox.ladybug.view.GameView" scope="singleton" init-method="init"/>
+	<!-- beanLadyView in beanGameView -->
+	<bean id="beanLadyView" class="com.kycox.ladybug.view.body.LadybugView" scope="singleton" init-method="init"/>
+
+	<!-- beanLadyView in beanGameView -->
+	<bean id="beanGhostView" class="com.kycox.ladybug.view.body.GhostView" scope="singleton"/>
+	
+	<!-- beanGameView in beanEngine -->	
+	<bean id="beanGameView" class="com.kycox.ladybug.view.GameView" scope="singleton" init-method="init">
+		<property name="ladybugView" ref="beanLadyView"/>
+		<property name="ghostView" ref="beanGhostView"/>
+	</bean>		
 	
 	<!-- beanGameSound in beanEngine -->
 	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton" init-method="init"/>
