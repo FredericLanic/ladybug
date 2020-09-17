@@ -46,18 +46,19 @@ import lombok.Setter;
  *
  */
 public abstract class Ghost extends UserBody {
-	private static final Log		logger			   = LogFactory.getLog(Ghost.class);
+	private static final Log		logger = LogFactory.getLog(Ghost.class);
 	@Getter
 	@Setter
-	private GhostBehaviousEnum		behavious		   = null;
+	private GhostBehaviousEnum		behavious;
 	@Getter
 	@Setter
-	private GhostsImagesEnum		images			   = null;
+	private GhostsImagesEnum		images;
 	@Setter
-	private GhostSensitiveBehavious	sensitiveBehavious = null;
+	@Getter
+	private GhostSensitiveBehavious	sensitiveBehavious;
 	@Getter
 	@Setter
-	private GhostStatusEnum			status			   = GhostStatusEnum.NORMAL;
+	private GhostStatusEnum			status = GhostStatusEnum.NORMAL;
 
 	/**
 	 * Retourne true si le fantôme est géré par l'ordinateur
@@ -135,7 +136,7 @@ public abstract class Ghost extends UserBody {
 
 	public void setNumLevel(int numLevel) {
 		// initialise le comportement du fantôme en fonction du niveau
-		sensitiveBehavious = new GhostSensitiveBehavious(numLevel);
+		getSensitiveBehavious().setNumLevel(numLevel);
 	}
 
 	/**

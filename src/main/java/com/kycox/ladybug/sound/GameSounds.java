@@ -24,6 +24,8 @@ import javax.sound.sampled.Clip;
 import com.kycox.ladybug.constant.SoundsEnum;
 import com.kycox.ladybug.model.GameModel;
 
+import lombok.Setter;
+
 /**
  * Gestion du son dans le jeu
  *
@@ -40,6 +42,7 @@ public class GameSounds implements Observer {
 	private Clip				clipGhostSurvivor	= null;
 	private Clip				clipInterMission	= null;
 	private Clip				clipSiren			= null;
+	@Setter
 	private transient GameModel	gameModel;
 	private boolean				listen				= true;
 	private int					sounds;
@@ -55,17 +58,28 @@ public class GameSounds implements Observer {
 	}
 
 	public void init() {
-		clipBeginning		= new ClipGame(SoundsEnum.LADYBUG_LEVEL_BEGINNING.getUrl()).getClip();
-		clipChomp			= new ClipGame(SoundsEnum.LADYBUG_CHOMP.getUrl()).getClip();
-		clipDeath			= new ClipGame(SoundsEnum.LADYBUG_IS_DYING.getUrl()).getClip();
-		clipEatFruit		= new ClipGame(SoundsEnum.LADYBUG_EAT_FRUIT.getUrl()).getClip();
-		clipEatGhost		= new ClipGame(SoundsEnum.LADYBUG_EAT_GHOST.getUrl()).getClip();
-		clipExtraPac		= new ClipGame(SoundsEnum.LADYBUG_EXTRA_PAC.getUrl()).getClip();
-		clipInterMission	= new ClipGame(SoundsEnum.LADYBUG_INTER_MISSION.getUrl()).getClip();
-		clipGhostSurvivor	= new ClipGame(SoundsEnum.GHOST_SURVIVOR.getUrl()).getClip();
-		clipGhostRegenerate	= new ClipGame(SoundsEnum.GHOST_REGENERATE.getUrl()).getClip();
-		clipGhostEaten		= new ClipGame(SoundsEnum.GHOST_EATEN.getUrl()).getClip();
-		clipSiren			= new ClipGame(SoundsEnum.LADYBUG_SIREN.getUrl()).getClip();
+		// 1
+		clipBeginning = new ClipGame(SoundsEnum.LADYBUG_LEVEL_BEGINNING).getClip();
+		// 2
+		clipChomp = new ClipGame(SoundsEnum.LADYBUG_CHOMP).getClip();
+		// 4
+		clipDeath = new ClipGame(SoundsEnum.LADYBUG_IS_DYING).getClip();
+		// 8
+		clipEatFruit = new ClipGame(SoundsEnum.LADYBUG_EAT_FRUIT).getClip();
+		// 16
+		clipEatGhost = new ClipGame(SoundsEnum.LADYBUG_EAT_GHOST).getClip();
+		// 32
+		clipExtraPac = new ClipGame(SoundsEnum.LADYBUG_EXTRA_PAC).getClip();
+		// 64
+		clipInterMission = new ClipGame(SoundsEnum.LADYBUG_INTER_MISSION).getClip();
+		// 128
+		clipGhostSurvivor = new ClipGame(SoundsEnum.GHOST_SURVIVOR).getClip();
+		// 256
+		clipGhostRegenerate = new ClipGame(SoundsEnum.GHOST_REGENERATE).getClip();
+		// 512
+		clipGhostEaten = new ClipGame(SoundsEnum.GHOST_EATEN).getClip();
+		// 1024
+		clipSiren = new ClipGame(SoundsEnum.LADYBUG_SIREN).getClip();
 	}
 
 	/**

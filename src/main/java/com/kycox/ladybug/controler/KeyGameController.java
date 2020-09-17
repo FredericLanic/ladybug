@@ -48,7 +48,7 @@ public class KeyGameController extends KeyAdapter {
 			// Gestion des touches durant une partie
 			manageKeysInGame(keyCode);
 		} else {
-			manageKeysPresentation(keyCode);
+			manageKeysInPresentation(keyCode);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class KeyGameController extends KeyAdapter {
 	 *
 	 * @param keyCode
 	 */
-	private void manageKeysPresentation(int keyCode) {
+	private void manageKeysInPresentation(int keyCode) {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
 			case KeyEvent.VK_S -> gameModel.startGame();

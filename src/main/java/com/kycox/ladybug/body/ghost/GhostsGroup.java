@@ -17,7 +17,6 @@
 package com.kycox.ladybug.body.ghost;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +39,10 @@ import lombok.Setter;
  *
  */
 public class GhostsGroup {
-	private static final Log logger	   = LogFactory.getLog(GhostsGroup.class);
+	private static final Log logger	= LogFactory.getLog(GhostsGroup.class);
 	@Getter
 	@Setter
-	private List<Ghost>		 lstGhosts = new ArrayList<>();
+	private List<Ghost>		 lstGhosts;
 
 	/**
 	 * Retourne le fantôme qui est géré par un utilisateur

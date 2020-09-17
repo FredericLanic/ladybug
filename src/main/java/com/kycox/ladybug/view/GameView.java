@@ -55,6 +55,8 @@ public class GameView extends JPanel implements Observer {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ConfJDialog		  confJDialog;
+	@Setter
+	private KeyGameController gameController;
 	// Données transitées par le pattern Observer
 	private transient GameModel	  gameModel;
 	@Setter
@@ -73,6 +75,8 @@ public class GameView extends JPanel implements Observer {
 		setFocusable(true);
 		setBackground(Color.black);
 		confJDialog = new ConfJDialog(mainFrame);
+		confJDialog.setVisible(false);
+		addKeyListener(gameController); // key listener pour les touches
 	}
 
 	/**
@@ -82,15 +86,6 @@ public class GameView extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		doDrawing(g);
-	}
-
-	/**
-	 * Applique le contrôleur
-	 *
-	 * @param ladybugController
-	 */
-	public void setController(KeyGameController ladybugController) {
-		addKeyListener(ladybugController); // key listener pour les touches
 	}
 
 	/**
@@ -129,9 +124,9 @@ public class GameView extends JPanel implements Observer {
 		drawScoreAndLevel(g2d);
 		if (gameModel.getGameStatus().isToConfiguration()) {
 			confJDialog.setVisible(true);
+			drawGhosts(g2d);
 			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
 			// autre solution
-			drawGhosts(g2d);
 			gameModel.getGameStatus().setNoGame();
 		} else if (gameModel.getGameStatus().isNoGame()) {
 			drawGhosts(g2d);

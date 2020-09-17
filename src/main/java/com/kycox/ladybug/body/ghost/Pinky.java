@@ -23,10 +23,6 @@ import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
  *
  */
 public class Pinky extends Ghost {
-	public Pinky() {
-		super();
-	}
-
 	@Override
 	public void setInitSpeed(int numLevel) {
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel));

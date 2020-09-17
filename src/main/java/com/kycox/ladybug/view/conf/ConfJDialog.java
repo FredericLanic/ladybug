@@ -102,21 +102,10 @@ public class ConfJDialog extends JDialog implements ActionListener {
 				GhostsImagesEnum.BLUE.setComputed(true);
 				GhostsImagesEnum.PINK.setComputed(true);
 				switch (group.getSelection().getActionCommand()) {
-					case JGhostChoice.BLINKY_CHOICE:
-						GhostsImagesEnum.RED.setComputed(false);
-						break;
-					case JGhostChoice.INKY_CHOICE:
-						GhostsImagesEnum.BLUE.setComputed(false);
-						break;
-					case JGhostChoice.CLYDE_CHOICE:
-						GhostsImagesEnum.ORANGE.setComputed(false);
-						break;
-					case JGhostChoice.PINKY_CHOICE:
-						GhostsImagesEnum.PINK.setComputed(false);
-						break;
-					default:
-						logger.error("Erreur de configuration :" + group.getSelection().getActionCommand());
-						break;
+					case JGhostChoice.BLINKY_CHOICE -> GhostsImagesEnum.RED.setComputed(false);
+					case JGhostChoice.INKY_CHOICE -> GhostsImagesEnum.BLUE.setComputed(false);
+					case JGhostChoice.CLYDE_CHOICE -> GhostsImagesEnum.ORANGE.setComputed(false);
+					case JGhostChoice.PINKY_CHOICE -> GhostsImagesEnum.PINK.setComputed(false);
 				}
 				this.dispose();
 			default:

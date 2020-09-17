@@ -16,24 +16,19 @@
  */
 package com.kycox.ladybug.engine;
 
-import com.kycox.ladybug.controler.KeyGameController;
 import com.kycox.ladybug.model.GameModel;
 import com.kycox.ladybug.sound.GameSounds;
 import com.kycox.ladybug.view.GameView;
 
-import lombok.Getter;
 import lombok.Setter;
 
 public class Engine {
 	@Setter
-	private GameModel		  gameModel;
+	private GameModel  gameModel;
 	@Setter
-	private GameSounds		  gameSounds;
+	private GameSounds gameSounds;
 	@Setter
-	@Getter
-	private GameView		  gameView;
-	@Setter
-	private KeyGameController keyGameController;
+	private GameView   gameView;
 
 	public void init() {
 		// PAD CONTROLLER
@@ -42,8 +37,6 @@ public class Engine {
 		// initialisation des observers
 		gameView.setObservable(gameModel);
 		gameSounds.setObservable(gameModel);
-		// On applique le contrôleur à la vue
-		gameView.setController(keyGameController);
 		// on récupère la longeur du son de la mort de ladybug et on l'affecte au
 		// gameModel
 		gameModel.getKinematicLadybugDeath().setMillisecondLenght(gameSounds.getMicrosecondLengthLadybugDeath());

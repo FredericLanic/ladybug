@@ -27,6 +27,7 @@ import com.kycox.ladybug.tools.Utils;
 import com.kycox.ladybug.tools.dijkstra.UnitDijkstra;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * La map du jeu en cours
@@ -34,9 +35,9 @@ import lombok.Getter;
  */
 public final class ScreenData {
 	@Getter
-	private ILevel currentLevel;
-	// chargement des niveaux
-	private Levels			  gameLevels			 = new Levels();
+	private ILevel			  currentLevel;
+	@Setter
+	private Levels			  gameLevels;
 	private int				  initNbrBlocksWithPoint = 0;
 	private List<ScreenBlock> lstDataBlocks			 = new ArrayList<>();
 	@Getter
@@ -75,14 +76,6 @@ public final class ScreenData {
 	public Point getInitLadybugPos() {
 		return Utils.convertPointToGraphicUnit(currentLevel.getInitLadybugBlockPos());
 	}
-//	/**
-//	 * Retourne le nombre de block par ligne de la map du niveau
-//	 *
-//	 * @return
-//	 */
-//	public int getNbrBlocksPerLine() {
-//		return currentLevel.getNbrBlocksByLine();
-//	}
 
 	/**
 	 * Retourne le nombre de points à manger par ladybug présents dans le IData

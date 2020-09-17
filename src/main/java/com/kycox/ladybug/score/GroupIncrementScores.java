@@ -27,14 +27,7 @@ public class GroupIncrementScores {
 	 * Liste des score incréments
 	 */
 	@Getter
-	private List<IncrementScore> lstIncrementScore;
-
-	/**
-	 * Constructor privé
-	 */
-	public GroupIncrementScores() {
-		lstIncrementScore = new ArrayList<>();
-	}
+	private List<IncrementScore> lstIncrementScore = new ArrayList<>();
 
 	/**
 	 * Ajout d'un score incrément

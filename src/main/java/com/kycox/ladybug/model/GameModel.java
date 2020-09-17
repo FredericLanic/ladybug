@@ -20,6 +20,8 @@ import static com.kycox.ladybug.constant.Constants.PACE;
 
 import java.awt.Point;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import javax.swing.Timer;
@@ -82,6 +84,8 @@ public class GameModel extends Observable {
 	@Getter
 	private LadybugActions		  ladybugActions;
 	@Getter
+	private List<SoundsEnum>	  lstSoundsEnum	= new ArrayList<>();
+	@Getter
 	private int					  newSounds;
 	@Getter
 	@Setter
@@ -134,7 +138,7 @@ public class GameModel extends Observable {
 		removePreviousTasksLevel();
 		gameStatus.setInGame();
 		// incrémente le numéro du niveau
-		gameStatus.addNumLevel();
+		gameStatus.setNumLevel(gameStatus.getNumLevel() + 1);
 		// recopie les paramètres du niveau dans les données flottantes du niveau
 		screenData.setLevelMap(gameStatus.getNumLevel(), gameStatus.isInGame());
 		// initialisation du super power
@@ -285,9 +289,9 @@ public class GameModel extends Observable {
 	private void initGame() {
 		gameStatus.setNoGame();
 		// initialisation du numéro du niveau; incrémenté dans initLevel
-		// gameStatus.setNumLevel(1);
+		gameStatus.setNumLevel(1);
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation
-		screenData.setLevelMap(1, gameStatus.isInGame());
+		screenData.setLevelMap(gameStatus.getNumLevel(), gameStatus.isInGame());
 		// 3 vies par défaut
 		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// ladybug n'est pas en vie lors de l'initialisation du jeu
@@ -369,27 +373,37 @@ public class GameModel extends Observable {
 		// initialise le sons
 		newSounds = 0;
 		// Son depuis l'état du jeu
-		if (gameStatus.isBeginningLevel())
+		if (gameStatus.isBeginningLevel()) {
 			setNewSounds(SoundsEnum.LADYBUG_LEVEL_BEGINNING.getIndex());
+		}
 		// Son depuis les objets Fantômes
-		if (groupGhosts.hasScaredGhost())
+		if (groupGhosts.hasScaredGhost()) {
 			setNewSounds(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
-		if (groupGhosts.hasRegeneratedGhost())
+		}
+		if (groupGhosts.hasRegeneratedGhost()) {
 			setNewSounds(SoundsEnum.GHOST_REGENERATE.getIndex());
-		if (groupGhosts.hasDyingGhost())
+		}
+		if (groupGhosts.hasDyingGhost()) {
 			setNewSounds(SoundsEnum.GHOST_EATEN.getIndex());
-		if (ghostsActions.getNbrEatenGhost() > 0)
+		}
+		if (ghostsActions.getNbrEatenGhost() > 0) {
 			setNewSounds(SoundsEnum.LADYBUG_EAT_GHOST.getIndex());
-		// son depuis Ladybug
-		if (ladybugActions.isEatenAMegaPoint())
+			// son depuis Ladybug
+		}
+		if (ladybugActions.isEatenAMegaPoint()) {
 			setNewSounds(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
-		if (ladybugActions.isEatenAPoint())
+		}
+		if (ladybugActions.isEatenAPoint()) {
 			setNewSounds(SoundsEnum.LADYBUG_CHOMP.getIndex());
-		if (ladybug.getStatus().equals(LadybugStatusEnum.DYING) && kinematicLadybugDeath.getBip() == 0)
+		}
+		if (ladybug.getStatus().equals(LadybugStatusEnum.DYING) && kinematicLadybugDeath.getBip() == 0) {
 			setNewSounds(SoundsEnum.LADYBUG_IS_DYING.getIndex());
-		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL))
+		}
+		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL)) {
 			setNewSounds(SoundsEnum.LADYBUG_SIREN.getIndex());
-		if (ladybug.isNewLife())
+		}
+		if (ladybug.isNewLife()) {
 			setNewSounds(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
+		}
 	}
 }

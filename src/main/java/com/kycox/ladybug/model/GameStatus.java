@@ -27,10 +27,6 @@ public class GameStatus {
 	@Setter
 	private int			   numLevel;
 
-	public void addNumLevel() {
-		numLevel++;
-	}
-
 	public boolean isBeginningGame() {
 		return gameStatusEnum == GameStatusEnum.BEGINNING_GAME;
 	}

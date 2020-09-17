@@ -16,26 +16,15 @@
  */
 package com.kycox.ladybug.level;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public final class Levels {
-	private List<ILevel> lstLevel = new ArrayList<>();
-	private Random		 random	  = new Random();
+import lombok.Setter;
 
-	/**
-	 * Constructeur : ajoute les différents niveaux du jeu
-	 */
-	public Levels() {
-		/*
-		 * Ici on peut ajouter d'autres niveaux => Kyky aide moi !!! :)
-		 */
-//    lstLevel.add(new Level1());
-		lstLevel.add(new Level2NG());
-		lstLevel.add(new Level3NG());
-//    lstLevel.add(new Level3());
-	}
+public final class Levels {
+	@Setter
+	private List<ILevel> lstLevel;
+	private Random		 random	= new Random();
 
 	/**
 	 * Retourne le niveau demand�

@@ -60,26 +60,30 @@ public class MainFrame extends JFrame {
 		// organisation des panels
 		Dimension dimension = new Dimension();
 		dimension.setSize(edge, edge);
-		initGameView(dimension);
+		centralZone(dimension);
 		// @FIXME : un peu de refacto !!
+		// en haut
 		JPanel jPanel = new JPanel();
 		dimension = new Dimension();
 		dimension.setSize(defaultToolKit.getScreenSize().getWidth(), topBottomHeight);
 		jPanel.setBackground(Color.BLACK);
 		jPanel.setPreferredSize(dimension);
 		add(jPanel, BorderLayout.PAGE_START);
+		// à gauche
 		jPanel	  = new JPanel();
 		dimension = new Dimension();
 		dimension.setSize(rightLeftWidth, edge);
 		jPanel.setBackground(Color.BLACK);
 		jPanel.setPreferredSize(dimension);
 		add(jPanel, BorderLayout.LINE_START);
+		// en bas
 		jPanel	  = new JPanel();
 		dimension = new Dimension();
 		dimension.setSize(defaultToolKit.getScreenSize().getWidth(), topBottomHeight);
 		jPanel.setBackground(Color.BLACK);
 		jPanel.setPreferredSize(dimension);
 		add(jPanel, BorderLayout.PAGE_END);
+		// à droite
 		jPanel	  = new JPanel();
 		dimension = new Dimension();
 		dimension.setSize(rightLeftWidth, edge);
@@ -88,7 +92,7 @@ public class MainFrame extends JFrame {
 		add(jPanel, BorderLayout.LINE_END);
 	}
 
-	private void initGameView(Dimension dimension) {
+	private void centralZone(Dimension dimension) {
 		gameView.setPreferredSize(dimension);
 		gameView.setBackground(Color.BLACK);
 		add(gameView, BorderLayout.CENTER);

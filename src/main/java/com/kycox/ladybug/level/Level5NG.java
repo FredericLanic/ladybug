@@ -23,40 +23,40 @@ import java.awt.Point;
 
 import com.kycox.ladybug.constant.LevelConstructEnum;
 
-public class Level3NG extends LevelNG {
-	public Level3NG() {
+public class Level5NG extends LevelNG {
+	public Level5NG() {
 		// nombre de blocks par ligne
 		nbrBlocksPerLine = 15;
 		// nombre de lignes
 		nbrLines  = 15;
 		levelDATA = new LevelConstructEnum[] {
-		        // 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B,	  // 1
-		        B, N, N, B, B, B, B, N, B, B, B, B, N, N, B,	  // 2
-		        B, B, B, B, B, B, N, N, N, B, B, B, B, B, B,	  // 3
-		        B, B, N, N, B, B, B, B, B, B, B, N, N, B, B,	  // 4
-		        N, B, N, B, B, B, B, N, B, B, B, B, N, B, N,	  // 5
-		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B,	  // 6
-		        B, B, N, B, B, N, N, B, N, N, B, B, N, B, B,	  // 7
-		        B, N, N, N, B, B, B, B, B, B, B, N, N, N, B,	  // 8
-		        B, B, N, B, B, N, N, B, N, N, B, B, N, B, B,	  // 9
-		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B,	  // 10
-		        N, B, N, B, B, B, B, N, B, B, B, B, N, B, N,	  // 11
-		        B, B, N, N, B, B, B, B, B, B, B, N, N, B, B,	  // 12
-		        B, B, B, B, B, B, N, N, N, B, B, B, B, B, B,	  // 13
-		        B, N, N, B, B, B, B, N, B, B, B, B, N, N, B,	  // 14
-		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B		  // 15
+		        // 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+		        B, B, B, B, N, N, B, N, B, N, N, B, B, B, B,	  // 1
+		        B, N, N, B, B, B, B, B, B, B, B, B, N, N, B,	  // 2
+		        B, N, B, N, B, N, B, N, B, N, B, N, B, N, B,	  // 3
+		        B, B, B, N, B, B, B, N, B, B, B, N, B, B, B,	  // 4
+		        N, B, B, B, B, N, B, B, B, N, B, B, B, B, N,	  // 5
+		        B, B, N, N, B, N, B, N, B, N, B, N, N, B, B,	  // 6
+		        B, B, B, B, B, B, B, N, B, B, B, B, B, B, B,	  // 7
+		        N, N, B, B, N, N, B, B, B, N, N, B, B, N, N,	  // 8
+		        B, B, B, B, B, B, B, N, B, B, B, B, B, B, B,	  // 9
+		        B, B, N, N, B, N, B, N, B, N, B, N, N, B, B,	  // 10
+		        N, B, B, B, B, N, B, B, B, N, B, B, B, B, N,	  // 11
+		        B, B, B, N, B, B, B, N, B, B, B, N, B, B, B,	  // 12
+		        B, N, B, N, B, N, B, N, B, N, B, N, B, N, B,	  // 13
+		        B, N, N, B, B, B, B, B, B, B, B, B, N, N, B,	  // 14
+		        B, B, B, B, N, N, B, N, B, N, N, B, B, B, B		  // 15
 		};
 	}
 
 	@Override
 	public Point getGhostRegenerateBlockPoint() {
-		return new Point(7, 7);
+		return new Point(7, 4);
 	}
 
 	@Override
 	public Point getInitLadybugBlockPos() {
-		return new Point(7, 14);
+		return new Point(7, 13);
 	}
 
 	@Override

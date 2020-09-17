@@ -30,16 +30,6 @@ public class BlinkySpeedIndex {
 	private double		  b;
 	private double		  levelPerCent = 80.0;
 
-	public BlinkySpeedIndex(int numLevel) {
-		// calcul de R en fonction du niveau pour commencer : on met R = 80
-		// FIXME : puis on devrait faire R = 80 pour le niveau 1, et R = 20 pour le
-		// dernier niveau
-		a = (centPerCent - 3 * levelPerCent)
-		        / (levelPerCent * levelPerCent * centPerCent - levelPerCent * centPerCent * centPerCent);
-		b = (centPerCent * centPerCent - 3 * levelPerCent * levelPerCent)
-		        / (levelPerCent * centPerCent * (centPerCent - levelPerCent));
-	}
-
 	/**
 	 * Return the number of index to increment
 	 *
@@ -48,5 +38,15 @@ public class BlinkySpeedIndex {
 	 */
 	public int getIncrementSpeedIndex(int perCent) {
 		return (int) (a * perCent * perCent + b * perCent);
+	}
+
+	public void setNumLevel(int numLevel) {
+		// calcul de R en fonction du niveau pour commencer : on met R = 80
+		// FIXME : puis on devrait faire R = 80 pour le niveau 1, et R = 20 pour le
+		// dernier niveau
+		a = (centPerCent - 3 * levelPerCent)
+		        / (levelPerCent * levelPerCent * centPerCent - levelPerCent * centPerCent * centPerCent);
+		b = (centPerCent * centPerCent - 3 * levelPerCent * levelPerCent)
+		        / (levelPerCent * centPerCent * (centPerCent - levelPerCent));
 	}
 }

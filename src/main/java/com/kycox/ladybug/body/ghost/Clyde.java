@@ -23,10 +23,6 @@ import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
  *
  */
 public class Clyde extends Ghost {
-	public Clyde() {
-		super();
-	}
-
 	@Override
 	public void setInitSpeed(int numLevel) {
 		/*

@@ -31,20 +31,11 @@ import com.kycox.ladybug.constant.Constants;
  *
  */
 public class GhostSensitiveBehavious {
-	// Echelle de 1 à 10
+	private final double HIGH_LIMIT = 90;
 	private final double LOW_LIMIT		  = 20;
-	private final double HIGH_LIMIT		  = 90;
 	private final Random RANDOM_GENERATOR = new Random();
 	private final int	 SCALE			  = 100;
 	private double		 y				  = 0;
-
-	public GhostSensitiveBehavious(int numLevel) {
-		double a = 0;
-		double b = 0;
-		a = (HIGH_LIMIT - LOW_LIMIT) / (Constants.NIVEAU_MAX - 1);
-		b = LOW_LIMIT - a;
-		y = (a * numLevel + b);
-	}
 
 	/**
 	 *
@@ -56,5 +47,13 @@ public class GhostSensitiveBehavious {
 	 */
 	public boolean isActive() {
 		return (RANDOM_GENERATOR.nextInt(SCALE) + 1) < y;
+	}
+
+	public void setNumLevel(int numLevel) {
+		double a = 0;
+		double b = 0;
+		a = (HIGH_LIMIT - LOW_LIMIT) / (Constants.NIVEAU_MAX - 1);
+		b = LOW_LIMIT - a;
+		y = (a * numLevel + b);
 	}
 }
