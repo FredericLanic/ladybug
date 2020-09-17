@@ -31,7 +31,7 @@ import com.kycox.ladybug.constant.Constants;
  *
  */
 public class GhostSensitiveBehavious {
-	private final double HIGH_LIMIT = 90;
+	private final double HIGH_LIMIT		  = 90;
 	private final double LOW_LIMIT		  = 20;
 	private final Random RANDOM_GENERATOR = new Random();
 	private final int	 SCALE			  = 100;
