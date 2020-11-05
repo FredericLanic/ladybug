@@ -35,8 +35,9 @@ public class Engine {
 		// PadController padController = new PadController(gameModel);
 		// Seulement gestion du clavier : on verra pour la manette après
 		// initialisation des observers
-		gameView.setObservable(gameModel);
-		gameSounds.setObservable(gameModel);
+		gameModel.addObserver(gameView);
+		gameModel.addObserver(gameSounds);
+		
 		// on récupère la longeur du son de la mort de ladybug et on l'affecte au
 		// gameModel
 		gameModel.getKinematicLadybugDeath().setMillisecondLenght(gameSounds.getMicrosecondLengthLadybugDeath());

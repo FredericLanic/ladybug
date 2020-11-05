@@ -148,15 +148,6 @@ public class GameSounds implements Observer {
 		gameModel.startGameTimer();
 	}
 
-	/**
-	 * Affecte le modèle du jeu
-	 *
-	 * @param gameModel
-	 */
-	public void setObservable(Observable gameModel) {
-		if (gameModel != null)
-			gameModel.addObserver(this);
-	}
 
 	@Override
 	public void update(Observable gameModel, Object arg) {

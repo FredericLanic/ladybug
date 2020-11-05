@@ -89,18 +89,6 @@ public class GameView extends JPanel implements Observer {
 	}
 
 	/**
-	 * Affecte le modèle du jeu
-	 *
-	 * @param gameModel
-	 */
-	public void setObservable(Observable gameModel) {
-		this.gameModel = (GameModel) gameModel;
-		if (this.gameModel != null) {
-			this.gameModel.addObserver(this);
-		}
-	}
-
-	/**
 	 * Récupère le gameModel envoyé par le modèle
 	 *
 	 * @param gameModel
