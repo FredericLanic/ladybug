@@ -27,7 +27,6 @@ import com.kycox.ladybug.action.ghost.GhostsGroupActions;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
 import com.kycox.ladybug.level.ScreenData;
-import com.kycox.ladybug.tools.Utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -94,11 +93,10 @@ public class GhostsGroup {
 	 */
 	public void moveGhosts(ScreenData screenData, Ladybug ladybug, Point ghostRequest) {
 		// Déplacement des fantômes gérés par l'ordinateur
-		lstGhosts.stream().filter(Ghost::isComputed)
-		        .forEach(g -> g.moveGhostByComputer(Utils.convertPointToBlockUnit(ladybug.getPosition()), screenData));
+		lstGhosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveGhostByComputer(ladybug, screenData));
 		// Déplacement des fantômes gérés par l'humain
-		lstGhosts.stream().filter(g -> !g.isComputed()).forEach(
-		        g -> g.moveGhostByUser(Utils.convertPointToBlockUnit(ladybug.getPosition()), screenData, ghostRequest));
+		lstGhosts.stream().filter(g -> !g.isComputed())
+		        .forEach(g -> g.moveGhostByUser(ladybug, screenData, ghostRequest));
 	}
 
 	/**

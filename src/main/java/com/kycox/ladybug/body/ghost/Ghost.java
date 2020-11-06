@@ -25,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kycox.ladybug.action.ghost.GhostActions;
+import com.kycox.ladybug.body.Body;
 import com.kycox.ladybug.body.UserBody;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
@@ -75,12 +76,13 @@ public abstract class Ghost extends UserBody {
 	 *
 	 * @param ladybugPosBlock
 	 */
-	public void moveGhostByComputer(Point ladybugPosBlock, ScreenData screenData) {
+	public void moveGhostByComputer(Body ladybug, ScreenData screenData) {
+		Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
 		// Déplacement en fonction du status du fantôme
 		switch (getStatus()) {
 			case DYING -> moveToRegenerate(screenData);
 			case FLASH, SCARED -> flashOrScaredMoving(ladybugPosBlock, screenData);
-			case NORMAL -> normalMoving(ladybugPosBlock, screenData);
+			case NORMAL -> normalMoving(ladybug, screenData);
 			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
 		}
 	}
@@ -92,13 +94,13 @@ public abstract class Ghost extends UserBody {
 	 * @param screenData
 	 * @param ghostRequest
 	 */
-	public void moveGhostByUser(Point ladybugPosBlock, ScreenData screenData, Point ghostRequest) {
+	public void moveGhostByUser(Body ladybug, ScreenData screenData, Point ghostRequest) {
 		setUserRequest(ghostRequest);
 		if (hasChangeBlock() && getStatus().equals(GhostStatusEnum.NORMAL)) {
 			move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
 			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		} else {
-			moveGhostByComputer(ladybugPosBlock, screenData);
+			moveGhostByComputer(ladybug, screenData);
 		}
 	}
 
@@ -170,23 +172,9 @@ public abstract class Ghost extends UserBody {
 	 * @param screenData
 	 * @param ladybugPosBlock
 	 */
-	private void moveAgressive(Point ladybugPosBlock, ScreenData screenData) {
-		/**
-		 * Note : le fantôme peut changer de direction uniquement lorsqu'il rempli le
-		 * block
-		 */
-		if (hasChangeBlock()) {
-			Point		ptCurrentBlockGhost	= Utils.convertPointToBlockUnit(getPosition());
-			List<Point>	shorterWay			= Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
-			Point		point0				= shorterWay.get(0);
-			if (shorterWay.size() != 1) {
-				Point point1 = shorterWay.get(1);
-				setDirection(new Point(point1.x - point0.x, point1.y - point0.y));
-			} else {
-				setDirection(new Point(ptCurrentBlockGhost.x - point0.x, ptCurrentBlockGhost.y - point0.y));
-			}
-		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+	private void moveAgressive(Body ladybug, ScreenData screenData) {
+		Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
+		moveTo(ladybugPosBlock, screenData);
 	}
 
 	/**
@@ -197,9 +185,10 @@ public abstract class Ghost extends UserBody {
 	 * @param screenData
 	 * @param ladybugPosBlock
 	 */
-	private void moveByBehaviour(Point ladybugPosBlock, ScreenData screenData) {
+	private void moveByBehaviour(Body ladybug, ScreenData screenData) {
 		switch (behavious) {
-			case SMART, AGGRESSIVE -> moveAgressive(ladybugPosBlock, screenData);
+			case SMART -> moveSmart(ladybug, screenData);
+			case AGGRESSIVE -> moveAgressive(ladybug, screenData);
 			default -> moveByDefault(screenData);
 		}
 	}
@@ -272,6 +261,41 @@ public abstract class Ghost extends UserBody {
 		}
 	}
 
+	private void moveSmart(Body ladybug, ScreenData screenData) {
+		Point		ladybugPosBlock	   = Utils.convertPointToBlockUnit(ladybug.getPosition());
+		ScreenBlock	ladybugScreenBlock = screenData.getDataBlock(ladybugPosBlock);
+		Point		ladybugDirection   = ladybug.getDirection();
+		if (ladybugDirection.equals(Constants.POINT_UP) && !ladybugScreenBlock.isUp()) {
+			ladybugPosBlock.y--;
+		} else if (ladybugDirection.equals(Constants.POINT_DOWN) && !ladybugScreenBlock.isDown()) {
+			ladybugPosBlock.y++;
+		} else if (ladybugDirection.equals(Constants.POINT_RIGHT) && !ladybugScreenBlock.isRight()) {
+			ladybugPosBlock.x++;
+		} else if (ladybugDirection.equals(Constants.POINT_LEFT) && !ladybugScreenBlock.isLeft()) {
+			ladybugPosBlock.x--;
+		}
+		moveTo(ladybugPosBlock, screenData);
+	}
+
+	private void moveTo(Point ladybugPosBlock, ScreenData screenData) {
+		/**
+		 * Note : le fantôme peut changer de direction uniquement lorsqu'il rempli le
+		 * block
+		 */
+		if (hasChangeBlock()) {
+			Point		ptCurrentBlockGhost	= Utils.convertPointToBlockUnit(getPosition());
+			List<Point>	shorterWay			= Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
+			Point		point0				= shorterWay.get(0);
+			if (shorterWay.size() != 1) {
+				Point point1 = shorterWay.get(1);
+				setDirection(new Point(point1.x - point0.x, point1.y - point0.y));
+			} else {
+				setDirection(new Point(ptCurrentBlockGhost.x - point0.x, ptCurrentBlockGhost.y - point0.y));
+			}
+		}
+		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+	}
+
 	/**
 	 * Déplacement du fantôme mangé
 	 *
@@ -310,9 +334,9 @@ public abstract class Ghost extends UserBody {
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
 
-	private void normalMoving(Point ladybugPosBlock, ScreenData screenData) {
+	private void normalMoving(Body ladybug, ScreenData screenData) {
 		if (sensitiveBehavious.isActive())
-			moveByBehaviour(ladybugPosBlock, screenData);
+			moveByBehaviour(ladybug, screenData);
 		else
 			moveByDefault(screenData);
 	}
