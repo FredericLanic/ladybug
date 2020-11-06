@@ -275,7 +275,7 @@ public class GameModel extends Observable {
 				checkEndMaze();
 			}
 			// notifie la view qu'il y a eu du changement
-			setGameSounds();
+			setGameSounds(screenData.getPercentageEatenPoint());
 			setChanged();
 			notifyObservers();
 		};
@@ -369,7 +369,7 @@ public class GameModel extends Observable {
 	/**
 	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
 	 */
-	private void setGameSounds() {
+	private void setGameSounds(int percent) {
 		// initialise le sons
 		newSounds = 0;
 		// Son depuis l'état du jeu
@@ -399,8 +399,14 @@ public class GameModel extends Observable {
 		if (ladybug.getStatus().equals(LadybugStatusEnum.DYING) && kinematicLadybugDeath.getBip() == 0) {
 			setNewSounds(SoundsEnum.LADYBUG_IS_DYING.getIndex());
 		}
-		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL)) {
-			setNewSounds(SoundsEnum.LADYBUG_SIREN.getIndex());
+		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 20) {
+			setNewSounds(SoundsEnum.LADYBUG_SIREN_0.getIndex());
+		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 40) {
+			setNewSounds(SoundsEnum.LADYBUG_SIREN_1.getIndex());
+		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 60) {
+			setNewSounds(SoundsEnum.LADYBUG_SIREN_2.getIndex());
+		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL)) {
+			setNewSounds(SoundsEnum.LADYBUG_SIREN_3.getIndex());
 		}
 		if (ladybug.isNewLife()) {
 			setNewSounds(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());

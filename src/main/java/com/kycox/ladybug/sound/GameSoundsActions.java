@@ -30,7 +30,7 @@ import lombok.Setter;
  * Gestion du son dans le jeu
  *
  */
-public class GameSounds implements Observer {
+public class GameSoundsActions implements Observer {
 	private Clip				clipBeginning		= null;
 	private Clip				clipChomp			= null;
 	private Clip				clipDeath			= null;
@@ -41,7 +41,10 @@ public class GameSounds implements Observer {
 	private Clip				clipGhostRegenerate	= null;
 	private Clip				clipGhostSurvivor	= null;
 	private Clip				clipInterMission	= null;
-	private Clip				clipSiren			= null;
+	private Clip				clipSiren0			= null;
+	private Clip				clipSiren1			= null;
+	private Clip				clipSiren2			= null;
+	private Clip				clipSiren3			= null;
 	@Setter
 	private transient GameModel	gameModel;
 	private boolean				listen				= true;
@@ -79,7 +82,10 @@ public class GameSounds implements Observer {
 		// 512
 		clipGhostEaten = new ClipGame(SoundsEnum.GHOST_EATEN).getClip();
 		// 1024
-		clipSiren = new ClipGame(SoundsEnum.LADYBUG_SIREN).getClip();
+		clipSiren0 = new ClipGame(SoundsEnum.LADYBUG_SIREN_0).getClip();
+		clipSiren1 = new ClipGame(SoundsEnum.LADYBUG_SIREN_1).getClip();
+		clipSiren2 = new ClipGame(SoundsEnum.LADYBUG_SIREN_2).getClip();
+		clipSiren3 = new ClipGame(SoundsEnum.LADYBUG_SIREN_3).getClip();
 	}
 
 	/**
@@ -123,8 +129,17 @@ public class GameSounds implements Observer {
 		if ((sounds & SoundsEnum.GHOST_EATEN.getIndex()) != 0) {
 			new ListenSound(clipGhostEaten).start();
 		}
-		if ((sounds & SoundsEnum.LADYBUG_SIREN.getIndex()) != 0) {
-			new ListenSound(clipSiren).start();
+		if ((sounds & SoundsEnum.LADYBUG_SIREN_0.getIndex()) != 0) {
+			new ListenSound(clipSiren0).start();
+		}
+		if ((sounds & SoundsEnum.LADYBUG_SIREN_1.getIndex()) != 0) {
+			new ListenSound(clipSiren1).start();
+		}
+		if ((sounds & SoundsEnum.LADYBUG_SIREN_2.getIndex()) != 0) {
+			new ListenSound(clipSiren2).start();
+		}
+		if ((sounds & SoundsEnum.LADYBUG_SIREN_3.getIndex()) != 0) {
+			new ListenSound(clipSiren3).start();
 		}
 	}
 
@@ -147,7 +162,6 @@ public class GameSounds implements Observer {
 		gameModel.getGameStatus().setInGame();
 		gameModel.startGameTimer();
 	}
-
 
 	@Override
 	public void update(Observable gameModel, Object arg) {
@@ -186,7 +200,13 @@ public class GameSounds implements Observer {
 		clipGhostSurvivor.setFramePosition(0);
 		clipGhostRegenerate.stop();
 		clipGhostRegenerate.setFramePosition(0);
-		clipSiren.stop();
-		clipSiren.setFramePosition(0);
+		clipSiren0.stop();
+		clipSiren0.setFramePosition(0);
+		clipSiren1.stop();
+		clipSiren1.setFramePosition(0);
+		clipSiren2.stop();
+		clipSiren2.setFramePosition(0);
+		clipSiren3.stop();
+		clipSiren3.setFramePosition(0);
 	}
 }

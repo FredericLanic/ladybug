@@ -6,19 +6,17 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 public class JSliderVertical extends JPanel {
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				JSliderVertical.showFrame();
-			}
-		});
-	}
-
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			@Override
+//			public void run() {
+//				JSliderVertical.showFrame();
+//			}
+//		});
+//	}
 	public static void showFrame() {
 		JPanel panel = new JSliderVertical();
 		panel.setOpaque(true);

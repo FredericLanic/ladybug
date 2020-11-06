@@ -49,7 +49,7 @@ public class ListenSound extends Thread {
 			if (!clip.isRunning()) {
 				clip.start();
 				while (!end) {
-					Thread.sleep(200);
+					Thread.sleep(1);
 					if (clip.getMicrosecondPosition() >= microsecondLength)
 						end = true;
 				}

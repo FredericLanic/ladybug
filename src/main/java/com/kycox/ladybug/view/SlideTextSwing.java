@@ -1,7 +1,6 @@
 package com.kycox.ladybug.view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,15 +10,14 @@ import javax.swing.JWindow;
 import javax.swing.Timer;
 
 public class SlideTextSwing {
-	public static void main(String args[]) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				SlideTextSwing windowTest = new SlideTextSwing();
-			}
-		});
-	}
-
+//	public static void main(String args[]) {
+//		EventQueue.invokeLater(new Runnable() {
+//			@Override
+//			public void run() {
+//				SlideTextSwing windowTest = new SlideTextSwing();
+//			}
+//		});
+//	}
 	private JLabel	label		   = new JLabel("Slide Text Swing, Slide Text Swing, ..........");
 	private JWindow	window		   = new JWindow();
 	private JPanel	windowContents = new JPanel();

@@ -30,7 +30,8 @@ public enum SoundsEnum {
 	LADYBUG_EAT_FRUIT(8, "ladybug_eatfruit.wav"), LADYBUG_EAT_GHOST(16, "ladybug_eatghost.wav"),
 	LADYBUG_EXTRA_PAC(32, "ladybug_extralife.wav"), LADYBUG_INTER_MISSION(64, "ladybug_intermission.wav"),
 	LADYBUG_IS_DYING(4, "ladybug_death.wav"), LADYBUG_LEVEL_BEGINNING(1, "ladybug_beginning.wav"),
-	LADYBUG_SIREN(1024, "ladybug_siren.wav");
+	LADYBUG_SIREN_0(1024, "ladybug_siren_0.wav"), LADYBUG_SIREN_1(2048, "ladybug_siren_1.wav"),
+	LADYBUG_SIREN_2(4096, "ladybug_siren_2.wav"), LADYBUG_SIREN_3(8192, "ladybug_siren_3.wav");
 
 	@Getter
 	private int	index = 0;

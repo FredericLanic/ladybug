@@ -98,12 +98,12 @@
 	<bean id="beanLevels" class="com.kycox.ladybug.level.Levels" scope="singleton">
 		<property name="lstLevel">
 			<list>
-				<!-- 
+		 
 				<ref bean="beanLevel1"/>
 				<ref bean="beanLevel2NG"/>
 				<ref bean="beanLevel3NG"/>
 				<ref bean="beanLevel4NG"/>
-				-->
+
 				<ref bean="beanLevel5NG"/>
 			</list>
 		</property>
@@ -145,13 +145,13 @@
 	</bean>		
 	
 	<!-- beanGameSound in beanEngine -->
-	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton" init-method="init">
+	<bean id="beanGameSoundsActions" class="com.kycox.ladybug.sound.GameSoundsActions" scope="singleton" init-method="init">
 	</bean>
 	
 	<!-- beanEngine -->
 	<bean id="beanEngine" class="com.kycox.ladybug.engine.Engine" scope="singleton" init-method="init">
 		<property name="gameModel" ref="beanGameModel"/>
-		<property name="gameSounds" ref="beanGameSounds"/>
+		<property name="gameSounds" ref="beanGameSoundsActions"/>
 		<property name="gameView" ref="beanGameView"/>
 	</bean>
 	
