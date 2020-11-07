@@ -1,0 +1,29 @@
+Ce document résume les principaux sujets à développer pour réaliser un apérOX.
+le 07/11/2020 : Pour l'instant, j'ai soumis l'idée à JMDD et JEFF, et ils ont l'air d'être intéressés
+
+Les grands sujets
+
+1/ l'histoire du pourquoi je me suis mis à Java
+	Je viens d'un monde XML, XSLT 3.0
+	Objectif : Montée en compétence Java
+	Support Java OXiane et OpenclassRoom
+
+2/ L'histoire du développement - naissance de Ladybug
+	pourquoi : envie de mettre en pratique, dialogue avec mon fils - idée de réaliser un pacman like
+	origine : 
+		je suis parti de class (libre de droit ?)
+		création des parties 
+			essai de MVC
+			
+	les principales étapes
+	
+3/ Les technologies utilisées
+	design patterns
+	java 8 à 14 : lamba, stream, switch
+	framework : loombok, spring
+	
+4/ les problèmes rencontrés
+	mauvais choix : tout singletons
+	
+5/ Todo à faire avant l'apérOX
+	- mettre packman en monde OXiane (bleu avec OK)

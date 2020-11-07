@@ -1,0 +1,4 @@
+- extraire isComputed de l'enumération GhostsImagesEnum
+- synchroniser les statuts entre les fantômes et ladybug; faire une énumeration status commun pour les fantômes et ladybug
+- revoir le design pattern MVC et revoir la notion de controleur
+- faire un skin OXiane pour Ladybug
