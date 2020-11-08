@@ -283,6 +283,19 @@ public class GameModel extends Observable {
 		return new Timer(PACE, action);
 	}
 
+	private int getSirenSound(int percent) {
+		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 40) {
+			return SoundsEnum.LADYBUG_SIREN_0.getIndex();
+		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 60) {
+			return SoundsEnum.LADYBUG_SIREN_1.getIndex();
+		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 80) {
+			return SoundsEnum.LADYBUG_SIREN_2.getIndex();
+		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent > 80) {
+			return SoundsEnum.LADYBUG_SIREN_3.getIndex();
+		}
+		return 0;
+	}
+
 	/**
 	 * Initialise les variables au lancement du programme
 	 */
@@ -399,17 +412,9 @@ public class GameModel extends Observable {
 		if (ladybug.getStatus().equals(LadybugStatusEnum.DYING) && kinematicLadybugDeath.getBip() == 0) {
 			setNewSounds(SoundsEnum.LADYBUG_IS_DYING.getIndex());
 		}
-		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 20) {
-			setNewSounds(SoundsEnum.LADYBUG_SIREN_0.getIndex());
-		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 40) {
-			setNewSounds(SoundsEnum.LADYBUG_SIREN_1.getIndex());
-		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 60) {
-			setNewSounds(SoundsEnum.LADYBUG_SIREN_2.getIndex());
-		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL)) {
-			setNewSounds(SoundsEnum.LADYBUG_SIREN_3.getIndex());
-		}
 		if (ladybug.isNewLife()) {
 			setNewSounds(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
 		}
+		setNewSounds(getSirenSound(screenData.getPercentageEatenPoint()));
 	}
 }

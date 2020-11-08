@@ -29,15 +29,15 @@ public enum LadybugStatusEnum {
 	DEAD, DYING, NORMAL;
 
 	public static Predicate<Ladybug> isDead() {
-		return p -> p.getStatus().equals(LadybugStatusEnum.DEAD);
+		return p -> p.getStatus().equals(DEAD);
 	}
 
 	public static Predicate<Ladybug> isDying() {
-		return p -> p.getStatus().equals(LadybugStatusEnum.DYING);
+		return p -> p.getStatus().equals(DYING);
 	}
 
 	public static Predicate<Ladybug> isNormal() {
-		return p -> p.getStatus().equals(LadybugStatusEnum.NORMAL);
+		return p -> p.getStatus().equals(NORMAL);
 	}
 
 	private LadybugStatusEnum() {

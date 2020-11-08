@@ -28,23 +28,23 @@ public enum GhostStatusEnum {
 	DYING, FLASH, NORMAL, REGENERATING, SCARED;
 
 	public static Predicate<Ghost> isDying() {
-		return g -> g.getStatus().equals(GhostStatusEnum.DYING);
+		return g -> g.getStatus().equals(DYING);
 	}
 
 	public static Predicate<Ghost> isFlashing() {
-		return g -> g.getStatus().equals(GhostStatusEnum.FLASH);
+		return g -> g.getStatus().equals(FLASH);
 	}
 
 	public static Predicate<Ghost> isNormal() {
-		return g -> g.getStatus().equals(GhostStatusEnum.NORMAL);
+		return g -> g.getStatus().equals(NORMAL);
 	}
 
 	public static Predicate<Ghost> isRegenerating() {
-		return g -> g.getStatus().equals(GhostStatusEnum.REGENERATING);
+		return g -> g.getStatus().equals(REGENERATING);
 	}
 
 	public static Predicate<Ghost> isScared() {
-		return g -> g.getStatus().equals(GhostStatusEnum.SCARED);
+		return g -> g.getStatus().equals(SCARED);
 	}
 
 	private GhostStatusEnum() {

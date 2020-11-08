@@ -1,4 +1,23 @@
-- extraire isComputed de l'enumération GhostsImagesEnum
+Coté technique :
+
+- extraire isComputed de l'enumération GhostsImagesEnum -> 
+	impact dans la fenêtre de configuration
+	=> solution à court terme : changer le nom de l'énumération GhostsImagesEnum en GhostsConfigEnum par exemple => nan, je pense que c'est un mauvais choix
 - synchroniser les statuts entre les fantômes et ladybug; faire une énumeration status commun pour les fantômes et ladybug
 - revoir le design pattern MVC et revoir la notion de controleur
+- revoir le pom.xml; voir jeff & tristan; version de java; rajouter un plugin pour sélectionner une version de java spécifique pour builder avec maven
+
+Coté fonctionnalités :
 - faire un skin OXiane pour Ladybug
+- augemnter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug
+- ajouter le notion de fruit  
+	- quand faire apparaitre un fruit 
+	- où le positionner
+	- comment le fruit apparait 
+	- le nombre de point a ajouter au score
+	- quel son est emis jeu quand le fruit apparait
+	- quel son est emis quand le fruit est disponible
+- faire un point de téléportation -> téléporter sur un point quelconque existant
+	- quand afficher ce point
+	- où le positionner
+	- comment le visualiser

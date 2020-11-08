@@ -21,6 +21,7 @@ Les grands sujets
 	design patterns
 	java 8 à 14 : lamba, stream, switch
 	framework : loombok, spring
+	enum pôur gérer les constantes
 	
 4/ les problèmes rencontrés
 	mauvais choix : tout singletons
