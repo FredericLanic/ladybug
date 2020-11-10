@@ -46,7 +46,7 @@ public class Ladybug extends UserBody {
 	 * Déplacement de ladybug et récupération du score obtenu Lancement du double
 	 * timer dans le cas du super power
 	 */
-	public LadybugActions moveLadybug(ScreenData screenData) {
+	public LadybugActions getActions(ScreenData screenData) {
 		LadybugActions ladybugActions = new LadybugActions();
 		if (getStatus().equals(LadybugStatusEnum.DEAD))
 			return ladybugActions;
@@ -60,12 +60,19 @@ public class Ladybug extends UserBody {
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
 			ladybugActions.setEatenAMegaPoint(currentScreenBlock.isMegaPoint());
+			ladybugActions.setToBeTeleported(currentScreenBlock.isTeleportation());
+		}
+		return ladybugActions;
+	}
+
+	public void move(ScreenData screenData) {
+		ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+		if (hasChangeBlock()) {
 			if (canMove(userRequest, currentScreenBlock))
 				viewDirection = userRequest;
 			move(currentScreenBlock);
 		}
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-		return ladybugActions;
 	}
 
 	/**
@@ -79,5 +86,13 @@ public class Ladybug extends UserBody {
 		setUserRequest(Constants.POINT_ZERO);
 		setStatus(LadybugStatusEnum.NORMAL);
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
+	}
+
+	public void teleport(ScreenData screenData) {
+		if (hasChangeBlock()) {
+			Point newPoint = screenData.getRandomPosOnAPoint();
+			setPosition(Utils.convertPointToGraphicUnit(newPoint));
+			setDirection(Constants.POINT_ZERO);
+		}
 	}
 }

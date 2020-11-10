@@ -16,6 +16,7 @@
  */
 package com.kycox.ladybug.action.ladybug;
 
+import com.kycox.ladybug.action.BodyActions;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.score.GroupIncrementScores;
@@ -24,7 +25,8 @@ import com.kycox.ladybug.tools.Utils;
 import lombok.Data;
 
 @Data
-public class LadybugActions {
+public class LadybugActions extends BodyActions {
+	// @FIXME : voir si c'est possible de le sortir; on a l'info dans LadyBug
 	private ScreenBlock	currentScreenBlock = null;
 	private boolean		eatenAMegaPoint	   = false;
 	private boolean		eatenAPoint		   = false;

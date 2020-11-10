@@ -105,7 +105,7 @@ public class GhostsGroup {
 	 * @param inGame
 	 * @param numLevel
 	 */
-	public GhostsGroupActions setAllGhostsActions(Ladybug ladybug) {
+	public GhostsGroupActions getActions(Ladybug ladybug) {
 		GhostsGroupActions ghostsActions = new GhostsGroupActions();
 		lstGhosts.stream().forEach(g -> ghostsActions.addGhostAction(g.setGhostActions(ladybug)));
 		return ghostsActions;

@@ -45,7 +45,7 @@ public enum PicturesEnum {
 	LADYBUG_UP_11("Ladybug11up.gif"), LADYBUG_UP_2("Ladybug2up.gif"), LADYBUG_UP_3("Ladybug3up.gif"),
 	LADYBUG_UP_4("Ladybug4up.gif"), LADYBUG_UP_5("Ladybug5up.gif"), LADYBUG_UP_6("Ladybug6up.gif"),
 	LADYBUG_UP_7("Ladybug7up.gif"), LADYBUG_UP_8("Ladybug8up.gif"), LADYBUG_UP_9("Ladybug9up.gif"),
-	ONLY_EYES_LEFT_EYES("Eyes2.gif"), ONLY_EYES_RIGHT_EYES("Eyes1.gif");
+	ONLY_EYES_LEFT_EYES("Eyes2.gif"), ONLY_EYES_RIGHT_EYES("Eyes1.gif"), TELEPORTATION("Teleportation.png");
 
 	private Image img = null;
 

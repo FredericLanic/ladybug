@@ -178,14 +178,18 @@ public final class ScreenData {
 		CheckScreenBlockBorders checkScreenBlockBorders = new CheckScreenBlockBorders(this);
 		checkScreenBlockBorders.checkDataBlockBorder();
 		lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
-		        .forEach(ScreenBlock::addSurvivorPoint);
+		        .forEach(ScreenBlock::addGhostReviver);
 		// ajout des mega points aléatoires
 		if (isInGame) {
 			for (int i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
 				Point randomPoint = getRandomPosOnAPoint();
 				lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
-				        .forEach(ScreenBlock::setMegaPoint);
+				        .forEach(ScreenBlock::addMegaPoint);
 			}
+			// @FIXME : Ajout Téléportation pour test
+			Point randomPoint = getRandomPosOnAPoint();
+			lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
+			        .forEach(ScreenBlock::addTeleportation);
 		}
 		lstViewBlocks = new ArrayList<>();
 		// on clone la liste

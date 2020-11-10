@@ -36,12 +36,12 @@ public abstract class UserBody extends Body {
 	 * @return
 	 */
 	protected boolean canMove(Point direction, ScreenBlock screenBlock) {
-		return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isLeft() // ladybug est coincé à
+		return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isBorderLeft() // ladybug est coincé à
 		                                                                        // gauche
-		        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isRight() // ladybug est coincé en
+		        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isBorderRight() // ladybug est coincé en
 		                                                                            // haut
-		        || direction.equals(Constants.POINT_UP) && screenBlock.isUp() // ladybug est coincé à droite
-		        || direction.equals(Constants.POINT_DOWN) && screenBlock.isDown() // ladybug est coincé en
+		        || direction.equals(Constants.POINT_UP) && screenBlock.isBorderUp() // ladybug est coincé à droite
+		        || direction.equals(Constants.POINT_DOWN) && screenBlock.isBorderDown() // ladybug est coincé en
 		                                                                          // bas
 		);
 	}

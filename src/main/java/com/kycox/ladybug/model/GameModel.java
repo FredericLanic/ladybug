@@ -225,11 +225,9 @@ public class GameModel extends Observable {
 // Gestion de la nouvelle vie à Ladybug
 				ladybug.addNewLife();
 // Déplacement de ladybug et récupération de ses actions
-				ladybugActions = ladybug.moveLadybug(screenData);
-// Déplacement des fantômes
-				groupGhosts.moveGhosts(screenData, ladybug, ghostRequest);
+				ladybugActions = ladybug.getActions(screenData);
 // Détections des actions des fantômes
-				ghostsActions = groupGhosts.setAllGhostsActions(ladybug);
+				ghostsActions = groupGhosts.getActions(ladybug);
 // GESTION DES INCREMENTS SCORES
 				ladybugActions.addIncrementScores(groupIncrementScores);
 				ghostsActions.addIncrementScores(groupIncrementScores);
@@ -268,6 +266,14 @@ public class GameModel extends Observable {
 					gameScore.setIncrementScore(0);
 					ladybug.setNewLife(true);
 				}
+// DEPLACEMENT
+				if (ladybugActions.isToBeTeleported()) {
+					ladybug.teleport(screenData);
+				} else {
+					ladybug.move(screenData);
+				}
+				// Déplacement des fantômes
+				groupGhosts.moveGhosts(screenData, ladybug, ghostRequest);
 // SCREENDATA
 				// Mise à jour du ScreenData
 				screenData.updateScreenBlock(ladybugActions);

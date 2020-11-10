@@ -137,19 +137,19 @@ public class Dijkstra {
 		Point coordinateRight = new Point(currentCoordinate.x + 1, currentCoordinate.y);
 		Point coordinateDown  = new Point(currentCoordinate.x, currentCoordinate.y + 1);
 		// Lancement de la recherche en haut quand c'est possible
-		if (weightHasChanged && !screenBlockCurrent.isUp()) {
+		if (weightHasChanged && !screenBlockCurrent.isBorderUp()) {
 			search(coordinateUp, currentUnitDijkstra, screenData);
 		}
 		// Lancement de la recherche à gauche quand c'est possible
-		if (weightHasChanged && !screenBlockCurrent.isLeft()) {
+		if (weightHasChanged && !screenBlockCurrent.isBorderLeft()) {
 			search(coordinateLeft, currentUnitDijkstra, screenData);
 		}
 		// Lancement de la recherche à droite quand c'est possible
-		if (weightHasChanged && !screenBlockCurrent.isRight()) {
+		if (weightHasChanged && !screenBlockCurrent.isBorderRight()) {
 			search(coordinateRight, currentUnitDijkstra, screenData);
 		}
 		// Lancement de la recherche en bas quand c'est possible
-		if (weightHasChanged && !screenBlockCurrent.isDown()) {
+		if (weightHasChanged && !screenBlockCurrent.isBorderDown()) {
 			search(coordinateDown, currentUnitDijkstra, screenData);
 		}
 	}

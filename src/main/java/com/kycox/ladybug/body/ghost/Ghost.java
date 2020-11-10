@@ -204,16 +204,16 @@ public abstract class Ghost extends UserBody {
 		Point		posPoint	  = getPosition();
 		if (hasChangeBlock()) {
 			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(posPoint));
-			if (!currentScreenBlock.isLeft() && getDirection().x != 1) {
+			if (!currentScreenBlock.isBorderLeft() && getDirection().x != 1) {
 				lstDirections.add(Constants.POINT_LEFT);
 			}
-			if (!currentScreenBlock.isUp() && getDirection().y != 1) {
+			if (!currentScreenBlock.isBorderUp() && getDirection().y != 1) {
 				lstDirections.add(Constants.POINT_UP);
 			}
-			if (!currentScreenBlock.isRight() && getDirection().x != -1) {
+			if (!currentScreenBlock.isBorderRight() && getDirection().x != -1) {
 				lstDirections.add(Constants.POINT_RIGHT);
 			}
-			if (!currentScreenBlock.isDown() && getDirection().y != -1) {
+			if (!currentScreenBlock.isBorderDown() && getDirection().y != -1) {
 				lstDirections.add(Constants.POINT_DOWN);
 			}
 			// mise à jour de la direction
@@ -265,13 +265,13 @@ public abstract class Ghost extends UserBody {
 		Point		ladybugPosBlock	   = Utils.convertPointToBlockUnit(ladybug.getPosition());
 		ScreenBlock	ladybugScreenBlock = screenData.getDataBlock(ladybugPosBlock);
 		Point		ladybugDirection   = ladybug.getDirection();
-		if (ladybugDirection.equals(Constants.POINT_UP) && !ladybugScreenBlock.isUp()) {
+		if (ladybugDirection.equals(Constants.POINT_UP) && !ladybugScreenBlock.isBorderUp()) {
 			ladybugPosBlock.y--;
-		} else if (ladybugDirection.equals(Constants.POINT_DOWN) && !ladybugScreenBlock.isDown()) {
+		} else if (ladybugDirection.equals(Constants.POINT_DOWN) && !ladybugScreenBlock.isBorderDown()) {
 			ladybugPosBlock.y++;
-		} else if (ladybugDirection.equals(Constants.POINT_RIGHT) && !ladybugScreenBlock.isRight()) {
+		} else if (ladybugDirection.equals(Constants.POINT_RIGHT) && !ladybugScreenBlock.isBorderRight()) {
 			ladybugPosBlock.x++;
-		} else if (ladybugDirection.equals(Constants.POINT_LEFT) && !ladybugScreenBlock.isLeft()) {
+		} else if (ladybugDirection.equals(Constants.POINT_LEFT) && !ladybugScreenBlock.isBorderLeft()) {
 			ladybugPosBlock.x--;
 		}
 		moveTo(ladybugPosBlock, screenData);

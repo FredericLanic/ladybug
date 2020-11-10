@@ -29,11 +29,12 @@ import lombok.Setter;
  */
 public class ScreenBlock implements Cloneable {
 	private static final int DOWN			= 8;
+	private static final int GHOST_REVIVER	= 64;
 	private static final int LEFT			= 1;
 	private static final int MEGA_POINT		= 32;
 	private static final int POINT			= 16;
 	private static final int RIGHT			= 4;
-	private static final int SURVIVOR_POINT	= 64;
+	private static final int TELEPORTATION	= 256;
 	private static final int UP				= 2;
 	static final int		 NOT_ACCESSIBLE	= 128;
 	@Getter
@@ -43,33 +44,36 @@ public class ScreenBlock implements Cloneable {
 	@Setter
 	private Point			 coordinate		= Constants.POINT_ZERO;
 
-	/**
-	 * Constructeur
-	 *
-	 * @param content
-	 */
 	public ScreenBlock(int content) {
 		this.content = content;
 	}
 
-	public void addDown() {
+	public void addBorderDown() {
 		content |= DOWN;
 	}
 
-	public void addLeft() {
+	public void addBorderLeft() {
 		content |= LEFT;
 	}
 
-	public void addRight() {
+	public void addBorderRight() {
 		content |= RIGHT;
 	}
 
-	public void addSurvivorPoint() {
-		content |= SURVIVOR_POINT;
+	public void addBorderUp() {
+		content |= UP;
 	}
 
-	public void addUp() {
-		content |= UP;
+	public void addGhostReviver() {
+		content |= GHOST_REVIVER;
+	}
+
+	public void addMegaPoint() {
+		content |= MEGA_POINT;
+	}
+
+	public void addTeleportation() {
+		content |= TELEPORTATION;
 	}
 
 	/**
@@ -87,11 +91,11 @@ public class ScreenBlock implements Cloneable {
 	}
 
 	public Point getDirectionInDeadEnd() {
-		if (!isLeft())
+		if (!isBorderLeft())
 			return Constants.POINT_LEFT;
-		if (!isRight())
+		if (!isBorderRight())
 			return Constants.POINT_RIGHT;
-		if (!isUp())
+		if (!isBorderUp())
 			return Constants.POINT_UP;
 //		if (isDown())
 		return Constants.POINT_DOWN;
@@ -99,53 +103,55 @@ public class ScreenBlock implements Cloneable {
 
 	public boolean isBlocked() {
 		int nbrBorders = 0;
-		if (isLeft())
+		if (isBorderLeft())
 			nbrBorders++;
-		if (isRight())
+		if (isBorderRight())
 			nbrBorders++;
-		if (isUp())
+		if (isBorderUp())
 			nbrBorders++;
-		if (isDown())
+		if (isBorderDown())
 			nbrBorders++;
 		return nbrBorders == 4;
 	}
 
+	public boolean isBorderDown() {
+		return (content & DOWN) != 0;
+	}
+
+	public boolean isBorderLeft() {
+		return (content & LEFT) != 0;
+	}
+
+	public boolean isBorderRight() {
+		return (content & RIGHT) != 0;
+	}
+
+	/**
+	 * Bordure en haut
+	 *
+	 * @return
+	 */
+	public boolean isBorderUp() {
+		return (content & UP) != 0;
+	}
+
 	public boolean isDeadEnd() {
 		int nbrBorders = 0;
-		if (isLeft())
+		if (isBorderLeft())
 			nbrBorders++;
-		if (isRight())
+		if (isBorderRight())
 			nbrBorders++;
-		if (isUp())
+		if (isBorderUp())
 			nbrBorders++;
-		if (isDown())
+		if (isBorderDown())
 			nbrBorders++;
 		return nbrBorders == 3;
 	}
 
-	/**
-	 * Bordure en bas
-	 *
-	 * @return
-	 */
-	public boolean isDown() {
-		return (content & DOWN) != 0;
+	public boolean isGhostReviver() {
+		return (content & GHOST_REVIVER) != 0;
 	}
 
-	/**
-	 * Bordure � gauche
-	 *
-	 * @return
-	 */
-	public boolean isLeft() {
-		return (content & LEFT) != 0;
-	}
-
-	/**
-	 * Contient un méga point
-	 *
-	 * @return
-	 */
 	public boolean isMegaPoint() {
 		return (content & MEGA_POINT) != 0;
 	}
@@ -154,70 +160,31 @@ public class ScreenBlock implements Cloneable {
 		return (content & NOT_ACCESSIBLE) != 0;
 	}
 
-	/**
-	 * Contient un point
-	 *
-	 * @return
-	 */
 	public boolean isPoint() {
 		return (content & POINT) != 0;
 	}
 
-	/**
-	 * Contient un point de revie des fantômes
-	 *
-	 * @return
-	 */
-	public boolean isReviverGhostPoint() {
-		return (content & SURVIVOR_POINT) != 0;
+	public boolean isTeleportation() {
+		return (content & TELEPORTATION) != 0;
 	}
 
-	/**
-	 * Bordure droite
-	 *
-	 * @return
-	 */
-	public boolean isRight() {
-		return (content & RIGHT) != 0;
-	}
-
-	public boolean isSurvivorGhost() {
-		return (content & SURVIVOR_POINT) != 0;
-	}
-
-	/**
-	 * Bordure en haut
-	 *
-	 * @return
-	 */
-	public boolean isUp() {
-		return (content & UP) != 0;
-	}
-
-	public void removeDown() {
+	public void removeBorderDown() {
 		content &= ~(DOWN);
 	}
 
-	public void removeLeft() {
+	public void removeBorderLeft() {
 		content &= ~(LEFT);
 	}
 
-	/**
-	 * Suppression du point dans le block
-	 */
-	public void removePoint() {
-		content &= ~(POINT | MEGA_POINT);
-	}
-
-	public void removeRight() {
+	public void removeBorderRight() {
 		content &= ~(RIGHT);
 	}
 
-	public void removeUp() {
+	public void removeBorderUp() {
 		content &= ~(UP);
 	}
 
-	public void setMegaPoint() {
-		content |= MEGA_POINT;
+	public void removePoint() {
+		content &= ~(POINT | MEGA_POINT);
 	}
 }
