@@ -21,3 +21,4 @@ Coté fonctionnalités :
 	- quand afficher ce point
 	- où le positionner
 	- comment le visualiser
+- ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau

@@ -143,8 +143,7 @@
 	</bean>		
 	
 	<!-- beanGameSound in beanEngine -->
-	<bean id="beanGameSoundsActions" class="com.kycox.ladybug.sound.GameSoundsActions" scope="singleton" init-method="init">
-	</bean>
+	<bean id="beanGameSoundsActions" class="com.kycox.ladybug.sound.GameSoundsActions" scope="singleton" init-method="init"/>
 	
 	<!-- beanEngine -->
 	<bean id="beanEngine" class="com.kycox.ladybug.engine.Engine" scope="singleton" init-method="init">
