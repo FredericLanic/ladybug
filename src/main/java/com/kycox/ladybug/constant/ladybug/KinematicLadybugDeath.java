@@ -36,7 +36,7 @@ public class KinematicLadybugDeath {
 	@Getter
 	private int bip = 0;
 	// Liste des images des images à afficher lors de la cinématique
-	private List<PicturesEnum> lstPictures = new ArrayList<>(Arrays.asList(PicturesEnum.LADYBUG_DEFAULT,
+	private List<PicturesEnum> lstPictures = new ArrayList<>(Arrays.asList(PicturesEnum.LADYBUG_UP_1,
 	        PicturesEnum.LADYBUG_UP_2, PicturesEnum.LADYBUG_UP_3, PicturesEnum.LADYBUG_UP_4, PicturesEnum.LADYBUG_UP_5,
 	        PicturesEnum.LADYBUG_UP_6, PicturesEnum.LADYBUG_UP_7, PicturesEnum.LADYBUG_UP_8, PicturesEnum.LADYBUG_UP_9,
 	        PicturesEnum.LADYBUG_UP_10, PicturesEnum.LADYBUG_UP_11));

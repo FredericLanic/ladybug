@@ -33,28 +33,28 @@ public class LadybugView implements TimerView {
 	private BodyImg	bodyRightCurrent;
 	private BodyImg	bodyUpCurrent;
 	// liste d'images ladybug regarde en bas
-	private BodyImg	ladybugDown1 = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
+	private BodyImg	ladybugDown1 = new BodyImg(PicturesEnum.LADYBUG_DOWN_1.getImg());
 	private BodyImg	ladybugDown2 = new BodyImg(PicturesEnum.LADYBUG_DOWN_2.getImg());
 	private BodyImg	ladybugDown3 = new BodyImg(PicturesEnum.LADYBUG_DOWN_3.getImg());
 	private BodyImg	ladybugDown4 = new BodyImg(PicturesEnum.LADYBUG_DOWN_4.getImg());
 	private BodyImg	ladybugDown5 = new BodyImg(PicturesEnum.LADYBUG_DOWN_3.getImg());
 	private BodyImg	ladybugDown6 = new BodyImg(PicturesEnum.LADYBUG_DOWN_2.getImg());
 	// liste d'images ladybug regarde à gauche
-	private BodyImg	ladybugLeft1 = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
+	private BodyImg	ladybugLeft1 = new BodyImg(PicturesEnum.LADYBUG_LEFT_1.getImg());
 	private BodyImg	ladybugLeft2 = new BodyImg(PicturesEnum.LADYBUG_LEFT_2.getImg());
 	private BodyImg	ladybugLeft3 = new BodyImg(PicturesEnum.LADYBUG_LEFT_3.getImg());
 	private BodyImg	ladybugLeft4 = new BodyImg(PicturesEnum.LADYBUG_LEFT_4.getImg());
 	private BodyImg	ladybugLeft5 = new BodyImg(PicturesEnum.LADYBUG_LEFT_3.getImg());
 	private BodyImg	ladybugLeft6 = new BodyImg(PicturesEnum.LADYBUG_LEFT_2.getImg());
 	// liste d'images ladybug regarde à doite
-	private BodyImg	ladybugRight1 = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
+	private BodyImg	ladybugRight1 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_1.getImg());
 	private BodyImg	ladybugRight2 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_2.getImg());
 	private BodyImg	ladybugRight3 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_3.getImg());
 	private BodyImg	ladybugRight4 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_4.getImg());
 	private BodyImg	ladybugRight5 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_3.getImg());
 	private BodyImg	ladybugRight6 = new BodyImg(PicturesEnum.LADYBUG_RIGHT_2.getImg());
 	// liste d'images ladybug regarde en haut
-	private BodyImg	ladybugUp1 = new BodyImg(PicturesEnum.LADYBUG_DEFAULT.getImg());
+	private BodyImg	ladybugUp1 = new BodyImg(PicturesEnum.LADYBUG_UP_1.getImg());
 	private BodyImg	ladybugUp2 = new BodyImg(PicturesEnum.LADYBUG_UP_2.getImg());
 	private BodyImg	ladybugUp3 = new BodyImg(PicturesEnum.LADYBUG_UP_3.getImg());
 	private BodyImg	ladybugUp4 = new BodyImg(PicturesEnum.LADYBUG_UP_4.getImg());
