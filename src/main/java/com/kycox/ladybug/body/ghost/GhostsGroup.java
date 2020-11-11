@@ -43,6 +43,10 @@ public class GhostsGroup {
 	@Setter
 	private List<Ghost>		 lstGhosts;
 
+	public boolean eatLadybug() {
+		return lstGhosts.stream().filter(g -> g.getGhostActions().isEatLadybug()).count() > 0;
+	}
+
 	/**
 	 * Retourne toutes les actions du group
 	 *
@@ -64,6 +68,10 @@ public class GhostsGroup {
 		if (ghost.isPresent())
 			return ghost.get();
 		return null;
+	}
+
+	public int getNbrEatenGhost() {
+		return (int) lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).count();
 	}
 
 	/**
@@ -91,8 +99,12 @@ public class GhostsGroup {
 	/**
 	 * Initialise les positions des fantômes
 	 */
-	public void initPositions(ScreenData screenData) {
+	public void initializePositions(ScreenData screenData) {
 		lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
+	}
+
+	public void manageNewLife() {
+		lstGhosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.manageNewLife());
 	}
 
 	/**
@@ -138,23 +150,13 @@ public class GhostsGroup {
 	/**
 	 * Tous les fantômes doivent clignotter
 	 */
-	public void setGhostFlashActive() {
+	public void setFlashActive() {
 		lstGhosts.stream().filter(GhostStatusEnum.isScared()).forEach(g -> g.setStatus(GhostStatusEnum.FLASH));
 	}
-
-	public void setGhostSettingAfterLadybugContact(int numLevel) {
-		// Mis à jour du statut
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.setSettingAfterBeEaten(numLevel));
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.minusLifesLeft());
-	}
-
-	/**
-	 * Status des fantômes de REGENERATING à NORMAL
-	 */
-	public void setGhostStatusAfterRegeneration() {
-		lstGhosts.stream().filter(g -> GhostStatusEnum.isRegenerating().test(g))
-		        .forEach(g -> g.setStatus(GhostStatusEnum.NORMAL));
-	}
+//	public void addNewLifeToKeyGhost() {
+//	lstGhostActions.stream().filter(GhostActions::isEatLadybug).filter(ga -> !ga.getGhost().isComputed())
+//	        .forEach(g -> g.getGhost().manageNewLife());
+//}
 
 	/**
 	 * Initialise les vitesses des fantômes
@@ -179,13 +181,6 @@ public class GhostsGroup {
 	}
 
 	/**
-	 * Affecte la vitesse de chaque fantôme au cours du niveau en cours
-	 */
-	public void setSpeed(int numLevel, int perCent) {
-		lstGhosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
-	}
-
-	/**
 	 * Initialise les fantômes lors du début de niveau
 	 *
 	 * @param numLevel
@@ -193,7 +188,7 @@ public class GhostsGroup {
 	public void setStartLevel(int numLevel, ScreenData screenData) {
 		setStatus(GhostStatusEnum.NORMAL);
 		setInitSpeeds(numLevel);
-		initPositions(screenData);
+		initializePositions(screenData);
 	}
 
 	/**
@@ -203,5 +198,34 @@ public class GhostsGroup {
 	 */
 	public void setStatus(GhostStatusEnum status) {
 		lstGhosts.stream().forEach(g -> g.setStatus(status));
+	}
+
+	public void updateSeetings(int numLevel, ScreenData screenData) {
+		setGhostSettingAfterLadybugContact(numLevel);
+		// modifier la vitesse des fantôme en cours de partie
+		setSpeed(numLevel, screenData.getPercentageEatenPoint());
+		// Etat des fantômes de REGENERATING à NORMAL
+		setGhostStatusAfterRegeneration();
+	}
+
+	private void setGhostSettingAfterLadybugContact(int numLevel) {
+		// Mis à jour du statut
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.setSettingAfterBeEaten(numLevel));
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.minusLifesLeft());
+	}
+
+	/**
+	 * Status des fantômes de REGENERATING à NORMAL
+	 */
+	private void setGhostStatusAfterRegeneration() {
+		lstGhosts.stream().filter(g -> GhostStatusEnum.isRegenerating().test(g))
+		        .forEach(g -> g.setStatus(GhostStatusEnum.NORMAL));
+	}
+
+	/**
+	 * Affecte la vitesse de chaque fantôme au cours du niveau en cours
+	 */
+	private void setSpeed(int numLevel, int perCent) {
+		lstGhosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
 	}
 }

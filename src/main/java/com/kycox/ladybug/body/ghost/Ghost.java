@@ -112,9 +112,9 @@ public abstract class Ghost extends UserBody {
 	 * @param ladybug
 	 * @return
 	 */
-	public GhostActions setGhostActions(Ladybug ladybug) {
-		GhostActions ghostActions = new GhostActions();
-//		ghostActions.setGhost(this);
+	public void setGhostActions(Ladybug ladybug) {
+		ghostActions = new GhostActions();
+		ghostActions.setPosition((Point) getPosition().clone());
 		// Détection de la collision avec un fantôme et ladybug
 		if (getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2)
 		        && !getStatus().equals(GhostStatusEnum.DYING) && !getStatus().equals(GhostStatusEnum.REGENERATING)
@@ -127,8 +127,6 @@ public abstract class Ghost extends UserBody {
 				ghostActions.setEatLadybug(true);
 			}
 		}
-		this.ghostActions = ghostActions;
-		return ghostActions;
 	}
 
 	/**

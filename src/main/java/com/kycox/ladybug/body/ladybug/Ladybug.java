@@ -34,6 +34,8 @@ import lombok.Setter;
  *
  */
 public class Ladybug extends UserBody {
+	@Getter
+	private LadybugActions ladybugActions;
 	// statut de ladybug
 	@Setter
 	@Getter
@@ -42,12 +44,35 @@ public class Ladybug extends UserBody {
 	@Getter
 	private Point viewDirection = Constants.POINT_ZERO;
 
+	public boolean isEatenAMegaPoint() {
+		return ladybugActions.isEatenAMegaPoint();
+	}
+
+	public boolean isEatenAPoint() {
+		return ladybugActions.isEatenAPoint();
+	}
+
+	// @FIXME
+	public void move(ScreenData screenData) {
+		if (ladybugActions.isToBeTeleported()) {
+			teleport(screenData);
+			return;
+		}
+		ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+		if (hasChangeBlock()) {
+			if (canMove(userRequest, currentScreenBlock))
+				viewDirection = userRequest;
+			move(currentScreenBlock);
+		}
+		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+	}
+
 	/**
 	 * Déplacement de ladybug et récupération du score obtenu Lancement du double
 	 * timer dans le cas du super power
 	 */
-	public LadybugActions getActions(ScreenData screenData) {
-		LadybugActions ladybugActions = new LadybugActions();
+	public LadybugActions setActions(ScreenData screenData) {
+		ladybugActions = new LadybugActions();
 		if (getStatus().equals(LadybugStatusEnum.DEAD))
 			return ladybugActions;
 		if (userRequest.equals(new Point(getDirection().x, -getDirection().y))) {
@@ -65,14 +90,6 @@ public class Ladybug extends UserBody {
 		return ladybugActions;
 	}
 
-	public void move(ScreenData screenData, LadybugActions ladybugActions) {
-		if (ladybugActions.isToBeTeleported()) {
-			teleport(screenData);
-		} else {
-			move(screenData);
-		}
-	}
-
 	/**
 	 * Caractéristiques de ladybug en début de niveau
 	 */
@@ -84,16 +101,6 @@ public class Ladybug extends UserBody {
 		setUserRequest(Constants.POINT_ZERO);
 		setStatus(LadybugStatusEnum.NORMAL);
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
-	}
-
-	private void move(ScreenData screenData) {
-		ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
-		if (hasChangeBlock()) {
-			if (canMove(userRequest, currentScreenBlock))
-				viewDirection = userRequest;
-			move(currentScreenBlock);
-		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
 
 	private void teleport(ScreenData screenData) {

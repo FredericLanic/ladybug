@@ -216,58 +216,48 @@ public class GameModel extends Observable {
 				gameStatus.setNoGame();
 			} else {
 // Récupération des actions de chacun
-				ladybugActions = ladybug.getActions(screenData);
+				ladybug.setActions(screenData);
+				ladybugActions = ladybug.getLadybugActions();
 				groupGhosts.setActions(ladybug);
 				ghostsGroupActions = groupGhosts.getActions();
 // GESTION DE L'ETAT DES FANTOMES
-				// Etats des fantômes
-//				ghostsGroupActions.setGhostSettingAfterLadybugContact(gameStatus.getNumLevel());
-				groupGhosts.setGhostSettingAfterLadybugContact(gameStatus.getNumLevel());
-				// modifier la vitesse des fantôme en cours de partie
-				groupGhosts.setSpeed(gameStatus.getNumLevel(), screenData.getPercentageEatenPoint());
-				// Etat des fantômes de REGENERATING à NORMAL
-				groupGhosts.setGhostStatusAfterRegeneration();
+				groupGhosts.updateSeetings(gameStatus.getNumLevel(), screenData);
 // GESTION DE LA MORT DE LADYBUG
-				// modification de l'état de ladybug en fonction des actions détectées des
-				// fantômes
-				if (ghostsGroupActions.eatLadybug()) {
+				if (groupGhosts.eatLadybug()) {
 					ladybug.setStatus(LadybugStatusEnum.DYING);
-//					ghostsGroupActions.addNewLifeToKeyGhost();
+					groupGhosts.manageNewLife();
 				}
 // GESTION DU SUPER POWER
-				// mise à jour des status des fantômes en fonction du timer
 				if (superPowerTimer.isStopping()) {
-					groupGhosts.setGhostFlashActive();
+					groupGhosts.setFlashActive();
 				} else if (superPowerTimer.isStopped()) {
 					groupGhosts.setFear(false);
 				}
 				// Active le timer du super power si ladybug a mangé un méga point
-				if (ladybugActions.isEatenAMegaPoint()) {
+				if (ladybug.isEatenAMegaPoint()) {
 					runSuperPowerTimer();
 					groupGhosts.setFear(true);
 				}
 // SCORE
-				// Ajout du score
-				gameScore.setScore(ghostsGroupActions, ladybugActions);
-				// ajout d'une vie supplémentaire si besoin
+				gameScore.setScore(groupGhosts, ladybug);
+// NOUVELLE VIE PACMAN
 				if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
 					gameScore.setIncrementScore(0);
 					ladybug.setNewLife(true);
 				}
-				// Gestion de la nouvelle vie à Ladybug
 				ladybug.manageNewLife();
 // GESTION DES INCREMENTS SCORES
 				ladybugActions.addIncrementScores(groupIncrementScores);
-//				ghostsGroupActions.addIncrementScores(groupIncrementScores);
+				ghostsGroupActions.addIncrementScores(groupIncrementScores);
 				groupIncrementScores.removeIfDying();
 // DEPLACEMENT
-				ladybug.move(screenData, ladybugActions);
+				ladybug.move(screenData);
 				// Déplacement des fantômes
 				groupGhosts.move(screenData, ladybug, ghostRequest);
 // SCREENDATA
 				// Mise à jour du ScreenData
 				screenData.updateScreenBlock(ladybugActions);
-				// vérification de la fin du tableau
+// VERIFICAITON NOMBRE POINT MANGEABLE
 				checkEndMaze();
 			}
 			setSoundRequests(screenData.getPercentageEatenPoint());
@@ -312,7 +302,7 @@ public class GameModel extends Observable {
 		// mise de la vitesse du niveau 3 pour la présentation
 		groupGhosts.setInitSpeeds(Constants.PRESENTATION_LEVEL);
 		// initialise les positions des fantômes
-		groupGhosts.initPositions(screenData);
+		groupGhosts.initializePositions(screenData);
 		// initialise les fantômes pour la présentation
 		groupGhosts.setStatus(GhostStatusEnum.NORMAL);
 		// initialise les vies de fantômes
@@ -398,13 +388,13 @@ public class GameModel extends Observable {
 		if (groupGhosts.hasDyingGhost()) {
 			addSoundRequest(SoundsEnum.GHOST_EATEN.getIndex());
 		}
-		if (ghostsGroupActions.getNbrEatenGhost() > 0) {
+		if (groupGhosts.getNbrEatenGhost() > 0) {
 			addSoundRequest(SoundsEnum.LADYBUG_EAT_GHOST.getIndex());
 		}
-		if (ladybugActions.isEatenAMegaPoint()) {
+		if (ladybug.isEatenAMegaPoint()) {
 			addSoundRequest(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
 		}
-		if (ladybugActions.isEatenAPoint()) {
+		if (ladybug.isEatenAPoint()) {
 			addSoundRequest(SoundsEnum.LADYBUG_CHOMP.getIndex());
 		}
 		if (ladybug.getStatus().equals(LadybugStatusEnum.DYING) && kinematicLadybugDeath.getBip() == 0) {
