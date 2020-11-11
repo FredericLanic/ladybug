@@ -16,14 +16,11 @@
  */
 package com.kycox.ladybug.action.ghost;
 
-import com.kycox.ladybug.body.ghost.Ghost;
-
 import lombok.Data;
 
 @Data
 public class GhostActions {
 	private boolean	eaten		= false;
 	private boolean	eatLadybug	= false;
-	private Ghost	ghost;
 	private boolean	regenerated	= false;
 }

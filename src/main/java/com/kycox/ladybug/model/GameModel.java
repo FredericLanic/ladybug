@@ -65,7 +65,7 @@ public class GameModel extends Observable {
 	@Setter
 	private Point				  ghostRequest	= Constants.POINT_ZERO;
 	@Getter
-	private GhostsGroupActions	  ghostsActions;
+	private GhostsGroupActions	  ghostsGroupActions;
 	@Getter
 	@Setter
 	private GhostsGroup			  groupGhosts;
@@ -217,14 +217,12 @@ public class GameModel extends Observable {
 			} else {
 // Récupération des actions de chacun
 				ladybugActions = ladybug.getActions(screenData);
-				ghostsActions  = groupGhosts.getActions(ladybug);
-// GESTION DES INCREMENTS SCORES
-				ladybugActions.addIncrementScores(groupIncrementScores);
-				ghostsActions.addIncrementScores(groupIncrementScores);
-				groupIncrementScores.removeIfDying();
+				groupGhosts.setActions(ladybug);
+				ghostsGroupActions = groupGhosts.getActions();
 // GESTION DE L'ETAT DES FANTOMES
 				// Etats des fantômes
-				ghostsActions.setGhostSettingAfterLadybugContact(gameStatus.getNumLevel());
+//				ghostsGroupActions.setGhostSettingAfterLadybugContact(gameStatus.getNumLevel());
+				groupGhosts.setGhostSettingAfterLadybugContact(gameStatus.getNumLevel());
 				// modifier la vitesse des fantôme en cours de partie
 				groupGhosts.setSpeed(gameStatus.getNumLevel(), screenData.getPercentageEatenPoint());
 				// Etat des fantômes de REGENERATING à NORMAL
@@ -232,9 +230,9 @@ public class GameModel extends Observable {
 // GESTION DE LA MORT DE LADYBUG
 				// modification de l'état de ladybug en fonction des actions détectées des
 				// fantômes
-				if (ghostsActions.eatLadybug()) {
+				if (ghostsGroupActions.eatLadybug()) {
 					ladybug.setStatus(LadybugStatusEnum.DYING);
-					ghostsActions.addNewLifeToKeyGhost();
+//					ghostsGroupActions.addNewLifeToKeyGhost();
 				}
 // GESTION DU SUPER POWER
 				// mise à jour des status des fantômes en fonction du timer
@@ -250,7 +248,7 @@ public class GameModel extends Observable {
 				}
 // SCORE
 				// Ajout du score
-				gameScore.setScore(ghostsActions, ladybugActions);
+				gameScore.setScore(ghostsGroupActions, ladybugActions);
 				// ajout d'une vie supplémentaire si besoin
 				if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
 					gameScore.setIncrementScore(0);
@@ -258,6 +256,10 @@ public class GameModel extends Observable {
 				}
 				// Gestion de la nouvelle vie à Ladybug
 				ladybug.manageNewLife();
+// GESTION DES INCREMENTS SCORES
+				ladybugActions.addIncrementScores(groupIncrementScores);
+//				ghostsGroupActions.addIncrementScores(groupIncrementScores);
+				groupIncrementScores.removeIfDying();
 // DEPLACEMENT
 				ladybug.move(screenData, ladybugActions);
 				// Déplacement des fantômes
@@ -396,7 +398,7 @@ public class GameModel extends Observable {
 		if (groupGhosts.hasDyingGhost()) {
 			addSoundRequest(SoundsEnum.GHOST_EATEN.getIndex());
 		}
-		if (ghostsActions.getNbrEatenGhost() > 0) {
+		if (ghostsGroupActions.getNbrEatenGhost() > 0) {
 			addSoundRequest(SoundsEnum.LADYBUG_EAT_GHOST.getIndex());
 		}
 		if (ladybugActions.isEatenAMegaPoint()) {

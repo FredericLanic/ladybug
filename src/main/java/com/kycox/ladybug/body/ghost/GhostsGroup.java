@@ -44,6 +44,17 @@ public class GhostsGroup {
 	private List<Ghost>		 lstGhosts;
 
 	/**
+	 * Retourne toutes les actions du group
+	 *
+	 * @return
+	 */
+	public GhostsGroupActions getActions() {
+		GhostsGroupActions ghostsGroupActions = new GhostsGroupActions();
+		lstGhosts.stream().forEach(g -> ghostsGroupActions.addGhostAction(g.getGhostActions()));
+		return ghostsGroupActions;
+	}
+
+	/**
 	 * Retourne le fantôme qui est géré par un utilisateur
 	 *
 	 * ou null si aucun fantôme n'est géré par un utilisateur
@@ -105,10 +116,8 @@ public class GhostsGroup {
 	 * @param inGame
 	 * @param numLevel
 	 */
-	public GhostsGroupActions getActions(Ladybug ladybug) {
-		GhostsGroupActions ghostsActions = new GhostsGroupActions();
-		lstGhosts.stream().forEach(g -> ghostsActions.addGhostAction(g.setGhostActions(ladybug)));
-		return ghostsActions;
+	public void setActions(Ladybug ladybug) {
+		lstGhosts.stream().forEach(g -> g.setGhostActions(ladybug));
 	}
 
 	/**
@@ -131,6 +140,12 @@ public class GhostsGroup {
 	 */
 	public void setGhostFlashActive() {
 		lstGhosts.stream().filter(GhostStatusEnum.isScared()).forEach(g -> g.setStatus(GhostStatusEnum.FLASH));
+	}
+
+	public void setGhostSettingAfterLadybugContact(int numLevel) {
+		// Mis à jour du statut
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.setSettingAfterBeEaten(numLevel));
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.minusLifesLeft());
 	}
 
 	/**

@@ -16,12 +16,8 @@
  */
 package com.kycox.ladybug.action.ghost;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.score.GroupIncrementScores;
 
 public class GhostsGroupActions {
 	private List<GhostActions> lstGhostActions = new ArrayList<>();
@@ -29,19 +25,17 @@ public class GhostsGroupActions {
 	public void addGhostAction(GhostActions ghostActions) {
 		lstGhostActions.add(ghostActions);
 	}
-
 	/**
 	 * Création des Increments Score en fonction des fantômes mangés
 	 */
-	public void addIncrementScores(GroupIncrementScores groupIncrementScores) {
-		lstGhostActions.stream().filter(GhostActions::isEaten).forEach(ga -> groupIncrementScores
-		        .add((Point) ga.getGhost().getPosition().clone(), Integer.toString(Constants.SCORE_EATEN_GHOST)));
-	}
-
-	public void addNewLifeToKeyGhost() {
-		lstGhostActions.stream().filter(GhostActions::isEatLadybug).filter(ga -> !ga.getGhost().isComputed())
-		        .forEach(g -> g.getGhost().manageNewLife());
-	}
+//	public void addIncrementScores(GroupIncrementScores groupIncrementScores) {
+//		lstGhostActions.stream().filter(GhostActions::isEaten).forEach(ga -> groupIncrementScores
+//		        .add((Point) ga.getGhost().getPosition().clone(), Integer.toString(Constants.SCORE_EATEN_GHOST)));
+//	}
+//	public void addNewLifeToKeyGhost() {
+//		lstGhostActions.stream().filter(GhostActions::isEatLadybug).filter(ga -> !ga.getGhost().isComputed())
+//		        .forEach(g -> g.getGhost().manageNewLife());
+//	}
 
 	/**
 	 * a mangé Ladybug ?
@@ -59,18 +53,5 @@ public class GhostsGroupActions {
 	 */
 	public int getNbrEatenGhost() {
 		return (int) lstGhostActions.stream().filter(GhostActions::isEaten).count();
-	}
-
-	// à mettre ailleurs ?
-	/**
-	 * Si le fantôme a été mangé, ses paramètres changent
-	 *
-	 * (voir Ghost.setSettingJustAfterBeEaten())
-	 */
-	public void setGhostSettingAfterLadybugContact(int numLevel) {
-		// Mis à jour du statut
-		lstGhostActions.stream().filter(GhostActions::isEaten)
-		        .forEach(ga -> ga.getGhost().setSettingAfterBeEaten(numLevel));
-		lstGhostActions.stream().filter(GhostActions::isEaten).forEach(ga -> ga.getGhost().minusLifesLeft());
 	}
 }
