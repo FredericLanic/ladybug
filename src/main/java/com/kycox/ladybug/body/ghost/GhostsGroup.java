@@ -91,7 +91,7 @@ public class GhostsGroup {
 	 * @param ladybug      : ladybug
 	 * @param ghostRequest : requête du fantôme non computé
 	 */
-	public void moveGhosts(ScreenData screenData, Ladybug ladybug, Point ghostRequest) {
+	public void move(ScreenData screenData, Ladybug ladybug, Point ghostRequest) {
 		// Déplacement des fantômes gérés par l'ordinateur
 		lstGhosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveGhostByComputer(ladybug, screenData));
 		// Déplacement des fantômes gérés par l'humain

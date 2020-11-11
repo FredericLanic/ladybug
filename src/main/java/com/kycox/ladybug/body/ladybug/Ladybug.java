@@ -65,14 +65,12 @@ public class Ladybug extends UserBody {
 		return ladybugActions;
 	}
 
-	public void move(ScreenData screenData) {
-		ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
-		if (hasChangeBlock()) {
-			if (canMove(userRequest, currentScreenBlock))
-				viewDirection = userRequest;
-			move(currentScreenBlock);
+	public void move(ScreenData screenData, LadybugActions ladybugActions) {
+		if (ladybugActions.isToBeTeleported()) {
+			teleport(screenData);
+		} else {
+			move(screenData);
 		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
 
 	/**
@@ -88,7 +86,17 @@ public class Ladybug extends UserBody {
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 
-	public void teleport(ScreenData screenData) {
+	private void move(ScreenData screenData) {
+		ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+		if (hasChangeBlock()) {
+			if (canMove(userRequest, currentScreenBlock))
+				viewDirection = userRequest;
+			move(currentScreenBlock);
+		}
+		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+	}
+
+	private void teleport(ScreenData screenData) {
 		if (hasChangeBlock()) {
 			Point newPoint = screenData.getRandomPosOnAPoint();
 			setPosition(Utils.convertPointToGraphicUnit(newPoint));

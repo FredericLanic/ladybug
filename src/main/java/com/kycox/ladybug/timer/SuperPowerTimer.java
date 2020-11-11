@@ -106,6 +106,14 @@ public class SuperPowerTimer {
 		return superPowerTimerStatus;
 	}
 
+	public boolean isStopped() {
+		return getStatus().equals(SuperPowerTimerEnum.STOP);
+	}
+
+	public boolean isStopping() {
+		return getStatus().equals(SuperPowerTimerEnum.STOPPING);
+	}
+
 	/**
 	 * launch the delay
 	 */

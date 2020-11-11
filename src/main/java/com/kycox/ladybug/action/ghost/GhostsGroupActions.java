@@ -40,7 +40,7 @@ public class GhostsGroupActions {
 
 	public void addNewLifeToKeyGhost() {
 		lstGhostActions.stream().filter(GhostActions::isEatLadybug).filter(ga -> !ga.getGhost().isComputed())
-		        .forEach(g -> g.getGhost().addNewLife());
+		        .forEach(g -> g.getGhost().manageNewLife());
 	}
 
 	/**

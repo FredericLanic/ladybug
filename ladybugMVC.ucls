@@ -67,7 +67,7 @@
     </display>  
   </class>  
   <association id="8">    
-    <end type="SOURCE" refId="2" navigable="false">      
+    <end type="SOURCE" refId="6" navigable="false">      
       <attribute id="9" name="gameModel">        
         <position height="0" width="0" x="0" y="106"/>      
       </attribute>      
@@ -79,64 +79,64 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="11">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="12" name="gameSounds">        
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="12" name="gameModel">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="13" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="14">    
-    <bendpoint x="813" y="1415"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="15" name="gameModel">        
-        <position height="0" width="0" x="0" y="106"/>      
-      </attribute>      
-      <multiplicity id="16" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="106"/>      
-      </multiplicity>    
-    </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="17">    
+  <association id="14">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="18" name="mainFrame">        
+      <attribute id="15" name="mainFrame">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="19" minimum="0" maximum="1">        
+      <multiplicity id="16" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="17">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="18" name="gameModel">        
+        <position height="0" width="0" x="0" y="106"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="106"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="20">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="21" name="gameModel">        
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="21" name="gameSounds">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="22" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <dependency id="23">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="24">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
+  <dependency id="24">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
   <association id="25">    
-    <end type="SOURCE" refId="6" navigable="false">      
+    <bendpoint x="813" y="1415"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
       <attribute id="26" name="gameModel">        
         <position height="0" width="0" x="0" y="106"/>      
       </attribute>      

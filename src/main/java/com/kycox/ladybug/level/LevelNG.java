@@ -26,12 +26,10 @@ import java.util.List;
 import com.kycox.ladybug.constant.LevelConstructEnum;
 
 public abstract class LevelNG implements ILevel {
-	private static final int DOWN = 8;
-	private static final int LEFT = 1;
-//	private static final int MEGA_POINT			  = 32;
-	private static final int POINT = 16;
-	private static final int RIGHT = 4;
-//	private static final int SURVIVOR_POINT		  = 64;
+	private static final int DOWN				  = 8;
+	private static final int LEFT				  = 1;
+	private static final int POINT				  = 16;
+	private static final int RIGHT				  = 4;
 	private static final int UP					  = 2;
 	static final int		 NOT_ACCESSIBLE_POINT = 128;
 	// Map
@@ -59,8 +57,7 @@ public abstract class LevelNG implements ILevel {
 		return null;
 	}
 
-	@Override
-	public int getNbrBlocksByLine() {
+	@Override	public int getNbrBlocksByLine() {
 		return nbrBlocksPerLine;
 	}
 

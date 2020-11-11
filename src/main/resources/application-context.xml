@@ -98,11 +98,11 @@
 	<bean id="beanLevels" class="com.kycox.ladybug.level.Levels" scope="singleton">
 		<property name="lstLevel">
 			<list>
-				<ref bean="beanLevel1"/>
+				<!--  ref bean="beanLevel1"/-->
 				<ref bean="beanLevel2NG"/>
-				<ref bean="beanLevel3NG"/>
+				<!--  ref bean="beanLevel3NG"/>
 				<ref bean="beanLevel4NG"/>
-				<ref bean="beanLevel5NG"/>
+				<ref bean="beanLevel5NG"/-->
 			</list>
 		</property>
 	</bean>

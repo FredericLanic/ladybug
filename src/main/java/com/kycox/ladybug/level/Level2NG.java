@@ -38,7 +38,7 @@ public class Level2NG extends LevelNG {
 		        B, N, N, N, B, N, B, N, B, N, B, N, N, N, B,	  // 5
 		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,	  // 6
 		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 7
-		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 8
+		        B, B, N, B, N, B, N, N, N, B, N, B, N, B, B,	  // 8
 		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 9
 		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,	  // 10
 		        B, N, N, N, N, B, N, B, N, B, N, N, N, N, B,	  // 11
@@ -62,5 +62,13 @@ public class Level2NG extends LevelNG {
 	@Override
 	public int getNbrMegaPoints() {
 		return 2;
+	}
+
+	public Point getTeleportationPoint1() {
+		return new Point(0, 6);
+	}
+
+	public Point getTeleportationPoint2() {
+		return new Point(14, 6);
 	}
 }

@@ -63,7 +63,7 @@ public abstract class Body {
 	/**
 	 * Ajout d'une nouvelle vie
 	 */
-	public void addNewLife() {
+	public void manageNewLife() {
 		if (isNewLife()) {
 			setNewLife(false);
 			leftLifes++;
