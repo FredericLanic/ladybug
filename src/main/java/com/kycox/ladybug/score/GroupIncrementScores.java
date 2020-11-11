@@ -36,11 +36,7 @@ public class GroupIncrementScores {
 	 * @param value
 	 */
 	public void add(Point position, String value) {
-		lstIncrementScore.add(new IncrementScore(position, value));
-	}
-
-	public void addAll(List<IncrementScore> lstIncrementScore) {
-		this.lstIncrementScore.addAll(lstIncrementScore);
+		lstIncrementScore.add(new IncrementScore((Point) position.clone(), value));
 	}
 
 	/**
