@@ -77,10 +77,10 @@ public class GhostsGroup {
 	/**
 	 * Retourne vrai si le fantôme n'a plus de vie
 	 */
-	public boolean GhostUserIsDead() {
+	public boolean userIsDead() {
 		long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
 		        .count();
-		return (nbrDeadKeyGhosts >= 1);
+		return (nbrDeadKeyGhosts > 0);
 	}
 
 	public boolean hasDyingGhost() {

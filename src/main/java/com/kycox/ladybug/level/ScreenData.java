@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.kycox.ladybug.action.ladybug.LadybugActions;
+import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.tools.Utils;
 import com.kycox.ladybug.tools.dijkstra.UnitDijkstra;
@@ -203,10 +203,11 @@ public final class ScreenData {
 	 *
 	 * FIXME : à mettre ailleurs
 	 */
-	public void updateScreenBlock(LadybugActions ladybugActions) {
-		if (ladybugActions.isEatenAMegaPoint() || ladybugActions.isEatenAPoint()) {
+	public void updateScreenBlock(Ladybug ladybug) {
+		if (ladybug.isEatenAMegaPoint() || ladybug.isEatenAPoint()) {
 			// Suppression du point dans le ScreenBlock de lstDataBlocks
-			ScreenBlock currentScreenBlock = ladybugActions.getCurrentScreenBlock();
+			ScreenBlock currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
+			// ladybugActions.getCurrentScreenBlock();
 			currentScreenBlock.removePoint();
 			// Suppression du point dans de ScreenBlock de lstViewBlocks
 			lstViewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate()))

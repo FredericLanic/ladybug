@@ -19,6 +19,7 @@ package com.kycox.ladybug.score;
 import com.kycox.ladybug.body.ghost.GhostsGroup;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
+import com.kycox.ladybug.tools.Utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -58,11 +59,17 @@ public class GameScore {
 	/**
 	 * Adjust the score number
 	 */
-	public void setScore(GhostsGroup allGhosts, Ladybug ladybug) {
-		if (ladybug.isEatenAMegaPoint())
+	public void setScore(GhostsGroup ghostsGroup, Ladybug ladybug, GroupIncrementScores groupIncrementScores) {
+		if (ladybug.isEatenAMegaPoint()) {
 			addScore(Constants.SCORE_MEGA_POINT);
-		if (ladybug.isEatenAPoint())
+			groupIncrementScores.add(Utils.convertPointToGraphicUnit(ladybug.getPosition()),
+			        Integer.toString(Constants.SCORE_MEGA_POINT));
+		}
+		if (ladybug.isEatenAPoint()) {
 			addScore(Constants.SCORE_SIMPLE_POINT);
-		addScore(allGhosts.getNbrEatenGhost() * Constants.SCORE_EATEN_GHOST);
+		}
+		addScore(ghostsGroup.getNbrEatenGhost() * Constants.SCORE_EATEN_GHOST);
+		ghostsGroup.getLstGhosts().stream().filter(g -> g.getGhostActions().isEaten())
+		        .forEach(g -> groupIncrementScores.add(g.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST)));
 	}
 }

@@ -39,6 +39,10 @@ public class GroupIncrementScores {
 		lstIncrementScore.add(new IncrementScore(position, value));
 	}
 
+	public void addAll(List<IncrementScore> lstIncrementScore) {
+		this.lstIncrementScore.addAll(lstIncrementScore);
+	}
+
 	/**
 	 * Suppression des score incrément qui sont en train de mourir
 	 */

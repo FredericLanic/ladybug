@@ -27,8 +27,6 @@ import javax.swing.Timer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kycox.ladybug.action.ghost.GhostsGroupActions;
-import com.kycox.ladybug.action.ladybug.LadybugActions;
 import com.kycox.ladybug.body.ghost.GhostsGroup;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
@@ -65,8 +63,6 @@ public class GameModel extends Observable {
 	@Setter
 	private Point				  ghostRequest	= Constants.POINT_ZERO;
 	@Getter
-	private GhostsGroupActions	  ghostsGroupActions;
-	@Getter
 	@Setter
 	private GhostsGroup			  groupGhosts;
 	@Getter
@@ -78,8 +74,6 @@ public class GameModel extends Observable {
 	@Getter
 	@Setter
 	private Ladybug				  ladybug;
-	@Getter
-	private LadybugActions		  ladybugActions;
 	@Getter
 	private int					  newSounds;
 	@Getter
@@ -212,14 +206,12 @@ public class GameModel extends Observable {
 				ladybugIsDead();
 			} else if (gameStatus.isInGame() && LadybugStatusEnum.isDying().test(ladybug)) {
 				ladybugIsDying();
-			} else if (gameStatus.isInGame() && groupGhosts.GhostUserIsDead()) {
+			} else if (gameStatus.isInGame() && groupGhosts.userIsDead()) {
 				gameStatus.setNoGame();
 			} else {
 // Récupération des actions de chacun
 				ladybug.setActions(screenData);
-				ladybugActions = ladybug.getLadybugActions();
 				groupGhosts.setActions(ladybug);
-				ghostsGroupActions = groupGhosts.getActions();
 // GESTION DE L'ETAT DES FANTOMES
 				groupGhosts.updateSeetings(gameStatus.getNumLevel(), screenData);
 // GESTION DE LA MORT DE LADYBUG
@@ -239,33 +231,26 @@ public class GameModel extends Observable {
 					groupGhosts.setFear(true);
 				}
 // SCORE
-				gameScore.setScore(groupGhosts, ladybug);
+				gameScore.setScore(groupGhosts, ladybug, groupIncrementScores);
+				groupIncrementScores.removeIfDying();
 // NOUVELLE VIE PACMAN
 				if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
 					gameScore.setIncrementScore(0);
 					ladybug.setNewLife(true);
 				}
 				ladybug.manageNewLife();
-// GESTION DES INCREMENTS SCORES
-				ladybugActions.addIncrementScores(groupIncrementScores);
-				ghostsGroupActions.addIncrementScores(groupIncrementScores);
-				groupIncrementScores.removeIfDying();
 // DEPLACEMENT
 				ladybug.move(screenData);
-				// Déplacement des fantômes
 				groupGhosts.move(screenData, ladybug, ghostRequest);
 // SCREENDATA
-				// Mise à jour du ScreenData
-				screenData.updateScreenBlock(ladybugActions);
-// VERIFICAITON NOMBRE POINT MANGEABLE
+				screenData.updateScreenBlock(ladybug);
+// VERIFICAITON NOMBRE POINT MANGEABLES
 				checkEndMaze();
 			}
 			setSoundRequests(screenData.getPercentageEatenPoint());
-			// notifie la view qu'il y a eu du changement
 			setChanged();
 			notifyObservers();
 		};
-		// Création d'un timer qui génère un tic
 		return new Timer(PACE, action);
 	}
 
