@@ -34,6 +34,8 @@ import com.kycox.ladybug.constant.SoundsEnum;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
 import com.kycox.ladybug.constant.ladybug.KinematicLadybugDeath;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
+import com.kycox.ladybug.contract.IGameModelForSound;
+import com.kycox.ladybug.contract.IGameModelForView;
 import com.kycox.ladybug.level.ScreenData;
 import com.kycox.ladybug.score.GameScore;
 import com.kycox.ladybug.score.GroupIncrementScores;
@@ -48,7 +50,7 @@ import lombok.Setter;
  *
  */
 @SuppressWarnings("deprecation")
-public class GameModel extends Observable {
+public class GameModel extends Observable implements IGameModelForView, IGameModelForSound {
 	private static final Log	  logger		= LogFactory.getLog(GameModel.class);
 	@Getter
 	@Setter

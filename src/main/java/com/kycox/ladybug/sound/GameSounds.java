@@ -22,7 +22,7 @@ import java.util.Observer;
 import javax.sound.sampled.Clip;
 
 import com.kycox.ladybug.constant.SoundsEnum;
-import com.kycox.ladybug.model.GameModel;
+import com.kycox.ladybug.contract.IGameModelForSound;
 
 import lombok.Setter;
 
@@ -30,25 +30,25 @@ import lombok.Setter;
  * Gestion du son dans le jeu
  *
  */
-public class GameSoundsActions implements Observer {
-	private Clip				clipBeginning		= null;
-	private Clip				clipChomp			= null;
-	private Clip				clipDeath			= null;
-	private Clip				clipEatFruit		= null;
-	private Clip				clipEatGhost		= null;
-	private Clip				clipExtraPac		= null;
-	private Clip				clipGhostEaten		= null;
-	private Clip				clipGhostRegenerate	= null;
-	private Clip				clipGhostSurvivor	= null;
-	private Clip				clipInterMission	= null;
-	private Clip				clipSiren0			= null;
-	private Clip				clipSiren1			= null;
-	private Clip				clipSiren2			= null;
-	private Clip				clipSiren3			= null;
+public class GameSounds implements Observer {
+	private Clip						 clipBeginning		 = null;
+	private Clip						 clipChomp			 = null;
+	private Clip						 clipDeath			 = null;
+	private Clip						 clipEatFruit		 = null;
+	private Clip						 clipEatGhost		 = null;
+	private Clip						 clipExtraPac		 = null;
+	private Clip						 clipGhostEaten		 = null;
+	private Clip						 clipGhostRegenerate = null;
+	private Clip						 clipGhostSurvivor	 = null;
+	private Clip						 clipInterMission	 = null;
+	private Clip						 clipSiren0			 = null;
+	private Clip						 clipSiren1			 = null;
+	private Clip						 clipSiren2			 = null;
+	private Clip						 clipSiren3			 = null;
 	@Setter
-	private transient GameModel	gameModel;
-	private boolean				listen				= true;
-	private int					sounds;
+	private transient IGameModelForSound gameModel;
+	private boolean						 listen				 = true;
+	private int							 sounds;
 
 	/**
 	 * Retourne le temps en millisecondes de la musique de la mort de ladybug
@@ -165,9 +165,7 @@ public class GameSoundsActions implements Observer {
 
 	@Override
 	public void update(Observable gameModel, Object arg) {
-		if (gameModel == null)
-			return;
-		this.gameModel = (GameModel) gameModel;
+		this.gameModel = (IGameModelForSound) gameModel;
 		sounds		   = this.gameModel.getNewSounds();
 		listen		   = this.gameModel.isSoundActive();
 		if ((sounds & SoundsEnum.LADYBUG_LEVEL_BEGINNING.getIndex()) != 0) {

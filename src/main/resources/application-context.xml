@@ -143,12 +143,12 @@
 	</bean>		
 	
 	<!-- beanGameSound in beanEngine -->
-	<bean id="beanGameSoundsActions" class="com.kycox.ladybug.sound.GameSoundsActions" scope="singleton" init-method="init"/>
+	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton" init-method="init"/>
 	
 	<!-- beanEngine -->
 	<bean id="beanEngine" class="com.kycox.ladybug.engine.Engine" scope="singleton" init-method="init">
 		<property name="gameModel" ref="beanGameModel"/>
-		<property name="gameSounds" ref="beanGameSoundsActions"/>
+		<property name="gameSounds" ref="beanGameSounds"/>
 		<property name="gameView" ref="beanGameView"/>
 	</bean>
 	

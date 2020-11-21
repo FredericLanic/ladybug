@@ -32,8 +32,8 @@ import com.kycox.ladybug.body.ghost.Ghost;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
+import com.kycox.ladybug.contract.IGameModelForView;
 import com.kycox.ladybug.controler.KeyGameController;
-import com.kycox.ladybug.model.GameModel;
 import com.kycox.ladybug.score.IncrementScore;
 import com.kycox.ladybug.view.body.GhostView;
 import com.kycox.ladybug.view.body.LadybugView;
@@ -58,16 +58,16 @@ public class GameView extends JPanel implements Observer {
 	@Setter
 	private KeyGameController gameController;
 	// Données transitées par le pattern Observer
-	private transient GameModel	  gameModel;
+	private transient IGameModelForView	gameModel;
 	@Setter
-	private transient GhostView	  ghostView;
-	private boolean				  hasBeenDrawOnce = false;
+	private transient GhostView			ghostView;
+	private boolean						hasBeenDrawOnce	= false;
 	@Setter
-	private transient LadybugView ladybugView;
+	private transient LadybugView		ladybugView;
 	/**
 	 * R�cup�ration de la JFrame parent
 	 */
-	private JFrame				  mainFrame		  = (JFrame) SwingUtilities.getRoot(this);
+	private JFrame						mainFrame		= (JFrame) SwingUtilities.getRoot(this);
 	// font par défaut
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
 
@@ -95,7 +95,7 @@ public class GameView extends JPanel implements Observer {
 	 */
 	@Override
 	public void update(Observable gameModel, Object used) {
-		this.gameModel = (GameModel) gameModel;
+		this.gameModel = (IGameModelForView) gameModel;
 		repaint();
 	}
 

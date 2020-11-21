@@ -17,7 +17,7 @@
 package com.kycox.ladybug.engine;
 
 import com.kycox.ladybug.model.GameModel;
-import com.kycox.ladybug.sound.GameSoundsActions;
+import com.kycox.ladybug.sound.GameSounds;
 import com.kycox.ladybug.view.GameView;
 
 import lombok.Setter;
@@ -26,7 +26,7 @@ public class Engine {
 	@Setter
 	private GameModel  gameModel;
 	@Setter
-	private GameSoundsActions gameSounds;
+	private GameSounds gameSounds;
 	@Setter
 	private GameView   gameView;
 
