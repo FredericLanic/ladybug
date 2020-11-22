@@ -24,32 +24,27 @@ import javax.sound.sampled.Clip;
 import com.kycox.ladybug.constant.SoundsEnum;
 import com.kycox.ladybug.contract.IGameModelForSound;
 
-import lombok.Setter;
-
 /**
  * Gestion du son dans le jeu
  *
  */
 public class GameSounds implements Observer {
-	private Clip						 clipCommonTeleport		 = null;
-	private Clip						 clipGameBeginLevel		 = null;
-	private Clip						 clipGameSiren0			 = null;
-	private Clip						 clipGameSiren1			 = null;
-	private Clip						 clipGameSiren2			 = null;
-	private Clip						 clipGameSiren3			 = null;
-	private Clip						 clipGhostEaten			 = null;
-	private Clip						 clipGhostRegenerate	 = null;
-	private Clip						 clipGhostSurvivor		 = null;
-	private Clip						 clipLadybugChomp		 = null;
-	private Clip						 clipLadybugDying		 = null;
-	private Clip						 clipLadybugEatFruit	 = null;
-	private Clip						 clipLadybugEatGhost	 = null;
-	private Clip						 clipLadybugExtraPac	 = null;
-	private Clip						 clipLadybugIntermission = null;
-	@Setter
-	private transient IGameModelForSound gameModel;
-	private boolean						 listen					 = true;
-	private int							 sounds;
+	private Clip			   clipCommonTeleport	   = null;
+	private Clip			   clipGameBeginLevel	   = null;
+	private Clip			   clipGameSiren0		   = null;
+	private Clip			   clipGameSiren1		   = null;
+	private Clip			   clipGameSiren2		   = null;
+	private Clip			   clipGameSiren3		   = null;
+	private Clip			   clipGhostEaten		   = null;
+	private Clip			   clipGhostRegenerate	   = null;
+	private Clip			   clipGhostSurvivor	   = null;
+	private Clip			   clipLadybugChomp		   = null;
+	private Clip			   clipLadybugDying		   = null;
+	private Clip			   clipLadybugEatFruit	   = null;
+	private Clip			   clipLadybugEatGhost	   = null;
+	private Clip			   clipLadybugExtraPac	   = null;
+	private Clip			   clipLadybugIntermission = null;
+	private IGameModelForSound gameModel;
 
 	/**
 	 * Retourne le temps en millisecondes de la musique de la mort de ladybug
@@ -80,18 +75,9 @@ public class GameSounds implements Observer {
 	}
 
 	/**
-	 * Initialise l'objet son. A chaque bip du timer du jeu
-	 */
-	public void initSounds() {
-		sounds = 0;
-	}
-
-	/**
 	 * Lancement des sons sélectionnés par le modèle
 	 */
-	public void playSounds() {
-		if (!listen)
-			return;
+	public void playSounds(int sounds) {
 		if ((sounds & SoundsEnum.LADYBUG_CHOMP.getIndex()) != 0) {
 			new ListenSound(clipLadybugChomp).start();
 		}
@@ -163,7 +149,7 @@ public class GameSounds implements Observer {
 		if ((gameModel.getSounds() & SoundsEnum.GAME_BEGIN_LEVEL.getIndex()) != 0) {
 			playStartJingle();
 		} else if (gameModel.isSoundActive())
-			playSounds();
+			playSounds(gameModel.getSounds());
 		else
 			stopAllSounds();
 	}
