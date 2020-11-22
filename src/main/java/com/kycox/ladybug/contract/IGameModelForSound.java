@@ -6,7 +6,7 @@ public interface IGameModelForSound {
 	// FIXME : c'est trop spécifique !!
 	public GameStatus getGameStatus();
 
-	public int getNewSounds();
+	public int getSounds();
 
 	public boolean isSoundActive();
 

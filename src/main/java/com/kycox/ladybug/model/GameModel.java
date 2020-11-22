@@ -77,18 +77,18 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 	@Setter
 	private Ladybug				  ladybug;
 	@Getter
-	private int					  newSounds;
-	@Getter
 	@Setter
 	private ScreenData			  screenData;
 	@Getter
 	@Setter
 	private boolean				  soundActive	= false;
+	@Getter
+	private int					  sounds;
 	@Setter
 	private SuperPowerTimer		  superPowerTimer;
 
 	public void addSoundRequest(int sounds) {
-		newSounds |= sounds;
+		this.sounds |= sounds;
 	}
 
 	public void forceStopGame() {
@@ -303,7 +303,7 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 	}
 
 	private void initSounds() {
-		newSounds = 0;
+		sounds = 0;
 	}
 
 	/**

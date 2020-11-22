@@ -7,12 +7,12 @@ Coté technique CTEC :
 - CTEC3 : revoir le design pattern MVC et revoir la notion de controleur
 - CTEC4 : revoir le pom.xml; voir jeff & tristan; version de java; rajouter un plugin pour sélectionner une version de java spécifique pour builder avec maven
 - CTEC5 : faire une refactor pour l'affichage
-- CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC7 : supprimer les lstIncrementScore lorque le niveau est terminé
 - CTEC8 : sortir la fonction checkEndMaze du block
 - CTEC10 : Mettre des notations d'injections spring pour la non-configuration du jeu en lui même
 	HORS : gameStatus ...
 - CTEC11 : sortir getSirenSound(int percent) de GameModel 
+- CTEC12 : prolème parfois pour se positionner sur un blcok contenant un point
 
 Coté fonctionnalités CFCT :
 
@@ -25,15 +25,16 @@ Coté fonctionnalités CFCT :
 	- le nombre de point a ajouter au score
 	- quel son est emis jeu quand le fruit apparait
 	- quel son est emis quand le fruit est disponible
-- CFCT4 : faire un point de téléportation -> téléporter sur un point quelconque existant
-	- OK quand afficher ce point : au chartgement du level
-	- OK où le positionner : aléatoire dans chaque niveau
-	- OK comment le visualiser : rond fixe
-	- rajouter du son 
-- CFCT4  : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
+- CFCT5  : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
 
 DONE :
 - CFCT0 OK : faire un skin OXiane pour Ladybug
 - CTEC9 OK : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
-
+- CFCT4 : faire un point de téléportation -> téléporter sur un point quelconque existant
+	- OK quand afficher ce point : au chartgement du level
+	- OK où le positionner : aléatoire dans chaque niveau
+	- OK comment le visualiser : rond fixe
+	- OK rajouter du son : son gratuit trouvé sur internet
+- CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
+	
 REJECT : 

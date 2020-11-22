@@ -89,7 +89,7 @@ public class GameSounds implements Observer {
 	/**
 	 * Lancement des sons sélectionnés par le modèle
 	 */
-	public void playSound() {
+	public void playSounds() {
 		if (!listen)
 			return;
 		if ((sounds & SoundsEnum.LADYBUG_CHOMP.getIndex()) != 0) {
@@ -158,14 +158,12 @@ public class GameSounds implements Observer {
 	}
 
 	@Override
-	public void update(Observable gameModel, Object arg) {
-		this.gameModel = (IGameModelForSound) gameModel;
-		sounds		   = this.gameModel.getNewSounds();
-		listen		   = this.gameModel.isSoundActive();
-		if ((sounds & SoundsEnum.GAME_BEGIN_LEVEL.getIndex()) != 0) {
+	public void update(Observable gameModelForSound, Object arg) {
+		gameModel = (IGameModelForSound) gameModelForSound;
+		if ((gameModel.getSounds() & SoundsEnum.GAME_BEGIN_LEVEL.getIndex()) != 0) {
 			playStartJingle();
-		} else if (listen)
-			playSound();
+		} else if (gameModel.isSoundActive())
+			playSounds();
 		else
 			stopAllSounds();
 	}
