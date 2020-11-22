@@ -30,15 +30,15 @@ import org.apache.commons.logging.LogFactory;
 import com.kycox.ladybug.body.ghost.GhostsGroup;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.constant.SoundsEnum;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
 import com.kycox.ladybug.constant.ladybug.KinematicLadybugDeath;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
-import com.kycox.ladybug.contract.IGameModelForSound;
-import com.kycox.ladybug.contract.IGameModelForView;
+import com.kycox.ladybug.contract.IGameModelForGameSounds;
+import com.kycox.ladybug.contract.IGameModelForGameView;
 import com.kycox.ladybug.level.ScreenData;
 import com.kycox.ladybug.score.GameScore;
 import com.kycox.ladybug.score.GroupIncrementScores;
+import com.kycox.ladybug.sound.NewSounds;
 import com.kycox.ladybug.timer.SuperPowerTimer;
 
 import lombok.Getter;
@@ -50,7 +50,7 @@ import lombok.Setter;
  *
  */
 @SuppressWarnings("deprecation")
-public class GameModel extends Observable implements IGameModelForView, IGameModelForSound {
+public class GameModel extends Observable implements IGameModelForGameView, IGameModelForGameSounds {
 	private static final Log	  logger		= LogFactory.getLog(GameModel.class);
 	@Getter
 	@Setter
@@ -78,18 +78,15 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 	private Ladybug				  ladybug;
 	@Getter
 	@Setter
+	private NewSounds			  newSounds;
+	@Getter
+	@Setter
 	private ScreenData			  screenData;
 	@Getter
 	@Setter
 	private boolean				  soundActive	= false;
-	@Getter
-	private int					  sounds;
 	@Setter
 	private SuperPowerTimer		  superPowerTimer;
-
-	public void addSoundRequest(int sounds) {
-		this.sounds |= sounds;
-	}
 
 	public void forceStopGame() {
 		if (gameTimer.isRunning()) {
@@ -154,7 +151,7 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 
 	/**
 	 * Lancement du timer qui rythme le jeu FIXME : cette fonction reste public car
-	 * elle est toujorus utilisé par GameSounds -> c'est le mal
+	 * elle est toujouts utilisée par GameSounds -> c'est le mal
 	 */
 	@Override
 	public void startGameTimer() {
@@ -260,19 +257,6 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 		return new Timer(PACE, action);
 	}
 
-	private int getSirenSound(int percent) {
-		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 40) {
-			return SoundsEnum.GAME_SIREN_0.getIndex();
-		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 60) {
-			return SoundsEnum.GAME_SIREN_1.getIndex();
-		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 80) {
-			return SoundsEnum.GAME_SIREN_2.getIndex();
-		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent > 80) {
-			return SoundsEnum.GAME_SIREN_3.getIndex();
-		}
-		return 0;
-	}
-
 	/**
 	 * Initialise les variables au lancement du programme
 	 */
@@ -300,10 +284,6 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// active sound
 		setSoundActive(true);
-	}
-
-	private void initSounds() {
-		sounds = 0;
 	}
 
 	/**
@@ -365,27 +345,19 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 	 */
 	private void setSoundRequests(int percent) {
 		// initialise le sons
-		initSounds();
-		if (gameStatus.isLevelBegin())
-			addSoundRequest(SoundsEnum.GAME_BEGIN_LEVEL.getIndex());
-		if (groupGhosts.hasScaredGhost())
-			addSoundRequest(SoundsEnum.LADYBUG_INTERMISSION.getIndex());
-		if (groupGhosts.hasRegeneratedGhost())
-			addSoundRequest(SoundsEnum.GHOST_REGENERATE.getIndex());
-		if (groupGhosts.hasDyingGhost())
-			addSoundRequest(SoundsEnum.GHOST_EATEN.getIndex());
-		if (groupGhosts.getNbrEatenGhost() > 0)
-			addSoundRequest(SoundsEnum.LADYBUG_EAT_GHOST.getIndex());
-		if (ladybug.isEatenAMegaPoint())
-			addSoundRequest(SoundsEnum.LADYBUG_INTERMISSION.getIndex());
-		if (ladybug.isEatenAPoint())
-			addSoundRequest(SoundsEnum.LADYBUG_CHOMP.getIndex());
-		if (ladybug.getStatus().equals(LadybugStatusEnum.DYING) && kinematicLadybugDeath.getBip() == 0)
-			addSoundRequest(SoundsEnum.LADYBUG_IS_DYING.getIndex());
-		if (ladybug.isNewLife())
-			addSoundRequest(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
-		if (ladybug.isToBeTeleported())
-			addSoundRequest(SoundsEnum.COMMON_TELEPORT.getIndex());
-		addSoundRequest(getSirenSound(screenData.getPercentageEatenPoint()));
+		newSounds.initSounds();
+		newSounds.addGameBeginLevel(gameStatus.isLevelBegin());
+		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
+		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
+		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
+		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhost() > 0);
+//		newSounds.addEatenAMegaPoint(ladybug.isEatenAMegaPoint());
+		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint());
+		newSounds.addLadybugIsDying(ladybug.getStatus().equals(LadybugStatusEnum.DYING),
+		        kinematicLadybugDeath.getBip() == 0);
+		newSounds.addNewLife(ladybug.isNewLife());
+		newSounds.addTeleport(ladybug.isToBeTeleported());
+		newSounds.addSirenSound(ladybug.getStatus().equals(LadybugStatusEnum.NORMAL),
+		        screenData.getPercentageEatenPoint());
 	}
 }

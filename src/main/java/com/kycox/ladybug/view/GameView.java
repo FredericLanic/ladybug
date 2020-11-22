@@ -32,7 +32,7 @@ import com.kycox.ladybug.body.ghost.Ghost;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
-import com.kycox.ladybug.contract.IGameModelForView;
+import com.kycox.ladybug.contract.IGameModelForGameView;
 import com.kycox.ladybug.controler.KeyGameController;
 import com.kycox.ladybug.score.IncrementScore;
 import com.kycox.ladybug.view.body.GhostView;
@@ -58,7 +58,7 @@ public class GameView extends JPanel implements Observer {
 	@Setter
 	private KeyGameController gameController;
 	// Données transitées par le pattern Observer
-	private transient IGameModelForView	gameModel;
+	private transient IGameModelForGameView	gameModel;
 	@Setter
 	private transient GhostView			ghostView;
 	private boolean						hasBeenDrawOnce	= false;
@@ -95,7 +95,7 @@ public class GameView extends JPanel implements Observer {
 	 */
 	@Override
 	public void update(Observable gameModel, Object used) {
-		this.gameModel = (IGameModelForView) gameModel;
+		this.gameModel = (IGameModelForGameView) gameModel;
 		repaint();
 	}
 

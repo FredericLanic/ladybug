@@ -17,12 +17,13 @@
 package com.kycox.ladybug.contract;
 
 import com.kycox.ladybug.model.GameStatus;
+import com.kycox.ladybug.sound.NewSounds;
 
-public interface IGameModelForSound {
+public interface IGameModelForGameSounds {
 	// FIXME : c'est trop spécifique !!
 	public GameStatus getGameStatus();
 
-	public int getSounds();
+	public NewSounds getNewSounds();
 
 	public boolean isSoundActive();
 

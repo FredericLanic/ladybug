@@ -24,7 +24,7 @@ import com.kycox.ladybug.model.GameStatus;
 import com.kycox.ladybug.score.GameScore;
 import com.kycox.ladybug.score.GroupIncrementScores;
 
-public interface IGameModelForView {
+public interface IGameModelForGameView {
 	public GameScore getGameScore();
 
 	public GameStatus getGameStatus();

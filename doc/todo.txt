@@ -15,6 +15,7 @@ Coté technique CTEC :
 - CTEC12 : problème parfois pour se positionner de façon random sur un block contenant un point
 - CTEC13 : tests unitaires
 - CTEC14 : tests fonctionnels
+- CTEC15 : sortir la notion de nouveau son de GameModel
 
 Coté fonctionnalités CFCT :
 

@@ -16,7 +16,14 @@
  */
 package com.kycox.ladybug.constant;
 
+import java.io.IOException;
 import java.net.URL;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import lombok.Getter;
 
@@ -25,29 +32,31 @@ import lombok.Getter;
  *
  */
 public enum SoundsEnum {
-	COMMON_TELEPORT(Math.pow(2, 14), "common_teleport.wav"),
-	GAME_BEGIN_LEVEL(Math.pow(2, 0), "game_begin_level.wav"), GAME_SIREN_0(Math.pow(2, 10), "game_siren_0.wav"),
-	GAME_SIREN_1(Math.pow(2, 11), "game_siren_1.wav"), GAME_SIREN_2(Math.pow(2, 12), "game_siren_2.wav"),
-	GAME_SIREN_3(Math.pow(2, 13), "game_siren_3.wav"), GHOST_EATEN(Math.pow(2, 9), "ghost_eaten.wav"),
-	GHOST_REGENERATE(Math.pow(2, 8), "ghost_regenerate.wav"), GHOST_SURVIVOR(Math.pow(2, 7), "ghost_survivor.wav"),
-	LADYBUG_CHOMP(Math.pow(2, 1), "ladybug_chomp.wav"), LADYBUG_EAT_FRUIT(Math.pow(2, 3), "ladybug_eatfruit.wav"),
-	LADYBUG_EAT_GHOST(Math.pow(2, 4), "ladybug_eatghost.wav"),
-	LADYBUG_EXTRA_PAC(Math.pow(2, 5), "ladybug_extralife.wav"),
-	LADYBUG_INTERMISSION(Math.pow(2, 6), "ladybug_intermission.wav"),
-	LADYBUG_IS_DYING(Math.pow(2, 2), "ladybug_death.wav");
+	COMMON_TELEPORT("common_teleport.wav"), GAME_BEGIN_LEVEL("game_begin_level.wav"), GAME_SIREN_0("game_siren_0.wav"),
+	GAME_SIREN_1("game_siren_1.wav"), GAME_SIREN_2("game_siren_2.wav"), GAME_SIREN_3("game_siren_3.wav"),
+	GHOST_EATEN("ghost_eaten.wav"), GHOST_REGENERATE("ghost_regenerate.wav"), GHOST_SURVIVOR("ghost_survivor.wav"),
+	LADYBUG_CHOMP("ladybug_chomp.wav"), LADYBUG_EAT_FRUIT("ladybug_eatfruit.wav"),
+	LADYBUG_EAT_GHOST("ladybug_eatghost.wav"), LADYBUG_EXTRA_PAC("ladybug_extralife.wav"),
+	LADYBUG_INTERMISSION("ladybug_intermission.wav"), LADYBUG_IS_DYING("ladybug_death.wav");
 
 	@Getter
-	private int	index = 0;
-	@Getter
-	private URL	url	  = null;
+	private Clip clip = null;
 
 	/**
 	 * Constructeur
 	 *
 	 * @param fileName
 	 */
-	private SoundsEnum(double index, String fileName) {
-		this.index = (int) index;
-		this.url   = SoundsEnum.class.getClassLoader().getResource("sound/wav/" + fileName);
+	private SoundsEnum(String fileName) {
+		try {
+			URL				 url			  = SoundsEnum.class.getClassLoader().getResource("sound/wav/" + fileName);
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+			// Get a sound clip resource.
+			clip = AudioSystem.getClip();
+			// Open audio clip and load samples from the audio input stream.
+			clip.open(audioInputStream);
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			e.getStackTrace();
+		}
 	}
 }

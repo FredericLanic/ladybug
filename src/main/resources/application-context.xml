@@ -107,10 +107,13 @@
 		</property>
 	</bean>
 	
-	<!-- beanScreenData in  beanGameModel -->	
+	<!-- beanScreenData in beanGameModel -->	
 	<bean id="beanScreenData" class="com.kycox.ladybug.level.ScreenData" scope="singleton">
 		<property name="gameLevels" ref="beanLevels"/>
 	</bean>
+
+	<!-- beanNewSounds in beanGameModel -->
+	<bean id="beanNewSounds" class="com.kycox.ladybug.sound.NewSounds" scope="singleton"/>
 
 	<!-- beanGameModel in beanEngine -->
 	<bean id="beanGameModel" class="com.kycox.ladybug.model.GameModel" scope="singleton" init-method="init">
@@ -121,7 +124,8 @@
 		<property name="kinematicLadybugDeath" ref="beanKinematicLadybugDeath"/>				
 		<property name="ladybug" ref="beanLadybug"/>
 		<property name="screenData" ref="beanScreenData"/>
-		<property name="superPowerTimer" ref="beanSuperPowerTimer"/>				
+		<property name="superPowerTimer" ref="beanSuperPowerTimer"/>
+		<property name="newSounds" ref="beanNewSounds"/>				
 	</bean>
 	
 	<!-- beanLadyView in beanGameView -->
@@ -143,7 +147,7 @@
 	</bean>		
 	
 	<!-- beanGameSound in beanEngine -->
-	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton" init-method="init"/>
+	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton"/>
 	
 	<!-- beanEngine -->
 	<bean id="beanEngine" class="com.kycox.ladybug.engine.Engine" scope="singleton" init-method="init">
