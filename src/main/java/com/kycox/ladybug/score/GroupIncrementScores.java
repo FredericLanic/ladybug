@@ -38,6 +38,10 @@ public class GroupIncrementScores {
 	public void add(Point position, String value) {
 		lstIncrementScore.add(new IncrementScore((Point) position.clone(), value));
 	}
+//	/** FIXME : à tester */
+//	public void removeAll() {
+//		lstIncrementScore.removeAll(lstIncrementScore);
+//	}
 
 	/**
 	 * Suppression des score incrément qui sont en train de mourir

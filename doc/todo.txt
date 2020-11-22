@@ -1,28 +1,39 @@
-Coté technique :
+Coté technique CTEC :
 
-- extraire isComputed de l'enumération GhostsImagesEnum -> 
+- CTEC1 : extraire isComputed de l'enumération GhostsImagesEnum -> 
 	impact dans la fenêtre de configuration
 	=> solution à court terme : changer le nom de l'énumération GhostsImagesEnum en GhostsConfigEnum par exemple => nan, je pense que c'est un mauvais choix
-- synchroniser les statuts entre les fantômes et ladybug; faire une énumeration status commun pour les fantômes et ladybug
-- revoir le design pattern MVC et revoir la notion de controleur
-- revoir le pom.xml; voir jeff & tristan; version de java; rajouter un plugin pour sélectionner une version de java spécifique pour builder avec maven
-- faire une refactor pour l'affichage
-- voir si on peut supprimer facilement Ghost de GhostAction
-- supprimer les lstIncrementScore lorque le niveau est terminé
+- CTEC2 : synchroniser les statuts entre les fantômes et ladybug; faire une énumeration status commun pour les fantômes et ladybug
+- CTEC3 : revoir le design pattern MVC et revoir la notion de controleur
+- CTEC4 : revoir le pom.xml; voir jeff & tristan; version de java; rajouter un plugin pour sélectionner une version de java spécifique pour builder avec maven
+- CTEC5 : faire une refactor pour l'affichage
+- CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
+- CTEC7 : supprimer les lstIncrementScore lorque le niveau est terminé
+- CTEC8 : sortir la fonction checkEndMaze du block
+- CTEC10 : Mettre des notations d'injections spring pour la non-configuration du jeu en lui même
+	HORS : gameStatus ...
+- CTEC11 : sortir getSirenSound(int percent) de GameModel 
 
-Coté fonctionnalités :
-- OK : faire un skin OXiane pour Ladybug
-- paramétrer l'utilisation du skin OXiane pour ladybug
-- augemnter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug 
-- ajouter le notion de fruit  
+Coté fonctionnalités CFCT :
+
+- CFCT1 : paramétrer l'utilisation du skin OXiane pour Ladybug
+- CFCT2 : augemnter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug 
+- CFCT3 : ajouter le notion de fruit  
 	- quand faire apparaitre un fruit 
 	- où le positionner
 	- comment le fruit apparait 
 	- le nombre de point a ajouter au score
 	- quel son est emis jeu quand le fruit apparait
 	- quel son est emis quand le fruit est disponible
-- faire un point de téléportation -> téléporter sur un point quelconque existant
-	- quand afficher ce point
-	- où le positionner
-	- comment le visualiser
-- ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau
+- CFCT4 : faire un point de téléportation -> téléporter sur un point quelconque existant
+	- OK quand afficher ce point : au chartgement du level
+	- OK où le positionner : aléatoire dans chaque niveau
+	- OK comment le visualiser : rond fixe
+	- rajouter du son 
+- CFCT4  : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
+
+DONE :
+- CFCT0 OK : faire un skin OXiane pour Ladybug
+- CTEC9 OK : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
+
+REJECT : 

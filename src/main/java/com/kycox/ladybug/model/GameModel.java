@@ -113,6 +113,7 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 	 *
 	 * @return
 	 */
+	@Override
 	public int getNbrPlayers() {
 		if (groupGhosts.getGhostNotComputed() == null) {
 			return 1;
@@ -155,6 +156,7 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 	 * Lancement du timer qui rythme le jeu FIXME : cette fonction reste public car
 	 * elle est toujorus utilisé par GameSounds -> c'est le mal
 	 */
+	@Override
 	public void startGameTimer() {
 		gameTimer.start();
 	}
@@ -168,6 +170,7 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 		soundActive = !soundActive;
 	}
 
+	@Override
 	public void stopGameTimer() {
 		gameTimer.stop();
 	}
@@ -247,6 +250,7 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 // SCREENDATA
 				screenData.updateScreenBlock(ladybug);
 // VERIFICAITON NOMBRE POINT MANGEABLES
+// FIXME : sortir ce test de ce block
 				checkEndMaze();
 			}
 			setSoundRequests(screenData.getPercentageEatenPoint());
@@ -258,13 +262,13 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 
 	private int getSirenSound(int percent) {
 		if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 40) {
-			return SoundsEnum.LADYBUG_SIREN_0.getIndex();
+			return SoundsEnum.GAME_SIREN_0.getIndex();
 		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 60) {
-			return SoundsEnum.LADYBUG_SIREN_1.getIndex();
+			return SoundsEnum.GAME_SIREN_1.getIndex();
 		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent < 80) {
-			return SoundsEnum.LADYBUG_SIREN_2.getIndex();
+			return SoundsEnum.GAME_SIREN_2.getIndex();
 		} else if (ladybug.getStatus().equals(LadybugStatusEnum.NORMAL) && percent > 80) {
-			return SoundsEnum.LADYBUG_SIREN_3.getIndex();
+			return SoundsEnum.GAME_SIREN_3.getIndex();
 		}
 		return 0;
 	}
@@ -282,7 +286,7 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// ladybug n'est pas en vie lors de l'initialisation du jeu
 		ladybug.setStatus(LadybugStatusEnum.DEAD);
-		// initialise les score
+		// initialise les scores
 		gameScore.init();
 		// Initialise le groupe de fantôme
 		groupGhosts.setNumLevel(Constants.PRESENTATION_LEVEL);
@@ -362,34 +366,26 @@ public class GameModel extends Observable implements IGameModelForView, IGameMod
 	private void setSoundRequests(int percent) {
 		// initialise le sons
 		initSounds();
-		// Son depuis l'état du jeu
-		if (gameStatus.isBeginningLevel()) {
-			addSoundRequest(SoundsEnum.LADYBUG_LEVEL_BEGINNING.getIndex());
-		}
-		if (groupGhosts.hasScaredGhost()) {
-			addSoundRequest(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
-		}
-		if (groupGhosts.hasRegeneratedGhost()) {
+		if (gameStatus.isLevelBegin())
+			addSoundRequest(SoundsEnum.GAME_BEGIN_LEVEL.getIndex());
+		if (groupGhosts.hasScaredGhost())
+			addSoundRequest(SoundsEnum.LADYBUG_INTERMISSION.getIndex());
+		if (groupGhosts.hasRegeneratedGhost())
 			addSoundRequest(SoundsEnum.GHOST_REGENERATE.getIndex());
-		}
-		if (groupGhosts.hasDyingGhost()) {
+		if (groupGhosts.hasDyingGhost())
 			addSoundRequest(SoundsEnum.GHOST_EATEN.getIndex());
-		}
-		if (groupGhosts.getNbrEatenGhost() > 0) {
+		if (groupGhosts.getNbrEatenGhost() > 0)
 			addSoundRequest(SoundsEnum.LADYBUG_EAT_GHOST.getIndex());
-		}
-		if (ladybug.isEatenAMegaPoint()) {
-			addSoundRequest(SoundsEnum.LADYBUG_INTER_MISSION.getIndex());
-		}
-		if (ladybug.isEatenAPoint()) {
+		if (ladybug.isEatenAMegaPoint())
+			addSoundRequest(SoundsEnum.LADYBUG_INTERMISSION.getIndex());
+		if (ladybug.isEatenAPoint())
 			addSoundRequest(SoundsEnum.LADYBUG_CHOMP.getIndex());
-		}
-		if (ladybug.getStatus().equals(LadybugStatusEnum.DYING) && kinematicLadybugDeath.getBip() == 0) {
+		if (ladybug.getStatus().equals(LadybugStatusEnum.DYING) && kinematicLadybugDeath.getBip() == 0)
 			addSoundRequest(SoundsEnum.LADYBUG_IS_DYING.getIndex());
-		}
-		if (ladybug.isNewLife()) {
+		if (ladybug.isNewLife())
 			addSoundRequest(SoundsEnum.LADYBUG_EXTRA_PAC.getIndex());
-		}
+		if (ladybug.isToBeTeleported())
+			addSoundRequest(SoundsEnum.COMMON_TELEPORT.getIndex());
 		addSoundRequest(getSirenSound(screenData.getPercentageEatenPoint()));
 	}
 }

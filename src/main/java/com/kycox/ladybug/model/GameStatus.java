@@ -27,12 +27,12 @@ public class GameStatus {
 	@Setter
 	private int			   numLevel;
 
-	public boolean isBeginningGame() {
-		return gameStatusEnum == GameStatusEnum.BEGINNING_GAME;
+	public boolean isGameBegin() {
+		return gameStatusEnum == GameStatusEnum.GAME_BEGIN;
 	}
 
-	public boolean isBeginningLevel() {
-		return gameStatusEnum == GameStatusEnum.BEGINING_LEVEL;
+	public boolean isLevelBegin() {
+		return gameStatusEnum == GameStatusEnum.LEVEL_BEGIN;
 	}
 
 	public boolean isInGame() {
@@ -48,11 +48,11 @@ public class GameStatus {
 	}
 
 	public void setBeginingLevel() {
-		gameStatusEnum = GameStatusEnum.BEGINING_LEVEL;
+		gameStatusEnum = GameStatusEnum.LEVEL_BEGIN;
 	}
 
 	public void setBeginningGame() {
-		gameStatusEnum = GameStatusEnum.BEGINNING_GAME;
+		gameStatusEnum = GameStatusEnum.GAME_BEGIN;
 	}
 
 	public void setConfiguration() {

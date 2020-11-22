@@ -31,23 +31,24 @@ import lombok.Setter;
  *
  */
 public class GameSounds implements Observer {
-	private Clip						 clipBeginning		 = null;
-	private Clip						 clipChomp			 = null;
-	private Clip						 clipDeath			 = null;
-	private Clip						 clipEatFruit		 = null;
-	private Clip						 clipEatGhost		 = null;
-	private Clip						 clipExtraPac		 = null;
-	private Clip						 clipGhostEaten		 = null;
-	private Clip						 clipGhostRegenerate = null;
-	private Clip						 clipGhostSurvivor	 = null;
-	private Clip						 clipInterMission	 = null;
-	private Clip						 clipSiren0			 = null;
-	private Clip						 clipSiren1			 = null;
-	private Clip						 clipSiren2			 = null;
-	private Clip						 clipSiren3			 = null;
+	private Clip						 clipCommonTeleport		 = null;
+	private Clip						 clipGameBeginLevel		 = null;
+	private Clip						 clipGameSiren0			 = null;
+	private Clip						 clipGameSiren1			 = null;
+	private Clip						 clipGameSiren2			 = null;
+	private Clip						 clipGameSiren3			 = null;
+	private Clip						 clipGhostEaten			 = null;
+	private Clip						 clipGhostRegenerate	 = null;
+	private Clip						 clipGhostSurvivor		 = null;
+	private Clip						 clipLadybugChomp		 = null;
+	private Clip						 clipLadybugDying		 = null;
+	private Clip						 clipLadybugEatFruit	 = null;
+	private Clip						 clipLadybugEatGhost	 = null;
+	private Clip						 clipLadybugExtraPac	 = null;
+	private Clip						 clipLadybugIntermission = null;
 	@Setter
 	private transient IGameModelForSound gameModel;
-	private boolean						 listen				 = true;
+	private boolean						 listen					 = true;
 	private int							 sounds;
 
 	/**
@@ -57,35 +58,25 @@ public class GameSounds implements Observer {
 	 * @return
 	 */
 	public long getMicrosecondLengthLadybugDeath() {
-		return clipDeath.getMicrosecondLength() / 1000;
+		return clipLadybugDying.getMicrosecondLength() / 1000;
 	}
 
 	public void init() {
-		// 1
-		clipBeginning = new ClipGame(SoundsEnum.LADYBUG_LEVEL_BEGINNING).getClip();
-		// 2
-		clipChomp = new ClipGame(SoundsEnum.LADYBUG_CHOMP).getClip();
-		// 4
-		clipDeath = new ClipGame(SoundsEnum.LADYBUG_IS_DYING).getClip();
-		// 8
-		clipEatFruit = new ClipGame(SoundsEnum.LADYBUG_EAT_FRUIT).getClip();
-		// 16
-		clipEatGhost = new ClipGame(SoundsEnum.LADYBUG_EAT_GHOST).getClip();
-		// 32
-		clipExtraPac = new ClipGame(SoundsEnum.LADYBUG_EXTRA_PAC).getClip();
-		// 64
-		clipInterMission = new ClipGame(SoundsEnum.LADYBUG_INTER_MISSION).getClip();
-		// 128
-		clipGhostSurvivor = new ClipGame(SoundsEnum.GHOST_SURVIVOR).getClip();
-		// 256
-		clipGhostRegenerate = new ClipGame(SoundsEnum.GHOST_REGENERATE).getClip();
-		// 512
-		clipGhostEaten = new ClipGame(SoundsEnum.GHOST_EATEN).getClip();
-		// 1024
-		clipSiren0 = new ClipGame(SoundsEnum.LADYBUG_SIREN_0).getClip();
-		clipSiren1 = new ClipGame(SoundsEnum.LADYBUG_SIREN_1).getClip();
-		clipSiren2 = new ClipGame(SoundsEnum.LADYBUG_SIREN_2).getClip();
-		clipSiren3 = new ClipGame(SoundsEnum.LADYBUG_SIREN_3).getClip();
+		clipGameBeginLevel		= new ClipGame(SoundsEnum.GAME_BEGIN_LEVEL).getClip();
+		clipLadybugChomp		= new ClipGame(SoundsEnum.LADYBUG_CHOMP).getClip();
+		clipLadybugDying		= new ClipGame(SoundsEnum.LADYBUG_IS_DYING).getClip();
+		clipLadybugEatFruit		= new ClipGame(SoundsEnum.LADYBUG_EAT_FRUIT).getClip();
+		clipLadybugEatGhost		= new ClipGame(SoundsEnum.LADYBUG_EAT_GHOST).getClip();
+		clipLadybugExtraPac		= new ClipGame(SoundsEnum.LADYBUG_EXTRA_PAC).getClip();
+		clipLadybugIntermission	= new ClipGame(SoundsEnum.LADYBUG_INTERMISSION).getClip();
+		clipGhostSurvivor		= new ClipGame(SoundsEnum.GHOST_SURVIVOR).getClip();
+		clipGhostRegenerate		= new ClipGame(SoundsEnum.GHOST_REGENERATE).getClip();
+		clipGhostEaten			= new ClipGame(SoundsEnum.GHOST_EATEN).getClip();
+		clipGameSiren0			= new ClipGame(SoundsEnum.GAME_SIREN_0).getClip();
+		clipGameSiren1			= new ClipGame(SoundsEnum.GAME_SIREN_1).getClip();
+		clipGameSiren2			= new ClipGame(SoundsEnum.GAME_SIREN_2).getClip();
+		clipGameSiren3			= new ClipGame(SoundsEnum.GAME_SIREN_3).getClip();
+		clipCommonTeleport		= new ClipGame(SoundsEnum.COMMON_TELEPORT).getClip();
 	}
 
 	/**
@@ -102,23 +93,23 @@ public class GameSounds implements Observer {
 		if (!listen)
 			return;
 		if ((sounds & SoundsEnum.LADYBUG_CHOMP.getIndex()) != 0) {
-			new ListenSound(clipChomp).start();
+			new ListenSound(clipLadybugChomp).start();
 		}
 		if ((sounds & SoundsEnum.LADYBUG_IS_DYING.getIndex()) != 0) {
 			stopAllSounds();
-			new ListenSound(clipDeath).start();
+			new ListenSound(clipLadybugDying).start();
 		}
 		if ((sounds & SoundsEnum.LADYBUG_EAT_FRUIT.getIndex()) != 0) {
-			new ListenSound(clipEatFruit).start();
+			new ListenSound(clipLadybugEatFruit).start();
 		}
 		if ((sounds & SoundsEnum.LADYBUG_EAT_GHOST.getIndex()) != 0) {
-			new ListenSound(clipEatGhost).start();
+			new ListenSound(clipLadybugEatGhost).start();
 		}
 		if ((sounds & SoundsEnum.LADYBUG_EXTRA_PAC.getIndex()) != 0) {
-			new ListenSound(clipExtraPac).start();
+			new ListenSound(clipLadybugExtraPac).start();
 		}
-		if ((sounds & SoundsEnum.LADYBUG_INTER_MISSION.getIndex()) != 0) {
-			new ListenSound(clipInterMission).start();
+		if ((sounds & SoundsEnum.LADYBUG_INTERMISSION.getIndex()) != 0) {
+			new ListenSound(clipLadybugIntermission).start();
 		}
 		if ((sounds & SoundsEnum.GHOST_SURVIVOR.getIndex()) != 0) {
 			new ListenSound(clipGhostSurvivor).start();
@@ -129,17 +120,20 @@ public class GameSounds implements Observer {
 		if ((sounds & SoundsEnum.GHOST_EATEN.getIndex()) != 0) {
 			new ListenSound(clipGhostEaten).start();
 		}
-		if ((sounds & SoundsEnum.LADYBUG_SIREN_0.getIndex()) != 0) {
-			new ListenSound(clipSiren0).start();
+		if ((sounds & SoundsEnum.GAME_SIREN_0.getIndex()) != 0) {
+			new ListenSound(clipGameSiren0).start();
 		}
-		if ((sounds & SoundsEnum.LADYBUG_SIREN_1.getIndex()) != 0) {
-			new ListenSound(clipSiren1).start();
+		if ((sounds & SoundsEnum.GAME_SIREN_1.getIndex()) != 0) {
+			new ListenSound(clipGameSiren1).start();
 		}
-		if ((sounds & SoundsEnum.LADYBUG_SIREN_2.getIndex()) != 0) {
-			new ListenSound(clipSiren2).start();
+		if ((sounds & SoundsEnum.GAME_SIREN_2.getIndex()) != 0) {
+			new ListenSound(clipGameSiren2).start();
 		}
-		if ((sounds & SoundsEnum.LADYBUG_SIREN_3.getIndex()) != 0) {
-			new ListenSound(clipSiren3).start();
+		if ((sounds & SoundsEnum.GAME_SIREN_3.getIndex()) != 0) {
+			new ListenSound(clipGameSiren3).start();
+		}
+		if ((sounds & SoundsEnum.COMMON_TELEPORT.getIndex()) != 0) {
+			new ListenSound(clipCommonTeleport).start();
 		}
 	}
 
@@ -152,10 +146,10 @@ public class GameSounds implements Observer {
 		stopAllSounds();
 		gameModel.stopGameTimer();
 		// lancement du jingle du d�but
-		new ListenSound(clipBeginning).start();
+		new ListenSound(clipGameBeginLevel).start();
 		// On attend le temps du jingle : le jeu est alors bloqué
 		try {
-			Thread.sleep(clipBeginning.getMicrosecondLength() / 1000);
+			Thread.sleep(clipGameBeginLevel.getMicrosecondLength() / 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -168,7 +162,7 @@ public class GameSounds implements Observer {
 		this.gameModel = (IGameModelForSound) gameModel;
 		sounds		   = this.gameModel.getNewSounds();
 		listen		   = this.gameModel.isSoundActive();
-		if ((sounds & SoundsEnum.LADYBUG_LEVEL_BEGINNING.getIndex()) != 0) {
+		if ((sounds & SoundsEnum.GAME_BEGIN_LEVEL.getIndex()) != 0) {
 			playStartJingle();
 		} else if (listen)
 			playSound();
@@ -180,31 +174,33 @@ public class GameSounds implements Observer {
 	 * Stop tous les sons qui ont pu être lancés.
 	 */
 	private void stopAllSounds() {
-		clipBeginning.stop();
-		clipBeginning.setFramePosition(0);
-		clipChomp.stop();
-		clipChomp.setFramePosition(0);
-		clipDeath.stop();
-		clipDeath.setFramePosition(0);
-		clipEatFruit.stop();
-		clipEatFruit.setFramePosition(0);
-		clipEatGhost.stop();
-		clipEatGhost.setFramePosition(0);
-		clipExtraPac.stop();
-		clipExtraPac.setFramePosition(0);
-		clipInterMission.stop();
-		clipInterMission.setFramePosition(0);
+		clipGameBeginLevel.stop();
+		clipGameBeginLevel.setFramePosition(0);
+		clipLadybugChomp.stop();
+		clipLadybugChomp.setFramePosition(0);
+		clipLadybugDying.stop();
+		clipLadybugDying.setFramePosition(0);
+		clipLadybugEatFruit.stop();
+		clipLadybugEatFruit.setFramePosition(0);
+		clipLadybugEatGhost.stop();
+		clipLadybugEatGhost.setFramePosition(0);
+		clipLadybugExtraPac.stop();
+		clipLadybugExtraPac.setFramePosition(0);
+		clipLadybugIntermission.stop();
+		clipLadybugIntermission.setFramePosition(0);
 		clipGhostSurvivor.stop();
 		clipGhostSurvivor.setFramePosition(0);
 		clipGhostRegenerate.stop();
 		clipGhostRegenerate.setFramePosition(0);
-		clipSiren0.stop();
-		clipSiren0.setFramePosition(0);
-		clipSiren1.stop();
-		clipSiren1.setFramePosition(0);
-		clipSiren2.stop();
-		clipSiren2.setFramePosition(0);
-		clipSiren3.stop();
-		clipSiren3.setFramePosition(0);
+		clipGameSiren0.stop();
+		clipGameSiren0.setFramePosition(0);
+		clipGameSiren1.stop();
+		clipGameSiren1.setFramePosition(0);
+		clipGameSiren2.stop();
+		clipGameSiren2.setFramePosition(0);
+		clipGameSiren3.stop();
+		clipGameSiren3.setFramePosition(0);
+		clipCommonTeleport.stop();
+		clipCommonTeleport.setFramePosition(0);
 	}
 }

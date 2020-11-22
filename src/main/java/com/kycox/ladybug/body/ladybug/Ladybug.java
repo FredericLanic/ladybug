@@ -52,7 +52,15 @@ public class Ladybug extends UserBody {
 		return ladybugActions.isEatenAPoint();
 	}
 
-	// @FIXME
+	public boolean isToBeTeleported() {
+		return ladybugActions.isToBeTeleported();
+	}
+
+	/**
+	 * Déplacement de Ladybug
+	 *
+	 * @param screenData
+	 */
 	public void move(ScreenData screenData) {
 		if (ladybugActions.isToBeTeleported()) {
 			teleport(screenData);
@@ -68,8 +76,7 @@ public class Ladybug extends UserBody {
 	}
 
 	/**
-	 * Déplacement de ladybug et récupération du score obtenu Lancement du double
-	 * timer dans le cas du super power
+	 * Détermincaiton des actions de Ladybug
 	 */
 	public LadybugActions setActions(ScreenData screenData) {
 		ladybugActions = new LadybugActions();

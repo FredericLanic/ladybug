@@ -25,13 +25,16 @@ import lombok.Getter;
  *
  */
 public enum SoundsEnum {
-	GHOST_EATEN(512, "ghost_eaten.wav"), GHOST_REGENERATE(256, "ghost_regenerate.wav"),
-	GHOST_SURVIVOR(128, "ghost_survivor.wav"), LADYBUG_CHOMP(2, "ladybug_chomp.wav"),
-	LADYBUG_EAT_FRUIT(8, "ladybug_eatfruit.wav"), LADYBUG_EAT_GHOST(16, "ladybug_eatghost.wav"),
-	LADYBUG_EXTRA_PAC(32, "ladybug_extralife.wav"), LADYBUG_INTER_MISSION(64, "ladybug_intermission.wav"),
-	LADYBUG_IS_DYING(4, "ladybug_death.wav"), LADYBUG_LEVEL_BEGINNING(1, "ladybug_beginning.wav"),
-	LADYBUG_SIREN_0(1024, "ladybug_siren_0.wav"), LADYBUG_SIREN_1(2048, "ladybug_siren_1.wav"),
-	LADYBUG_SIREN_2(4096, "ladybug_siren_2.wav"), LADYBUG_SIREN_3(8192, "ladybug_siren_3.wav");
+	COMMON_TELEPORT(Math.pow(2, 14), "common_teleport.wav"),
+	GAME_BEGIN_LEVEL(Math.pow(2, 0), "game_begin_level.wav"), GAME_SIREN_0(Math.pow(2, 10), "game_siren_0.wav"),
+	GAME_SIREN_1(Math.pow(2, 11), "game_siren_1.wav"), GAME_SIREN_2(Math.pow(2, 12), "game_siren_2.wav"),
+	GAME_SIREN_3(Math.pow(2, 13), "game_siren_3.wav"), GHOST_EATEN(Math.pow(2, 9), "ghost_eaten.wav"),
+	GHOST_REGENERATE(Math.pow(2, 8), "ghost_regenerate.wav"), GHOST_SURVIVOR(Math.pow(2, 7), "ghost_survivor.wav"),
+	LADYBUG_CHOMP(Math.pow(2, 1), "ladybug_chomp.wav"), LADYBUG_EAT_FRUIT(Math.pow(2, 3), "ladybug_eatfruit.wav"),
+	LADYBUG_EAT_GHOST(Math.pow(2, 4), "ladybug_eatghost.wav"),
+	LADYBUG_EXTRA_PAC(Math.pow(2, 5), "ladybug_extralife.wav"),
+	LADYBUG_INTERMISSION(Math.pow(2, 6), "ladybug_intermission.wav"),
+	LADYBUG_IS_DYING(Math.pow(2, 2), "ladybug_death.wav");
 
 	@Getter
 	private int	index = 0;
@@ -43,8 +46,8 @@ public enum SoundsEnum {
 	 *
 	 * @param fileName
 	 */
-	private SoundsEnum(int index, String fileName) {
-		this.index = index;
+	private SoundsEnum(double index, String fileName) {
+		this.index = (int) index;
 		this.url   = SoundsEnum.class.getClassLoader().getResource("sound/wav/" + fileName);
 	}
 }
