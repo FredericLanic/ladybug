@@ -11,10 +11,13 @@ Coté technique CTEC :
 - CTEC8 : sortir la fonction checkEndMaze du block
 - CTEC10 : Mettre des notations d'injections spring pour la non-configuration du jeu en lui même
 	HORS : gameStatus ...
-- CTEC11 : sortir getSirenSound(int percent) de GameModel 
 - CTEC13 : tests unitaires
 - CTEC14 : tests fonctionnels
 - CTEC16 : sortir la gestion de gameModel dans la fonction GameSounds.playStartJingle()
+- CTEC17 : asscoier une interface à tous les objects générés dasn/depuis GameModel lors de l'envoi en affichage
+- CTEC18 : associer une interface à GameModel lors de sa gestion dans le controleur
+- CTEC19 : faire une fct dans gameModel pour envoyer la requete de ladybug depuis le controleur
+- CTEC20 : faire une fct dans gameModel pour mettre le jeu en mode configuration depuis le controleur
 
 Coté fonctionnalités CFCT :
 
@@ -28,7 +31,6 @@ Coté fonctionnalités CFCT :
 	- quel son est emis jeu quand le fruit apparait
 	- quel son est emis quand le fruit est disponible
 - CFCT5  : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
-- CTEC12 : problème parfois pour se positionner de façon random sur un block contenant un point
 
 DONE :
 - CFCT0 : faire un skin OXiane pour Ladybug
@@ -40,7 +42,10 @@ DONE :
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
+- CTEC11 : sortir getSirenSound(int percent) de GameModel - lié à CTEC15
+- CTEC12 : problème parfois pour se positionner de façon random sur un block contenant un point
 - CTEC15 : sortir la notion de nouveau son de GameModel : 
 	en fin de compte, j'ai fait un gros refacto sur la gestions des sons; l'instance NewSounds contient du coup une liste d'enum SoundsEnum à entendre
+
 
 REJECT : 

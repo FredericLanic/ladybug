@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.tools.Utils;
@@ -33,10 +36,11 @@ import lombok.Setter;
  * La map du jeu en cours
  *
  */
+@Named("ScreenData")
 public final class ScreenData {
 	@Getter
 	private ILevel			  currentLevel;
-	@Setter
+	@Inject
 	private Levels			  gameLevels;
 	private int				  initNbrBlocksWithPoint = 0;
 	private List<ScreenBlock> lstDataBlocks			 = new ArrayList<>();

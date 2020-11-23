@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -43,7 +44,8 @@ public class MainLadybug {
 	/** lecture du contexte Spring de l'application */
 	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml",
 	        "application-context-*.xml");
-	private MainFrame		   mainFrame		  = applicationContext.getBean("beanMainFrame", MainFrame.class);
+	@Autowired
+	private MainFrame		   mainFrame		  = applicationContext.getBean("MainFrame", MainFrame.class);
 
 	public void launchTheGame() {
 		Version javaVersion = Runtime.version();

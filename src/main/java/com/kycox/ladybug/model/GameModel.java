@@ -22,6 +22,9 @@ import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.swing.Timer;
 
 import org.apache.commons.logging.Log;
@@ -50,42 +53,43 @@ import lombok.Setter;
  *
  */
 @SuppressWarnings("deprecation")
+@Named("GameModel")
 public class GameModel extends Observable implements IGameModelForGameView, IGameModelForGameSounds {
 	private static final Log	  logger		= LogFactory.getLog(GameModel.class);
 	@Getter
 	@Setter
 	private boolean				  beginNewLevel	= false;
 	@Getter
-	@Setter
+	@Inject
 	private GameScore			  gameScore;
 	@Getter
-	@Setter
+	@Inject
 	private GameStatus			  gameStatus;
 	private final Timer			  gameTimer		= createTimer();
 	@Setter
 	private Point				  ghostRequest	= Constants.POINT_ZERO;
 	@Getter
-	@Setter
+	@Inject
 	private GhostsGroup			  groupGhosts;
 	@Getter
-	@Setter
+	@Inject
 	private GroupIncrementScores  groupIncrementScores;
 	@Getter
-	@Setter
+	@Inject
 	private KinematicLadybugDeath kinematicLadybugDeath;
 	@Getter
-	@Setter
+	@Inject
 	private Ladybug				  ladybug;
 	@Getter
-	@Setter
+	@Inject
 	private NewSounds			  newSounds;
 	@Getter
-	@Setter
+	@Inject
 	private ScreenData			  screenData;
 	@Getter
 	@Setter
 	private boolean				  soundActive	= false;
-	@Setter
+	@Inject
 	private SuperPowerTimer		  superPowerTimer;
 
 	public void forceStopGame() {
@@ -231,6 +235,7 @@ public class GameModel extends Observable implements IGameModelForGameView, IGam
 		return new Timer(PACE, action);
 	}
 
+	@PostConstruct
 	private void init() {
 		initGame();
 		startGameTimer();

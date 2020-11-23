@@ -18,6 +18,9 @@ package com.kycox.ladybug.level;
 
 import java.awt.Point;
 
+import javax.inject.Named;
+
+@Named("Level1")
 public final class Level1 extends Level {
 
   // Représentation du level initial
@@ -29,6 +32,7 @@ public final class Level1 extends Level {
   // 0100000 : superpower 32
   // 1000000 : survivor ghost 64
   // 10000000 : double traits 128
+
 
   public Level1() {
     // nombre de blocks par ligne

@@ -20,8 +20,11 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
+
 import lombok.Getter;
 
+@Named("GroupIncrementScores")
 public class GroupIncrementScores {
 	/**
 	 * Liste des score incréments

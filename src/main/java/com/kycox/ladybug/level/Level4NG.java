@@ -21,8 +21,11 @@ import static com.kycox.ladybug.constant.LevelConstructEnum.N;
 
 import java.awt.Point;
 
+import javax.inject.Named;
+
 import com.kycox.ladybug.constant.LevelConstructEnum;
 
+@Named("Level4NG")
 public class Level4NG extends LevelNG {
 	public Level4NG() {
 		// nombre de blocks par ligne

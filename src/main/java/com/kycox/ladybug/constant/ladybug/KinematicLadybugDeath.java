@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Named;
+
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.PicturesEnum;
 
@@ -31,6 +33,7 @@ import lombok.Setter;
  * Cinématique pour afficher / entendre lors de la mort de Ladybug
  *
  */
+@Named("KinematicLadybugDeath")
 public class KinematicLadybugDeath {
 	// bip de la cinématique
 	@Getter
