@@ -165,7 +165,7 @@ public final class ScreenData {
 	}
 
 	/***
-	 * Affecte la map en focntion du numero de niveau
+	 * Affecte la map en fonction du numero de niveau
 	 *
 	 * @param numLevel
 	 */
@@ -215,12 +215,6 @@ public final class ScreenData {
 		}
 	}
 
-	/**
-	 * Retourne la position dans le IData du numéro du block ayant un point
-	 *
-	 * @param numPoint
-	 * @return
-	 */
 	private int getPosNumPoint(int numPoint) {
 		int	nbrPoint = 0;
 		int	pos		 = 0;
@@ -234,13 +228,9 @@ public final class ScreenData {
 		return pos;
 	}
 
-	/**
-	 * Retourne une position aléatoire du tableau où se trouve un point
-	 */
 	private int getRandomPosNumPoint() {
-		// nombre de points dans le IData courant
 		int	nbrPoints	= getNbrBlocksWithPoint();
-		int	randomPoint	= new Random().nextInt(nbrPoints);
+		int	randomPoint	= new Random().nextInt(nbrPoints)+1;
 		return getPosNumPoint(randomPoint);
 	}
 }

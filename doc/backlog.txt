@@ -12,7 +12,6 @@ Coté technique CTEC :
 - CTEC10 : Mettre des notations d'injections spring pour la non-configuration du jeu en lui même
 	HORS : gameStatus ...
 - CTEC11 : sortir getSirenSound(int percent) de GameModel 
-- CTEC12 : problème parfois pour se positionner de façon random sur un block contenant un point
 - CTEC13 : tests unitaires
 - CTEC14 : tests fonctionnels
 - CTEC16 : sortir la gestion de gameModel dans la fonction GameSounds.playStartJingle()
@@ -29,6 +28,7 @@ Coté fonctionnalités CFCT :
 	- quel son est emis jeu quand le fruit apparait
 	- quel son est emis quand le fruit est disponible
 - CFCT5  : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
+- CTEC12 : problème parfois pour se positionner de façon random sur un block contenant un point
 
 DONE :
 - CFCT0 : faire un skin OXiane pour Ladybug
