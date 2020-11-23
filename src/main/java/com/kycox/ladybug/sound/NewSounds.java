@@ -13,79 +13,65 @@ public class NewSounds implements INewSoundsForGameSounds {
 	private List<SoundsEnum> lstSoundsEnum = new ArrayList<>();
 
 	public void addDyingGhost(boolean mustBeAdded) {
-		if (mustBeAdded) {
-			lstSoundsEnum.add(SoundsEnum.GHOST_EATEN);
-		}
+		addSounds(SoundsEnum.GHOST_EATEN, mustBeAdded);
 	}
 
 	public void addGameBeginLevel(boolean mustBeAdded) {
-		if (mustBeAdded) {
-			lstSoundsEnum.add(SoundsEnum.GAME_BEGIN_LEVEL);
-		}
+		addSounds(SoundsEnum.GAME_BEGIN_LEVEL, mustBeAdded);
 	}
 
 	public void addLadybugEatenAPoint(boolean mustBeAdded) {
-		if (mustBeAdded) {
-			lstSoundsEnum.add(SoundsEnum.LADYBUG_CHOMP);
-		}
+		addSounds(SoundsEnum.LADYBUG_CHOMP, mustBeAdded);
 	}
 
 	public void addLadybugEatGhost(boolean mustBeAdded) {
-		if (mustBeAdded) {
-			lstSoundsEnum.add(SoundsEnum.LADYBUG_EAT_GHOST);
-		}
+		addSounds(SoundsEnum.LADYBUG_EAT_GHOST, mustBeAdded);
 	}
 
 	public void addLadybugIsDying(boolean mustBeAdded, boolean startFenerarium) {
-		if (mustBeAdded & startFenerarium) {
-			lstSoundsEnum.add(SoundsEnum.LADYBUG_IS_DYING);
-		}
+		addSounds(SoundsEnum.LADYBUG_IS_DYING, mustBeAdded && startFenerarium);
 	}
 
 	public void addNewLife(boolean mustBeAdded) {
-		if (mustBeAdded) {
-			lstSoundsEnum.add(SoundsEnum.LADYBUG_EXTRA_PAC);
-		}
+		addSounds(SoundsEnum.LADYBUG_EXTRA_PAC, mustBeAdded);
 	}
 
 	public void addRegeneratedGhost(boolean mustBeAdded) {
-		if (mustBeAdded) {
-			lstSoundsEnum.add(SoundsEnum.GHOST_REGENERATE);
-		}
+		addSounds(SoundsEnum.GHOST_REGENERATE, mustBeAdded);
 	}
 
 	public void addScaredGhost(boolean mustBeAdded) {
-		if (mustBeAdded) {
-			lstSoundsEnum.add(SoundsEnum.LADYBUG_INTERMISSION);
-		}
+		addSounds(SoundsEnum.LADYBUG_INTERMISSION, mustBeAdded);
 	}
 
 	public void addSirenSound(boolean mustBeAdded, int percent) {
-		if (!mustBeAdded) {
-			return;
-		}
 		if (percent < 40) {
-			lstSoundsEnum.add(SoundsEnum.GAME_SIREN_0);
+			addSounds(SoundsEnum.GAME_SIREN_0, mustBeAdded);
 		} else if (percent < 60) {
-			lstSoundsEnum.add(SoundsEnum.GAME_SIREN_1);
+			addSounds(SoundsEnum.GAME_SIREN_1, mustBeAdded);
 		} else if (percent < 80) {
-			lstSoundsEnum.add(SoundsEnum.GAME_SIREN_2);
+			addSounds(SoundsEnum.GAME_SIREN_2, mustBeAdded);
 		} else {
-			lstSoundsEnum.add(SoundsEnum.GAME_SIREN_3);
+			addSounds(SoundsEnum.GAME_SIREN_3, mustBeAdded);
 		}
 	}
 
 	public void addTeleport(boolean mustBeAdded) {
-		if (mustBeAdded) {
-			lstSoundsEnum.add(SoundsEnum.COMMON_TELEPORT);
-		}
+		addSounds(SoundsEnum.COMMON_TELEPORT, mustBeAdded);
 	}
 
+	@Override
 	public boolean hasSound(SoundsEnum soundsEnum) {
 		return lstSoundsEnum.contains(soundsEnum);
 	}
 
 	public void initSounds() {
 		lstSoundsEnum.removeAll(lstSoundsEnum);
+	}
+
+	private void addSounds(SoundsEnum soundsEnum, boolean mustBeAdded) {
+		if (mustBeAdded) {
+			lstSoundsEnum.add(soundsEnum);
+		}
 	}
 }

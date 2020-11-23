@@ -16,14 +16,8 @@
  */
 package com.kycox.ladybug.contract;
 
-import com.kycox.ladybug.model.GameStatus;
-import com.kycox.ladybug.sound.NewSounds;
-
-public interface IGameModelForGameSounds {
-	// FIXME : c'est trop spécifique !!
-	public GameStatus getGameStatus();
-
-	public NewSounds getNewSounds();
+public interface IGameModelForGameSounds extends IGameModelForExternalElements {
+	public INewSoundsForGameSounds getNewSounds();
 
 	public boolean isSoundActive();
 

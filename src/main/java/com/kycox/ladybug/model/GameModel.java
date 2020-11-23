@@ -118,32 +118,6 @@ public class GameModel extends Observable implements IGameModelForGameView, IGam
 		return 2;
 	}
 
-	public void init() {
-		initGame();
-		startGameTimer();
-	}
-
-	/**
-	 * Initialise le niveau en fonction du niveau précédent
-	 */
-	public void initLevel() {
-		// suppression des composants techniques du niveau précédent
-		removePreviousTasksLevel();
-		gameStatus.setInGame();
-		// incrémente le numéro du niveau
-		gameStatus.setNumLevel(gameStatus.getNumLevel() + 1);
-		// recopie les paramètres du niveau dans les données flottantes du niveau
-		screenData.setLevelMap(gameStatus.getNumLevel(), gameStatus.isInGame());
-		// initialisation du super power
-		groupGhosts.setFear(false);
-		// début du level : utile pour le son du jingle
-		setBeginNewLevel(true);
-		// initialisation de la cinématique de la mort de ladybug
-		kinematicLadybugDeath.initBip();
-		// on continue le level
-		continueLevel();
-	}
-
 	public void startGame() {
 		initGame();
 		initLevel();
@@ -257,6 +231,11 @@ public class GameModel extends Observable implements IGameModelForGameView, IGam
 		return new Timer(PACE, action);
 	}
 
+	private void init() {
+		initGame();
+		startGameTimer();
+	}
+
 	/**
 	 * Initialise les variables au lancement du programme
 	 */
@@ -284,6 +263,27 @@ public class GameModel extends Observable implements IGameModelForGameView, IGam
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// active sound
 		setSoundActive(true);
+	}
+
+	/**
+	 * Initialise le niveau en fonction du niveau précédent
+	 */
+	private void initLevel() {
+		// suppression des composants techniques du niveau précédent
+		removePreviousTasksLevel();
+		gameStatus.setInGame();
+		// incrémente le numéro du niveau
+		gameStatus.setNumLevel(gameStatus.getNumLevel() + 1);
+		// recopie les paramètres du niveau dans les données flottantes du niveau
+		screenData.setLevelMap(gameStatus.getNumLevel(), gameStatus.isInGame());
+		// initialisation du super power
+		groupGhosts.setFear(false);
+		// début du level : utile pour le son du jingle
+		setBeginNewLevel(true);
+		// initialisation de la cinématique de la mort de ladybug
+		kinematicLadybugDeath.initBip();
+		// on continue le level
+		continueLevel();
 	}
 
 	/**
