@@ -18,8 +18,11 @@ package com.kycox.ladybug.view.body;
 
 import java.awt.Image;
 
+import javax.inject.Named;
+
 import com.kycox.ladybug.body.ghost.Ghost;
 
+@Named("GhostView")
 public class GhostView {
 
   public Image getImage(Ghost ghost) {

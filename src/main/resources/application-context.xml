@@ -14,152 +14,88 @@
 		http://www.springframework.org/schema/aop 
 		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
 		default-lazy-init="false">  
-		
-	<bean id="beanSpeedFunctionGhost" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
+	<context:annotation-config/>
+	<context:component-scan base-package="com.kycox"/>
+	
+	<bean id="SpeedFunctionGhost" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
 		<property name="lowLimit" value="2"/>
 	</bean>
 	
-	<bean id="beanGhostSensitiveBehavious" class="com.kycox.ladybug.maths.GhostSensitiveBehavious" scope="prototype"/>
+	<!-- /!\ prototype -->
+	<bean id="GhostSensitiveBehavious" class="com.kycox.ladybug.maths.GhostSensitiveBehavious" scope="prototype"/>
 	
-	<!-- beanClyde in beanGroupGhost -->	
-	<bean id="beanClyde" class="com.kycox.ladybug.body.ghost.Clyde" scope="prototype">
+	<!-- Clyde in GroupGhost -->	
+	<bean id="Clyde" class="com.kycox.ladybug.body.ghost.Clyde" scope="prototype">
 		<property name="images" value="ORANGE"/>
 		<property name="behavious" value="STUPID"/>
-		<property name="speedFunction" ref="beanSpeedFunctionGhost"/>
-		<property name="sensitiveBehavious" ref="beanGhostSensitiveBehavious"/>
+		<property name="speedFunction" ref="SpeedFunctionGhost"/>
+		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious"/>
 	</bean>	
 	
-	<!-- beanBlinkySpeedIndex in beanBlinky -->
-	<bean id="beanBlinkySpeedIndex" class="com.kycox.ladybug.maths.BlinkySpeedIndex" scope="singleton"/>
-	
-	<!-- beanBlinky in beanGroupGhost -->
-	<bean id="beanBlinky" class="com.kycox.ladybug.body.ghost.Blinky" scope="prototype">
+	<!-- Blinky in GroupGhost -->
+	<bean id="Blinky" class="com.kycox.ladybug.body.ghost.Blinky" scope="prototype">
 		<property name="images" value="RED"/>
 		<property name="behavious" value="AGGRESSIVE"/>
-		<property name="speedFunction" ref="beanSpeedFunctionGhost"/>
-		<property name="sensitiveBehavious" ref="beanGhostSensitiveBehavious"/>
-		<property name="blinkySpeedIndex" ref="beanBlinkySpeedIndex"/>
+		<property name="speedFunction" ref="SpeedFunctionGhost"/>
+		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious"/>
+		<property name="blinkySpeedIndex" ref="BlinkySpeedIndex"/>
 	</bean>	
 	
-	<!-- beanInky in beanGroupGhost -->
-	<bean id="beanInky" class="com.kycox.ladybug.body.ghost.Inky" scope="prototype">
+	<!-- Inky in GroupGhost -->
+	<bean id="Inky" class="com.kycox.ladybug.body.ghost.Inky" scope="prototype">
 		<property name="images" value="BLUE"/>
 		<property name="behavious" value="STUPID"/>
-		<property name="speedFunction" ref="beanSpeedFunctionGhost"/>
-		<property name="sensitiveBehavious" ref="beanGhostSensitiveBehavious"/>
+		<property name="speedFunction" ref="SpeedFunctionGhost"/>
+		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious"/>
 	</bean>	
 	
-	<!-- beanPinky in beanGroupGhost -->
-	<bean id="beanPinky" class="com.kycox.ladybug.body.ghost.Pinky" scope="prototype">
+	<!-- Pinky in GroupGhost -->
+	<bean id="Pinky" class="com.kycox.ladybug.body.ghost.Pinky" scope="prototype">
 		<property name="images" value="PINK"/>
 		<property name="behavious" value="SMART"/>
-		<property name="speedFunction" ref="beanSpeedFunctionGhost"/>
-		<property name="sensitiveBehavious" ref="beanGhostSensitiveBehavious"/>
+		<property name="speedFunction" ref="SpeedFunctionGhost"/>
+		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious"/>
 	</bean>
 	
-	<!-- Ghosts list in beanGameModel -->
-	<bean id="beanGroupGhost" class="com.kycox.ladybug.body.ghost.GhostsGroup">
+	<!-- GroupGhost list in GameModel -->
+	<bean id="GroupGhost" class="com.kycox.ladybug.body.ghost.GhostsGroup">
 		<property name="lstGhosts">
 			<list>
-				<ref bean="beanClyde"/>
-				<ref bean="beanBlinky"/>
-				<ref bean="beanInky"/>				
-				<ref bean="beanPinky"/>
+				<ref bean="Clyde"/>
+				<ref bean="Blinky"/>
+				<ref bean="Inky"/>				
+				<ref bean="Pinky"/>
 			</list>
 		</property>
 	</bean>
 
-	<!-- LadyBug in beanGameModel -->	
-	<bean id="beanSpeedFunctionLadybug" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
+	<!-- SpeedFunctionLadybug in Ladybug -->	
+	<bean id="SpeedFunctionLadybug" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
 		<property name="lowLimit" value="4"/>
 	</bean>
 	
-	<bean id="beanLadybug" class="com.kycox.ladybug.body.ladybug.Ladybug" scope="singleton">
-		<property name="speedFunction" ref="beanSpeedFunctionLadybug"/>
+	<!--  /!\ speedFunction est définie dans une classe parente -->
+	<bean id="Ladybug" class="com.kycox.ladybug.body.ladybug.Ladybug" scope="singleton">
+		<property name="speedFunction" ref="SpeedFunctionLadybug"/>
 	</bean>
-	<bean id="beanKinematicLadybugDeath" class="com.kycox.ladybug.constant.ladybug.KinematicLadybugDeath" scope="singleton"/>
 	
-	<!-- The Game beans in beanGameModel -->
-	<bean id="beanGameScore" class="com.kycox.ladybug.score.GameScore" scope="singleton"/>
-	<bean id="beanGameStatus" class="com.kycox.ladybug.model.GameStatus" scope="singleton">
+	<!-- The GameStatus in GameModel -->
+	<bean id="GameStatus" class="com.kycox.ladybug.model.GameStatus" scope="singleton">
 		<property name="numLevel" value="0"/>
-	</bean>
-	<bean id="beanSuperPowerTimer" class="com.kycox.ladybug.timer.SuperPowerTimer" scope="singleton"/>	
-	<bean id="beanGroupIncrementScores" class="com.kycox.ladybug.score.GroupIncrementScores" scope="singleton"/>
+	</bean>	
 	
-	<!-- beans levels in beanLevels -->
-	<bean id="beanLevel1" class="com.kycox.ladybug.level.Level1" scope="singleton"/>
-	<bean id="beanLevel2NG" class="com.kycox.ladybug.level.Level2NG" scope="singleton"/>
-	<bean id="beanLevel3NG" class="com.kycox.ladybug.level.Level3NG" scope="singleton"/>
-	<bean id="beanLevel4NG" class="com.kycox.ladybug.level.Level4NG" scope="singleton"/>
-	<bean id="beanLevel5NG" class="com.kycox.ladybug.level.Level5NG" scope="singleton"/>
-	
-	<!--  beanLevels in beanScreenData -->
-	<bean id="beanLevels" class="com.kycox.ladybug.level.Levels" scope="singleton">
+	<!--  Levels in ScreenData -->
+	<bean id="Levels" class="com.kycox.ladybug.level.Levels" scope="singleton">
 		<property name="lstLevel">
 			<list>
-				<!--  ref bean="beanLevel1"/-->
-				<ref bean="beanLevel2NG"/>
-				<!--  ref bean="beanLevel3NG"/>
-				<ref bean="beanLevel4NG"/>
-				<ref bean="beanLevel5NG"/-->
+				<ref bean="Level1"/>
+				<ref bean="Level2NG"/>
+				<ref bean="Level3NG"/>
+				<ref bean="Level4NG"/>
+				<ref bean="Level5NG"/>
 			</list>
 		</property>
-	</bean>
-	
-	<!-- beanScreenData in beanGameModel -->	
-	<bean id="beanScreenData" class="com.kycox.ladybug.level.ScreenData" scope="singleton">
-		<property name="gameLevels" ref="beanLevels"/>
-	</bean>
-
-	<!-- beanNewSounds in beanGameModel -->
-	<bean id="beanNewSounds" class="com.kycox.ladybug.sound.NewSounds" scope="singleton"/>
-
-	<!-- beanGameModel in beanEngine -->
-	<bean id="beanGameModel" class="com.kycox.ladybug.model.GameModel" scope="singleton" init-method="init">
-		<property name="groupGhosts" ref="beanGroupGhost"/>
-		<property name="gameScore" ref="beanGameScore"/>
-		<property name="gameStatus" ref="beanGameStatus"/>
-		<property name="groupIncrementScores" ref="beanGroupIncrementScores"/>
-		<property name="kinematicLadybugDeath" ref="beanKinematicLadybugDeath"/>				
-		<property name="ladybug" ref="beanLadybug"/>
-		<property name="screenData" ref="beanScreenData"/>
-		<property name="superPowerTimer" ref="beanSuperPowerTimer"/>
-		<property name="newSounds" ref="beanNewSounds"/>				
-	</bean>
-	
-	<!-- beanLadyView in beanGameView -->
-	<bean id="beanLadyView" class="com.kycox.ladybug.view.body.LadybugView" scope="singleton" init-method="init"/>
-
-	<!-- beanLadyView in beanGameView -->
-	<bean id="beanGhostView" class="com.kycox.ladybug.view.body.GhostView" scope="singleton"/>
-
-	<!--  beanGameController in beanGameView -->
-	<bean id="beanKeyGameController" class="com.kycox.ladybug.controler.KeyGameController" scope="singleton">
-		<property name="gameModel" ref="beanGameModel"/>
-	</bean>
-	
-	<!-- beanGameView in beanEngine -->	
-	<bean id="beanGameView" class="com.kycox.ladybug.view.GameView" scope="singleton" init-method="init">
-		<property name="ladybugView" ref="beanLadyView"/>
-		<property name="ghostView" ref="beanGhostView"/>
-		<property name="gameController" ref="beanKeyGameController"/>
-	</bean>		
-	
-	<!-- beanGameSound in beanEngine -->
-	<bean id="beanGameSounds" class="com.kycox.ladybug.sound.GameSounds" scope="singleton"/>
-	
-	<!-- beanEngine -->
-	<bean id="beanEngine" class="com.kycox.ladybug.engine.Engine" scope="singleton" init-method="init">
-		<property name="gameModel" ref="beanGameModel"/>
-		<property name="gameSounds" ref="beanGameSounds"/>
-		<property name="gameView" ref="beanGameView"/>
-	</bean>
-	
-	<!-- beanMainFrame -->
-	<bean id="beanMainFrame" class="com.kycox.ladybug.view.MainFrame" scope="singleton" init-method="init">
-		<property name="gameView" ref="beanGameView"/>
-	</bean> 
+	</bean>	
 		
 	<!-- Test AOP pour logger dans la console -->
 	<bean id="logAdvice" name="logAdvice" class="com.kycox.ladybug.utils.aop.TraceurAdvice"/>

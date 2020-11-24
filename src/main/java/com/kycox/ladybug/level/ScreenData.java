@@ -21,22 +21,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.tools.Utils;
 import com.kycox.ladybug.tools.dijkstra.UnitDijkstra;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * La map du jeu en cours
  *
  */
+@Named("ScreenData")
 public final class ScreenData {
 	@Getter
 	private ILevel			  currentLevel;
-	@Setter
+	@Inject
 	private Levels			  gameLevels;
 	private int				  initNbrBlocksWithPoint = 0;
 	private List<ScreenBlock> lstDataBlocks			 = new ArrayList<>();
@@ -165,7 +168,7 @@ public final class ScreenData {
 	}
 
 	/***
-	 * Affecte la map en focntion du numero de niveau
+	 * Affecte la map en fonction du numero de niveau
 	 *
 	 * @param numLevel
 	 */
@@ -215,12 +218,6 @@ public final class ScreenData {
 		}
 	}
 
-	/**
-	 * Retourne la position dans le IData du numéro du block ayant un point
-	 *
-	 * @param numPoint
-	 * @return
-	 */
 	private int getPosNumPoint(int numPoint) {
 		int	nbrPoint = 0;
 		int	pos		 = 0;
@@ -234,13 +231,9 @@ public final class ScreenData {
 		return pos;
 	}
 
-	/**
-	 * Retourne une position aléatoire du tableau où se trouve un point
-	 */
 	private int getRandomPosNumPoint() {
-		// nombre de points dans le IData courant
 		int	nbrPoints	= getNbrBlocksWithPoint();
-		int	randomPoint	= new Random().nextInt(nbrPoints);
+		int	randomPoint	= new Random().nextInt(nbrPoints)+1;
 		return getPosNumPoint(randomPoint);
 	}
 }

@@ -19,6 +19,8 @@ package com.kycox.ladybug.view.body;
 import java.awt.Image;
 import java.awt.Point;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Named;
 import javax.swing.Timer;
 
 import com.kycox.ladybug.body.ladybug.Ladybug;
@@ -26,6 +28,7 @@ import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.timer.TimerView;
 
+@Named("LadybugView")
 public class LadybugView implements TimerView {
 	// Suite de body image
 	private BodyImg	bodyDownCurrent;
@@ -104,7 +107,8 @@ public class LadybugView implements TimerView {
 		return bodyDownCurrent.getImg();
 	}
 
-	public void init() {
+	@PostConstruct
+	private void init() {
 		ladybugLeft1.setNext(ladybugLeft2);
 		ladybugLeft2.setNext(ladybugLeft3);
 		ladybugLeft3.setNext(ladybugLeft4);

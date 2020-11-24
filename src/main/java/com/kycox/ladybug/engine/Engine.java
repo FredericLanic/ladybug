@@ -16,20 +16,26 @@
  */
 package com.kycox.ladybug.engine;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import com.kycox.ladybug.model.GameModel;
 import com.kycox.ladybug.sound.GameSounds;
 import com.kycox.ladybug.view.GameView;
 
 import lombok.Setter;
 
+@Named("Engine")
 public class Engine {
-	@Setter
+	@Inject
 	private GameModel  gameModel;
-	@Setter
+	@Inject
 	private GameSounds gameSounds;
-	@Setter
+	@Inject
 	private GameView   gameView;
 
+	@PostConstruct
 	public void init() {
 		// PAD CONTROLLER
 		// PadController padController = new PadController(gameModel);

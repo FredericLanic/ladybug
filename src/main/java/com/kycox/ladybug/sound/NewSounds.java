@@ -3,11 +3,14 @@ package com.kycox.ladybug.sound;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
+
 import com.kycox.ladybug.constant.SoundsEnum;
 import com.kycox.ladybug.contract.INewSoundsForGameSounds;
 
 import lombok.Getter;
 
+@Named("NewSounds")
 public class NewSounds implements INewSoundsForGameSounds {
 	@Getter
 	private List<SoundsEnum> lstSoundsEnum = new ArrayList<>();

@@ -19,6 +19,8 @@ package com.kycox.ladybug.timer;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Named;
+
 import com.kycox.ladybug.constant.SuperPowerTimerEnum;
 
 import lombok.Getter;
@@ -29,6 +31,7 @@ import lombok.Setter;
  * clignottent ensuite. 5 Secondes avant la fin, les fantômes vont clignoter
  *
  */
+@Named("SuperPowerTimer")
 public class SuperPowerTimer {
 	/**
 	 * Class TimerTask

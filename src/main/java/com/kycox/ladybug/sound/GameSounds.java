@@ -19,6 +19,7 @@ package com.kycox.ladybug.sound;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.inject.Named;
 import javax.sound.sampled.Clip;
 
 import com.kycox.ladybug.constant.SoundsEnum;
@@ -29,6 +30,7 @@ import com.kycox.ladybug.contract.INewSoundsForGameSounds;
  * Gestion du son dans le jeu
  *
  */
+@Named("GameSounds")
 public class GameSounds implements Observer {
 	private IGameModelForGameSounds	gameModel;
 	private INewSoundsForGameSounds	newSounds;

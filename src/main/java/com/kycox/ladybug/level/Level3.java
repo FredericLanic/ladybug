@@ -18,6 +18,9 @@ package com.kycox.ladybug.level;
 
 import java.awt.Point;
 
+import javax.inject.Named;
+
+@Named("Level3")
 public class Level3 extends Level {
 
   public Level3() {

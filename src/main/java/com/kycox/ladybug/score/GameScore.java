@@ -16,6 +16,8 @@
  */
 package com.kycox.ladybug.score;
 
+import javax.inject.Named;
+
 import com.kycox.ladybug.body.ghost.GhostsGroup;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
@@ -28,6 +30,7 @@ import lombok.Setter;
  * Score du jeu
  *
  */
+@Named("GameScore")
 public class GameScore {
 	@Getter
 	@Setter

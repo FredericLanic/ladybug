@@ -18,8 +18,10 @@ package com.kycox.ladybug.level;
 
 import java.awt.Point;
 
-public class Level2 extends Level {
+import javax.inject.Named;
 
+@Named("Level2")
+public class Level2 extends Level {
   public Level2() {
     // nombre de blocks par ligne
     nbrBlocksByLine = 15;

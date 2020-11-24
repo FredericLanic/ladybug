@@ -24,6 +24,9 @@ import java.awt.Graphics2D;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -49,20 +52,21 @@ import lombok.Setter;
  *
  */
 @SuppressWarnings("deprecation")
+@Named("GameView")
 public class GameView extends JPanel implements Observer {
 	/**
 	 * Default serialVersionUID
 	 */
 	private static final long serialVersionUID = 1L;
 	private ConfJDialog		  confJDialog;
-	@Setter
+	@Inject
 	private KeyGameController gameController;
 	// Données transitées par le pattern Observer
 	private transient IGameModelForGameView	gameModel;
-	@Setter
+	@Inject
 	private transient GhostView			ghostView;
 	private boolean						hasBeenDrawOnce	= false;
-	@Setter
+	@Inject
 	private transient LadybugView		ladybugView;
 	/**
 	 * R�cup�ration de la JFrame parent
@@ -71,6 +75,7 @@ public class GameView extends JPanel implements Observer {
 	// font par défaut
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
 
+	@PostConstruct
 	public void init() {
 		setFocusable(true);
 		setBackground(Color.black);

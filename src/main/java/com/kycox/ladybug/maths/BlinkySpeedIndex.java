@@ -16,6 +16,9 @@
  */
 package com.kycox.ladybug.maths;
 
+import javax.inject.Named;
+
+@Named("BlinkySpeedIndex")
 public class BlinkySpeedIndex {
 	/**
 	 * aX²+bX+c (c=0)

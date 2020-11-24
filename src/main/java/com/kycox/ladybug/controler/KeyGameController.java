@@ -19,6 +19,9 @@ package com.kycox.ladybug.controler;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.model.GameModel;
 
@@ -28,11 +31,12 @@ import lombok.Setter;
  * Contrôleur du jeu : MVC
  *
  */
+@Named("KeyGameController")
 public class KeyGameController extends KeyAdapter {
 	// voir https://github.com/marcelschoen/gamepad4j pour brancher une
 	// manette usb pour le jeu
 	// utiliser plutôt Jamepad qui me semble facilement utilisable;
-	@Setter
+	@Inject
 	private GameModel gameModel;
 
 	/**

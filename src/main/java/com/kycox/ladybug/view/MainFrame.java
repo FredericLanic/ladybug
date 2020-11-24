@@ -21,6 +21,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -35,23 +38,20 @@ import lombok.Setter;
  * FIXME : peut-être utiliser une autre techno que swing
  *
  */
+@Named("MainFrame")
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private transient Toolkit defaultToolKit   = Toolkit.getDefaultToolkit();
 	private double			  edge			   = (double) 15 * Constants.BLOCK_SIZE;
-	@Setter
+	@Inject
 	private GameView		  gameView;
 	private double			  rightLeftWidth   = (defaultToolKit.getScreenSize().getWidth() - 15 * Constants.BLOCK_SIZE)
 	        / 2;
 	private double			  topBottomHeight  = (defaultToolKit.getScreenSize().getHeight()
 	        - 16 * Constants.BLOCK_SIZE) / 2;
 
-	/**
-	 * Création des JPanel de la JFrame
-	 *
-	 * @param gameView
-	 */
-	public void init() {
+	@PostConstruct
+	private void init() {
 		setTitle("LadyBug");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
