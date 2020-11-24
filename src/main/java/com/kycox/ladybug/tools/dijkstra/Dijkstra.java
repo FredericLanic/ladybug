@@ -22,6 +22,8 @@ import java.util.List;
 import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.level.ScreenData;
 
+import lombok.Getter;
+
 /**
  * Algorithme Dijkstra pour trouver un plus court chemin dans un ScreenData
  *
@@ -52,12 +54,11 @@ public class Dijkstra {
 		return shorterWay;
 	}
 
+	@Getter
 	private List<UnitDijkstra> listUnitDijkstra;
 	int						   nbrAccessibleBlocks;
 
-	/**
-	 * @param level
-	 */
+	
 	/**
 	 * Calcul du parcours le plus court en partant de startCoordonnate (coordonnées
 	 * de Block) dans un Level de ladybug IMPORTANT : On part du principe que le
@@ -71,15 +72,6 @@ public class Dijkstra {
 	private Dijkstra(ScreenData screenData) {
 		// Création de la list des unités Dijkstra
 		listUnitDijkstra = screenData.convertToDjistraList();
-	}
-
-	/**
-	 * Getter et Setter
-	 *
-	 * @return
-	 */
-	private List<UnitDijkstra> getListUnitDijkstra() {
-		return listUnitDijkstra;
 	}
 
 	/**

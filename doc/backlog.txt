@@ -42,6 +42,7 @@ DONE :
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
+- CTEC10 : Mettre des notations d'injections spring pour la non-configuration du jeu en lui même
 - CTEC11 : sortir getSirenSound(int percent) de GameModel - lié à CTEC15
 - CTEC12 : problème parfois pour se positionner de façon random sur un block contenant un point
 - CTEC15 : sortir la notion de nouveau son de GameModel : 

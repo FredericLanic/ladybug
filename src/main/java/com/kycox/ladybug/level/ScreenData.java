@@ -30,7 +30,6 @@ import com.kycox.ladybug.tools.Utils;
 import com.kycox.ladybug.tools.dijkstra.UnitDijkstra;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * La map du jeu en cours

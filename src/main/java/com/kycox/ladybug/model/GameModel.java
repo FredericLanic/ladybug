@@ -182,55 +182,7 @@ public class GameModel extends Observable implements IGameModelForGameView, IGam
 	 */
 	private Timer createTimer() {
 		ActionListener action = event -> {
-			if (gameStatus.isInGame() && LadybugStatusEnum.isDead().test(ladybug)) {
-				ladybugIsDead();
-			} else if (gameStatus.isInGame() && LadybugStatusEnum.isDying().test(ladybug)) {
-				ladybugIsDying();
-			} else if (gameStatus.isInGame() && groupGhosts.userIsDead()) {
-				gameStatus.setNoGame();
-			} else {
-// Récupération des actions de chacun
-				ladybug.setActions(screenData);
-				groupGhosts.setActions(ladybug);
-// GESTION DE L'ETAT DES FANTOMES
-				groupGhosts.updateSeetings(gameStatus.getNumLevel(), screenData);
-// GESTION DE LA MORT DE LADYBUG
-				if (groupGhosts.eatLadybug()) {
-					ladybug.setStatus(LadybugStatusEnum.DYING);
-					groupGhosts.manageNewLife();
-				}
-// GESTION DU SUPER POWER
-				if (superPowerTimer.isStopping()) {
-					groupGhosts.setFlashActive();
-				} else if (superPowerTimer.isStopped()) {
-					groupGhosts.setFear(false);
-				}
-				// Active le timer du super power si ladybug a mangé un méga point
-				if (ladybug.isEatenAMegaPoint()) {
-					runSuperPowerTimer();
-					groupGhosts.setFear(true);
-				}
-// SCORE
-				gameScore.setScore(groupGhosts, ladybug, groupIncrementScores);
-				groupIncrementScores.removeIfDying();
-// NOUVELLE VIE PACMAN
-				if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
-					gameScore.setIncrementScore(0);
-					ladybug.setNewLife(true);
-				}
-				ladybug.manageNewLife();
-// DEPLACEMENT
-				ladybug.move(screenData);
-				groupGhosts.move(screenData, ladybug, ghostRequest);
-// SCREENDATA
-				screenData.updateScreenBlock(ladybug);
-// VERIFICAITON NOMBRE POINT MANGEABLES
-// FIXME : sortir ce test de ce block
-				checkEndMaze();
-			}
-			setSoundRequests(screenData.getPercentageEatenPoint());
-			setChanged();
-			notifyObservers();
+			actionsByTimerBip();
 		};
 		return new Timer(PACE, action);
 	}
@@ -241,6 +193,58 @@ public class GameModel extends Observable implements IGameModelForGameView, IGam
 		startGameTimer();
 	}
 
+	private void actionsByTimerBip() {
+		if (gameStatus.isInGame() && LadybugStatusEnum.isDead().test(ladybug)) {
+			ladybugIsDead();
+		} else if (gameStatus.isInGame() && LadybugStatusEnum.isDying().test(ladybug)) {
+			ladybugIsDying();
+		} else if (gameStatus.isInGame() && groupGhosts.userIsDead()) {
+			gameStatus.setNoGame();
+		} else {
+//Récupération des actions de chacun
+			ladybug.setActions(screenData);
+			groupGhosts.setActions(ladybug);
+//GESTION DE L'ETAT DES FANTOMES
+			groupGhosts.updateSeetings(gameStatus.getNumLevel(), screenData);
+//GESTION DE LA MORT DE LADYBUG
+			if (groupGhosts.eatLadybug()) {
+				ladybug.setStatus(LadybugStatusEnum.DYING);
+				groupGhosts.manageNewLife();
+			}
+//GESTION DU SUPER POWER
+			if (superPowerTimer.isStopping()) {
+				groupGhosts.setFlashActive();
+			} else if (superPowerTimer.isStopped()) {
+				groupGhosts.setFear(false);
+			}
+			// Active le timer du super power si ladybug a mangé un méga point
+			if (ladybug.isEatenAMegaPoint()) {
+				runSuperPowerTimer();
+				groupGhosts.setFear(true);
+			}
+//SCORE
+			gameScore.setScore(groupGhosts, ladybug, groupIncrementScores);
+			groupIncrementScores.removeIfDying();
+//NOUVELLE VIE PACMAN
+			if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
+				gameScore.setIncrementScore(0);
+				ladybug.setNewLife(true);
+			}
+			ladybug.manageNewLife();
+//DEPLACEMENT
+			ladybug.move(screenData);
+			groupGhosts.move(screenData, ladybug, ghostRequest);
+//SCREENDATA
+			screenData.updateScreenBlock(ladybug);
+//VERIFICAITON NOMBRE POINT MANGEABLES
+//FIXME : sortir ce test de ce block
+			checkEndMaze();
+		}
+		setSoundRequests(screenData.getPercentageEatenPoint());
+		setChanged();
+		notifyObservers();
+	}
+	
 	/**
 	 * Initialise les variables au lancement du programme
 	 */
