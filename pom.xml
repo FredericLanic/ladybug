@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.kycox</groupId>
-  <artifactId>ladybug</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>ladybug</name>
-  <url>http://maven.apache.org</url>
-
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.kycox</groupId>
+	<artifactId>ladybug</artifactId>
+	<version>0.1.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	
+	<name>ladybug</name>
+	<url>http://maven.apache.org</url>
+	
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -18,10 +18,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <app.main.class>com.kycox.ladybug.MainLadybug</app.main.class>
-        <java.version>1.8</java.version>        
-        <maven.compiler.target>14</maven.compiler.target>
-    	<maven.compiler.source>14</maven.compiler.source>
+        <java.version>14</java.version>        
     </properties>
 
     <dependencies>
@@ -35,6 +32,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+      
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>      
       
 	    <dependency>
 			<groupId>org.projectlombok</groupId>
@@ -66,8 +69,7 @@
 			  <version>11</version>
 			  <type>pom</type>
 		</dependency>
-
-        		
+    		
     </dependencies>
     <build>
         <plugins>
@@ -84,31 +86,34 @@
             </plugin>			           
 
         	<plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>shade</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <shadedArtifactAttached>true</shadedArtifactAttached>
-                <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
-                <filters>
-                    <filter>
-                        <artifact>*:*</artifact>
-                        <excludes>
-                            <exclude>META-INF/*.SF</exclude>
-                            <exclude>META-INF/*.DSA</exclude>
-                            <exclude>META-INF/*.RSA</exclude>
-                        </excludes>
-                    </filter>
-                </filters>
-            </configuration>
-        </plugin> 
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-shade-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>shade</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	            <configuration>
+	                <shadedArtifactAttached>true</shadedArtifactAttached>
+	                <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
+	                <filters>
+	                    <filter>
+	                        <artifact>*:*</artifact>
+	                        <excludes>
+	                            <exclude>META-INF/*.SF</exclude>
+	                            <exclude>META-INF/*.DSA</exclude>
+	                            <exclude>META-INF/*.RSA</exclude>
+	                        </excludes>
+	                    </filter>
+	                </filters>
+	            </configuration>
+	        </plugin> 
+        
+        	<!-- voir https://spring.io/blog/2020/03/11/spring-tips-java-14-or-can-your-java-do-this -->
+			
         </plugins>
     </build>
 </project>
