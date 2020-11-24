@@ -24,8 +24,6 @@ import com.kycox.ladybug.model.GameModel;
 import com.kycox.ladybug.sound.GameSounds;
 import com.kycox.ladybug.view.GameView;
 
-import lombok.Setter;
-
 @Named("Engine")
 public class Engine {
 	@Inject

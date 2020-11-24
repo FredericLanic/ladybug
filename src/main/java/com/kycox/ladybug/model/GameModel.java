@@ -36,6 +36,7 @@ import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
 import com.kycox.ladybug.constant.ladybug.KinematicLadybugDeath;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
+import com.kycox.ladybug.contract.IGameModelForControleur;
 import com.kycox.ladybug.contract.IGameModelForGameSounds;
 import com.kycox.ladybug.contract.IGameModelForGameView;
 import com.kycox.ladybug.level.ScreenData;
@@ -54,7 +55,8 @@ import lombok.Setter;
  */
 @SuppressWarnings("deprecation")
 @Named("GameModel")
-public class GameModel extends Observable implements IGameModelForGameView, IGameModelForGameSounds {
+public class GameModel extends Observable
+        implements IGameModelForGameView, IGameModelForGameSounds, IGameModelForControleur {
 	private static final Log	  logger		= LogFactory.getLog(GameModel.class);
 	@Getter
 	@Setter
@@ -150,49 +152,6 @@ public class GameModel extends Observable implements IGameModelForGameView, IGam
 		gameTimer.stop();
 	}
 
-	/**
-	 * Vérifier si le labyrinthe est terminé
-	 */
-	private void checkEndMaze() {
-		// Niveau terminé
-		if (screenData.getNbrBlocksWithPoint() == 0) {
-			gameScore.addScore(Constants.SCORE_END_LEVEL);
-			initLevel();
-		}
-	}
-
-	/**
-	 * Paramêtrage des fantômes dans le niveau actuel
-	 *
-	 * Initialisation des directions et de la vue de ladybug
-	 *
-	 * suite de l'initialisation du niveau ou quand ladybug meurt
-	 */
-	private void continueLevel() {
-		// initialise ladybug pour le niveau
-		ladybug.setStartLevel(gameStatus.getNumLevel(), screenData.getInitLadybugPos());
-		// initialise les fantômes
-		groupGhosts.setStartLevel(gameStatus.getNumLevel(), screenData);
-	}
-
-	/**
-	 * Création du timer du jeu (coeur du jeu)
-	 *
-	 * @return
-	 */
-	private Timer createTimer() {
-		ActionListener action = event -> {
-			actionsByTimerBip();
-		};
-		return new Timer(PACE, action);
-	}
-
-	@PostConstruct
-	private void init() {
-		initGame();
-		startGameTimer();
-	}
-
 	private void actionsByTimerBip() {
 		if (gameStatus.isInGame() && LadybugStatusEnum.isDead().test(ladybug)) {
 			ladybugIsDead();
@@ -244,7 +203,50 @@ public class GameModel extends Observable implements IGameModelForGameView, IGam
 		setChanged();
 		notifyObservers();
 	}
-	
+
+	/**
+	 * Vérifier si le labyrinthe est terminé
+	 */
+	private void checkEndMaze() {
+		// Niveau terminé
+		if (screenData.getNbrBlocksWithPoint() == 0) {
+			gameScore.addScore(Constants.SCORE_END_LEVEL);
+			initLevel();
+		}
+	}
+
+	/**
+	 * Paramêtrage des fantômes dans le niveau actuel
+	 *
+	 * Initialisation des directions et de la vue de ladybug
+	 *
+	 * suite de l'initialisation du niveau ou quand ladybug meurt
+	 */
+	private void continueLevel() {
+		// initialise ladybug pour le niveau
+		ladybug.setStartLevel(gameStatus.getNumLevel(), screenData.getInitLadybugPos());
+		// initialise les fantômes
+		groupGhosts.setStartLevel(gameStatus.getNumLevel(), screenData);
+	}
+
+	/**
+	 * Création du timer du jeu (coeur du jeu)
+	 *
+	 * @return
+	 */
+	private Timer createTimer() {
+		ActionListener action = event -> {
+			actionsByTimerBip();
+		};
+		return new Timer(PACE, action);
+	}
+
+	@PostConstruct
+	private void init() {
+		initGame();
+		startGameTimer();
+	}
+
 	/**
 	 * Initialise les variables au lancement du programme
 	 */

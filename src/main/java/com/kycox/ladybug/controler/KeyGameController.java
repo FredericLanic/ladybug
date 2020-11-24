@@ -23,9 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.model.GameModel;
-
-import lombok.Setter;
+import com.kycox.ladybug.contract.IGameModelForControleur;
 
 /**
  * Contrôleur du jeu : MVC
@@ -37,7 +35,7 @@ public class KeyGameController extends KeyAdapter {
 	// manette usb pour le jeu
 	// utiliser plutôt Jamepad qui me semble facilement utilisable;
 	@Inject
-	private GameModel gameModel;
+	private IGameModelForControleur gameModel;
 
 	/**
 	 * Action sur les touches Gestion des touches pressées
