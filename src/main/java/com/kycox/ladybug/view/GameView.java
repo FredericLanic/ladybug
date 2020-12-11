@@ -43,8 +43,6 @@ import com.kycox.ladybug.view.body.LadybugView;
 import com.kycox.ladybug.view.conf.ConfJDialog;
 import com.kycox.ladybug.view.map.ScreenBlockView;
 
-import lombok.Setter;
-
 /**
  * Vue du jeu MVC
  *
@@ -151,7 +149,7 @@ public class GameView extends JPanel implements Observer {
 	 * @param g2d
 	 */
 	private void drawLadybug(Graphics2D g2d) {
-		g2d.drawImage(ladybugView.getNextImage(gameModel.getLadybug()), gameModel.getLadybug().getPosition().x + 1,
+		g2d.drawImage(ladybugView.getNextImage(gameModel.getLadybug().getViewDirection()), gameModel.getLadybug().getPosition().x + 1,
 		        gameModel.getLadybug().getPosition().y + 1, this);
 	}
 

@@ -23,7 +23,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.swing.Timer;
 
-import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.timer.TimerView;
@@ -75,16 +74,10 @@ public class LadybugView implements TimerView {
 	 */
 	@Override
 	public void doAction() {
-		if (viewDirectionPoint == Constants.POINT_UP) {
-			bodyUpCurrent = bodyUpCurrent.getNext();
-		}
-		if (viewDirectionPoint == Constants.POINT_RIGHT) {
-			bodyRightCurrent = bodyRightCurrent.getNext();
-		}
-		if (viewDirectionPoint == Constants.POINT_LEFT) {
-			bodyLeftCurrent = bodyLeftCurrent.getNext();
-		}
-		bodyDownCurrent = bodyDownCurrent.getNext();
+		if (viewDirectionPoint == Constants.POINT_UP) 	 bodyUpCurrent = bodyUpCurrent.getNext();
+		if (viewDirectionPoint == Constants.POINT_RIGHT) bodyRightCurrent = bodyRightCurrent.getNext();
+		if (viewDirectionPoint == Constants.POINT_LEFT)  bodyLeftCurrent = bodyLeftCurrent.getNext();
+		if (viewDirectionPoint == Constants.POINT_DOWN)  bodyDownCurrent = bodyDownCurrent.getNext();
 	}
 
 	/**
@@ -93,40 +86,54 @@ public class LadybugView implements TimerView {
 	 * @param viewDirectionPoint
 	 * @return
 	 */
-	public Image getNextImage(Ladybug ladybug) {
-		this.viewDirectionPoint = ladybug.getViewDirection();
-		if (viewDirectionPoint == Constants.POINT_UP) {
-			return bodyUpCurrent.getImg();
-		}
-		if (viewDirectionPoint == Constants.POINT_RIGHT) {
-			return bodyRightCurrent.getImg();
-		}
-		if (viewDirectionPoint == Constants.POINT_LEFT) {
-			return bodyLeftCurrent.getImg();
-		}
+	public Image getNextImage(Point viewDirectionPoint) {
+		if (viewDirectionPoint == Constants.POINT_UP) return bodyUpCurrent.getImg();
+		if (viewDirectionPoint == Constants.POINT_RIGHT) return bodyRightCurrent.getImg();
+		if (viewDirectionPoint == Constants.POINT_LEFT) return bodyLeftCurrent.getImg();
 		return bodyDownCurrent.getImg();
 	}
 
 	@PostConstruct
 	private void init() {
+		initDownImages();
+		initLeftImages();
+		initRightImages();
+		initUpImages();						
+		timer			 = createTimer(period);
+		timer.start();
+	}
+	
+	private void initLeftImages() {
 		ladybugLeft1.setNext(ladybugLeft2);
 		ladybugLeft2.setNext(ladybugLeft3);
 		ladybugLeft3.setNext(ladybugLeft4);
 		ladybugLeft4.setNext(ladybugLeft5);
 		ladybugLeft5.setNext(ladybugLeft6);
 		ladybugLeft6.setNext(ladybugLeft1);
+		bodyLeftCurrent	 = ladybugLeft1;
+	}
+	
+	private void initRightImages() {
 		ladybugRight1.setNext(ladybugRight2);
 		ladybugRight2.setNext(ladybugRight3);
 		ladybugRight3.setNext(ladybugRight4);
 		ladybugRight4.setNext(ladybugRight5);
 		ladybugRight5.setNext(ladybugRight6);
 		ladybugRight6.setNext(ladybugRight1);
+		bodyRightCurrent = ladybugRight1;
+	}
+	
+	private void initUpImages() {
 		ladybugUp1.setNext(ladybugUp2);
 		ladybugUp2.setNext(ladybugUp3);
 		ladybugUp3.setNext(ladybugUp4);
 		ladybugUp4.setNext(ladybugUp5);
 		ladybugUp5.setNext(ladybugUp6);
 		ladybugUp6.setNext(ladybugUp1);
+		bodyUpCurrent	 = ladybugUp1;
+	}
+	
+	private void initDownImages() {
 		ladybugDown1.setNext(ladybugDown2);
 		ladybugDown2.setNext(ladybugDown3);
 		ladybugDown3.setNext(ladybugDown4);
@@ -134,10 +141,5 @@ public class LadybugView implements TimerView {
 		ladybugDown5.setNext(ladybugDown6);
 		ladybugDown5.setNext(ladybugDown1);
 		bodyDownCurrent	 = ladybugDown1;
-		bodyLeftCurrent	 = ladybugLeft1;
-		bodyRightCurrent = ladybugRight1;
-		bodyUpCurrent	 = ladybugUp1;
-		timer			 = createTimer(period);
-		timer.start();
 	}
 }

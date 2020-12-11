@@ -47,5 +47,6 @@ DONE :
 - CTEC15 : sortir la notion de nouveau son de GameModel : 
 	en fin de compte, j'ai fait un gros refacto sur la gestions des sons; l'instance NewSounds contient du coup une liste d'enum SoundsEnum à entendre
 - CTEC18 : associer une interface à GameModel lors de sa gestion dans le controleur
+- CTEC21 : rendre plus lisible le design pattern des images de ladybug
 
 REJECT : 
