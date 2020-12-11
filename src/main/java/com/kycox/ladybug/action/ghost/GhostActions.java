@@ -18,12 +18,20 @@ package com.kycox.ladybug.action.ghost;
 
 import java.awt.Point;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 public class GhostActions {
+	@Setter
+	@Getter
 	private boolean	eaten		= false;
+	@Setter
+	@Getter
 	private boolean	eatLadybug	= false;
+	@Setter
+	@Getter
 	private Point	position;
+	@Setter
+	@Getter
 	private boolean	regenerated	= false;
 }

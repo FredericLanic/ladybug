@@ -19,6 +19,8 @@ package com.kycox.ladybug.level;
 import java.util.List;
 import java.util.Random;
 
+import com.kycox.ladybug.contract.ILevel;
+
 import lombok.Setter;
 
 public final class Levels {

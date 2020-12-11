@@ -22,4 +22,7 @@ package com.kycox.ladybug.constant;
  */
 public enum LevelConstructEnum {
 	B, N;
+	
+	private LevelConstructEnum() {
+	}
 }

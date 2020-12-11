@@ -14,36 +14,23 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.ladybug.level;
+package com.kycox.ladybug.contract;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.kycox.ladybug.contract.ILevel;
+import com.kycox.ladybug.level.ScreenBlock;
 
-import lombok.Getter;
+public interface ILevel {
+	public Point getGhostRegenerateBlockPoint();
 
-public abstract class Level implements ILevel {
-	// Map
-	protected int[] levelDATA;
-	// Nombre de blocks par ligne
-	@Getter
-	protected int nbrBlocksByLine;
-	// Nombre de lignes
-	@Getter
-	protected int nbrLines;
+	public Point getInitLadybugBlockPos();
 
-	@Override
-	public List<ScreenBlock> getLstBlocks() {
-		List<ScreenBlock> lstBlocks = new ArrayList<>();
-		for (int i = 0; i < levelDATA.length; i++) {
-			int			x	  = i % nbrBlocksByLine;
-			int			y	  = i / nbrBlocksByLine;
-			ScreenBlock	block = new ScreenBlock(levelDATA[i]);
-			block.setCoordinate(new Point(x, y));
-			lstBlocks.add(block);
-		}
-		return lstBlocks;
-	}
+	public List<ScreenBlock> getLstBlocks();
+
+	public int getNbrBlocksByLine();
+
+	public int getNbrLines();
+
+	public int getNbrMegaPoints();
 }

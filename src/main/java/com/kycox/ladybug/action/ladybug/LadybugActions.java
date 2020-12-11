@@ -19,11 +19,17 @@ package com.kycox.ladybug.action.ladybug;
 import com.kycox.ladybug.action.BodyActions;
 import com.kycox.ladybug.level.ScreenBlock;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 public class LadybugActions extends BodyActions {
-	private ScreenBlock	currentScreenBlock = null;
-	private boolean		eatenAMegaPoint	   = false;
-	private boolean		eatenAPoint		   = false;
+	@Setter
+	@Getter
+	private ScreenBlock	currentScreenBlock;
+	@Setter
+	@Getter
+	private boolean		eatenAMegaPoint;
+	@Setter
+	@Getter
+	private boolean		eatenAPoint;
 }

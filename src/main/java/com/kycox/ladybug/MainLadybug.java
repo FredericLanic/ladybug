@@ -42,8 +42,7 @@ public class MainLadybug {
 	}
 
 	/** lecture du contexte Spring de l'application */
-	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml",
-	        "application-context-*.xml");
+	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
 	@Autowired
 	private MainFrame		   mainFrame		  = applicationContext.getBean("MainFrame", MainFrame.class);
 

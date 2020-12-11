@@ -1,8 +1,10 @@
 package com.kycox.ladybug.action;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 public class BodyActions {
+	@Setter
+	@Getter
 	private boolean toBeTeleported = false;
 }

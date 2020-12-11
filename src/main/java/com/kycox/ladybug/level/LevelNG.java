@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kycox.ladybug.constant.LevelConstructEnum;
+import com.kycox.ladybug.contract.ILevel;
 
 public abstract class LevelNG implements ILevel {
 	private static final int DOWN				  = 8;
