@@ -36,7 +36,6 @@ import com.kycox.ladybug.contract.INewSoundsForGameSounds;
 @Named("GameSounds")
 public class GameSounds implements Observer {
 	private static final Log		logger = LogFactory.getLog(GameSounds.class);
-	
 	private IGameModelForGameSounds	gameModel;
 	private INewSoundsForGameSounds	newSounds;
 

@@ -25,48 +25,45 @@ import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.timer.TimerView;
 
 public class GhostFlashView implements TimerView {
+	private static GhostFlashView ghostFlashView = new GhostFlashView();
 
-  private static GhostFlashView ghostFlashView = new GhostFlashView();
+	public static GhostFlashView getInstance() {
+		return ghostFlashView;
+	}
 
-  public static GhostFlashView getInstance() {
-    return ghostFlashView;
-  }
+	/**
+	 * Période de clignottement
+	 */
+	private int		period = Constants.PACE * 4;
+	private boolean	showScared;
+	/**
+	 * Timer du clignottement
+	 */
+	private Timer	timer;
 
-  /**
-   * Période de clignottement
-   */
-  private int     period = Constants.PACE * 4;
+	/**
+	 * Constructeur privé pour assurer le singleton
+	 */
+	private GhostFlashView() {
+		timer = createTimer(period);
+		timer.start();
+	}
 
-  private boolean showScared;
+	@Override
+	public void doAction() {
+		showScared = !showScared;
+	}
 
-  /**
-   * Timer du clignottement
-   */
-  private Timer   timer;
-
-  /**
-   * Constructeur privé pour assurer le singleton
-   */
-  private GhostFlashView() {
-    timer = createTimer(period);
-    timer.start();
-  }
-
-  @Override
-  public void doAction() {
-    showScared = !showScared;
-  }
-
-  /**
-   * Retourne le fantôme qui clignotte
-   *
-   * @param ghost
-   * @return
-   */
-  public Image getImage(Ghost ghost) {
-    if (showScared)
-      return GhostScaredView.getInstance().getImage(ghost);
-    else
-      return GhostDefautlView.getInstance().getImage(ghost);
-  }
+	/**
+	 * Retourne le fantôme qui clignotte
+	 *
+	 * @param ghost
+	 * @return
+	 */
+	public Image getImage(Ghost ghost) {
+		if (showScared)
+			return GhostScaredView.getInstance().getImage(ghost);
+		else
+			return GhostDefautlView.getInstance().getImage(ghost);
+	}
 }

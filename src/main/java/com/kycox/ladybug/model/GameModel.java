@@ -94,6 +94,7 @@ public class GameModel extends Observable
 	@Inject
 	private SuperPowerTimer		  superPowerTimer;
 
+	@Override
 	public void forceStopGame() {
 		if (gameTimer.isRunning()) {
 			gameScore.setOldScore(-1);
@@ -104,6 +105,7 @@ public class GameModel extends Observable
 	/**
 	 * Jeu en pause
 	 */
+	@Override
 	public void gameInPause() {
 		if (gameTimer.isRunning())
 			stopGameTimer();
@@ -124,6 +126,7 @@ public class GameModel extends Observable
 		return 2;
 	}
 
+	@Override
 	public void startGame() {
 		initGame();
 		initLevel();
@@ -142,6 +145,7 @@ public class GameModel extends Observable
 	 * FIXME : peut être gérer en fonction de l'état du jeu quand par exemple on est
 	 * en intro
 	 */
+	@Override
 	public void startStopSoundActive() {
 		logger.info("startStopSoundActive : " + soundActive);
 		soundActive = !soundActive;

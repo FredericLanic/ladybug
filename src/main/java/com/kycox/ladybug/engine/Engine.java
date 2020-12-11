@@ -33,18 +33,16 @@ public class Engine {
 	@Inject
 	private GameView   gameView;
 
-	
 	/**
-	 * 	note : use PAD CONTROLLER PadController padController = new PadController(gameModel) for joystick
+	 * note : use PAD CONTROLLER PadController padController = new
+	 * PadController(gameModel) for joystick
 	 */
 	@PostConstruct
 	public void init() {
-
 		// Seulement gestion du clavier : on verra pour la manette après
 		// initialisation des observers
 		gameModel.addObserver(gameView);
 		gameModel.addObserver(gameSounds);
-		
 		// on récupère la longeur du son de la mort de ladybug et on l'affecte au
 		// gameModel
 		gameModel.getKinematicLadybugDeath().setMillisecondLenght(gameSounds.getMicrosecondLengthLadybugDeath());

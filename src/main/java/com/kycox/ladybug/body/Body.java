@@ -61,16 +61,6 @@ public abstract class Body {
 	private int startSpeedIndex = 0;
 
 	/**
-	 * Ajout d'une nouvelle vie
-	 */
-	public void manageNewLife() {
-		if (isNewLife()) {
-			setNewLife(false);
-			leftLifes++;
-		}
-	}
-
-	/**
 	 * Getters et setters pour la vitesse
 	 *
 	 * @return
@@ -100,6 +90,16 @@ public abstract class Body {
 	public void initSpeedIndex(int speedIndex) {
 		this.speedIndex		 = speedIndex;
 		this.startSpeedIndex = speedIndex;
+	}
+
+	/**
+	 * Ajout d'une nouvelle vie
+	 */
+	public void manageNewLife() {
+		if (isNewLife()) {
+			setNewLife(false);
+			leftLifes++;
+		}
 	}
 
 	public void minusLifesLeft() {

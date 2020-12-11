@@ -109,7 +109,6 @@ public class ConfJDialog extends JDialog implements ActionListener {
 					case JGhostChoice.CLYDE_CHOICE -> GhostsImagesEnum.ORANGE.setComputed(false);
 					case JGhostChoice.PINKY_CHOICE -> GhostsImagesEnum.PINK.setComputed(false);
 					default -> logger.info("No associated action for " + actionCommand);
-						
 				}
 				this.dispose();
 			default:
