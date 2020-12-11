@@ -62,10 +62,8 @@ public class LadybugView implements TimerView {
 	private BodyImg	ladybugUp4 = new BodyImg(PicturesEnum.LADYBUG_UP_4.getImg());
 	private BodyImg	ladybugUp5 = new BodyImg(PicturesEnum.LADYBUG_UP_3.getImg());
 	private BodyImg	ladybugUp6 = new BodyImg(PicturesEnum.LADYBUG_UP_2.getImg());
-	// période en mms
-	private int	  period = Constants.PACE * 4;
 	/** Timer de l'affichage */
-	private Timer timer;
+	private Timer	timer;
 	// View par défaut à la construction
 	private Point viewDirectionPoint = Constants.POINT_ZERO;
 
@@ -107,7 +105,7 @@ public class LadybugView implements TimerView {
 		initLeftImages();
 		initRightImages();
 		initUpImages();
-		timer = createTimer(period);
+		timer = createTimer();
 		timer.start();
 	}
 

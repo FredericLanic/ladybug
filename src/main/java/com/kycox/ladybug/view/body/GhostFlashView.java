@@ -21,7 +21,6 @@ import java.awt.Image;
 import javax.swing.Timer;
 
 import com.kycox.ladybug.body.ghost.Ghost;
-import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.timer.TimerView;
 
 public class GhostFlashView implements TimerView {
@@ -31,10 +30,6 @@ public class GhostFlashView implements TimerView {
 		return ghostFlashView;
 	}
 
-	/**
-	 * Période de clignottement
-	 */
-	private int		period = Constants.PACE * 4;
 	private boolean	showScared;
 	/**
 	 * Timer du clignottement
@@ -45,7 +40,7 @@ public class GhostFlashView implements TimerView {
 	 * Constructeur privé pour assurer le singleton
 	 */
 	private GhostFlashView() {
-		timer = createTimer(period);
+		timer = createTimer();
 		timer.start();
 	}
 

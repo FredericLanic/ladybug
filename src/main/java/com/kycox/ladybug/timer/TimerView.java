@@ -20,11 +20,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import com.kycox.ladybug.constant.Constants;
+
 public interface TimerView {
-	public default Timer createTimer(int mms) {
+	final int period = 4 * Constants.PACE;
+
+	public default Timer createTimer() {
 		ActionListener action = event -> doAction();
-		// Création d'un timer qui génère un tic
-		return new Timer(mms, action);
+		return new Timer(period, action);
 	}
 
 	public abstract void doAction();
