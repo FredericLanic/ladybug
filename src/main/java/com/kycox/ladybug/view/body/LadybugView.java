@@ -87,6 +87,7 @@ public class LadybugView implements TimerView {
 	 * @return
 	 */
 	public Image getNextImage(Point viewDirectionPoint) {
+		this.viewDirectionPoint = viewDirectionPoint;
 		if (viewDirectionPoint == Constants.POINT_UP) return bodyUpCurrent.getImg();
 		if (viewDirectionPoint == Constants.POINT_RIGHT) return bodyRightCurrent.getImg();
 		if (viewDirectionPoint == Constants.POINT_LEFT) return bodyLeftCurrent.getImg();
