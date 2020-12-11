@@ -30,6 +30,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -60,7 +61,7 @@ public class ConfJDialog extends JDialog implements ActionListener {
 		JPanel ghostPanel = new JGhostChoice(group);
 		ghostPanel.setBackground(Color.BLACK);
 		JLabel ladybugImg = new JLabel(new ImageIcon(PicturesEnum.LADYBUG_RIGHT_2.getImg()));
-		ladybugImg.setHorizontalAlignment(JLabel.CENTER);
+		ladybugImg.setHorizontalAlignment(SwingConstants.CENTER);
 		centerPanel.setLayout(new GridLayout(1, 2));
 		centerPanel.add(ghostPanel);
 		// Sud : les boutons 1 ou 2 joueurs
@@ -101,11 +102,14 @@ public class ConfJDialog extends JDialog implements ActionListener {
 				GhostsImagesEnum.RED.setComputed(true);
 				GhostsImagesEnum.BLUE.setComputed(true);
 				GhostsImagesEnum.PINK.setComputed(true);
-				switch (group.getSelection().getActionCommand()) {
+				String actionCommand = group.getSelection().getActionCommand();
+				switch (actionCommand) {
 					case JGhostChoice.BLINKY_CHOICE -> GhostsImagesEnum.RED.setComputed(false);
 					case JGhostChoice.INKY_CHOICE -> GhostsImagesEnum.BLUE.setComputed(false);
 					case JGhostChoice.CLYDE_CHOICE -> GhostsImagesEnum.ORANGE.setComputed(false);
 					case JGhostChoice.PINKY_CHOICE -> GhostsImagesEnum.PINK.setComputed(false);
+					default -> logger.info("No associated action for " + actionCommand);
+						
 				}
 				this.dispose();
 			default:

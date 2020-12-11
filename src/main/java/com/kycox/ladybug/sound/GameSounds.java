@@ -22,6 +22,9 @@ import java.util.Observer;
 import javax.inject.Named;
 import javax.sound.sampled.Clip;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.kycox.ladybug.constant.SoundsEnum;
 import com.kycox.ladybug.contract.IGameModelForGameSounds;
 import com.kycox.ladybug.contract.INewSoundsForGameSounds;
@@ -32,6 +35,8 @@ import com.kycox.ladybug.contract.INewSoundsForGameSounds;
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
+	private static final Log		logger = LogFactory.getLog(GameSounds.class);
+	
 	private IGameModelForGameSounds	gameModel;
 	private INewSoundsForGameSounds	newSounds;
 
@@ -76,7 +81,8 @@ public class GameSounds implements Observer {
 		try {
 			Thread.sleep(clip.getMicrosecondLength() / 1000);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.error("Interrupted - playStartJingle" + e);
+			Thread.currentThread().interrupt();
 		}
 		gameModel.getGameStatus().setInGame();
 		gameModel.startGameTimer();

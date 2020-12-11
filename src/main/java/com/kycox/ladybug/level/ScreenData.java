@@ -44,7 +44,7 @@ public final class ScreenData {
 	private int				  initNbrBlocksWithPoint = 0;
 	private List<ScreenBlock> lstDataBlocks			 = new ArrayList<>();
 	@Getter
-	private List<ScreenBlock> lstViewBlocks;
+	private List<ScreenBlock> lstViewBlocks = new ArrayList<>();
 
 	/**
 	 * Convert le ScreenData en une List<UnitDijkstra>
@@ -194,9 +194,9 @@ public final class ScreenData {
 			lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
 			        .forEach(ScreenBlock::addTeleportation);
 		}
-		lstViewBlocks = new ArrayList<>();
+		lstViewBlocks.clear();
 		// on clone la liste
-		lstDataBlocks.stream().forEach(sb -> lstViewBlocks.add((ScreenBlock) sb.clone()));
+		lstDataBlocks.stream().forEach(sb -> lstViewBlocks.add(sb.clone()));
 		checkScreenBlockBorders.checkViewBlockBorder();
 		initNbrBlocksWithPoint = getNbrBlocksWithPoint();
 	}
@@ -204,17 +204,16 @@ public final class ScreenData {
 	/**
 	 * Update Point
 	 *
-	 * FIXME : à mettre ailleurs
+	 * FIXME : à mettre ailleurs ou appeler différemment, par exemple sans l'instance de Ladybug
 	 */
 	public void updateScreenBlock(Ladybug ladybug) {
 		if (ladybug.isEatenAMegaPoint() || ladybug.isEatenAPoint()) {
 			// Suppression du point dans le ScreenBlock de lstDataBlocks
 			ScreenBlock currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
-			// ladybugActions.getCurrentScreenBlock();
 			currentScreenBlock.removePoint();
 			// Suppression du point dans de ScreenBlock de lstViewBlocks
 			lstViewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate()))
-			        .findFirst().orElse(null).removePoint();
+				.findFirst().orElseThrow().removePoint();
 		}
 	}
 

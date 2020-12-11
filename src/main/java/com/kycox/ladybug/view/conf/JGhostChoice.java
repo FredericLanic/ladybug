@@ -62,14 +62,6 @@ import javax.swing.JRadioButton;
 
 import com.kycox.ladybug.constant.PicturesEnum;
 
-/*
- * RadioButtonDemo.java requires these files:
- *   images/Bird.gif
- *   images/Cat.gif
- *   images/Dog.gif
- *   images/Rabbit.gif
- *   images/Pig.gif
- */
 public class JGhostChoice extends JPanel implements KeyListener {
 	public static final String BLINKY_CHOICE	= "Blinky";
 	public static final String CLYDE_CHOICE		= "Clyde";
@@ -135,6 +127,7 @@ public class JGhostChoice extends JPanel implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		// nothing to do
 	}
 
 	@Override
@@ -159,5 +152,6 @@ public class JGhostChoice extends JPanel implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		// nothing to do
 	}
 }

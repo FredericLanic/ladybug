@@ -18,6 +18,9 @@ package com.kycox.ladybug.level;
 
 import java.awt.Point;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.kycox.ladybug.constant.Constants;
 
 import lombok.Getter;
@@ -43,6 +46,8 @@ public class ScreenBlock implements Cloneable {
 	@Getter
 	@Setter
 	private Point			 coordinate		= Constants.POINT_ZERO;
+	
+	private static final Log		logger = LogFactory.getLog(ScreenBlock.class);
 
 	public ScreenBlock(int content) {
 		this.content = content;
@@ -76,20 +81,6 @@ public class ScreenBlock implements Cloneable {
 		content |= TELEPORTATION;
 	}
 
-	/**
-	 * Clone l'objet en cours
-	 */
-	@Override
-	public Object clone() {
-		Object o = null;
-		try {
-			o = super.clone();
-		} catch (CloneNotSupportedException cnse) {
-			cnse.printStackTrace(System.err);
-		}
-		return o;
-	}
-
 	public Point getDirectionInDeadEnd() {
 		if (!isBorderLeft())
 			return Constants.POINT_LEFT;
@@ -97,21 +88,13 @@ public class ScreenBlock implements Cloneable {
 			return Constants.POINT_RIGHT;
 		if (!isBorderUp())
 			return Constants.POINT_UP;
-//		if (isDown())
-		return Constants.POINT_DOWN;
+		if (!isBorderDown())
+			return Constants.POINT_DOWN;
+		return Constants.POINT_ZERO;
 	}
 
-	public boolean isBlocked() {
-		int nbrBorders = 0;
-		if (isBorderLeft())
-			nbrBorders++;
-		if (isBorderRight())
-			nbrBorders++;
-		if (isBorderUp())
-			nbrBorders++;
-		if (isBorderDown())
-			nbrBorders++;
-		return nbrBorders == 4;
+	public boolean isBlocked() {		
+		return getDirectionInDeadEnd().equals(Constants.POINT_ZERO);
 	}
 
 	public boolean isBorderDown() {
@@ -186,5 +169,15 @@ public class ScreenBlock implements Cloneable {
 
 	public void removePoint() {
 		content &= ~(POINT | MEGA_POINT);
+	}
+	
+	public ScreenBlock clone() {
+		ScreenBlock o = null;
+		try {
+			o = (ScreenBlock) super.clone();
+		} catch(CloneNotSupportedException cnse) {
+			logger.error(cnse.getMessage());
+		}
+		return o;
 	}
 }

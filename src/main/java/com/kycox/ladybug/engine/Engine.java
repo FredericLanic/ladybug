@@ -33,10 +33,13 @@ public class Engine {
 	@Inject
 	private GameView   gameView;
 
+	
+	/**
+	 * 	note : use PAD CONTROLLER PadController padController = new PadController(gameModel) for joystick
+	 */
 	@PostConstruct
 	public void init() {
-		// PAD CONTROLLER
-		// PadController padController = new PadController(gameModel);
+
 		// Seulement gestion du clavier : on verra pour la manette après
 		// initialisation des observers
 		gameModel.addObserver(gameView);

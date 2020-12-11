@@ -152,7 +152,7 @@ public class GameModel extends Observable
 		gameTimer.stop();
 	}
 
-	private void actionsByTimerBip() {
+	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (gameStatus.isInGame() && LadybugStatusEnum.isDead().test(ladybug)) {
 			ladybugIsDead();
 		} else if (gameStatus.isInGame() && LadybugStatusEnum.isDying().test(ladybug)) {
@@ -199,7 +199,7 @@ public class GameModel extends Observable
 //FIXME : sortir ce test de ce block
 			checkEndMaze();
 		}
-		setSoundRequests(screenData.getPercentageEatenPoint());
+		setSoundRequests();
 		setChanged();
 		notifyObservers();
 	}
@@ -354,7 +354,7 @@ public class GameModel extends Observable
 	/**
 	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
 	 */
-	private void setSoundRequests(int percent) {
+	private void setSoundRequests() {
 		// initialise le sons
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(gameStatus.isLevelBegin());
@@ -362,7 +362,6 @@ public class GameModel extends Observable
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
 		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhost() > 0);
-//		newSounds.addEatenAMegaPoint(ladybug.isEatenAMegaPoint());
 		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint());
 		newSounds.addLadybugIsDying(ladybug.getStatus().equals(LadybugStatusEnum.DYING),
 		        kinematicLadybugDeath.getBip() == 0);

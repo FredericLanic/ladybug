@@ -218,11 +218,11 @@ public abstract class Ghost extends UserBody {
 				lstDirections.add(Constants.POINT_DOWN);
 			}
 			// mise à jour de la direction
-			if (lstDirections.size() == 0 && currentScreenBlock.isBlocked()) {
+			if (lstDirections.isEmpty() && currentScreenBlock.isBlocked()) {
 				setDirection(Constants.POINT_ZERO);
-			} else if (lstDirections.size() == 0 && currentScreenBlock.isDeadEnd()) {
+			} else if (lstDirections.isEmpty() && currentScreenBlock.isDeadEnd()) {
 				setDirection(currentScreenBlock.getDirectionInDeadEnd());
-			} else if (lstDirections.size() == 0) {
+			} else if (lstDirections.isEmpty()) {
 				// NOTE : je ne sais pas si on arrive un jour ici
 				logger.info("On ne devrait pas passer par ici");
 				setDirection(new Point(getDirection().x, -getDirection().y));

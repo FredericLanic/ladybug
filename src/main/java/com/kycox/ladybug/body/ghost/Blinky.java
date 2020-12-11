@@ -38,7 +38,7 @@ public class Blinky extends Ghost {
 	@Override
 	public void setNumLevel(int numLevel) {
 		super.setNumLevel(numLevel);
-		blinkySpeedIndex.setNumLevel(numLevel);
+		blinkySpeedIndex.setNumLevel();
 	}
 
 	@Override

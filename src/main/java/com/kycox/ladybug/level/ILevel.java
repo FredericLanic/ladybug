@@ -26,8 +26,6 @@ public interface ILevel {
 
 	public List<ScreenBlock> getLstBlocks();
 
-	public int[] getMapLevel();
-
 	public int getNbrBlocksByLine();
 
 	public int getNbrLines();

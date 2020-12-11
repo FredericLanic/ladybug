@@ -22,18 +22,23 @@ import java.awt.event.KeyEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.contract.IGameModelForControleur;
 
 /**
  * Contrôleur du jeu : MVC
+ * 
+ * 	voir https://github.com/marcelschoen/gamepad4j pour brancher une
+ *  manette usb pour le jeu
+ *	utiliser plutôt Jamepad qui me semble facilement utilisable;
  *
  */
 @Named("KeyGameController")
 public class KeyGameController extends KeyAdapter {
-	// voir https://github.com/marcelschoen/gamepad4j pour brancher une
-	// manette usb pour le jeu
-	// utiliser plutôt Jamepad qui me semble facilement utilisable;
+	private static final Log	  logger		= LogFactory.getLog(KeyGameController.class);
 	@Inject
 	private IGameModelForControleur gameModel;
 
@@ -44,6 +49,7 @@ public class KeyGameController extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		if (keyCode == KeyEvent.VK_ESCAPE) {
+			// FIXME : c'est au modèle de sortir proprement du jeu 
 			System.exit(0);
 		}
 		if (gameModel.getGameStatus().isInGame()) {
@@ -77,6 +83,7 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_ESCAPE -> gameModel.forceStopGame();
 			// Partie en pause
 			case KeyEvent.VK_PAUSE -> gameModel.gameInPause();
+			default -> logger.info(keyCode + " key not managed");
 		}
 	}
 
@@ -91,6 +98,7 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_S -> gameModel.startGame();
 			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
 			case KeyEvent.VK_C -> gameModel.getGameStatus().setConfiguration();
+			default -> logger.info(keyCode + " key not managed");
 		}
 	}
 }

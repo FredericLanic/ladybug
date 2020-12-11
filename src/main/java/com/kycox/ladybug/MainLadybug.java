@@ -18,8 +18,6 @@ package com.kycox.ladybug;
 
 import java.lang.Runtime.Version;
 
-import javax.swing.SwingUtilities;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,8 @@ import com.kycox.ladybug.view.MainFrame;
  */
 public class MainLadybug {
 	private static final Log logger = LogFactory.getLog(MainLadybug.class);
+	
+	private static String cruxLine = "******************************";
 
 	/** Lancement du jeu */
 	public static void main(String[] args) {
@@ -49,21 +49,15 @@ public class MainLadybug {
 
 	public void launchTheGame() {
 		Version javaVersion = Runtime.version();
-		logger.info("******************************");
+		logger.info(cruxLine);
 		logger.info("*  LadyBug v0.1.1 SnapShot   *");
 		logger.info("*  for Java 14+ by kycox     *");
 		if (javaVersion.feature() >= 14) {
-			logger.info("******************************");
-			// Création de la vue
-			SwingUtilities.invokeLater(() -> {
-//				mainFrame.setOpacity(0.75F);
-//			    mainFrame.initMainFrame();
-			    // Affichage de la MainFrame
-			    mainFrame.setVisible(true);
-			});
+			logger.info(cruxLine);
+			mainFrame.setVisible(true);
 		} else {
 			logger.info("*   Please Check your JVM    *");
-			logger.info("******************************");
+			logger.info(cruxLine);
 		}
 	}
 }

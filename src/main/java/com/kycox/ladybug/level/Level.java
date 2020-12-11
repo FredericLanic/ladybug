@@ -44,9 +44,4 @@ public abstract class Level implements ILevel {
 		}
 		return lstBlocks;
 	}
-
-	@Override
-	public int[] getMapLevel() {
-		return levelDATA.clone();
-	}
 }

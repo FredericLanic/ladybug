@@ -18,12 +18,17 @@ package com.kycox.ladybug.sound;
 
 import javax.sound.sampled.Clip;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Processus pour écouter le clip
  *
  * @see Thread
  */
 public class ListenSound extends Thread {
+	private static final Log		logger = LogFactory.getLog(ListenSound.class);
+	
 	// clip partagé par les Threads
 	private Clip clip			   = null;
 	private long microsecondLength = 0;
@@ -61,7 +66,8 @@ public class ListenSound extends Thread {
 				clip.setFramePosition(0);
 			}
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.error("Interrupted - playStartJingle" + e);
+			Thread.currentThread().interrupt();
 		}
 	}
 }

@@ -20,9 +20,6 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.ladybug.action.ghost.GhostsGroupActions;
 import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
@@ -38,7 +35,6 @@ import lombok.Setter;
  *
  */
 public class GhostsGroup {
-	private static final Log logger	= LogFactory.getLog(GhostsGroup.class);
 	@Getter
 	@Setter
 	private List<Ghost>		 lstGhosts;
@@ -104,7 +100,7 @@ public class GhostsGroup {
 	}
 
 	public void manageNewLife() {
-		lstGhosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.manageNewLife());
+		lstGhosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
 	/**
@@ -153,10 +149,6 @@ public class GhostsGroup {
 	public void setFlashActive() {
 		lstGhosts.stream().filter(GhostStatusEnum.isScared()).forEach(g -> g.setStatus(GhostStatusEnum.FLASH));
 	}
-//	public void addNewLifeToKeyGhost() {
-//	lstGhostActions.stream().filter(GhostActions::isEatLadybug).filter(ga -> !ga.getGhost().isComputed())
-//	        .forEach(g -> g.getGhost().manageNewLife());
-//}
 
 	/**
 	 * Initialise les vitesses des fantômes
@@ -211,7 +203,7 @@ public class GhostsGroup {
 	private void setGhostSettingAfterLadybugContact(int numLevel) {
 		// Mis à jour du statut
 		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.setSettingAfterBeEaten(numLevel));
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.minusLifesLeft());
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(Ghost::minusLifesLeft);
 	}
 
 	/**

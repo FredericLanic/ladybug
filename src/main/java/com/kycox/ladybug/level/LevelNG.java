@@ -31,9 +31,9 @@ public abstract class LevelNG implements ILevel {
 	private static final int POINT				  = 16;
 	private static final int RIGHT				  = 4;
 	private static final int UP					  = 2;
-	static final int		 NOT_ACCESSIBLE_POINT = 128;
+	static final int		 NOT_ACCESSIBLE_POINT = 128; 
 	// Map
-	protected LevelConstructEnum[] levelDATA;
+	protected LevelConstructEnum[]  levelDATA;
 	// Nombre de blocks par ligne
 	protected int nbrBlocksPerLine;
 	// Nombre de lignes
@@ -52,11 +52,6 @@ public abstract class LevelNG implements ILevel {
 		return lstBlocks;
 	}
 
-	@Override
-	public int[] getMapLevel() {
-		return null;
-	}
-
 	@Override	public int getNbrBlocksByLine() {
 		return nbrBlocksPerLine;
 	}
@@ -70,7 +65,13 @@ public abstract class LevelNG implements ILevel {
 		return y * nbrBlocksPerLine + x;
 	}
 
-	protected int screenBlockValue(int x, int y) {
+	/**
+	 * FIXME : Refacto !!
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private int screenBlockValue(int x, int y) {
 		int				   pointValue = 0;
 		LevelConstructEnum block	  = levelDATA[dataPosition(x, y)];
 		LevelConstructEnum blockUp	  = null;

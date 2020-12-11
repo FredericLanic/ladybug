@@ -43,7 +43,7 @@ public class BlinkySpeedIndex {
 		return (int) (a * perCent * perCent + b * perCent);
 	}
 
-	public void setNumLevel(int numLevel) {
+	public void setNumLevel() {
 		// calcul de R en fonction du niveau pour commencer : on met R = 80
 		// FIXME : puis on devrait faire R = 80 pour le niveau 1, et R = 20 pour le
 		// dernier niveau

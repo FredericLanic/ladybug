@@ -19,6 +19,7 @@ package com.kycox.ladybug.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Toolkit;
 
 import javax.annotation.PostConstruct;
@@ -54,7 +55,7 @@ public class MainFrame extends JFrame {
 	private void init() {
 		setTitle("LadyBug");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setUndecorated(true);
 		new ConfJDialog(this);
 		// organisation des panels

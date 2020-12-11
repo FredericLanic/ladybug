@@ -69,7 +69,7 @@ public class NewSounds implements INewSoundsForGameSounds {
 	}
 
 	public void initSounds() {
-		lstSoundsEnum.removeAll(lstSoundsEnum);
+		lstSoundsEnum.clear();
 	}
 
 	private void addSounds(SoundsEnum soundsEnum, boolean mustBeAdded) {
