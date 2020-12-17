@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns:lang="http://www.springframework.org/schema/lang"
- xmlns:context="http://www.springframework.org/schema/context"
- xmlns:aop="http://www.springframework.org/schema/aop"
- xsi:schemaLocation="
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
  		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/lang
@@ -13,97 +13,106 @@
 		http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/aop 
 		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
-		default-lazy-init="false">  
-	<context:annotation-config/>
-	<context:component-scan base-package="com.kycox"/>
-	
-	<bean id="SpeedFunctionGhost" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
-		<property name="lowLimit" value="2"/>
+	default-lazy-init="false">
+	<context:annotation-config />
+	<context:component-scan base-package="com.kycox" />
+
+	<bean id="SpeedFunctionGhost"
+		class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype"
+		init-method="init">
+		<property name="lowLimit" value="2" />
 	</bean>
-	
+
 	<!-- /!\ prototype -->
-	<bean id="GhostSensitiveBehavious" class="com.kycox.ladybug.maths.GhostSensitiveBehavious" scope="prototype"/>
-	
-	<!-- Clyde in GroupGhost -->	
-	<bean id="Clyde" class="com.kycox.ladybug.body.ghost.Clyde" scope="prototype">
-		<property name="images" value="ORANGE"/>
-		<property name="behavious" value="STUPID"/>
-		<property name="speedFunction" ref="SpeedFunctionGhost"/>
-		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious"/>
-	</bean>	
-	
-	<!-- Blinky in GroupGhost -->
-	<bean id="Blinky" class="com.kycox.ladybug.body.ghost.Blinky" scope="prototype">
-		<property name="images" value="RED"/>
-		<property name="behavious" value="AGGRESSIVE"/>
-		<property name="speedFunction" ref="SpeedFunctionGhost"/>
-		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious"/>
-		<property name="blinkySpeedIndex" ref="BlinkySpeedIndex"/>
-	</bean>	
-	
-	<!-- Inky in GroupGhost -->
-	<bean id="Inky" class="com.kycox.ladybug.body.ghost.Inky" scope="prototype">
-		<property name="images" value="BLUE"/>
-		<property name="behavious" value="STUPID"/>
-		<property name="speedFunction" ref="SpeedFunctionGhost"/>
-		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious"/>
-	</bean>	
-	
-	<!-- Pinky in GroupGhost -->
-	<bean id="Pinky" class="com.kycox.ladybug.body.ghost.Pinky" scope="prototype">
-		<property name="images" value="PINK"/>
-		<property name="behavious" value="SMART"/>
-		<property name="speedFunction" ref="SpeedFunctionGhost"/>
-		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious"/>
+	<bean id="GhostSensitiveBehavious"
+		class="com.kycox.ladybug.maths.GhostSensitiveBehavious"
+		scope="prototype" />
+
+	<!-- Clyde in GroupGhost -->
+	<bean id="Clyde" class="com.kycox.ladybug.body.ghost.Clyde"
+		scope="prototype">
+		<property name="images" value="ORANGE" />
+		<property name="behavious" value="STUPID" />
+		<property name="speedFunction" ref="SpeedFunctionGhost" />
+		<property name="sensitiveBehavious"
+			ref="GhostSensitiveBehavious" />
 	</bean>
-	
+
+	<!-- Blinky in GroupGhost -->
+	<bean id="Blinky" class="com.kycox.ladybug.body.ghost.Blinky"
+		scope="prototype">
+		<property name="images" value="RED" />
+		<property name="behavious" value="AGGRESSIVE" />
+		<property name="speedFunction" ref="SpeedFunctionGhost" />
+		<property name="sensitiveBehavious"
+			ref="GhostSensitiveBehavious" />
+		<property name="blinkySpeedIndex" ref="BlinkySpeedIndex" />
+	</bean>
+
+	<!-- Inky in GroupGhost -->
+	<bean id="Inky" class="com.kycox.ladybug.body.ghost.Inky"
+		scope="prototype">
+		<property name="images" value="BLUE" />
+		<property name="behavious" value="STUPID" />
+		<property name="speedFunction" ref="SpeedFunctionGhost" />
+		<property name="sensitiveBehavious"
+			ref="GhostSensitiveBehavious" />
+	</bean>
+
+	<!-- Pinky in GroupGhost -->
+	<bean id="Pinky" class="com.kycox.ladybug.body.ghost.Pinky"
+		scope="prototype">
+		<property name="images" value="PINK" />
+		<property name="behavious" value="SMART" />
+		<property name="speedFunction" ref="SpeedFunctionGhost" />
+		<property name="sensitiveBehavious"
+			ref="GhostSensitiveBehavious" />
+	</bean>
+
 	<!-- GroupGhost list in GameModel -->
-	<bean id="GroupGhost" class="com.kycox.ladybug.body.ghost.GhostsGroup">
+	<bean id="GroupGhost"
+		class="com.kycox.ladybug.body.ghost.GhostsGroup">
 		<property name="lstGhosts">
 			<list>
-				<ref bean="Clyde"/>
-				<ref bean="Blinky"/>
-				<ref bean="Inky"/>				
-				<ref bean="Pinky"/>
+				<ref bean="Clyde" />
+				<ref bean="Blinky" />
+				<ref bean="Inky" />
+				<ref bean="Pinky" />
 			</list>
 		</property>
 	</bean>
 
-	<!-- SpeedFunctionLadybug in Ladybug -->	
-	<bean id="SpeedFunctionLadybug" class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype" init-method="init">
-		<property name="lowLimit" value="4"/>
+	<!-- SpeedFunctionLadybug in Ladybug -->
+	<bean id="SpeedFunctionLadybug"
+		class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype"
+		init-method="init">
+		<property name="lowLimit" value="4" />
 	</bean>
-	
-	<!--  /!\ speedFunction est définie dans une classe parente -->
-	<bean id="Ladybug" class="com.kycox.ladybug.body.ladybug.Ladybug" scope="singleton">
-		<property name="speedFunction" ref="SpeedFunctionLadybug"/>
+
+	<!-- /!\ speedFunction est définie dans une classe parente -->
+	<bean id="Ladybug" class="com.kycox.ladybug.body.ladybug.Ladybug"
+		scope="singleton">
+		<property name="speedFunction" ref="SpeedFunctionLadybug" />
 	</bean>
-	
+
 	<!-- The GameStatus in GameModel -->
-	<bean id="GameStatus" class="com.kycox.ladybug.model.GameStatus" scope="singleton">
-		<property name="numLevel" value="0"/>
-	</bean>	
-	
-	<!--  Levels in ScreenData -->
-	<bean id="Levels" class="com.kycox.ladybug.level.Levels" scope="singleton">
+	<bean id="GameStatus" class="com.kycox.ladybug.model.GameStatus"
+		scope="singleton">
+		<property name="numLevel" value="0" />
+	</bean>
+
+	<!-- Levels in ScreenData -->
+	<bean id="Levels" class="com.kycox.ladybug.level.Levels"
+		scope="singleton">
 		<property name="lstLevel">
 			<list>
-				<ref bean="Level1"/>
-				<ref bean="Level2NG"/>
-				<ref bean="Level3NG"/>
-				<ref bean="Level4NG"/>
-				<ref bean="Level5NG"/>
+				<ref bean="Level1" />
+				<ref bean="Level2NG" />
+				<ref bean="Level3NG" />
+				<ref bean="Level4NG" />
+				<ref bean="Level5NG" />
 			</list>
 		</property>
-	</bean>	
-		
-	<!-- Test AOP pour logger dans la console -->
-	<!-- 
-	<bean id="logAdvice" name="logAdvice" class="com.kycox.ladybug.utils.aop.TraceurAdvice"/>
-	<aop:config>
-		<aop:pointcut id="changeBlock" expression="execution(* com.kycox.ladybug.body.ghost.*.setNumLevel(..))"/>
- 		<aop:advisor advice-ref="logAdvice" pointcut-ref="changeBlock" />
-	</aop:config>
-	-->
- 	
+	</bean>
+
 </beans>

@@ -20,7 +20,7 @@ import java.awt.Image;
 
 import javax.swing.Timer;
 
-import com.kycox.ladybug.constant.PicturesEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 import com.kycox.ladybug.timer.TimerView;
 
 public class GhostDyingView implements TimerView {

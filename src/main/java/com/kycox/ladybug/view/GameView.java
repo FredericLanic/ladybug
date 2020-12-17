@@ -33,8 +33,8 @@ import javax.swing.SwingUtilities;
 
 import com.kycox.ladybug.body.ghost.Ghost;
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 import com.kycox.ladybug.contract.IGameModelForGameView;
 import com.kycox.ladybug.controler.KeyGameController;
 import com.kycox.ladybug.score.IncrementScore;
@@ -102,11 +102,6 @@ public class GameView extends JPanel implements Observer {
 		repaint();
 	}
 
-	/**
-	 * Lancement du dessin
-	 *
-	 * @param g
-	 */
 	private void doDrawing(Graphics g) {
 		listenStartLevelJingle();
 		Graphics2D g2d = (Graphics2D) g;
@@ -133,41 +128,21 @@ public class GameView extends JPanel implements Observer {
 		}
 	}
 
-	/**
-	 * Affiche les fantômes "vivants"
-	 *
-	 * @param g2d
-	 */
 	private void drawGhosts(Graphics2D g2d) {
 		gameModel.getGroupGhosts().getLstGhosts().stream()
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
 	}
 
-	/**
-	 * Affichage de ladybug selon sa direction
-	 *
-	 * @param g2d
-	 */
 	private void drawLadybug(Graphics2D g2d) {
 		g2d.drawImage(ladybugView.getNextImage(gameModel.getLadybug().getViewDirection()),
 		        gameModel.getLadybug().getPosition().x + 1, gameModel.getLadybug().getPosition().y + 1, this);
 	}
 
-	/**
-	 * Affichage de parman qui meurt
-	 *
-	 * @param g2d
-	 */
 	private void drawLadybugDying(Graphics2D g2d) {
 		g2d.drawImage(gameModel.getKinematicLadybugDeath().getImage(), gameModel.getLadybug().getPosition().x + 1,
 		        gameModel.getLadybug().getPosition().y + 1, this);
 	}
 
-	/**
-	 * Affichage du labyrinthe
-	 *
-	 * @param g2d
-	 */
 	private void drawMaze(Graphics2D g2d) {
 		for (int y = 0; y < gameModel.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
 			for (int x = 0; x < gameModel.getScreenData().getCurrentLevel().getNbrBlocksByLine()
@@ -178,11 +153,6 @@ public class GameView extends JPanel implements Observer {
 		}
 	}
 
-	/**
-	 * Dessine le nombre de ladybug encore disponible et le score.
-	 *
-	 * @param g
-	 */
 	private void drawScoreAndLevel(Graphics2D g) {
 		// parfois le modèle ne se charge pas tout de suite
 		if (gameModel == null)
@@ -227,11 +197,6 @@ public class GameView extends JPanel implements Observer {
 		}
 	}
 
-	/**
-	 * Draw score increment
-	 *
-	 * @param g2d
-	 */
 	private void drawScoresIncrement(Graphics2D g2d) {
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(smallFont);
@@ -271,11 +236,6 @@ public class GameView extends JPanel implements Observer {
 		}
 	}
 
-	/**
-	 * Affiche la fenêtre d'introduction
-	 *
-	 * @param g2d
-	 */
 	private void showIntroScreen(Graphics2D g2d) {
 		int	   x			= gameModel.getScreenData().getScreenWidth();
 		int	   y			= gameModel.getScreenData().getScreenHeight();

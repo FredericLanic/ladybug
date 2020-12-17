@@ -35,8 +35,8 @@ import javax.swing.SwingConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kycox.ladybug.constant.PicturesEnum;
 import com.kycox.ladybug.constant.ghost.GhostsImagesEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 
 public class ConfJDialog extends JDialog implements ActionListener {
 	private static final Log  logger		   = LogFactory.getLog(ConfJDialog.class);

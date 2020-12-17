@@ -22,7 +22,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.constant.PicturesEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.level.ScreenData;
 import com.kycox.ladybug.tools.Utils;
