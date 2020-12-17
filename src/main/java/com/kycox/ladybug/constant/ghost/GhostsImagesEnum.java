@@ -20,7 +20,7 @@ import java.awt.Image;
 import java.util.Arrays;
 import java.util.List;
 
-import com.kycox.ladybug.constant.PicturesEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 
 /**
  * Setting spécifique des fantômes : Blinky, Clyde, Inky, Pinky

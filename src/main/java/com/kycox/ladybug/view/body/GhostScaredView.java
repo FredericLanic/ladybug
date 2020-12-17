@@ -19,7 +19,7 @@ package com.kycox.ladybug.view.body;
 import java.awt.Image;
 
 import com.kycox.ladybug.body.ghost.Ghost;
-import com.kycox.ladybug.constant.PicturesEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 
 public class GhostScaredView {
 

@@ -60,7 +60,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import com.kycox.ladybug.constant.PicturesEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 
 public class JGhostChoice extends JPanel implements KeyListener {
 	public static final String BLINKY_CHOICE	= "Blinky";

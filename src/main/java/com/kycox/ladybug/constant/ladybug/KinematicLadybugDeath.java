@@ -24,7 +24,7 @@ import java.util.List;
 import javax.inject.Named;
 
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.constant.PicturesEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 
 import lombok.Getter;
 import lombok.Setter;

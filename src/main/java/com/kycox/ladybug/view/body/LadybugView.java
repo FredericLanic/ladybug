@@ -24,7 +24,7 @@ import javax.inject.Named;
 import javax.swing.Timer;
 
 import com.kycox.ladybug.constant.Constants;
-import com.kycox.ladybug.constant.PicturesEnum;
+import com.kycox.ladybug.constant.pictures.PicturesEnum;
 import com.kycox.ladybug.timer.TimerView;
 
 @Named("LadybugView")
