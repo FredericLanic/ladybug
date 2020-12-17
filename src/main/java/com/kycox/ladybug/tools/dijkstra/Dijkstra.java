@@ -58,7 +58,6 @@ public class Dijkstra {
 	private List<UnitDijkstra> listUnitDijkstra;
 	int						   nbrAccessibleBlocks;
 
-	
 	/**
 	 * Calcul du parcours le plus court en partant de startCoordonnate (coordonnées
 	 * de Block) dans un Level de ladybug IMPORTANT : On part du principe que le

@@ -73,8 +73,8 @@ public class CheckScreenBlockBorders {
 			otherScreenBlock.addBorderDown();
 		// vérification de la bordure en bas
 		otherScreenBlock = screenData.getDataBlock(new Point(point.x, point.y + 1));
-		if (screenBlock.isBorderDown() && point.y < screenData.getCurrentLevel().getNbrLines() - 1 && otherScreenBlock != null
-		        && !otherScreenBlock.isBorderUp())
+		if (screenBlock.isBorderDown() && point.y < screenData.getCurrentLevel().getNbrLines() - 1
+		        && otherScreenBlock != null && !otherScreenBlock.isBorderUp())
 			otherScreenBlock.addBorderUp();
 		// vérification de la bordure à droite
 		otherScreenBlock = screenData.getDataBlock(new Point(point.x + 1, point.y));

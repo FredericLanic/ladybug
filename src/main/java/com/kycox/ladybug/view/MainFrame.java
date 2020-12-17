@@ -31,8 +31,6 @@ import javax.swing.JPanel;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.view.conf.ConfJDialog;
 
-import lombok.Setter;
-
 /**
  * Frame principale du jeu.
  *
@@ -50,6 +48,12 @@ public class MainFrame extends JFrame {
 	        / 2;
 	private double			  topBottomHeight  = (defaultToolKit.getScreenSize().getHeight()
 	        - 16 * Constants.BLOCK_SIZE) / 2;
+
+	private void centralZone(Dimension dimension) {
+		gameView.setPreferredSize(dimension);
+		gameView.setBackground(Color.BLACK);
+		add(gameView, BorderLayout.CENTER);
+	}
 
 	@PostConstruct
 	private void init() {
@@ -91,11 +95,5 @@ public class MainFrame extends JFrame {
 		jPanel.setBackground(Color.BLACK);
 		jPanel.setPreferredSize(dimension);
 		add(jPanel, BorderLayout.LINE_END);
-	}
-
-	private void centralZone(Dimension dimension) {
-		gameView.setPreferredSize(dimension);
-		gameView.setBackground(Color.BLACK);
-		add(gameView, BorderLayout.CENTER);
 	}
 }

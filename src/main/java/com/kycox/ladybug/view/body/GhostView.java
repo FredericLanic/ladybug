@@ -24,31 +24,27 @@ import com.kycox.ladybug.body.ghost.Ghost;
 
 @Named("GhostView")
 public class GhostView {
-
-  public Image getImage(Ghost ghost) {
-
-    /**
-     * Affiche les images du fantômes "vivants"
-     *
-     * @param ghost
-     * @return
-     */
-    Image ghostImg;
-
-    switch (ghost.getStatus()) {
-    case FLASH:
-      ghostImg = GhostFlashView.getInstance().getImage(ghost);
-      break;
-    case SCARED:
-      ghostImg = GhostScaredView.getInstance().getImage(ghost);
-      break;
-    case DYING:
-      ghostImg = GhostDyingView.getInstance().getImage();
-      break;
-    default:
-      ghostImg = GhostDefautlView.getInstance().getImage(ghost);
-    }
-    return ghostImg;
-  }
-
+	public Image getImage(Ghost ghost) {
+		/**
+		 * Affiche les images du fantômes "vivants"
+		 *
+		 * @param ghost
+		 * @return
+		 */
+		Image ghostImg;
+		switch (ghost.getStatus()) {
+			case FLASH:
+				ghostImg = GhostFlashView.getInstance().getImage(ghost);
+				break;
+			case SCARED:
+				ghostImg = GhostScaredView.getInstance().getImage(ghost);
+				break;
+			case DYING:
+				ghostImg = GhostDyingView.getInstance().getImage();
+				break;
+			default:
+				ghostImg = GhostDefautlView.getInstance().getImage(ghost);
+		}
+		return ghostImg;
+	}
 }

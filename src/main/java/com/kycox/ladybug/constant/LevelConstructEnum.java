@@ -15,14 +15,14 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 package com.kycox.ladybug.constant;
+
 /**
- * B : Basic point
- * N : Not accessible point
+ * B : Basic point N : Not accessible point
  *
  */
 public enum LevelConstructEnum {
 	B, N;
-	
+
 	private LevelConstructEnum() {
 	}
 }

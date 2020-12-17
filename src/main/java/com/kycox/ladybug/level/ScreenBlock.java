@@ -34,6 +34,7 @@ public class ScreenBlock implements Cloneable {
 	private static final int DOWN			= 8;
 	private static final int GHOST_REVIVER	= 64;
 	private static final int LEFT			= 1;
+	private static final Log logger			= LogFactory.getLog(ScreenBlock.class);
 	private static final int MEGA_POINT		= 32;
 	private static final int POINT			= 16;
 	private static final int RIGHT			= 4;
@@ -46,8 +47,6 @@ public class ScreenBlock implements Cloneable {
 	@Getter
 	@Setter
 	private Point			 coordinate		= Constants.POINT_ZERO;
-	
-	private static final Log		logger = LogFactory.getLog(ScreenBlock.class);
 
 	public ScreenBlock(int content) {
 		this.content = content;
@@ -81,6 +80,17 @@ public class ScreenBlock implements Cloneable {
 		content |= TELEPORTATION;
 	}
 
+	@Override
+	public ScreenBlock clone() {
+		ScreenBlock o = null;
+		try {
+			o = (ScreenBlock) super.clone();
+		} catch (CloneNotSupportedException cnse) {
+			logger.error(cnse.getMessage());
+		}
+		return o;
+	}
+
 	public Point getDirectionInDeadEnd() {
 		if (!isBorderLeft())
 			return Constants.POINT_LEFT;
@@ -93,7 +103,7 @@ public class ScreenBlock implements Cloneable {
 		return Constants.POINT_ZERO;
 	}
 
-	public boolean isBlocked() {		
+	public boolean isBlocked() {
 		return getDirectionInDeadEnd().equals(Constants.POINT_ZERO);
 	}
 
@@ -169,15 +179,5 @@ public class ScreenBlock implements Cloneable {
 
 	public void removePoint() {
 		content &= ~(POINT | MEGA_POINT);
-	}
-	
-	public ScreenBlock clone() {
-		ScreenBlock o = null;
-		try {
-			o = (ScreenBlock) super.clone();
-		} catch(CloneNotSupportedException cnse) {
-			logger.error(cnse.getMessage());
-		}
-		return o;
 	}
 }

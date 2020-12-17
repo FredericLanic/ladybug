@@ -30,17 +30,16 @@ import com.kycox.ladybug.contract.IGameModelForControleur;
 
 /**
  * Contrôleur du jeu : MVC
- * 
- * 	voir https://github.com/marcelschoen/gamepad4j pour brancher une
- *  manette usb pour le jeu
- *	utiliser plutôt Jamepad qui me semble facilement utilisable;
+ *
+ * voir https://github.com/marcelschoen/gamepad4j pour brancher une manette usb
+ * pour le jeu utiliser plutôt Jamepad qui me semble facilement utilisable;
  *
  */
 @Named("KeyGameController")
 public class KeyGameController extends KeyAdapter {
-	private static final Log	  logger		= LogFactory.getLog(KeyGameController.class);
+	private static final Log		logger = LogFactory.getLog(KeyGameController.class);
 	@Inject
-	private IGameModelForControleur gameModel;
+	private IGameModelForControleur	gameModel;
 
 	/**
 	 * Action sur les touches Gestion des touches pressées
@@ -49,7 +48,7 @@ public class KeyGameController extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
 		if (keyCode == KeyEvent.VK_ESCAPE) {
-			// FIXME : c'est au modèle de sortir proprement du jeu 
+			// FIXME : c'est au modèle de sortir proprement du jeu
 			System.exit(0);
 		}
 		if (gameModel.getGameStatus().isInGame()) {

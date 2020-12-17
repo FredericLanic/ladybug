@@ -45,7 +45,7 @@ public final class ScreenData {
 	private int				  initNbrBlocksWithPoint = 0;
 	private List<ScreenBlock> lstDataBlocks			 = new ArrayList<>();
 	@Getter
-	private List<ScreenBlock> lstViewBlocks = new ArrayList<>();
+	private List<ScreenBlock> lstViewBlocks			 = new ArrayList<>();
 
 	/**
 	 * Convert le ScreenData en une List<UnitDijkstra>
@@ -205,7 +205,8 @@ public final class ScreenData {
 	/**
 	 * Update Point
 	 *
-	 * FIXME : à mettre ailleurs ou appeler différemment, par exemple sans l'instance de Ladybug
+	 * FIXME : à mettre ailleurs ou appeler différemment, par exemple sans
+	 * l'instance de Ladybug
 	 */
 	public void updateScreenBlock(Ladybug ladybug) {
 		if (ladybug.isEatenAMegaPoint() || ladybug.isEatenAPoint()) {
@@ -214,7 +215,7 @@ public final class ScreenData {
 			currentScreenBlock.removePoint();
 			// Suppression du point dans de ScreenBlock de lstViewBlocks
 			lstViewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate()))
-				.findFirst().orElseThrow().removePoint();
+			        .findFirst().orElseThrow().removePoint();
 		}
 	}
 
@@ -233,7 +234,7 @@ public final class ScreenData {
 
 	private int getRandomPosNumPoint() {
 		int	nbrPoints	= getNbrBlocksWithPoint();
-		int	randomPoint	= new Random().nextInt(nbrPoints)+1;
+		int	randomPoint	= new Random().nextInt(nbrPoints) + 1;
 		return getPosNumPoint(randomPoint);
 	}
 }

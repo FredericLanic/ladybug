@@ -32,9 +32,8 @@ import com.kycox.ladybug.view.MainFrame;
  * C'est elle qui faut lancer :)
  */
 public class MainLadybug {
-	private static final Log logger = LogFactory.getLog(MainLadybug.class);
-	
-	private static String cruxLine = "******************************";
+	private static String	 cruxLine = "******************************";
+	private static final Log logger	  = LogFactory.getLog(MainLadybug.class);
 
 	/** Lancement du jeu */
 	public static void main(String[] args) {

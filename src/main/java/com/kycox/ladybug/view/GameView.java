@@ -62,12 +62,14 @@ public class GameView extends JPanel implements Observer {
 	// Données transitées par le pattern Observer
 	private transient IGameModelForGameView	gameModel;
 	@Inject
-	private transient GhostView			ghostView;
-	private boolean						hasBeenDrawOnce	= false;
+	private transient GhostView				ghostView;
+	private boolean							hasBeenDrawOnce	= false;
 	@Inject
-	private transient LadybugView		ladybugView;
-
-	private JFrame						mainFrame		= (JFrame) SwingUtilities.getRoot(this);
+	private transient LadybugView			ladybugView;
+	/**
+	 * R�cup�ration de la JFrame parent
+	 */
+	private JFrame							mainFrame		= (JFrame) SwingUtilities.getRoot(this);
 	// font par défaut
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
 
@@ -132,8 +134,8 @@ public class GameView extends JPanel implements Observer {
 	}
 
 	private void drawLadybug(Graphics2D g2d) {
-		g2d.drawImage(ladybugView.getNextImage(gameModel.getLadybug().getViewDirection()), gameModel.getLadybug().getPosition().x + 1,
-		        gameModel.getLadybug().getPosition().y + 1, this);
+		g2d.drawImage(ladybugView.getNextImage(gameModel.getLadybug().getViewDirection()),
+		        gameModel.getLadybug().getPosition().x + 1, gameModel.getLadybug().getPosition().y + 1, this);
 	}
 
 	private void drawLadybugDying(Graphics2D g2d) {

@@ -31,12 +31,12 @@ public class GameStatus {
 		return gameStatusEnum == GameStatusEnum.GAME_BEGIN;
 	}
 
-	public boolean isLevelBegin() {
-		return gameStatusEnum == GameStatusEnum.LEVEL_BEGIN;
-	}
-
 	public boolean isInGame() {
 		return gameStatusEnum == GameStatusEnum.IN_GAME;
+	}
+
+	public boolean isLevelBegin() {
+		return gameStatusEnum == GameStatusEnum.LEVEL_BEGIN;
 	}
 
 	public boolean isNoGame() {

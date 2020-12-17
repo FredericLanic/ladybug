@@ -37,7 +37,7 @@ import lombok.Setter;
 public class GhostsGroup {
 	@Getter
 	@Setter
-	private List<Ghost>		 lstGhosts;
+	private List<Ghost> lstGhosts;
 
 	public boolean eatLadybug() {
 		return lstGhosts.stream().filter(g -> g.getGhostActions().isEatLadybug()).count() > 0;
@@ -68,15 +68,6 @@ public class GhostsGroup {
 
 	public int getNbrEatenGhost() {
 		return (int) lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).count();
-	}
-
-	/**
-	 * Retourne vrai si le fantôme n'a plus de vie
-	 */
-	public boolean userIsDead() {
-		long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
-		        .count();
-		return (nbrDeadKeyGhosts > 0);
 	}
 
 	public boolean hasDyingGhost() {
@@ -198,6 +189,15 @@ public class GhostsGroup {
 		setSpeed(numLevel, screenData.getPercentageEatenPoint());
 		// Etat des fantômes de REGENERATING à NORMAL
 		setGhostStatusAfterRegeneration();
+	}
+
+	/**
+	 * Retourne vrai si le fantôme n'a plus de vie
+	 */
+	public boolean userIsDead() {
+		long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
+		        .count();
+		return (nbrDeadKeyGhosts > 0);
 	}
 
 	private void setGhostSettingAfterLadybugContact(int numLevel) {

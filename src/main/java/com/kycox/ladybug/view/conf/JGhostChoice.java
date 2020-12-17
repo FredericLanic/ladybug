@@ -14,7 +14,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.ladybug.view.conf;
 /*
  * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
  *
@@ -45,6 +44,7 @@ package com.kycox.ladybug.view.conf;
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.kycox.ladybug.view.conf;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
