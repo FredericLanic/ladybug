@@ -29,12 +29,10 @@ import lombok.Getter;
  *
  */
 public enum PicturesEnum {
-    // scared ghost
-	EMPTY("empty.png"),
     // color
-	GHOST_COLOR_BLUE("ghosts/color/blue.png"), GHOST_COLOR_ORANGE("ghosts/color/orange.png"),
-	GHOST_COLOR_PINK("ghosts/color/pink.png"), GHOST_COLOR_RED("ghosts/color/red.png"),
-	GHOST_COLOR_GREY("ghosts/color/grey.png"),
+	GHOST_COLOR_BLUE("ghosts/color/blue.png"), GHOST_COLOR_GREY("ghosts/color/grey.png"),
+	GHOST_COLOR_ORANGE("ghosts/color/orange.png"), GHOST_COLOR_PINK("ghosts/color/pink.png"),
+	GHOST_COLOR_RED("ghosts/color/red.png"),
     // eyes ghost
 	GHOST_EYE_DOWN("ghosts/eyes/DownEyes.png"), GHOST_EYE_LEFT("ghosts/eyes/LeftEyes.png"),
 	GHOST_EYE_RIGHT("ghosts/eyes/RightEyes.png"), GHOST_EYE_UP("ghosts/eyes/UpEyes.png"),
@@ -51,8 +49,6 @@ public enum PicturesEnum {
 	LADYBUG_UP_5("ladybug/color/blue/Ladybug5up.gif"), LADYBUG_UP_6("ladybug/color/blue/Ladybug6up.gif"),
 	LADYBUG_UP_7("ladybug/color/blue/Ladybug7up.gif"), LADYBUG_UP_8("ladybug/color/blue/Ladybug8up.gif"),
 	LADYBUG_UP_9("ladybug/color/blue/Ladybug9up.gif"),
-    // dying ghost
-	ONLY_EYES_LEFT_EYES("Eyes2.gif"), ONLY_EYES_RIGHT_EYES("Eyes1.gif"),
     // teleportation
 	TELEPORTATION("Teleportation.png");
 

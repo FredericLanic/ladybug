@@ -49,5 +49,6 @@ DONE :
 - CTEC18 : associer une interface à GameModel lors de sa gestion dans le controleur
 - CTEC21 : rendre plus lisible le design pattern des images de ladybug
 - CTEC22 : Refacto du timerView
+- CTEC23 : dissocier les yeux et les plugins lors de l'affichage
 
 REJECT : 
