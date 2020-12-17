@@ -120,7 +120,7 @@ public abstract class Ghost extends UserBody {
 		        && !getStatus().equals(GhostStatusEnum.DYING) && !getStatus().equals(GhostStatusEnum.REGENERATING)
 		        && !ladybug.getStatus().equals(LadybugStatusEnum.DYING)
 		        && !ladybug.getStatus().equals(LadybugStatusEnum.DEAD)) {
-			if (GhostStatusEnum.isScared().test(this) || GhostStatusEnum.isFlashing().test(this)) {
+			if (GhostStatusEnum.SCARED.equals(getStatus()) || GhostStatusEnum.FLASH.equals(getStatus())) {
 				ghostActions.setEaten(true);
 			} else {
 				// Mise à mort de Ladybug !!!

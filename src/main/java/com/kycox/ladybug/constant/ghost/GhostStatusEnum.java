@@ -16,36 +16,12 @@
  */
 package com.kycox.ladybug.constant.ghost;
 
-import java.util.function.Predicate;
-
-import com.kycox.ladybug.body.ghost.Ghost;
-
 /**
  * Enumération des états des fantômes
  *
  */
 public enum GhostStatusEnum {
 	DYING, FLASH, NORMAL, REGENERATING, SCARED;
-
-	public static Predicate<Ghost> isDying() {
-		return g -> g.getStatus().equals(DYING);
-	}
-
-	public static Predicate<Ghost> isFlashing() {
-		return g -> g.getStatus().equals(FLASH);
-	}
-
-	public static Predicate<Ghost> isNormal() {
-		return g -> g.getStatus().equals(NORMAL);
-	}
-
-	public static Predicate<Ghost> isRegenerating() {
-		return g -> g.getStatus().equals(REGENERATING);
-	}
-
-	public static Predicate<Ghost> isScared() {
-		return g -> g.getStatus().equals(SCARED);
-	}
 
 	private GhostStatusEnum() {
 	}

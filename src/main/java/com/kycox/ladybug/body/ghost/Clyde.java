@@ -25,18 +25,18 @@ import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
 public class Clyde extends Ghost {
 	@Override
 	public void setInitSpeed(int numLevel) {
-		/*
-		 * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
-		 */
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
+		/*
+		 * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
+		 */
 		if (!hasChangeBlock()) {
 			return;
 		}
-		if (GhostStatusEnum.isScared().test(this))
+		if (GhostStatusEnum.SCARED.equals(getStatus()))
 			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
 		else
 			setSpeedIndex(getStartSpeedIndex());

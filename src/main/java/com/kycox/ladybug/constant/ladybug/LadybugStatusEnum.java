@@ -16,10 +16,6 @@
  */
 package com.kycox.ladybug.constant.ladybug;
 
-import java.util.function.Predicate;
-
-import com.kycox.ladybug.body.ladybug.Ladybug;
-
 /**
  * Enumération des états de ladybug
  *
@@ -27,18 +23,17 @@ import com.kycox.ladybug.body.ladybug.Ladybug;
  */
 public enum LadybugStatusEnum {
 	DEAD, DYING, NORMAL;
-
-	public static Predicate<Ladybug> isDead() {
-		return p -> p.getStatus().equals(DEAD);
-	}
-
-	public static Predicate<Ladybug> isDying() {
-		return p -> p.getStatus().equals(DYING);
-	}
-
-	public static Predicate<Ladybug> isNormal() {
-		return p -> p.getStatus().equals(NORMAL);
-	}
+//	public static Predicate<Ladybug> isDead() {
+//		return p -> p.getStatus().equals(DEAD);
+//	}
+//
+//	public static Predicate<Ladybug> isDying() {
+//		return p -> p.getStatus().equals(DYING);
+//	}
+//
+//	public static Predicate<Ladybug> isNormal() {
+//		return p -> p.getStatus().equals(NORMAL);
+//	}
 
 	private LadybugStatusEnum() {
 	}

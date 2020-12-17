@@ -122,10 +122,10 @@ public class GameView extends JPanel implements Observer {
 		} else if (gameModel.getGameStatus().isNoGame()) {
 			drawGhosts(g2d);
 			showIntroScreen(g2d);
-		} else if (LadybugStatusEnum.isDying().test(gameModel.getLadybug())) {
+		} else if (LadybugStatusEnum.DYING.equals(gameModel.getLadybug().getStatus())) {
 			drawGhosts(g2d);
 			drawLadybugDying(g2d);
-		} else if (!LadybugStatusEnum.isDead().test(gameModel.getLadybug())) {
+		} else if (!LadybugStatusEnum.DEAD.equals(gameModel.getLadybug().getStatus())) {
 			// jeu en cours
 			drawLadybug(g2d);
 			drawGhosts(g2d);

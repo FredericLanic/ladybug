@@ -71,16 +71,16 @@ public class GhostsGroup {
 	}
 
 	public boolean hasDyingGhost() {
-		return (lstGhosts.stream().filter(g -> GhostStatusEnum.isDying().test(g)).count() > 0);
+		return (lstGhosts.stream().filter(g -> GhostStatusEnum.DYING.equals(g.getStatus())).count() > 0);
 	}
 
 	public boolean hasRegeneratedGhost() {
-		return (lstGhosts.stream().filter(g -> GhostStatusEnum.isRegenerating().test(g)).count() > 0);
+		return (lstGhosts.stream().filter(g -> GhostStatusEnum.REGENERATING.equals(g.getStatus())).count() > 0);
 	}
 
 	public boolean hasScaredGhost() {
-		return ((lstGhosts.stream().filter(g -> GhostStatusEnum.isScared().test(g)).count()
-		        + lstGhosts.stream().filter(g -> GhostStatusEnum.isFlashing().test(g)).count()) > 0);
+		return ((lstGhosts.stream().filter(g -> GhostStatusEnum.SCARED.equals(g.getStatus())).count()
+		        + lstGhosts.stream().filter(g -> GhostStatusEnum.FLASH.equals(g.getStatus())).count()) > 0);
 	}
 
 	/**
@@ -138,7 +138,8 @@ public class GhostsGroup {
 	 * Tous les fantômes doivent clignotter
 	 */
 	public void setFlashActive() {
-		lstGhosts.stream().filter(GhostStatusEnum.isScared()).forEach(g -> g.setStatus(GhostStatusEnum.FLASH));
+		lstGhosts.stream().filter(g -> GhostStatusEnum.SCARED.equals(g.getStatus()))
+		        .forEach(g -> g.setStatus(GhostStatusEnum.FLASH));
 	}
 
 	/**
@@ -210,7 +211,7 @@ public class GhostsGroup {
 	 * Status des fantômes de REGENERATING à NORMAL
 	 */
 	private void setGhostStatusAfterRegeneration() {
-		lstGhosts.stream().filter(g -> GhostStatusEnum.isRegenerating().test(g))
+		lstGhosts.stream().filter(g -> GhostStatusEnum.REGENERATING.equals(g.getStatus()))
 		        .forEach(g -> g.setStatus(GhostStatusEnum.NORMAL));
 	}
 

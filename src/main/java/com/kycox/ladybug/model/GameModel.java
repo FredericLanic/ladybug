@@ -157,9 +157,9 @@ public class GameModel extends Observable
 	}
 
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
-		if (gameStatus.isInGame() && LadybugStatusEnum.isDead().test(ladybug)) {
+		if (gameStatus.isInGame() && LadybugStatusEnum.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
-		} else if (gameStatus.isInGame() && LadybugStatusEnum.isDying().test(ladybug)) {
+		} else if (gameStatus.isInGame() && LadybugStatusEnum.DYING.equals(ladybug.getStatus())) {
 			ladybugIsDying();
 		} else if (gameStatus.isInGame() && groupGhosts.userIsDead()) {
 			gameStatus.setNoGame();

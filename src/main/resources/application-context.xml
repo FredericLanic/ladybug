@@ -98,10 +98,12 @@
 	</bean>	
 		
 	<!-- Test AOP pour logger dans la console -->
+	<!-- 
 	<bean id="logAdvice" name="logAdvice" class="com.kycox.ladybug.utils.aop.TraceurAdvice"/>
 	<aop:config>
 		<aop:pointcut id="changeBlock" expression="execution(* com.kycox.ladybug.body.ghost.*.setNumLevel(..))"/>
  		<aop:advisor advice-ref="logAdvice" pointcut-ref="changeBlock" />
 	</aop:config>
+	-->
  	
 </beans>
