@@ -63,7 +63,7 @@ public class KinematicLadybugDeath {
 		// si le calcul est long, il se peut que l'index dépasse... on le rajuste
 		if (numImage >= nbrImages)
 			numImage = nbrImages - 1;
-		return lstPictures.get(numImage).getImg();
+		return lstPictures.get(numImage).getImage();
 	}
 
 	/**

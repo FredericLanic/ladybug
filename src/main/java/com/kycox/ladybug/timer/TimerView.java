@@ -23,7 +23,7 @@ import javax.swing.Timer;
 import com.kycox.ladybug.constant.Constants;
 
 public interface TimerView {
-	final int period = 4 * Constants.PACE;
+	final int period = 3 * Constants.PACE;
 
 	public default Timer createTimer() {
 		ActionListener action = event -> doAction();

@@ -108,7 +108,7 @@ public class JGhostChoice extends JPanel implements KeyListener {
 		blinkyButton.addKeyListener(this);
 		clydeButton.addKeyListener(this);
 		// Set up the picture label.
-		picture = new JLabel(new ImageIcon(PicturesEnum.GHOST_PINK_LEFT_EYES.getImg()));
+		picture = new JLabel(new ImageIcon(PicturesEnum.GHOST_COLOR_PINK.getImage()));
 		// The preferred size is hard-coded to be the width of the
 		// widest image and the height of the tallest image.
 		// A real program would compute this.
@@ -134,16 +134,16 @@ public class JGhostChoice extends JPanel implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		switch (group.getSelection().getActionCommand()) {
 			case BLINKY_CHOICE:
-				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_RED_LEFT_EYES.getImg()));
+				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_COLOR_RED.getImage()));
 				break;
 			case INKY_CHOICE:
-				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_BLUE_LEFT_EYES.getImg()));
+				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_COLOR_BLUE.getImage()));
 				break;
 			case CLYDE_CHOICE:
-				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_ORANGE_LEFT_EYES.getImg()));
+				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_COLOR_ORANGE.getImage()));
 				break;
 			case PINKY_CHOICE:
-				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_PINK_LEFT_EYES.getImg()));
+				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_COLOR_PINK.getImage()));
 				break;
 			default:
 				break;

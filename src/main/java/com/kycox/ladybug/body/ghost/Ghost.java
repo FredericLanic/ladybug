@@ -31,7 +31,7 @@ import com.kycox.ladybug.body.ladybug.Ladybug;
 import com.kycox.ladybug.constant.Constants;
 import com.kycox.ladybug.constant.ghost.GhostBehaviousEnum;
 import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
-import com.kycox.ladybug.constant.ghost.GhostsImagesEnum;
+import com.kycox.ladybug.constant.ghost.GhostsColorEnum;
 import com.kycox.ladybug.constant.ladybug.LadybugStatusEnum;
 import com.kycox.ladybug.level.ScreenBlock;
 import com.kycox.ladybug.level.ScreenData;
@@ -52,10 +52,10 @@ public abstract class Ghost extends UserBody {
 	@Setter
 	private GhostBehaviousEnum		behavious;
 	@Getter
-	private GhostActions			ghostActions;
-	@Getter
 	@Setter
-	private GhostsImagesEnum		images;
+	private GhostsColorEnum			color;
+	@Getter
+	private GhostActions			ghostActions;
 	@Setter
 	@Getter
 	private GhostSensitiveBehavious	sensitiveBehavious;
@@ -69,7 +69,7 @@ public abstract class Ghost extends UserBody {
 	 * @return
 	 */
 	public boolean isComputed() {
-		return images.isComputed();
+		return color.isComputed();
 	}
 
 	/**

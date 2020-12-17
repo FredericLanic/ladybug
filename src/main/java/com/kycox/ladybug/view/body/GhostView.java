@@ -17,34 +17,43 @@
 package com.kycox.ladybug.view.body;
 
 import java.awt.Image;
+import java.awt.Point;
 
 import javax.inject.Named;
 
 import com.kycox.ladybug.body.ghost.Ghost;
+import com.kycox.ladybug.constant.Constants;
+import com.kycox.ladybug.constant.ghost.GhostStatusEnum;
+import com.kycox.ladybug.constant.pictures.EyesEnum;
+import com.kycox.ladybug.tools.ImageUtils;
 
 @Named("GhostView")
 public class GhostView {
 	public Image getImage(Ghost ghost) {
-		/**
-		 * Affiche les images du fantômes "vivants"
-		 *
-		 * @param ghost
-		 * @return
-		 */
 		Image ghostImg;
+		// ajout le corps
 		switch (ghost.getStatus()) {
-			case FLASH:
-				ghostImg = GhostFlashView.getInstance().getImage(ghost);
-				break;
-			case SCARED:
-				ghostImg = GhostScaredView.getInstance().getImage(ghost);
-				break;
-			case DYING:
-				ghostImg = GhostDyingView.getInstance().getImage();
-				break;
-			default:
-				ghostImg = GhostDefautlView.getInstance().getImage(ghost);
+			case FLASH -> ghostImg = GhostFlashView.getInstance().getImage(ghost);
+			case SCARED -> ghostImg = GhostScaredView.getInstance().getImage(ghost);
+			case DYING -> ghostImg = GhostDyingView.getInstance().getImage();
+			default -> ghostImg = GhostDefautlView.getInstance().getImage(ghost);
 		}
+		// ajout les yeux en fonction de la direction
+		if (!GhostStatusEnum.DYING.equals(ghost.getStatus())) {
+			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));
+		}
+		// ajouts les plugins
+		// ...
 		return ghostImg;
+	}
+
+	private Image addEyes(Point direction) {
+		if (direction.equals(Constants.POINT_LEFT))
+			return EyesEnum.GHOST_LEFT_EYES.getImage();
+		if (direction.equals(Constants.POINT_DOWN))
+			return EyesEnum.GHOST_DOWN_EYES.getImage();
+		if (direction.equals(Constants.POINT_UP))
+			return EyesEnum.GHOST_UP_EYES.getImage();
+		return EyesEnum.GHOST_RIGHT_EYES.getImage();
 	}
 }

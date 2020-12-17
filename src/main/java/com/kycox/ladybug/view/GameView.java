@@ -169,10 +169,10 @@ public class GameView extends JPanel implements Observer {
 			// Affichage des vies de ladybug
 			if (gameModel.getLadybug().getLeftLifes() < 1) {
 				for (i = 0; i < gameModel.getLadybug().getLeftLifes(); i++) {
-					g.drawImage(PicturesEnum.LADYBUG_LEFT_3.getImg(), i * 28 + 8, y + 1, this);
+					g.drawImage(PicturesEnum.LADYBUG_LEFT_3.getImage(), i * 28 + 8, y + 1, this);
 				}
 			} else {
-				g.drawImage(PicturesEnum.LADYBUG_LEFT_3.getImg(), 8, y + 1, this);
+				g.drawImage(PicturesEnum.LADYBUG_LEFT_3.getImage(), 8, y + 1, this);
 				g.setColor(Color.YELLOW);
 				g.setFont(smallFont);
 				g.drawString("x " + gameModel.getLadybug().getLeftLifes(),
@@ -182,10 +182,10 @@ public class GameView extends JPanel implements Observer {
 			Ghost ghostNotComputed = gameModel.getGroupGhosts().getGhostNotComputed();
 			if (ghostNotComputed != null && ghostNotComputed.getLeftLifes() < 5) {
 				for (i = 0; i < ghostNotComputed.getLeftLifes(); i++) {
-					g.drawImage(ghostNotComputed.getImages().getGhostLeftEyesImg(), i * 28 + 8, y + 20, this);
+					g.drawImage(ghostNotComputed.getColor().getImage(), i * 28 + 8, y + 20, this);
 				}
 			} else if (ghostNotComputed != null) {
-				g.drawImage(ghostNotComputed.getImages().getGhostLeftEyesImg(), 8, y + 20, this);
+				g.drawImage(ghostNotComputed.getColor().getImage(), 8, y + 20, this);
 				g.setColor(Color.GRAY);
 				g.setFont(smallFont);
 				g.drawString("x" + ghostNotComputed.getLeftLifes(), 34, y + 38);

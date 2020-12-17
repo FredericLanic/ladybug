@@ -20,7 +20,7 @@ import java.awt.Image;
 
 import javax.swing.Timer;
 
-import com.kycox.ladybug.constant.pictures.PicturesEnum;
+import com.kycox.ladybug.constant.pictures.EyesEnum;
 import com.kycox.ladybug.timer.TimerView;
 
 public class GhostDyingView implements TimerView {
@@ -31,19 +31,21 @@ public class GhostDyingView implements TimerView {
 	}
 
 	private BodyImg	currentImg;
-	private BodyImg	leftEyes = new BodyImg(PicturesEnum.ONLY_EYES_LEFT_EYES.getImg());
-	// period en mms
-	private BodyImg rightEyes = new BodyImg(PicturesEnum.ONLY_EYES_RIGHT_EYES.getImg());
-	// Timer de l'affichage
-	private Timer timer;
+	private BodyImg	downEyes  = new BodyImg(EyesEnum.GHOST_DOWN_EYES.getImage());
+	private BodyImg	leftEyes  = new BodyImg(EyesEnum.GHOST_LEFT_EYES.getImage());
+	private BodyImg	rightEyes = new BodyImg(EyesEnum.GHOST_RIGHT_EYES.getImage());
+	private Timer	timer;
+	private BodyImg	upEyes	  = new BodyImg(EyesEnum.GHOST_UP_EYES.getImage());
 
 	/**
 	 * Constructeur privé pour assurer le singleton
 	 */
 	private GhostDyingView() {
 		currentImg = leftEyes;
-		leftEyes.setNext(rightEyes);
-		rightEyes.setNext(leftEyes);
+		leftEyes.setNext(upEyes);
+		upEyes.setNext(rightEyes);
+		rightEyes.setNext(downEyes);
+		downEyes.setNext(leftEyes);
 		timer = createTimer();
 		timer.start();
 	}

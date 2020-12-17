@@ -23,7 +23,6 @@
 		<property name="lowLimit" value="2" />
 	</bean>
 
-	<!-- /!\ prototype -->
 	<bean id="GhostSensitiveBehavious"
 		class="com.kycox.ladybug.maths.GhostSensitiveBehavious"
 		scope="prototype" />
@@ -31,7 +30,7 @@
 	<!-- Clyde in GroupGhost -->
 	<bean id="Clyde" class="com.kycox.ladybug.body.ghost.Clyde"
 		scope="prototype">
-		<property name="images" value="ORANGE" />
+		<property name="color" value="ORANGE" />
 		<property name="behavious" value="STUPID" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
 		<property name="sensitiveBehavious"
@@ -41,7 +40,7 @@
 	<!-- Blinky in GroupGhost -->
 	<bean id="Blinky" class="com.kycox.ladybug.body.ghost.Blinky"
 		scope="prototype">
-		<property name="images" value="RED" />
+		<property name="color" value="RED" />
 		<property name="behavious" value="AGGRESSIVE" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
 		<property name="sensitiveBehavious"
@@ -52,7 +51,7 @@
 	<!-- Inky in GroupGhost -->
 	<bean id="Inky" class="com.kycox.ladybug.body.ghost.Inky"
 		scope="prototype">
-		<property name="images" value="BLUE" />
+		<property name="color" value="BLUE" />
 		<property name="behavious" value="STUPID" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
 		<property name="sensitiveBehavious"
@@ -62,7 +61,7 @@
 	<!-- Pinky in GroupGhost -->
 	<bean id="Pinky" class="com.kycox.ladybug.body.ghost.Pinky"
 		scope="prototype">
-		<property name="images" value="PINK" />
+		<property name="color" value="PINK" />
 		<property name="behavious" value="SMART" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
 		<property name="sensitiveBehavious"

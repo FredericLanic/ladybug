@@ -31,14 +31,8 @@ public class GhostFlashView implements TimerView {
 	}
 
 	private boolean	showScared;
-	/**
-	 * Timer du clignottement
-	 */
 	private Timer	timer;
 
-	/**
-	 * Constructeur privé pour assurer le singleton
-	 */
 	private GhostFlashView() {
 		timer = createTimer();
 		timer.start();
@@ -49,12 +43,6 @@ public class GhostFlashView implements TimerView {
 		showScared = !showScared;
 	}
 
-	/**
-	 * Retourne le fantôme qui clignotte
-	 *
-	 * @param ghost
-	 * @return
-	 */
 	public Image getImage(Ghost ghost) {
 		if (showScared)
 			return GhostScaredView.getInstance().getImage(ghost);
