@@ -2,8 +2,8 @@
 <class-diagram version="1.2.4" icons="true" automaticImage="JPEG" always-add-relationships="false" 
   generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
   router="FAN">  
-  <class id="1" language="java" name="com.kycox.ladybug.MainLadybug" project="ladybug" 
-    file="/ladybug/src/main/java/com/kycox/ladybug/MainLadybug.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="com.kycox.game.MainLadybug" project="ladybug" 
+    file="/ladybug/src/main/java/com/kycox/game/MainLadybug.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="548" y="144"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -11,8 +11,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.kycox.ladybug.engine.Engine" project="ladybug" 
-    file="/ladybug/src/main/java/com/kycox/ladybug/engine/Engine.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="com.kycox.game.engine.Engine" project="ladybug" 
+    file="/ladybug/src/main/java/com/kycox/game/engine/Engine.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="549" y="321"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -20,8 +20,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.kycox.ladybug.view.MainFrame" project="ladybug" 
-    file="/ladybug/src/main/java/com/kycox/ladybug/view/MainFrame.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="com.kycox.game.view.MainFrame" project="ladybug" 
+    file="/ladybug/src/main/java/com/kycox/game/view/MainFrame.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="140" y="143"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -29,8 +29,8 @@
       <operations public="true" package="false" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.kycox.ladybug.model.GameModel" project="ladybug" 
-    file="/ladybug/src/main/java/com/kycox/ladybug/model/GameModel.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="com.kycox.game.model.GameModel" project="ladybug" 
+    file="/ladybug/src/main/java/com/kycox/game/model/GameModel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="568" y="1151"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -38,9 +38,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.kycox.ladybug.controler.KeyGameController" project="ladybug" 
-    file="/ladybug/src/main/java/com/kycox/ladybug/controler/KeyGameController.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="com.kycox.game.controler.KeyGameController" project="ladybug" 
+    file="/ladybug/src/main/java/com/kycox/game/controler/KeyGameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1346" y="1460"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -48,8 +47,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.kycox.ladybug.view.GameView" project="ladybug" 
-    file="/ladybug/src/main/java/com/kycox/ladybug/view/GameView.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="com.kycox.game.view.GameView" project="ladybug" 
+    file="/ladybug/src/main/java/com/kycox/game/view/GameView.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="143" y="1490"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -57,8 +56,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.kycox.ladybug.sound.GameSounds" project="ladybug" 
-    file="/ladybug/src/main/java/com/kycox/ladybug/sound/GameSounds.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="com.kycox.game.sound.GameSounds" project="ladybug" 
+    file="/ladybug/src/main/java/com/kycox/game/sound/GameSounds.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="936" y="1184"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -66,73 +65,60 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <dependency id="8">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <association id="9">    
+  <association id="8">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="9" name="mainFrame">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="10" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="11">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="10" name="gameView">        
+      <attribute id="12" name="gameView">        
         <position height="0" width="0" x="-1" y="132"/>      
       </attribute>      
-      <multiplicity id="11" minimum="0" maximum="1">        
+      <multiplicity id="13" minimum="0" maximum="1">        
         <position height="0" width="0" x="-1" y="132"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="12">    
+  <association id="14">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="13" name="gameSounds">        
+      <attribute id="15" name="gameSounds">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="14" minimum="0" maximum="1">        
+      <multiplicity id="16" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="15">    
-    <bendpoint x="813" y="1415"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="16" name="gameModel">        
-        <position height="0" width="0" x="0" y="106"/>      
-      </attribute>      
-      <multiplicity id="17" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="106"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="18">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="19" name="gameModel">        
-        <position height="0" width="0" x="0" y="106"/>      
-      </attribute>      
-      <multiplicity id="20" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="106"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="21">    
+  <dependency id="17">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="18">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="5"/>  
   </dependency>  
-  <association id="22">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="23" name="mainFrame">        
-        <position height="0" width="0" x="0" y="0"/>      
+  <association id="19">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="20" name="gameModel">        
+        <position height="0" width="0" x="0" y="106"/>      
       </attribute>      
-      <multiplicity id="24" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="21" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="106"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

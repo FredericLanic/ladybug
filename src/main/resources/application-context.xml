@@ -18,17 +18,17 @@
 	<context:component-scan base-package="com.kycox" />
 
 	<bean id="SpeedFunctionGhost"
-		class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype"
+		class="com.kycox.game.maths.SpeedFunction" scope="prototype"
 		init-method="init">
 		<property name="lowLimit" value="2" />
 	</bean>
 
 	<bean id="GhostSensitiveBehavious"
-		class="com.kycox.ladybug.maths.GhostSensitiveBehavious"
+		class="com.kycox.game.maths.GhostSensitiveBehavious"
 		scope="prototype" />
 
 	<!-- Clyde in GroupGhost -->
-	<bean id="Clyde" class="com.kycox.ladybug.body.ghost.Clyde"
+	<bean id="Clyde" class="com.kycox.game.body.ghost.Clyde"
 		scope="prototype">
 		<property name="color" value="ORANGE" />
 		<property name="behavious" value="STUPID" />
@@ -38,7 +38,7 @@
 	</bean>
 
 	<!-- Blinky in GroupGhost -->
-	<bean id="Blinky" class="com.kycox.ladybug.body.ghost.Blinky"
+	<bean id="Blinky" class="com.kycox.game.body.ghost.Blinky"
 		scope="prototype">
 		<property name="color" value="RED" />
 		<property name="behavious" value="AGGRESSIVE" />
@@ -49,7 +49,7 @@
 	</bean>
 
 	<!-- Inky in GroupGhost -->
-	<bean id="Inky" class="com.kycox.ladybug.body.ghost.Inky"
+	<bean id="Inky" class="com.kycox.game.body.ghost.Inky"
 		scope="prototype">
 		<property name="color" value="BLUE" />
 		<property name="behavious" value="STUPID" />
@@ -59,7 +59,7 @@
 	</bean>
 
 	<!-- Pinky in GroupGhost -->
-	<bean id="Pinky" class="com.kycox.ladybug.body.ghost.Pinky"
+	<bean id="Pinky" class="com.kycox.game.body.ghost.Pinky"
 		scope="prototype">
 		<property name="color" value="PINK" />
 		<property name="behavious" value="SMART" />
@@ -70,7 +70,7 @@
 
 	<!-- GroupGhost list in GameModel -->
 	<bean id="GroupGhost"
-		class="com.kycox.ladybug.body.ghost.GhostsGroup">
+		class="com.kycox.game.body.ghost.GhostsGroup">
 		<property name="lstGhosts">
 			<list>
 				<ref bean="Clyde" />
@@ -83,25 +83,25 @@
 
 	<!-- SpeedFunctionLadybug in Ladybug -->
 	<bean id="SpeedFunctionLadybug"
-		class="com.kycox.ladybug.maths.SpeedFunction" scope="prototype"
+		class="com.kycox.game.maths.SpeedFunction" scope="prototype"
 		init-method="init">
 		<property name="lowLimit" value="4" />
 	</bean>
 
 	<!-- /!\ speedFunction est définie dans une classe parente -->
-	<bean id="Ladybug" class="com.kycox.ladybug.body.ladybug.Ladybug"
+	<bean id="Ladybug" class="com.kycox.game.body.ladybug.Ladybug"
 		scope="singleton">
 		<property name="speedFunction" ref="SpeedFunctionLadybug" />
 	</bean>
 
 	<!-- The GameStatus in GameModel -->
-	<bean id="GameStatus" class="com.kycox.ladybug.model.GameStatus"
+	<bean id="GameStatus" class="com.kycox.game.model.GameStatus"
 		scope="singleton">
 		<property name="numLevel" value="0" />
 	</bean>
 
 	<!-- Levels in ScreenData -->
-	<bean id="Levels" class="com.kycox.ladybug.level.Levels"
+	<bean id="Levels" class="com.kycox.game.level.Levels"
 		scope="singleton">
 		<property name="lstLevel">
 			<list>
