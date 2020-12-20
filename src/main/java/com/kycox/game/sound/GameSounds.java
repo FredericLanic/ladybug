@@ -25,7 +25,7 @@ import javax.sound.sampled.Clip;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kycox.game.constant.SoundsEnum;
+import com.kycox.game.constant.Sounds;
 import com.kycox.game.contract.IGameModelForGameSounds;
 import com.kycox.game.contract.INewSoundsForGameSounds;
 
@@ -46,7 +46,7 @@ public class GameSounds implements Observer {
 	 * @return
 	 */
 	public long getMicrosecondLengthLadybugDeath() {
-		Clip clipLadybugDying = SoundsEnum.LADYBUG_IS_DYING.getClip();
+		Clip clipLadybugDying = Sounds.LADYBUG_IS_DYING.getClip();
 		return clipLadybugDying.getMicrosecondLength() / 1000;
 	}
 
@@ -54,11 +54,11 @@ public class GameSounds implements Observer {
 	 * Lancement des sons sélectionnés par le modèle
 	 */
 	public void playSounds() {
-		if (newSounds.hasSound(SoundsEnum.LADYBUG_IS_DYING)) {
+		if (newSounds.hasSound(Sounds.LADYBUG_IS_DYING)) {
 			stopAllSounds();
 		}
-		SoundsEnum[] soundsEnums = SoundsEnum.values();
-		for (SoundsEnum soundsEnum : soundsEnums) {
+		Sounds[] soundsEnums = Sounds.values();
+		for (Sounds soundsEnum : soundsEnums) {
 			if (newSounds.hasSound(soundsEnum)) {
 				new ListenSound(soundsEnum.getClip()).start();
 			}
@@ -73,7 +73,7 @@ public class GameSounds implements Observer {
 	public void playStartJingle() {
 		stopAllSounds();
 		gameModel.stopGameTimer();
-		Clip clip = SoundsEnum.GAME_BEGIN_LEVEL.getClip();
+		Clip clip = Sounds.GAME_BEGIN_LEVEL.getClip();
 		// lancement du jingle du début
 		new ListenSound(clip).start();
 		// On attend le temps du jingle : le jeu est alors bloqué
@@ -83,7 +83,7 @@ public class GameSounds implements Observer {
 			logger.error("Interrupted - playStartJingle" + e);
 			Thread.currentThread().interrupt();
 		}
-		gameModel.getGameStatus().setInGame();
+		gameModel.getCurrentGameStatus().setInGame();
 		gameModel.startGameTimer();
 	}
 
@@ -91,7 +91,7 @@ public class GameSounds implements Observer {
 	public void update(Observable gameModelForSound, Object arg) {
 		gameModel = (IGameModelForGameSounds) gameModelForSound;
 		newSounds = gameModel.getNewSounds();
-		if (newSounds.hasSound(SoundsEnum.GAME_BEGIN_LEVEL)) {
+		if (newSounds.hasSound(Sounds.GAME_BEGIN_LEVEL)) {
 			playStartJingle();
 		} else if (gameModel.isSoundActive()) {
 			playSounds();
@@ -101,8 +101,8 @@ public class GameSounds implements Observer {
 	}
 
 	private void stopAllSounds() {
-		SoundsEnum[] soundsEnums = SoundsEnum.values();
-		for (SoundsEnum soundsEnum : soundsEnums) {
+		Sounds[] soundsEnums = Sounds.values();
+		for (Sounds soundsEnum : soundsEnums) {
 			soundsEnum.getClip().stop();
 			soundsEnum.getClip().setFramePosition(0);
 		}

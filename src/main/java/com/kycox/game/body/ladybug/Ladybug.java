@@ -21,7 +21,7 @@ import java.awt.Point;
 import com.kycox.game.action.ladybug.LadybugActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.ladybug.LadybugStatusEnum;
+import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
@@ -39,7 +39,7 @@ public class Ladybug extends UserBody {
 	// statut de ladybug
 	@Setter
 	@Getter
-	private LadybugStatusEnum status = LadybugStatusEnum.NORMAL;
+	private LadybugStatus status = LadybugStatus.NORMAL;
 	// direction de ladybug
 	@Getter
 	private Point viewDirection = Constants.POINT_UP;
@@ -80,7 +80,7 @@ public class Ladybug extends UserBody {
 	 */
 	public LadybugActions setActions(ScreenData screenData) {
 		ladybugActions = new LadybugActions();
-		if (getStatus().equals(LadybugStatusEnum.DEAD))
+		if (getStatus().equals(LadybugStatus.DEAD))
 			return ladybugActions;
 		if (userRequest.equals(new Point(getDirection().x, -getDirection().y))) {
 			setDirection(userRequest);
@@ -106,7 +106,7 @@ public class Ladybug extends UserBody {
 		setDirection(Constants.POINT_ZERO);
 		viewDirection = Constants.POINT_ZERO;
 		setUserRequest(Constants.POINT_ZERO);
-		setStatus(LadybugStatusEnum.NORMAL);
+		setStatus(LadybugStatus.NORMAL);
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 

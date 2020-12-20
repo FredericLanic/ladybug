@@ -23,8 +23,8 @@ import javax.inject.Named;
 
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.ghost.GhostStatusEnum;
-import com.kycox.game.constant.pictures.EyesEnum;
+import com.kycox.game.constant.ghost.GhostStatus;
+import com.kycox.game.constant.ghost.image.GhostEyesImages;
 import com.kycox.game.tools.ImageUtils;
 
 @Named("GhostView")
@@ -39,7 +39,7 @@ public class GhostView {
 			default -> ghostImg = GhostDefautlView.getInstance().getImage(ghost);
 		}
 		// ajout les yeux en fonction de la direction
-		if (!GhostStatusEnum.DYING.equals(ghost.getStatus())) {
+		if (!GhostStatus.DYING.equals(ghost.getStatus())) {
 			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));
 		}
 		// ajouts des plugins
@@ -49,11 +49,11 @@ public class GhostView {
 
 	private Image addEyes(Point direction) {
 		if (direction.equals(Constants.POINT_LEFT))
-			return EyesEnum.GHOST_LEFT_EYES.getImage();
+			return GhostEyesImages.GHOST_LEFT_EYES.getImage();
 		if (direction.equals(Constants.POINT_DOWN))
-			return EyesEnum.GHOST_DOWN_EYES.getImage();
+			return GhostEyesImages.GHOST_DOWN_EYES.getImage();
 		if (direction.equals(Constants.POINT_UP))
-			return EyesEnum.GHOST_UP_EYES.getImage();
-		return EyesEnum.GHOST_RIGHT_EYES.getImage();
+			return GhostEyesImages.GHOST_UP_EYES.getImage();
+		return GhostEyesImages.GHOST_RIGHT_EYES.getImage();
 	}
 }

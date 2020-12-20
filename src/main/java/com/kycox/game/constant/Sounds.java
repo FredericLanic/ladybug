@@ -31,7 +31,7 @@ import lombok.Getter;
  * Enumération des sons à écouter dans le jeu
  *
  */
-public enum SoundsEnum {
+public enum Sounds {
 	COMMON_TELEPORT("common_teleport.wav"), GAME_BEGIN_LEVEL("game_begin_level.wav"), GAME_SIREN_0("game_siren_0.wav"),
 	GAME_SIREN_1("game_siren_1.wav"), GAME_SIREN_2("game_siren_2.wav"), GAME_SIREN_3("game_siren_3.wav"),
 	GHOST_EATEN("ghost_eaten.wav"), GHOST_REGENERATE("ghost_regenerate.wav"), GHOST_SURVIVOR("ghost_survivor.wav"),
@@ -47,9 +47,9 @@ public enum SoundsEnum {
 	 *
 	 * @param fileName
 	 */
-	private SoundsEnum(String fileName) {
+	private Sounds(String fileName) {
 		try {
-			URL				 url			  = SoundsEnum.class.getClassLoader().getResource("sound/wav/" + fileName);
+			URL				 url			  = Sounds.class.getClassLoader().getResource("sound/wav/" + fileName);
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
 			// Get a sound clip resource.
 			clip = AudioSystem.getClip();

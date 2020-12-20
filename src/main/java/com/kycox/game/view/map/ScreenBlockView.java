@@ -22,7 +22,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.pictures.PicturesEnum;
+import com.kycox.game.constant.GameImages;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
@@ -226,7 +226,7 @@ public class ScreenBlockView {
 		if (screenBlock.isTeleportation()) {
 			g2d.setColor(teleportationColor);
 			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 10, 10);
-			g2d.drawImage(PicturesEnum.TELEPORTATION.getImage(), x, y, null);
+			g2d.drawImage(GameImages.TELEPORTATION.getImage(), x, y, null);
 		}
 	}
 

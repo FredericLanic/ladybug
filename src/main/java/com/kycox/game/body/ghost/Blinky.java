@@ -16,7 +16,7 @@
  */
 package com.kycox.game.body.ghost;
 
-import com.kycox.game.constant.ghost.GhostStatusEnum;
+import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.maths.BlinkySpeedIndex;
 
 import lombok.Setter;
@@ -45,7 +45,7 @@ public class Blinky extends Ghost {
 	public void setSpeed(int numLevel, int perCent) {
 		if (!hasChangeBlock())
 			return;
-		if (GhostStatusEnum.SCARED.equals(getStatus()))
+		if (GhostStatus.SCARED.equals(getStatus()))
 			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
 		else {
 			// Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la

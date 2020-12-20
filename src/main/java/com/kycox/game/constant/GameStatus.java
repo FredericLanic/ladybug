@@ -14,31 +14,11 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.body.ghost;
+package com.kycox.game.constant;
 
-import com.kycox.game.constant.ghost.GhostStatus;
+public enum GameStatus {
+	GAME_BEGIN, IN_GAME, LEVEL_BEGIN, NO_GAME, TO_CONF_LOCAL_USR;
 
-/**
- * Spécificité du fantôme Clyde
- *
- */
-public class Clyde extends Ghost {
-	@Override
-	public void setInitSpeed(int numLevel) {
-		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
-	}
-
-	@Override
-	public void setSpeed(int numLevel, int perCent) {
-		/*
-		 * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
-		 */
-		if (!hasChangeBlock()) {
-			return;
-		}
-		if (GhostStatus.SCARED.equals(getStatus()))
-			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
-		else
-			setSpeedIndex(getStartSpeedIndex());
+	private GameStatus() {
 	}
 }

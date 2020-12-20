@@ -19,7 +19,7 @@ package com.kycox.game.view.ghost;
 import java.awt.Image;
 
 import com.kycox.game.body.ghost.Ghost;
-import com.kycox.game.constant.pictures.PicturesEnum;
+import com.kycox.game.constant.ghost.image.GhostsColorImages;
 
 public class GhostScaredView {
 	private static GhostScaredView ghostScaredView = new GhostScaredView();
@@ -28,13 +28,10 @@ public class GhostScaredView {
 		return ghostScaredView;
 	}
 
-	/**
-	 * Constructeur privé pour assurer le singleton
-	 */
 	private GhostScaredView() {
 	}
 
 	public Image getImage(Ghost ghost) {
-		return PicturesEnum.GHOST_COLOR_GREY.getImage();
+		return GhostsColorImages.GHOST_COLOR_GREY.getImage();
 	}
 }

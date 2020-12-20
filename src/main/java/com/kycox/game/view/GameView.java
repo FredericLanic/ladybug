@@ -33,8 +33,8 @@ import javax.swing.SwingUtilities;
 
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.ladybug.LadybugStatusEnum;
-import com.kycox.game.constant.pictures.PicturesEnum;
+import com.kycox.game.constant.ladybug.LadybugImages;
+import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.controler.KeyGameController;
 import com.kycox.game.score.IncrementScore;
@@ -108,19 +108,19 @@ public class GameView extends JPanel implements Observer {
 		// Affichage du tableau de niveau et du score
 		drawMaze(g2d);
 		drawScoreAndLevel(g2d);
-		if (gameModel.getGameStatus().isToConfiguration()) {
+		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
 			confJDialog.setVisible(true);
 			drawGhosts(g2d);
 			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
 			// autre solution
-			gameModel.getGameStatus().setNoGame();
-		} else if (gameModel.getGameStatus().isNoGame()) {
+			gameModel.getCurrentGameStatus().setNoGame();
+		} else if (gameModel.getCurrentGameStatus().isNoGame()) {
 			drawGhosts(g2d);
 			showIntroScreen(g2d);
-		} else if (LadybugStatusEnum.DYING.equals(gameModel.getLadybug().getStatus())) {
+		} else if (LadybugStatus.DYING.equals(gameModel.getLadybug().getStatus())) {
 			drawGhosts(g2d);
 			drawLadybugDying(g2d);
-		} else if (!LadybugStatusEnum.DEAD.equals(gameModel.getLadybug().getStatus())) {
+		} else if (!LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
 			// jeu en cours
 			drawLadybug(g2d);
 			drawGhosts(g2d);
@@ -163,16 +163,17 @@ public class GameView extends JPanel implements Observer {
 		String s = "";
 		g.setFont(smallFont);
 		g.setColor(new Color(96, 128, 255));
-		if (gameModel.getGameStatus().isInGame()) {
-			s = "Level " + gameModel.getGameStatus().getNumLevel() + " - Score: " + gameModel.getGameScore().getScore();
+		if (gameModel.getCurrentGameStatus().isInGame()) {
+			s = "Level " + gameModel.getCurrentGameStatus().getNumLevel() + " - Score: "
+			        + gameModel.getGameScore().getScore();
 			g.drawString(s, x / 2 + 26, y + 16);
 			// Affichage des vies de ladybug
 			if (gameModel.getLadybug().getLeftLifes() < 1) {
 				for (i = 0; i < gameModel.getLadybug().getLeftLifes(); i++) {
-					g.drawImage(PicturesEnum.LADYBUG_UP_3.getImage(), i * 28 + 8, y + 1, this);
+					g.drawImage(LadybugImages.LADYBUG_UP_3.getImage(), i * 28 + 8, y + 1, this);
 				}
 			} else {
-				g.drawImage(PicturesEnum.LADYBUG_UP_3.getImage(), 8, y + 1, this);
+				g.drawImage(LadybugImages.LADYBUG_UP_3.getImage(), 8, y + 1, this);
 				g.setColor(Color.YELLOW);
 				g.setFont(smallFont);
 				g.drawString("x " + gameModel.getLadybug().getLeftLifes(),
@@ -232,7 +233,7 @@ public class GameView extends JPanel implements Observer {
 		} else if (hasBeenDrawOnce) {
 			hasBeenDrawOnce = false;
 			// FIXME : changement du status du jeu à partir de la vue : c'est le mal !!
-			gameModel.getGameStatus().setBeginingLevel();
+			gameModel.getCurrentGameStatus().setBeginingLevel();
 		}
 	}
 

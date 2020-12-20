@@ -20,9 +20,9 @@ package com.kycox.game.constant;
  * B : Basic point N : Not accessible point
  *
  */
-public enum LevelConstructEnum {
+public enum LevelConstruct {
 	B, N;
 
-	private LevelConstructEnum() {
+	private LevelConstruct() {
 	}
 }

@@ -14,11 +14,16 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.constant;
+package com.kycox.game.constant.ghost;
 
-public enum SuperPowerTimerEnum {
-	RUN, STOP, STOPPING;
+/**
+ * Enumération des comportements des fantômes
+ *
+ */
+public enum GhostBehavious {
+    // agressif, timide, débile, intelligent
+	AGGRESSIVE, SHY, SMART, STUPID;
 
-	private SuperPowerTimerEnum() {
+	private GhostBehavious() {
 	}
 }

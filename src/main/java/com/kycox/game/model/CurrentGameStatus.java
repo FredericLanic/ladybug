@@ -16,54 +16,54 @@
  */
 package com.kycox.game.model;
 
-import com.kycox.game.constant.GameStatusEnum;
+import com.kycox.game.constant.GameStatus;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class GameStatus {
-	private GameStatusEnum gameStatusEnum;
+public class CurrentGameStatus {
+	private GameStatus gameStatus;
 	@Getter
 	@Setter
 	private int			   numLevel;
 
 	public boolean isGameBegin() {
-		return gameStatusEnum == GameStatusEnum.GAME_BEGIN;
+		return gameStatus == GameStatus.GAME_BEGIN;
 	}
 
 	public boolean isInGame() {
-		return gameStatusEnum == GameStatusEnum.IN_GAME;
+		return gameStatus == GameStatus.IN_GAME;
 	}
 
 	public boolean isLevelBegin() {
-		return gameStatusEnum == GameStatusEnum.LEVEL_BEGIN;
+		return gameStatus == GameStatus.LEVEL_BEGIN;
 	}
 
 	public boolean isNoGame() {
-		return gameStatusEnum == GameStatusEnum.NO_GAME;
+		return gameStatus == GameStatus.NO_GAME;
 	}
 
 	public boolean isToConfiguration() {
-		return gameStatusEnum == GameStatusEnum.TO_CONF_LOCAL_USR;
+		return gameStatus == GameStatus.TO_CONF_LOCAL_USR;
 	}
 
 	public void setBeginingLevel() {
-		gameStatusEnum = GameStatusEnum.LEVEL_BEGIN;
+		gameStatus = GameStatus.LEVEL_BEGIN;
 	}
 
 	public void setBeginningGame() {
-		gameStatusEnum = GameStatusEnum.GAME_BEGIN;
+		gameStatus = GameStatus.GAME_BEGIN;
 	}
 
 	public void setConfiguration() {
-		gameStatusEnum = GameStatusEnum.TO_CONF_LOCAL_USR;
+		gameStatus = GameStatus.TO_CONF_LOCAL_USR;
 	}
 
 	public void setInGame() {
-		gameStatusEnum = GameStatusEnum.IN_GAME;
+		gameStatus = GameStatus.IN_GAME;
 	}
 
 	public void setNoGame() {
-		gameStatusEnum = GameStatusEnum.NO_GAME;
+		gameStatus = GameStatus.NO_GAME;
 	}
 }

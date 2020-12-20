@@ -18,10 +18,10 @@ package com.kycox.game.contract;
 
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
-import com.kycox.game.constant.ladybug.KinematicLadybugDeath;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupIncrementScores;
+import com.kycox.game.view.ladybug.LadybugDeathView;
 
 public interface IGameModelForGameView extends IGameModelForExternalElements {
 	public GameScore getGameScore();
@@ -30,7 +30,7 @@ public interface IGameModelForGameView extends IGameModelForExternalElements {
 
 	public GroupIncrementScores getGroupIncrementScores();
 
-	public KinematicLadybugDeath getKinematicLadybugDeath();
+	public LadybugDeathView getKinematicLadybugDeath();
 
 	public Ladybug getLadybug();
 

@@ -1,4 +1,4 @@
-package com.kycox.game.view;
+package com.kycox.game.view.tests;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

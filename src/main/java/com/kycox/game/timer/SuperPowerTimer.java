@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 import javax.inject.Named;
 
-import com.kycox.game.constant.SuperPowerTimerEnum;
+import com.kycox.game.constant.SuperPowerTimerStatus;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +47,7 @@ public class SuperPowerTimer {
 				superPowerTimer.launch(FLASH_DELAY);
 			} else {
 				// Fin du second timer
-				superPowerTimerStatus = SuperPowerTimerEnum.STOP;
+				superPowerTimerStatus = SuperPowerTimerStatus.STOP;
 				superPowerTimer		  = null;
 			}
 		}
@@ -62,7 +62,7 @@ public class SuperPowerTimer {
 	// objet powerFlashTimer utilisé pour le 2i�me timer
 	private SuperPowerTimer superPowerTimer = null;
 	// etat du superPower courant (1ier ou 2ieme selon le cas)
-	private SuperPowerTimerEnum superPowerTimerStatus = SuperPowerTimerEnum.STOP;
+	private SuperPowerTimerStatus superPowerTimerStatus = SuperPowerTimerStatus.STOP;
 	// Timer du power
 	private Timer timer;
 
@@ -94,7 +94,7 @@ public class SuperPowerTimer {
 			superPowerTimer.forcedStop();
 			superPowerTimer = null;
 		}
-		superPowerTimerStatus = SuperPowerTimerEnum.STOP;
+		superPowerTimerStatus = SuperPowerTimerStatus.STOP;
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class SuperPowerTimer {
 	 *
 	 * @return
 	 */
-	public SuperPowerTimerEnum getStatus() {
+	public SuperPowerTimerStatus getStatus() {
 		// Priorité au deuxième timer s'il existe
 		if (superPowerTimer != null)
 			return superPowerTimer.getStatus();
@@ -110,11 +110,11 @@ public class SuperPowerTimer {
 	}
 
 	public boolean isStopped() {
-		return getStatus().equals(SuperPowerTimerEnum.STOP);
+		return getStatus().equals(SuperPowerTimerStatus.STOP);
 	}
 
 	public boolean isStopping() {
-		return getStatus().equals(SuperPowerTimerEnum.STOPPING);
+		return getStatus().equals(SuperPowerTimerStatus.STOPPING);
 	}
 
 	/**
@@ -124,10 +124,10 @@ public class SuperPowerTimer {
 		if (numTimer == 1) {
 			// Début du premier timer
 			seconds				  = seconds - FLASH_DELAY;
-			superPowerTimerStatus = SuperPowerTimerEnum.RUN;
+			superPowerTimerStatus = SuperPowerTimerStatus.RUN;
 		} else {
 			// Début du second timer
-			superPowerTimerStatus = SuperPowerTimerEnum.STOPPING;
+			superPowerTimerStatus = SuperPowerTimerStatus.STOPPING;
 		}
 		// Création du timer
 		timer = new Timer(true);

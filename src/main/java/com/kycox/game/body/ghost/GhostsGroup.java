@@ -22,7 +22,7 @@ import java.util.Optional;
 
 import com.kycox.game.action.ghost.GhostsGroupActions;
 import com.kycox.game.body.ladybug.Ladybug;
-import com.kycox.game.constant.ghost.GhostStatusEnum;
+import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.level.ScreenData;
 
 import lombok.Getter;
@@ -71,16 +71,16 @@ public class GhostsGroup {
 	}
 
 	public boolean hasDyingGhost() {
-		return (lstGhosts.stream().filter(g -> GhostStatusEnum.DYING.equals(g.getStatus())).count() > 0);
+		return (lstGhosts.stream().filter(g -> GhostStatus.DYING.equals(g.getStatus())).count() > 0);
 	}
 
 	public boolean hasRegeneratedGhost() {
-		return (lstGhosts.stream().filter(g -> GhostStatusEnum.REGENERATING.equals(g.getStatus())).count() > 0);
+		return (lstGhosts.stream().filter(g -> GhostStatus.REGENERATING.equals(g.getStatus())).count() > 0);
 	}
 
 	public boolean hasScaredGhost() {
-		return ((lstGhosts.stream().filter(g -> GhostStatusEnum.SCARED.equals(g.getStatus())).count()
-		        + lstGhosts.stream().filter(g -> GhostStatusEnum.FLASH.equals(g.getStatus())).count()) > 0);
+		return ((lstGhosts.stream().filter(g -> GhostStatus.SCARED.equals(g.getStatus())).count()
+		        + lstGhosts.stream().filter(g -> GhostStatus.FLASH.equals(g.getStatus())).count()) > 0);
 	}
 
 	/**
@@ -126,11 +126,11 @@ public class GhostsGroup {
 	 */
 	public void setFear(boolean fear) {
 		if (fear) {
-			lstGhosts.stream().filter(g -> !g.getStatus().equals(GhostStatusEnum.DYING))
-			        .forEach(g -> g.setStatus(GhostStatusEnum.SCARED));
+			lstGhosts.stream().filter(g -> !g.getStatus().equals(GhostStatus.DYING))
+			        .forEach(g -> g.setStatus(GhostStatus.SCARED));
 		} else {
-			lstGhosts.stream().filter(g -> !g.getStatus().equals(GhostStatusEnum.DYING))
-			        .forEach(g -> g.setStatus(GhostStatusEnum.NORMAL));
+			lstGhosts.stream().filter(g -> !g.getStatus().equals(GhostStatus.DYING))
+			        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
 		}
 	}
 
@@ -138,8 +138,8 @@ public class GhostsGroup {
 	 * Tous les fantômes doivent clignotter
 	 */
 	public void setFlashActive() {
-		lstGhosts.stream().filter(g -> GhostStatusEnum.SCARED.equals(g.getStatus()))
-		        .forEach(g -> g.setStatus(GhostStatusEnum.FLASH));
+		lstGhosts.stream().filter(g -> GhostStatus.SCARED.equals(g.getStatus()))
+		        .forEach(g -> g.setStatus(GhostStatus.FLASH));
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class GhostsGroup {
 	 * @param numLevel
 	 */
 	public void setStartLevel(int numLevel, ScreenData screenData) {
-		setStatus(GhostStatusEnum.NORMAL);
+		setStatus(GhostStatus.NORMAL);
 		setInitSpeeds(numLevel);
 		initializePositions(screenData);
 	}
@@ -180,7 +180,7 @@ public class GhostsGroup {
 	 *
 	 * @param status
 	 */
-	public void setStatus(GhostStatusEnum status) {
+	public void setStatus(GhostStatus status) {
 		lstGhosts.stream().forEach(g -> g.setStatus(status));
 	}
 
@@ -211,8 +211,8 @@ public class GhostsGroup {
 	 * Status des fantômes de REGENERATING à NORMAL
 	 */
 	private void setGhostStatusAfterRegeneration() {
-		lstGhosts.stream().filter(g -> GhostStatusEnum.REGENERATING.equals(g.getStatus()))
-		        .forEach(g -> g.setStatus(GhostStatusEnum.NORMAL));
+		lstGhosts.stream().filter(g -> GhostStatus.REGENERATING.equals(g.getStatus()))
+		        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
 	}
 
 	/**

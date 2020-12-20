@@ -60,7 +60,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import com.kycox.game.constant.pictures.PicturesEnum;
+import com.kycox.game.constant.ghost.image.GhostsBodyImages;
 
 public class JGhostChoice extends JPanel implements KeyListener {
 	public static final String BLINKY_CHOICE	= "Blinky";
@@ -108,7 +108,7 @@ public class JGhostChoice extends JPanel implements KeyListener {
 		blinkyButton.addKeyListener(this);
 		clydeButton.addKeyListener(this);
 		// Set up the picture label.
-		picture = new JLabel(new ImageIcon(PicturesEnum.GHOST_COLOR_PINK.getImage()));
+		picture = new JLabel(new ImageIcon(GhostsBodyImages.PINK.getImage()));
 		// The preferred size is hard-coded to be the width of the
 		// widest image and the height of the tallest image.
 		// A real program would compute this.
@@ -134,16 +134,16 @@ public class JGhostChoice extends JPanel implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		switch (group.getSelection().getActionCommand()) {
 			case BLINKY_CHOICE:
-				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_COLOR_RED.getImage()));
+				picture.setIcon(new ImageIcon(GhostsBodyImages.RED.getImage()));
 				break;
 			case INKY_CHOICE:
-				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_COLOR_BLUE.getImage()));
+				picture.setIcon(new ImageIcon(GhostsBodyImages.BLUE.getImage()));
 				break;
 			case CLYDE_CHOICE:
-				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_COLOR_ORANGE.getImage()));
+				picture.setIcon(new ImageIcon(GhostsBodyImages.ORANGE.getImage()));
 				break;
 			case PINKY_CHOICE:
-				picture.setIcon(new ImageIcon(PicturesEnum.GHOST_COLOR_PINK.getImage()));
+				picture.setIcon(new ImageIcon(GhostsBodyImages.PINK.getImage()));
 				break;
 			default:
 				break;

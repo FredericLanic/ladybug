@@ -1,7 +1,7 @@
 package com.kycox.game.contract;
 
-import com.kycox.game.model.GameStatus;
+import com.kycox.game.model.CurrentGameStatus;
 
 public interface IGameModelForExternalElements {
-	public GameStatus getGameStatus();
+	public CurrentGameStatus getCurrentGameStatus();
 }

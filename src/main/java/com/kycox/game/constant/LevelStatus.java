@@ -16,9 +16,9 @@
  */
 package com.kycox.game.constant;
 
-public enum LevelStatusEnum {
+public enum LevelStatus {
 	FINISHED, RUNNING;
 
-	private LevelStatusEnum() {
+	private LevelStatus() {
 	}
 }

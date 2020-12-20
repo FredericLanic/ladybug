@@ -35,8 +35,8 @@ import javax.swing.SwingConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kycox.game.constant.ghost.GhostsColorEnum;
-import com.kycox.game.constant.pictures.PicturesEnum;
+import com.kycox.game.constant.ghost.image.GhostsBodyImages;
+import com.kycox.game.constant.ladybug.LadybugImages;
 
 public class ConfJDialog extends JDialog implements ActionListener {
 	private static final Log  logger		   = LogFactory.getLog(ConfJDialog.class);
@@ -60,7 +60,7 @@ public class ConfJDialog extends JDialog implements ActionListener {
 		centerPanel.setBackground(Color.BLACK);
 		JPanel ghostPanel = new JGhostChoice(group);
 		ghostPanel.setBackground(Color.BLACK);
-		JLabel ladybugImg = new JLabel(new ImageIcon(PicturesEnum.LADYBUG_UP_3.getImage()));
+		JLabel ladybugImg = new JLabel(new ImageIcon(LadybugImages.LADYBUG_UP_3.getImage()));
 		ladybugImg.setHorizontalAlignment(SwingConstants.CENTER);
 		centerPanel.setLayout(new GridLayout(1, 2));
 		centerPanel.add(ghostPanel);
@@ -91,23 +91,23 @@ public class ConfJDialog extends JDialog implements ActionListener {
 		switch (e.getActionCommand()) {
 			case "1 player":
 				// on met un fantôme jouable par les touches
-				GhostsColorEnum.ORANGE.setComputed(true);
-				GhostsColorEnum.RED.setComputed(true);
-				GhostsColorEnum.BLUE.setComputed(true);
-				GhostsColorEnum.PINK.setComputed(true);
+				GhostsBodyImages.ORANGE.setComputed(true);
+				GhostsBodyImages.RED.setComputed(true);
+				GhostsBodyImages.BLUE.setComputed(true);
+				GhostsBodyImages.PINK.setComputed(true);
 				this.dispose();
 				break;
 			case "2 players":
-				GhostsColorEnum.ORANGE.setComputed(true);
-				GhostsColorEnum.RED.setComputed(true);
-				GhostsColorEnum.BLUE.setComputed(true);
-				GhostsColorEnum.PINK.setComputed(true);
+				GhostsBodyImages.ORANGE.setComputed(true);
+				GhostsBodyImages.RED.setComputed(true);
+				GhostsBodyImages.BLUE.setComputed(true);
+				GhostsBodyImages.PINK.setComputed(true);
 				String actionCommand = group.getSelection().getActionCommand();
 				switch (actionCommand) {
-					case JGhostChoice.BLINKY_CHOICE -> GhostsColorEnum.RED.setComputed(false);
-					case JGhostChoice.INKY_CHOICE -> GhostsColorEnum.BLUE.setComputed(false);
-					case JGhostChoice.CLYDE_CHOICE -> GhostsColorEnum.ORANGE.setComputed(false);
-					case JGhostChoice.PINKY_CHOICE -> GhostsColorEnum.PINK.setComputed(false);
+					case JGhostChoice.BLINKY_CHOICE -> GhostsBodyImages.RED.setComputed(false);
+					case JGhostChoice.INKY_CHOICE -> GhostsBodyImages.BLUE.setComputed(false);
+					case JGhostChoice.CLYDE_CHOICE -> GhostsBodyImages.ORANGE.setComputed(false);
+					case JGhostChoice.PINKY_CHOICE -> GhostsBodyImages.PINK.setComputed(false);
 					default -> logger.info("No associated action for " + actionCommand);
 				}
 				this.dispose();

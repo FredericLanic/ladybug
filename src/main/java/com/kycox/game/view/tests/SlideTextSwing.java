@@ -1,4 +1,4 @@
-package com.kycox.game.view;
+package com.kycox.game.view.tests;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;

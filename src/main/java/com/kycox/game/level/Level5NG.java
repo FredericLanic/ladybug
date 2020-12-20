@@ -16,14 +16,14 @@
  */
 package com.kycox.game.level;
 
-import static com.kycox.game.constant.LevelConstructEnum.B;
-import static com.kycox.game.constant.LevelConstructEnum.N;
+import static com.kycox.game.constant.LevelConstruct.B;
+import static com.kycox.game.constant.LevelConstruct.N;
 
 import java.awt.Point;
 
 import javax.inject.Named;
 
-import com.kycox.game.constant.LevelConstructEnum;
+import com.kycox.game.constant.LevelConstruct;
 
 @Named("Level5NG")
 public class Level5NG extends LevelNG {
@@ -32,7 +32,7 @@ public class Level5NG extends LevelNG {
 		nbrBlocksPerLine = 15;
 		// nombre de lignes
 		nbrLines  = 15;
-		levelDATA = new LevelConstructEnum[] {
+		levelDATA = new LevelConstruct[] {
 		        // 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
 		        B, B, B, B, N, N, B, N, B, N, N, B, B, B, B,	  // 1
 		        B, N, N, B, B, B, B, B, B, B, B, B, N, N, B,	  // 2

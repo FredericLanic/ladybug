@@ -29,10 +29,10 @@ import com.kycox.game.body.Body;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.ghost.GhostBehaviousEnum;
-import com.kycox.game.constant.ghost.GhostStatusEnum;
-import com.kycox.game.constant.ghost.GhostsColorEnum;
-import com.kycox.game.constant.ladybug.LadybugStatusEnum;
+import com.kycox.game.constant.ghost.GhostBehavious;
+import com.kycox.game.constant.ghost.GhostStatus;
+import com.kycox.game.constant.ghost.image.GhostsBodyImages;
+import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.maths.GhostSensitiveBehavious;
@@ -50,10 +50,10 @@ public abstract class Ghost extends UserBody {
 	private static final Log		logger = LogFactory.getLog(Ghost.class);
 	@Getter
 	@Setter
-	private GhostBehaviousEnum		behavious;
+	private GhostBehavious		behavious;
 	@Getter
 	@Setter
-	private GhostsColorEnum			color;
+	private GhostsBodyImages			color;
 	@Getter
 	private GhostActions			ghostActions;
 	@Setter
@@ -61,7 +61,7 @@ public abstract class Ghost extends UserBody {
 	private GhostSensitiveBehavious	sensitiveBehavious;
 	@Getter
 	@Setter
-	private GhostStatusEnum			status = GhostStatusEnum.NORMAL;
+	private GhostStatus			status = GhostStatus.NORMAL;
 
 	/**
 	 * Retourne true si le fantôme est géré par l'ordinateur
@@ -98,7 +98,7 @@ public abstract class Ghost extends UserBody {
 	 */
 	public void moveGhostByUser(Body ladybug, ScreenData screenData, Point ghostRequest) {
 		setUserRequest(ghostRequest);
-		if (hasChangeBlock() && getStatus().equals(GhostStatusEnum.NORMAL)) {
+		if (hasChangeBlock() && getStatus().equals(GhostStatus.NORMAL)) {
 			move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
 			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		} else {
@@ -117,10 +117,10 @@ public abstract class Ghost extends UserBody {
 		ghostActions.setPosition((Point) getPosition().clone());
 		// Détection de la collision avec un fantôme et ladybug
 		if (getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2)
-		        && !getStatus().equals(GhostStatusEnum.DYING) && !getStatus().equals(GhostStatusEnum.REGENERATING)
-		        && !ladybug.getStatus().equals(LadybugStatusEnum.DYING)
-		        && !ladybug.getStatus().equals(LadybugStatusEnum.DEAD)) {
-			if (GhostStatusEnum.SCARED.equals(getStatus()) || GhostStatusEnum.FLASH.equals(getStatus())) {
+		        && !getStatus().equals(GhostStatus.DYING) && !getStatus().equals(GhostStatus.REGENERATING)
+		        && !ladybug.getStatus().equals(LadybugStatus.DYING)
+		        && !ladybug.getStatus().equals(LadybugStatus.DEAD)) {
+			if (GhostStatus.SCARED.equals(getStatus()) || GhostStatus.FLASH.equals(getStatus())) {
 				ghostActions.setEaten(true);
 			} else {
 				// Mise à mort de Ladybug !!!
@@ -148,7 +148,7 @@ public abstract class Ghost extends UserBody {
 	public void setSettingAfterBeEaten(int numLevel) {
 		setPosition(Utils.convertPointToGraphicUnit(Utils.convertPointToBlockUnit(getPosition())));
 		// � d�placer dans
-		setStatus(GhostStatusEnum.DYING);
+		setStatus(GhostStatus.DYING);
 		setSpeedIndex(getSpeedFunction().getRealIndexSpeedPlus(numLevel));
 	}
 
@@ -313,7 +313,7 @@ public abstract class Ghost extends UserBody {
 			if (shorterWay.size() == 1) {
 				// Le fantôme est arrivé au point de regénération, il redevient "normal" avec
 				// une vitesse "normale" aussi
-				setStatus(GhostStatusEnum.REGENERATING);
+				setStatus(GhostStatus.REGENERATING);
 			} else {
 				// On prend le premier block cible
 				Point currentPoint = shorterWay.get(0);

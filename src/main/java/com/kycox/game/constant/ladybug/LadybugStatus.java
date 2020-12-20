@@ -14,11 +14,11 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.constant;
+package com.kycox.game.constant.ladybug;
 
-public enum GameStatusEnum {
-	GAME_BEGIN, IN_GAME, LEVEL_BEGIN, NO_GAME, TO_CONF_LOCAL_USR;
+public enum LadybugStatus {
+	DEAD, DYING, NORMAL;
 
-	private GameStatusEnum() {
+	private LadybugStatus() {
 	}
 }

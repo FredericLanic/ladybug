@@ -14,27 +14,32 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.constant.ladybug;
+package com.kycox.game.constant;
+
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
+import lombok.Getter;
 
 /**
- * Enumération des états de ladybug
+ * Enumération des images à afficher dans le jeu
  *
+ * @author kycox
  *
  */
-public enum LadybugStatusEnum {
-	DEAD, DYING, NORMAL;
-//	public static Predicate<Ladybug> isDead() {
-//		return p -> p.getStatus().equals(DEAD);
-//	}
-//
-//	public static Predicate<Ladybug> isDying() {
-//		return p -> p.getStatus().equals(DYING);
-//	}
-//
-//	public static Predicate<Ladybug> isNormal() {
-//		return p -> p.getStatus().equals(NORMAL);
-//	}
+public enum GameImages {
+	EMPTY("images/empty.png"),
+    // ghost plugin headband
+    // ladybug plugins
+	LADYBUG_PLUGIN_OX_UP("images/ladybug/skin/OXiane/OXup.gif"),
+    // teleportation
+	TELEPORTATION("images/Teleportation.png");
 
-	private LadybugStatusEnum() {
+	@Getter
+	private Image image = null;
+
+	private GameImages(String fileName) {
+		image = new ImageIcon(GameImages.class.getClassLoader().getResource(fileName)).getImage();
 	}
 }

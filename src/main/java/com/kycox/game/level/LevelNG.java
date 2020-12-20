@@ -16,14 +16,14 @@
  */
 package com.kycox.game.level;
 
-import static com.kycox.game.constant.LevelConstructEnum.B;
-import static com.kycox.game.constant.LevelConstructEnum.N;
+import static com.kycox.game.constant.LevelConstruct.B;
+import static com.kycox.game.constant.LevelConstruct.N;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kycox.game.constant.LevelConstructEnum;
+import com.kycox.game.constant.LevelConstruct;
 import com.kycox.game.contract.ILevel;
 
 public abstract class LevelNG implements ILevel {
@@ -34,7 +34,7 @@ public abstract class LevelNG implements ILevel {
 	private static final int UP					  = 2;
 	static final int		 NOT_ACCESSIBLE_POINT = 128;
 	// Map
-	protected LevelConstructEnum[] levelDATA;
+	protected LevelConstruct[] levelDATA;
 	// Nombre de blocks par ligne
 	protected int nbrBlocksPerLine;
 	// Nombre de lignes
@@ -76,11 +76,11 @@ public abstract class LevelNG implements ILevel {
 	 */
 	private int screenBlockValue(int x, int y) {
 		int				   pointValue = 0;
-		LevelConstructEnum block	  = levelDATA[dataPosition(x, y)];
-		LevelConstructEnum blockUp	  = null;
-		LevelConstructEnum blockDown  = null;
-		LevelConstructEnum blockLeft  = null;
-		LevelConstructEnum blockRight = null;
+		LevelConstruct block	  = levelDATA[dataPosition(x, y)];
+		LevelConstruct blockUp	  = null;
+		LevelConstruct blockDown  = null;
+		LevelConstruct blockLeft  = null;
+		LevelConstruct blockRight = null;
 		// Si y = 0 on est en haut de la grille
 		if (y > 0)
 			blockUp = levelDATA[dataPosition(x, y - 1)];

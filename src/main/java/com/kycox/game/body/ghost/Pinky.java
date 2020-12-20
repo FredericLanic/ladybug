@@ -16,7 +16,7 @@
  */
 package com.kycox.game.body.ghost;
 
-import com.kycox.game.constant.ghost.GhostStatusEnum;
+import com.kycox.game.constant.ghost.GhostStatus;
 
 /**
  * Spécificités du fantôme Pinky
@@ -33,7 +33,7 @@ public class Pinky extends Ghost {
 		if (!hasChangeBlock()) {
 			return;
 		}
-		if (GhostStatusEnum.SCARED.equals(getStatus()))
+		if (GhostStatus.SCARED.equals(getStatus()))
 			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
 		else
 			setSpeedIndex(getStartSpeedIndex());

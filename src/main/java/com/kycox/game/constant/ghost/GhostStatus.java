@@ -17,13 +17,12 @@
 package com.kycox.game.constant.ghost;
 
 /**
- * Enumération des comportements des fantômes
+ * Enumération des états des fantômes
  *
  */
-public enum GhostBehaviousEnum {
-    // agressif, timide, débile, intelligent
-	AGGRESSIVE, SHY, SMART, STUPID;
+public enum GhostStatus {
+	DYING, FLASH, NORMAL, REGENERATING, SCARED;
 
-	private GhostBehaviousEnum() {
+	private GhostStatus() {
 	}
 }

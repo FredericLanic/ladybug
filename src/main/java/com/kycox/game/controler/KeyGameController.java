@@ -51,7 +51,7 @@ public class KeyGameController extends KeyAdapter {
 			// FIXME : c'est au modèle de sortir proprement du jeu
 			System.exit(0);
 		}
-		if (gameModel.getGameStatus().isInGame()) {
+		if (gameModel.getCurrentGameStatus().isInGame()) {
 			// Gestion des touches durant une partie
 			manageKeysInGame(keyCode);
 		} else {
@@ -96,7 +96,7 @@ public class KeyGameController extends KeyAdapter {
 		switch (keyCode) {
 			case KeyEvent.VK_S -> gameModel.startGame();
 			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
-			case KeyEvent.VK_C -> gameModel.getGameStatus().setConfiguration();
+			case KeyEvent.VK_C -> gameModel.getCurrentGameStatus().setConfiguration();
 			default -> logger.info(keyCode + " key not managed");
 		}
 	}
