@@ -13,7 +13,7 @@ import lombok.Getter;
 @Named("NewSounds")
 public class NewSounds implements INewSoundsForGameSounds {
 	@Getter
-	private List<Sounds> lstSoundsEnum = new ArrayList<>();
+	private List<Sounds> sounds = new ArrayList<>();
 
 	public void addDyingGhost(boolean mustBeAdded) {
 		addSounds(Sounds.GHOST_EATEN, mustBeAdded);
@@ -32,6 +32,10 @@ public class NewSounds implements INewSoundsForGameSounds {
 	}
 
 	public void addLadybugIsDying(boolean mustBeAdded, boolean startFenerarium) {
+//		if (mustBeAdded && startFenerarium) {
+//			sounds.clear();
+//			System.out.println("Start sound ladybug is dying");
+//		}
 		addSounds(Sounds.LADYBUG_IS_DYING, mustBeAdded && startFenerarium);
 	}
 
@@ -65,16 +69,16 @@ public class NewSounds implements INewSoundsForGameSounds {
 
 	@Override
 	public boolean hasSound(Sounds soundsEnum) {
-		return lstSoundsEnum.contains(soundsEnum);
+		return sounds.contains(soundsEnum);
 	}
 
 	public void initSounds() {
-		lstSoundsEnum.clear();
+		sounds.clear();
 	}
 
 	private void addSounds(Sounds soundsEnum, boolean mustBeAdded) {
 		if (mustBeAdded) {
-			lstSoundsEnum.add(soundsEnum);
+			sounds.add(soundsEnum);
 		}
 	}
 }

@@ -41,7 +41,7 @@ public final class Constants {
 	// Nouvelle vie en fonction du score incrémental
 	public static final int NEW_LIFE_BY_SCORE = 100;
 	// Niveau max
-	public static final int NIVEAU_MAX = 10;
+	public static final int NIVEAU_MAX = 30;
 	// Période du timer du jeu
 	public static final int PACE = 40; // rythme en anglais :/
 	// Point en bas

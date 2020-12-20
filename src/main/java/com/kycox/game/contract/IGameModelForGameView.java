@@ -30,9 +30,9 @@ public interface IGameModelForGameView extends IGameModelForExternalElements {
 
 	public GroupIncrementScores getGroupIncrementScores();
 
-	public LadybugDeathView getKinematicLadybugDeath();
-
 	public Ladybug getLadybug();
+
+	public LadybugDeathView getLadybugDeathView();
 
 	public int getNbrPlayers();
 

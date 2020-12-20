@@ -33,7 +33,7 @@ import javax.swing.SwingUtilities;
 
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.ladybug.LadybugImages;
+//import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.controler.KeyGameController;
@@ -134,12 +134,12 @@ public class GameView extends JPanel implements Observer {
 	}
 
 	private void drawLadybug(Graphics2D g2d) {
-		g2d.drawImage(ladybugView.getNextImage(gameModel.getLadybug().getViewDirection()),
+		g2d.drawImage(ladybugView.getImage(gameModel.getLadybug().getViewDirection()),
 		        gameModel.getLadybug().getPosition().x + 1, gameModel.getLadybug().getPosition().y + 1, this);
 	}
 
 	private void drawLadybugDying(Graphics2D g2d) {
-		g2d.drawImage(gameModel.getKinematicLadybugDeath().getImage(), gameModel.getLadybug().getPosition().x + 1,
+		g2d.drawImage(gameModel.getLadybugDeathView().getImage(), gameModel.getLadybug().getPosition().x + 1,
 		        gameModel.getLadybug().getPosition().y + 1, this);
 	}
 
@@ -170,10 +170,10 @@ public class GameView extends JPanel implements Observer {
 			// Affichage des vies de ladybug
 			if (gameModel.getLadybug().getLeftLifes() < 1) {
 				for (i = 0; i < gameModel.getLadybug().getLeftLifes(); i++) {
-					g.drawImage(LadybugImages.LADYBUG_UP_3.getImage(), i * 28 + 8, y + 1, this);
+					g.drawImage(ladybugView.getStaticView(), i * 28 + 8, y + 1, this);
 				}
 			} else {
-				g.drawImage(LadybugImages.LADYBUG_UP_3.getImage(), 8, y + 1, this);
+				g.drawImage(ladybugView.getStaticView(), 8, y + 1, this);
 				g.setColor(Color.YELLOW);
 				g.setFont(smallFont);
 				g.drawString("x " + gameModel.getLadybug().getLeftLifes(),

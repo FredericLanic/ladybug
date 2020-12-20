@@ -45,6 +45,6 @@ public class Engine {
 		gameModel.addObserver(gameSounds);
 		// on récupère la longeur du son de la mort de ladybug et on l'affecte au
 		// gameModel
-		gameModel.getKinematicLadybugDeath().setMillisecondLenght(gameSounds.getMicrosecondLengthLadybugDeath());
+		gameModel.getLadybugDeathView().setMillisecondLenght(gameSounds.getMicrosecondLengthLadybugDeath());
 	}
 }

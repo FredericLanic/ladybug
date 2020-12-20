@@ -17,17 +17,16 @@
 package com.kycox.game.view.ladybug;
 
 import java.awt.Image;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.awt.Point;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
+import com.kycox.game.view.body.BodyImg;
 
-import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -35,60 +34,76 @@ import lombok.Setter;
  *
  */
 @Named("LadybugDeathView")
-public class LadybugDeathView {
-	// bip de la cinématique
-	@Getter
-	private int bip = 0;
-	// Liste des images des images à afficher lors de la cinématique
-	private List<Image>	lstPictures		  = new ArrayList<>(Arrays.asList(LadybugImages.LADYBUG_UP_FULL.getImage(),
-	        LadybugImages.LADYBUG_UP_1.getImage(), LadybugImages.LADYBUG_UP_2.getImage(),
-	        LadybugImages.LADYBUG_UP_3.getImage(), LadybugImages.LADYBUG_UP_4.getImage(),
-	        LadybugImages.LADYBUG_UP_5.getImage(), LadybugImages.LADYBUG_UP_6.getImage(),
-	        LadybugImages.LADYBUG_UP_7.getImage(), LadybugImages.LADYBUG_UP_8.getImage(),
-	        LadybugImages.LADYBUG_UP_9.getImage(), GameImages.EMPTY.getImage()));
+public class LadybugDeathView extends LadybugCommun {
+	private int		bip				  = 0;
+	private int		deltaBips;
 	@Setter
-	private long		millisecondLenght = 0;
+	private Point	direction		  = Constants.POINT_ZERO;
+	private BodyImg	empty			  = new BodyImg(GameImages.EMPTY.getImage());
+	private BodyImg	ladybugFull		  = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
+	private BodyImg	ladybugUp1		  = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
+	private BodyImg	ladybugUp2		  = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
+	private BodyImg	ladybugUp3		  = new BodyImg(LadybugImages.LADYBUG_UP_3.getImage());
+	private BodyImg	ladybugUp4		  = new BodyImg(LadybugImages.LADYBUG_UP_4.getImage());
+	private BodyImg	ladybugUp5		  = new BodyImg(LadybugImages.LADYBUG_UP_5.getImage());
+	private BodyImg	ladybugUp6		  = new BodyImg(LadybugImages.LADYBUG_UP_6.getImage());
+	private BodyImg	ladybugUp7		  = new BodyImg(LadybugImages.LADYBUG_UP_7.getImage());
+	private BodyImg	ladybugUp8		  = new BodyImg(LadybugImages.LADYBUG_UP_8.getImage());
+	private BodyImg	ladybugUp9		  = new BodyImg(LadybugImages.LADYBUG_UP_9.getImage());
+	@Setter
+	private long	millisecondLenght = 0;
+	private int		nbrImages		  = 19;
 
-	/**
-	 * Retourne l'image à afficher quand Ladybug meurt.
-	 *
-	 * @return
-	 */
 	public Image getImage() {
-		// �chantillonnage en fonction du timer du modèle
-		long nbrBips = millisecondLenght / Constants.PACE;
-		// R�cup�ration du nombre d'images
-		int nbrImages = lstPictures.size();
-		// Calcul du nombre de bip du timer du modèle par images
-		long nbrBitPerImage = nbrBips / nbrImages;
-		// Calcule de l'index de l'image à afficher
-		int numImage = (int) (bip / nbrBitPerImage);
-		// si le calcul est long, il se peut que l'index dépasse... on le rajuste
-		if (numImage >= nbrImages)
-			numImage = nbrImages - 1;
-		return lstPictures.get(numImage);
+		Image displayImage = getImage(direction);
+		if (mustNextImage()) {
+			deltaBips = 0;
+			setNextImage();
+		}
+		return displayImage;
 	}
 
-	/**
-	 * Incrémentation du Bip; utilisé par le modèle
-	 */
 	public void incrementBip() {
 		bip++;
+		deltaBips++;
 	}
 
-	/**
-	 * Initialise le bip de la cinématique
-	 */
 	public void initBip() {
-		bip = 0;
+		setBodyUpCurrent(ladybugFull);
+		bip		  = 0;
+		deltaBips = 0;
 	}
 
-	/**
-	 * Test la fin de la musique de la mort de Ladybug; utilisé par le modèle
-	 *
-	 * @return
-	 */
 	public boolean isEnd() {
 		return bip * Constants.PACE >= millisecondLenght;
+	}
+
+	public boolean isStarted() {
+		return !(bip == 0);
+	}
+
+	@PostConstruct
+	private void initUpImages() {
+		addConvertPointToDegrees(Constants.POINT_UP, 0);
+		ladybugFull.setNext(ladybugUp1);
+		ladybugUp1.setNext(ladybugUp2);
+		ladybugUp2.setNext(ladybugUp3);
+		ladybugUp3.setNext(ladybugUp4);
+		ladybugUp4.setNext(ladybugUp5);
+		ladybugUp5.setNext(ladybugUp6);
+		ladybugUp6.setNext(ladybugUp7);
+		ladybugUp7.setNext(ladybugUp8);
+		ladybugUp8.setNext(ladybugUp9);
+		ladybugUp9.setNext(empty);
+		empty.setNext(empty);
+	}
+
+	private boolean mustNextImage() {
+		long nbrBips		= millisecondLenght / Constants.PACE;
+		long nbrBitPerImage	= nbrBips / nbrImages;
+		if (deltaBips > nbrBitPerImage) {
+			return true;
+		}
+		return false;
 	}
 }
