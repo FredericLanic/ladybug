@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.controler;
+package com.kycox.game.controller;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -26,7 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.Constants;
-import com.kycox.game.contract.IGameModelForControleur;
+import com.kycox.game.contract.IGameModelForController;
 
 /**
  * Contrôleur du jeu : MVC
@@ -39,7 +39,7 @@ import com.kycox.game.contract.IGameModelForControleur;
 public class KeyGameController extends KeyAdapter {
 	private static final Log		logger = LogFactory.getLog(KeyGameController.class);
 	@Inject
-	private IGameModelForControleur	gameModel;
+	private IGameModelForController	gameModel;
 
 	/**
 	 * Action sur les touches Gestion des touches pressées

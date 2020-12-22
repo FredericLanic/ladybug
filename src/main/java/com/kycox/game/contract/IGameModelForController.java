@@ -2,14 +2,14 @@ package com.kycox.game.contract;
 
 import java.awt.Point;
 
-import com.kycox.game.body.ladybug.Ladybug;
-
-public interface IGameModelForControleur extends IGameModelForExternalElements {
+public interface IGameModelForController {
 	public void forceStopGame();
 
 	public void gameInPause();
 
-	public Ladybug getLadybug();
+	public IGameStatusForController getCurrentGameStatus();
+
+	public ILadybugForController getLadybug();
 
 	public void setGhostRequest(Point point);
 

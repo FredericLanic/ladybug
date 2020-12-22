@@ -17,20 +17,24 @@
 package com.kycox.game.model;
 
 import com.kycox.game.constant.GameStatus;
+import com.kycox.game.contract.IGameStatusForController;
+import com.kycox.game.contract.IGameStatusForGameSounds;
+import com.kycox.game.contract.IGameStatusForGameView;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class CurrentGameStatus {
+public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController {
 	private GameStatus gameStatus;
 	@Getter
 	@Setter
-	private int			   numLevel;
+	private int		   numLevel;
 
 	public boolean isGameBegin() {
 		return gameStatus == GameStatus.GAME_BEGIN;
 	}
 
+	@Override
 	public boolean isInGame() {
 		return gameStatus == GameStatus.IN_GAME;
 	}
@@ -39,14 +43,17 @@ public class CurrentGameStatus {
 		return gameStatus == GameStatus.LEVEL_BEGIN;
 	}
 
+	@Override
 	public boolean isNoGame() {
 		return gameStatus == GameStatus.NO_GAME;
 	}
 
+	@Override
 	public boolean isToConfiguration() {
 		return gameStatus == GameStatus.TO_CONF_LOCAL_USR;
 	}
 
+	@Override
 	public void setBeginingLevel() {
 		gameStatus = GameStatus.LEVEL_BEGIN;
 	}
@@ -55,14 +62,17 @@ public class CurrentGameStatus {
 		gameStatus = GameStatus.GAME_BEGIN;
 	}
 
+	@Override
 	public void setConfiguration() {
 		gameStatus = GameStatus.TO_CONF_LOCAL_USR;
 	}
 
+	@Override
 	public void setInGame() {
 		gameStatus = GameStatus.IN_GAME;
 	}
 
+	@Override
 	public void setNoGame() {
 		gameStatus = GameStatus.NO_GAME;
 	}

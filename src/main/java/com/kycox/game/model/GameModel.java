@@ -35,7 +35,7 @@ import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.contract.IGameModelForControleur;
+import com.kycox.game.contract.IGameModelForController;
 import com.kycox.game.contract.IGameModelForGameSounds;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.level.ScreenData;
@@ -56,7 +56,7 @@ import lombok.Setter;
 @SuppressWarnings("deprecation")
 @Named("GameModel")
 public class GameModel extends Observable
-        implements IGameModelForGameView, IGameModelForGameSounds, IGameModelForControleur {
+        implements IGameModelForGameView, IGameModelForGameSounds, IGameModelForController {
 	private static final Log	 logger		   = LogFactory.getLog(GameModel.class);
 	@Getter
 	@Setter
@@ -117,6 +117,11 @@ public class GameModel extends Observable
 		}
 	}
 
+	@Override
+	public int getGhostLeftLifes() {
+		return groupGhosts.getLeftLives();
+	}
+
 	/**
 	 * Retourne le nombre de joueurs : 1 ou 2
 	 *
@@ -124,10 +129,10 @@ public class GameModel extends Observable
 	 */
 	@Override
 	public int getNbrPlayers() {
-		if (groupGhosts.getGhostNotComputed() == null) {
-			return 1;
+		if (groupGhosts.hasNotComputedGhost()) {
+			return 2;
 		}
-		return 2;
+		return 1;
 	}
 
 	@Override
@@ -164,11 +169,11 @@ public class GameModel extends Observable
 	}
 
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
-		if (currentGameStatus.isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
+		if (getCurrentGameStatus().isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
-		} else if (currentGameStatus.isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
+		} else if (getCurrentGameStatus().isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
 			ladybugIsDying();
-		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
+		} else if (getCurrentGameStatus().isInGame() && groupGhosts.userIsDead()) {
 			currentGameStatus.setNoGame();
 		} else {
 			// ***
@@ -270,7 +275,7 @@ public class GameModel extends Observable
 		// initialisation du numéro du niveau; incrémenté dans initLevel
 		currentGameStatus.setNumLevel(1);
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
+		screenData.setLevelMap(currentGameStatus.getNumLevel(), getCurrentGameStatus().isInGame());
 		// 3 vies par défaut
 		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// ladybug n'est pas en vie lors de l'initialisation du jeu
@@ -302,7 +307,7 @@ public class GameModel extends Observable
 		// incrémente le numéro du niveau
 		currentGameStatus.setNumLevel(currentGameStatus.getNumLevel() + 1);
 		// recopie les paramètres du niveau dans les données flottantes du niveau
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
+		screenData.setLevelMap(currentGameStatus.getNumLevel(), getCurrentGameStatus().isInGame());
 		// initialisation du super power
 		groupGhosts.setFear(false);
 		// début du level : utile pour le son du jingle

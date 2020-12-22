@@ -16,21 +16,23 @@
  */
 package com.kycox.game.contract;
 
-import com.kycox.game.body.ghost.GhostsGroup;
-import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupIncrementScores;
 import com.kycox.game.view.ladybug.LadybugDeathView;
 
-public interface IGameModelForGameView extends IGameModelForExternalElements {
+public interface IGameModelForGameView {
+	public IGameStatusForGameView getCurrentGameStatus();
+
 	public GameScore getGameScore();
 
-	public GhostsGroup getGroupGhosts();
+	public int getGhostLeftLifes();
+
+	public IGroupGhostForGameView getGroupGhosts();
 
 	public GroupIncrementScores getGroupIncrementScores();
 
-	public Ladybug getLadybug();
+	public ILadybugForGameView getLadybug();
 
 	public LadybugDeathView getLadybugDeathView();
 

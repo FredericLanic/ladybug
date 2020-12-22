@@ -23,15 +23,18 @@ import javax.inject.Named;
 import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.GameView;
+import com.kycox.game.view.down.PageEndView;
 
 @Named("Engine")
 public class Engine {
 	@Inject
-	private GameModel  gameModel;
+	private GameModel	gameModel;
 	@Inject
-	private GameSounds gameSounds;
+	private GameSounds	gameSounds;
 	@Inject
-	private GameView   gameView;
+	private GameView	gameView;
+	@Inject
+	private PageEndView	pageEndView;
 
 	/**
 	 * note : use PAD CONTROLLER PadController padController = new
@@ -39,11 +42,10 @@ public class Engine {
 	 */
 	@PostConstruct
 	public void init() {
-		// Seulement gestion du clavier : on verra pour la manette après
-		// initialisation des observers
 		gameModel.addObserver(gameView);
 		gameModel.addObserver(gameSounds);
-		// on récupère la longeur du son de la mort de ladybug et on l'affecte au
+		gameModel.addObserver(pageEndView);
+		// on récupère la longueur du son de la mort de ladybug et on l'affecte au
 		// gameModel
 		gameModel.getLadybugDeathView().setMillisecondLenght(gameSounds.getMicrosecondLengthLadybugDeath());
 	}

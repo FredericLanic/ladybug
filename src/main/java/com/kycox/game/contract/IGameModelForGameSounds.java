@@ -16,12 +16,16 @@
  */
 package com.kycox.game.contract;
 
-public interface IGameModelForGameSounds extends IGameModelForExternalElements {
+public interface IGameModelForGameSounds {
+	public IGameStatusForGameSounds getCurrentGameStatus();
+
 	public INewSoundsForGameSounds getNewSounds();
 
 	public boolean isSoundActive();
 
+	// fixme : c'est le mal ici
 	public void startGameTimer();
 
+	// fixme : c'est le mal ici
 	public void stopGameTimer();
 }

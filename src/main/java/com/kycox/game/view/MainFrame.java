@@ -17,10 +17,8 @@
 package com.kycox.game.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Toolkit;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -28,8 +26,9 @@ import javax.inject.Named;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.kycox.game.constant.Constants;
-import com.kycox.game.view.conf.ConfJDialog;
+import com.kycox.game.contract.IMainGraphicStructrure;
+import com.kycox.game.tools.Screen;
+import com.kycox.game.view.down.PageEndView;
 
 /**
  * Frame principale du jeu.
@@ -38,62 +37,35 @@ import com.kycox.game.view.conf.ConfJDialog;
  *
  */
 @Named("MainFrame")
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements IMainGraphicStructrure {
 	private static final long serialVersionUID = 1L;
-	private transient Toolkit defaultToolKit   = Toolkit.getDefaultToolkit();
-	private double			  edge			   = (double) 15 * Constants.BLOCK_SIZE;
+	private Dimension		  gameDimension	   = new Dimension();
 	@Inject
 	private GameView		  gameView;
-	private double			  rightLeftWidth   = (defaultToolKit.getScreenSize().getWidth() - 15 * Constants.BLOCK_SIZE)
-	        / 2;
-	private double			  topBottomHeight  = (defaultToolKit.getScreenSize().getHeight()
-	        - 16 * Constants.BLOCK_SIZE) / 2;
-
-	private void centralZone(Dimension dimension) {
-		gameView.setPreferredSize(dimension);
-		gameView.setBackground(Color.BLACK);
-		add(gameView, BorderLayout.CENTER);
-	}
+	private Dimension		  lineDimension	   = new Dimension();
+	private Dimension		  pageDimension	   = new Dimension();
+	@Inject
+	private PageEndView		  pageEndView;
+	@Inject
+	private Screen			  screen;
 
 	@PostConstruct
 	private void init() {
 		setTitle("LadyBug");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
+		initScreenSize();
 		setUndecorated(true);
-		new ConfJDialog(this);
-		// organisation des panels
-		Dimension dimension = new Dimension();
-		dimension.setSize(edge, edge);
-		centralZone(dimension);
-		// @FIXME : un peu de refacto !!
-		// en haut
-		JPanel jPanel = new JPanel();
-		dimension = new Dimension();
-		dimension.setSize(defaultToolKit.getScreenSize().getWidth(), topBottomHeight);
-		jPanel.setBackground(Color.BLACK);
-		jPanel.setPreferredSize(dimension);
-		add(jPanel, BorderLayout.PAGE_START);
-		// à gauche
-		jPanel	  = new JPanel();
-		dimension = new Dimension();
-		dimension.setSize(rightLeftWidth, edge);
-		jPanel.setBackground(Color.BLACK);
-		jPanel.setPreferredSize(dimension);
-		add(jPanel, BorderLayout.LINE_START);
-		// en bas
-		jPanel	  = new JPanel();
-		dimension = new Dimension();
-		dimension.setSize(defaultToolKit.getScreenSize().getWidth(), topBottomHeight);
-		jPanel.setBackground(Color.BLACK);
-		jPanel.setPreferredSize(dimension);
-		add(jPanel, BorderLayout.PAGE_END);
-		// à droite
-		jPanel	  = new JPanel();
-		dimension = new Dimension();
-		dimension.setSize(rightLeftWidth, edge);
-		jPanel.setBackground(Color.BLACK);
-		jPanel.setPreferredSize(dimension);
-		add(jPanel, BorderLayout.LINE_END);
+		addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);
+		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_START);
+		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_END);
+		addPanel(pageEndView, pageDimension, BorderLayout.PAGE_END);
+		addPanel(gameView, gameDimension, BorderLayout.CENTER);
+	}
+
+	private void initScreenSize() {
+		gameDimension.setSize(screen.getEdgeGameSide(), screen.getEdgeGameSide());
+		pageDimension.setSize(screen.getScreenWidth(), screen.getBorderHeight());
+		lineDimension.setSize(screen.getBorderWidth(), screen.getEdgeGameSide());
 	}
 }

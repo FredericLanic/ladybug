@@ -23,6 +23,7 @@ import java.util.Optional;
 import com.kycox.game.action.ghost.GhostsGroupActions;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
+import com.kycox.game.contract.IGroupGhostForGameView;
 import com.kycox.game.level.ScreenData;
 
 import lombok.Getter;
@@ -34,7 +35,7 @@ import lombok.Setter;
  * Singleton
  *
  */
-public class GhostsGroup {
+public class GhostsGroup implements IGroupGhostForGameView {
 	@Getter
 	@Setter
 	private List<Ghost> lstGhosts;
@@ -54,16 +55,11 @@ public class GhostsGroup {
 		return ghostsGroupActions;
 	}
 
-	/**
-	 * Retourne le fantôme qui est géré par un utilisateur
-	 *
-	 * ou null si aucun fantôme n'est géré par un utilisateur
-	 */
-	public Ghost getGhostNotComputed() {
-		Optional<Ghost> ghost = lstGhosts.stream().filter(g -> !g.isComputed()).findFirst();
-		if (ghost.isPresent())
-			return ghost.get();
-		return null;
+	public int getLeftLives() {
+		if (!hasNotComputedGhost()) {
+			return 0;
+		}
+		return lstGhosts.stream().filter(g -> !g.isComputed()).findFirst().get().getLeftLifes();
 	}
 
 	public int getNbrEatenGhost() {
@@ -72,6 +68,13 @@ public class GhostsGroup {
 
 	public boolean hasDyingGhost() {
 		return (lstGhosts.stream().filter(g -> GhostStatus.DYING.equals(g.getStatus())).count() > 0);
+	}
+
+	public boolean hasNotComputedGhost() {
+		Optional<Ghost> ghost = lstGhosts.stream().filter(g -> !g.isComputed()).findFirst();
+		if (ghost.isPresent())
+			return true;
+		return false;
 	}
 
 	public boolean hasRegeneratedGhost() {

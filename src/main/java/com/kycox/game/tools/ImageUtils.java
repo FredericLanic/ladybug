@@ -18,6 +18,15 @@ public final class ImageUtils {
 		return bufferedImage;
 	}
 
+	// https://www.baeldung.com/java-resize-image
+	public static Image resizeImage(Image originalImage, int targetWidth, int targetHeight) {
+		BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics2D	  graphics2D   = resizedImage.createGraphics();
+		graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+		graphics2D.dispose();
+		return resizedImage;
+	}
+
 	// Code récupéré à
 	// https://www.developpez.net/forums/d1194588/general-developpement/algorithme-mathematiques/traitement-d-images/pivoter-image-d-angle-java/
 	// FIXME : nécessite un refacto

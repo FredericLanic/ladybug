@@ -31,12 +31,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
-//import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.IGameModelForGameView;
-import com.kycox.game.controler.KeyGameController;
+import com.kycox.game.controller.KeyGameController;
 import com.kycox.game.score.IncrementScore;
 import com.kycox.game.view.conf.ConfJDialog;
 import com.kycox.game.view.ghost.GhostView;
@@ -49,29 +47,20 @@ import com.kycox.game.view.map.ScreenBlockView;
  * @author kycox
  *
  */
-@SuppressWarnings("deprecation")
 @Named("GameView")
 public class GameView extends JPanel implements Observer {
-	/**
-	 * Default serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-	private ConfJDialog		  confJDialog;
+	private static final long				serialVersionUID = 1L;
+	private ConfJDialog						confJDialog;
 	@Inject
-	private KeyGameController gameController;
-	// Données transitées par le pattern Observer
+	private KeyGameController				gameController;
 	private transient IGameModelForGameView	gameModel;
 	@Inject
 	private transient GhostView				ghostView;
-	private boolean							hasBeenDrawOnce	= false;
+	private boolean							hasBeenDrawOnce	 = false;
 	@Inject
 	private transient LadybugView			ladybugView;
-	/**
-	 * R�cup�ration de la JFrame parent
-	 */
-	private JFrame							mainFrame		= (JFrame) SwingUtilities.getRoot(this);
-	// font par défaut
-	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
+	private JFrame							mainFrame		 = (JFrame) SwingUtilities.getRoot(this);
+	private final Font						smallFont		 = new Font("CrackMan", Font.BOLD, 14);
 
 	@PostConstruct
 	public void init() {
@@ -82,32 +71,24 @@ public class GameView extends JPanel implements Observer {
 		addKeyListener(gameController); // key listener pour les touches
 	}
 
-	/**
-	 * Dessine le composant
-	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		doDrawing(g);
+		if (gameModel != null) {
+			super.paintComponent(g);
+			draw(g);
+		}
 	}
 
-	/**
-	 * Récupère le gameModel envoyé par le modèle
-	 *
-	 * @param gameModel
-	 */
 	@Override
 	public void update(Observable gameModel, Object used) {
 		this.gameModel = (IGameModelForGameView) gameModel;
 		repaint();
 	}
 
-	private void doDrawing(Graphics g) {
+	private void draw(Graphics g) {
 		listenStartLevelJingle();
 		Graphics2D g2d = (Graphics2D) g;
-		// Affichage du tableau de niveau et du score
 		drawMaze(g2d);
-		drawScoreAndLevel(g2d);
 		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
 			confJDialog.setVisible(true);
 			drawGhosts(g2d);
@@ -150,51 +131,6 @@ public class GameView extends JPanel implements Observer {
 				// Affichage du screenBlock dans la Vue
 				ScreenBlockView.display(g2d, gameModel.getScreenData(), x, y);
 			}
-		}
-	}
-
-	private void drawScoreAndLevel(Graphics2D g) {
-		// parfois le modèle ne se charge pas tout de suite
-		if (gameModel == null)
-			return;
-		int	   x = gameModel.getScreenData().getScreenWidth();
-		int	   y = gameModel.getScreenData().getScreenHeight();
-		int	   i;
-		String s = "";
-		g.setFont(smallFont);
-		g.setColor(new Color(96, 128, 255));
-		if (gameModel.getCurrentGameStatus().isInGame()) {
-			s = "Level " + gameModel.getCurrentGameStatus().getNumLevel() + " - Score: "
-			        + gameModel.getGameScore().getScore();
-			g.drawString(s, x / 2 + 26, y + 16);
-			// Affichage des vies de ladybug
-			if (gameModel.getLadybug().getLeftLifes() < 1) {
-				for (i = 0; i < gameModel.getLadybug().getLeftLifes(); i++) {
-					g.drawImage(ladybugView.getStaticView(), i * 28 + 8, y + 1, this);
-				}
-			} else {
-				g.drawImage(ladybugView.getStaticView(), 8, y + 1, this);
-				g.setColor(Color.YELLOW);
-				g.setFont(smallFont);
-				g.drawString("x " + gameModel.getLadybug().getLeftLifes(),
-				        Constants.BLOCK_SIZE + Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2);
-			}
-			// affichage des vies du fantômes
-			Ghost ghostNotComputed = gameModel.getGroupGhosts().getGhostNotComputed();
-			if (ghostNotComputed != null && ghostNotComputed.getLeftLifes() < 5) {
-				for (i = 0; i < ghostNotComputed.getLeftLifes(); i++) {
-					g.drawImage(ghostNotComputed.getColor().getImage(), i * 28 + 8, y + 20, this);
-				}
-			} else if (ghostNotComputed != null) {
-				g.drawImage(ghostNotComputed.getColor().getImage(), 8, y + 20, this);
-				g.setColor(Color.GRAY);
-				g.setFont(smallFont);
-				g.drawString("x" + ghostNotComputed.getLeftLifes(), 34, y + 38);
-			}
-		} else {
-			int nbrPlayers = gameModel.getNbrPlayers();
-			s = "Game config : " + nbrPlayers + " player" + (nbrPlayers > 1 ? "s" : "");
-			g.drawString(s, x / 2 + 26, y + 16);
 		}
 	}
 
