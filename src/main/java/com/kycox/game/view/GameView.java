@@ -21,6 +21,8 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -38,6 +40,7 @@ import com.kycox.game.controller.KeyGameController;
 import com.kycox.game.score.IncrementScore;
 import com.kycox.game.view.conf.ConfJDialog;
 import com.kycox.game.view.ghost.GhostView;
+import com.kycox.game.view.ladybug.LadybugDyingView;
 import com.kycox.game.view.ladybug.LadybugView;
 import com.kycox.game.view.map.ScreenBlockView;
 
@@ -49,18 +52,20 @@ import com.kycox.game.view.map.ScreenBlockView;
  */
 @Named("GameView")
 public class GameView extends JPanel implements Observer {
-	private static final long				serialVersionUID = 1L;
-	private ConfJDialog						confJDialog;
+	private static final long	  serialVersionUID = 1L;
+	private ConfJDialog			  confJDialog;
 	@Inject
-	private KeyGameController				gameController;
-	private transient IGameModelForGameView	gameModel;
+	private KeyGameController	  gameController;
+	private IGameModelForGameView gameModel;
 	@Inject
-	private transient GhostView				ghostView;
-	private boolean							hasBeenDrawOnce	 = false;
+	private GhostView			  ghostView;
+	private boolean				  hasBeenDrawOnce  = false;
 	@Inject
-	private transient LadybugView			ladybugView;
-	private JFrame							mainFrame		 = (JFrame) SwingUtilities.getRoot(this);
-	private final Font						smallFont		 = new Font("CrackMan", Font.BOLD, 14);
+	private LadybugDyingView	  ladybugDyingView;
+	@Inject
+	private LadybugView			  ladybugView;
+	private JFrame				  mainFrame		   = (JFrame) SwingUtilities.getRoot(this);
+	private final Font			  smallFont		   = new Font("CrackMan", Font.BOLD, 14);
 
 	@PostConstruct
 	public void init() {
@@ -99,8 +104,11 @@ public class GameView extends JPanel implements Observer {
 			drawGhosts(g2d);
 			showIntroScreen(g2d);
 		} else if (LadybugStatus.DYING.equals(gameModel.getLadybug().getStatus())) {
+			ladybugDyingView.inProgress();
 			drawGhosts(g2d);
 			drawLadybugDying(g2d);
+		} else if (LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
+			ladybugDyingView.init();
 		} else if (!LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
 			// jeu en cours
 			drawLadybug(g2d);
@@ -115,13 +123,17 @@ public class GameView extends JPanel implements Observer {
 	}
 
 	private void drawLadybug(Graphics2D g2d) {
-		g2d.drawImage(ladybugView.getImage(gameModel.getLadybug().getViewDirection()),
-		        gameModel.getLadybug().getPosition().x + 1, gameModel.getLadybug().getPosition().y + 1, this);
+		Point viewDirection	= gameModel.getLadybug().getViewDirection();
+		Point getPosition	= gameModel.getLadybug().getPosition();
+		Image image			= ladybugView.getImage(viewDirection);
+		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
 	}
 
 	private void drawLadybugDying(Graphics2D g2d) {
-		g2d.drawImage(gameModel.getLadybugDeathView().getImage(), gameModel.getLadybug().getPosition().x + 1,
-		        gameModel.getLadybug().getPosition().y + 1, this);
+		Point viewDirection	= gameModel.getLadybug().getViewDirection();
+		Point getPosition	= gameModel.getLadybug().getPosition();
+		Image image			= ladybugDyingView.getImage(viewDirection);
+		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
 	}
 
 	private void drawMaze(Graphics2D g2d) {

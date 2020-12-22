@@ -113,10 +113,9 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 	}
 
 	private void teleport(ScreenData screenData) {
-		if (hasChangeBlock()) {
+		if (hasChangeBlock() && screenData.getNbrBlocksWithPoint() > 0) {
 			Point newPoint = screenData.getRandomPosOnAPoint();
 			setPosition(Utils.convertPointToGraphicUnit(newPoint));
-			setDirection(Constants.POINT_ZERO);
 		}
 	}
 }

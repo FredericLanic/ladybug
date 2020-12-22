@@ -60,7 +60,7 @@ public class UnitDijkstra {
 	/**
 	 * D�tricote le résultat obtenu
 	 *
-	 * @return une liste de point � suivre pour aller du point A au point B (unités
+	 * @return une liste de point à suivre pour aller du point A au point B (unités
 	 *         GRAPHIQUE)
 	 */
 	public List<Point> getShorterWay() {

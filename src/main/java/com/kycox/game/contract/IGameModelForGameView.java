@@ -19,7 +19,6 @@ package com.kycox.game.contract;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupIncrementScores;
-import com.kycox.game.view.ladybug.LadybugDeathView;
 
 public interface IGameModelForGameView {
 	public IGameStatusForGameView getCurrentGameStatus();
@@ -33,8 +32,6 @@ public interface IGameModelForGameView {
 	public GroupIncrementScores getGroupIncrementScores();
 
 	public ILadybugForGameView getLadybug();
-
-	public LadybugDeathView getLadybugDeathView();
 
 	public int getNbrPlayers();
 

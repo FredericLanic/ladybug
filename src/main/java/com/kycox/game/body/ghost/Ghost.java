@@ -50,10 +50,10 @@ public abstract class Ghost extends UserBody {
 	private static final Log		logger = LogFactory.getLog(Ghost.class);
 	@Getter
 	@Setter
-	private GhostBehavious		behavious;
+	private GhostBehavious			behavious;
 	@Getter
 	@Setter
-	private GhostsBodyImages			color;
+	private GhostsBodyImages		color;
 	@Getter
 	private GhostActions			ghostActions;
 	@Setter
@@ -61,7 +61,7 @@ public abstract class Ghost extends UserBody {
 	private GhostSensitiveBehavious	sensitiveBehavious;
 	@Getter
 	@Setter
-	private GhostStatus			status = GhostStatus.NORMAL;
+	private GhostStatus				status = GhostStatus.NORMAL;
 
 	/**
 	 * Retourne true si le fantôme est géré par l'ordinateur
