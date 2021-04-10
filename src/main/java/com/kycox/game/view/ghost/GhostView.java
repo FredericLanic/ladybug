@@ -19,6 +19,7 @@ package com.kycox.game.view.ghost;
 import java.awt.Image;
 import java.awt.Point;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.kycox.game.body.ghost.Ghost;
@@ -26,10 +27,14 @@ import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.image.GhostEyesImages;
 import com.kycox.game.constant.ghost.image.GhostHeadbandImages;
+import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
 
 @Named("GhostView")
 public class GhostView {
+	@Inject 
+	private GameProperties 	 	 gameProperties;
+	
 	public Image getImage(Ghost ghost) {
 		Image ghostImg;
 		// ajout le corps
@@ -42,8 +47,12 @@ public class GhostView {
 		// ajout les yeux en fonction de la direction
 		if (!GhostStatus.DYING.equals(ghost.getStatus())) {
 			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));
-			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.getDirection()));
+			
 		}		
+		// ajout du bandeau
+		if (!GhostStatus.DYING.equals(ghost.getStatus()) && gameProperties.hasGhostHeadBand()) {
+			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.getDirection()));
+		}
 
 		return ghostImg;
 	}

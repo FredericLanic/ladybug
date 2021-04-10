@@ -51,7 +51,6 @@ public class LadybugView extends LadybugCommun implements TimerView {
 		ladybugUp2.setNext(ladybugUp3);
 		ladybugUp3.setNext(ladybugFull02);
 		ladybugFull02.setNext(ladybugFull01);
-		//
 		setBodyUpCurrent(ladybugFull01);
 	}
 }

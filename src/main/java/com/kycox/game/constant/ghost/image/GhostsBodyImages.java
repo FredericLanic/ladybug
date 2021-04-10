@@ -27,15 +27,10 @@ public enum GhostsBodyImages {
 	BLUE(GhostsColorImages.GHOST_COLOR_BLUE, true), ORANGE(GhostsColorImages.GHOST_COLOR_ORANGE, true),
 	PINK(GhostsColorImages.GHOST_COLOR_PINK, true), RED(GhostsColorImages.GHOST_COLOR_RED, true);
 
-	public static void initIsComputed(boolean isComputed) {
-		List<GhostsBodyImages> lstEnum = Arrays.asList(GhostsBodyImages.class.getEnumConstants());
-		lstEnum.stream().forEach(e -> e.isComputed = isComputed);
-	}
-
 	@Getter
 	private GhostsColorImages	ghostColorBody;
 	@Getter
-	@Setter
+	@Setter // ici je triche 
 	private boolean				isComputed;
 
 	private GhostsBodyImages(GhostsColorImages colorImage, boolean isComputed) {

@@ -43,8 +43,7 @@
 		<property name="color" value="RED" />
 		<property name="behavious" value="AGGRESSIVE" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
-		<property name="sensitiveBehavious"
-			ref="GhostSensitiveBehavious" />
+		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious" />
 		<property name="blinkySpeedIndex" ref="BlinkySpeedIndex" />
 	</bean>
 
@@ -54,8 +53,7 @@
 		<property name="color" value="BLUE" />
 		<property name="behavious" value="STUPID" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
-		<property name="sensitiveBehavious"
-			ref="GhostSensitiveBehavious" />
+		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious" />
 	</bean>
 
 	<!-- Pinky in GroupGhost -->

@@ -7,14 +7,15 @@ import javax.swing.ImageIcon;
 import lombok.Getter;
 
 public enum GhostEyesImages {
-	GHOST_DOWN_EYES("ghosts/eyes/DownEyes.png"), GHOST_LEFT_EYES("ghosts/eyes/LeftEyes.png"),
-	GHOST_RIGHT_EYES("ghosts/eyes/RightEyes.png"), GHOST_UP_EYES("ghosts/eyes/UpEyes.png");
+	GHOST_DOWN_EYES("DownEyes.png"), GHOST_LEFT_EYES("LeftEyes.png"),
+	GHOST_RIGHT_EYES("RightEyes.png"), GHOST_UP_EYES("UpEyes.png");
 
 	@Getter
 	private Image image = null;
 
 	// constructor other than ghost
 	private GhostEyesImages(String fileName) {
-		image = new ImageIcon(GhostEyesImages.class.getClassLoader().getResource("images/" + fileName)).getImage();
+		String pathName = "images/ghosts/eyes/" + fileName;
+		image = new ImageIcon(GhostEyesImages.class.getClassLoader().getResource(pathName)).getImage();
 	}
 }

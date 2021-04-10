@@ -40,6 +40,7 @@ import com.kycox.game.contract.IGameModelForController;
 import com.kycox.game.contract.IGameModelForGameSounds;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.level.ScreenData;
+import com.kycox.game.properties.GameProperties;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupIncrementScores;
 import com.kycox.game.sound.NewSounds;
@@ -92,7 +93,7 @@ public class GameModel extends Observable
 	@Setter
 	private boolean				 soundActive;
 	@Inject
-	private SuperPowerTimer		 superPowerTimer;
+	private SuperPowerTimer		 superPowerTimer;	
 
 	@Override
 	public void forceStopGame() {
@@ -176,7 +177,7 @@ public class GameModel extends Observable
 		return getCurrentGameStatus().isInGame();
 	}
 	
-	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
+	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else		
 		if (isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
 		} else if (isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {

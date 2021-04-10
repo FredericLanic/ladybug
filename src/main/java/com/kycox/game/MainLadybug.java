@@ -18,6 +18,8 @@ package com.kycox.game;
 
 import java.lang.Runtime.Version;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +44,11 @@ public class MainLadybug {
 
 	/** lecture du contexte Spring de l'application */
 	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
+		
 	@Autowired
 	private MainFrame		   mainFrame		  = applicationContext.getBean("MainFrame", MainFrame.class);
-
-	public void launchTheGame() {
+	
+	public void launchTheGame() {		
 		Version javaVersion = Runtime.version();
 		logger.info(cruxLine);
 		logger.info("*  LadyBug v0.1.1 SnapShot   *");
