@@ -167,64 +167,105 @@ public class GameModel extends Observable
 		logger.info("Stop Game Timer");
 		gameTimer.stop();
 	}
+	
+	public void setLadybugRequest(Point point) {
+		getLadybug().setUserRequest(point);
+	}
 
+	public boolean isInGame() {
+		return getCurrentGameStatus().isInGame();
+	}
+	
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
-		if (getCurrentGameStatus().isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
+		if (isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
-		} else if (getCurrentGameStatus().isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
+		} else if (isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
 			ladybugIsDying();
-			groupGhosts.move(screenData, ladybug, ghostRequest);
-		} else if (getCurrentGameStatus().isInGame() && groupGhosts.userIsDead()) {
+			moveGhosts();
+		} else if (isInGame() && groupGhosts.userIsDead()) {
 			currentGameStatus.setNoGame();
 		} else {
 			// ***
-			ladybug.manageNewLife();
+			caseOfNewLadybugLife();
 			// ***
-			ladybug.setActions(screenData);
-			groupGhosts.setActions(ladybug);
+			setBodiesActions();
 			// ***
-			groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData);
+			updateGhostSeetings();
 			// ***
-			if (groupGhosts.eatLadybug()) {
-				ladybug.setStatus(LadybugStatus.DYING);
-				ladybugDying.initBip();
-				groupGhosts.manageNewLife();
-			}
+			caseOfGhostEatLadybug();
 			// ***
-			if (superPowerTimer.isStopping()) {
-				groupGhosts.setFlashActive();
-			} else if (superPowerTimer.isStopped()) {
-				groupGhosts.setFear(false);
-			}
+			manageSuperPower();
 			// ***
-			if (ladybug.isEatenAMegaPoint()) {
-				logger.info("Ladybug has just eaten a mega point");
-				runSuperPowerTimer();
-				groupGhosts.setFear(true);
-			}
+			caseOfLadybugEatAMegaPoint();
 			// ***
-			gameScore.setScore(groupGhosts, ladybug, groupIncrementScores);
-			groupIncrementScores.removeIfDying();
+			manageScores();
 			// ***
-			if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
-				logger.info("New life for Ladybug");
-				gameScore.setIncrementScore(0);
-				ladybug.setNewLife(true);
-			}
-			// ***
-			screenData.updateScreenBlock(ladybug);
+			updateScreenBlock();
 			// ***
 			setSoundRequests();
 			// ***
-			ladybug.move(screenData);
-			groupGhosts.move(screenData, ladybug, ghostRequest);
+			moveBodies();
 			// ***
 			checkEndMaze(); // FIXME : sortir ce test de cette boucle
 		}
 		setChanged();
 		notifyObservers();
 	}
+	
+	private void updateScreenBlock() {
+		screenData.updateScreenBlock(ladybug);
+	}
+	
+	private void caseOfNewLadybugLife() {
+		ladybug.manageNewLife();	
+	}
+	
+	private void updateGhostSeetings() {
+		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData.getPercentageEatenPoint());
+	}
+	
+	private void moveBodies() {
+		ladybug.move(screenData);
+		moveGhosts();
+	}
+	
+	private void moveGhosts() {
+		groupGhosts.move(screenData, ladybug, ghostRequest);
+	}
+	
+	private void manageScores() {
+		gameScore.setScore(groupGhosts, ladybug, groupIncrementScores);
+		groupIncrementScores.removeIfDying();
+		// ***
+		if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
+			logger.info("New life for Ladybug");
+			gameScore.setIncrementScore(0);
+			ladybug.setNewLife(true);
+		}
+	}
 
+	private void caseOfLadybugEatAMegaPoint() {
+		if (ladybug.isEatenAMegaPoint()) {
+			logger.info("Ladybug has just eaten a mega point");
+			runSuperPowerTimer();
+			groupGhosts.setFear(true);
+		}
+	}
+	
+	private void caseOfGhostEatLadybug() {
+		if (groupGhosts.eatLadybug()) {
+			ladybug.setStatus(LadybugStatus.DYING);
+			ladybugDying.initBip();
+			groupGhosts.manageNewLife();
+		}
+	}
+
+	
+	private void setBodiesActions() {
+		ladybug.setActions(screenData);
+		groupGhosts.setActions(ladybug);
+	}
+	
 	private void checkEndMaze() {
 		// Niveau terminé
 		if (screenData.getNbrBlocksWithPoint() == 0) {
@@ -270,7 +311,7 @@ public class GameModel extends Observable
 		// initialisation du numéro du niveau; incrémenté dans initLevel
 		currentGameStatus.setNumLevel(1);
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), getCurrentGameStatus().isInGame());
+		screenData.setLevelMap(currentGameStatus.getNumLevel(), isInGame());
 		// 3 vies par défaut
 		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// ladybug n'est pas en vie lors de l'initialisation du jeu
@@ -297,12 +338,12 @@ public class GameModel extends Observable
 	private void initLevel() {
 		logger.info("Initialize level");
 		// suppression des composants techniques du niveau précédent
-		removePreviousTasksLevel();
+		removePreviousLevelTasks();
 		currentGameStatus.setInGame();
 		// incrémente le numéro du niveau
 		currentGameStatus.setNumLevel(currentGameStatus.getNumLevel() + 1);
 		// recopie les paramètres du niveau dans les données flottantes du niveau
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), getCurrentGameStatus().isInGame());
+		screenData.setLevelMap(currentGameStatus.getNumLevel(), isInGame());
 		// initialisation du super power
 		groupGhosts.setFear(false);
 		// début du level : utile pour le son du jingle
@@ -345,11 +386,19 @@ public class GameModel extends Observable
 		}
 	}
 
+	private void manageSuperPower() {
+		if (superPowerTimer.isStopping()) {
+			groupGhosts.setFlashActive();
+		} else if (superPowerTimer.isStopped()) {
+			groupGhosts.setFear(false);
+		}
+	}
+	
 	/**
 	 * Suppression des tâches du niveau qui est terminé (succès, échec ou pas de
 	 * niveau).
 	 */
-	private void removePreviousTasksLevel() {
+	private void removePreviousLevelTasks() {
 		// arrêt des timers super power
 		superPowerTimer.forcedStop();
 	}

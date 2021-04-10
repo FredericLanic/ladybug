@@ -1,7 +1,5 @@
 package com.kycox.game.contract;
 
-public interface IGameStatusForController {
-	public boolean isInGame();
-
+public interface IGameStatusForController extends IGameCommon {
 	public void setConfiguration();
 }

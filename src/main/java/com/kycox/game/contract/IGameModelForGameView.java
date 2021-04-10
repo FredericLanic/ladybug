@@ -20,7 +20,7 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupIncrementScores;
 
-public interface IGameModelForGameView {
+public interface IGameModelForGameView extends IGameCommon {
 	public IGameStatusForGameView getCurrentGameStatus();
 
 	public GameScore getGameScore();

@@ -187,10 +187,10 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		lstGhosts.stream().forEach(g -> g.setStatus(status));
 	}
 
-	public void updateSeetings(int numLevel, ScreenData screenData) {
+	public void updateSeetings(int numLevel, int percentageEatenPoints) {
 		setGhostSettingAfterLadybugContact(numLevel);
 		// modifier la vitesse des fantôme en cours de partie
-		setSpeed(numLevel, screenData.getPercentageEatenPoint());
+		setSpeed(numLevel, percentageEatenPoints);
 		// Etat des fantômes de REGENERATING à NORMAL
 		setGhostStatusAfterRegeneration();
 	}

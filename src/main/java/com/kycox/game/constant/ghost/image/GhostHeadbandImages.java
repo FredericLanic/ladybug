@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 import lombok.Getter;
 
-public enum GhostPluginsImages {
+public enum GhostHeadbandImages {
 	HEADBAND_DOWN("images/ghosts/headband/HeadbandDown.png"),
 	HEADBAND_LEFT("images/ghosts/headband/HeadbandLeft.png"),
 	HEADBAND_RIGHT("images/ghosts/headband/HeadbandRight.png"),
@@ -15,7 +15,7 @@ public enum GhostPluginsImages {
 	@Getter
 	private Image image;
 
-	private GhostPluginsImages(String fileName) {
-		image = new ImageIcon(GhostPluginsImages.class.getClassLoader().getResource(fileName)).getImage();
+	private GhostHeadbandImages(String fileName) {
+		image = new ImageIcon(GhostHeadbandImages.class.getClassLoader().getResource(fileName)).getImage();
 	}
 }

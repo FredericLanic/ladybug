@@ -25,6 +25,7 @@ import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.image.GhostEyesImages;
+import com.kycox.game.constant.ghost.image.GhostHeadbandImages;
 import com.kycox.game.tools.ImageUtils;
 
 @Named("GhostView")
@@ -41,9 +42,9 @@ public class GhostView {
 		// ajout les yeux en fonction de la direction
 		if (!GhostStatus.DYING.equals(ghost.getStatus())) {
 			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));
-		}
-		// ajouts des plugins
-		// ...
+			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.getDirection()));
+		}		
+
 		return ghostImg;
 	}
 
@@ -55,5 +56,16 @@ public class GhostView {
 		if (direction.equals(Constants.POINT_UP))
 			return GhostEyesImages.GHOST_UP_EYES.getImage();
 		return GhostEyesImages.GHOST_RIGHT_EYES.getImage();
+	}
+	
+	private Image addHeadband(Point direction) {
+		if (direction.equals(Constants.POINT_LEFT))
+			return GhostHeadbandImages.HEADBAND_LEFT.getImage();
+		if (direction.equals(Constants.POINT_DOWN))
+			return GhostHeadbandImages.HEADBAND_DOWN.getImage();
+		if (direction.equals(Constants.POINT_UP))
+			return GhostHeadbandImages.HEADBAND_UP.getImage();
+		return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
+		
 	}
 }

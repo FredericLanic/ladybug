@@ -2,7 +2,7 @@ package com.kycox.game.contract;
 
 import java.awt.Point;
 
-public interface IGameModelForController {
+public interface IGameModelForController extends IGameCommon {
 	public void forceStopGame();
 
 	public void gameInPause();
@@ -16,4 +16,6 @@ public interface IGameModelForController {
 	public void startGame();
 
 	public void startStopSoundActive();
+
+	public void setLadybugRequest(Point point);
 }

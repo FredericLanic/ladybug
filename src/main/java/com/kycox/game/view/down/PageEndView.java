@@ -81,7 +81,7 @@ public class PageEndView extends JPanel implements Observer, IMainGraphicStructr
 		// Rajouter les yeux
 		statusGameView.setImageGhostPlayer(GhostsColorImages.GHOST_COLOR_GREY.getImage());
 		statusGameView.setImageLadybugPlayer(ladybugView.getStaticView());
-		statusGameView.setInGame(gameModel.getCurrentGameStatus().isInGame());
+		statusGameView.setInGame(gameModel.isInGame());
 		statusGameView.setLadybugNbrLifes(gameModel.getLadybug().getLeftLifes());
 		statusGameView.setNbrPlayers(gameModel.getNbrPlayers());
 		statusGameView.setNumLevel(gameModel.getCurrentGameStatus().getNumLevel());

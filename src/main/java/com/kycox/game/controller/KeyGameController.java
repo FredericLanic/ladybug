@@ -51,7 +51,7 @@ public class KeyGameController extends KeyAdapter {
 			// FIXME : c'est au modèle de sortir proprement du jeu
 			System.exit(0);
 		}
-		if (gameModel.getCurrentGameStatus().isInGame()) {
+		if (gameModel.isInGame()) {
 			// Gestion des touches durant une partie
 			manageKeysInGame(keyCode);
 		} else {
@@ -67,10 +67,10 @@ public class KeyGameController extends KeyAdapter {
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
 			// Mouvement L
-			case KeyEvent.VK_LEFT -> gameModel.getLadybug().setUserRequest(Constants.POINT_LEFT);
-			case KeyEvent.VK_RIGHT -> gameModel.getLadybug().setUserRequest(Constants.POINT_RIGHT);
-			case KeyEvent.VK_UP -> gameModel.getLadybug().setUserRequest(Constants.POINT_UP);
-			case KeyEvent.VK_DOWN -> gameModel.getLadybug().setUserRequest(Constants.POINT_DOWN);
+			case KeyEvent.VK_LEFT -> gameModel.setLadybugRequest(Constants.POINT_LEFT);
+			case KeyEvent.VK_RIGHT -> gameModel.setLadybugRequest(Constants.POINT_RIGHT);
+			case KeyEvent.VK_UP -> gameModel.setLadybugRequest(Constants.POINT_UP);
+			case KeyEvent.VK_DOWN -> gameModel.setLadybugRequest(Constants.POINT_DOWN);
 			// Mouvement du fantôme (joueur 2)
 			case KeyEvent.VK_Z -> gameModel.setGhostRequest(Constants.POINT_UP);
 			case KeyEvent.VK_S -> gameModel.setGhostRequest(Constants.POINT_DOWN);

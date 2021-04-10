@@ -1,9 +1,7 @@
 package com.kycox.game.contract;
 
-public interface IGameStatusForGameView {
+public interface IGameStatusForGameView extends IGameCommon {
 	public int getNumLevel();
-
-	public boolean isInGame();
 
 	public boolean isNoGame();
 
