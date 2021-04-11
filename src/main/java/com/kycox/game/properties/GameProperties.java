@@ -18,6 +18,12 @@ public class GameProperties {
 	private Optional<String> ladybugColor = Optional.empty();
 	// ladybug.ski
 	private Optional<String> ladybugSkin = Optional.empty();
+	
+	private Optional<String> ladybugLeft = Optional.empty();
+	private Optional<String> ladybugRight = Optional.empty();
+	private Optional<String> ladybugUp = Optional.empty();
+	private Optional<String> ladybugDown = Optional.empty();	
+	
 	// ghosts.headband
 	private Optional<String> ghostsHeadband = Optional.empty();
 	
@@ -34,6 +40,12 @@ public class GameProperties {
 			props = PropertiesLoaderUtils.loadProperties(classPathResource);
 			ladybugColor = readProperty("ladybug.color");
 			ladybugSkin = readProperty("ladybug.skin");
+			
+			ladybugLeft = readProperty("ladybug.left");
+			ladybugRight = readProperty("ladybug.right");
+			ladybugUp = readProperty("ladybug.up");
+			ladybugDown = readProperty("ladybug.down");
+			
 			ghostsHeadband = readProperty("ghosts.headband");
 		} 
 		catch (IOException ioException)
@@ -65,5 +77,10 @@ public class GameProperties {
 	public boolean hasGhostHeadBand() {
 		return ghostsHeadband.isPresent() && TRUE_PROPERTY.equals(ghostsHeadband.get());
 	}
+	
+	public int getLadybugLeft() {
+		return ladybugLeft.isPresent()?Integer.parseInt(ladybugLeft.get()): 0x25;
+	}
 
 }
+

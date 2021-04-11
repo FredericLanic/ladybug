@@ -20,7 +20,6 @@ Coté technique CTEC :
 
 Coté fonctionnalités CFCT :
 
-- CFCT1 : paramétrer l'utilisation du skin OXiane pour Ladybug
 - CFCT2 : augemnter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug 
 - CFCT3 : ajouter le notion de fruit  
 	- quand faire apparaitre un fruit 
@@ -38,6 +37,7 @@ DONE :
 	- OK où le positionner : aléatoire dans chaque niveau
 	- OK comment le visualiser : rond fixe
 	- OK rajouter du son : son gratuit trouvé sur internet
+- CFCT1 : paramétrer l'utilisation du skin OXiane pour Ladybug
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 

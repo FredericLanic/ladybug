@@ -17,8 +17,6 @@
 package com.kycox.game.constant.ghost.image;
 
 import java.awt.Image;
-import java.util.Arrays;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;

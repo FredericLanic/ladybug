@@ -40,7 +40,6 @@ import com.kycox.game.contract.IGameModelForController;
 import com.kycox.game.contract.IGameModelForGameSounds;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.level.ScreenData;
-import com.kycox.game.properties.GameProperties;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupIncrementScores;
 import com.kycox.game.sound.NewSounds;

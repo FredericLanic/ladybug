@@ -62,12 +62,6 @@ public final class ImageUtils {
 					newImage.setRGB(xOut, yOut, bufferedImageIn.getRGB(xIn, yIn));
 			}
 		}
-		try {
-			ImageIO.write(newImage, "png", new File("rotation.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return newImage;
 	}
 

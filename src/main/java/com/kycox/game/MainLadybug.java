@@ -18,8 +18,6 @@ package com.kycox.game;
 
 import java.lang.Runtime.Version;
 
-import javax.inject.Inject;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
