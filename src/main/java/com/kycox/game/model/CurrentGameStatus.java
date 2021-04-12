@@ -76,4 +76,8 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 	public void setNoGame() {
 		gameStatus = GameStatus.NO_GAME;
 	}
+	
+	public void initNumLevel() {
+		setNumLevel(0);
+	}
 }

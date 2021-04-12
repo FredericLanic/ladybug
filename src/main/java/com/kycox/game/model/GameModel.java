@@ -139,6 +139,8 @@ public class GameModel extends Observable
 	public void startGame() {
 		logger.info("Start Game");
 		initGame();
+		// 
+		currentGameStatus.initNumLevel();
 		initLevel();
 	}
 
@@ -346,7 +348,7 @@ public class GameModel extends Observable
 		screenData.setLevelMap(currentGameStatus.getNumLevel(), isInGame());
 		// initialisation du super power
 		groupGhosts.setFear(false);
-		// début du level : utile pour le son du jingle
+		// début du level : utile pour l'introduction du level
 		setBeginNewLevel(true);
 		// on continue le level
 		continueLevel();
