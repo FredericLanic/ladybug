@@ -93,7 +93,7 @@ public class GameModel extends Observable
 	@Inject
 	private SuperPowerTimer		 superPowerTimer;	
 	
-	private BeginingTimer        beginningTimer = new BeginingTimer();
+	private BeginingTimer        beginningTimer;
 	
 	@Setter
 	private long beginningMillisecondes;
@@ -182,6 +182,7 @@ public class GameModel extends Observable
 	
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (currentGameStatus.isLevelStart()) {
+			beginningTimer = new BeginingTimer();
 			beginningTimer.launch(beginningMillisecondes, currentGameStatus);
 			currentGameStatus.setBeginLevel();
 			setSoundRequests();
