@@ -6,9 +6,8 @@ public interface IGameStatusForGameView extends IGameCommon {
 	public boolean isNoGame();
 
 	public boolean isToConfiguration();
-
-	// FIXME : hmmm ?
-	public void setBeginingLevel();
+	
+	public boolean isLevelBegin();
 
 	// FIXME : hmmm ?
 	public void setNoGame();

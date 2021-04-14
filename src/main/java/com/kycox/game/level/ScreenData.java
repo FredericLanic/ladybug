@@ -173,7 +173,7 @@ public final class ScreenData {
 	 *
 	 * @param numLevel
 	 */
-	public void setLevelMap(int numLevel, boolean isInGame) {
+	public void setLevelMap(int numLevel, boolean mustDisplayMegaPoints) {
 		// récupération du level associé au numLevel
 		currentLevel = gameLevels.getLevel(numLevel);
 		// Création des blocks
@@ -184,7 +184,7 @@ public final class ScreenData {
 		lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
 		        .forEach(ScreenBlock::addGhostReviver);
 		// ajout des mega points aléatoires
-		if (isInGame) {
+		if (mustDisplayMegaPoints) {
 			for (int i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
 				Point randomPoint = getRandomPosOnAPoint();
 				lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))

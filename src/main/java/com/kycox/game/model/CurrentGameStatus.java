@@ -29,24 +29,49 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 	@Getter
 	@Setter
 	private int		   numLevel;
+	
+	@Override
+	public boolean isNoGame() {
+		return gameStatus == GameStatus.NO_GAME;
+	}
+	
+	public void setNoGame() {
+		gameStatus = GameStatus.NO_GAME;
+	}
 
+	public boolean isLevelStart() {
+		return gameStatus == GameStatus.LEVEL_START;
+	}
+	
+	public void setLevelStart() {
+		gameStatus = GameStatus.LEVEL_START;
+	}
+	
 	public boolean isGameBegin() {
 		return gameStatus == GameStatus.GAME_BEGIN;
 	}
+	
+	public void setBeginGame() {
+		gameStatus = GameStatus.GAME_BEGIN;
+	}	
+	
+	public boolean isLevelBegin() {
+		return gameStatus == GameStatus.LEVEL_BEGIN;
+	}
 
+	public void setBeginLevel() {
+		gameStatus = GameStatus.LEVEL_BEGIN;
+	}
+	
 	@Override
 	public boolean isInGame() {
 		return gameStatus == GameStatus.IN_GAME;
 	}
 
-	public boolean isLevelBegin() {
-		return gameStatus == GameStatus.LEVEL_BEGIN;
-	}
-
 	@Override
-	public boolean isNoGame() {
-		return gameStatus == GameStatus.NO_GAME;
-	}
+	public void setInGame() {
+		gameStatus = GameStatus.IN_GAME;
+	}	
 
 	@Override
 	public boolean isToConfiguration() {
@@ -54,27 +79,8 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 	}
 
 	@Override
-	public void setBeginingLevel() {
-		gameStatus = GameStatus.LEVEL_BEGIN;
-	}
-
-	public void setBeginningGame() {
-		gameStatus = GameStatus.GAME_BEGIN;
-	}
-
-	@Override
 	public void setConfiguration() {
 		gameStatus = GameStatus.TO_CONF_LOCAL_USR;
-	}
-
-	@Override
-	public void setInGame() {
-		gameStatus = GameStatus.IN_GAME;
-	}
-
-	@Override
-	public void setNoGame() {
-		gameStatus = GameStatus.NO_GAME;
 	}
 	
 	public void initNumLevel() {

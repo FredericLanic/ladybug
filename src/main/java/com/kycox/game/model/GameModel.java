@@ -43,8 +43,10 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupIncrementScores;
 import com.kycox.game.sound.NewSounds;
+import com.kycox.game.timer.BeginingTimer;
 import com.kycox.game.timer.SuperPowerTimer;
 
+import ch.qos.logback.classic.Logger;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,9 +60,6 @@ import lombok.Setter;
 public class GameModel extends Observable
         implements IGameModelForGameView, IGameModelForGameSounds, IGameModelForController {
 	private static final Log	 logger		   = LogFactory.getLog(GameModel.class);
-	@Getter
-	@Setter
-	private boolean				 beginNewLevel = false;
 	@Getter
 	@Inject
 	private CurrentGameStatus	 currentGameStatus;
@@ -93,6 +92,11 @@ public class GameModel extends Observable
 	private boolean				 soundActive;
 	@Inject
 	private SuperPowerTimer		 superPowerTimer;	
+	
+	private BeginingTimer        beginningTimer = new BeginingTimer();
+	
+	@Setter
+	private long beginningMillisecondes;
 
 	@Override
 	public void forceStopGame() {
@@ -148,7 +152,6 @@ public class GameModel extends Observable
 	 * Lancement du timer qui rythme le jeu FIXME : cette fonction reste public car
 	 * elle est toujouts utilisée par GameSounds -> c'est le mal
 	 */
-	@Override
 	public void startGameTimer() {
 		logger.info("Start Game Timer");
 		gameTimer.start();
@@ -164,7 +167,6 @@ public class GameModel extends Observable
 		soundActive = !soundActive;
 	}
 
-	@Override
 	public void stopGameTimer() {
 		logger.info("Stop Game Timer");
 		gameTimer.stop();
@@ -176,10 +178,16 @@ public class GameModel extends Observable
 
 	public boolean isInGame() {
 		return getCurrentGameStatus().isInGame();
-	}
+	}	
 	
-	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else		
-		if (isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
+	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
+		if (currentGameStatus.isLevelStart()) {
+			beginningTimer.launch(beginningMillisecondes, currentGameStatus);
+			currentGameStatus.setBeginLevel();
+			setSoundRequests();
+		} else if (currentGameStatus.isLevelBegin()) {
+			logger.info("En attente...");
+		} else if (isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
 		} else if (isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
 			ladybugIsDying();
@@ -341,15 +349,13 @@ public class GameModel extends Observable
 		logger.info("Initialize level");
 		// suppression des composants techniques du niveau précédent
 		removePreviousLevelTasks();
-		currentGameStatus.setInGame();
+		currentGameStatus.setLevelStart();
 		// incrémente le numéro du niveau
 		currentGameStatus.setNumLevel(currentGameStatus.getNumLevel() + 1);
 		// recopie les paramètres du niveau dans les données flottantes du niveau
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), isInGame());
+		screenData.setLevelMap(currentGameStatus.getNumLevel(), true);
 		// initialisation du super power
 		groupGhosts.setFear(false);
-		// début du level : utile pour l'introduction du level
-		setBeginNewLevel(true);
 		// on continue le level
 		continueLevel();
 	}
@@ -433,7 +439,7 @@ public class GameModel extends Observable
 		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint());
 		newSounds.addNewLife(ladybug.isNewLife());
 		newSounds.addTeleport(ladybug.isToBeTeleported());
-		newSounds.addSirenSound(ladybug.getStatus().equals(LadybugStatus.NORMAL), screenData.getPercentageEatenPoint());
+		newSounds.addSirenSound(ladybug.getStatus().equals(LadybugStatus.NORMAL) && currentGameStatus.isInGame(), screenData.getPercentageEatenPoint());
 		newSounds.addLadybugIsDying(ladybug.getStatus().equals(LadybugStatus.DYING), !ladybugDying.isInPogress());
 	}
 }

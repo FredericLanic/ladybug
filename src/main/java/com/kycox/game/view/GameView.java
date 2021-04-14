@@ -59,13 +59,13 @@ public class GameView extends JPanel implements Observer {
 	private IGameModelForGameView gameModel;
 	@Inject
 	private GhostView			  ghostView;
-	private boolean				  hasBeenDrawOnce  = false;
 	@Inject
 	private LadybugDyingView	  ladybugDyingView;
 	@Inject
 	private LadybugView			  ladybugView;
 	private JFrame				  mainFrame		   = (JFrame) SwingUtilities.getRoot(this);
 	private final Font			  smallFont		   = new Font("CrackMan", Font.BOLD, 14);
+	private final Font			  bigFont		   = new Font("CrackMan", Font.BOLD, 80);
 
 	@PostConstruct
 	public void init() {
@@ -91,32 +91,51 @@ public class GameView extends JPanel implements Observer {
 	}
 
 	private void draw(Graphics g) {
-		listenStartLevelJingle();
 		Graphics2D g2d = (Graphics2D) g;
 		drawMaze(g2d);
 		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
+			// jeu en configuration
 			confJDialog.setVisible(true);
 			drawGhosts(g2d);
 			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
 			// autre solution
-			gameModel.getCurrentGameStatus().setNoGame();
+			gameModel.getCurrentGameStatus().setNoGame();		
+		} else if (gameModel.getCurrentGameStatus().isLevelBegin()) {
+			drawLadybug(g2d);
+			drawGhosts(g2d);
+			drawLevel(g2d);
 		} else if (gameModel.getCurrentGameStatus().isNoGame()) {
+			// jeu en présentation
 			drawGhosts(g2d);
 			showIntroScreen(g2d);
 		} else if (LadybugStatus.DYING.equals(gameModel.getLadybug().getStatus())) {
+			// pacman en est train de mourir
 			ladybugDyingView.inProgress();
 			drawGhosts(g2d);
 			drawLadybugDying(g2d);
 		} else if (LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
+			// pacman est mort
 			ladybugDyingView.init();
 		} else if (!LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
-			// jeu en cours
+			// pacman n'est pas mort, le jeu continue
 			drawLadybug(g2d);
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
 		}
 	}
 
+	private void drawLevel(Graphics2D g2d) {
+		int	   x			= gameModel.getScreenData().getScreenWidth();
+		int	   y			= gameModel.getScreenData().getScreenHeight();
+		
+		String s			= "LEVEL " + gameModel.getCurrentGameStatus().getNumLevel();
+		FontMetrics metr 	= this.getFontMetrics(bigFont);
+		
+		g2d.setColor(Color.white);
+		g2d.setFont(bigFont);
+		g2d.drawString(s, (x - metr.stringWidth(s)) / 2, y / 2);
+	}
+	
 	private void drawGhosts(Graphics2D g2d) {
 		gameModel.getGroupGhosts().getLstGhosts().stream()
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
@@ -159,32 +178,7 @@ public class GameView extends JPanel implements Observer {
 			g2d.drawString(scorePoint.getValue() + " pt", x, y);
 		}
 	}
-
-	/**
-	 * Ecoute le jingle de début
-	 *
-	 * C'est un contournement !!! Il faut que le niveau s'affiche pour pouvoir
-	 * entendre le jingle.
-	 *
-	 * Du coup, le jingle se lancera au deuxième affichage de la map du niveau.
-	 *
-	 * Lorsque qu'on écoutera le jingle, le jeu est frisé.
-	 */
-	private void listenStartLevelJingle() {
-		// Utile pour entendre le jingle du début :
-		// Le modèle annonce le début du niveau. La vue dans ce cas là, n'a pas encore
-		// pu afficher le niveau à l'écran.
-		// Elle doit faire un affichage et ensuite pouvoir lancer le jingle.
-		if (gameModel.isBeginNewLevel()) {
-			gameModel.setBeginNewLevel(false);
-			hasBeenDrawOnce = true;
-		} else if (hasBeenDrawOnce) {
-			hasBeenDrawOnce = false;
-			// FIXME : changement du status du jeu à partir de la vue : c'est le mal !!
-			gameModel.getCurrentGameStatus().setBeginingLevel();
-		}
-	}
-
+	
 	private void showIntroScreen(Graphics2D g2d) {
 		int	   x			= gameModel.getScreenData().getScreenWidth();
 		int	   y			= gameModel.getScreenData().getScreenHeight();

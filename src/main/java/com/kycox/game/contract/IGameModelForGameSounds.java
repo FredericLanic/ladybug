@@ -22,10 +22,4 @@ public interface IGameModelForGameSounds {
 	public INewSoundsForGameSounds getNewSounds();
 
 	public boolean isSoundActive();
-
-	// fixme : c'est le mal ici
-	public void startGameTimer();
-
-	// fixme : c'est le mal ici
-	public void stopGameTimer();
 }

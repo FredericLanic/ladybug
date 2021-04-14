@@ -45,9 +45,14 @@ public class GameSounds implements Observer {
 	 *
 	 * @return
 	 */
-	public long getMicrosecondLengthLadybugDeath() {
+	public long getMillisecondLadybugDeath() {
 		Clip clipLadybugDying = Sounds.LADYBUG_IS_DYING.getClip();
 		return clipLadybugDying.getMicrosecondLength() / 1000;
+	}
+	
+	public long getMillisecondsBeginning() {
+		Clip clipBeginning = Sounds.GAME_BEGIN_LEVEL.getClip();
+		return clipBeginning.getMicrosecondLength() / 1000;
 	}
 
 	/**
@@ -65,35 +70,11 @@ public class GameSounds implements Observer {
 		}
 	}
 
-	/**
-	 * Start Jingle. Le jeu est figé le temps que le jingle est lancé
-	 *
-	 * @FIXME : la gestion du timer devrait être gérée ailleurs
-	 */
-	public void playStartJingle() {
-		stopAllSounds();
-		gameModel.stopGameTimer();
-		Clip clip = Sounds.GAME_BEGIN_LEVEL.getClip();
-		// lancement du jingle du début
-		new ListenSound(clip).start();
-		// On attend le temps du jingle : le jeu est alors bloqué
-		try {
-			Thread.sleep(clip.getMicrosecondLength() / 1000);
-		} catch (InterruptedException e) {
-			logger.error("Interrupted - playStartJingle" + e);
-			Thread.currentThread().interrupt();
-		}
-		gameModel.getCurrentGameStatus().setInGame();
-		gameModel.startGameTimer();
-	}
-
 	@Override
 	public void update(Observable gameModelForSound, Object arg) {
 		gameModel = (IGameModelForGameSounds) gameModelForSound;
 		newSounds = gameModel.getNewSounds();
-		if (newSounds.hasSound(Sounds.GAME_BEGIN_LEVEL)) {
-			playStartJingle();
-		} else if (gameModel.isSoundActive()) {
+		if (gameModel.isSoundActive()) {
 			playSounds();
 		} else {
 			stopAllSounds();
