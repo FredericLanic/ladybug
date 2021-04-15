@@ -50,6 +50,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -60,7 +62,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.ghost.image.GhostEyesImages;
 import com.kycox.game.constant.ghost.image.GhostsBodyImages;
+import com.kycox.game.tools.ImageUtils;
 
 public class JGhostChoice extends JPanel implements KeyListener {
 	public static final String BLINKY_CHOICE	= "Blinky";
@@ -134,22 +139,26 @@ public class JGhostChoice extends JPanel implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		switch (group.getSelection().getActionCommand()) {
 			case BLINKY_CHOICE:
-				picture.setIcon(new ImageIcon(GhostsBodyImages.RED.getImage()));
+				picture.setIcon(new ImageIcon(getImageWithEyes(GhostsBodyImages.RED.getImage())));
 				break;
 			case INKY_CHOICE:
-				picture.setIcon(new ImageIcon(GhostsBodyImages.BLUE.getImage()));
+				picture.setIcon(new ImageIcon(getImageWithEyes(GhostsBodyImages.BLUE.getImage())));
 				break;
 			case CLYDE_CHOICE:
-				picture.setIcon(new ImageIcon(GhostsBodyImages.ORANGE.getImage()));
+				picture.setIcon(new ImageIcon(getImageWithEyes(GhostsBodyImages.ORANGE.getImage())));
 				break;
 			case PINKY_CHOICE:
-				picture.setIcon(new ImageIcon(GhostsBodyImages.PINK.getImage()));
+				picture.setIcon(new ImageIcon(getImageWithEyes(GhostsBodyImages.PINK.getImage())));
 				break;
 			default:
 				break;
 		}
 	}
-
+	
+	private Image getImageWithEyes(Image ghostImg) {
+		return ImageUtils.appendImages(ghostImg, GhostEyesImages.GHOST_LEFT_EYES.getImage());
+	}
+		
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// nothing to do

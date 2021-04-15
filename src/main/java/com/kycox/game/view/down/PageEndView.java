@@ -86,5 +86,6 @@ public class PageEndView extends JPanel implements Observer, IMainGraphicStructr
 		statusGameView.setNbrPlayers(gameModel.getNbrPlayers());
 		statusGameView.setNumLevel(gameModel.getCurrentGameStatus().getNumLevel());
 		statusGameView.setScore(gameModel.getGameScore().getScore());
+		statusGameView.setSoundActive(gameModel.isSoundActive());
 	}
 }

@@ -17,13 +17,7 @@ public class GameProperties {
 	// ladybug.color
 	private Optional<String> ladybugColor = Optional.empty();
 	// ladybug.ski
-	private Optional<String> ladybugSkin = Optional.empty();
-	
-	private Optional<String> ladybugLeft = Optional.empty();
-	private Optional<String> ladybugRight = Optional.empty();
-	private Optional<String> ladybugUp = Optional.empty();
-	private Optional<String> ladybugDown = Optional.empty();	
-	
+	private Optional<String> ladybugSkin = Optional.empty();	
 	// ghosts.headband
 	private Optional<String> ghostsHeadband = Optional.empty();
 	
@@ -39,12 +33,7 @@ public class GameProperties {
 			classPathResource = new ClassPathResource("ladybug.properties");
 			props = PropertiesLoaderUtils.loadProperties(classPathResource);
 			ladybugColor = readProperty("ladybug.color");
-			ladybugSkin = readProperty("ladybug.skin");
-			
-			ladybugLeft = readProperty("ladybug.left");
-			ladybugRight = readProperty("ladybug.right");
-			ladybugUp = readProperty("ladybug.up");
-			ladybugDown = readProperty("ladybug.down");
+			ladybugSkin = readProperty("ladybug.skin");			
 			
 			ghostsHeadband = readProperty("ghosts.headband");
 		} 
@@ -70,17 +59,29 @@ public class GameProperties {
 		return ladybugColor.isPresent() ? ladybugColor.get(): "blue";
 	}
 
+	public void changeLadybugSkin() {
+		if (hasLadybugSkin()) {
+			ladybugSkin = Optional.empty();
+		} else {
+			ladybugSkin = Optional.of(TRUE_PROPERTY);
+		}
+	}
+	
 	public boolean hasLadybugSkin() {
 		return ladybugSkin.isPresent() && TRUE_PROPERTY.equals(ladybugSkin.get());
 	}
-
+	
+	public void changeGhostHeadBand() {
+		if (hasGhostHeadBand()) {
+			ghostsHeadband = Optional.empty();
+		} else {
+			ghostsHeadband = Optional.of(TRUE_PROPERTY);
+		}
+	}
+	
 	public boolean hasGhostHeadBand() {
 		return ghostsHeadband.isPresent() && TRUE_PROPERTY.equals(ghostsHeadband.get());
 	}
 	
-	public int getLadybugLeft() {
-		return ladybugLeft.isPresent()?Integer.parseInt(ladybugLeft.get()): 0x25;
-	}
-
 }
 

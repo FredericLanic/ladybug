@@ -46,8 +46,7 @@ public class GhostView {
 		}
 		// ajout les yeux en fonction de la direction
 		if (!GhostStatus.DYING.equals(ghost.getStatus())) {
-			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));
-			
+			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));			
 		}		
 		// ajout du bandeau
 		if (!GhostStatus.DYING.equals(ghost.getStatus()) && gameProperties.hasGhostHeadBand()) {

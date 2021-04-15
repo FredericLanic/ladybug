@@ -437,7 +437,7 @@ public class GameModel extends Observable
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
 		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhost() > 0);
-		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint());
+		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint() && currentGameStatus.isInGame());
 		newSounds.addNewLife(ladybug.isNewLife());
 		newSounds.addTeleport(ladybug.isToBeTeleported());
 		newSounds.addSirenSound(ladybug.getStatus().equals(LadybugStatus.NORMAL) && currentGameStatus.isInGame(), screenData.getPercentageEatenPoint());

@@ -27,6 +27,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.IGameModelForController;
+import com.kycox.game.properties.GameProperties;
 
 /**
  * Contrôleur du jeu : MVC
@@ -40,6 +41,8 @@ public class KeyGameController extends KeyAdapter {
 	private static final Log		logger = LogFactory.getLog(KeyGameController.class);
 	@Inject
 	private IGameModelForController	gameModel;
+	@Inject
+	private GameProperties gameProperties;
 
 	/**
 	 * Action sur les touches Gestion des touches pressées
@@ -47,16 +50,9 @@ public class KeyGameController extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if (keyCode == KeyEvent.VK_ESCAPE) {
-			// FIXME : c'est au modèle de sortir proprement du jeu
-			System.exit(0);
-		}
-		if (gameModel.isInGame()) {
-			// Gestion des touches durant une partie
-			manageKeysInGame(keyCode);
-		} else {
-			manageKeysInPresentation(keyCode);
-		}
+
+		if (gameModel.isInGame()) {	manageKeysInGame(keyCode); } 
+		else { manageKeysInPresentation(keyCode); }
 	}
 
 	/**
@@ -78,6 +74,8 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_D -> gameModel.setGhostRequest(Constants.POINT_RIGHT);
 			// Son
 			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
+			case KeyEvent.VK_F3 ->  gameProperties.changeLadybugSkin();
+			case KeyEvent.VK_F4 ->  gameProperties.changeGhostHeadBand();
 			// Arret de la partie
 			case KeyEvent.VK_ESCAPE -> gameModel.forceStopGame();
 			// Partie en pause
@@ -97,6 +95,7 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_S -> gameModel.startGame();
 			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
 			case KeyEvent.VK_C -> gameModel.getCurrentGameStatus().setConfiguration();
+			case KeyEvent.VK_ESCAPE -> System.exit(0); // FIXME : c'est au modèle de sortir proprement du jeu
 			default -> logger.info(keyCode + " key not managed");
 		}
 	}
