@@ -54,6 +54,8 @@ public final class Constants {
 	public static final Point POINT_UP = new Point(0, -1);
 	// Point neutre
 	public static final Point POINT_ZERO = new Point(0, 0);
+	// Point neutre
+	public static final Point POINT_OUTSIDE = new Point(-1, -1);
 	// niveau pour la fenêtre de présentation
 	public static final int PRESENTATION_LEVEL = 2;
 	// Score quand un fantôme est mangé

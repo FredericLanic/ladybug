@@ -83,6 +83,7 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 		gameStatus = GameStatus.TO_CONF_LOCAL_USR;
 	}
 	
+	// KYLIAN C'EST ICI
 	public void initNumLevel() {
 		setNumLevel(0);
 	}

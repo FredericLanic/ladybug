@@ -118,4 +118,13 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 			setPosition(Utils.convertPointToGraphicUnit(newPoint));
 		}
 	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Ladybug ");
+		sb.append("inScreen : " + isInScreen());
+		sb.append("position: " + getPosition());
+		return sb.toString();
+	}
+	
 }

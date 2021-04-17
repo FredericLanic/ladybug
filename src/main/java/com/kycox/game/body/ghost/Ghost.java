@@ -336,7 +336,7 @@ public abstract class Ghost extends UserBody {
 	}
 
 	private void normalMoving(Body ladybug, ScreenData screenData) {
-		if (sensitiveBehavious.isActive())
+		if (sensitiveBehavious.isActive() && ladybug.isInScreen())
 			moveByBehaviour(ladybug, screenData);
 		else
 			moveByDefault(screenData);

@@ -95,7 +95,7 @@ public class ScreenBlockView {
 		if (screenBlock.isBorderRight() && screenBlock.isBorderUp()) {
 			g2d.drawArc(x, y, rayon, rayon, 0, 90);
 		}
-		// affichage de la courbe doite vers bas
+		// affichage de la courbe droite vers bas
 		if (screenBlock.isBorderRight() && screenBlock.isBorderDown()) {
 			g2d.drawArc(x, y, rayon, rayon, 270, 90);
 		}
@@ -104,7 +104,7 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y)).isBorderUp()) {
 			g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y, x + Constants.BLOCK_SIZE, y);
 		}
-		if (screenBlock.isBorderUp() && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 2
+		if (screenBlock.isBorderUp() && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && currentCoord.y > 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y - 1)).isBorderLeft()) {
 			g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y, x + Constants.BLOCK_SIZE, y);
@@ -115,8 +115,8 @@ public class ScreenBlockView {
 			g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE,
 			        y + Constants.BLOCK_SIZE);
 		}
-		if (screenBlock.isBorderDown() && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 2
-		        && currentCoord.y < screenData.getNbrLines() - 2
+		if (screenBlock.isBorderDown() && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
+		        && currentCoord.y < screenData.getNbrLines() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y + 1)).isBorderLeft()) {
 			g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE,
 			        y + Constants.BLOCK_SIZE);
@@ -125,7 +125,7 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y)).isBorderUp()) {
 			g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
 		}
-		if (screenBlock.isBorderUp() && currentCoord.x > 1 && currentCoord.y > 1
+		if (screenBlock.isBorderUp() && currentCoord.x > 0 && currentCoord.y > 1
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isBorderRight()) {
 			g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
 		}
@@ -135,7 +135,7 @@ public class ScreenBlockView {
 		        && (sbTmp.isBorderDown() || sbTmp.isBorderRight())) {
 			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE);
 		}
-		if (screenBlock.isBorderDown() && currentCoord.x > 1 && currentCoord.y < screenData.getNbrLines() - 2
+		if (screenBlock.isBorderDown() && currentCoord.x > 0 && currentCoord.y < screenData.getNbrLines() - 1
 		        && (sbTmp.isBorderDown() || sbTmp1.isBorderRight())) {
 			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE);
 		}
@@ -145,8 +145,8 @@ public class ScreenBlockView {
 			g2d.drawLine(x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2, x + Constants.BLOCK_SIZE,
 			        y + Constants.BLOCK_SIZE);
 		}
-		if (screenBlock.isBorderRight() && currentCoord.y < screenData.getNbrLines() - 2
-		        && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 2
+		if (screenBlock.isBorderRight() && currentCoord.y < screenData.getNbrLines() - 1
+		        && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y + 1)).isBorderUp()) {
 			g2d.drawLine(x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2, x + Constants.BLOCK_SIZE,
 			        y + Constants.BLOCK_SIZE);
@@ -155,7 +155,7 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y + 1)).isBorderLeft()) {
 			g2d.drawLine(x, y + Constants.BLOCK_SIZE / 2, x, y + Constants.BLOCK_SIZE);
 		}
-		if (screenBlock.isBorderLeft() && currentCoord.y < screenData.getNbrLines() - 2 && currentCoord.x > 1
+		if (screenBlock.isBorderLeft() && currentCoord.y < screenData.getNbrLines() - 1 && currentCoord.x > 0
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1)).isBorderUp()) {
 			g2d.drawLine(x, y + Constants.BLOCK_SIZE / 2, x, y + Constants.BLOCK_SIZE);
 		}
@@ -163,8 +163,8 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y - 1)).isBorderRight()) {
 			g2d.drawLine(x + Constants.BLOCK_SIZE, y, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2);
 		}
-		if (screenBlock.isBorderRight() && currentCoord.y > 1
-		        && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 2
+		if (screenBlock.isBorderRight() && currentCoord.y > 0
+		        && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y - 1)).isBorderDown()) {
 			g2d.drawLine(x + Constants.BLOCK_SIZE, y, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2);
 		}
@@ -172,7 +172,7 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y - 1)).isBorderLeft()) {
 			g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE / 2);
 		}
-		if (screenBlock.isBorderLeft() && currentCoord.y > 1 && currentCoord.x > 1
+		if (screenBlock.isBorderLeft() && currentCoord.y > 0 && currentCoord.x > 1
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isBorderDown()) {
 			g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE / 2);
 		}

@@ -106,4 +106,12 @@ public abstract class Body {
 		leftLifes--;
 		logger.info("lifesLeft:" + leftLifes);
 	}
+	
+	public boolean isInScreen() {
+		return Constants.POINT_OUTSIDE.equals(getPosition())?false: true;
+	}
+	
+	public void setOutSideScreen() {
+		setPosition(Constants.POINT_OUTSIDE);
+	}
 }

@@ -46,7 +46,6 @@ import com.kycox.game.sound.NewSounds;
 import com.kycox.game.timer.BeginingTimer;
 import com.kycox.game.timer.SuperPowerTimer;
 
-import ch.qos.logback.classic.Logger;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -196,6 +195,7 @@ public class GameModel extends Observable
 		} else if (isInGame() && groupGhosts.userIsDead()) {
 			currentGameStatus.setNoGame();
 		} else {
+			logger.info(ladybug);
 			// ***
 			caseOfNewLadybugLife();
 			// ***
@@ -341,6 +341,8 @@ public class GameModel extends Observable
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// active sound
 		setSoundActive(true);
+		// on met ladybug en dehors du level pour que les fantômes ne le cherchent pas
+		ladybug.setOutSideScreen();
 	}
 
 	/**
