@@ -17,35 +17,42 @@
 package com.kycox.game.score;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.inject.Named;
+import com.kycox.game.timer.IncrementScoreTimer;
 
 import lombok.Getter;
+import lombok.Setter;
 
-@Named("GroupIncrementScores")
-public class GroupIncrementScores {
-	/**
-	 * Liste des score incréments
-	 */
+/**
+ * Contenu des valeurs afficées dans la map, lorsque ladybug fait des exploits
+ *
+ * @author kycox
+ *
+ */
+public class Message {
 	@Getter
-	private List<IncrementScore> lstIncrementScore = new ArrayList<>();
+	@Setter
+	private boolean				dying;
+	/** Position dans la fenêtre où le score est affiché */
+	@Getter
+	private Point				position;
+	/** Timer d'affichage du score dans la fenêtre */
+	private IncrementScoreTimer	scoreTimer;
+	/** Valeur à afficher */
+	@Getter
+	private String				value;
 
 	/**
-	 * Ajout d'un score incrément
+	 * Constructeur
 	 *
-	 * @param position
-	 * @param value
+	 * @param position : position d'affichage du score
+	 * @param value    : valeur à afficher
 	 */
-	public void add(Point position, String value) {
-		lstIncrementScore.add(new IncrementScore((Point) position.clone(), value));
-	}
-
-	/**
-	 * Suppression des score incrément qui sont en train de mourir
-	 */
-	public void removeIfDying() {
-		lstIncrementScore.removeIf(IncrementScore::isDying);
+	public Message(Point position, String value) {
+		this.position = position;
+		this.value	  = value;
+		this.setDying(false);
+		scoreTimer = new IncrementScoreTimer(this);
+		scoreTimer.launch(1000);
 	}
 }

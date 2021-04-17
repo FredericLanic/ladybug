@@ -19,7 +19,7 @@ package com.kycox.game.timer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.kycox.game.score.IncrementScore;
+import com.kycox.game.score.Message;
 
 /**
  * Timer qui permet d'afficher le score un certain temps à l'écran
@@ -39,7 +39,7 @@ public class IncrementScoreTimer {
 		}
 	}
 
-	private IncrementScore scoreIncrement;
+	private Message scoreIncrement;
 	private Timer		   timer = new Timer(true);
 
 	/**
@@ -49,7 +49,7 @@ public class IncrementScoreTimer {
 	 * @param numThread       : numéro du thread (1: principal, autrement
 	 *                        clignottement)
 	 */
-	public IncrementScoreTimer(IncrementScore scoreIncremenet) {
+	public IncrementScoreTimer(Message scoreIncremenet) {
 		this.scoreIncrement = scoreIncremenet;
 	}
 

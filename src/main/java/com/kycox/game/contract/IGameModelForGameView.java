@@ -18,7 +18,7 @@ package com.kycox.game.contract;
 
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
-import com.kycox.game.score.GroupIncrementScores;
+import com.kycox.game.score.GroupMessages;
 
 public interface IGameModelForGameView extends IGameCommon {
 	public IGameStatusForGameView getCurrentGameStatus();
@@ -29,7 +29,7 @@ public interface IGameModelForGameView extends IGameCommon {
 
 	public IGroupGhostForGameView getGroupGhosts();
 
-	public GroupIncrementScores getGroupIncrementScores();
+	public GroupMessages getGroupMessages();
 
 	public ILadybugForGameView getLadybug();
 

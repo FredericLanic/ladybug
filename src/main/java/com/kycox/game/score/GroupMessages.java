@@ -14,26 +14,38 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.action.ghost;
+package com.kycox.game.score;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kycox.game.constant.Constants;
-import com.kycox.game.score.GroupMessages;
+import javax.inject.Named;
 
-public class GhostsGroupActions {
-	private List<GhostActions> lstGhostActions = new ArrayList<>();
+import lombok.Getter;
 
-	public void addGhostAction(GhostActions ghostActions) {
-		lstGhostActions.add(ghostActions);
+@Named("GroupIncrementScores")
+public class GroupMessages {
+	/**
+	 * Liste des score incréments
+	 */
+	@Getter
+	private List<Message> messages = new ArrayList<>();
+
+	/**
+	 * Ajout d'un score incrément
+	 *
+	 * @param position
+	 * @param value
+	 */
+	public void add(Point position, String value) {
+		messages.add(new Message((Point) position.clone(), value));
 	}
 
 	/**
-	 * Création des Increments Score en fonction des fantômes mangés
+	 * Suppression des score incrément qui sont en train de mourir
 	 */
-	public void addIncrementScores(GroupMessages groupIncrementScores) {
-		lstGhostActions.stream().filter(GhostActions::isEaten).forEach(
-		        ga -> groupIncrementScores.add(ga.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST)));
+	public void removeIfDying() {
+		messages.removeIf(Message::isDying);
 	}
 }

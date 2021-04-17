@@ -41,7 +41,7 @@ import com.kycox.game.contract.IGameModelForGameSounds;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
-import com.kycox.game.score.GroupIncrementScores;
+import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
 import com.kycox.game.timer.WaitAndToActionTimer;
 import com.kycox.game.timer.SuperPowerTimer;
@@ -73,7 +73,7 @@ public class GameModel extends Observable
 	private GhostsGroup			 groupGhosts;
 	@Getter
 	@Inject
-	private GroupIncrementScores groupIncrementScores;
+	private GroupMessages 		 groupMessages;
 	@Getter
 	@Inject
 	private Ladybug				 ladybug;
@@ -245,8 +245,8 @@ public class GameModel extends Observable
 	}
 	
 	private void manageScores() {
-		gameScore.setScore(groupGhosts, ladybug, groupIncrementScores);
-		groupIncrementScores.removeIfDying();
+		gameScore.setScore(groupGhosts, ladybug, groupMessages);
+		groupMessages.removeIfDying();
 		// ***
 		if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
 			logger.info("New life for Ladybug");
