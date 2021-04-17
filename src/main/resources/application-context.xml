@@ -111,6 +111,7 @@
 				<ref bean="Level4NG" />
 				<ref bean="Level5NG" />
 				<ref bean="Level6NG" />
+				<ref bean="Level7NG" />
 			</list>
 		</property>
 	</bean>

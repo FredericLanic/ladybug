@@ -16,6 +16,7 @@
  */
 package com.kycox.game.constant;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.util.Arrays;
 import java.util.Collections;
@@ -71,6 +72,9 @@ public final class Constants {
 	// changement de ScreenBlock
 	public static final List<Integer> VALID_SPEEDS = Collections
 	        .unmodifiableList(Arrays.asList(1, 2, 3, 4, 6, 8, 12, 24));
+	
+	public static final Color BLUE_LADYBUG = new Color(33, 33, 255);
+	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
 
 	private Constants() {
 	}

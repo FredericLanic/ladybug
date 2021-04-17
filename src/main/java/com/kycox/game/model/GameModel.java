@@ -43,7 +43,7 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupIncrementScores;
 import com.kycox.game.sound.NewSounds;
-import com.kycox.game.timer.BeginingTimer;
+import com.kycox.game.timer.WaitAndToActionTimer;
 import com.kycox.game.timer.SuperPowerTimer;
 
 import lombok.Getter;
@@ -92,7 +92,7 @@ public class GameModel extends Observable
 	@Inject
 	private SuperPowerTimer		 superPowerTimer;	
 	
-	private BeginingTimer        beginningTimer;
+	private WaitAndToActionTimer        beginningTimer;
 	
 	@Setter
 	private long beginningMillisecondes;
@@ -181,7 +181,7 @@ public class GameModel extends Observable
 	
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (currentGameStatus.isLevelStart()) {
-			beginningTimer = new BeginingTimer();
+			beginningTimer = new WaitAndToActionTimer();
 			beginningTimer.launch(beginningMillisecondes, currentGameStatus);
 			currentGameStatus.setBeginLevel();
 			setSoundRequests();

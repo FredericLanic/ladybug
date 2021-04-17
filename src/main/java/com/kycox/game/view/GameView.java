@@ -35,14 +35,18 @@ import javax.swing.SwingUtilities;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
+import com.kycox.game.contract.IDoActionAfterTimer;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.controller.KeyGameController;
 import com.kycox.game.score.IncrementScore;
+import com.kycox.game.timer.WaitAndToActionTimer;
 import com.kycox.game.view.conf.ConfJDialog;
 import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugDyingView;
 import com.kycox.game.view.ladybug.LadybugView;
 import com.kycox.game.view.map.ScreenBlockView;
+
+import lombok.Setter;
 
 /**
  * Vue du jeu MVC
@@ -51,7 +55,7 @@ import com.kycox.game.view.map.ScreenBlockView;
  *
  */
 @Named("GameView")
-public class GameView extends JPanel implements Observer {
+public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	private static final long	  serialVersionUID = 1L;
 	private ConfJDialog			  confJDialog;
 	@Inject
@@ -66,6 +70,10 @@ public class GameView extends JPanel implements Observer {
 	private JFrame				  mainFrame		   = (JFrame) SwingUtilities.getRoot(this);
 	private final Font			  smallFont		   = new Font("CrackMan", Font.BOLD, 14);
 	private final Font			  bigFont		   = new Font("CrackMan", Font.BOLD, 80);
+	@Setter
+	private long durationLadybugNewLife;
+	// todo : sécuriser le timer en mode deux joueurs
+	private WaitAndToActionTimer        newLiveTimer;
 
 	@PostConstruct
 	public void init() {
@@ -90,9 +98,21 @@ public class GameView extends JPanel implements Observer {
 		repaint();
 	}
 
+	@Override
+	public void doActionAfterTimer() {
+		ScreenBlockView.setBlueLadybug(Constants.BLUE_LADYBUG);
+	}
+	
 	private void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		drawMaze(g2d);
+		
+		if (gameModel.getLadybug().isNewLife()) {
+			ScreenBlockView.setBlueLadybug(Constants.COLOR_EXTRA_PAC_LADYBUG);						
+			newLiveTimer = new WaitAndToActionTimer();
+			newLiveTimer.launch(durationLadybugNewLife, this);			
+		}
+		
 		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
 			// jeu en configuration
 			confJDialog.setVisible(true);
@@ -122,6 +142,7 @@ public class GameView extends JPanel implements Observer {
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
 		}
+		
 	}
 
 	private void drawLevel(Graphics2D g2d) {

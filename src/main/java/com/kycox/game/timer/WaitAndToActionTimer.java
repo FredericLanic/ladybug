@@ -21,16 +21,17 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
+import com.kycox.game.contract.IDoActionAfterTimer;
 import com.kycox.game.model.CurrentGameStatus;
 
 /**
  * Timer qui permet d'afficher le score un certain temps à l'écran
  *
  */
-public class BeginingTimer {
+public class WaitAndToActionTimer {
 	
 	@Inject
-	private CurrentGameStatus currentGameStatus;
+	private IDoActionAfterTimer doActionAfterTimer;
 	/**
 	 * Class TimerTask
 	 */
@@ -39,13 +40,13 @@ public class BeginingTimer {
 		public void run() {
 			timer.cancel();
 			timer.purge();
-			currentGameStatus.setInGame();
+			doActionAfterTimer.doActionAfterTimer();
 		}
 	}
 
 	private Timer		   timer = new Timer(true);
 
-	public BeginingTimer() {}
+	public WaitAndToActionTimer() {}
 
 	/**
 	 * Arrete le super power : le niveau est terminé, ou bien un autre super power a
@@ -61,10 +62,10 @@ public class BeginingTimer {
 	/**
 	 * Lance le timer du score incrément
 	 *
-	 * @param duration temps en milli secondes
+	 * @param millisecondsDuration temps en milli secondes
 	 */
-	public void launch(long duration, CurrentGameStatus currentGameStatus) {
-		this.currentGameStatus = currentGameStatus;
-		timer.schedule(new WaitTimer(), duration);
+	public void launch(long millisecondsDuration, IDoActionAfterTimer iDoActionAfterTimer) {
+		this.doActionAfterTimer = iDoActionAfterTimer;
+		timer.schedule(new WaitTimer(), millisecondsDuration);
 	}
 }

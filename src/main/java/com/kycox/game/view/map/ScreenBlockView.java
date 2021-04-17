@@ -27,8 +27,9 @@ import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
 
+import lombok.Setter;
+
 public class ScreenBlockView {
-	private static final Color blueLadybug = new Color(33, 33, 255);
 	// Couleur d'un point
 	private static final Color dotColor = new Color(192, 192, 0);
 	// Couleur du labyrinthe
@@ -37,8 +38,11 @@ public class ScreenBlockView {
 	private static final Color revivorColor = new Color(128, 255, 255);
 	// Couleur du labyrinthe
 	private static final Color teleportationColor = new Color(255, 255, 255);
+	@Setter
+	private static Color blueLadybug = Constants.BLUE_LADYBUG;
 
 	public static void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
+		g2d.setColor(blueLadybug);
 		displayBorders(g2d, screenData, x, y);
 		displayPoints(g2d, screenData, x, y);
 		displayTeleportation(g2d, screenData, x, y);
@@ -56,7 +60,6 @@ public class ScreenBlockView {
 	 */
 	private static void displayBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		ScreenBlock screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
-		g2d.setColor(blueLadybug);
 		g2d.setStroke(new BasicStroke(2));
 		Point currentCoord = screenBlock.getCoordinate();
 		// affichage de la barre à gauche

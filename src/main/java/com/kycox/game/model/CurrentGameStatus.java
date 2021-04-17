@@ -17,6 +17,7 @@
 package com.kycox.game.model;
 
 import com.kycox.game.constant.GameStatus;
+import com.kycox.game.contract.IDoActionAfterTimer;
 import com.kycox.game.contract.IGameStatusForController;
 import com.kycox.game.contract.IGameStatusForGameSounds;
 import com.kycox.game.contract.IGameStatusForGameView;
@@ -24,7 +25,7 @@ import com.kycox.game.contract.IGameStatusForGameView;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController {
+public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController, IDoActionAfterTimer {
 	private GameStatus gameStatus;
 	@Getter
 	@Setter
@@ -86,5 +87,9 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 	// KYLIAN C'EST ICI
 	public void initNumLevel() {
 		setNumLevel(0);
+	}
+	
+	public void doActionAfterTimer() {
+		setInGame();
 	}
 }

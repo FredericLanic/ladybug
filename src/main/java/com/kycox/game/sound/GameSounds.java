@@ -55,6 +55,11 @@ public class GameSounds implements Observer {
 		return clipBeginning.getMicrosecondLength() / 1000;
 	}
 
+	public long getMillisecondNewLife() {
+		Clip clipNewLife = Sounds.LADYBUG_EXTRA_PAC.getClip();
+		return clipNewLife.getMicrosecondLength() / 1000;
+	}
+	
 	/**
 	 * Lancement des sons sélectionnés par le modèle
 	 */
