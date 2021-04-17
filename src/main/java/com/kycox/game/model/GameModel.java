@@ -90,10 +90,8 @@ public class GameModel extends Observable
 	@Setter
 	private boolean				 soundActive;
 	@Inject
-	private SuperPowerTimer		 superPowerTimer;	
-	
-	private WaitAndToActionTimer        beginningTimer;
-	
+	private SuperPowerTimer		 superPowerTimer;		
+	private WaitAndToActionTimer beginningTimer;	
 	@Setter
 	private long beginningMillisecondes;
 
