@@ -33,6 +33,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.IDoActionAfterTimer;
@@ -58,8 +61,12 @@ import lombok.Setter;
  */
 @Named("GameView")
 public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
+	private static final Log	  logger		   = LogFactory.getLog(GameView.class);
 	private static final long	  serialVersionUID = 1L;
 	private ConfJDialog			  confJDialog;
+	private final Font			  defaultFont	   = PacFont.PACFONT.getDefaultFont();
+	@Setter
+	private long				  durationLadybugNewLife;
 	@Inject
 	private KeyGameController	  gameController;
 	private IGameModelForGameView gameModel;
@@ -70,12 +77,14 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	@Inject
 	private LadybugView			  ladybugView;
 	private JFrame				  mainFrame		   = (JFrame) SwingUtilities.getRoot(this);
-	private final Font			  txtFont		   = PacFont.PACFONT.getDefaultFont();
-	private final Font			  scoreFont		   = new Font("CrackMan", Font.BOLD, 14); 
-	@Setter
-	private long durationLadybugNewLife;
 	// todo : sécuriser le timer en mode deux joueurs
-	private WaitAndToActionTimer        newLiveTimer;
+	private WaitAndToActionTimer newLiveTimer;
+	private final Font			 scoreFont = new Font("CrackMan", Font.BOLD, 14);
+
+	@Override
+	public void doActionAfterTimer() {
+		ScreenBlockView.setBlueLadybug(Constants.BLUE_LADYBUG);
+	}
 
 	@PostConstruct
 	public void init() {
@@ -100,28 +109,21 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		repaint();
 	}
 
-	@Override
-	public void doActionAfterTimer() {
-		ScreenBlockView.setBlueLadybug(Constants.BLUE_LADYBUG);
-	}
-	
 	private void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		drawMaze(g2d);
-		
 		if (gameModel.getLadybug().isNewLife()) {
-			ScreenBlockView.setBlueLadybug(Constants.COLOR_EXTRA_PAC_LADYBUG);						
+			ScreenBlockView.setBlueLadybug(Constants.COLOR_EXTRA_PAC_LADYBUG);
 			newLiveTimer = new WaitAndToActionTimer();
-			newLiveTimer.launch(durationLadybugNewLife, this);			
+			newLiveTimer.launch(durationLadybugNewLife, this);
 		}
-		
 		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
 			// jeu en configuration
 			confJDialog.setVisible(true);
 			drawGhosts(g2d);
 			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
 			// autre solution
-			gameModel.getCurrentGameStatus().setNoGame();		
+			gameModel.getCurrentGameStatus().setNoGame();
 		} else if (gameModel.getCurrentGameStatus().isLevelBegin()) {
 			drawLadybug(g2d);
 			drawGhosts(g2d);
@@ -144,21 +146,8 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
 		}
-		
 	}
 
-	private void drawLevel(Graphics2D g2d) {
-		int	   x			= gameModel.getScreenData().getScreenWidth();
-		int	   y			= gameModel.getScreenData().getScreenHeight();
-		
-		String s			= "lEVEL " + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
-		FontMetrics metr 	= this.getFontMetrics(txtFont);
-		
-		g2d.setColor(Color.white);
-		g2d.setFont(txtFont);
-		g2d.drawString(s, (x - metr.stringWidth(s)) / 2, y / 2);
-	}
-	
 	private void drawGhosts(Graphics2D g2d) {
 		gameModel.getGroupGhosts().getLstGhosts().stream()
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
@@ -176,6 +165,17 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		Point getPosition	= gameModel.getLadybug().getPosition();
 		Image image			= ladybugDyingView.getImage(viewDirection);
 		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
+	}
+
+	private void drawLevel(Graphics2D g2d) {
+		int			x	 = gameModel.getScreenData().getScreenWidth();
+		int			y	 = gameModel.getScreenData().getScreenHeight();
+		String		s	 = "lEVEL "
+		        + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
+		FontMetrics	metr = this.getFontMetrics(scoreFont);
+		g2d.setColor(Color.white);
+		g2d.setFont(scoreFont);
+		g2d.drawString(s, (x - metr.stringWidth(s)) / 2, y / 2);
 	}
 
 	private void drawMaze(Graphics2D g2d) {
@@ -201,27 +201,15 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			g2d.drawString(scorePoint.getValue() + " pt", x, y);
 		}
 	}
-	
+
 	private void showIntroScreen(Graphics2D g2d) {
-		int	   x			= gameModel.getScreenData().getScreenWidth();
-		int	   y			= gameModel.getScreenData().getScreenHeight();
-//		int	   addXGameOver	= gameModel.getGameScore().getOldScore() != -1 ? 30 : 0;
-//		String gameOver		= "Game Over, try again...";
-//		String yourOldScore	= "Your Score : " + gameModel.getGameScore().getOldScore();
-//		String s			= "s TO START - c TO CONFIG";
-		String startMessage = "s TO START";
-		String configMessage = "c TO CONFIG";
-		FontMetrics metr = this.getFontMetrics(txtFont);
+		int			x			  = gameModel.getScreenData().getScreenWidth();
+		int			y			  = gameModel.getScreenData().getScreenHeight();
+		String		startMessage  = "s TO START";
+		String		configMessage = "c TO CONFIG";
+		FontMetrics	metr		  = this.getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
-		g2d.setFont(txtFont);
-		/*
-		if (gameModel.getGameScore().getOldScore() > 0) {
-			// Affichage de "Game Over"
-			g2d.drawString(gameOver, (x - metr.stringWidth(gameOver)) / 2, y / 2);
-			// Affichage du score
-			g2d.drawString(yourOldScore, (x - metr.stringWidth(yourOldScore)) / 2, y / 2 + addXGameOver / 2);
-		}
-		*/
+		g2d.setFont(defaultFont);
 		g2d.drawString(startMessage, (x - metr.stringWidth(startMessage)) / 2, y / 3);
 		g2d.drawString(configMessage, (x - metr.stringWidth(configMessage)) / 2, y / 2);
 	}
