@@ -172,9 +172,9 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		int			y	 = gameModel.getScreenData().getScreenHeight();
 		String		s	 = "lEVEL "
 		        + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
-		FontMetrics	metr = this.getFontMetrics(scoreFont);
+		FontMetrics	metr = this.getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
-		g2d.setFont(scoreFont);
+		g2d.setFont(defaultFont);
 		g2d.drawString(s, (x - metr.stringWidth(s)) / 2, y / 2);
 	}
 
