@@ -193,7 +193,6 @@ public class GameModel extends Observable
 		} else if (isInGame() && groupGhosts.userIsDead()) {
 			currentGameStatus.setNoGame();
 		} else {
-			logger.info(ladybug);
 			// ***
 			caseOfNewLadybugLife();
 			// ***

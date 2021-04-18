@@ -66,12 +66,4 @@ public class Level2NG extends LevelNG {
 	public int getNbrMegaPoints() {
 		return 2;
 	}
-
-	public Point getTeleportationPoint1() {
-		return new Point(0, 6);
-	}
-
-	public Point getTeleportationPoint2() {
-		return new Point(14, 6);
-	}
 }

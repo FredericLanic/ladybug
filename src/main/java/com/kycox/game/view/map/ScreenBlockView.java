@@ -175,7 +175,8 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y - 1)).isBorderLeft()) {
 			g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE / 2);
 		}
-		if (screenBlock.isBorderLeft() && currentCoord.y > 0 && currentCoord.x > 1
+		
+		if (screenBlock.isBorderLeft() && currentCoord.y > 0 && currentCoord.x > 0
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isBorderDown()) {
 			g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE / 2);
 		}

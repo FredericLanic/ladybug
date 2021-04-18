@@ -35,8 +35,8 @@ public class Level5NG extends LevelNG {
 		levelDATA = new LevelConstruct[] {
 		        // 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
 		        B, B, B, B, N, N, B, N, B, N, N, B, B, B, B,	  // 1
-		        B, N, N, B, B, B, B, B, B, B, B, B, N, N, B,	  // 2
-		        B, N, B, N, B, N, B, N, B, N, B, N, B, N, B,	  // 3
+		        B, B, N, B, B, B, B, B, B, B, B, B, N, B, B,	  // 2
+		        B, N, N, N, B, N, B, N, B, N, B, N, N, N, B,	  // 3
 		        B, B, B, N, B, B, B, N, B, B, B, N, B, B, B,	  // 4
 		        N, B, B, B, B, N, B, B, B, N, B, B, B, B, N,	  // 5
 		        B, B, N, N, B, N, B, N, B, N, B, N, N, B, B,	  // 6
@@ -46,7 +46,7 @@ public class Level5NG extends LevelNG {
 		        B, B, N, N, B, N, B, N, B, N, B, N, N, B, B,	  // 10
 		        N, B, B, B, B, N, B, B, B, N, B, B, B, B, N,	  // 11
 		        B, B, B, N, B, B, B, N, B, B, B, N, B, B, B,	  // 12
-		        B, N, B, N, B, N, B, N, B, N, B, N, B, N, B,	  // 13
+		        B, B, N, N, B, N, B, N, B, N, B, N, N, B, B,	  // 13
 		        B, N, N, B, B, B, B, B, B, B, B, B, N, N, B,	  // 14
 		        B, B, B, B, N, N, B, N, B, N, N, B, B, B, B		  // 15
 		};
