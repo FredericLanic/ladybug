@@ -37,6 +37,7 @@ public class MainLadybug {
 
 	/** Lancement du jeu */
 	public static void main(String[] args) {
+		// Lancement du jeu
 		new MainLadybug().launchTheGame();
 	}
 

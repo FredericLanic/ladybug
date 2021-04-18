@@ -38,8 +38,10 @@ import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.IDoActionAfterTimer;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.controller.KeyGameController;
+import com.kycox.game.font.PacFont;
 import com.kycox.game.score.Message;
 import com.kycox.game.timer.WaitAndToActionTimer;
+import com.kycox.game.tools.Utils;
 import com.kycox.game.view.conf.ConfJDialog;
 import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugDyingView;
@@ -68,8 +70,8 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	@Inject
 	private LadybugView			  ladybugView;
 	private JFrame				  mainFrame		   = (JFrame) SwingUtilities.getRoot(this);
-	private final Font			  smallFont		   = new Font("CrackMan", Font.BOLD, 14);
-	private final Font			  bigFont		   = new Font("CrackMan", Font.BOLD, 80);
+	private final Font			  txtFont		   = PacFont.PACFONT.getDefaultFont();
+	private final Font			  scoreFont		   = new Font("CrackMan", Font.BOLD, 14); 
 	@Setter
 	private long durationLadybugNewLife;
 	// todo : sécuriser le timer en mode deux joueurs
@@ -149,11 +151,11 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		int	   x			= gameModel.getScreenData().getScreenWidth();
 		int	   y			= gameModel.getScreenData().getScreenHeight();
 		
-		String s			= "LEVEL " + gameModel.getCurrentGameStatus().getNumLevel();
-		FontMetrics metr 	= this.getFontMetrics(bigFont);
+		String s			= "lEVEL " + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
+		FontMetrics metr 	= this.getFontMetrics(txtFont);
 		
 		g2d.setColor(Color.white);
-		g2d.setFont(bigFont);
+		g2d.setFont(txtFont);
 		g2d.drawString(s, (x - metr.stringWidth(s)) / 2, y / 2);
 	}
 	
@@ -188,8 +190,8 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 
 	private void drawScoresIncrement(Graphics2D g2d) {
 		g2d.setColor(Color.WHITE);
-		g2d.setFont(smallFont);
-		FontMetrics	metr = this.getFontMetrics(smallFont);
+		g2d.setFont(scoreFont);
+		FontMetrics	metr = this.getFontMetrics(scoreFont);
 		int			x;
 		int			y;
 		// Affichage des scores incréments
@@ -203,23 +205,24 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	private void showIntroScreen(Graphics2D g2d) {
 		int	   x			= gameModel.getScreenData().getScreenWidth();
 		int	   y			= gameModel.getScreenData().getScreenHeight();
-		int	   addXGameOver	= gameModel.getGameScore().getOldScore() != -1 ? 30 : 0;
-		String gameOver		= "Game Over, try again...";
-		String yourOldScore	= "Your Score : " + gameModel.getGameScore().getOldScore();
-		String s			= "Press s to start, c to configurate";
-		g2d.setColor(new Color(0, 32, 48));
-		g2d.fillRect(50, x / 2 - 30, y - 100, 50 + addXGameOver);
+//		int	   addXGameOver	= gameModel.getGameScore().getOldScore() != -1 ? 30 : 0;
+//		String gameOver		= "Game Over, try again...";
+//		String yourOldScore	= "Your Score : " + gameModel.getGameScore().getOldScore();
+//		String s			= "s TO START - c TO CONFIG";
+		String startMessage = "s TO START";
+		String configMessage = "c TO CONFIG";
+		FontMetrics metr = this.getFontMetrics(txtFont);
 		g2d.setColor(Color.white);
-		g2d.drawRect(50, x / 2 - 30, y - 100, 50 + addXGameOver);
-		FontMetrics metr = this.getFontMetrics(smallFont);
-		g2d.setColor(Color.white);
-		g2d.setFont(smallFont);
+		g2d.setFont(txtFont);
+		/*
 		if (gameModel.getGameScore().getOldScore() > 0) {
 			// Affichage de "Game Over"
 			g2d.drawString(gameOver, (x - metr.stringWidth(gameOver)) / 2, y / 2);
 			// Affichage du score
 			g2d.drawString(yourOldScore, (x - metr.stringWidth(yourOldScore)) / 2, y / 2 + addXGameOver / 2);
 		}
-		g2d.drawString(s, (x - metr.stringWidth(s)) / 2, y / 2 + addXGameOver);
+		*/
+		g2d.drawString(startMessage, (x - metr.stringWidth(startMessage)) / 2, y / 3);
+		g2d.drawString(configMessage, (x - metr.stringWidth(configMessage)) / 2, y / 2);
 	}
 }

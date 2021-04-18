@@ -16,6 +16,8 @@
  */
 package com.kycox.game.model;
 
+import javax.inject.Named;
+
 import com.kycox.game.constant.GameStatus;
 import com.kycox.game.contract.IDoActionAfterTimer;
 import com.kycox.game.contract.IGameStatusForController;
@@ -25,6 +27,7 @@ import com.kycox.game.contract.IGameStatusForGameView;
 import lombok.Getter;
 import lombok.Setter;
 
+@Named("CurrentGameStatus")
 public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController, IDoActionAfterTimer {
 	private GameStatus gameStatus;
 	@Getter

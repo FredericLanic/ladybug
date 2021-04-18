@@ -184,7 +184,7 @@ public class GameModel extends Observable
 			currentGameStatus.setBeginLevel();
 			setSoundRequests();
 		} else if (currentGameStatus.isLevelBegin()) {
-			logger.info("En attente...");
+			// waiting
 		} else if (isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
 		} else if (isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
@@ -382,8 +382,6 @@ public class GameModel extends Observable
 	 * Cinématique de la mort de ladybug
 	 */
 	private void ladybugIsDying() {
-		logger.info("Ladybug is dying");
-		//
 		ladybugDying.inProgress();
 		if (ladybugDying.isInPogress()) {
 			newSounds.initSounds();
@@ -415,7 +413,7 @@ public class GameModel extends Observable
 	 * Lancement du timer pour le super power de ladybug
 	 */
 	private void runSuperPowerTimer() {
-		logger.info("Super power for ladybug");
+		logger.info("Super power is up");
 		// on force l'arrêt des timers qui ont pu être démarrés dans la partie
 		// précédente
 		superPowerTimer.forcedStop();

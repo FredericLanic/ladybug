@@ -104,7 +104,6 @@ public abstract class Body {
 
 	public void minusLifesLeft() {
 		leftLifes--;
-		logger.info("lifesLeft:" + leftLifes);
 	}
 	
 	public boolean isInScreen() {

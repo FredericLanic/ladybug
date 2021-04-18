@@ -92,12 +92,6 @@
 		<property name="speedFunction" ref="SpeedFunctionLadybug" />
 	</bean>
 
-	<!-- The GameStatus in GameModel -->
-	<bean id="CurrentGameStatus" class="com.kycox.game.model.CurrentGameStatus"
-		scope="singleton">
-		<property name="numLevel" value="0" />
-	</bean>
-
 	<!-- Levels in ScreenData -->
 	<bean id="Levels" class="com.kycox.game.level.Levels"
 		scope="singleton">
