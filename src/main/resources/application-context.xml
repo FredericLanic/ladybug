@@ -97,7 +97,7 @@
 		scope="singleton">
 		<property name="lstLevel">
 			<list>
-				<!--  ref bean="Level1" /--> <!-- niveau bof bof -->				
+				<!-- ref bean="Level1" /--> <!-- niveau bof bof -->				
 				<!-- ref bean="Level3"/--> <!-- niveau pour test, à ne pas utiliser pour le jeu -->
 				<ref bean="Level1NG" />
 				<ref bean="Level2NG" />
@@ -106,6 +106,7 @@
 				<ref bean="Level5NG" />
 				<ref bean="Level6NG" />
 				<ref bean="Level7NG" />
+				<ref bean="Level8NG" />
 			</list>
 		</property>
 	</bean>

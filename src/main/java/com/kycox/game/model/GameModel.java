@@ -247,7 +247,7 @@ public class GameModel extends Observable
 		// ***
 		if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
 			logger.info("New life for Ladybug");
-			gameScore.setIncrementScore(0);
+			gameScore.initIncrementScore();
 			ladybug.setNewLife(true);
 		}
 	}
@@ -278,6 +278,7 @@ public class GameModel extends Observable
 		// Niveau terminé
 		if (screenData.getNbrBlocksWithPoint() == 0) {
 			gameScore.addScore(Constants.SCORE_END_LEVEL);
+			gameScore.initIncrementScore();
 			initLevel();
 		}
 	}
