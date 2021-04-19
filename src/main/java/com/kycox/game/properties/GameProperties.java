@@ -36,6 +36,8 @@ public class GameProperties {
 	private Optional<String> ladybugSkin = Optional.empty();	
 	// ghosts.headband
 	private Optional<String> ghostsHeadband = Optional.empty();
+	// ghost.hat
+	private Optional<String> ghostHat = Optional.empty();
 	
 	private ClassPathResource classPathResource;
 	private Properties props;
@@ -49,12 +51,10 @@ public class GameProperties {
 			classPathResource = new ClassPathResource("ladybug.properties");
 			props = PropertiesLoaderUtils.loadProperties(classPathResource);
 			ladybugColor = readProperty("ladybug.color");
-			ladybugSkin = readProperty("ladybug.skin");			
-			
+			ladybugSkin = readProperty("ladybug.skin");						
 			ghostsHeadband = readProperty("ghosts.headband");
-		} 
-		catch (IOException ioException)
-		{
+			ghostHat = readProperty("ghosts.hat");
+		} catch (IOException ioException) {
 			logger.error(ioException);
 		}
 		displayPropertiesInLog();
@@ -93,11 +93,23 @@ public class GameProperties {
 		} else {
 			ghostsHeadband = Optional.of(TRUE_PROPERTY);
 		}
-	}
+	}	
 	
 	public boolean hasGhostHeadBand() {
 		return ghostsHeadband.isPresent() && TRUE_PROPERTY.equals(ghostsHeadband.get());
+	}	
+	
+	public void changeGhostHat() {
+		if (hasHatSkin()) {
+			ghostHat = Optional.empty();
+		} else {
+			ghostHat = Optional.of(TRUE_PROPERTY);
+		}		
 	}
+	
+	public boolean hasHatSkin() {
+		return ghostHat.isPresent() && TRUE_PROPERTY.equals(ghostHat.get()); 
+	}	
 	
 }
 

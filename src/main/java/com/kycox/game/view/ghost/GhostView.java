@@ -26,6 +26,7 @@ import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.image.GhostEyesImages;
+import com.kycox.game.constant.ghost.image.GhostHatImages;
 import com.kycox.game.constant.ghost.image.GhostHeadbandImages;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
@@ -52,7 +53,11 @@ public class GhostView {
 		if (!GhostStatus.DYING.equals(ghost.getStatus()) && gameProperties.hasGhostHeadBand()) {
 			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.getDirection()));
 		}
-
+		
+		if (gameProperties.hasHatSkin()) {
+			ghostImg = ImageUtils.appendImages(ghostImg, GhostHatImages.GHOST_HAT.getImage());
+		}
+		
 		return ghostImg;
 	}
 
