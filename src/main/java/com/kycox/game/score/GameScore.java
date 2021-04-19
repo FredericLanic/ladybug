@@ -72,6 +72,10 @@ public class GameScore {
 		if (ladybug.isEatenAPoint()) {
 			addScore(Constants.SCORE_SIMPLE_POINT);
 		}
+		if (ladybug.isToBeTeleported()) {
+			addScore(Constants.SCORE_TELEPORT_POINT);
+			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_TELEPORT_POINT));
+		}
 		addScore(ghostsGroup.getNbrEatenGhost() * Constants.SCORE_EATEN_GHOST);
 		ghostsGroup.getLstGhosts().stream().filter(g -> g.getGhostActions().isEaten())
 		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST)));

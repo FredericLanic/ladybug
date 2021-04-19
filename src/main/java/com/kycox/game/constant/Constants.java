@@ -65,13 +65,15 @@ public final class Constants {
 	public static final int SCORE_END_LEVEL = 50;
 	// Score quand Ladybug mange un super point
 	public static final int SCORE_MEGA_POINT = 10;
+	// Score quand Ladybug mange un super point
+	public static final int SCORE_TELEPORT_POINT = 15;
 	// Score quand Ladybug mange un point simpe
 	public static final int SCORE_SIMPLE_POINT = 1;
 	// Tableau des vitesses disponibles : les vitesses doivent être un multiple de
 	// 24 (taille d'un BLOCK_SIZE) pour que le programme puisse détecter le
 	// changement de ScreenBlock
 	public static final List<Integer> VALID_SPEEDS = Collections
-	        .unmodifiableList(Arrays.asList(1, 2, 3, 4, 6, 8, 12, 24));
+	        .unmodifiableList(Arrays.asList(1, 2, 3, 4, 6, 8, 12/*,24*/));
 	
 	public static final Color BLUE_LADYBUG = new Color(33, 33, 255);
 	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
