@@ -43,7 +43,7 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
-import com.kycox.game.timer.WaitAndToActionTimer;
+import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.timer.SuperPowerTimer;
 
 import lombok.Getter;
@@ -91,7 +91,7 @@ public class GameModel extends Observable
 	private boolean				 soundActive;
 	@Inject
 	private SuperPowerTimer		 superPowerTimer;		
-	private WaitAndToActionTimer beginningTimer;	
+	private WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;	
 	@Setter
 	private long beginningMillisecondes;
 
@@ -179,18 +179,18 @@ public class GameModel extends Observable
 	
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (currentGameStatus.isLevelStart()) {
-			beginningTimer = new WaitAndToActionTimer();
-			beginningTimer.launch(beginningMillisecondes, currentGameStatus);
+			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, 0);
 			currentGameStatus.setBeginLevel();
 			setSoundRequests();
 		} else if (currentGameStatus.isLevelBegin()) {
 			// waiting
-		} else if (isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
+		} else if (currentGameStatus.isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
-		} else if (isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
+		} else if (currentGameStatus.isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
 			ladybugIsDying();
 			moveGhosts();
-		} else if (isInGame() && groupGhosts.userIsDead()) {
+		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
 			currentGameStatus.setNoGame();
 		} else {
 			// ***
@@ -267,7 +267,6 @@ public class GameModel extends Observable
 			groupGhosts.manageNewLife();
 		}
 	}
-
 	
 	private void setBodiesActions() {
 		ladybug.setActions(screenData);
@@ -320,7 +319,7 @@ public class GameModel extends Observable
 		// initialisation du numéro du niveau; incrémenté dans initLevel
 		currentGameStatus.setNumLevel(1);
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), isInGame());
+		screenData.setLevelMap(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
 		// 3 vies par défaut
 		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// ladybug n'est pas en vie lors de l'initialisation du jeu

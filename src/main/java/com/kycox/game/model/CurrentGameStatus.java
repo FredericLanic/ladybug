@@ -18,6 +18,9 @@ package com.kycox.game.model;
 
 import javax.inject.Named;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.kycox.game.constant.GameStatus;
 import com.kycox.game.contract.IDoActionAfterTimer;
 import com.kycox.game.contract.IGameStatusForController;
@@ -29,6 +32,8 @@ import lombok.Setter;
 
 @Named("CurrentGameStatus")
 public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController, IDoActionAfterTimer {
+	private static final Log	 logger		   = LogFactory.getLog(CurrentGameStatus.class);
+	
 	private GameStatus gameStatus;
 	@Getter
 	@Setter
@@ -51,7 +56,7 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 		gameStatus = GameStatus.LEVEL_START;
 	}
 	
-	public boolean isGameBegin() {
+	public boolean isBeginGame() {
 		return gameStatus == GameStatus.GAME_BEGIN;
 	}
 	
@@ -92,7 +97,12 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 		setNumLevel(0);
 	}
 	
-	public void doActionAfterTimer() {
-		setInGame();
+	public void doActionAfterTimer(int nbrAction) {
+		switch(nbrAction) {
+			case 0 : setInGame();
+				break;
+			default : logger.debug("no number " + nbrAction + " action");
+		}
+		
 	}
 }

@@ -28,7 +28,7 @@ import com.kycox.game.model.CurrentGameStatus;
  * Timer qui permet d'afficher le score un certain temps à l'écran
  *
  */
-public class WaitAndToActionTimer {
+public class WaitAndDoActionAfterTimer {
 	
 	@Inject
 	private IDoActionAfterTimer doActionAfterTimer;
@@ -36,17 +36,21 @@ public class WaitAndToActionTimer {
 	 * Class TimerTask
 	 */
 	private class WaitTimer extends TimerTask {
+		private int nbrAction;
+
+		public WaitTimer(int nbrAction) {
+			this.nbrAction = nbrAction;
+		}
+		
 		@Override
 		public void run() {
 			timer.cancel();
 			timer.purge();
-			doActionAfterTimer.doActionAfterTimer();
+			doActionAfterTimer.doActionAfterTimer(nbrAction);
 		}
 	}
 
 	private Timer		   timer = new Timer(true);
-
-	public WaitAndToActionTimer() {}
 
 	/**
 	 * Arrete le super power : le niveau est terminé, ou bien un autre super power a
@@ -64,8 +68,8 @@ public class WaitAndToActionTimer {
 	 *
 	 * @param millisecondsDuration temps en milli secondes
 	 */
-	public void launch(long millisecondsDuration, IDoActionAfterTimer iDoActionAfterTimer) {
+	public void launch(long millisecondsDuration, IDoActionAfterTimer iDoActionAfterTimer, int nbrAction) {
 		this.doActionAfterTimer = iDoActionAfterTimer;
-		timer.schedule(new WaitTimer(), millisecondsDuration);
+		timer.schedule(new WaitTimer(nbrAction), millisecondsDuration);
 	}
 }

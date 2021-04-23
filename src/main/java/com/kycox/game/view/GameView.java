@@ -43,7 +43,7 @@ import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.controller.KeyGameController;
 import com.kycox.game.font.PacFont;
 import com.kycox.game.score.Message;
-import com.kycox.game.timer.WaitAndToActionTimer;
+import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.view.conf.ConfJDialog;
 import com.kycox.game.view.ghost.GhostView;
@@ -78,12 +78,16 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	private LadybugView			  ladybugView;
 	private JFrame				  mainFrame		   = (JFrame) SwingUtilities.getRoot(this);
 	// todo : sécuriser le timer en mode deux joueurs
-	private WaitAndToActionTimer newLiveTimer;
+	private WaitAndDoActionAfterTimer newLiveTimer;
 	private final Font			 scoreFont = new Font("CrackMan", Font.BOLD, 14);
 
 	@Override
-	public void doActionAfterTimer() {
-		ScreenBlockView.setBlueLadybug(Constants.BLUE_LADYBUG);
+	public void doActionAfterTimer(int nbrAction) {
+		switch (nbrAction) {
+			case 0 : ScreenBlockView.setBlueLadybug(Constants.BLUE_LADYBUG);
+				break;
+			default : logger.debug("no number " + nbrAction + " action");
+		}
 	}
 
 	@PostConstruct
@@ -114,8 +118,8 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		drawMaze(g2d);
 		if (gameModel.getLadybug().isNewLife()) {
 			ScreenBlockView.setBlueLadybug(Constants.COLOR_EXTRA_PAC_LADYBUG);
-			newLiveTimer = new WaitAndToActionTimer();
-			newLiveTimer.launch(durationLadybugNewLife, this);
+			newLiveTimer = new WaitAndDoActionAfterTimer();
+			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
 		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
 			// jeu en configuration
