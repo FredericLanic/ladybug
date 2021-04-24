@@ -338,8 +338,6 @@ public class GameModel extends Observable
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
 		// active sound
 		setSoundActive(true);
-		// on met ladybug en dehors du level pour que les fantômes ne le cherchent pas
-		ladybug.setOutSideScreen();
 	}
 
 	/**

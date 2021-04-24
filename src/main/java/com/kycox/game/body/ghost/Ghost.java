@@ -78,7 +78,7 @@ public abstract class Ghost extends UserBody {
 	 *
 	 * @param ladybugPosBlock
 	 */
-	public void moveGhostByComputer(Body ladybug, ScreenData screenData) {
+	public void moveGhostByComputer(Ladybug ladybug, ScreenData screenData) {
 		Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
 		// Déplacement en fonction du status du fantôme
 		switch (getStatus()) {
@@ -96,7 +96,7 @@ public abstract class Ghost extends UserBody {
 	 * @param screenData
 	 * @param ghostRequest
 	 */
-	public void moveGhostByUser(Body ladybug, ScreenData screenData, Point ghostRequest) {
+	public void moveGhostByUser(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
 		setUserRequest(ghostRequest);
 		if (hasChangeBlock() && getStatus().equals(GhostStatus.NORMAL)) {
 			move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
@@ -335,8 +335,8 @@ public abstract class Ghost extends UserBody {
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
 
-	private void normalMoving(Body ladybug, ScreenData screenData) {
-		if (sensitiveBehavious.isActive() && ladybug.isInScreen())
+	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
+		if (sensitiveBehavious.isActive() && !LadybugStatus.DEAD.equals(ladybug.getStatus()))
 			moveByBehaviour(ladybug, screenData);
 		else
 			moveByDefault(screenData);
