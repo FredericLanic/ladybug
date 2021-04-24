@@ -181,9 +181,9 @@ public class GameModel extends Observable
 		if (currentGameStatus.isLevelStart()) {
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, 0);
-			currentGameStatus.setBeginLevel();
+			currentGameStatus.setLevelStarting();
 			setSoundRequests();
-		} else if (currentGameStatus.isLevelBegin()) {
+		} else if (currentGameStatus.isLevelStarting()) {
 			// waiting
 		} else if (currentGameStatus.isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
@@ -427,7 +427,7 @@ public class GameModel extends Observable
 	private void setSoundRequests() {
 		// initialise le sons
 		newSounds.initSounds();
-		newSounds.addGameBeginLevel(currentGameStatus.isLevelBegin());
+		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
 		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());

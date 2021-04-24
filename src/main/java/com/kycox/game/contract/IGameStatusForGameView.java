@@ -23,7 +23,7 @@ public interface IGameStatusForGameView extends IGameCommon {
 
 	public boolean isToConfiguration();
 	
-	public boolean isLevelBegin();
+	public boolean isLevelStarting();
 
 	// FIXME : hmmm ?
 	public void setNoGame();

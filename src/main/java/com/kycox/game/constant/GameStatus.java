@@ -17,7 +17,7 @@
 package com.kycox.game.constant;
 
 public enum GameStatus {
-	GAME_BEGIN, LEVEL_START, LEVEL_BEGIN, IN_GAME, NO_GAME, TO_CONF_LOCAL_USR;
+	GAME_START, LEVEL_START, LEVEL_STARTING, IN_GAME, NO_GAME, TO_CONF_LOCAL_USR;
 
 	private GameStatus() {
 	}

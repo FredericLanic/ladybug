@@ -56,20 +56,20 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 		gameStatus = GameStatus.LEVEL_START;
 	}
 	
-	public boolean isBeginGame() {
-		return gameStatus == GameStatus.GAME_BEGIN;
+	public boolean isGameStart() {
+		return gameStatus == GameStatus.GAME_START;
 	}
 	
-	public void setBeginGame() {
-		gameStatus = GameStatus.GAME_BEGIN;
+	public void setGameStart() {
+		gameStatus = GameStatus.GAME_START;
 	}	
 	
-	public boolean isLevelBegin() {
-		return gameStatus == GameStatus.LEVEL_BEGIN;
+	public boolean isLevelStarting() {
+		return gameStatus == GameStatus.LEVEL_STARTING;
 	}
 
-	public void setBeginLevel() {
-		gameStatus = GameStatus.LEVEL_BEGIN;
+	public void setLevelStarting() {
+		gameStatus = GameStatus.LEVEL_STARTING;
 	}
 	
 	@Override
