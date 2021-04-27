@@ -132,10 +132,11 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			drawLadybug(g2d);
 			drawGhosts(g2d);
 			drawLevel(g2d);
-		} else if (gameModel.getCurrentGameStatus().isNoGame()) {
+		} else if (gameModel.getCurrentGameStatus().isGamePresentation()) {
 			// jeu en présentation
 			drawGhosts(g2d);
 			showIntroScreen(g2d);
+			// drawLadybug(g2d);
 		} else if (LadybugStatus.DYING.equals(gameModel.getLadybug().getStatus())) {
 			// pacman en est train de mourir
 			ladybugDyingView.inProgress();

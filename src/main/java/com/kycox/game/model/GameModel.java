@@ -139,15 +139,13 @@ public class GameModel extends Observable
 	@Override
 	public void startGame() {
 		logger.info("Start Game");
-		initGame();
-		// 
+		// initGame();
 		currentGameStatus.initNumLevel();
 		initLevel();
 	}
 
 	/**
 	 * Lancement du timer qui rythme le jeu FIXME : cette fonction reste public car
-	 * elle est toujouts utilisée par GameSounds -> c'est le mal
 	 */
 	public void startGameTimer() {
 		logger.info("Start Game Timer");
@@ -178,7 +176,12 @@ public class GameModel extends Observable
 	}	
 	
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
-		if (currentGameStatus.isLevelStart()) {
+		if (currentGameStatus.isGameStart()) {
+			initGame();			
+		} else if (currentGameStatus.isGamePresentation()) {
+			setBodiesActions();
+			moveBodies();
+		} else if (currentGameStatus.isLevelStart()) {
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, 0);
 			currentGameStatus.setLevelStarting();
@@ -305,8 +308,7 @@ public class GameModel extends Observable
 
 	@PostConstruct
 	private void init() {
-		soundActive = false;
-		initGame();
+		currentGameStatus.setGameStart();
 		startGameTimer();
 	}
 
@@ -315,7 +317,7 @@ public class GameModel extends Observable
 	 */
 	private void initGame() {
 		logger.info("Initialize game");
-		currentGameStatus.setNoGame();
+		currentGameStatus.setGamePresentation();
 		// initialisation du numéro du niveau; incrémenté dans initLevel
 		currentGameStatus.setNumLevel(1);
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation

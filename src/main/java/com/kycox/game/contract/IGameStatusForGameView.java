@@ -27,4 +27,6 @@ public interface IGameStatusForGameView extends IGameCommon {
 
 	// FIXME : hmmm ?
 	public void setNoGame();
+	
+	public boolean isGamePresentation();
 }

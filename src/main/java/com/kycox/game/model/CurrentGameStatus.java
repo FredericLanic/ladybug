@@ -47,6 +47,14 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 	public void setNoGame() {
 		gameStatus = GameStatus.NO_GAME;
 	}
+	
+	public void setGamePresentation() {
+		gameStatus = GameStatus.GAME_PRESENTATION;
+	}
+	
+	public boolean isGamePresentation() {
+		return gameStatus == GameStatus.GAME_PRESENTATION;
+	}
 
 	public boolean isLevelStart() {
 		return gameStatus == GameStatus.LEVEL_START;
