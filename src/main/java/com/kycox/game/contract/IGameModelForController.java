@@ -27,13 +27,13 @@ public interface IGameModelForController extends IGameCommon {
 
 	public ILadybugForController getLadybug();
 
+	public boolean isGamePresentation();
+
 	public void setGhostRequest(Point point);
+
+	public void setLadybugRequest(Point point);
 
 	public void startGame();
 
 	public void startStopSoundActive();
-
-	public void setLadybugRequest(Point point);
-	
-	public boolean isGamePresentation();
 }

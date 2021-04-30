@@ -31,7 +31,7 @@ import lombok.Setter;
  */
 @Named("GameScore")
 public class GameScore {
-	@Getter	
+	@Getter
 	private int	incrementScore;
 	@Getter
 	@Setter
@@ -54,13 +54,13 @@ public class GameScore {
 	 */
 	public void init() {
 		initIncrementScore();
-		score		   = 0;
+		score = 0;
 	}
 
 	public void initIncrementScore() {
 		incrementScore = 0;
 	}
-	
+
 	/**
 	 * Adjust the score number
 	 */

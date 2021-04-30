@@ -30,7 +30,9 @@ import java.util.List;
  */
 public final class Constants {
 	// taille d'un block
-	public static final int BLOCK_SIZE = 48;
+	public static final int	  BLOCK_SIZE			  = 48;
+	public static final Color BLUE_LADYBUG			  = new Color(33, 33, 255);
+	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
 	// distance ou le fantôme fuit Ladybug
 	public static final int DISTANCE_GHOST_SCARED = 100;
 	// distance min entre Ladybug et un fantôme => provoque la mort de Ladybug
@@ -49,14 +51,14 @@ public final class Constants {
 	public static final Point POINT_DOWN = new Point(0, 1);
 	// Point à gauche
 	public static final Point POINT_LEFT = new Point(-1, 0);
+	// Point neutre
+	public static final Point POINT_OUTSIDE = new Point(-1, -1);
 	// Point à droite
 	public static final Point POINT_RIGHT = new Point(1, 0);
 	// Point en haut
 	public static final Point POINT_UP = new Point(0, -1);
 	// Point neutre
 	public static final Point POINT_ZERO = new Point(0, 0);
-	// Point neutre
-	public static final Point POINT_OUTSIDE = new Point(-1, -1);
 	// niveau pour la fenêtre de présentation
 	public static final int PRESENTATION_LEVEL = 2;
 	// Score quand un fantôme est mangé
@@ -65,18 +67,15 @@ public final class Constants {
 	public static final int SCORE_END_LEVEL = 50;
 	// Score quand Ladybug mange un super point
 	public static final int SCORE_MEGA_POINT = 10;
-	// Score quand Ladybug mange un super point
-	public static final int SCORE_TELEPORT_POINT = 15;
 	// Score quand Ladybug mange un point simpe
 	public static final int SCORE_SIMPLE_POINT = 1;
+	// Score quand Ladybug mange un super point
+	public static final int SCORE_TELEPORT_POINT = 15;
 	// Tableau des vitesses disponibles : les vitesses doivent être un multiple de
 	// 24 (taille d'un BLOCK_SIZE) pour que le programme puisse détecter le
 	// changement de ScreenBlock
 	public static final List<Integer> VALID_SPEEDS = Collections
-	        .unmodifiableList(Arrays.asList(1, 2, 3, 4, 6, 8, 12/*,24*/));
-	
-	public static final Color BLUE_LADYBUG = new Color(33, 33, 255);
-	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
+	        .unmodifiableList(Arrays.asList(1, 2, 3, 4, 6, 8, 12/* ,24 */));
 
 	private Constants() {
 	}

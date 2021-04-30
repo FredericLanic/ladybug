@@ -20,19 +20,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import com.kycox.game.contract.IDoActionAfterTimer;
-import com.kycox.game.model.CurrentGameStatus;
 
 /**
  * Timer qui permet d'afficher le score un certain temps à l'écran
  *
  */
 public class WaitAndDoActionAfterTimer {
-	
-	@Inject
-	private IDoActionAfterTimer doActionAfterTimer;
 	/**
 	 * Class TimerTask
 	 */
@@ -42,7 +37,7 @@ public class WaitAndDoActionAfterTimer {
 		public WaitTimer(int nbrAction) {
 			this.nbrAction = nbrAction;
 		}
-		
+
 		@Override
 		public void run() {
 			timer.cancel();
@@ -51,7 +46,9 @@ public class WaitAndDoActionAfterTimer {
 		}
 	}
 
-	private Timer		   timer = new Timer(true);
+	@Inject
+	private IDoActionAfterTimer	doActionAfterTimer;
+	private Timer				timer = new Timer(true);
 
 	/**
 	 * Arrete le super power : le niveau est terminé, ou bien un autre super power a

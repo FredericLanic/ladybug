@@ -75,7 +75,7 @@ public abstract class LevelNG implements ILevel {
 	 * @return
 	 */
 	private int screenBlockValue(int x, int y) {
-		int				   pointValue = 0;
+		int			   pointValue = 0;
 		LevelConstruct block	  = levelDATA[dataPosition(x, y)];
 		LevelConstruct blockUp	  = null;
 		LevelConstruct blockDown  = null;

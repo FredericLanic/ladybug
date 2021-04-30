@@ -36,6 +36,6 @@ public interface IGameModelForGameView extends IGameCommon {
 	public int getNbrPlayers();
 
 	public ScreenData getScreenData();
-	
+
 	public boolean isSoundActive();
 }

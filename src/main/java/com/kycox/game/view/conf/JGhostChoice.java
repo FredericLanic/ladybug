@@ -51,7 +51,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -62,7 +61,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.image.GhostEyesImages;
 import com.kycox.game.constant.ghost.image.GhostsBodyImages;
 import com.kycox.game.tools.ImageUtils;
@@ -154,13 +152,13 @@ public class JGhostChoice extends JPanel implements KeyListener {
 				break;
 		}
 	}
-	
-	private Image getImageWithEyes(Image ghostImg) {
-		return ImageUtils.appendImages(ghostImg, GhostEyesImages.GHOST_LEFT_EYES.getImage());
-	}
-		
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// nothing to do
+	}
+
+	private Image getImageWithEyes(Image ghostImg) {
+		return ImageUtils.appendImages(ghostImg, GhostEyesImages.GHOST_LEFT_EYES.getImage());
 	}
 }

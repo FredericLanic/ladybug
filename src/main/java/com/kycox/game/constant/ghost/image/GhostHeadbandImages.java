@@ -23,9 +23,7 @@ import javax.swing.ImageIcon;
 import lombok.Getter;
 
 public enum GhostHeadbandImages {
-	HEADBAND_DOWN("HeadbandDown.png"),
-	HEADBAND_LEFT("HeadbandLeft.png"),
-	HEADBAND_RIGHT("HeadbandRight.png"),
+	HEADBAND_DOWN("HeadbandDown.png"), HEADBAND_LEFT("HeadbandLeft.png"), HEADBAND_RIGHT("HeadbandRight.png"),
 	HEADBAND_UP("HeadbandUp.png");
 
 	@Getter

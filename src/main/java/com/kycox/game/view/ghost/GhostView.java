@@ -33,9 +33,9 @@ import com.kycox.game.tools.ImageUtils;
 
 @Named("GhostView")
 public class GhostView {
-	@Inject 
-	private GameProperties 	 	 gameProperties;
-	
+	@Inject
+	private GameProperties gameProperties;
+
 	public Image getImage(Ghost ghost) {
 		Image ghostImg;
 		// ajout le corps
@@ -47,17 +47,15 @@ public class GhostView {
 		}
 		// ajout les yeux en fonction de la direction
 		if (!GhostStatus.DYING.equals(ghost.getStatus())) {
-			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));			
-		}		
+			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));
+		}
 		// ajout du bandeau
 		if (!GhostStatus.DYING.equals(ghost.getStatus()) && gameProperties.hasGhostHeadBand()) {
 			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.getDirection()));
 		}
-		
 		if (gameProperties.hasHatSkin()) {
 			ghostImg = ImageUtils.appendImages(ghostImg, GhostHatImages.GHOST_HAT.getImage());
 		}
-		
 		return ghostImg;
 	}
 
@@ -70,7 +68,7 @@ public class GhostView {
 			return GhostEyesImages.GHOST_UP_EYES.getImage();
 		return GhostEyesImages.GHOST_RIGHT_EYES.getImage();
 	}
-	
+
 	private Image addHeadband(Point direction) {
 		if (direction.equals(Constants.POINT_LEFT))
 			return GhostHeadbandImages.HEADBAND_LEFT.getImage();
@@ -79,6 +77,5 @@ public class GhostView {
 		if (direction.equals(Constants.POINT_UP))
 			return GhostHeadbandImages.HEADBAND_UP.getImage();
 		return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
-		
 	}
 }

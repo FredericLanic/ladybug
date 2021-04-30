@@ -31,16 +31,16 @@ public class NewSounds implements INewSoundsForGameSounds {
 	@Getter
 	private List<Sounds> sounds = new ArrayList<>();
 
-	public void addIntermission(boolean mustBeAdded) {
-		addSounds(Sounds.LADYBUG_INTERMISSION, mustBeAdded);
-	}
-	
 	public void addDyingGhost(boolean mustBeAdded) {
 		addSounds(Sounds.GHOST_EATEN, mustBeAdded);
 	}
 
 	public void addGameBeginLevel(boolean mustBeAdded) {
 		addSounds(Sounds.GAME_BEGIN_LEVEL, mustBeAdded);
+	}
+
+	public void addIntermission(boolean mustBeAdded) {
+		addSounds(Sounds.LADYBUG_INTERMISSION, mustBeAdded);
 	}
 
 	public void addLadybugEatenAPoint(boolean mustBeAdded) {

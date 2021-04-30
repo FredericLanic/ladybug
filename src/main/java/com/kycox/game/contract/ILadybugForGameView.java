@@ -28,6 +28,6 @@ public interface ILadybugForGameView {
 	public LadybugStatus getStatus();
 
 	public Point getViewDirection();
-	
+
 	public boolean isNewLife();
 }

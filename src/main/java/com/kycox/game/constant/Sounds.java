@@ -34,10 +34,10 @@ import lombok.Getter;
 public enum Sounds {
 	COMMON_TELEPORT("common_teleport.wav"), GAME_BEGIN_LEVEL("game_begin_level.wav"), GAME_SIREN_0("game_siren_0.wav"),
 	GAME_SIREN_1("game_siren_1.wav"), GAME_SIREN_2("game_siren_2.wav"), GAME_SIREN_3("game_siren_3.wav"),
-	GHOST_EATEN("ghost_eaten.wav"), GHOST_REGENERATE("ghost_regenerate.wav"), GHOST_SURVIVOR("ghost_survivor.wav"),
-	LADYBUG_CHOMP("ladybug_chomp.wav"), LADYBUG_EAT_FRUIT("ladybug_eatfruit.wav"),
+	GHOST_EATEN("ghost_eaten.wav"), GHOST_REGENERATE("ghost_regenerate.wav"), GHOST_SCARED("ghost_scared.wav"),
+	GHOST_SURVIVOR("ghost_survivor.wav"), LADYBUG_CHOMP("ladybug_chomp.wav"), LADYBUG_EAT_FRUIT("ladybug_eatfruit.wav"),
 	LADYBUG_EAT_GHOST("ladybug_eatghost.wav"), LADYBUG_EXTRA_PAC("ladybug_extralife.wav"),
-	GHOST_SCARED("ghost_scared.wav"), LADYBUG_IS_DYING("ladybug_death.wav"), LADYBUG_INTERMISSION("ladybug_intermission.wav");
+	LADYBUG_INTERMISSION("ladybug_intermission.wav"), LADYBUG_IS_DYING("ladybug_death.wav");
 
 	@Getter
 	private Clip clip = null;
@@ -59,7 +59,7 @@ public enum Sounds {
 			e.getStackTrace();
 		}
 	}
-	
+
 	public void stopSound() {
 		clip.stop();
 		clip.setFramePosition(0);

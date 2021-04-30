@@ -34,22 +34,21 @@ public class Level7NG extends LevelNG {
 		nbrLines  = 15;
 		levelDATA = new LevelConstruct[] {
 		        // 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
-				N,N,N,B,B,B,B,B,B,B,B,B,N,N,N,// 1
-				N,N,B,B,N,N,B,N,B,N,N,B,B,N,N,// 2
-				N,B,B,N,N,B,B,N,B,B,N,N,B,B,N,// 3
-				B,B,N,N,B,B,B,N,B,B,B,N,N,B,B,// 4
-				B,N,N,B,B,N,B,B,B,N,B,B,N,N,B,// 5
-				B,N,B,B,N,N,B,N,B,N,N,B,B,N,B,// 6
-				B,B,B,B,B,B,B,N,B,B,B,B,B,B,B,// 7
-				B,N,N,N,B,N,N,N,N,N,B,N,N,N,B,// 8
-				B,B,B,B,B,B,B,N,B,B,B,B,B,B,B,// 9
-				B,N,B,B,N,N,B,N,B,N,N,B,B,N,B,// 10
-				B,N,N,B,B,N,B,B,B,N,B,B,N,N,B,// 11
-				B,B,N,N,B,B,B,N,B,B,B,N,N,B,B,// 12
-				N,B,B,N,N,B,B,N,B,B,N,N,B,B,N,// 13
-				N,N,B,B,N,N,B,N,B,N,N,B,B,N,N,// 14
-				N,N,N,B,B,B,B,B,B,B,B,B,N,N,N // 15
-
+		        N, N, N, B, B, B, B, B, B, B, B, B, N, N, N,	  // 1
+		        N, N, B, B, N, N, B, N, B, N, N, B, B, N, N,	  // 2
+		        N, B, B, N, N, B, B, N, B, B, N, N, B, B, N,	  // 3
+		        B, B, N, N, B, B, B, N, B, B, B, N, N, B, B,	  // 4
+		        B, N, N, B, B, N, B, B, B, N, B, B, N, N, B,	  // 5
+		        B, N, B, B, N, N, B, N, B, N, N, B, B, N, B,	  // 6
+		        B, B, B, B, B, B, B, N, B, B, B, B, B, B, B,	  // 7
+		        B, N, N, N, B, N, N, N, N, N, B, N, N, N, B,	  // 8
+		        B, B, B, B, B, B, B, N, B, B, B, B, B, B, B,	  // 9
+		        B, N, B, B, N, N, B, N, B, N, N, B, B, N, B,	  // 10
+		        B, N, N, B, B, N, B, B, B, N, B, B, N, N, B,	  // 11
+		        B, B, N, N, B, B, B, N, B, B, B, N, N, B, B,	  // 12
+		        N, B, B, N, N, B, B, N, B, B, N, N, B, B, N,	  // 13
+		        N, N, B, B, N, N, B, N, B, N, N, B, B, N, N,	  // 14
+		        N, N, N, B, B, B, B, B, B, B, B, B, N, N, N		  // 15
 		};
 	}
 

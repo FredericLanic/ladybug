@@ -39,8 +39,8 @@ public class IncrementScoreTimer {
 		}
 	}
 
-	private Message scoreIncrement;
-	private Timer		   timer = new Timer(true);
+	private Message	scoreIncrement;
+	private Timer	timer = new Timer(true);
 
 	/**
 	 * Constructeur

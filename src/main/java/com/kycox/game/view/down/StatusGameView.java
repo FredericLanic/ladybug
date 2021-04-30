@@ -30,7 +30,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.tools.ImageUtils;
 
-import lombok.Getter;
 import lombok.Setter;
 
 @Named("StatusGameView")
@@ -52,10 +51,10 @@ public class StatusGameView extends JPanel {
 	@Setter
 	private int				  numLevel;
 	@Setter
-	private int				  score;	
-	@Setter
-	private boolean 		  soundActive;
+	private int				  score;
 	private final Font		  smallFont		   = new Font("CrackMan", Font.BOLD, 14);
+	@Setter
+	private boolean			  soundActive;
 
 	@PostConstruct
 	public void init() {
@@ -69,8 +68,6 @@ public class StatusGameView extends JPanel {
 	}
 
 	private void diplayCurrentScoreAndLevel(Graphics g) {
-		
-		
 		if (!isInGame)
 			return;
 		StringBuilder message = new StringBuilder();
@@ -78,9 +75,8 @@ public class StatusGameView extends JPanel {
 		message.append(numLevel);
 		message.append(" - Score: ");
 		message.append(score);
-		message.append(" - Sound");		
-		message.append(soundActive?" ON":" OFF");
-		
+		message.append(" - Sound");
+		message.append(soundActive ? " ON" : " OFF");
 		displayTexte(g, message.toString());
 	}
 

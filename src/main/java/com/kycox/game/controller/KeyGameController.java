@@ -42,7 +42,7 @@ public class KeyGameController extends KeyAdapter {
 	@Inject
 	private IGameModelForController	gameModel;
 	@Inject
-	private GameProperties gameProperties;
+	private GameProperties			gameProperties;
 
 	/**
 	 * Action sur les touches Gestion des touches pressées
@@ -50,10 +50,21 @@ public class KeyGameController extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-
 		manageCommonKeys(keyCode);
-		if (gameModel.isGamePresentation()) { manageKeysInPresentation(keyCode); }
-		else if (gameModel.isInGame()) { manageKeysInGame(keyCode); }
+		if (gameModel.isGamePresentation()) {
+			manageKeysInPresentation(keyCode);
+		} else if (gameModel.isInGame()) {
+			manageKeysInGame(keyCode);
+		}
+	}
+
+	private void manageCommonKeys(int keyCode) {
+		switch (keyCode) {
+			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
+			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
+			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();
+			case KeyEvent.VK_F5 -> gameProperties.changeGhostHat();
+		}
 	}
 
 	/**
@@ -68,12 +79,11 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_RIGHT -> gameModel.setLadybugRequest(Constants.POINT_RIGHT);
 			case KeyEvent.VK_UP -> gameModel.setLadybugRequest(Constants.POINT_UP);
 			case KeyEvent.VK_DOWN -> gameModel.setLadybugRequest(Constants.POINT_DOWN);
-			// Mouvement du fantôme (joueur 2)			
+			// Mouvement du fantôme (joueur 2)
 			case KeyEvent.VK_Z -> gameModel.setGhostRequest(Constants.POINT_UP);
 			case KeyEvent.VK_S -> gameModel.setGhostRequest(Constants.POINT_DOWN);
 			case KeyEvent.VK_Q -> gameModel.setGhostRequest(Constants.POINT_LEFT);
-			case KeyEvent.VK_D -> gameModel.setGhostRequest(Constants.POINT_RIGHT);			
-			
+			case KeyEvent.VK_D -> gameModel.setGhostRequest(Constants.POINT_RIGHT);
 			// Partie en pause
 			case KeyEvent.VK_PAUSE -> gameModel.gameInPause();
 			// Arret de la partie
@@ -81,15 +91,6 @@ public class KeyGameController extends KeyAdapter {
 		}
 	}
 
-	private void manageCommonKeys(int keyCode) {
-		switch (keyCode) {
-			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
-			case KeyEvent.VK_F3 ->  gameProperties.changeLadybugSkin();
-			case KeyEvent.VK_F4 ->  gameProperties.changeGhostHeadBand();
-			case KeyEvent.VK_F5 ->  gameProperties.changeGhostHat();
-		}
-	}
-	
 	/**
 	 * Gestion des touches durant la présentation
 	 *
@@ -98,7 +99,7 @@ public class KeyGameController extends KeyAdapter {
 	private void manageKeysInPresentation(int keyCode) {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
-			case KeyEvent.VK_S -> gameModel.startGame();			
+			case KeyEvent.VK_S -> gameModel.startGame();
 			case KeyEvent.VK_C -> gameModel.getCurrentGameStatus().setConfiguration();
 			case KeyEvent.VK_ESCAPE -> System.exit(0); // FIXME : c'est au modèle de sortir proprement du jeu
 		}

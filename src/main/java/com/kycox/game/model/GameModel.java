@@ -44,8 +44,8 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
-import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.timer.SuperPowerTimer;
+import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -59,48 +59,48 @@ import lombok.Setter;
 @Named("GameModel")
 public class GameModel extends Observable
         implements IGameModelForGameView, IGameModelForGameSounds, IGameModelForController {
-	private static final Log	 logger		   = LogFactory.getLog(GameModel.class);
-	@Getter
-	@Inject
-	private CurrentGameStatus	 currentGameStatus;
-	@Getter
-	@Inject
-	private GameScore			 gameScore;
-	private final Timer			 gameTimer	   = createGameTimer();
+	private static final Log		  logger	   = LogFactory.getLog(GameModel.class);
 	@Setter
-	private Point				 ghostRequest  = Constants.POINT_ZERO;
+	private long					  beginningMillisecondes;
 	@Getter
 	@Inject
-	private GhostsGroup			 groupGhosts;
+	private CurrentGameStatus		  currentGameStatus;
 	@Getter
 	@Inject
-	private GroupMessages 		 groupMessages;
+	private GameScore				  gameScore;
+	private final Timer				  gameTimer	   = createGameTimer();
+	@Setter
+	private Point					  ghostRequest = Constants.POINT_ZERO;
 	@Getter
 	@Inject
-	private Ladybug				 ladybug;
+	private GhostsGroup				  groupGhosts;
 	@Getter
 	@Inject
-	private LadybugDying		 ladybugDying;
+	private GroupMessages			  groupMessages;
 	@Getter
 	@Inject
-	private NewSounds			 newSounds;
+	private Ladybug					  ladybug;
 	@Getter
 	@Inject
-	private ScreenData			 screenData;
+	private LadybugDying			  ladybugDying;
+	@Getter
+	@Inject
+	private NewSounds				  newSounds;
+	@Getter
+	@Inject
+	private ScreenData				  screenData;
 	@Getter
 	@Setter
-	private boolean				 soundActive;
+	private boolean					  soundActive;
 	@Inject
-	private SuperPowerTimer		 superPowerTimer;
-	private WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;	
-	@Setter
-	private long beginningMillisecondes;
+	private SuperPowerTimer			  superPowerTimer;
+	private WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;
 
 	@Override
 	public void forceStopGame() {
 		if (gameTimer.isRunning()) {
 			logger.info("Force Stop Game");
-			gameScore.setOldScore(-1);			
+			gameScore.setOldScore(-1);
 			currentGameStatus.setProgramStart();
 		}
 	}
@@ -138,6 +138,21 @@ public class GameModel extends Observable
 	}
 
 	@Override
+	public boolean isGamePresentation() {
+		return currentGameStatus.isGamePresentation();
+	}
+
+	@Override
+	public boolean isInGame() {
+		return getCurrentGameStatus().isInGame();
+	}
+
+	@Override
+	public void setLadybugRequest(Point point) {
+		getLadybug().setUserRequest(point);
+	}
+
+	@Override
 	public void startGame() {
 		logger.info("Start Game");
 		currentGameStatus.initNumLevel();
@@ -159,45 +174,24 @@ public class GameModel extends Observable
 		logger.info("Stop Game Timer");
 		gameTimer.stop();
 	}
-	
-	public void setLadybugRequest(Point point) {
-		getLadybug().setUserRequest(point);
-	}
 
-	@Override
-	public boolean isInGame() {
-		return getCurrentGameStatus().isInGame();
-	}	
-	
-	@Override
-	public boolean isGamePresentation() {
-		return currentGameStatus.isGamePresentation();
-	}
-	
-	/**
-	 * Lancement du timer qui rythme le jeu
-	 */
-	private void startGameTimer() {
-		logger.info("Start Game Timer");
-		gameTimer.start();
-	}
-	
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (currentGameStatus.isProgramStart()) {
 			// possibilité de mettre un timer d'attente pour présenter le jeu
-			initGame();	
+			initGame();
 			setSoundActive(false);
 			currentGameStatus.setProgramStarting();
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(5000, currentGameStatus, CurrentGameStatus.TO_PRESENTATION);			
+			waitAndDoActionAfterTimer.launch(5000, currentGameStatus, CurrentGameStatus.TO_PRESENTATION);
 			// le status passera à GAME_PRESENTATION
 		} else if (currentGameStatus.isGamePresentation()) {
 			setBodiesActions();
-			moveBodies();			
-			setSoundActive(true); // à supprimer ?			
+			moveBodies();
+			setSoundActive(true); // à supprimer ?
 			setSoundRequests();
-		} else if (currentGameStatus.isGameStart()) {			
-			// possibilité de mettre un timer d'attente pour le début de la partie; afficher "Get Ready"
+		} else if (currentGameStatus.isGameStart()) {
+			// possibilité de mettre un timer d'attente pour le début de la partie; afficher
+			// "Get Ready"
 			currentGameStatus.setLevelStart();
 		} else if (currentGameStatus.isLevelStart()) {
 			initLevel();
@@ -205,7 +199,8 @@ public class GameModel extends Observable
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, CurrentGameStatus.TO_INGAME);
 			setSoundRequests();
-		} else if (currentGameStatus.isLevelStarting() || currentGameStatus.isProgramStarting() /* , isGameStarting, isGameEnding */) {
+		} else if (currentGameStatus.isLevelStarting()
+		        || currentGameStatus.isProgramStarting() /* , isGameStarting, isGameEnding */) {
 			// waiting
 		} else if (currentGameStatus.isInGame()) {
 			// ***
@@ -241,45 +236,22 @@ public class GameModel extends Observable
 			setSoundActive(false);
 			currentGameStatus.setLevelEnding();
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);			
+			waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);
 		} else if (currentGameStatus.isGameEnd()) {
 			currentGameStatus.setGameEnding();
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, CurrentGameStatus.TO_PROGRAM_START);
-		} 
+			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus,
+			        CurrentGameStatus.TO_PROGRAM_START);
+		}
 		setChanged();
 		notifyObservers();
 	}
-	
-	private void updateScreenBlock() {
-		screenData.updateScreenBlock(ladybug);
-	}
-	
-	private void caseOfNewLadybugLife() {
-		ladybug.manageNewLife();	
-	}
-	
-	private void updateGhostSeetings() {
-		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData.getPercentageEatenPoint());
-	}
-	
-	private void moveBodies() {
-		ladybug.move(screenData);
-		moveGhosts();
-	}
-	
-	private void moveGhosts() {
-		groupGhosts.move(screenData, ladybug, ghostRequest);
-	}
-	
-	private void manageScores() {
-		gameScore.setScore(groupGhosts, ladybug, groupMessages);
-		groupMessages.removeIfDying();
-		// ***
-		if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
-			logger.info("New life for Ladybug");
-			gameScore.initIncrementScore();
-			ladybug.setNewLife(true);
+
+	private void caseOfGhostEatLadybug() {
+		if (groupGhosts.eatLadybug()) {
+			ladybug.setStatus(LadybugStatus.DYING);
+			ladybugDying.initBip();
+			groupGhosts.manageNewLife();
 		}
 	}
 
@@ -290,20 +262,11 @@ public class GameModel extends Observable
 			groupGhosts.setFear(true);
 		}
 	}
-	
-	private void caseOfGhostEatLadybug() {
-		if (groupGhosts.eatLadybug()) {
-			ladybug.setStatus(LadybugStatus.DYING);
-			ladybugDying.initBip();
-			groupGhosts.manageNewLife();
-		}
+
+	private void caseOfNewLadybugLife() {
+		ladybug.manageNewLife();
 	}
-	
-	private void setBodiesActions() {
-		ladybug.setActions(screenData);
-		groupGhosts.setActions(ladybug);
-	}
-	
+
 	private void checkEndMaze() {
 		// Niveau terminé
 		if (screenData.getNbrBlocksWithPoint() == 0) {
@@ -383,11 +346,11 @@ public class GameModel extends Observable
 		screenData.setLevelMap(currentGameStatus.getNumLevel(), true);
 		// initialisation du super power
 		groupGhosts.setFear(false);
-		// son activé		
+		// son activé
 		setSoundActive(true);
 		// ladybug est vivant
 		ladybug.setStatus(LadybugStatus.NORMAL);
-		// on continue le level		
+		// on continue le level
 		continueLevel();
 	}
 
@@ -422,6 +385,17 @@ public class GameModel extends Observable
 		}
 	}
 
+	private void manageScores() {
+		gameScore.setScore(groupGhosts, ladybug, groupMessages);
+		groupMessages.removeIfDying();
+		// ***
+		if (gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE) {
+			logger.info("New life for Ladybug");
+			gameScore.initIncrementScore();
+			ladybug.setNewLife(true);
+		}
+	}
+
 	private void manageSuperPower() {
 		if (superPowerTimer.isStopping()) {
 			groupGhosts.setFlashActive();
@@ -429,7 +403,16 @@ public class GameModel extends Observable
 			groupGhosts.setFear(false);
 		}
 	}
-	
+
+	private void moveBodies() {
+		ladybug.move(screenData);
+		moveGhosts();
+	}
+
+	private void moveGhosts() {
+		groupGhosts.move(screenData, ladybug, ghostRequest);
+	}
+
 	/**
 	 * Suppression des tâches du niveau qui est terminé (succès, échec ou pas de
 	 * niveau).
@@ -453,6 +436,11 @@ public class GameModel extends Observable
 		superPowerTimer.launch(Constants.NBR_SECONDS_SUPER_POWER);
 	}
 
+	private void setBodiesActions() {
+		ladybug.setActions(screenData);
+		groupGhosts.setActions(ladybug);
+	}
+
 	/**
 	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
 	 */
@@ -460,7 +448,7 @@ public class GameModel extends Observable
 		// initialise le sons
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
-		newSounds.addIntermission(currentGameStatus.isGamePresentation() && new Random().nextInt(1000) > 995);		
+		newSounds.addIntermission(currentGameStatus.isGamePresentation() && new Random().nextInt(1000) > 995);
 		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
@@ -468,7 +456,24 @@ public class GameModel extends Observable
 		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint() && currentGameStatus.isInGame());
 		newSounds.addNewLife(ladybug.isNewLife());
 		newSounds.addTeleport(ladybug.isToBeTeleported());
-		newSounds.addSirenSound(ladybug.getStatus().equals(LadybugStatus.NORMAL) && currentGameStatus.isInGame(), screenData.getPercentageEatenPoint());
+		newSounds.addSirenSound(ladybug.getStatus().equals(LadybugStatus.NORMAL) && currentGameStatus.isInGame(),
+		        screenData.getPercentageEatenPoint());
 		newSounds.addLadybugIsDying(ladybug.getStatus().equals(LadybugStatus.DYING), !ladybugDying.isInPogress());
+	}
+
+	/**
+	 * Lancement du timer qui rythme le jeu
+	 */
+	private void startGameTimer() {
+		logger.info("Start Game Timer");
+		gameTimer.start();
+	}
+
+	private void updateGhostSeetings() {
+		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData.getPercentageEatenPoint());
+	}
+
+	private void updateScreenBlock() {
+		screenData.updateScreenBlock(ladybug);
 	}
 }

@@ -26,10 +26,10 @@ public enum GhostsBodyImages {
 	PINK(GhostsColorImages.GHOST_COLOR_PINK, true), RED(GhostsColorImages.GHOST_COLOR_RED, true);
 
 	@Getter
-	private GhostsColorImages	ghostColorBody;
+	private GhostsColorImages ghostColorBody;
 	@Getter
-	@Setter // ici je triche 
-	private boolean				isComputed;
+	@Setter // ici je triche
+	private boolean			  isComputed;
 
 	private GhostsBodyImages(GhostsColorImages colorImage, boolean isComputed) {
 		this.ghostColorBody	= colorImage;

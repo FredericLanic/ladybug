@@ -83,14 +83,16 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	private JFrame				  mainFrame		   = (JFrame) SwingUtilities.getRoot(this);
 	// todo : sécuriser le timer en mode deux joueurs
 	private WaitAndDoActionAfterTimer newLiveTimer;
-	private final Font			 scoreFont = new Font("CrackMan", Font.BOLD, 14);
+	private final Font				  scoreFont	= new Font("CrackMan", Font.BOLD, 14);
 
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
 		switch (nbrAction) {
-			case 0 : ScreenBlockView.setBlueLadybug(Constants.BLUE_LADYBUG);
+			case 0:
+				ScreenBlockView.setBlueLadybug(Constants.BLUE_LADYBUG);
 				break;
-			default : logger.debug("no number " + nbrAction + " action");
+			default:
+				logger.debug("no number " + nbrAction + " action");
 		}
 	}
 
@@ -128,14 +130,15 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
 			confJDialog.setVisible(true);
 			drawGhosts(g2d);
-			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une autre solution
+			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
+			// autre solution
 			gameModel.getCurrentGameStatus().setGamePresentation();
 		} else if (gameModel.getCurrentGameStatus().isProgramStarting()) {
-			drawOneCenterTextLine(g2d, "WELCOME TO lADYBUG");	
+			drawOneCenterTextLine(g2d, "WELCOME TO lADYBUG");
 			drawPresentationGhosts(g2d);
 		} else if (gameModel.getCurrentGameStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
-			drawGhosts(g2d);			
+			drawGhosts(g2d);
 			String text = "lEVEL " + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
 		} else if (gameModel.getCurrentGameStatus().isGamePresentation()) {
@@ -143,7 +146,7 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			showIntroScreen(g2d);
 		} else if (gameModel.getCurrentGameStatus().isGameEnding() || gameModel.getCurrentGameStatus().isGameEnd()) {
 			drawGhosts(g2d);
-			drawOneCenterTextLine(g2d, "gAME oVER");			
+			drawOneCenterTextLine(g2d, "gAME oVER");
 		} else if (gameModel.getCurrentGameStatus().isLevelEnding()) {
 			drawOneCenterTextLine(g2d, "nEXT lEVEL");
 		} else if (LadybugStatus.DYING.equals(gameModel.getLadybug().getStatus())) {
@@ -166,35 +169,12 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
 	}
 
-	/*
-	 * FIXME : utiliser les streams comme dans drawGhosts(Graphics2D g2d)
-	 */
-	private void drawPresentationGhosts(Graphics2D g2d) {		
-		int			x	 = gameModel.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
-		int			y	 = gameModel.getScreenData().getScreenHeight() / 2;	
-		
-		List<Ghost> ghosts = gameModel.getGroupGhosts().getLstGhosts().stream().collect(Collectors.toList());
-	    for (Ghost ghost : ghosts) {	    	
-	    	g2d.drawImage(ghostView.getImage(ghost), x, y, this);
-	    	x += 2 * Constants.BLOCK_SIZE;
-	    }		
-	}
-
 	private void drawLadybug(Graphics2D g2d, LadybugCommun ladybugCommon) {
 		Point viewDirection	= gameModel.getLadybug().getViewDirection();
 		Point getPosition	= gameModel.getLadybug().getPosition();
 		Image image			= ladybugCommon.getImage(viewDirection);
 		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
 	}
-	
-	private void drawOneCenterTextLine(Graphics2D g2d, String text) {
-		int			x	 = gameModel.getScreenData().getScreenWidth();
-		int			y	 = gameModel.getScreenData().getScreenHeight();		
-		FontMetrics	metr = this.getFontMetrics(defaultFont);
-		g2d.setColor(Color.white);
-		g2d.setFont(defaultFont);
-		g2d.drawString(text, (x - metr.stringWidth(text)) / 2, y / 2 - Constants.BLOCK_SIZE);
-	}	
 
 	private void drawMaze(Graphics2D g2d) {
 		for (int y = 0; y < gameModel.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
@@ -202,6 +182,28 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			        * Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE) {
 				ScreenBlockView.display(g2d, gameModel.getScreenData(), x, y);
 			}
+		}
+	}
+
+	private void drawOneCenterTextLine(Graphics2D g2d, String text) {
+		int			x	 = gameModel.getScreenData().getScreenWidth();
+		int			y	 = gameModel.getScreenData().getScreenHeight();
+		FontMetrics	metr = this.getFontMetrics(defaultFont);
+		g2d.setColor(Color.white);
+		g2d.setFont(defaultFont);
+		g2d.drawString(text, (x - metr.stringWidth(text)) / 2, y / 2 - Constants.BLOCK_SIZE);
+	}
+
+	/*
+	 * FIXME : utiliser les streams comme dans drawGhosts(Graphics2D g2d)
+	 */
+	private void drawPresentationGhosts(Graphics2D g2d) {
+		int			x	   = gameModel.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
+		int			y	   = gameModel.getScreenData().getScreenHeight() / 2;
+		List<Ghost>	ghosts = gameModel.getGroupGhosts().getLstGhosts().stream().collect(Collectors.toList());
+		for (Ghost ghost : ghosts) {
+			g2d.drawImage(ghostView.getImage(ghost), x, y, this);
+			x += 2 * Constants.BLOCK_SIZE;
 		}
 	}
 

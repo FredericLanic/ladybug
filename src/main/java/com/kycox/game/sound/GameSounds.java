@@ -49,17 +49,17 @@ public class GameSounds implements Observer {
 		Clip clipLadybugDying = Sounds.LADYBUG_IS_DYING.getClip();
 		return clipLadybugDying.getMicrosecondLength() / 1000;
 	}
-	
-	public long getMillisecondsBeginning() {
-		Clip clipBeginning = Sounds.GAME_BEGIN_LEVEL.getClip();
-		return clipBeginning.getMicrosecondLength() / 1000;
-	}
 
 	public long getMillisecondNewLife() {
 		Clip clipNewLife = Sounds.LADYBUG_EXTRA_PAC.getClip();
 		return clipNewLife.getMicrosecondLength() / 1000;
 	}
-	
+
+	public long getMillisecondsBeginning() {
+		Clip clipBeginning = Sounds.GAME_BEGIN_LEVEL.getClip();
+		return clipBeginning.getMicrosecondLength() / 1000;
+	}
+
 	/**
 	 * Lancement des sons sélectionnés par le modèle
 	 */
@@ -71,8 +71,6 @@ public class GameSounds implements Observer {
 			Sounds.LADYBUG_INTERMISSION.getClip().stop();
 			Sounds.LADYBUG_INTERMISSION.getClip().setFramePosition(0);
 		}
-		
-		
 		Sounds[] soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
 			if (newSounds.hasSound(soundsEnum)) {

@@ -65,9 +65,9 @@ public abstract class Body {
 	 *
 	 * @return
 	 */
-	public int getSpeed() {		
-		return Constants.VALID_SPEEDS.get(speedIndex < Constants.VALID_SPEEDS.size()?
-				speedIndex:Constants.VALID_SPEEDS.size() - 1);
+	public int getSpeed() {
+		return Constants.VALID_SPEEDS
+		        .get(speedIndex < Constants.VALID_SPEEDS.size() ? speedIndex : Constants.VALID_SPEEDS.size() - 1);
 	}
 
 	/**

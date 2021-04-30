@@ -112,18 +112,18 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 
-	private void teleport(ScreenData screenData) {
-		if (hasChangeBlock() && screenData.getNbrBlocksWithPoint() > 0) {
-			Point newPoint = screenData.getRandomPosOnAPoint();
-			setPosition(Utils.convertPointToGraphicUnit(newPoint));
-		}
-	}
-	
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Ladybug ");
 		sb.append("position: " + getPosition());
 		return sb.toString();
 	}
-	
+
+	private void teleport(ScreenData screenData) {
+		if (hasChangeBlock() && screenData.getNbrBlocksWithPoint() > 0) {
+			Point newPoint = screenData.getRandomPosOnAPoint();
+			setPosition(Utils.convertPointToGraphicUnit(newPoint));
+		}
+	}
 }

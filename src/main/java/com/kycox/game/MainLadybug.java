@@ -43,11 +43,10 @@ public class MainLadybug {
 
 	/** lecture du contexte Spring de l'application */
 	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
-		
 	@Autowired
 	private MainFrame		   mainFrame		  = applicationContext.getBean("MainFrame", MainFrame.class);
-	
-	public void launchTheGame() {		
+
+	public void launchTheGame() {
 		Version javaVersion = Runtime.version();
 		logger.info(cruxLine);
 		logger.info("*  LadyBug v0.1.1 SnapShot   *");

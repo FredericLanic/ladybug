@@ -41,10 +41,9 @@ public abstract class LadybugCommun {
 	@Setter
 	private BodyImg				bodyUpCurrent;
 	private Map<Point, Integer>	convertPointToDegrees = new HashMap<>();
+	@Inject
+	private GameProperties		gameProperties;
 
-	@Inject 
-	private GameProperties 	 	 gameProperties;
-	
 	public Image getImage(Point direction) {
 		Image ladybugImage = ImageUtils.rotateImage(bodyUpCurrent.getImage(), convertPointToDegrees.get(direction));
 		return addSkin(ladybugImage, direction);
@@ -54,12 +53,11 @@ public abstract class LadybugCommun {
 		Point direction	   = Constants.POINT_RIGHT;
 		Image ladybugImage = ImageUtils.rotateImage(LadybugImages.LADYBUG_UP_2.getImage(),
 		        convertPointToDegrees.get(direction));
-		
 		return addSkin(ladybugImage, direction);
 	}
 
 	private Image addSkin(Image image, Point direction) {
-		if (gameProperties.hasLadybugSkin()) {		
+		if (gameProperties.hasLadybugSkin()) {
 			Image imagePluginOX = ImageUtils.rotateImage(GameImages.LADYBUG_PLUGIN_OX_UP.getImage(),
 			        convertPointToDegrees.get(direction));
 			return ImageUtils.appendImages(image, imagePluginOX);
