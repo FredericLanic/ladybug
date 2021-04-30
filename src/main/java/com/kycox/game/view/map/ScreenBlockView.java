@@ -195,7 +195,7 @@ public class ScreenBlockView {
 		// affichage du méga point
 		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
 			g2d.setColor(megaPointColor);
-			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 6, y + Constants.BLOCK_SIZE / 2 - 6, 8, 8);
+			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 8, y + Constants.BLOCK_SIZE / 2 - 8, 12, 12);
 		}
 		// affichage du point de survie des fantômes
 		if (screenBlock.isGhostReviver()) {

@@ -169,7 +169,7 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	/*
 	 * FIXME : utiliser les streams comme dans drawGhosts(Graphics2D g2d)
 	 */
-	private void  drawPresentationGhosts(Graphics2D g2d) {		
+	private void drawPresentationGhosts(Graphics2D g2d) {		
 		int			x	 = gameModel.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
 		int			y	 = gameModel.getScreenData().getScreenHeight() / 2;	
 		

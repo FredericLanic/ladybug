@@ -193,8 +193,7 @@ public class GameModel extends Observable
 			// le status passera à GAME_PRESENTATION
 		} else if (currentGameStatus.isGamePresentation()) {
 			setBodiesActions();
-			moveBodies();
-			
+			moveBodies();			
 			setSoundActive(true); // à supprimer ?			
 			setSoundRequests();
 		} else if (currentGameStatus.isGameStart()) {			
@@ -208,23 +207,7 @@ public class GameModel extends Observable
 			setSoundRequests();
 		} else if (currentGameStatus.isLevelStarting() || currentGameStatus.isProgramStarting() /* , isGameStarting, isGameEnding */) {
 			// waiting
-		} else if (currentGameStatus.isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
-			ladybugIsDead();
-		} else if (currentGameStatus.isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
-			ladybugIsDying();
-			// moveGhosts();
-		} else if (currentGameStatus.isLevelEnd()) {
-			setSoundActive(false);
-			currentGameStatus.setLevelEnding();
-			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(5000, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);			
-		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
-			currentGameStatus.setGameEnd();
-		} else if (currentGameStatus.isGameEnd()) {
-			currentGameStatus.setGameEnding();
-			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, CurrentGameStatus.TO_PROGRAM_START);
-		} else if (currentGameStatus.isInGame()){
+		} else if (currentGameStatus.isInGame()) {
 			// ***
 			caseOfNewLadybugLife();
 			// ***
@@ -247,7 +230,23 @@ public class GameModel extends Observable
 			moveBodies();
 			// ***
 			checkEndMaze(); // FIXME : sortir ce test de cette boucle
-		}
+		} else if (currentGameStatus.isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
+			ladybugIsDead();
+		} else if (currentGameStatus.isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
+			ladybugIsDying();
+			// moveGhosts();
+		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
+			currentGameStatus.setGameEnd();
+		} else if (currentGameStatus.isLevelEnd()) {
+			setSoundActive(false);
+			currentGameStatus.setLevelEnding();
+			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+			waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);			
+		} else if (currentGameStatus.isGameEnd()) {
+			currentGameStatus.setGameEnding();
+			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, CurrentGameStatus.TO_PROGRAM_START);
+		} 
 		setChanged();
 		notifyObservers();
 	}
