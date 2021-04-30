@@ -19,14 +19,20 @@ package com.kycox.game.contract;
 public interface IGameStatusForGameView extends IGameCommon {
 	public int getNumLevel();
 
-	public boolean isNoGame();
-
 	public boolean isToConfiguration();
 	
 	public boolean isLevelStarting();
 
 	// FIXME : hmmm ?
-	public void setNoGame();
+	public void setGamePresentation();
 	
 	public boolean isGamePresentation();
+	
+	public boolean isGameEnding();
+	
+	public boolean isGameEnd();
+	
+	public boolean isProgramStarting();
+	
+	public boolean isLevelEnding();
 }

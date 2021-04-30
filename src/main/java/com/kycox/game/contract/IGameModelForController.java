@@ -34,4 +34,6 @@ public interface IGameModelForController extends IGameCommon {
 	public void startStopSoundActive();
 
 	public void setLadybugRequest(Point point);
+	
+	public boolean isGamePresentation();
 }

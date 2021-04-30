@@ -23,8 +23,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -36,6 +38,7 @@ import javax.swing.SwingUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.IDoActionAfterTimer;
@@ -47,6 +50,7 @@ import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.view.conf.ConfJDialog;
 import com.kycox.game.view.ghost.GhostView;
+import com.kycox.game.view.ladybug.LadybugCommun;
 import com.kycox.game.view.ladybug.LadybugDyingView;
 import com.kycox.game.view.ladybug.LadybugView;
 import com.kycox.game.view.map.ScreenBlockView;
@@ -122,34 +126,38 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
 		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
-			// jeu en configuration
 			confJDialog.setVisible(true);
 			drawGhosts(g2d);
-			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
-			// autre solution
-			gameModel.getCurrentGameStatus().setNoGame();
+			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une autre solution
+			gameModel.getCurrentGameStatus().setGamePresentation();
+		} else if (gameModel.getCurrentGameStatus().isProgramStarting()) {
+			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");	
+			drawPresentationGhosts(g2d);
 		} else if (gameModel.getCurrentGameStatus().isLevelStarting()) {
-			drawLadybug(g2d);
-			drawGhosts(g2d);
-			drawLevel(g2d);
+			drawLadybug(g2d, ladybugView);
+			drawGhosts(g2d);			
+			String text = "lEVEL " + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
+			drawOneCenterTextLine(g2d, text);
 		} else if (gameModel.getCurrentGameStatus().isGamePresentation()) {
-			// jeu en présentation
 			drawGhosts(g2d);
 			showIntroScreen(g2d);
-			// drawLadybug(g2d);
+		} else if (gameModel.getCurrentGameStatus().isGameEnding() || gameModel.getCurrentGameStatus().isGameEnd()) {
+			drawGhosts(g2d);
+			drawOneCenterTextLine(g2d, "gAME oVER");			
+		} else if (gameModel.getCurrentGameStatus().isLevelEnding()) {
+			drawOneCenterTextLine(g2d, "nEXT lEVEL");
 		} else if (LadybugStatus.DYING.equals(gameModel.getLadybug().getStatus())) {
-			// pacman en est train de mourir
 			ladybugDyingView.inProgress();
 			drawGhosts(g2d);
-			drawLadybugDying(g2d);
+			drawLadybug(g2d, ladybugDyingView);
 		} else if (LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
-			// pacman est mort
 			ladybugDyingView.init();
 		} else if (!LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
-			// pacman n'est pas mort, le jeu continue
-			drawLadybug(g2d);
+			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
+		} else {
+			logger.info("NO DISPLAY FOR STATUS " + gameModel.getCurrentGameStatus());
 		}
 	}
 
@@ -158,36 +166,40 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
 	}
 
-	private void drawLadybug(Graphics2D g2d) {
-		Point viewDirection	= gameModel.getLadybug().getViewDirection();
-		Point getPosition	= gameModel.getLadybug().getPosition();
-		Image image			= ladybugView.getImage(viewDirection);
-		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
+	/*
+	 * FIXME : utiliser les streams comme dans drawGhosts(Graphics2D g2d)
+	 */
+	private void  drawPresentationGhosts(Graphics2D g2d) {		
+		int			x	 = gameModel.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
+		int			y	 = gameModel.getScreenData().getScreenHeight() / 2;	
+		
+		List<Ghost> ghosts = gameModel.getGroupGhosts().getLstGhosts().stream().collect(Collectors.toList());
+	    for (Ghost ghost : ghosts) {	    	
+	    	g2d.drawImage(ghostView.getImage(ghost), x, y, this);
+	    	x += 2 * Constants.BLOCK_SIZE;
+	    }		
 	}
 
-	private void drawLadybugDying(Graphics2D g2d) {
+	private void drawLadybug(Graphics2D g2d, LadybugCommun ladybugCommon) {
 		Point viewDirection	= gameModel.getLadybug().getViewDirection();
 		Point getPosition	= gameModel.getLadybug().getPosition();
-		Image image			= ladybugDyingView.getImage(viewDirection);
+		Image image			= ladybugCommon.getImage(viewDirection);
 		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
 	}
-
-	private void drawLevel(Graphics2D g2d) {
+	
+	private void drawOneCenterTextLine(Graphics2D g2d, String text) {
 		int			x	 = gameModel.getScreenData().getScreenWidth();
-		int			y	 = gameModel.getScreenData().getScreenHeight();
-		String		s	 = "lEVEL "
-		        + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
+		int			y	 = gameModel.getScreenData().getScreenHeight();		
 		FontMetrics	metr = this.getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(s, (x - metr.stringWidth(s)) / 2, y / 2);
-	}
+		g2d.drawString(text, (x - metr.stringWidth(text)) / 2, y / 2 - Constants.BLOCK_SIZE);
+	}	
 
 	private void drawMaze(Graphics2D g2d) {
 		for (int y = 0; y < gameModel.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
 			for (int x = 0; x < gameModel.getScreenData().getCurrentLevel().getNbrBlocksByLine()
 			        * Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE) {
-				// Affichage du screenBlock dans la Vue
 				ScreenBlockView.display(g2d, gameModel.getScreenData(), x, y);
 			}
 		}
@@ -210,12 +222,12 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	private void showIntroScreen(Graphics2D g2d) {
 		int			x			  = gameModel.getScreenData().getScreenWidth();
 		int			y			  = gameModel.getScreenData().getScreenHeight();
-		String		startMessage  = "s TO START";
-		String		configMessage = "c TO CONFIG";
+		String		startMessage  = "PRESS s TO sTART";
+		String		configMessage = "OR c TO cONFIG";
 		FontMetrics	metr		  = this.getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(startMessage, (x - metr.stringWidth(startMessage)) / 2, y / 3);
-		g2d.drawString(configMessage, (x - metr.stringWidth(configMessage)) / 2, y / 2);
+		g2d.drawString(startMessage, (x - metr.stringWidth(startMessage)) / 2, y / 2 - Constants.BLOCK_SIZE);
+		g2d.drawString(configMessage, (x - metr.stringWidth(configMessage)) / 2, y / 2 + Constants.BLOCK_SIZE);
 	}
 }

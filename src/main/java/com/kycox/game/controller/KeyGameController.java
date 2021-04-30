@@ -52,8 +52,8 @@ public class KeyGameController extends KeyAdapter {
 		int keyCode = e.getKeyCode();
 
 		manageCommonKeys(keyCode);
-		if (gameModel.isInGame()) {	manageKeysInGame(keyCode); } 
-		else { manageKeysInPresentation(keyCode); }
+		if (gameModel.isGamePresentation()) { manageKeysInPresentation(keyCode); }
+		else if (gameModel.isInGame()) { manageKeysInGame(keyCode); }
 	}
 
 	/**
@@ -74,10 +74,10 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_Q -> gameModel.setGhostRequest(Constants.POINT_LEFT);
 			case KeyEvent.VK_D -> gameModel.setGhostRequest(Constants.POINT_RIGHT);			
 			
-			// Arret de la partie
-			case KeyEvent.VK_ESCAPE -> gameModel.forceStopGame();
 			// Partie en pause
 			case KeyEvent.VK_PAUSE -> gameModel.gameInPause();
+			// Arret de la partie
+			case KeyEvent.VK_ESCAPE -> gameModel.forceStopGame();
 		}
 	}
 

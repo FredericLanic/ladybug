@@ -20,6 +20,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.kycox.game.contract.IDoActionAfterTimer;
 import com.kycox.game.model.CurrentGameStatus;

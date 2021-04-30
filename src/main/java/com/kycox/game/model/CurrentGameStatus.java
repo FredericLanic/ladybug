@@ -34,34 +34,70 @@ import lombok.Setter;
 public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController, IDoActionAfterTimer {
 	private static final Log	 logger		   = LogFactory.getLog(CurrentGameStatus.class);
 	
+	public static final int TO_INGAME = 0;
+	public static final int TO_PROGRAM_START = 1;
+	public static final int TO_PRESENTATION = 2;
+	public static final int TO_LEVEL_START = 3;
+	
 	private GameStatus gameStatus;
 	@Getter
 	@Setter
 	private int		   numLevel;
-	
-	@Override
-	public boolean isNoGame() {
-		return gameStatus == GameStatus.NO_GAME;
+
+	public boolean isProgramStart() {
+		return gameStatus == GameStatus.PROGRAM_START;
 	}
 	
-	public void setNoGame() {
-		gameStatus = GameStatus.NO_GAME;
+	public void setProgramStart() {
+		gameStatus = GameStatus.PROGRAM_START;
+		logger.info("Passage du status en " + gameStatus);
 	}
+	
+	public boolean isProgramStarting() {
+		return gameStatus == GameStatus.PROGRAM_STARTING;
+	}
+	
+	public void setProgramStarting() {
+		gameStatus = GameStatus.PROGRAM_STARTING;
+		logger.info("Passage du status en " + gameStatus);
+	}
+	
+//	@Override
+//	public boolean isNoGame() {
+//		return gameStatus == GameStatus.NO_GAME;
+//	}
+	
+//	public void setNoGame() {
+//		gameStatus = GameStatus.NO_GAME;
+//	}
 	
 	public void setGamePresentation() {
 		gameStatus = GameStatus.GAME_PRESENTATION;
+		logger.info("Passage du status en " + gameStatus);
 	}
 	
 	public boolean isGamePresentation() {
 		return gameStatus == GameStatus.GAME_PRESENTATION;
 	}
 
+	@Override
+	public boolean isToConfiguration() {
+		return gameStatus == GameStatus.TO_CONF_LOCAL_USR;
+	}
+
+	@Override
+	public void setConfiguration() {
+		gameStatus = GameStatus.TO_CONF_LOCAL_USR;
+		logger.info("Passage du status en " + gameStatus);
+	}
+	
 	public boolean isLevelStart() {
 		return gameStatus == GameStatus.LEVEL_START;
 	}
 	
 	public void setLevelStart() {
 		gameStatus = GameStatus.LEVEL_START;
+		logger.info("Passage du status en " + gameStatus);
 	}
 	
 	public boolean isGameStart() {
@@ -70,6 +106,7 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 	
 	public void setGameStart() {
 		gameStatus = GameStatus.GAME_START;
+		logger.info("Passage du status en " + gameStatus);
 	}	
 	
 	public boolean isLevelStarting() {
@@ -78,6 +115,25 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 
 	public void setLevelStarting() {
 		gameStatus = GameStatus.LEVEL_STARTING;
+		logger.info("Passage du status en " + gameStatus);
+	}
+	
+	public boolean isLevelEnd() {
+		return gameStatus == GameStatus.LEVEL_END;
+	}
+
+	public void setLevelEnd() {
+		gameStatus = GameStatus.LEVEL_END;
+		logger.info("Passage du status en " + gameStatus);
+	}
+	
+	public boolean isLevelEnding() {
+		return gameStatus == GameStatus.LEVEL_ENDING;
+	}
+
+	public void setLevelEnding() {
+		gameStatus = GameStatus.LEVEL_ENDING;
+		logger.info("Passage du status en " + gameStatus);
 	}
 	
 	@Override
@@ -88,16 +144,24 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 	@Override
 	public void setInGame() {
 		gameStatus = GameStatus.IN_GAME;
+		logger.info("Passage du status en " + gameStatus);
 	}	
 
-	@Override
-	public boolean isToConfiguration() {
-		return gameStatus == GameStatus.TO_CONF_LOCAL_USR;
+	public boolean isGameEnd() {
+		return gameStatus == GameStatus.GAME_END;
 	}
-
-	@Override
-	public void setConfiguration() {
-		gameStatus = GameStatus.TO_CONF_LOCAL_USR;
+	
+	public void setGameEnd() {
+		gameStatus = GameStatus.GAME_END;
+	}
+	
+	public boolean isGameEnding() {
+		return gameStatus == GameStatus.GAME_ENDING;		
+	}
+	
+	public void setGameEnding() {
+		gameStatus = GameStatus.GAME_ENDING;
+		logger.info("Passage du status en " + gameStatus);
 	}
 	
 	// KYLIAN C'EST ICI
@@ -107,10 +171,19 @@ public class CurrentGameStatus implements IGameStatusForGameView, IGameStatusFor
 	
 	public void doActionAfterTimer(int nbrAction) {
 		switch(nbrAction) {
-			case 0 : setInGame();
+			case TO_INGAME : setInGame();
+				break;
+			case TO_PROGRAM_START : setProgramStart();
+				break;
+			case TO_PRESENTATION : setGamePresentation();
+				break;
+			case TO_LEVEL_START : setLevelStart();
 				break;
 			default : logger.debug("no number " + nbrAction + " action");
-		}
-		
+		}		
+	}
+	
+	public String toString() {
+		return gameStatus.toString();
 	}
 }

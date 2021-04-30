@@ -48,10 +48,6 @@ public class NewSounds implements INewSoundsForGameSounds {
 	}
 
 	public void addLadybugIsDying(boolean mustBeAdded, boolean startFenerarium) {
-//		if (mustBeAdded && startFenerarium) {
-//			sounds.clear();
-//			System.out.println("Start sound ladybug is dying");
-//		}
 		addSounds(Sounds.LADYBUG_IS_DYING, mustBeAdded && startFenerarium);
 	}
 
@@ -64,7 +60,7 @@ public class NewSounds implements INewSoundsForGameSounds {
 	}
 
 	public void addScaredGhost(boolean mustBeAdded) {
-		addSounds(Sounds.LADYBUG_INTERMISSION, mustBeAdded);
+		addSounds(Sounds.GHOST_SCARED, mustBeAdded);
 	}
 
 	public void addSirenSound(boolean mustBeAdded, int percent) {

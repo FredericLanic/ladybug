@@ -90,7 +90,7 @@ public class GameModel extends Observable
 	@Setter
 	private boolean				 soundActive;
 	@Inject
-	private SuperPowerTimer		 superPowerTimer;		
+	private SuperPowerTimer		 superPowerTimer;
 	private WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;	
 	@Setter
 	private long beginningMillisecondes;
@@ -99,8 +99,8 @@ public class GameModel extends Observable
 	public void forceStopGame() {
 		if (gameTimer.isRunning()) {
 			logger.info("Force Stop Game");
-			gameScore.setOldScore(-1);
-			initGame();
+			gameScore.setOldScore(-1);			
+			currentGameStatus.setProgramStart();
 		}
 	}
 
@@ -139,17 +139,9 @@ public class GameModel extends Observable
 	@Override
 	public void startGame() {
 		logger.info("Start Game");
-		// initGame();
 		currentGameStatus.initNumLevel();
-		initLevel();
-	}
-
-	/**
-	 * Lancement du timer qui rythme le jeu FIXME : cette fonction reste public car
-	 */
-	public void startGameTimer() {
-		logger.info("Start Game Timer");
-		gameTimer.start();
+		currentGameStatus.setLevelStart();
+		// initLevel();
 	}
 
 	/**
@@ -171,31 +163,65 @@ public class GameModel extends Observable
 		getLadybug().setUserRequest(point);
 	}
 
+	@Override
 	public boolean isInGame() {
 		return getCurrentGameStatus().isInGame();
 	}	
 	
+	@Override
+	public boolean isGamePresentation() {
+		return currentGameStatus.isGamePresentation();
+	}
+	
+	/**
+	 * Lancement du timer qui rythme le jeu
+	 */
+	private void startGameTimer() {
+		logger.info("Start Game Timer");
+		gameTimer.start();
+	}
+	
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
-		if (currentGameStatus.isGameStart()) {
-			initGame();			
+		if (currentGameStatus.isProgramStart()) {
+			// possibilité de mettre un timer d'attente pour présenter le jeu
+			initGame();	
+			setSoundActive(false);
+			currentGameStatus.setProgramStarting();
+			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+			waitAndDoActionAfterTimer.launch(5000, currentGameStatus, CurrentGameStatus.TO_PRESENTATION);			
+			// le status passera à GAME_PRESENTATION
 		} else if (currentGameStatus.isGamePresentation()) {
+			setSoundActive(false); // à supprimer ?
 			setBodiesActions();
 			moveBodies();
+		} else if (currentGameStatus.isGameStart()) {			
+			// possibilité de mettre un timer d'attente pour le début de la partie; afficher "Get Ready"
+			currentGameStatus.setLevelStart();
 		} else if (currentGameStatus.isLevelStart()) {
-			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, 0);
+			initLevel();
 			currentGameStatus.setLevelStarting();
+			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, CurrentGameStatus.TO_INGAME);
 			setSoundRequests();
-		} else if (currentGameStatus.isLevelStarting()) {
+		} else if (currentGameStatus.isLevelStarting() || currentGameStatus.isProgramStarting() /* , isGameStarting, isGameEnding */) {
 			// waiting
 		} else if (currentGameStatus.isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
 			ladybugIsDead();
 		} else if (currentGameStatus.isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
 			ladybugIsDying();
-			moveGhosts();
+			// moveGhosts();
+		} else if (currentGameStatus.isLevelEnd()) {
+			setSoundActive(false);
+			currentGameStatus.setLevelEnding();
+			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+			waitAndDoActionAfterTimer.launch(5000, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);			
 		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
-			currentGameStatus.setNoGame();
-		} else {
+			currentGameStatus.setGameEnd();
+		} else if (currentGameStatus.isGameEnd()) {
+			currentGameStatus.setGameEnding();
+			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, CurrentGameStatus.TO_PROGRAM_START);
+		} else if (currentGameStatus.isInGame()){
 			// ***
 			caseOfNewLadybugLife();
 			// ***
@@ -281,7 +307,7 @@ public class GameModel extends Observable
 		if (screenData.getNbrBlocksWithPoint() == 0) {
 			gameScore.addScore(Constants.SCORE_END_LEVEL);
 			gameScore.initIncrementScore();
-			initLevel();
+			currentGameStatus.setLevelEnd();
 		}
 	}
 
@@ -308,7 +334,7 @@ public class GameModel extends Observable
 
 	@PostConstruct
 	private void init() {
-		currentGameStatus.setGameStart();
+		currentGameStatus.setProgramStart();
 		startGameTimer();
 	}
 
@@ -317,7 +343,7 @@ public class GameModel extends Observable
 	 */
 	private void initGame() {
 		logger.info("Initialize game");
-		currentGameStatus.setGamePresentation();
+		// currentGameStatus.setGamePresentation();
 		// initialisation du numéro du niveau; incrémenté dans initLevel
 		currentGameStatus.setNumLevel(1);
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation
@@ -338,8 +364,6 @@ public class GameModel extends Observable
 		groupGhosts.setStatus(GhostStatus.NORMAL);
 		// initialise les vies de fantômes
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
-		// active sound
-		setSoundActive(true);
 	}
 
 	/**
@@ -349,14 +373,19 @@ public class GameModel extends Observable
 		logger.info("Initialize level");
 		// suppression des composants techniques du niveau précédent
 		removePreviousLevelTasks();
-		currentGameStatus.setLevelStart();
+		// currentGameStatus.setLevelStart();
+		currentGameStatus.setGameStart();
 		// incrémente le numéro du niveau
 		currentGameStatus.setNumLevel(currentGameStatus.getNumLevel() + 1);
 		// recopie les paramètres du niveau dans les données flottantes du niveau
 		screenData.setLevelMap(currentGameStatus.getNumLevel(), true);
 		// initialisation du super power
 		groupGhosts.setFear(false);
-		// on continue le level
+		// son activé		
+		setSoundActive(true);
+		// ladybug est vivant
+		ladybug.setStatus(LadybugStatus.NORMAL);
+		// on continue le level		
 		continueLevel();
 	}
 
@@ -371,8 +400,7 @@ public class GameModel extends Observable
 		if (ladybug.getLeftLifes() == 0) {
 			logger.info("Ladybug lost the game");
 			gameScore.setOldScore(gameScore.getScore());
-			// FIXME : à mettre ailleurs
-			initGame();
+			currentGameStatus.setGameEnd();
 		} else {
 			continueLevel();
 		}
