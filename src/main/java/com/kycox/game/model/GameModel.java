@@ -21,6 +21,7 @@ import static com.kycox.game.constant.Constants.PACE;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.util.Observable;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -191,9 +192,11 @@ public class GameModel extends Observable
 			waitAndDoActionAfterTimer.launch(5000, currentGameStatus, CurrentGameStatus.TO_PRESENTATION);			
 			// le status passera à GAME_PRESENTATION
 		} else if (currentGameStatus.isGamePresentation()) {
-			setSoundActive(false); // à supprimer ?
 			setBodiesActions();
 			moveBodies();
+			
+			setSoundActive(true); // à supprimer ?			
+			setSoundRequests();
 		} else if (currentGameStatus.isGameStart()) {			
 			// possibilité de mettre un timer d'attente pour le début de la partie; afficher "Get Ready"
 			currentGameStatus.setLevelStart();
@@ -458,6 +461,7 @@ public class GameModel extends Observable
 		// initialise le sons
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
+		newSounds.addIntermission(currentGameStatus.isGamePresentation() && new Random().nextInt(1000) > 995);		
 		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());

@@ -67,6 +67,12 @@ public class GameSounds implements Observer {
 		if (newSounds.hasSound(Sounds.LADYBUG_IS_DYING)) {
 			stopAllSounds();
 		}
+		if (newSounds.hasSound(Sounds.GAME_BEGIN_LEVEL)) {
+			Sounds.LADYBUG_INTERMISSION.getClip().stop();
+			Sounds.LADYBUG_INTERMISSION.getClip().setFramePosition(0);
+		}
+		
+		
 		Sounds[] soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
 			if (newSounds.hasSound(soundsEnum)) {
@@ -89,8 +95,9 @@ public class GameSounds implements Observer {
 	private void stopAllSounds() {
 		Sounds[] soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
-			soundsEnum.getClip().stop();
-			soundsEnum.getClip().setFramePosition(0);
+			soundsEnum.stopSound();
+//			soundsEnum.getClip().stop();
+//			soundsEnum.getClip().setFramePosition(0);
 		}
 	}
 }

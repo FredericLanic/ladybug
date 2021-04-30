@@ -131,7 +131,7 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une autre solution
 			gameModel.getCurrentGameStatus().setGamePresentation();
 		} else if (gameModel.getCurrentGameStatus().isProgramStarting()) {
-			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");	
+			drawOneCenterTextLine(g2d, "WELCOME TO lADYBUG");	
 			drawPresentationGhosts(g2d);
 		} else if (gameModel.getCurrentGameStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
