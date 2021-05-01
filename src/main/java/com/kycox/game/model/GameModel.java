@@ -61,10 +61,12 @@ public class GameModel extends Observable
         implements IGameModelForGameView, IGameModelForGameSounds, IGameModelForController {
 	private static final Log		  logger	   = LogFactory.getLog(GameModel.class);
 	@Setter
-	private long					  beginningMillisecondes;
+	private long					  beginningMilliseconds;
 	@Getter
 	@Inject
 	private CurrentGameStatus		  currentGameStatus;
+	@Setter
+	private long					  endingLevelMilliseconds;
 	@Getter
 	@Inject
 	private GameScore				  gameScore;
@@ -175,14 +177,22 @@ public class GameModel extends Observable
 		gameTimer.stop();
 	}
 
+	/*
+	 * Remarque de Christophe M : Sur ce gros if, tes conditions sont difficilement
+	 * lisibles. Tu pourrais créer une méthode pour chaque test, avec un nom métier
+	 * qui exprime la règle métier, et pas la règle technique. Ceci fait, ton
+	 * pattern startegy apparaitra plus naturellement. Tu pourras introduire une
+	 * enum privée à ta classe, avec les cas de test dessus, les méthodes métier,
+	 * écrites par lambda, et tu aurais un bloc qui s'écrit en une ligne.
+	 */
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (currentGameStatus.isProgramStart()) {
-			// possibilité de mettre un timer d'attente pour présenter le jeu
 			initGame();
 			setSoundActive(false);
 			currentGameStatus.setProgramStarting();
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(5000, currentGameStatus, CurrentGameStatus.TO_PRESENTATION);
+			waitAndDoActionAfterTimer.launch(Constants.PROGRAM_STARTING_MILLISECONDS, currentGameStatus,
+			        CurrentGameStatus.TO_PRESENTATION);
 			// le status passera à GAME_PRESENTATION
 		} else if (currentGameStatus.isGamePresentation()) {
 			setBodiesActions();
@@ -197,11 +207,18 @@ public class GameModel extends Observable
 			initLevel();
 			currentGameStatus.setLevelStarting();
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus, CurrentGameStatus.TO_INGAME);
+			waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentGameStatus.TO_INGAME);
 			setSoundRequests();
 		} else if (currentGameStatus.isLevelStarting()
 		        || currentGameStatus.isProgramStarting() /* , isGameStarting, isGameEnding */) {
 			// waiting
+		} else if (currentGameStatus.isInGame() && ladybug.getStatus() == LadybugStatus.DEAD) {
+			ladybugIsDead();
+		} else if (currentGameStatus.isInGame() && ladybug.getStatus() == LadybugStatus.DYING) {
+			ladybugIsDying();
+			// moveGhosts();
+		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
+			currentGameStatus.setGameEnd();
 		} else if (currentGameStatus.isInGame()) {
 			// ***
 			caseOfNewLadybugLife();
@@ -225,22 +242,19 @@ public class GameModel extends Observable
 			moveBodies();
 			// ***
 			checkEndMaze(); // FIXME : sortir ce test de cette boucle
-		} else if (currentGameStatus.isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
-			ladybugIsDead();
-		} else if (currentGameStatus.isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
-			ladybugIsDying();
-			// moveGhosts();
-		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
-			currentGameStatus.setGameEnd();
 		} else if (currentGameStatus.isLevelEnd()) {
 			setSoundActive(false);
 			currentGameStatus.setLevelEnding();
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);
+			waitAndDoActionAfterTimer.launch(endingLevelMilliseconds, currentGameStatus,
+			        CurrentGameStatus.TO_LEVEL_START);
+		} else if (currentGameStatus.isLevelEnding()) {
+			setSoundActive(true);
+			setSoundRequests();
 		} else if (currentGameStatus.isGameEnd()) {
 			currentGameStatus.setGameEnding();
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(beginningMillisecondes, currentGameStatus,
+			waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus,
 			        CurrentGameStatus.TO_PROGRAM_START);
 		}
 		setChanged();
@@ -449,6 +463,7 @@ public class GameModel extends Observable
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
 		newSounds.addIntermission(currentGameStatus.isGamePresentation() && new Random().nextInt(1000) > 995);
+		newSounds.addIntermission(currentGameStatus.isLevelEnding());
 		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
