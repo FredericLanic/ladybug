@@ -143,12 +143,12 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			drawOneCenterTextLine(g2d, text);
 		} else if (gameModel.getCurrentGameStatus().isGamePresentation()) {
 			drawGhosts(g2d);
-			showIntroScreen(g2d);
+			drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "OR c TO cONFIG");
 		} else if (gameModel.getCurrentGameStatus().isGameEnding() || gameModel.getCurrentGameStatus().isGameEnd()) {
 			drawGhosts(g2d);
 			drawOneCenterTextLine(g2d, "gAME oVER");
 		} else if (gameModel.getCurrentGameStatus().isLevelEnding()) {
-			drawOneCenterTextLine(g2d, "nEXT lEVEL");
+			drawTwoCenterTextLines(g2d, "nEXT LEVEL", "gET READY");
 		} else if (LadybugStatus.DYING.equals(gameModel.getLadybug().getStatus())) {
 			ladybugDyingView.inProgress();
 			drawGhosts(g2d);
@@ -160,7 +160,9 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
 		} else {
-			logger.info("NO DISPLAY FOR STATUS " + gameModel.getCurrentGameStatus());
+			String msg = "NO DISPLAY FOR STATUS " + gameModel.getCurrentGameStatus();
+			drawOneCenterTextLine(g2d, msg);
+			logger.error(msg);
 		}
 	}
 
@@ -221,15 +223,13 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		}
 	}
 
-	private void showIntroScreen(Graphics2D g2d) {
-		int			x			  = gameModel.getScreenData().getScreenWidth();
-		int			y			  = gameModel.getScreenData().getScreenHeight();
-		String		startMessage  = "PRESS s TO sTART";
-		String		configMessage = "OR c TO cONFIG";
-		FontMetrics	metr		  = this.getFontMetrics(defaultFont);
+	private void drawTwoCenterTextLines(Graphics2D g2d, String line1, String line2) {
+		int			x	 = gameModel.getScreenData().getScreenWidth();
+		int			y	 = gameModel.getScreenData().getScreenHeight();
+		FontMetrics	metr = this.getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(startMessage, (x - metr.stringWidth(startMessage)) / 2, y / 2 - Constants.BLOCK_SIZE);
-		g2d.drawString(configMessage, (x - metr.stringWidth(configMessage)) / 2, y / 2 + Constants.BLOCK_SIZE);
+		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - Constants.BLOCK_SIZE);
+		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 + Constants.BLOCK_SIZE);
 	}
 }

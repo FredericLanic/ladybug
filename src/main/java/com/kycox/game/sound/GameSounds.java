@@ -60,6 +60,11 @@ public class GameSounds implements Observer {
 		return clipBeginning.getMicrosecondLength() / 1000;
 	}
 
+	public long getMillisecondsIntermission() {
+		Clip clipBeginning = Sounds.LADYBUG_INTERMISSION.getClip();
+		return clipBeginning.getMicrosecondLength() / 1000;
+	}
+
 	/**
 	 * Lancement des sons sélectionnés par le modèle
 	 */
@@ -94,8 +99,6 @@ public class GameSounds implements Observer {
 		Sounds[] soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
 			soundsEnum.stopSound();
-//			soundsEnum.getClip().stop();
-//			soundsEnum.getClip().setFramePosition(0);
 		}
 	}
 }
