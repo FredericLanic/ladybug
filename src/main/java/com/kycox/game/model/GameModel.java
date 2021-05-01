@@ -177,6 +177,14 @@ public class GameModel extends Observable
 		gameTimer.stop();
 	}
 
+	/*
+	 * Remarque de Christophe M : Sur ce gros if, tes conditions sont difficilement
+	 * lisibles. Tu pourrais créer une méthode pour chaque test, avec un nom métier
+	 * qui exprime la règle métier, et pas la règle technique. Ceci fait, ton
+	 * pattern startegy apparaitra plus naturellement. Tu pourras introduire une
+	 * enum privée à ta classe, avec les cas de test dessus, les méthodes métier,
+	 * écrites par lambda, et tu aurais un bloc qui s'écrit en une ligne.
+	 */
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (currentGameStatus.isProgramStart()) {
 			initGame();
