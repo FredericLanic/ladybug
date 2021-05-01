@@ -72,9 +72,12 @@ public class GameSounds implements Observer {
 		if (newSounds.hasSound(Sounds.LADYBUG_IS_DYING)) {
 			stopAllSounds();
 		}
+		// FIXME : je pense qu'on n'en a plus besoin
 		if (newSounds.hasSound(Sounds.GAME_BEGIN_LEVEL)) {
-			Sounds.LADYBUG_INTERMISSION.getClip().stop();
-			Sounds.LADYBUG_INTERMISSION.getClip().setFramePosition(0);
+			stopAllSoundsExcept(Sounds.GAME_BEGIN_LEVEL);
+		}
+		if (newSounds.hasSound(Sounds.LADYBUG_INTERMISSION)) {
+			stopAllSoundsExcept(Sounds.LADYBUG_INTERMISSION);
 		}
 		Sounds[] soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
@@ -99,6 +102,15 @@ public class GameSounds implements Observer {
 		Sounds[] soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
 			soundsEnum.stopSound();
+		}
+	}
+
+	private void stopAllSoundsExcept(Sounds sound) {
+		Sounds[] soundsEnums = Sounds.values();
+		for (Sounds soundsEnum : soundsEnums) {
+			if (!soundsEnum.equals(sound)) {
+				soundsEnum.stopSound();
+			}
 		}
 	}
 }

@@ -179,12 +179,12 @@ public class GameModel extends Observable
 
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (currentGameStatus.isProgramStart()) {
-			// possibilité de mettre un timer d'attente pour présenter le jeu
 			initGame();
 			setSoundActive(false);
 			currentGameStatus.setProgramStarting();
 			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_PRESENTATION);
+			waitAndDoActionAfterTimer.launch(Constants.PROGRAM_STARTING_MILLISECONDS, currentGameStatus,
+			        CurrentGameStatus.TO_PRESENTATION);
 			// le status passera à GAME_PRESENTATION
 		} else if (currentGameStatus.isGamePresentation()) {
 			setBodiesActions();
@@ -204,9 +204,9 @@ public class GameModel extends Observable
 		} else if (currentGameStatus.isLevelStarting()
 		        || currentGameStatus.isProgramStarting() /* , isGameStarting, isGameEnding */) {
 			// waiting
-		} else if (currentGameStatus.isInGame() && LadybugStatus.DEAD.equals(ladybug.getStatus())) {
+		} else if (currentGameStatus.isInGame() && ladybug.getStatus() == LadybugStatus.DEAD) {
 			ladybugIsDead();
-		} else if (currentGameStatus.isInGame() && LadybugStatus.DYING.equals(ladybug.getStatus())) {
+		} else if (currentGameStatus.isInGame() && ladybug.getStatus() == LadybugStatus.DYING) {
 			ladybugIsDying();
 			// moveGhosts();
 		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
