@@ -119,6 +119,12 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		repaint();
 	}
 
+	/**
+	 * FIXME : même remarque que dans le modèle du jeu; appliquer un design pattern;
+	 * ça devient un peu dificile à lire
+	 *
+	 * @param g
+	 */
 	private void draw(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		drawMaze(g2d);
@@ -134,8 +140,10 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			// autre solution
 			gameModel.getCurrentGameStatus().setGamePresentation();
 		} else if (gameModel.getCurrentGameStatus().isProgramStarting()) {
-			drawOneCenterTextLine(g2d, "WELCOME TO lADYBUG");
+			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");
 			drawPresentationGhosts(g2d);
+		} else if (gameModel.getCurrentGameStatus().isGameStarting()) {
+			drawTwoCenterTextLines(g2d, "eNJOY", "yOUR GAME");
 		} else if (gameModel.getCurrentGameStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);

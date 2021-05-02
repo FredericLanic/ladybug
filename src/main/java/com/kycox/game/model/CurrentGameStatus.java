@@ -77,13 +77,6 @@ public class CurrentGameStatus
 	public boolean isGameEnding() {
 		return gameStatus == GameStatus.GAME_ENDING;
 	}
-//	@Override
-//	public boolean isNoGame() {
-//		return gameStatus == GameStatus.NO_GAME;
-//	}
-//	public void setNoGame() {
-//		gameStatus = GameStatus.NO_GAME;
-//	}
 
 	@Override
 	public boolean isGamePresentation() {
@@ -92,6 +85,10 @@ public class CurrentGameStatus
 
 	public boolean isGameStart() {
 		return gameStatus == GameStatus.GAME_START;
+	}
+
+	public boolean isGameStarting() {
+		return gameStatus == GameStatus.GAME_STARTING;
 	}
 
 	@Override
@@ -154,6 +151,11 @@ public class CurrentGameStatus
 
 	public void setGameStart() {
 		gameStatus = GameStatus.GAME_START;
+		logger.info("Passage du status en " + gameStatus);
+	}
+
+	public void setGameStarting() {
+		gameStatus = GameStatus.GAME_STARTING;
 		logger.info("Passage du status en " + gameStatus);
 	}
 

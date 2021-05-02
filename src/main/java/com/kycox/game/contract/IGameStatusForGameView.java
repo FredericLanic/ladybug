@@ -25,6 +25,8 @@ public interface IGameStatusForGameView extends IGameCommon {
 
 	public boolean isGamePresentation();
 
+	public boolean isGameStarting();
+
 	public boolean isLevelEnding();
 
 	public boolean isLevelStarting();

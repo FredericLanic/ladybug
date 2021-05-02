@@ -158,8 +158,7 @@ public class GameModel extends Observable
 	public void startGame() {
 		logger.info("Start Game");
 		currentGameStatus.initNumLevel();
-		currentGameStatus.setLevelStart();
-		// initLevel();
+		currentGameStatus.setGameStart();
 	}
 
 	/**
@@ -187,28 +186,13 @@ public class GameModel extends Observable
 	 */
 	private void actionsByTimerBip() { // voir pattern strategie pour supprimer les if then else
 		if (currentGameStatus.isProgramStart()) {
-			initGame();
-			setSoundActive(false);
-			currentGameStatus.setProgramStarting();
-			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(Constants.PROGRAM_STARTING_MILLISECONDS, currentGameStatus,
-			        CurrentGameStatus.TO_PRESENTATION);
-			// le status passera à GAME_PRESENTATION
+			programIsStarting();
 		} else if (currentGameStatus.isGamePresentation()) {
-			setBodiesActions();
-			moveBodies();
-			setSoundActive(true); // à supprimer ?
-			setSoundRequests();
+			ghostsIsMovingInPresentation();
 		} else if (currentGameStatus.isGameStart()) {
-			// possibilité de mettre un timer d'attente pour le début de la partie; afficher
-			// "Get Ready"
-			currentGameStatus.setLevelStart();
+			gameIsStarting();
 		} else if (currentGameStatus.isLevelStart()) {
-			initLevel();
-			currentGameStatus.setLevelStarting();
-			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentGameStatus.TO_INGAME);
-			setSoundRequests();
+			levelIsStarting();
 		} else if (currentGameStatus.isLevelStarting()
 		        || currentGameStatus.isProgramStarting() /* , isGameStarting, isGameEnding */) {
 			// waiting
@@ -220,42 +204,14 @@ public class GameModel extends Observable
 		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
 			currentGameStatus.setGameEnd();
 		} else if (currentGameStatus.isInGame()) {
-			// ***
-			caseOfNewLadybugLife();
-			// ***
-			setBodiesActions();
-			// ***
-			updateGhostSeetings();
-			// ***
-			caseOfGhostEatLadybug();
-			// ***
-			manageSuperPower();
-			// ***
-			caseOfLadybugEatAMegaPoint();
-			// ***
-			manageScores();
-			// ***
-			updateScreenBlock();
-			// ***
-			setSoundRequests();
-			// ***
-			moveBodies();
-			// ***
-			checkEndMaze(); // FIXME : sortir ce test de cette boucle
+			gameIsPlaying();
 		} else if (currentGameStatus.isLevelEnd()) {
-			setSoundActive(false);
-			currentGameStatus.setLevelEnding();
-			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(endingLevelMilliseconds, currentGameStatus,
-			        CurrentGameStatus.TO_LEVEL_START);
+			levelIsEnding();
 		} else if (currentGameStatus.isLevelEnding()) {
 			setSoundActive(true);
 			setSoundRequests();
 		} else if (currentGameStatus.isGameEnd()) {
-			currentGameStatus.setGameEnding();
-			waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-			waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus,
-			        CurrentGameStatus.TO_PROGRAM_START);
+			gameIsEnding();
 		}
 		setChanged();
 		notifyObservers();
@@ -309,6 +265,51 @@ public class GameModel extends Observable
 			actionsByTimerBip();
 		};
 		return new Timer(PACE, action);
+	}
+
+	private void gameIsEnding() {
+		currentGameStatus.setGameEnding();
+		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+		waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentGameStatus.TO_PROGRAM_START);
+	}
+
+	private void gameIsPlaying() {
+		// ***
+		caseOfNewLadybugLife();
+		// ***
+		setBodiesActions();
+		// ***
+		updateGhostSeetings();
+		// ***
+		caseOfGhostEatLadybug();
+		// ***
+		manageSuperPower();
+		// ***
+		caseOfLadybugEatAMegaPoint();
+		// ***
+		manageScores();
+		// ***
+		updateScreenBlock();
+		// ***
+		setSoundRequests();
+		// ***
+		moveBodies();
+		// ***
+		checkEndMaze(); // FIXME : sortir ce test de cette boucle
+	}
+
+	private void gameIsStarting() {
+		currentGameStatus.setGameStarting();
+		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+		waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);
+		setSoundRequests();
+	}
+
+	private void ghostsIsMovingInPresentation() {
+		setBodiesActions();
+		moveBodies();
+		setSoundActive(true); // à supprimer ?
+		setSoundRequests();
 	}
 
 	@PostConstruct
@@ -399,6 +400,21 @@ public class GameModel extends Observable
 		}
 	}
 
+	private void levelIsEnding() {
+		setSoundActive(false);
+		currentGameStatus.setLevelEnding();
+		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+		waitAndDoActionAfterTimer.launch(endingLevelMilliseconds, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);
+	}
+
+	private void levelIsStarting() {
+		initLevel();
+		currentGameStatus.setLevelStarting();
+		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+		waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentGameStatus.TO_INGAME);
+		setSoundRequests();
+	}
+
 	private void manageScores() {
 		gameScore.setScore(groupGhosts, ladybug, groupMessages);
 		groupMessages.removeIfDying();
@@ -425,6 +441,16 @@ public class GameModel extends Observable
 
 	private void moveGhosts() {
 		groupGhosts.move(screenData, ladybug, ghostRequest);
+	}
+
+	private void programIsStarting() {
+		initGame();
+		setSoundActive(false);
+		currentGameStatus.setProgramStarting();
+		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+		waitAndDoActionAfterTimer.launch(Constants.PROGRAM_STARTING_MILLISECONDS, currentGameStatus,
+		        CurrentGameStatus.TO_PRESENTATION);
+		// le status passera à GAME_PRESENTATION
 	}
 
 	/**
@@ -462,8 +488,8 @@ public class GameModel extends Observable
 		// initialise le sons
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
-		newSounds.addIntermission(currentGameStatus.isGamePresentation() && new Random().nextInt(1000) > 995);
-		newSounds.addIntermission(currentGameStatus.isLevelEnding());
+		newSounds.addIntermission(currentGameStatus.isGamePresentation() && new Random().nextInt(1000) > 997
+		        || currentGameStatus.isLevelEnding());
 		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
