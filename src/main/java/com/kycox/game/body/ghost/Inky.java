@@ -33,7 +33,7 @@ public class Inky extends Ghost {
 		if (!hasChangeBlock()) {
 			return;
 		}
-		if (GhostStatus.SCARED.equals(getStatus()))
+		if (getStatus() == GhostStatus.SCARED)
 			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
 		else
 			setSpeedIndex(getStartSpeedIndex());

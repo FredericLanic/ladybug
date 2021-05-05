@@ -67,7 +67,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	}
 
 	public boolean hasDyingGhost() {
-		return (lstGhosts.stream().filter(g -> GhostStatus.DYING.equals(g.getStatus())).count() > 0);
+		return (lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.DYING).count() > 0);
 	}
 
 	public boolean hasNotComputedGhost() {
@@ -78,12 +78,12 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	}
 
 	public boolean hasRegeneratedGhost() {
-		return (lstGhosts.stream().filter(g -> GhostStatus.REGENERATING.equals(g.getStatus())).count() > 0);
+		return (lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATING).count() > 0);
 	}
 
 	public boolean hasScaredGhost() {
-		return ((lstGhosts.stream().filter(g -> GhostStatus.SCARED.equals(g.getStatus())).count()
-		        + lstGhosts.stream().filter(g -> GhostStatus.FLASH.equals(g.getStatus())).count()) > 0);
+		return ((lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.SCARED).count()
+		        + lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.FLASH).count()) > 0);
 	}
 
 	/**
@@ -129,10 +129,10 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	 */
 	public void setFear(boolean fear) {
 		if (fear) {
-			lstGhosts.stream().filter(g -> !g.getStatus().equals(GhostStatus.DYING))
+			lstGhosts.stream().filter(g -> g.getStatus() != GhostStatus.DYING)
 			        .forEach(g -> g.setStatus(GhostStatus.SCARED));
 		} else {
-			lstGhosts.stream().filter(g -> !g.getStatus().equals(GhostStatus.DYING))
+			lstGhosts.stream().filter(g -> g.getStatus() != GhostStatus.DYING)
 			        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
 		}
 	}
@@ -141,7 +141,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	 * Tous les fantômes doivent clignotter
 	 */
 	public void setFlashActive() {
-		lstGhosts.stream().filter(g -> GhostStatus.SCARED.equals(g.getStatus()))
+		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.SCARED)
 		        .forEach(g -> g.setStatus(GhostStatus.FLASH));
 	}
 
@@ -214,7 +214,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	 * Status des fantômes de REGENERATING à NORMAL
 	 */
 	private void setGhostStatusAfterRegeneration() {
-		lstGhosts.stream().filter(g -> GhostStatus.REGENERATING.equals(g.getStatus()))
+		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATING)
 		        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
 	}
 

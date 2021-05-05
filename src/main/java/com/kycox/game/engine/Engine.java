@@ -49,6 +49,7 @@ public class Engine {
 		gameModel.getLadybugDying().setMillisecondLenght(gameSounds.getMillisecondLadybugDeath());
 		gameModel.setBeginningMilliseconds(gameSounds.getMillisecondsBeginning());
 		gameModel.setEndingLevelMilliseconds(gameSounds.getMillisecondsIntermission());
+		//
 		gameView.setDurationLadybugNewLife(gameSounds.getMillisecondNewLife());
 	}
 }

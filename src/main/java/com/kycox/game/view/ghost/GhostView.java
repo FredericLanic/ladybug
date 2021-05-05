@@ -46,11 +46,11 @@ public class GhostView {
 			default -> ghostImg = GhostDefautlView.getInstance().getImage(ghost);
 		}
 		// ajout les yeux en fonction de la direction
-		if (!GhostStatus.DYING.equals(ghost.getStatus())) {
+		if (ghost.getStatus() != GhostStatus.DYING) {
 			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));
 		}
 		// ajout du bandeau
-		if (!GhostStatus.DYING.equals(ghost.getStatus()) && gameProperties.hasGhostHeadBand()) {
+		if (ghost.getStatus() != GhostStatus.DYING && gameProperties.hasGhostHeadBand()) {
 			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.getDirection()));
 		}
 		if (gameProperties.hasHatSkin()) {

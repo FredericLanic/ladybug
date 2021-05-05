@@ -110,11 +110,11 @@ public class SuperPowerTimer {
 	}
 
 	public boolean isStopped() {
-		return getStatus().equals(SuperPowerTimerStatus.STOP);
+		return getStatus() == SuperPowerTimerStatus.STOP;
 	}
 
 	public boolean isStopping() {
-		return getStatus().equals(SuperPowerTimerStatus.STOPPING);
+		return getStatus() == SuperPowerTimerStatus.STOPPING;
 	}
 
 	/**

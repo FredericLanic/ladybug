@@ -157,13 +157,13 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 			drawOneCenterTextLine(g2d, "gAME oVER");
 		} else if (gameModel.getCurrentGameStatus().isLevelEnding()) {
 			drawTwoCenterTextLines(g2d, "nEXT LEVEL", "gET READY");
-		} else if (LadybugStatus.DYING.equals(gameModel.getLadybug().getStatus())) {
+		} else if (gameModel.getLadybug().getStatus() == LadybugStatus.DYING) {
 			ladybugDyingView.inProgress();
 			drawGhosts(g2d);
 			drawLadybug(g2d, ladybugDyingView);
-		} else if (LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
+		} else if (gameModel.getLadybug().getStatus() == LadybugStatus.DEAD) {
 			ladybugDyingView.init();
-		} else if (!LadybugStatus.DEAD.equals(gameModel.getLadybug().getStatus())) {
+		} else if (gameModel.getLadybug().getStatus() != LadybugStatus.DEAD) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
