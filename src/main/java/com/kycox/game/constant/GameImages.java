@@ -30,7 +30,6 @@ import lombok.Getter;
  */
 public enum GameImages {
 	EMPTY("images/empty.png"),
-    // ghost plugin headband
     // ladybug plugins
 	LADYBUG_PLUGIN_OX_UP("images/ladybug/skin/OXiane/OXup.gif"),
     // teleportation

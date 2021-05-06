@@ -497,9 +497,9 @@ public class GameModel extends Observable
 		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint() && currentGameStatus.isInGame());
 		newSounds.addNewLife(ladybug.isNewLife());
 		newSounds.addTeleport(ladybug.isToBeTeleported());
-		newSounds.addSirenSound(ladybug.getStatus().equals(LadybugStatus.NORMAL) && currentGameStatus.isInGame(),
+		newSounds.addSirenSound(ladybug.getStatus() == LadybugStatus.NORMAL && currentGameStatus.isInGame(),
 		        screenData.getPercentageEatenPoint());
-		newSounds.addLadybugIsDying(ladybug.getStatus().equals(LadybugStatus.DYING), !ladybugDying.isInPogress());
+		newSounds.addLadybugIsDying(ladybug.getStatus() == LadybugStatus.DYING, !ladybugDying.isInPogress());
 	}
 
 	/**

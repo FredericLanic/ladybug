@@ -98,7 +98,7 @@ public abstract class Ghost extends UserBody {
 	 */
 	public void moveGhostByUser(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
 		setUserRequest(ghostRequest);
-		if (hasChangeBlock() && getStatus().equals(GhostStatus.NORMAL)) {
+		if (hasChangeBlock() && getStatus() == GhostStatus.NORMAL) {
 			move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
 			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		} else {
@@ -117,10 +117,11 @@ public abstract class Ghost extends UserBody {
 		ghostActions.setPosition((Point) getPosition().clone());
 		// Détection de la collision avec un fantôme et ladybug
 		if (getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2)
-		        && !getStatus().equals(GhostStatus.DYING) && !getStatus().equals(GhostStatus.REGENERATING)
-		        && !ladybug.getStatus().equals(LadybugStatus.DYING)
-		        && !ladybug.getStatus().equals(LadybugStatus.DEAD)) {
-			if (GhostStatus.SCARED.equals(getStatus()) || GhostStatus.FLASH.equals(getStatus())) {
+		        && getStatus() != GhostStatus.DYING 
+		        && getStatus() != GhostStatus.REGENERATING
+		        && ladybug.getStatus() != LadybugStatus.DYING
+		        && ladybug.getStatus() != LadybugStatus.DEAD) {
+			if (getStatus() == GhostStatus.SCARED || getStatus() == GhostStatus.FLASH) {
 				ghostActions.setEaten(true);
 			} else {
 				// Mise à mort de Ladybug !!!
@@ -336,7 +337,7 @@ public abstract class Ghost extends UserBody {
 	}
 
 	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
-		if (sensitiveBehavious.isActive() && !LadybugStatus.DEAD.equals(ladybug.getStatus()))
+		if (sensitiveBehavious.isActive() && ladybug.getStatus() != LadybugStatus.DEAD)
 			moveByBehaviour(ladybug, screenData);
 		else
 			moveByDefault(screenData);

@@ -82,7 +82,7 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 	 */
 	public LadybugActions setActions(ScreenData screenData) {
 		ladybugActions = new LadybugActions();
-		if (getStatus().equals(LadybugStatus.DEAD))
+		if (getStatus() == LadybugStatus.DEAD)
 			return ladybugActions;
 		if (userRequest.equals(new Point(getDirection().x, -getDirection().y))) {
 			setDirection(userRequest);

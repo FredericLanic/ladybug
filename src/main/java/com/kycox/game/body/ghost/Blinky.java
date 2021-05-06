@@ -45,7 +45,7 @@ public class Blinky extends Ghost {
 	public void setSpeed(int numLevel, int perCent) {
 		if (!hasChangeBlock())
 			return;
-		if (GhostStatus.SCARED.equals(getStatus()))
+		if (getStatus() == GhostStatus.SCARED)
 			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
 		else {
 			// Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
