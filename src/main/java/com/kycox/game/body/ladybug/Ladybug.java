@@ -38,11 +38,9 @@ import lombok.Setter;
 public class Ladybug extends UserBody implements ILadybugForController, ILadybugForGameView {
 	@Getter
 	private LadybugActions ladybugActions;
-	// statut de ladybug
 	@Setter
 	@Getter
 	private LadybugStatus status = LadybugStatus.NORMAL;
-	// direction de ladybug
 	@Getter
 	private Point viewDirection = Constants.POINT_UP;
 
@@ -58,11 +56,6 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 		return ladybugActions.isToBeTeleported();
 	}
 
-	/**
-	 * Déplacement de Ladybug
-	 *
-	 * @param screenData
-	 */
 	public void move(ScreenData screenData) {
 		if (ladybugActions.isToBeTeleported()) {
 			teleport(screenData);
@@ -77,9 +70,6 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
 
-	/**
-	 * Détermincaiton des actions de Ladybug
-	 */
 	public LadybugActions setActions(ScreenData screenData) {
 		ladybugActions = new LadybugActions();
 		if (getStatus() == LadybugStatus.DEAD)
@@ -102,8 +92,7 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 	/**
 	 * Caractéristiques de ladybug en début de niveau
 	 */
-	public void setStartLevel(int numLevel, Point startPosition) {
-		// attributs de ladybug
+	public void settingsForNewLevel(int numLevel, Point startPosition) {
 		setPosition(startPosition);
 		setDirection(Constants.POINT_ZERO);
 		viewDirection = Constants.POINT_ZERO;

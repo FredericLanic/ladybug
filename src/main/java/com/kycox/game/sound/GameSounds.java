@@ -29,13 +29,15 @@ import com.kycox.game.constant.Sounds;
 import com.kycox.game.contract.IGameModelForGameSounds;
 import com.kycox.game.contract.INewSoundsForGameSounds;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Gestion du son dans le jeu
  *
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
-	private static final Log		logger = LogFactory.getLog(GameSounds.class);
 	private IGameModelForGameSounds	gameModel;
 	private INewSoundsForGameSounds	newSounds;
 

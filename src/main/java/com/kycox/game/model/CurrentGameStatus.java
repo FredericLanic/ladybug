@@ -38,6 +38,7 @@ public class CurrentGameStatus
 	public static final int	 TO_PRESENTATION  = 2;
 	public static final int	 TO_PROGRAM_START = 1;
 	private static final Log logger			  = LogFactory.getLog(CurrentGameStatus.class);
+	@Getter
 	private GameStatus		 gameStatus;
 	@Getter
 	@Setter
