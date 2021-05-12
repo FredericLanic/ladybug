@@ -52,7 +52,6 @@ import com.kycox.game.model.strategy.actions.GameModelPresentationStatus;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
-import com.kycox.game.constant.GameStatus;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -97,7 +96,7 @@ public class GameModel extends Observable
 	@Setter
 	private boolean					  soundActive = true;
 	@Inject 
-	private GameModelInitialisationProgram    gameModelInitialisationProgram;
+	private GameModelInitialisationProgram gameModelInitialisationProgram;
 	@Inject
 	private GameModelPresentationStatus gameModelPresentationStatus;
 	@Inject
