@@ -78,11 +78,11 @@ public abstract class Ghost extends UserBody {
 	 *
 	 * @param ladybugPosBlock
 	 */
-	public void moveGhostByComputer(Ladybug ladybug, ScreenData screenData) {
+	public void moveComputedGhost(Ladybug ladybug, ScreenData screenData) {
 		Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
 		// Déplacement en fonction du status du fantôme
 		switch (getStatus()) {
-			case DYING -> moveToRegenerate(screenData);
+			case DYING -> moveToRegeneratePoint(screenData);
 			case FLASH, SCARED -> flashOrScaredMoving(ladybugPosBlock, screenData);
 			case NORMAL -> normalMoving(ladybug, screenData);
 			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
@@ -96,13 +96,13 @@ public abstract class Ghost extends UserBody {
 	 * @param screenData
 	 * @param ghostRequest
 	 */
-	public void moveGhostByUser(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
+	public void moveGhostUser(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
 		setUserRequest(ghostRequest);
-		if (hasChangeBlock() && getStatus() == GhostStatus.NORMAL) {
+		if (isPerfectOnABlock() && getStatus() == GhostStatus.NORMAL) {
 			move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
 			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		} else {
-			moveGhostByComputer(ladybug, screenData);
+			moveComputedGhost(ladybug, screenData);
 		}
 	}
 
@@ -116,26 +116,29 @@ public abstract class Ghost extends UserBody {
 		ghostActions = new GhostActions();
 		ghostActions.setPosition((Point) getPosition().clone());
 		// Détection de la collision avec un fantôme et ladybug
-		if (getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2)
-		        && getStatus() != GhostStatus.DYING 
-		        && getStatus() != GhostStatus.REGENERATING
-		        && ladybug.getStatus() != LadybugStatus.DYING
-		        && ladybug.getStatus() != LadybugStatus.DEAD) {
-			if (getStatus() == GhostStatus.SCARED || getStatus() == GhostStatus.FLASH) {
-				ghostActions.setEaten(true);
+		if (isTooNearOfLadybug(ladybug)
+		        && isAllowedToDoActions()
+		        && ladybug.isAllowedToDoActions()) {
+			if (isScaredOrFlashed()) {
+				ghostActions.setEatenByLadybug(true);
 			} else {
-				// Mise à mort de Ladybug !!!
 				ghostActions.setEatLadybug(true);
 			}
 		}
 	}
 
-	/**
-	 * Cette fonction est a définir pour chaque fantôme nommé (Blinky, Inky, Clyde &
-	 * Pinky)
-	 *
-	 * @param numLevel
-	 */
+	private boolean isScaredOrFlashed() {
+		return getStatus() == GhostStatus.SCARED || getStatus() == GhostStatus.FLASH;
+	}
+
+	protected boolean isAllowedToDoActions() {
+		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATING;
+	}
+	
+	private boolean isTooNearOfLadybug(Ladybug ladybug) {
+		return getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2);
+	}
+
 	public abstract void setInitSpeed(int numLevel);
 
 	public void setNumLevel(int numLevel) {
@@ -143,9 +146,6 @@ public abstract class Ghost extends UserBody {
 		getSensitiveBehavious().setNumLevel(numLevel);
 	}
 
-	/**
-	 * Affecte des paramètres au fantômes qui vient d'être mangé
-	 */
 	public void setSettingAfterBeEaten(int numLevel) {
 		setPosition(Utils.convertPointToGraphicUnit(Utils.convertPointToBlockUnit(getPosition())));
 		// � d�placer dans
@@ -153,12 +153,6 @@ public abstract class Ghost extends UserBody {
 		setSpeedIndex(getSpeedFunction().getRealIndexSpeedPlus(numLevel));
 	}
 
-	/**
-	 * Cette fonction est a définir pour chaque fantôme nommé (Blinky, Inky, Clyde &
-	 * Pinky)
-	 *
-	 * @param numLevel, int perCent
-	 */
 	public abstract void setSpeed(int numLevel, int perCent);
 
 	private void flashOrScaredMoving(Point ladybugPosBlock, ScreenData screenData) {
@@ -179,14 +173,6 @@ public abstract class Ghost extends UserBody {
 		moveTo(ladybugPosBlock, screenData);
 	}
 
-	/**
-	 * Déplacement d'un fantôme en fonction de son comportement
-	 *
-	 * (son état est NORMAL)
-	 *
-	 * @param screenData
-	 * @param ladybugPosBlock
-	 */
 	private void moveByBehaviour(Body ladybug, ScreenData screenData) {
 		switch (behavious) {
 			case SMART -> moveSmart(ladybug, screenData);
@@ -195,16 +181,12 @@ public abstract class Ghost extends UserBody {
 		}
 	}
 
-	/**
-	 * Déplacement du fantôme Renvoi un objet StateMoving A ce jour, cela ne sert à
-	 * rien, mais je préfère le laisser pour les prochaines évolutions.
-	 */
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
 	// nécessaire
 	private void moveByDefault(ScreenData screenData) {
 		List<Point>	lstDirections = new ArrayList<>();
 		Point		posPoint	  = getPosition();
-		if (hasChangeBlock()) {
+		if (isPerfectOnABlock()) {
 			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(posPoint));
 			if (!currentScreenBlock.isBorderLeft() && getDirection().x != 1) {
 				lstDirections.add(Constants.POINT_LEFT);
@@ -244,7 +226,7 @@ public abstract class Ghost extends UserBody {
 		Point	ptCurrentScreenGhost = getPosition();
 		boolean	canScaredMove		 = false;
 		Point	scaredDirection		 = Constants.POINT_ZERO;
-		if (hasChangeBlock()) {
+		if (isPerfectOnABlock()) {
 			Point		ptCurrentBlockGhost	= Utils.convertPointToBlockUnit(ptCurrentScreenGhost);
 			ScreenBlock	currentBlockGhost	= screenData.getDataBlock(ptCurrentBlockGhost);
 			List<Point>	shorterWay			= Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
@@ -280,11 +262,7 @@ public abstract class Ghost extends UserBody {
 	}
 
 	private void moveTo(Point ladybugPosBlock, ScreenData screenData) {
-		/**
-		 * Note : le fantôme peut changer de direction uniquement lorsqu'il rempli le
-		 * block
-		 */
-		if (hasChangeBlock()) {
+		if (isPerfectOnABlock()) {
 			Point		ptCurrentBlockGhost	= Utils.convertPointToBlockUnit(getPosition());
 			List<Point>	shorterWay			= Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
 			Point		point0				= shorterWay.get(0);
@@ -298,15 +276,9 @@ public abstract class Ghost extends UserBody {
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
 
-	/**
-	 * Déplacement du fantôme mangé
-	 *
-	 * @param data
-	 * @param coordinateRevivorGhost
-	 */
-	private void moveToRegenerate(ScreenData screenData) {
+	private void moveToRegeneratePoint(ScreenData screenData) {
 		// Le fantôme est arrivé au limite du block
-		if (hasChangeBlock()) {
+		if (isPerfectOnABlock()) {
 			// calcul du chemin le plus court :
 			List<Point> shorterWay = Dijkstra.getShorterWay(Utils.convertPointToBlockUnit(getPosition()),
 			        Utils.convertPointToBlockUnit(screenData.getRevivorGhostPos()), screenData);

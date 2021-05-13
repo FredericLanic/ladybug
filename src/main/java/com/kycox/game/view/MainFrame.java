@@ -54,8 +54,13 @@ public class MainFrame extends JFrame implements IMainGraphicStructrure {
 		setTitle("LadyBug");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
-		initScreenSize();
 		setUndecorated(true);
+	
+		initScreenSize();
+		addPanels();
+	}
+
+	private void addPanels() {
 		addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);
 		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_START);
 		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_END);

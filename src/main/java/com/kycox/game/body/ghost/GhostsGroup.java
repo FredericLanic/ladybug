@@ -20,7 +20,6 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Optional;
 
-import com.kycox.game.action.ghost.GhostsGroupActions;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.contract.IGroupGhostForGameView;
@@ -44,17 +43,6 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		return lstGhosts.stream().filter(g -> g.getGhostActions().isEatLadybug()).count() > 0;
 	}
 
-	/**
-	 * Retourne toutes les actions du group
-	 *
-	 * @return
-	 */
-	public GhostsGroupActions getActions() {
-		GhostsGroupActions ghostsGroupActions = new GhostsGroupActions();
-		lstGhosts.stream().forEach(g -> ghostsGroupActions.addGhostAction(g.getGhostActions()));
-		return ghostsGroupActions;
-	}
-
 	public int getLeftLives() {
 		if (!hasNotComputedGhost()) {
 			return 0;
@@ -63,7 +51,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	}
 
 	public int getNbrEatenGhost() {
-		return (int) lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).count();
+		return (int) lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).count();
 	}
 
 	public boolean hasDyingGhost() {
@@ -106,10 +94,10 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	 */
 	public void move(ScreenData screenData, Ladybug ladybug, Point ghostRequest) {
 		// Déplacement des fantômes gérés par l'ordinateur
-		lstGhosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveGhostByComputer(ladybug, screenData));
+		lstGhosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, screenData));
 		// Déplacement des fantômes gérés par l'humain
 		lstGhosts.stream().filter(g -> !g.isComputed())
-		        .forEach(g -> g.moveGhostByUser(ladybug, screenData, ghostRequest));
+		        .forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
 	}
 
 	/**
@@ -206,8 +194,8 @@ public class GhostsGroup implements IGroupGhostForGameView {
 
 	private void setGhostSettingAfterLadybugContact(int numLevel) {
 		// Mis à jour du statut
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(g -> g.setSettingAfterBeEaten(numLevel));
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEaten()).forEach(Ghost::minusLifesLeft);
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(g -> g.setSettingAfterBeEaten(numLevel));
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(Ghost::minusLifesLeft);
 	}
 
 	/**

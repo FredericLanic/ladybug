@@ -69,7 +69,7 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 			return;
 		}
 		ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
-		if (hasChangeBlock()) {
+		if (isPerfectOnABlock()) {
 			if (canMove(userRequest, currentScreenBlock))
 				viewDirection = userRequest;
 			move(currentScreenBlock);
@@ -89,7 +89,7 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 			this.viewDirection = getDirection();
 		}
 		// calcule uniquement lorsque ladybug rempli le block
-		if (hasChangeBlock()) {
+		if (isPerfectOnABlock()) {
 			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
@@ -121,9 +121,13 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 	}
 
 	private void teleport(ScreenData screenData) {
-		if (hasChangeBlock() && screenData.getNbrBlocksWithPoint() > 0) {
+		if (isPerfectOnABlock() && screenData.getNbrBlocksWithPoint() > 0) {
 			Point newPoint = screenData.getRandomPosOnAPoint();
 			setPosition(Utils.convertPointToGraphicUnit(newPoint));
 		}
+	}
+	
+	public boolean isAllowedToDoActions() {
+		return getStatus() != LadybugStatus.DYING && getStatus() != LadybugStatus.DEAD;
 	}
 }

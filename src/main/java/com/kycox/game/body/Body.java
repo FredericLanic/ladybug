@@ -34,11 +34,9 @@ import lombok.Setter;
  */
 public abstract class Body {
 	private static final Log logger = LogFactory.getLog(Body.class);
-	// Direction du fantôme
 	@Getter
 	@Setter
 	private Point direction = Constants.POINT_ZERO;
-	// nombre de vie restant pour ce body
 	@Getter
 	@Setter
 	private int		leftLifes = 0;
@@ -52,11 +50,9 @@ public abstract class Body {
 	@Setter
 	@Getter
 	private SpeedFunction speedFunction;
-	// Vitesse : index dans le tableau VALID_SPEEDS
 	@Getter
 	@Setter
 	private int speedIndex = 0;
-	// Vitesse initiale : index dans le tableau VALID_SPEEDS
 	@Getter
 	private int startSpeedIndex = 0;
 
@@ -76,7 +72,7 @@ public abstract class Body {
 	 * @param pointPos : coordonnées DE L'ECRAN (x,y) dans la fenêtre
 	 * @return
 	 */
-	public boolean hasChangeBlock() {
+	public boolean isPerfectOnABlock() {
 		Point pointPos = getPosition();
 		return pointPos.x % Constants.BLOCK_SIZE == 0 && pointPos.y % Constants.BLOCK_SIZE == 0;
 	}
@@ -106,4 +102,6 @@ public abstract class Body {
 	public void minusLifesLeft() {
 		leftLifes--;
 	}
+	
+	protected abstract boolean isAllowedToDoActions();
 }

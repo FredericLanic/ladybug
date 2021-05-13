@@ -33,7 +33,7 @@ public class Clyde extends Ghost {
 		/*
 		 * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
 		 */
-		if (!hasChangeBlock()) {
+		if (!isPerfectOnABlock()) {
 			return;
 		}
 		if (getStatus() == GhostStatus.SCARED)
