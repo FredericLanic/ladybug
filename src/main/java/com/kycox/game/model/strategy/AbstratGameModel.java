@@ -24,65 +24,45 @@ import lombok.Setter;
 public class AbstratGameModel {
 	@Getter
 	@Inject
-	protected CurrentGameStatus		  currentGameStatus;
-	
+	protected CurrentGameStatus currentGameStatus;
+
 	@Getter
 	@Inject
-	protected ScreenData				  screenData;
-	
+	protected GameScore gameScore;
+
 	@Getter
 	@Inject
-	protected Ladybug					  ladybug;
-	
+	protected GhostsGroup groupGhosts;
+
 	@Getter
 	@Inject
-	protected GameScore				  gameScore;
-	
+	protected GroupMessages groupMessages;
+
 	@Getter
 	@Inject
-	protected GhostsGroup				  groupGhosts;
-		
+	protected Ladybug ladybug;
+
+	@Getter
+	@Inject
+	protected LadybugDying ladybugDying;
+
+	@Getter
+	@Inject
+	protected NewSounds newSounds;
+
+	@Getter
+	@Inject
+	protected ScreenData screenData;
+
 	@Getter
 	@Setter
-	protected boolean					soundActive = true;
-	
-	@Getter
+	protected boolean soundActive = true;
+
 	@Inject
-	protected NewSounds				  newSounds;
-	
-	@Getter
-	@Inject
-	protected LadybugDying			  ladybugDying;
-	
+	protected SuperPowerTimer superPowerTimer;
+
 	protected WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;
-	
-	@Inject
-	protected SuperPowerTimer			  superPowerTimer;
-	
-	
-	/**
-	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
-	 */
-	protected void setSoundRequests() {
-		
-		boolean musicOn = new SecureRandom().nextInt(1000) > 997;
-		
-		newSounds.initSounds();
-		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
-		newSounds.addIntermission(currentGameStatus.isGamePresentation() && musicOn
-		        || currentGameStatus.isLevelEnding());
-		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
-		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
-		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
-		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhost() > 0);
-		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint() && currentGameStatus.isInGame());
-		newSounds.addNewLife(ladybug.isNewLife());
-		newSounds.addTeleport(ladybug.isToBeTeleported());
-		newSounds.addSirenSound(ladybug.getStatus() == LadybugStatus.NORMAL && currentGameStatus.isInGame(),
-		        screenData.getPercentageEatenPoint());
-		newSounds.addLadybugIsDying(ladybug.getStatus() == LadybugStatus.DYING, !ladybugDying.isInPogress());
-	}
-	
+
 	/**
 	 * Paramêtrage des fantômes dans le niveau actuel
 	 *
@@ -96,8 +76,27 @@ public class AbstratGameModel {
 		// initialise les fantômes
 		groupGhosts.setStartLevel(currentGameStatus.getNumLevel(), screenData);
 	}
-	
-	@Getter
-	@Inject
-	protected GroupMessages			  groupMessages;
+
+	/**
+	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
+	 */
+	protected void setSoundRequests() {
+
+		boolean musicOn = new SecureRandom().nextInt(1000) > 997;
+
+		newSounds.initSounds();
+		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
+		newSounds.addIntermission(
+		        currentGameStatus.isGamePresentation() && musicOn || currentGameStatus.isLevelEnding());
+		newSounds.addScaredGhost(groupGhosts.hasScaredOrFlashedGhost());
+		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
+		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
+		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhost() > 0);
+		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint() && currentGameStatus.isInGame());
+		newSounds.addNewLife(ladybug.isNewLife());
+		newSounds.addTeleport(ladybug.isToBeTeleported());
+		newSounds.addSirenSound(ladybug.getStatus() == LadybugStatus.NORMAL && currentGameStatus.isInGame(),
+		        screenData.getPercentageEatenPoint());
+		newSounds.addLadybugIsDying(ladybug.getStatus() == LadybugStatus.DYING, !ladybugDying.isInPogress());
+	}
 }

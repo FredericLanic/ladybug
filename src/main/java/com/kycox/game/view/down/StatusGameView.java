@@ -34,38 +34,27 @@ import lombok.Setter;
 
 @Named("StatusGameView")
 public class StatusGameView extends JPanel {
-	private static final Log  logger		   = LogFactory.getLog(StatusGameView.class);
+	private static final Log logger = LogFactory.getLog(StatusGameView.class);
 	private static final long serialVersionUID = 4546077700634533519L;
 	@Setter
-	private int				  ghostNbrLifes;
+	private int ghostNbrLifes;
 	@Setter
-	private Image			  imageGhostPlayer;
+	private Image imageGhostPlayer;
 	@Setter
-	private Image			  imageLadybugPlayer;
+	private Image imageLadybugPlayer;
 	@Setter
-	private boolean			  isInGame;
+	private boolean isInGame;
 	@Setter
-	private int				  ladybugNbrLifes;
+	private int ladybugNbrLifes;
 	@Setter
-	private int				  nbrPlayers;
+	private int nbrPlayers;
 	@Setter
-	private int				  numLevel;
+	private int numLevel;
 	@Setter
-	private int				  score;
-	private final Font		  smallFont		   = new Font("CrackMan", Font.BOLD, 14);
+	private int score;
+	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
 	@Setter
-	private boolean			  soundActive;
-
-	@PostConstruct
-	public void init() {
-		setBackground(Color.BLACK);
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		display(g);
-	}
+	private boolean soundActive;
 
 	private void diplayCurrentScoreAndLevel(Graphics g) {
 		if (!isInGame)
@@ -81,10 +70,10 @@ public class StatusGameView extends JPanel {
 	}
 
 	private void display(Graphics g) {
-		int	x				= 0;
-		int	y				= 0;
-		int	delta			= 2;
-		int	imageBorderSize	= (this.getHeight() - 6 * delta) / 2;
+		int x = 0;
+		int y = 0;
+		int delta = 2;
+		int imageBorderSize = (this.getHeight() - 6 * delta) / 2;
 		// number ladybug lifes
 		displayNbrLifes(g, ImageUtils.resizeImage(imageLadybugPlayer, imageBorderSize, imageBorderSize),
 		        ladybugNbrLifes, x + delta, y);
@@ -104,8 +93,8 @@ public class StatusGameView extends JPanel {
 		g.drawImage(imageBody, x, y, this);
 		g.setColor(Color.YELLOW);
 		g.setFont(smallFont);
-		int	coordX = x + imageBody.getWidth(null);
-		int	coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
+		int coordX = x + imageBody.getWidth(null);
+		int coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
 		g.drawString("x " + nbrLifes, coordX, coordY);
 	}
 
@@ -123,8 +112,19 @@ public class StatusGameView extends JPanel {
 	private void displayTexte(Graphics g, String message) {
 		g.setFont(smallFont);
 		g.setColor(new Color(96, 128, 255));
-		int	coordX = this.getWidth() / 2;
-		int	coordY = this.getHeight() / 4 + smallFont.getSize() / 2;
+		int coordX = this.getWidth() / 2;
+		int coordY = this.getHeight() / 4 + smallFont.getSize() / 2;
 		g.drawString(message, coordX, coordY);
+	}
+
+	@PostConstruct
+	public void init() {
+		setBackground(Color.BLACK);
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		display(g);
 	}
 }

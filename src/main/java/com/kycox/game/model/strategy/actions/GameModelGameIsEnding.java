@@ -13,11 +13,11 @@ import lombok.Setter;
 public class GameModelGameIsEnding extends AbstratGameModel implements IGameModelAction {
 	@Setter
 	private long timeEnding;
-	
+
 	@Override
 	public void execute() {
 		currentGameStatus.setGameEnding();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 		waitAndDoActionAfterTimer.launch(timeEnding, currentGameStatus, CurrentGameStatus.TO_PROGRAM_START);
-	}	
+	}
 }

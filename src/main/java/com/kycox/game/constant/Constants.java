@@ -30,8 +30,8 @@ import java.util.List;
  */
 public final class Constants {
 	// taille d'un block
-	public static final int	  BLOCK_SIZE			  = 48;
-	public static final Color BLUE_LADYBUG			  = new Color(33, 33, 255);
+	public static final int BLOCK_SIZE = 48;
+	public static final Color BLUE_LADYBUG = new Color(33, 33, 255);
 	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
 	// distance ou le fantôme fuit Ladybug
 	public static final int DISTANCE_GHOST_SCARED = 100;

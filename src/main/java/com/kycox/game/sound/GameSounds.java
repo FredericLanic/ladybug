@@ -22,15 +22,9 @@ import java.util.Observer;
 import javax.inject.Named;
 import javax.sound.sampled.Clip;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.constant.Sounds;
 import com.kycox.game.contract.IGameModelForGameSounds;
 import com.kycox.game.contract.INewSoundsForGameSounds;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Gestion du son dans le jeu
@@ -38,8 +32,8 @@ import lombok.Setter;
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
-	private IGameModelForGameSounds	gameModel;
-	private INewSoundsForGameSounds	newSounds;
+	private IGameModelForGameSounds gameModel;
+	private INewSoundsForGameSounds newSounds;
 
 	/**
 	 * Retourne le temps en millisecondes de la musique de la mort de ladybug
@@ -89,17 +83,6 @@ public class GameSounds implements Observer {
 		}
 	}
 
-	@Override
-	public void update(Observable gameModelForSound, Object arg) {
-		gameModel = (IGameModelForGameSounds) gameModelForSound;
-		newSounds = gameModel.getNewSounds();
-		if (gameModel.isSoundActive()) {
-			playSounds();
-		} else {
-			stopAllSounds();
-		}
-	}
-
 	private void stopAllSounds() {
 		Sounds[] soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
@@ -113,6 +96,17 @@ public class GameSounds implements Observer {
 			if (!soundsEnum.equals(sound)) {
 				soundsEnum.stopSound();
 			}
+		}
+	}
+
+	@Override
+	public void update(Observable gameModelForSound, Object arg) {
+		gameModel = (IGameModelForGameSounds) gameModelForSound;
+		newSounds = gameModel.getNewSounds();
+		if (gameModel.isSoundActive()) {
+			playSounds();
+		} else {
+			stopAllSounds();
 		}
 	}
 }

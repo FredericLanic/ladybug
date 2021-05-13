@@ -14,27 +14,27 @@ import lombok.Setter;
 public class GameModelPresentationStatus extends AbstratGameModel implements IGameModelAction {
 
 	@Setter
-	private Point					  ghostRequest = Constants.POINT_ZERO;
-	
+	private Point ghostRequest = Constants.POINT_ZERO;
+
 	@Override
 	public void execute() {
 		setBodiesActions();
 		moveBodies();
 		setSoundActive(true); // à supprimer ?
 		setSoundRequests();
-	}	
-	
-	private void setBodiesActions() {
-		ladybug.setActions(screenData);
-		groupGhosts.setActions(ladybug);
 	}
-	
+
 	private void moveBodies() {
 		ladybug.move(screenData);
 		moveGhosts();
 	}
-	
+
 	private void moveGhosts() {
-		groupGhosts.move(screenData, ladybug, ghostRequest);
+		groupGhosts.move(ladybug, screenData, ghostRequest);
+	}
+
+	private void setBodiesActions() {
+		ladybug.setActions(screenData);
+		groupGhosts.setActions(ladybug);
 	}
 }

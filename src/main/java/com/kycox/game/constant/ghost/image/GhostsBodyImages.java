@@ -29,11 +29,11 @@ public enum GhostsBodyImages {
 	private GhostsColorImages ghostColorBody;
 	@Getter
 	@Setter // ici je triche
-	private boolean			  isComputed;
+	private boolean isComputed;
 
 	private GhostsBodyImages(GhostsColorImages colorImage, boolean isComputed) {
-		this.ghostColorBody	= colorImage;
-		this.isComputed		= isComputed;
+		this.ghostColorBody = colorImage;
+		this.isComputed = isComputed;
 	}
 
 	public Image getImage() {

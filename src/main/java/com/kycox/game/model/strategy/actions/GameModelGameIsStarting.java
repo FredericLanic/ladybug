@@ -15,13 +15,13 @@ import lombok.Setter;
 @Named("GameModelGameIsStarting")
 public class GameModelGameIsStarting extends AbstratGameModel implements IGameModelAction {
 	@Setter
-	private Point					  ghostRequest = Constants.POINT_ZERO;
-	
+	private Point ghostRequest = Constants.POINT_ZERO;
+
 	@Override
 	public void execute() {
 		currentGameStatus.setGameStarting();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 		waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);
 		setSoundRequests();
-	}			
+	}
 }

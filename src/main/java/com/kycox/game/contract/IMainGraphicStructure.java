@@ -22,7 +22,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-public interface IMainGraphicStructrure {
+public interface IMainGraphicStructure {
 	public void add(Component comp, Object constraints);
 
 	default void addPanel(JPanel jPanel, Dimension dimension, String borderLayout) {

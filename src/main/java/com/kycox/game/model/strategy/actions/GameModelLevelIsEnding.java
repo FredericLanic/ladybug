@@ -7,7 +7,7 @@ import com.kycox.game.model.strategy.IGameModelAction;
 
 @Named("GameModelLevelIsEnding")
 public class GameModelLevelIsEnding extends AbstratGameModel implements IGameModelAction {
-	
+
 	@Override
 	public void execute() {
 		setSoundActive(true);

@@ -29,7 +29,7 @@ import org.apache.commons.logging.LogFactory;
 public class ListenSound extends Thread {
 	private static final Log logger = LogFactory.getLog(ListenSound.class);
 	// clip partagé par les Threads
-	private Clip clip			   = null;
+	private Clip clip = null;
 	private long microsecondLength = 0;
 
 	/**
@@ -38,7 +38,7 @@ public class ListenSound extends Thread {
 	 * @param clip
 	 */
 	public ListenSound(Clip clip) {
-		this.clip		  = clip;
+		this.clip = clip;
 		microsecondLength = clip.getMicrosecondLength();
 	}
 

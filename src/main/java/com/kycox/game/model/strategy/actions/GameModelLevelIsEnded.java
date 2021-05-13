@@ -13,7 +13,7 @@ import lombok.Setter;
 public class GameModelLevelIsEnded extends AbstratGameModel implements IGameModelAction {
 	@Setter
 	private long endingLevelMilliseconds;
-	
+
 	@Override
 	public void execute() {
 		setSoundActive(false);

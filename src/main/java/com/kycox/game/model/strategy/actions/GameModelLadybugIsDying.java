@@ -8,7 +8,7 @@ import com.kycox.game.model.strategy.IGameModelAction;
 
 @Named("GameModelLadybugIsDying")
 public class GameModelLadybugIsDying extends AbstratGameModel implements IGameModelAction {
-	
+
 	@Override
 	public void execute() {
 		ladybugDying.inProgress();
@@ -19,5 +19,5 @@ public class GameModelLadybugIsDying extends AbstratGameModel implements IGameMo
 			ladybug.setStatus(LadybugStatus.DEAD);
 			ladybugDying.initBip();
 		}
-	}			
+	}
 }

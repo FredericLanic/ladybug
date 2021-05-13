@@ -44,6 +44,11 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 	@Getter
 	private Point viewDirection = Constants.POINT_UP;
 
+	@Override
+	public boolean isAllowedToDoActions() {
+		return getStatus() != LadybugStatus.DYING && getStatus() != LadybugStatus.DEAD;
+	}
+
 	public boolean isEatenAMegaPoint() {
 		return ladybugActions.isEatenAMegaPoint();
 	}
@@ -62,7 +67,7 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 			return;
 		}
 		ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
-		if (hasChangeBlock()) {
+		if (isPerfectOnABlock()) {
 			if (canMove(userRequest, currentScreenBlock))
 				viewDirection = userRequest;
 			move(currentScreenBlock);
@@ -79,7 +84,7 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 			this.viewDirection = getDirection();
 		}
 		// calcule uniquement lorsque ladybug rempli le block
-		if (hasChangeBlock()) {
+		if (isPerfectOnABlock()) {
 			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
@@ -101,18 +106,18 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 
+	private void teleport(ScreenData screenData) {
+		if (isPerfectOnABlock() && screenData.getNbrBlocksWithPoint() > 0) {
+			Point newPoint = screenData.getRandomPosOnAPoint();
+			setPosition(Utils.convertPointToGraphicUnit(newPoint));
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Ladybug ");
 		sb.append("position: " + getPosition());
 		return sb.toString();
-	}
-
-	private void teleport(ScreenData screenData) {
-		if (hasChangeBlock() && screenData.getNbrBlocksWithPoint() > 0) {
-			Point newPoint = screenData.getRandomPosOnAPoint();
-			setPosition(Utils.convertPointToGraphicUnit(newPoint));
-		}
 	}
 }

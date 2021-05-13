@@ -25,11 +25,11 @@ import lombok.Setter;
 public class LadybugActions extends BodyActions {
 	@Setter
 	@Getter
-	private ScreenBlock	currentScreenBlock;
+	private ScreenBlock currentScreenBlock;
 	@Setter
 	@Getter
-	private boolean		eatenAMegaPoint;
+	private boolean eatenAMegaPoint;
 	@Setter
 	@Getter
-	private boolean		eatenAPoint;
+	private boolean eatenAPoint;
 }

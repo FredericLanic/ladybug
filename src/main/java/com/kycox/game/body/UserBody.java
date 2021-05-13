@@ -24,36 +24,19 @@ import com.kycox.game.level.ScreenBlock;
 import lombok.Setter;
 
 public abstract class UserBody extends Body {
-	// Les direction de ladyBug (requête suite aux touches et la vue)
 	@Setter
 	protected Point userRequest = Constants.POINT_ZERO;
 
-	/**
-	 * Retourne vrai si l'élément peut bouger en fonction des cases à côté
-	 *
-	 * @param direction
-	 * @param screenBlock
-	 * @return
-	 */
 	protected boolean canMove(Point direction, ScreenBlock screenBlock) {
-		return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isBorderLeft() // ladybug est coincé à
-		        // gauche
-		        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isBorderRight() // ladybug est coincé en
-				// haut
-		        || direction.equals(Constants.POINT_UP) && screenBlock.isBorderUp() // ladybug est coincé à droite
-		        || direction.equals(Constants.POINT_DOWN) && screenBlock.isBorderDown() // ladybug est coincé en
-		// bas
-		);
+		return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isBorderLeft() //
+		        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isBorderRight() //
+		        || direction.equals(Constants.POINT_UP) && screenBlock.isBorderUp() //
+		        || direction.equals(Constants.POINT_DOWN) && screenBlock.isBorderDown());
 	}
 
-	/**
-	 * Déplacement de l'élément
-	 *
-	 * @param screenBlock
-	 */
 	protected void move(ScreenBlock screenBlock) {
-		if (hasChangeBlock()) {
-			if ((userRequest.x != 0 || userRequest.y != 0) && canMove(userRequest, screenBlock)) {
+		if (isPerfectOnABlock()) {
+			if (userRequestHasChanged() && canMove(userRequest, screenBlock)) {
 				setDirection(userRequest);
 			}
 			/**
@@ -63,5 +46,9 @@ public abstract class UserBody extends Body {
 				setDirection(Constants.POINT_ZERO);
 			}
 		}
+	}
+
+	private boolean userRequestHasChanged() {
+		return userRequest.x != 0 || userRequest.y != 0;
 	}
 }

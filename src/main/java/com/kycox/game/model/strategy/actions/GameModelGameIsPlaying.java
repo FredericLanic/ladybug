@@ -16,17 +16,45 @@ import lombok.Setter;
 
 @Named("GameModelGameIsPlaying")
 public class GameModelGameIsPlaying extends AbstratGameModel implements IGameModelAction {
-	
-	private static final Log		  logger	   = LogFactory.getLog(GameModelGameIsPlaying.class);
-	
+
+	private static final Log logger = LogFactory.getLog(GameModelGameIsPlaying.class);
+
 	@Setter
 	private Point ghostRequest = Constants.POINT_ZERO;
-	
+
+	private void caseOfGhostEatLadybug() {
+		if (groupGhosts.eatLadybug()) {
+			ladybug.setStatus(LadybugStatus.DYING);
+			ladybugDying.initBip();
+			groupGhosts.manageNewLife();
+		}
+	}
+
+	private void caseOfLadybugEatAMegaPoint() {
+		if (ladybug.isEatenAMegaPoint()) {
+			logger.info("Ladybug has just eaten a mega point");
+			runSuperPowerTimer();
+			groupGhosts.setFear(true);
+		}
+	}
+
+	private void caseOfNewLadybugLife() {
+		ladybug.manageNewLife();
+	}
+
+	private void checkEndMaze() {
+		if (screenData.getNbrBlocksWithPoint() == 0) {
+			gameScore.addScore(Constants.SCORE_END_LEVEL);
+			gameScore.initIncrementScore();
+			currentGameStatus.setLevelEnd();
+		}
+	}
+
 	@Override
 	public void execute() {
 		gameIsPlaying();
 	}
-	
+
 	private void gameIsPlaying() {
 		// ***
 		caseOfNewLadybugLife();
@@ -49,30 +77,24 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 		// ***
 		moveBodies();
 		// ***
-		checkEndMaze(); 
+		checkEndMaze();
 	}
-	
-	private void caseOfNewLadybugLife() {
-		ladybug.manageNewLife();
+
+	private boolean hasEnoughtPointForANewLife() {
+		return gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE;
 	}
-	
-	private void setBodiesActions() {
-		ladybug.setActions(screenData);
-		groupGhosts.setActions(ladybug);
-	}
-	
-	private void updateGhostSeetings() {
-		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData.getPercentageEatenPoint());
-	}
-	
-	private void caseOfGhostEatLadybug() {
-		if (groupGhosts.eatLadybug()) {
-			ladybug.setStatus(LadybugStatus.DYING);
-			ladybugDying.initBip();
-			groupGhosts.manageNewLife();
+
+	private void manageScores() {
+		gameScore.setScore(groupGhosts, ladybug, groupMessages);
+		groupMessages.removeIfDying();
+		// ***
+		if (hasEnoughtPointForANewLife()) {
+			logger.info("New life for Ladybug");
+			gameScore.initIncrementScore();
+			ladybug.setNewLife(true);
 		}
 	}
-	
+
 	private void manageSuperPower() {
 		if (superPowerTimer.isStopping()) {
 			groupGhosts.setFlashActive();
@@ -80,23 +102,16 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 			groupGhosts.setFear(false);
 		}
 	}
-	
-	private void caseOfLadybugEatAMegaPoint() {
-		if (ladybug.isEatenAMegaPoint()) {
-			logger.info("Ladybug has just eaten a mega point");
-			runSuperPowerTimer();
-			groupGhosts.setFear(true);
-		}
+
+	private void moveBodies() {
+		ladybug.move(screenData);
+		moveGhosts();
 	}
-	
-	private void checkEndMaze() {
-		if (screenData.getNbrBlocksWithPoint() == 0) {
-			gameScore.addScore(Constants.SCORE_END_LEVEL);
-			gameScore.initIncrementScore();
-			currentGameStatus.setLevelEnd();
-		}
+
+	private void moveGhosts() {
+		groupGhosts.move(ladybug, screenData, ghostRequest);
 	}
-	
+
 	/**
 	 * Lancement du timer pour le super power de ladybug
 	 */
@@ -110,32 +125,17 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 		// niveau
 		superPowerTimer.launch(Constants.NBR_SECONDS_SUPER_POWER);
 	}
-	
-	private void manageScores() {
-		gameScore.setScore(groupGhosts, ladybug, groupMessages);
-		groupMessages.removeIfDying();
-		// ***
-		if (hasEnoughtPointForANewLife()) {
-			logger.info("New life for Ladybug");
-			gameScore.initIncrementScore();
-			ladybug.setNewLife(true);
-		}
+
+	private void setBodiesActions() {
+		ladybug.setActions(screenData);
+		groupGhosts.setActions(ladybug);
 	}
 
-	private boolean hasEnoughtPointForANewLife() {
-		return gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE;
+	private void updateGhostSeetings() {
+		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData.getPercentageEatenPoint());
 	}
-	
+
 	private void updateScreenBlock() {
 		screenData.updateScreenBlock(ladybug);
-	}
-	
-	private void moveBodies() {
-		ladybug.move(screenData);
-		moveGhosts();
-	}
-
-	private void moveGhosts() {
-		groupGhosts.move(screenData, ladybug, ghostRequest);
 	}
 }

@@ -26,12 +26,12 @@ import com.kycox.game.view.body.BodyImg;
 
 @Named("LadybugView")
 public class LadybugView extends LadybugCommun implements TimerView {
-	private BodyImg	ladybugFull01 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
-	private BodyImg	ladybugFull02 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
-	private BodyImg	ladybugUp1	  = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
-	private BodyImg	ladybugUp2	  = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
-	private BodyImg	ladybugUp3	  = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
-	private Timer	timer;
+	private BodyImg ladybugFull01 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
+	private BodyImg ladybugFull02 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
+	private BodyImg ladybugUp1 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
+	private BodyImg ladybugUp2 = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
+	private BodyImg ladybugUp3 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
+	private Timer timer;
 
 	@Override
 	public void doAction() {

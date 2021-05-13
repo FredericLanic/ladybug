@@ -38,11 +38,11 @@ import com.kycox.game.properties.GameProperties;
  */
 @Named("KeyGameController")
 public class KeyGameController extends KeyAdapter {
-	private static final Log		logger = LogFactory.getLog(KeyGameController.class);
+	private static final Log logger = LogFactory.getLog(KeyGameController.class);
 	@Inject
-	private IGameModelForController	gameModel;
+	private IGameModelForController gameModel;
 	@Inject
-	private GameProperties			gameProperties;
+	private GameProperties gameProperties;
 
 	/**
 	 * Action sur les touches Gestion des touches pressées

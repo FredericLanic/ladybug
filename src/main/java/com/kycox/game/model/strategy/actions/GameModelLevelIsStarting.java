@@ -18,15 +18,15 @@ import lombok.Setter;
 
 @Named("GameModelLevelIsStarting")
 public class GameModelLevelIsStarting extends AbstratGameModel implements IGameModelAction {
-	
-	private static final Log		  logger	   = LogFactory.getLog(GameModelLevelIsStarting.class);
+
+	private static final Log logger = LogFactory.getLog(GameModelLevelIsStarting.class);
 
 	@Setter
 	private long beginningMilliseconds;
-	
+
 	@Setter
-	private Point					  ghostRequest = Constants.POINT_ZERO;
-	
+	private Point ghostRequest = Constants.POINT_ZERO;
+
 	@Override
 	public void execute() {
 		initLevel();
@@ -35,7 +35,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentGameStatus.TO_INGAME);
 		setSoundRequests();
 	}
-	
+
 	/**
 	 * Initialise le niveau en fonction du niveau précédent
 	 */
@@ -58,7 +58,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		// on continue le level
 		continueLevel();
 	}
-	
+
 	/**
 	 * Suppression des tâches du niveau qui est terminé (succès, échec ou pas de
 	 * niveau).

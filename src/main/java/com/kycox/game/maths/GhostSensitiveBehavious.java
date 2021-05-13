@@ -16,9 +16,8 @@
  */
 package com.kycox.game.maths;
 
-import java.util.Random;
-
 import com.kycox.game.constant.Constants;
+import com.kycox.game.tools.Utils;
 
 /**
  * Probabilité de comportement
@@ -31,11 +30,10 @@ import com.kycox.game.constant.Constants;
  *
  */
 public class GhostSensitiveBehavious {
-	private final double HIGH_LIMIT		  = 90;
-	private final double LOW_LIMIT		  = 20;
-	private final Random RANDOM_GENERATOR = new Random();
-	private final int	 SCALE			  = 100;
-	private double		 y				  = 0;
+	private final double HIGH_LIMIT = 90;
+	private final double LOW_LIMIT = 20;
+	private final int SCALE = 100;
+	private double y = 0;
 
 	/**
 	 *
@@ -46,7 +44,7 @@ public class GhostSensitiveBehavious {
 	 * @return
 	 */
 	public boolean isActive() {
-		return (RANDOM_GENERATOR.nextInt(SCALE) + 1) < y;
+		return (Utils.generateRandomInt(SCALE) + 1) < y;
 	}
 
 	public void setNumLevel(int numLevel) {

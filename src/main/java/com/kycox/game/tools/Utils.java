@@ -17,10 +17,14 @@
 package com.kycox.game.tools;
 
 import java.awt.Point;
+import java.security.SecureRandom;
 
 import com.kycox.game.constant.Constants;
 
 public final class Utils {
+
+	private static SecureRandom secureRandom = new SecureRandom();
+
 	/**
 	 * Converti un point du graphique en un block
 	 *
@@ -41,11 +45,15 @@ public final class Utils {
 		return new Point(point.x * Constants.BLOCK_SIZE, point.y * Constants.BLOCK_SIZE);
 	}
 
+	public static int generateRandomInt(int max) {
+		return secureRandom.nextInt(max);
+	}
+
 	// origin : https://algorithms.tutorialhorizon.com/convert-integer-to-roman/
 	public static String integerToRoman(int num) {
-		int[]		  values		= { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
-		String[]	  romanLiterals	= { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
-		StringBuilder roman			= new StringBuilder();
+		int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+		String[] romanLiterals = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+		StringBuilder roman = new StringBuilder();
 		for (int i = 0; i < values.length; i++) {
 			while (num >= values[i]) {
 				num -= values[i];

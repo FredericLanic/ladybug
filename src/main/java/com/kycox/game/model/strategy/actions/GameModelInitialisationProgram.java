@@ -15,8 +15,8 @@ import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 
 @Named("GameModelInitialisationProgram")
 public class GameModelInitialisationProgram extends AbstratGameModel implements IGameModelAction {
-	
-	private static final Log		  logger	   = LogFactory.getLog(GameModelInitialisationProgram.class);
+
+	private static final Log logger = LogFactory.getLog(GameModelInitialisationProgram.class);
 
 	@Override
 	public void execute() {
@@ -56,5 +56,5 @@ public class GameModelInitialisationProgram extends AbstratGameModel implements 
 		// initialise les vies de fantômes
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
 	}
-	
+
 }
