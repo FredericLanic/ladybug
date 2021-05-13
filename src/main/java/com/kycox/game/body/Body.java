@@ -18,9 +18,6 @@ package com.kycox.game.body;
 
 import java.awt.Point;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.maths.SpeedFunction;
 
@@ -28,7 +25,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 public abstract class Body {
-	private static final Log logger = LogFactory.getLog(Body.class);
 	@Getter
 	@Setter
 	private Point direction = Constants.POINT_ZERO;

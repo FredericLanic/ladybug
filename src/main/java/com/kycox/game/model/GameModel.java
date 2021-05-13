@@ -262,7 +262,7 @@ public class GameModel extends Observable
 	 */
 	@Override
 	public int getNbrPlayers() {
-		if (groupGhosts.hasNotComputedGhost()) {
+		if (groupGhosts.hasGhostUser()) {
 			return 2;
 		}
 		return 1;
@@ -413,7 +413,7 @@ public class GameModel extends Observable
 	}
 
 	private void moveGhosts() {
-		groupGhosts.move(screenData, ladybug, ghostRequest);
+		groupGhosts.move(ladybug, screenData, ghostRequest);
 	}
 
 	private void programIsStarting() {
@@ -468,7 +468,7 @@ public class GameModel extends Observable
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
 		newSounds.addIntermission(currentGameStatus.isGamePresentation() && Utils.generateRandomInt(1000) > 997
 		        || currentGameStatus.isLevelEnding());
-		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
+		newSounds.addScaredGhost(groupGhosts.hasScaredOrFlashedGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
 		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhost() > 0);

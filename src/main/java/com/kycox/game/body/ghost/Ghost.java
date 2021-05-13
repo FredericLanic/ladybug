@@ -58,11 +58,15 @@ public abstract class Ghost extends UserBody {
 	@Setter
 	private GhostStatus status = GhostStatus.NORMAL;
 
-	private void flashOrScaredMoving(Point ladybugPosBlock, ScreenData screenData) {
+	private void scaredOrFlashedMoving(Point ladybugPosBlock, ScreenData screenData) {
 		if (Utils.convertPointToGraphicUnit(ladybugPosBlock).distance(getPosition()) < 5 * Constants.BLOCK_SIZE)
 			moveScared(ladybugPosBlock, screenData);
 		else
 			moveByDefault(screenData);
+	}
+
+	private boolean hasTouchedLadybug(Ladybug ladybug) {
+		return isTooNearOfLadybug(ladybug) && isAllowedToDoActions() && ladybug.isAllowedToDoActions();
 	}
 
 	@Override
@@ -135,7 +139,7 @@ public abstract class Ghost extends UserBody {
 		// Déplacement en fonction du status du fantôme
 		switch (getStatus()) {
 			case DYING -> moveToRegeneratePoint(screenData);
-			case FLASH, SCARED -> flashOrScaredMoving(ladybugPosBlock, screenData);
+			case FLASH, SCARED -> scaredOrFlashedMoving(ladybugPosBlock, screenData);
 			case NORMAL -> normalMoving(ladybug, screenData);
 			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
 		}
@@ -254,7 +258,7 @@ public abstract class Ghost extends UserBody {
 		ghostActions = new GhostActions();
 		ghostActions.setPosition((Point) getPosition().clone());
 		// Détection de la collision avec un fantôme et ladybug
-		if (isTooNearOfLadybug(ladybug) && isAllowedToDoActions() && ladybug.isAllowedToDoActions()) {
+		if (hasTouchedLadybug(ladybug)) {
 			if (isScaredOrFlashed()) {
 				ghostActions.setEatenByLadybug(true);
 			} else {

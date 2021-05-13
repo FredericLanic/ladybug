@@ -37,7 +37,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	}
 
 	public int getLeftLives() {
-		if (!hasNotComputedGhost()) {
+		if (hasGhostUser()) {
 			return 0;
 		}
 		return lstGhosts.stream().filter(g -> !g.isComputed()).findFirst().get().getLeftLifes();
@@ -51,7 +51,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		return (lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.DYING).count() > 0);
 	}
 
-	public boolean hasNotComputedGhost() {
+	public boolean hasGhostUser() {
 		return lstGhosts.stream().filter(g -> !g.isComputed()).findFirst().isPresent();
 	}
 
@@ -59,7 +59,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		return (lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATING).count() > 0);
 	}
 
-	public boolean hasScaredGhost() {
+	public boolean hasScaredOrFlashedGhost() {
 		return ((lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.SCARED).count()
 		        + lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.FLASH).count()) > 0);
 	}
@@ -72,7 +72,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		lstGhosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
-	public void move(ScreenData screenData, Ladybug ladybug, Point ghostRequest) {
+	public void move(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
 		lstGhosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, screenData));
 		lstGhosts.stream().filter(g -> !g.isComputed())
 		        .forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
