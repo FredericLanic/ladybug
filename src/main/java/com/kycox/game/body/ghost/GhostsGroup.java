@@ -18,6 +18,7 @@ package com.kycox.game.body.ghost;
 
 import java.awt.Point;
 import java.util.List;
+import java.util.Optional;
 
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
@@ -37,10 +38,12 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	}
 
 	public int getLeftLives() {
-		if (hasGhostUser()) {
-			return 0;
+		Optional<Ghost> optGhost = lstGhosts.stream().filter(g -> !g.isComputed()).findFirst();
+		if (optGhost.isPresent()) {
+			return optGhost.get().getLeftLifes();
 		}
-		return lstGhosts.stream().filter(g -> !g.isComputed()).findFirst().get().getLeftLifes();
+		return 0;
+
 	}
 
 	public int getNbrEatenGhost() {
@@ -146,7 +149,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	/**
 	 * Retourne vrai si le fantôme n'a plus de vie
 	 */
-	public boolean userGhostHasLife() {
+	public boolean userGhostHasNoLife() {
 		long nbrDeadUserGhost = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
 		        .count();
 		return (nbrDeadUserGhost > 0);

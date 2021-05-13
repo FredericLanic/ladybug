@@ -123,7 +123,7 @@ public class GameModel extends Observable
 		} else if (currentGameStatus.isInGame() && ladybug.getStatus() == LadybugStatus.DYING) {
 			ladybugIsDying();
 			// moveGhosts();
-		} else if (currentGameStatus.isInGame() && groupGhosts.userGhostHasLife()) {
+		} else if (currentGameStatus.isInGame() && groupGhosts.userGhostHasNoLife()) {
 			currentGameStatus.setGameEnd();
 		} else if (currentGameStatus.isInGame()) {
 			gameIsPlaying();
