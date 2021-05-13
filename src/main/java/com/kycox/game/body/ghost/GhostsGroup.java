@@ -101,7 +101,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		// Mis à jour du statut
 		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug())
 		        .forEach(g -> g.setSettingAfterBeEaten(numLevel));
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(Ghost::minusLifesLeft);
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(Ghost::lostsALife);
 	}
 
 	private void setGhostStatusAfterRegeneration() {

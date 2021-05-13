@@ -17,16 +17,15 @@
 package com.kycox.game.level;
 
 import java.util.List;
-import java.util.Random;
 
 import com.kycox.game.contract.ILevel;
+import com.kycox.game.tools.Utils;
 
 import lombok.Setter;
 
 public final class Levels {
 	@Setter
 	private List<ILevel> lstLevel;
-	private Random random = new Random();
 
 	/**
 	 * Retourne le niveau demand�
@@ -36,7 +35,8 @@ public final class Levels {
 	public ILevel getLevel(int i) {
 		int num = i;
 		if (num > lstLevel.size())
-			num = 1 + random.nextInt(lstLevel.size());
+			num = 1 + Utils.generateRandomInt(lstLevel.size());
 		return lstLevel.get(num - 1);
 	}
+
 }

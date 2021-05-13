@@ -19,7 +19,6 @@ package com.kycox.game.body.ghost;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -125,7 +124,7 @@ public abstract class Ghost extends UserBody {
 				logger.info("On ne devrait pas passer par ici");
 				setDirection(new Point(getDirection().x, -getDirection().y));
 			} else {
-				setDirection(lstDirections.get(new Random().nextInt(lstDirections.size())));
+				setDirection(lstDirections.get(Utils.generateRandomInt(lstDirections.size())));
 			}
 		}
 		posPoint.translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());

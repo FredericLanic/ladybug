@@ -27,11 +27,6 @@ import com.kycox.game.maths.SpeedFunction;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Classe abstraite pour les éléments qui bouge dans le jeu
- *
- * Le mouvement peut être calculé ou bien en fonction des joueurs
- */
 public abstract class Body {
 	private static final Log logger = LogFactory.getLog(Body.class);
 	@Getter
@@ -56,20 +51,13 @@ public abstract class Body {
 	@Getter
 	private int startSpeedIndex = 0;
 
-	/**
-	 * Getters et setters pour la vitesse
-	 *
-	 * @return
-	 */
 	public int getSpeed() {
 		return Constants.VALID_SPEEDS
 		        .get(speedIndex < Constants.VALID_SPEEDS.size() ? speedIndex : Constants.VALID_SPEEDS.size() - 1);
 	}
 
 	/**
-	 * Initialise la vitesse du fantôme à la construction
-	 *
-	 * (speed & startSpeed)
+	 * Initialise la vitesse du fantôme à la construction (speed & startSpeed)
 	 *
 	 * @param speedIndex
 	 */
@@ -80,28 +68,19 @@ public abstract class Body {
 
 	protected abstract boolean isAllowedToDoActions();
 
-	/**
-	 * Le fantôme ou ladybug change de block
-	 *
-	 * @param pointPos : coordonnées DE L'ECRAN (x,y) dans la fenêtre
-	 * @return
-	 */
 	public boolean isPerfectOnABlock() {
 		Point pointPos = getPosition();
 		return pointPos.x % Constants.BLOCK_SIZE == 0 && pointPos.y % Constants.BLOCK_SIZE == 0;
 	}
 
-	/**
-	 * Ajout d'une nouvelle vie
-	 */
+	public void lostsALife() {
+		leftLifes--;
+	}
+
 	public void manageNewLife() {
 		if (isNewLife()) {
 			setNewLife(false);
 			leftLifes++;
 		}
-	}
-
-	public void minusLifesLeft() {
-		leftLifes--;
 	}
 }

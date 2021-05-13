@@ -21,7 +21,6 @@ import static com.kycox.game.constant.Constants.PACE;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -46,6 +45,7 @@ import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
 import com.kycox.game.timer.SuperPowerTimer;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
+import com.kycox.game.tools.Utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -348,7 +348,7 @@ public class GameModel extends Observable
 	 */
 	private void ladybugIsDead() {
 		logger.info("Ladybug is dead");
-		ladybug.minusLifesLeft();
+		ladybug.lostsALife();
 		// test fin du jeu
 		if (ladybug.getLeftLifes() == 0) {
 			logger.info("Ladybug lost the game");
@@ -466,7 +466,7 @@ public class GameModel extends Observable
 		// initialise le sons
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
-		newSounds.addIntermission(currentGameStatus.isGamePresentation() && new Random().nextInt(1000) > 997
+		newSounds.addIntermission(currentGameStatus.isGamePresentation() && Utils.generateRandomInt(1000) > 997
 		        || currentGameStatus.isLevelEnding());
 		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());

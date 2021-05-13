@@ -17,10 +17,14 @@
 package com.kycox.game.tools;
 
 import java.awt.Point;
+import java.security.SecureRandom;
 
 import com.kycox.game.constant.Constants;
 
 public final class Utils {
+
+	private static SecureRandom secureRandom = new SecureRandom();
+
 	/**
 	 * Converti un point du graphique en un block
 	 *
@@ -39,6 +43,10 @@ public final class Utils {
 	 */
 	public static Point convertPointToGraphicUnit(Point point) {
 		return new Point(point.x * Constants.BLOCK_SIZE, point.y * Constants.BLOCK_SIZE);
+	}
+
+	public static int generateRandomInt(int max) {
+		return secureRandom.nextInt(max);
 	}
 
 	// origin : https://algorithms.tutorialhorizon.com/convert-integer-to-roman/

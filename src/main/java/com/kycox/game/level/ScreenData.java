@@ -19,7 +19,6 @@ package com.kycox.game.level;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -132,7 +131,8 @@ public final class ScreenData {
 
 	private int getRandomPosNumPoint() {
 		int nbrPoints = getNbrBlocksWithPoint();
-		int randomPoint = new Random().nextInt(nbrPoints) + 1;
+		int randomPoint = Utils.generateRandomInt(nbrPoints) + 1;
+
 		return getPosNumPoint(randomPoint);
 	}
 
