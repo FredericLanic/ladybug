@@ -19,7 +19,6 @@ package com.kycox.game.level;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,13 +38,13 @@ import lombok.Getter;
 @Named("ScreenData")
 public final class ScreenData {
 	@Getter
-	private ILevel			  currentLevel;
+	private ILevel currentLevel;
 	@Inject
-	private Levels			  gameLevels;
-	private int				  initNbrBlocksWithPoint = 0;
-	private List<ScreenBlock> lstDataBlocks			 = new ArrayList<>();
+	private Levels gameLevels;
+	private int initNbrBlocksWithPoint = 0;
+	private List<ScreenBlock> lstDataBlocks = new ArrayList<>();
 	@Getter
-	private List<ScreenBlock> lstViewBlocks			 = new ArrayList<>();
+	private List<ScreenBlock> lstViewBlocks = new ArrayList<>();
 
 	/**
 	 * Convert le ScreenData en une List<UnitDijkstra>
@@ -117,6 +116,26 @@ public final class ScreenData {
 		return (initNbrBlocksWithPoint - getNbrBlocksWithPoint()) * 100 / initNbrBlocksWithPoint;
 	}
 
+	private int getPosNumPoint(int numPoint) {
+		int nbrPoint = 0;
+		int pos = 0;
+		for (int i = 0; i < lstDataBlocks.size(); i++) {
+			if (lstDataBlocks.get(i).isPoint()) {
+				nbrPoint++;
+				if (nbrPoint == numPoint)
+					pos = i;
+			}
+		}
+		return pos;
+	}
+
+	private int getRandomPosNumPoint() {
+		int nbrPoints = getNbrBlocksWithPoint();
+		int randomPoint = Utils.generateRandomInt(nbrPoints) + 1;
+
+		return getPosNumPoint(randomPoint);
+	}
+
 	/**
 	 * Retourne les coordonnées aléatoire GRAPHIQUE d'un block qui contient un point
 	 * à manger par ladybug
@@ -124,9 +143,9 @@ public final class ScreenData {
 	 * @return
 	 */
 	public Point getRandomPosOnAPoint() {
-		int	pos	   = getRandomPosNumPoint();
-		int	yBlock = pos / currentLevel.getNbrBlocksByLine();
-		int	xBlock = pos % currentLevel.getNbrBlocksByLine();
+		int pos = getRandomPosNumPoint();
+		int yBlock = pos / currentLevel.getNbrBlocksByLine();
+		int xBlock = pos % currentLevel.getNbrBlocksByLine();
 		return new Point(xBlock, yBlock);
 	}
 
@@ -217,24 +236,5 @@ public final class ScreenData {
 			lstViewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate()))
 			        .findFirst().orElseThrow().removePoint();
 		}
-	}
-
-	private int getPosNumPoint(int numPoint) {
-		int	nbrPoint = 0;
-		int	pos		 = 0;
-		for (int i = 0; i < lstDataBlocks.size(); i++) {
-			if (lstDataBlocks.get(i).isPoint()) {
-				nbrPoint++;
-				if (nbrPoint == numPoint)
-					pos = i;
-			}
-		}
-		return pos;
-	}
-
-	private int getRandomPosNumPoint() {
-		int	nbrPoints	= getNbrBlocksWithPoint();
-		int	randomPoint	= new Random().nextInt(nbrPoints) + 1;
-		return getPosNumPoint(randomPoint);
 	}
 }

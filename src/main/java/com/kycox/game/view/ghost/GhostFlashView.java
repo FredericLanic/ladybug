@@ -30,8 +30,8 @@ public class GhostFlashView implements TimerView {
 		return ghostFlashView;
 	}
 
-	private boolean	showScared;
-	private Timer	timer;
+	private boolean showScared;
+	private Timer timer;
 
 	private GhostFlashView() {
 		timer = createTimer();

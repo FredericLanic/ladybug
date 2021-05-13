@@ -21,7 +21,6 @@ import static com.kycox.game.constant.Constants.PACE;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -46,6 +45,7 @@ import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
 import com.kycox.game.timer.SuperPowerTimer;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
+import com.kycox.game.tools.Utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -59,122 +59,44 @@ import lombok.Setter;
 @Named("GameModel")
 public class GameModel extends Observable
         implements IGameModelForGameView, IGameModelForGameSounds, IGameModelForController {
-	private static final Log		  logger	   = LogFactory.getLog(GameModel.class);
+	private static final Log logger = LogFactory.getLog(GameModel.class);
 	@Setter
-	private long					  beginningMilliseconds;
+	private long beginningMilliseconds;
 	@Getter
 	@Inject
-	private CurrentGameStatus		  currentGameStatus;
+	private CurrentGameStatus currentGameStatus;
 	@Setter
-	private long					  endingLevelMilliseconds;
+	private long endingLevelMilliseconds;
 	@Getter
 	@Inject
-	private GameScore				  gameScore;
-	private final Timer				  gameTimer	   = createGameTimer();
+	private GameScore gameScore;
+	private final Timer gameTimer = createGameTimer();
 	@Setter
-	private Point					  ghostRequest = Constants.POINT_ZERO;
+	private Point ghostRequest = Constants.POINT_ZERO;
 	@Getter
 	@Inject
-	private GhostsGroup				  groupGhosts;
+	private GhostsGroup groupGhosts;
 	@Getter
 	@Inject
-	private GroupMessages			  groupMessages;
+	private GroupMessages groupMessages;
 	@Getter
 	@Inject
-	private Ladybug					  ladybug;
+	private Ladybug ladybug;
 	@Getter
 	@Inject
-	private LadybugDying			  ladybugDying;
+	private LadybugDying ladybugDying;
 	@Getter
 	@Inject
-	private NewSounds				  newSounds;
+	private NewSounds newSounds;
 	@Getter
 	@Inject
-	private ScreenData				  screenData;
+	private ScreenData screenData;
 	@Getter
 	@Setter
-	private boolean					  soundActive;
+	private boolean soundActive;
 	@Inject
-	private SuperPowerTimer			  superPowerTimer;
+	private SuperPowerTimer superPowerTimer;
 	private WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;
-
-	@Override
-	public void forceStopGame() {
-		if (gameTimer.isRunning()) {
-			logger.info("Force Stop Game");
-			gameScore.setOldScore(-1);
-			currentGameStatus.setProgramStart();
-		}
-	}
-
-	/**
-	 * Jeu en pause
-	 */
-	@Override
-	public void gameInPause() {
-		if (gameTimer.isRunning()) {
-			logger.info("Game in pause");
-			stopGameTimer();
-		} else {
-			logger.info("Game regoes");
-			startGameTimer();
-		}
-	}
-
-	@Override
-	public int getGhostLeftLifes() {
-		return groupGhosts.getLeftLives();
-	}
-
-	/**
-	 * Retourne le nombre de joueurs : 1 ou 2
-	 *
-	 * @return
-	 */
-	@Override
-	public int getNbrPlayers() {
-		if (groupGhosts.hasNotComputedGhost()) {
-			return 2;
-		}
-		return 1;
-	}
-
-	@Override
-	public boolean isGamePresentation() {
-		return currentGameStatus.isGamePresentation();
-	}
-
-	@Override
-	public boolean isInGame() {
-		return getCurrentGameStatus().isInGame();
-	}
-
-	@Override
-	public void setLadybugRequest(Point point) {
-		getLadybug().setUserRequest(point);
-	}
-
-	@Override
-	public void startGame() {
-		logger.info("Start Game");
-		currentGameStatus.initNumLevel();
-		currentGameStatus.setGameStart();
-	}
-
-	/**
-	 * FIXME : peut être gérer en fonction de l'état du jeu quand par exemple on est
-	 * en intro
-	 */
-	@Override
-	public void startStopSoundActive() {
-		logger.info("startStopSoundActive : " + soundActive);
-		soundActive = !soundActive;
-	}
-
-	public void stopGameTimer() {
-		logger.info("Stop Game Timer");
-		gameTimer.stop();
-	}
 
 	/*
 	 * Remarque de Christophe M : Sur ce gros if, tes conditions sont difficilement
@@ -201,7 +123,7 @@ public class GameModel extends Observable
 		} else if (currentGameStatus.isInGame() && ladybug.getStatus() == LadybugStatus.DYING) {
 			ladybugIsDying();
 			// moveGhosts();
-		} else if (currentGameStatus.isInGame() && groupGhosts.userIsDead()) {
+		} else if (currentGameStatus.isInGame() && groupGhosts.userGhostHasNoLife()) {
 			currentGameStatus.setGameEnd();
 		} else if (currentGameStatus.isInGame()) {
 			gameIsPlaying();
@@ -267,6 +189,29 @@ public class GameModel extends Observable
 		return new Timer(PACE, action);
 	}
 
+	@Override
+	public void forceStopGame() {
+		if (gameTimer.isRunning()) {
+			logger.info("Force Stop Game");
+			gameScore.setOldScore(-1);
+			currentGameStatus.setProgramStart();
+		}
+	}
+
+	/**
+	 * Jeu en pause
+	 */
+	@Override
+	public void gameInPause() {
+		if (gameTimer.isRunning()) {
+			logger.info("Game in pause");
+			stopGameTimer();
+		} else {
+			logger.info("Game regoes");
+			startGameTimer();
+		}
+	}
+
 	private void gameIsEnding() {
 		currentGameStatus.setGameEnding();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
@@ -303,6 +248,24 @@ public class GameModel extends Observable
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 		waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);
 		setSoundRequests();
+	}
+
+	@Override
+	public int getGhostLeftLifes() {
+		return groupGhosts.getLeftLives();
+	}
+
+	/**
+	 * Retourne le nombre de joueurs : 1 ou 2
+	 *
+	 * @return
+	 */
+	@Override
+	public int getNbrPlayers() {
+		if (groupGhosts.hasGhostUser()) {
+			return 2;
+		}
+		return 1;
 	}
 
 	private void ghostsIsMovingInPresentation() {
@@ -369,13 +332,23 @@ public class GameModel extends Observable
 		continueLevel();
 	}
 
+	@Override
+	public boolean isGamePresentation() {
+		return currentGameStatus.isGamePresentation();
+	}
+
+	@Override
+	public boolean isInGame() {
+		return getCurrentGameStatus().isInGame();
+	}
+
 	/**
 	 * Ladybug a rencontré un fantôme !! Le jeu est terminé si toutes les vies de
 	 * ladybug ont été utilisées.
 	 */
 	private void ladybugIsDead() {
 		logger.info("Ladybug is dead");
-		ladybug.minusLifesLeft();
+		ladybug.lostsALife();
 		// test fin du jeu
 		if (ladybug.getLeftLifes() == 0) {
 			logger.info("Ladybug lost the game");
@@ -440,7 +413,7 @@ public class GameModel extends Observable
 	}
 
 	private void moveGhosts() {
-		groupGhosts.move(screenData, ladybug, ghostRequest);
+		groupGhosts.move(ladybug, screenData, ghostRequest);
 	}
 
 	private void programIsStarting() {
@@ -481,6 +454,11 @@ public class GameModel extends Observable
 		groupGhosts.setActions(ladybug);
 	}
 
+	@Override
+	public void setLadybugRequest(Point point) {
+		getLadybug().setUserRequest(point);
+	}
+
 	/**
 	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
 	 */
@@ -488,9 +466,9 @@ public class GameModel extends Observable
 		// initialise le sons
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
-		newSounds.addIntermission(currentGameStatus.isGamePresentation() && new Random().nextInt(1000) > 997
+		newSounds.addIntermission(currentGameStatus.isGamePresentation() && Utils.generateRandomInt(1000) > 997
 		        || currentGameStatus.isLevelEnding());
-		newSounds.addScaredGhost(groupGhosts.hasScaredGhost());
+		newSounds.addScaredGhost(groupGhosts.hasScaredOrFlashedGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
 		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhost() > 0);
@@ -502,12 +480,34 @@ public class GameModel extends Observable
 		newSounds.addLadybugIsDying(ladybug.getStatus() == LadybugStatus.DYING, !ladybugDying.isInPogress());
 	}
 
+	@Override
+	public void startGame() {
+		logger.info("Start Game");
+		currentGameStatus.initNumLevel();
+		currentGameStatus.setGameStart();
+	}
+
 	/**
 	 * Lancement du timer qui rythme le jeu
 	 */
 	private void startGameTimer() {
 		logger.info("Start Game Timer");
 		gameTimer.start();
+	}
+
+	/**
+	 * FIXME : peut être gérer en fonction de l'état du jeu quand par exemple on est
+	 * en intro
+	 */
+	@Override
+	public void startStopSoundActive() {
+		logger.info("startStopSoundActive : " + soundActive);
+		soundActive = !soundActive;
+	}
+
+	public void stopGameTimer() {
+		logger.info("Stop Game Timer");
+		gameTimer.stop();
 	}
 
 	private void updateGhostSeetings() {

@@ -32,15 +32,15 @@ import lombok.Setter;
 public class Message {
 	@Getter
 	@Setter
-	private boolean				dying;
+	private boolean dying;
 	/** Position dans la fenêtre où le score est affiché */
 	@Getter
-	private Point				position;
+	private Point position;
 	/** Timer d'affichage du score dans la fenêtre */
-	private IncrementScoreTimer	scoreTimer;
+	private IncrementScoreTimer scoreTimer;
 	/** Valeur à afficher */
 	@Getter
-	private String				value;
+	private String value;
 
 	/**
 	 * Constructeur
@@ -50,7 +50,7 @@ public class Message {
 	 */
 	public Message(Point position, String value) {
 		this.position = position;
-		this.value	  = value;
+		this.value = value;
 		this.setDying(false);
 		scoreTimer = new IncrementScoreTimer(this);
 		scoreTimer.launch(1000);

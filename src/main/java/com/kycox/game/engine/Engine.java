@@ -28,13 +28,13 @@ import com.kycox.game.view.down.PageEndView;
 @Named("Engine")
 public class Engine {
 	@Inject
-	private GameModel	gameModel;
+	private GameModel gameModel;
 	@Inject
-	private GameSounds	gameSounds;
+	private GameSounds gameSounds;
 	@Inject
-	private GameView	gameView;
+	private GameView gameView;
 	@Inject
-	private PageEndView	pageEndView;
+	private PageEndView pageEndView;
 
 	/**
 	 * note : use PAD CONTROLLER PadController padController = new

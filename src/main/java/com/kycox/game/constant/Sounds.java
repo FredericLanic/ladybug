@@ -41,7 +41,7 @@ public enum Sounds {
 
 	// FIXME : see why GHOST_SURVIVOR is not used ?
 	// FIXME : see why LADYBUG_EAT_FRUIT is not used ?
-	
+
 	@Getter
 	private Clip clip = null;
 
@@ -52,7 +52,7 @@ public enum Sounds {
 	 */
 	private Sounds(String fileName) {
 		try {
-			URL				 url			  = Sounds.class.getClassLoader().getResource("sound/wav/" + fileName);
+			URL url = Sounds.class.getClassLoader().getResource("sound/wav/" + fileName);
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
 			// Get a sound clip resource.
 			clip = AudioSystem.getClip();

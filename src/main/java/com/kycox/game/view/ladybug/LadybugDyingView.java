@@ -35,21 +35,21 @@ import com.kycox.game.view.body.BodyImg;
  */
 @Named("LadybugDeathView")
 public class LadybugDyingView extends LadybugCommun {
-	private int		deltaBips;
-	private BodyImg	empty		= new BodyImg(GameImages.EMPTY.getImage());
-	private BodyImg	ladybugFull	= new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
-	private BodyImg	ladybugUp1	= new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
-	private BodyImg	ladybugUp2	= new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
-	private BodyImg	ladybugUp3	= new BodyImg(LadybugImages.LADYBUG_UP_3.getImage());
-	private BodyImg	ladybugUp4	= new BodyImg(LadybugImages.LADYBUG_UP_4.getImage());
-	private BodyImg	ladybugUp5	= new BodyImg(LadybugImages.LADYBUG_UP_5.getImage());
-	private BodyImg	ladybugUp6	= new BodyImg(LadybugImages.LADYBUG_UP_6.getImage());
-	private BodyImg	ladybugUp7	= new BodyImg(LadybugImages.LADYBUG_UP_7.getImage());
-	private BodyImg	ladybugUp8	= new BodyImg(LadybugImages.LADYBUG_UP_8.getImage());
-	private BodyImg	ladybugUp9	= new BodyImg(LadybugImages.LADYBUG_UP_9.getImage());
-	private int		nbrImages	= 19;
+	private int deltaBips;
+	private BodyImg empty = new BodyImg(GameImages.EMPTY.getImage());
 	@Inject
-	LadybugDying	ladybugDying;
+	private LadybugDying ladybugDying;
+	private BodyImg ladybugFull = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
+	private BodyImg ladybugUp1 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
+	private BodyImg ladybugUp2 = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
+	private BodyImg ladybugUp3 = new BodyImg(LadybugImages.LADYBUG_UP_3.getImage());
+	private BodyImg ladybugUp4 = new BodyImg(LadybugImages.LADYBUG_UP_4.getImage());
+	private BodyImg ladybugUp5 = new BodyImg(LadybugImages.LADYBUG_UP_5.getImage());
+	private BodyImg ladybugUp6 = new BodyImg(LadybugImages.LADYBUG_UP_6.getImage());
+	private BodyImg ladybugUp7 = new BodyImg(LadybugImages.LADYBUG_UP_7.getImage());
+	private BodyImg ladybugUp8 = new BodyImg(LadybugImages.LADYBUG_UP_8.getImage());
+	private BodyImg ladybugUp9 = new BodyImg(LadybugImages.LADYBUG_UP_9.getImage());
+	private int nbrImages = 19;
 
 	@Override
 	public Image getImage(Point direction) {
@@ -65,18 +65,6 @@ public class LadybugDyingView extends LadybugCommun {
 	public void init() {
 		setBodyUpCurrent(ladybugFull);
 		deltaBips = 0;
-	}
-
-	public void inProgress() {
-		deltaBips++;
-	}
-
-	public boolean isEnd() {
-		return ladybugDying.isEnd();
-	}
-
-	public boolean isInProgress() {
-		return ladybugDying.isInPogress();
 	}
 
 	@PostConstruct
@@ -95,9 +83,21 @@ public class LadybugDyingView extends LadybugCommun {
 		empty.setNext(empty);
 	}
 
+	public void inProgress() {
+		deltaBips++;
+	}
+
+	public boolean isEnd() {
+		return ladybugDying.isEnd();
+	}
+
+	public boolean isInProgress() {
+		return ladybugDying.isInPogress();
+	}
+
 	private boolean mustNextImage() {
-		long nbrBips		= ladybugDying.getMillisecondLenght() / Constants.PACE;
-		long nbrBitPerImage	= nbrBips / nbrImages;
+		long nbrBips = ladybugDying.getMillisecondLenght() / Constants.PACE;
+		long nbrBitPerImage = nbrBips / nbrImages;
 		if (deltaBips > nbrBitPerImage) {
 			return true;
 		}

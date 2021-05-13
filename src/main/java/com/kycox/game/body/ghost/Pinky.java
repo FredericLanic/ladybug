@@ -30,7 +30,7 @@ public class Pinky extends Ghost {
 
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
-		if (!hasChangeBlock()) {
+		if (!isPerfectOnABlock()) {
 			return;
 		}
 		if (getStatus() == GhostStatus.SCARED)

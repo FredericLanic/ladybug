@@ -51,7 +51,7 @@ public class ScreenBlockView {
 	/**
 	 * Affichage des bordures
 	 *
-	 * Note : faire confiance, je sais c'est immaintenable :)
+	 * Note : me faire confiance, je sais ce n'est pas maintenable en l'état :)
 	 *
 	 * @param g2d
 	 * @param screenBlock
@@ -132,8 +132,8 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isBorderRight()) {
 			g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
 		}
-		ScreenBlock	sbTmp  = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y));
-		ScreenBlock	sbTmp1 = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1));
+		ScreenBlock sbTmp = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y));
+		ScreenBlock sbTmp1 = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1));
 		if (screenBlock.isBorderRight() && screenBlock.isBorderDown() && currentCoord.x > 0
 		        && (sbTmp.isBorderDown() || sbTmp.isBorderRight())) {
 			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE);

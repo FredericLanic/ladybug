@@ -31,22 +31,22 @@ import lombok.Setter;
  *
  */
 public class ScreenBlock implements Cloneable {
-	private static final int DOWN			= 8;
-	private static final int GHOST_REVIVER	= 64;
-	private static final int LEFT			= 1;
-	private static final Log logger			= LogFactory.getLog(ScreenBlock.class);
-	private static final int MEGA_POINT		= 32;
-	private static final int POINT			= 16;
-	private static final int RIGHT			= 4;
-	private static final int TELEPORTATION	= 256;
-	private static final int UP				= 2;
-	static final int		 NOT_ACCESSIBLE	= 128;
+	private static final int DOWN = 8;
+	private static final int GHOST_REVIVER = 64;
+	private static final int LEFT = 1;
+	private static final Log logger = LogFactory.getLog(ScreenBlock.class);
+	private static final int MEGA_POINT = 32;
+	private static final int NOT_ACCESSIBLE = 128;
+	private static final int POINT = 16;
+	private static final int RIGHT = 4;
+	private static final int TELEPORTATION = 256;
+	private static final int UP = 2;
 	@Getter
 	@Setter
-	private int				 content;
+	private int content;
 	@Getter
 	@Setter
-	private Point			 coordinate		= Constants.POINT_ZERO;
+	private Point coordinate = Constants.POINT_ZERO;
 
 	public ScreenBlock(int content) {
 		this.content = content;

@@ -66,13 +66,13 @@ import com.kycox.game.constant.ghost.image.GhostsBodyImages;
 import com.kycox.game.tools.ImageUtils;
 
 public class JGhostChoice extends JPanel implements KeyListener {
-	public static final String BLINKY_CHOICE	= "Blinky";
-	public static final String CLYDE_CHOICE		= "Clyde";
-	public static final String INKY_CHOICE		= "Inky";
-	public static final String PINKY_CHOICE		= "Pinky";
-	private static final long  serialVersionUID	= 1L;
-	private ButtonGroup		   group;
-	private JLabel			   picture;
+	public static final String BLINKY_CHOICE = "Blinky";
+	public static final String CLYDE_CHOICE = "Clyde";
+	public static final String INKY_CHOICE = "Inky";
+	public static final String PINKY_CHOICE = "Pinky";
+	private static final long serialVersionUID = 1L;
+	private ButtonGroup group;
+	private JLabel picture;
 
 	public JGhostChoice(ButtonGroup group) {
 		super(new BorderLayout());
@@ -128,6 +128,10 @@ public class JGhostChoice extends JPanel implements KeyListener {
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 	}
 
+	private Image getImageWithEyes(Image ghostImg) {
+		return ImageUtils.appendImages(ghostImg, GhostEyesImages.GHOST_LEFT_EYES.getImage());
+	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// nothing to do
@@ -156,9 +160,5 @@ public class JGhostChoice extends JPanel implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// nothing to do
-	}
-
-	private Image getImageWithEyes(Image ghostImg) {
-		return ImageUtils.appendImages(ghostImg, GhostEyesImages.GHOST_LEFT_EYES.getImage());
 	}
 }
