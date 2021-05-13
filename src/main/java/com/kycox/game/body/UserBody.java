@@ -30,9 +30,8 @@ public abstract class UserBody extends Body {
 	protected boolean canMove(Point direction, ScreenBlock screenBlock) {
 		return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isBorderLeft() //
 		        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isBorderRight() //
-		        || direction.equals(Constants.POINT_UP) && screenBlock.isBorderUp() // 
-		        || direction.equals(Constants.POINT_DOWN) && screenBlock.isBorderDown()
-		);
+		        || direction.equals(Constants.POINT_UP) && screenBlock.isBorderUp() //
+		        || direction.equals(Constants.POINT_DOWN) && screenBlock.isBorderDown());
 	}
 
 	protected void move(ScreenBlock screenBlock) {

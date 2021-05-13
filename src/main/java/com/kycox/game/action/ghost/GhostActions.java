@@ -18,22 +18,20 @@ package com.kycox.game.action.ghost;
 
 import java.awt.Point;
 
-import com.kycox.game.action.BodyActions;
-
 import lombok.Getter;
 import lombok.Setter;
 
 public class GhostActions {
 	@Setter
 	@Getter
-	private boolean	eatenByLadybug		= false;
+	private boolean eatenByLadybug = false;
 	@Setter
 	@Getter
-	private boolean	eatLadybug	= false;
+	private boolean eatLadybug = false;
 	@Setter
 	@Getter
-	private Point	position;
+	private Point position;
 	@Setter
 	@Getter
-	private boolean	regenerated	= false;
+	private boolean regenerated = false;
 }

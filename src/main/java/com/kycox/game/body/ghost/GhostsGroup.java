@@ -18,7 +18,6 @@ package com.kycox.game.body.ghost;
 
 import java.awt.Point;
 import java.util.List;
-import java.util.Optional;
 
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
@@ -28,12 +27,6 @@ import com.kycox.game.level.ScreenData;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Gestion des actions sur l'ensemble des fantômes
- *
- * Singleton
- *
- */
 public class GhostsGroup implements IGroupGhostForGameView {
 	@Getter
 	@Setter
@@ -59,10 +52,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	}
 
 	public boolean hasNotComputedGhost() {
-		Optional<Ghost> ghost = lstGhosts.stream().filter(g -> !g.isComputed()).findFirst();
-		if (ghost.isPresent())
-			return true;
-		return false;
+		return lstGhosts.stream().filter(g -> !g.isComputed()).findFirst().isPresent();
 	}
 
 	public boolean hasRegeneratedGhost() {
@@ -74,9 +64,6 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		        + lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.FLASH).count()) > 0);
 	}
 
-	/**
-	 * Initialise les positions des fantômes
-	 */
 	public void initializePositions(ScreenData screenData) {
 		lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
 	}
@@ -85,36 +72,16 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		lstGhosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
-	/**
-	 * Déplacement des fantômes
-	 *
-	 * @param screenData   : la map
-	 * @param ladybug      : ladybug
-	 * @param ghostRequest : requête du fantôme non computé
-	 */
 	public void move(ScreenData screenData, Ladybug ladybug, Point ghostRequest) {
-		// Déplacement des fantômes gérés par l'ordinateur
 		lstGhosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, screenData));
-		// Déplacement des fantômes gérés par l'humain
 		lstGhosts.stream().filter(g -> !g.isComputed())
 		        .forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
 	}
 
-	/**
-	 * Vérification des fantômes
-	 *
-	 * @param inGame
-	 * @param numLevel
-	 */
 	public void setActions(Ladybug ladybug) {
 		lstGhosts.stream().forEach(g -> g.setGhostActions(ladybug));
 	}
 
-	/**
-	 * Informe tous les fantômes (non mangés) qu'ils ont peur ou pas
-	 *
-	 * @param active
-	 */
 	public void setFear(boolean fear) {
 		if (fear) {
 			lstGhosts.stream().filter(g -> g.getStatus() != GhostStatus.DYING)
@@ -125,28 +92,27 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		}
 	}
 
-	/**
-	 * Tous les fantômes doivent clignotter
-	 */
 	public void setFlashActive() {
 		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.SCARED)
 		        .forEach(g -> g.setStatus(GhostStatus.FLASH));
 	}
 
-	/**
-	 * Initialise les vitesses des fantômes
-	 *
-	 * @param numLevel
-	 */
+	private void setGhostSettingAfterLadybugContact(int numLevel) {
+		// Mis à jour du statut
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug())
+		        .forEach(g -> g.setSettingAfterBeEaten(numLevel));
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(Ghost::minusLifesLeft);
+	}
+
+	private void setGhostStatusAfterRegeneration() {
+		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATING)
+		        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
+	}
+
 	public void setInitSpeeds(int numLevel) {
 		lstGhosts.stream().forEach(g -> g.setInitSpeed(numLevel));
 	}
 
-	/**
-	 * Initialise le nombre de vie des fantômes
-	 *
-	 * @param numLeftLives
-	 */
 	public void setLeftLifes(int numLeftLives) {
 		lstGhosts.stream().forEach(g -> g.setLeftLifes(numLeftLives));
 	}
@@ -155,22 +121,16 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		lstGhosts.stream().forEach(g -> g.setNumLevel(numLevel));
 	}
 
-	/**
-	 * Initialise les fantômes lors du début de niveau
-	 *
-	 * @param numLevel
-	 */
+	private void setSpeed(int numLevel, int perCent) {
+		lstGhosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
+	}
+
 	public void setStartLevel(int numLevel, ScreenData screenData) {
 		setStatus(GhostStatus.NORMAL);
 		setInitSpeeds(numLevel);
 		initializePositions(screenData);
 	}
 
-	/**
-	 * Affecte le même status à tous les fantômes
-	 *
-	 * @param status
-	 */
 	public void setStatus(GhostStatus status) {
 		lstGhosts.stream().forEach(g -> g.setStatus(status));
 	}
@@ -186,30 +146,9 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	/**
 	 * Retourne vrai si le fantôme n'a plus de vie
 	 */
-	public boolean userIsDead() {
-		long nbrDeadKeyGhosts = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
+	public boolean userGhostHasLife() {
+		long nbrDeadUserGhost = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
 		        .count();
-		return (nbrDeadKeyGhosts > 0);
-	}
-
-	private void setGhostSettingAfterLadybugContact(int numLevel) {
-		// Mis à jour du statut
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(g -> g.setSettingAfterBeEaten(numLevel));
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(Ghost::minusLifesLeft);
-	}
-
-	/**
-	 * Status des fantômes de REGENERATING à NORMAL
-	 */
-	private void setGhostStatusAfterRegeneration() {
-		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATING)
-		        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
-	}
-
-	/**
-	 * Affecte la vitesse de chaque fantôme au cours du niveau en cours
-	 */
-	private void setSpeed(int numLevel, int perCent) {
-		lstGhosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
+		return (nbrDeadUserGhost > 0);
 	}
 }

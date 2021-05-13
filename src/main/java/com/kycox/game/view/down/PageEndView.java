@@ -32,47 +32,30 @@ import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.ghost.image.GhostsColorImages;
 import com.kycox.game.contract.IGameModelForGameView;
-import com.kycox.game.contract.IMainGraphicStructrure;
+import com.kycox.game.contract.IMainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.ladybug.LadybugView;
 
 import lombok.Setter;
 
 @Named("PageEndView")
-public class PageEndView extends JPanel implements Observer, IMainGraphicStructrure {
-	private static final Log				logger					 = LogFactory.getLog(PageEndView.class);
-	private static final long				serialVersionUID		 = 1L;
-	private transient IGameModelForGameView	gameModel;
+public class PageEndView extends JPanel implements Observer, IMainGraphicStructure {
+	private static final Log logger = LogFactory.getLog(PageEndView.class);
+	private static final long serialVersionUID = 1L;
+	private transient IGameModelForGameView gameModel;
 	@Setter
-	private int								height;
-	private JPanel							jPanelLadybugKinematique = new JPanel();
+	private int height;
+	private JPanel jPanelLadybugKinematique = new JPanel();
 	@Inject
-	private LadybugView						ladybugView;
+	private LadybugView ladybugView;
 	@Inject
-	private Screen							screen;
+	private Screen screen;
 	@Inject
-	private StatusGameView					statusGameView;
+	private StatusGameView statusGameView;
 
 	@PostConstruct
 	public void init() {
 		setFocusable(false);
-	}
-
-	@Override
-	public void setPreferredSize(Dimension preferredSize) {
-		super.setPreferredSize(preferredSize);
-		initJPanelInside(preferredSize);
-	}
-
-	@Override
-	public void update(Observable gameModel, Object arg) {
-		if (gameModel != null) {
-			this.gameModel = (IGameModelForGameView) gameModel;
-			setVariableToScoreView(this.gameModel);
-			repaint();
-		} else {
-			logger.info("GameModel is null in " + PageEndView.class);
-		}
 	}
 
 	private void initJPanelInside(Dimension parentDimension) {
@@ -92,6 +75,12 @@ public class PageEndView extends JPanel implements Observer, IMainGraphicStructr
 		jPanelLadybugKinematique.setBackground(Color.BLACK);
 	}
 
+	@Override
+	public void setPreferredSize(Dimension preferredSize) {
+		super.setPreferredSize(preferredSize);
+		initJPanelInside(preferredSize);
+	}
+
 	private void setVariableToScoreView(IGameModelForGameView gameModel) {
 		statusGameView.setGhostNbrLifes(gameModel.getGhostLeftLifes());
 		// Rajouter les yeux
@@ -103,5 +92,16 @@ public class PageEndView extends JPanel implements Observer, IMainGraphicStructr
 		statusGameView.setNumLevel(gameModel.getCurrentGameStatus().getNumLevel());
 		statusGameView.setScore(gameModel.getGameScore().getScore());
 		statusGameView.setSoundActive(gameModel.isSoundActive());
+	}
+
+	@Override
+	public void update(Observable gameModel, Object arg) {
+		if (gameModel != null) {
+			this.gameModel = (IGameModelForGameView) gameModel;
+			setVariableToScoreView(this.gameModel);
+			repaint();
+		} else {
+			logger.info("GameModel is null in " + PageEndView.class);
+		}
 	}
 }

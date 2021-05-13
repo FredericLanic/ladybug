@@ -16,14 +16,14 @@ public enum PacFont {
 	PACFONT("fonts/font-pacfont/pac-font.ttf");
 
 	@Getter
-	private Font	  defaultFont = new Font("CrackMan", Font.BOLD, 14);
-	private final Log logger	  = LogFactory.getLog(GameView.class);
+	private Font defaultFont = new Font("CrackMan", Font.BOLD, 14);
+	private final Log logger = LogFactory.getLog(GameView.class);
 
 	private PacFont(String filePath) {
 		try {
 			InputStream is = this.getClass().getResourceAsStream("/fonts/font-pacfont/pac-font.ttf");
-			defaultFont	= Font.createFont(Font.TRUETYPE_FONT, is);
-			defaultFont	= defaultFont.deriveFont((float) 38.0);
+			defaultFont = Font.createFont(Font.TRUETYPE_FONT, is);
+			defaultFont = defaultFont.deriveFont((float) 38.0);
 		} catch (FontFormatException | IOException e) {
 			logger.error(e);
 		}

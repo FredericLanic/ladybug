@@ -39,14 +39,14 @@ public abstract class Body {
 	private Point direction = Constants.POINT_ZERO;
 	@Getter
 	@Setter
-	private int		leftLifes = 0;
+	private int leftLifes = 0;
 	@Getter
 	@Setter
-	private boolean	newLife	  = false;
+	private boolean newLife = false;
 	// Position dans le JPanel
 	@Getter
 	@Setter
-	private Point		  position = Constants.POINT_ZERO;
+	private Point position = Constants.POINT_ZERO;
 	@Setter
 	@Getter
 	private SpeedFunction speedFunction;
@@ -67,6 +67,20 @@ public abstract class Body {
 	}
 
 	/**
+	 * Initialise la vitesse du fantôme à la construction
+	 *
+	 * (speed & startSpeed)
+	 *
+	 * @param speedIndex
+	 */
+	public void initSpeedIndex(int speedIndex) {
+		this.speedIndex = speedIndex;
+		this.startSpeedIndex = speedIndex;
+	}
+
+	protected abstract boolean isAllowedToDoActions();
+
+	/**
 	 * Le fantôme ou ladybug change de block
 	 *
 	 * @param pointPos : coordonnées DE L'ECRAN (x,y) dans la fenêtre
@@ -75,18 +89,6 @@ public abstract class Body {
 	public boolean isPerfectOnABlock() {
 		Point pointPos = getPosition();
 		return pointPos.x % Constants.BLOCK_SIZE == 0 && pointPos.y % Constants.BLOCK_SIZE == 0;
-	}
-
-	/**
-	 * Initialise la vitesse du fantôme à la construction
-	 *
-	 * (speed & startSpeed)
-	 *
-	 * @param speedIndex
-	 */
-	public void initSpeedIndex(int speedIndex) {
-		this.speedIndex		 = speedIndex;
-		this.startSpeedIndex = speedIndex;
 	}
 
 	/**
@@ -102,6 +104,4 @@ public abstract class Body {
 	public void minusLifesLeft() {
 		leftLifes--;
 	}
-	
-	protected abstract boolean isAllowedToDoActions();
 }

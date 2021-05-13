@@ -38,13 +38,13 @@ public class UnitDijkstra {
 	 */
 	@Getter
 	@Setter
-	private int	  distance;
+	private int distance;
 	@Getter
 	@Setter
-	UnitDijkstra  previousUnitDijkstra;
+	UnitDijkstra previousUnitDijkstra;
 	@Getter
 	@Setter
-	ScreenBlock	  screenBlock;
+	ScreenBlock screenBlock;
 
 	/**
 	 * Constructeur
@@ -52,8 +52,8 @@ public class UnitDijkstra {
 	 * @param screenBlock
 	 */
 	public UnitDijkstra(ScreenBlock screenBlock) {
-		this.distance		 = 999_999_999;
-		this.screenBlock	 = screenBlock;
+		this.distance = 999_999_999;
+		this.screenBlock = screenBlock;
 		previousUnitDijkstra = null;
 	}
 

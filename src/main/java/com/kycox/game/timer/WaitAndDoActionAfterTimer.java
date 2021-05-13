@@ -47,8 +47,8 @@ public class WaitAndDoActionAfterTimer {
 	}
 
 	@Inject
-	private IDoActionAfterTimer	doActionAfterTimer;
-	private Timer				timer = new Timer(true);
+	private IDoActionAfterTimer doActionAfterTimer;
+	private Timer timer = new Timer(true);
 
 	/**
 	 * Arrete le super power : le niveau est terminé, ou bien un autre super power a

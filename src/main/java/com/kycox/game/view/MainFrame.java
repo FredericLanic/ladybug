@@ -26,7 +26,7 @@ import javax.inject.Named;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.kycox.game.contract.IMainGraphicStructrure;
+import com.kycox.game.contract.IMainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.down.PageEndView;
 
@@ -37,28 +37,17 @@ import com.kycox.game.view.down.PageEndView;
  *
  */
 @Named("MainFrame")
-public class MainFrame extends JFrame implements IMainGraphicStructrure {
+public class MainFrame extends JFrame implements IMainGraphicStructure {
 	private static final long serialVersionUID = 1L;
-	private Dimension		  gameDimension	   = new Dimension();
+	private Dimension gameDimension = new Dimension();
 	@Inject
-	private GameView		  gameView;
-	private Dimension		  lineDimension	   = new Dimension();
-	private Dimension		  pageDimension	   = new Dimension();
+	private GameView gameView;
+	private Dimension lineDimension = new Dimension();
+	private Dimension pageDimension = new Dimension();
 	@Inject
-	private PageEndView		  pageEndView;
+	private PageEndView pageEndView;
 	@Inject
-	private Screen			  screen;
-
-	@PostConstruct
-	private void init() {
-		setTitle("LadyBug");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setExtendedState(Frame.MAXIMIZED_BOTH);
-		setUndecorated(true);
-	
-		initScreenSize();
-		addPanels();
-	}
+	private Screen screen;
 
 	private void addPanels() {
 		addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);
@@ -66,6 +55,17 @@ public class MainFrame extends JFrame implements IMainGraphicStructrure {
 		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_END);
 		addPanel(pageEndView, pageDimension, BorderLayout.PAGE_END);
 		addPanel(gameView, gameDimension, BorderLayout.CENTER);
+	}
+
+	@PostConstruct
+	private void init() {
+		setTitle("LadyBug");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setExtendedState(Frame.MAXIMIZED_BOTH);
+		setUndecorated(true);
+
+		initScreenSize();
+		addPanels();
 	}
 
 	private void initScreenSize() {

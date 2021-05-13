@@ -32,12 +32,12 @@ import lombok.Setter;
 @Named("GameScore")
 public class GameScore {
 	@Getter
-	private int	incrementScore;
+	private int incrementScore;
 	@Getter
 	@Setter
-	private int	oldScore = -1;
+	private int oldScore = -1;
 	@Getter
-	private int	score;
+	private int score;
 
 	/**
 	 * Ajout du score et du score incrémental
@@ -45,8 +45,8 @@ public class GameScore {
 	 * @param score
 	 */
 	public void addScore(int score) {
-		this.score			+= score;
-		this.incrementScore	+= score;
+		this.score += score;
+		this.incrementScore += score;
 	}
 
 	/**

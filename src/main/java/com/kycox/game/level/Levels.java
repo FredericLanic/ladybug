@@ -26,7 +26,7 @@ import lombok.Setter;
 public final class Levels {
 	@Setter
 	private List<ILevel> lstLevel;
-	private Random		 random	= new Random();
+	private Random random = new Random();
 
 	/**
 	 * Retourne le niveau demand�

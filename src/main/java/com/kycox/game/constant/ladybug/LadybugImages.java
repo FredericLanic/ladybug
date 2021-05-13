@@ -55,7 +55,7 @@ public enum LadybugImages {
 	private String color;
 	private String fileName;
 	@Getter
-	private Image  image;
+	private Image image;
 
 	private LadybugImages(String fileName) {
 		this.fileName = fileName;

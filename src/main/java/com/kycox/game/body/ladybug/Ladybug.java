@@ -46,6 +46,11 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 	@Getter
 	private Point viewDirection = Constants.POINT_UP;
 
+	@Override
+	public boolean isAllowedToDoActions() {
+		return getStatus() != LadybugStatus.DYING && getStatus() != LadybugStatus.DEAD;
+	}
+
 	public boolean isEatenAMegaPoint() {
 		return ladybugActions.isEatenAMegaPoint();
 	}
@@ -112,22 +117,18 @@ public class Ladybug extends UserBody implements ILadybugForController, ILadybug
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Ladybug ");
-		sb.append("position: " + getPosition());
-		return sb.toString();
-	}
-
 	private void teleport(ScreenData screenData) {
 		if (isPerfectOnABlock() && screenData.getNbrBlocksWithPoint() > 0) {
 			Point newPoint = screenData.getRandomPosOnAPoint();
 			setPosition(Utils.convertPointToGraphicUnit(newPoint));
 		}
 	}
-	
-	public boolean isAllowedToDoActions() {
-		return getStatus() != LadybugStatus.DYING && getStatus() != LadybugStatus.DEAD;
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Ladybug ");
+		sb.append("position: " + getPosition());
+		return sb.toString();
 	}
 }

@@ -21,10 +21,6 @@ import com.kycox.game.maths.BlinkySpeedIndex;
 
 import lombok.Setter;
 
-/**
- * Setting du fantôme Blinky
- *
- */
 public class Blinky extends Ghost {
 	@Setter
 	private BlinkySpeedIndex blinkySpeedIndex;
