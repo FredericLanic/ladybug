@@ -22,9 +22,6 @@ import java.util.Observer;
 import javax.inject.Named;
 import javax.sound.sampled.Clip;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.constant.Sounds;
 import com.kycox.game.contract.IGameModelForGameSounds;
 import com.kycox.game.contract.INewSoundsForGameSounds;
@@ -35,7 +32,6 @@ import com.kycox.game.contract.INewSoundsForGameSounds;
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
-	private static final Log logger = LogFactory.getLog(GameSounds.class);
 	private IGameModelForGameSounds gameModel;
 	private INewSoundsForGameSounds newSounds;
 

@@ -33,12 +33,15 @@ import lombok.Setter;
 @Named("CurrentGameStatus")
 public class CurrentGameStatus
         implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController, IDoActionAfterTimer {
+
 	private static final Log logger = LogFactory.getLog(CurrentGameStatus.class);
 	public static final int TO_INGAME = 0;
 	public static final int TO_LEVEL_START = 3;
 	public static final int TO_PRESENTATION = 2;
 	public static final int TO_PROGRAM_START = 1;
+	@Getter
 	private GameStatus gameStatus;
+
 	@Getter
 	@Setter
 	private int numLevel;
