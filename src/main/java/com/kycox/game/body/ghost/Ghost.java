@@ -24,7 +24,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.action.ghost.GhostActions;
-import com.kycox.game.body.Body;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
@@ -58,50 +57,9 @@ public abstract class Ghost extends UserBody {
 	@Setter
 	private GhostStatus status = GhostStatus.NORMAL;
 
-	private void scaredOrFlashedMoving(Point ladybugPosBlock, ScreenData screenData) {
-		if (Utils.convertPointToGraphicUnit(ladybugPosBlock).distance(getPosition()) < 5 * Constants.BLOCK_SIZE)
-			moveScared(ladybugPosBlock, screenData);
-		else
-			moveByDefault(screenData);
-	}
-
-	private boolean hasTouchedLadybug(Ladybug ladybug) {
-		return isTooNearOfLadybug(ladybug) && isAllowedToDoActions() && ladybug.isAllowedToDoActions();
-	}
-
-	@Override
-	protected boolean isAllowedToDoActions() {
-		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATING;
-	}
-
-	public boolean isComputed() {
-		return color.isComputed();
-	}
-
-	private boolean isScaredOrFlashed() {
-		return getStatus() == GhostStatus.SCARED || getStatus() == GhostStatus.FLASH;
-	}
-
-	private boolean isTooNearOfLadybug(Ladybug ladybug) {
-		return getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2);
-	}
-
-	private void moveAgressive(Body ladybug, ScreenData screenData) {
-		Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
-		moveTo(ladybugPosBlock, screenData);
-	}
-
-	private void moveByBehaviour(Body ladybug, ScreenData screenData) {
-		switch (behavious) {
-			case SMART -> moveSmart(ladybug, screenData);
-			case AGGRESSIVE -> moveAgressive(ladybug, screenData);
-			default -> moveByDefault(screenData);
-		}
-	}
-
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
 	// nécessaire
-	private void moveByDefault(ScreenData screenData) {
+	private void defaultMoving(ScreenData screenData) {
 		List<Point> lstDirections = new ArrayList<>();
 		Point posPoint = getPosition();
 		if (isPerfectOnABlock()) {
@@ -132,6 +90,35 @@ public abstract class Ghost extends UserBody {
 			}
 		}
 		posPoint.translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+	}
+
+	private boolean hasTouchedLadybug(Ladybug ladybug) {
+		return isTooNearOfLadybug(ladybug) && isAllowedToDoActions() && ladybug.isAllowedToDoActions();
+	}
+
+	@Override
+	protected boolean isAllowedToDoActions() {
+		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATING;
+	}
+
+	public boolean isComputed() {
+		return color.isComputed();
+	}
+
+	private boolean isScaredOrFlashed() {
+		return getStatus() == GhostStatus.SCARED || getStatus() == GhostStatus.FLASH;
+	}
+
+	private boolean isTooNearOfLadybug(Ladybug ladybug) {
+		return getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2);
+	}
+
+	private void moveByBehaviour(Point ladybugPosBlock, Point ladybugDirection, ScreenData screenData) {
+		switch (behavious) {
+			case SMART -> smartMoving(ladybugPosBlock, ladybugDirection, screenData);
+			case AGGRESSIVE -> moveTo(ladybugPosBlock, screenData);
+			default -> defaultMoving(screenData);
+		}
 	}
 
 	public void moveComputedGhost(Ladybug ladybug, ScreenData screenData) {
@@ -174,24 +161,8 @@ public abstract class Ghost extends UserBody {
 			setDirection(scaredDirection);
 			ptCurrentScreenGhost.translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		} else {
-			moveByDefault(screenData);
+			defaultMoving(screenData);
 		}
-	}
-
-	private void moveSmart(Body ladybug, ScreenData screenData) {
-		Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
-		ScreenBlock ladybugScreenBlock = screenData.getDataBlock(ladybugPosBlock);
-		Point ladybugDirection = ladybug.getDirection();
-		if (ladybugDirection.equals(Constants.POINT_UP) && !ladybugScreenBlock.isBorderUp()) {
-			ladybugPosBlock.y--;
-		} else if (ladybugDirection.equals(Constants.POINT_DOWN) && !ladybugScreenBlock.isBorderDown()) {
-			ladybugPosBlock.y++;
-		} else if (ladybugDirection.equals(Constants.POINT_RIGHT) && !ladybugScreenBlock.isBorderRight()) {
-			ladybugPosBlock.x++;
-		} else if (ladybugDirection.equals(Constants.POINT_LEFT) && !ladybugScreenBlock.isBorderLeft()) {
-			ladybugPosBlock.x--;
-		}
-		moveTo(ladybugPosBlock, screenData);
 	}
 
 	private void moveTo(Point ladybugPosBlock, ScreenData screenData) {
@@ -242,10 +213,20 @@ public abstract class Ghost extends UserBody {
 	}
 
 	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
+		Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
+		Point ladybugDirection = ladybug.getDirection();
+
 		if (sensitiveBehavious.isActive() && ladybug.getStatus() != LadybugStatus.DEAD)
-			moveByBehaviour(ladybug, screenData);
+			moveByBehaviour(ladybugPosBlock, ladybugDirection, screenData);
 		else
-			moveByDefault(screenData);
+			defaultMoving(screenData);
+	}
+
+	private void scaredOrFlashedMoving(Point ladybugPosBlock, ScreenData screenData) {
+		if (Utils.convertPointToGraphicUnit(ladybugPosBlock).distance(getPosition()) < 5 * Constants.BLOCK_SIZE)
+			moveScared(ladybugPosBlock, screenData);
+		else
+			defaultMoving(screenData);
 	}
 
 	/**
@@ -282,4 +263,20 @@ public abstract class Ghost extends UserBody {
 	}
 
 	public abstract void setSpeed(int numLevel, int perCent);
+
+	private void smartMoving(Point ladybugPosBlock, Point ladybugDirection, ScreenData screenData) {
+		// Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
+		ScreenBlock ladybugScreenBlock = screenData.getDataBlock(ladybugPosBlock);
+		// Point ladybugDirection = ladybug.getDirection();
+		if (ladybugDirection.equals(Constants.POINT_UP) && !ladybugScreenBlock.isBorderUp()) {
+			ladybugPosBlock.y--;
+		} else if (ladybugDirection.equals(Constants.POINT_DOWN) && !ladybugScreenBlock.isBorderDown()) {
+			ladybugPosBlock.y++;
+		} else if (ladybugDirection.equals(Constants.POINT_RIGHT) && !ladybugScreenBlock.isBorderRight()) {
+			ladybugPosBlock.x++;
+		} else if (ladybugDirection.equals(Constants.POINT_LEFT) && !ladybugScreenBlock.isBorderLeft()) {
+			ladybugPosBlock.x--;
+		}
+		moveTo(ladybugPosBlock, screenData);
+	}
 }
