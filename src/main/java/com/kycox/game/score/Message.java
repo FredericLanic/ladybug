@@ -33,6 +33,8 @@ public class Message {
 	@Getter
 	@Setter
 	private boolean dying;
+	@Getter
+	private MessageType messageType = MessageType.POINT;
 	/** Position dans la fenêtre où le score est affiché */
 	@Getter
 	private Point position;
@@ -48,9 +50,11 @@ public class Message {
 	 * @param position : position d'affichage du score
 	 * @param value    : valeur à afficher
 	 */
-	public Message(Point position, String value) {
+	public Message(Point position, String value, MessageType messageType) {
 		this.position = position;
 		this.value = value;
+		this.messageType = messageType;
+
 		this.setDying(false);
 		scoreTimer = new IncrementScoreTimer(this);
 		scoreTimer.launch(1000);

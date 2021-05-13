@@ -20,7 +20,6 @@ public class GameModelPresentationStatus extends AbstratGameModel implements IGa
 	public void execute() {
 		setBodiesActions();
 		moveBodies();
-		setSoundActive(true); // à supprimer ?
 		setSoundRequests();
 	}
 

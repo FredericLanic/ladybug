@@ -62,22 +62,53 @@ public class GameScore {
 	}
 
 	/**
-	 * Adjust the score number
+	 * FIXME : on doit sortir cette méthode du score.
 	 */
-	public void setScore(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
+	private void setMessages(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
+
+		// Ladybug digère et elle laisse tout derrière elle :/
+//		if (ladybug.isEatenAPoint() && !ladybug.isEatenAMegaPoint() && !ladybug.isToBeTeleported()
+//		        && ghostsGroup.getNbrEatenGhosts() == 0) {
+//			groupMessages.add(ladybug.getPosition(), "💩 💩", MessageType.STRING);
+//		}
+
 		if (ladybug.isEatenAMegaPoint()) {
-			addScore(Constants.SCORE_MEGA_POINT);
-			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_MEGA_POINT));
+			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_MEGA_POINT), MessageType.POINT);
 		}
+
+		if (ladybug.isToBeTeleported()) {
+			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_TELEPORT_POINT),
+			        MessageType.POINT);
+		}
+
+		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
+
+		ghostsGroup.getLstGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
+		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST),
+		                MessageType.POINT));
+	}
+
+	private void setScore(GhostsGroup ghostsGroup, Ladybug ladybug) {
 		if (ladybug.isEatenAPoint()) {
 			addScore(Constants.SCORE_SIMPLE_POINT);
 		}
+
+		if (ladybug.isEatenAMegaPoint()) {
+			addScore(Constants.SCORE_MEGA_POINT);
+		}
+
 		if (ladybug.isToBeTeleported()) {
 			addScore(Constants.SCORE_TELEPORT_POINT);
-			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_TELEPORT_POINT));
 		}
-		addScore(ghostsGroup.getNbrEatenGhost() * Constants.SCORE_EATEN_GHOST);
-		ghostsGroup.getLstGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
-		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST)));
+
+		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
+	}
+
+	/**
+	 * Adjust the score number
+	 */
+	public void setScoreAndMessages(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
+		setScore(ghostsGroup, ladybug);
+		setMessages(ghostsGroup, ladybug, groupMessages);
 	}
 }

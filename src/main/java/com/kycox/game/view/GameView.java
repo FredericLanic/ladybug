@@ -201,10 +201,10 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		int x;
 		int y;
 		// Affichage des scores incréments
-		for (Message scorePoint : gameModel.getGroupMessages().getMessages()) {
-			x = scorePoint.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(scorePoint.getValue()) / 2;
-			y = scorePoint.getPosition().y + Constants.BLOCK_SIZE / 2;
-			g2d.drawString(scorePoint.getValue() + " pt", x, y);
+		for (Message message : gameModel.getGroupMessages().getMessages()) {
+			x = message.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
+			y = message.getPosition().y + Constants.BLOCK_SIZE / 2;
+			g2d.drawString(message.getValue() + message.getMessageType().getEndMessage(), x, y);
 		}
 	}
 

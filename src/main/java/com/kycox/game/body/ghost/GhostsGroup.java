@@ -46,7 +46,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 
 	}
 
-	public int getNbrEatenGhost() {
+	public int getNbrEatenGhosts() {
 		return (int) lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).count();
 	}
 

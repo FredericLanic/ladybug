@@ -91,7 +91,7 @@ public class AbstratGameModel {
 		newSounds.addScaredGhost(groupGhosts.hasScaredOrFlashedGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
-		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhost() > 0);
+		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhosts() > 0);
 		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint() && currentGameStatus.isInGame());
 		newSounds.addNewLife(ladybug.isNewLife());
 		newSounds.addTeleport(ladybug.isToBeTeleported());

@@ -85,7 +85,7 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	}
 
 	private void manageScores() {
-		gameScore.setScore(groupGhosts, ladybug, groupMessages);
+		gameScore.setScoreAndMessages(groupGhosts, ladybug, groupMessages);
 		groupMessages.removeIfDying();
 		// ***
 		if (hasEnoughtPointForANewLife()) {

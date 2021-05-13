@@ -38,8 +38,8 @@ public class GroupMessages {
 	 * @param position
 	 * @param value
 	 */
-	public void add(Point position, String value) {
-		messages.add(new Message((Point) position.clone(), value));
+	public void add(Point position, String value, MessageType messageType) {
+		messages.add(new Message((Point) position.clone(), value, messageType));
 	}
 
 	/**
