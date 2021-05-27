@@ -21,6 +21,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import javax.inject.Named;
+
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.level.ScreenBlock;
@@ -29,20 +31,21 @@ import com.kycox.game.tools.Utils;
 
 import lombok.Setter;
 
+@Named("ScreenBlockView")
 public class ScreenBlockView {
-	@Setter
-	private static Color blueLadybug = Constants.BLUE_LADYBUG;
 	// Couleur d'un point
 	private static final Color dotColor = new Color(192, 192, 0);
+	@Setter
+	private Color colorMaze = Constants.BLUE_LADYBUG;
 	// Couleur du labyrinthe
-	private static final Color megaPointColor = new Color(255, 128, 0);
+	private final Color megaPointColor = new Color(255, 128, 0);
 	// Couleur du lieu revivor
-	private static final Color revivorColor = new Color(128, 255, 255);
+	private final Color revivorColor = new Color(128, 255, 255);
 	// Couleur du labyrinthe
-	private static final Color teleportationColor = new Color(255, 255, 255);
+	private final Color teleportationColor = new Color(255, 255, 255);
 
-	public static void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		g2d.setColor(blueLadybug);
+	public void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
+		g2d.setColor(colorMaze);
 		displayBorders(g2d, screenData, x, y);
 		displayPoints(g2d, screenData, x, y);
 		displayTeleportation(g2d, screenData, x, y);
@@ -58,7 +61,7 @@ public class ScreenBlockView {
 	 * @param x
 	 * @param y
 	 */
-	private static void displayBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
+	private void displayBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		ScreenBlock screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		g2d.setStroke(new BasicStroke(2));
 		Point currentCoord = screenBlock.getCoordinate();
@@ -189,7 +192,7 @@ public class ScreenBlockView {
 	 * @param x
 	 * @param y
 	 */
-	private static void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
+	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		ScreenBlock screenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		// affichage du méga point
 		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
@@ -224,18 +227,12 @@ public class ScreenBlockView {
 		}
 	}
 
-	private static void displayTeleportation(Graphics2D g2d, ScreenData screenData, int x, int y) {
+	private void displayTeleportation(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		ScreenBlock screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		if (screenBlock.isTeleportation()) {
 			g2d.setColor(teleportationColor);
 			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 10, 10);
 			g2d.drawImage(GameImages.TELEPORTATION.getImage(), x, y, null);
 		}
-	}
-
-	/**
-	 * Constructeur privé
-	 */
-	private ScreenBlockView() {
 	}
 }

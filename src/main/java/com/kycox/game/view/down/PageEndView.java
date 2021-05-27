@@ -19,6 +19,7 @@ package com.kycox.game.view.down;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -46,6 +47,7 @@ public class PageEndView extends JPanel implements Observer, IMainGraphicStructu
 	@Setter
 	private int height;
 	private JPanel jPanelLadybugKinematique = new JPanel();
+	private JPanel jPanelMainScore = new JPanel();
 	@Inject
 	private LadybugView ladybugView;
 	@Inject
@@ -62,17 +64,24 @@ public class PageEndView extends JPanel implements Observer, IMainGraphicStructu
 		Dimension dimension = new Dimension();
 		dimension.setSize(parentDimension.getWidth(), parentDimension.getHeight() / 2);
 		//
-		JPanel jPanelMainSore = new JPanel();
-		addPanel(jPanelMainSore, dimension, BorderLayout.PAGE_START);
+
+		addPanel(jPanelMainScore, dimension, BorderLayout.PAGE_START);
 		addPanel(jPanelLadybugKinematique, dimension, BorderLayout.PAGE_END);
 		//
 		Dimension preferredSize = new Dimension();
 		preferredSize.setSize(screen.getEdgeGameSide(), dimension.getHeight());
 		statusGameView.setPreferredSize(preferredSize);
-		jPanelMainSore.add(statusGameView, BorderLayout.CENTER);
+		jPanelMainScore.add(statusGameView, BorderLayout.CENTER);
 		//
-		jPanelMainSore.setBackground(Color.BLACK);
+		jPanelMainScore.setBackground(Color.BLACK);
 		jPanelLadybugKinematique.setBackground(Color.BLACK);
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		if (gameModel != null) {
+			super.paintComponent(g);
+		}
 	}
 
 	@Override

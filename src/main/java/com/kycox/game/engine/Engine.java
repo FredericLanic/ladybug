@@ -22,17 +22,17 @@ import javax.inject.Named;
 
 import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
-import com.kycox.game.view.GameView;
+import com.kycox.game.view.CentralView;
 import com.kycox.game.view.down.PageEndView;
 
 @Named("Engine")
 public class Engine {
 	@Inject
+	private CentralView centralView;
+	@Inject
 	private GameModel gameModel;
 	@Inject
 	private GameSounds gameSounds;
-	@Inject
-	private GameView gameView;
 	@Inject
 	private PageEndView pageEndView;
 
@@ -42,14 +42,13 @@ public class Engine {
 	 */
 	@PostConstruct
 	public void init() {
-		gameModel.addObserver(gameView);
+		gameModel.addObserver(centralView);
 		gameModel.addObserver(gameSounds);
 		gameModel.addObserver(pageEndView);
-		// on récupère la longueur du son de la mort de ladybug et on l'affecte au
+		// on récupère la longueur du son de la mort de ladybug et on l'affecte
 		gameModel.getLadybugDying().setMillisecondLenght(gameSounds.getMillisecondLadybugDeath());
 		gameModel.setBeginningMilliseconds(gameSounds.getMillisecondsBeginning());
 		gameModel.setEndingLevelMilliseconds(gameSounds.getMillisecondsIntermission());
-		//
-		gameView.setDurationLadybugNewLife(gameSounds.getMillisecondNewLife());
+		centralView.setDurationLadybugNewLife(gameSounds.getMillisecondNewLife());
 	}
 }

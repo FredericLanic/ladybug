@@ -8,20 +8,18 @@ import java.io.InputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kycox.game.view.GameView;
-
 import lombok.Getter;
 
-public enum PacFont {
-	PACFONT("fonts/font-pacfont/pac-font.ttf");
+public enum GameFont {
+	PACFONT("/fonts/font-pacfont/pac-font.ttf");
 
 	@Getter
 	private Font defaultFont = new Font("CrackMan", Font.BOLD, 14);
-	private final Log logger = LogFactory.getLog(GameView.class);
+	private final Log logger = LogFactory.getLog(GameFont.class);
 
-	private PacFont(String filePath) {
+	private GameFont(String filePath) {
 		try {
-			InputStream is = this.getClass().getResourceAsStream("/fonts/font-pacfont/pac-font.ttf");
+			InputStream is = this.getClass().getResourceAsStream(filePath);
 			defaultFont = Font.createFont(Font.TRUETYPE_FONT, is);
 			defaultFont = defaultFont.deriveFont((float) 38.0);
 		} catch (FontFormatException | IOException e) {

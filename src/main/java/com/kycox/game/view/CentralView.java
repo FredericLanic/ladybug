@@ -44,7 +44,7 @@ import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.IDoActionAfterTimer;
 import com.kycox.game.contract.IGameModelForGameView;
 import com.kycox.game.controller.KeyGameController;
-import com.kycox.game.font.PacFont;
+import com.kycox.game.font.GameFont;
 import com.kycox.game.score.Message;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
@@ -63,12 +63,12 @@ import lombok.Setter;
  * @author kycox
  *
  */
-@Named("GameView")
-public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
-	private static final Log logger = LogFactory.getLog(GameView.class);
+@Named("CentralView")
+public class CentralView extends JPanel implements Observer, IDoActionAfterTimer {
+	private static final Log logger = LogFactory.getLog(CentralView.class);
 	private static final long serialVersionUID = 1L;
 	private ConfJDialog confJDialog;
-	private final Font defaultFont = PacFont.PACFONT.getDefaultFont();
+	private final Font defaultFont = GameFont.PACFONT.getDefaultFont();
 	@Setter
 	private long durationLadybugNewLife;
 	@Inject
@@ -84,12 +84,14 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 	// todo : sécuriser le timer en mode deux joueurs
 	private WaitAndDoActionAfterTimer newLiveTimer;
 	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
+	@Inject
+	private ScreenBlockView screenBlockView;
 
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
 		switch (nbrAction) {
 			case 0:
-				ScreenBlockView.setBlueLadybug(Constants.BLUE_LADYBUG);
+				screenBlockView.setColorMaze(Constants.BLUE_LADYBUG);
 				break;
 			default:
 				logger.debug("no number " + nbrAction + " action");
@@ -106,7 +108,7 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		Graphics2D g2d = (Graphics2D) g;
 		drawMaze(g2d);
 		if (gameModel.getLadybug().isNewLife()) {
-			ScreenBlockView.setBlueLadybug(Constants.COLOR_EXTRA_PAC_LADYBUG);
+			screenBlockView.setColorMaze(Constants.COLOR_EXTRA_PAC_LADYBUG);
 			newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
@@ -167,7 +169,7 @@ public class GameView extends JPanel implements Observer, IDoActionAfterTimer {
 		for (int y = 0; y < gameModel.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
 			for (int x = 0; x < gameModel.getScreenData().getCurrentLevel().getNbrBlocksByLine()
 			        * Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE) {
-				ScreenBlockView.display(g2d, gameModel.getScreenData(), x, y);
+				screenBlockView.display(g2d, gameModel.getScreenData(), x, y);
 			}
 		}
 	}

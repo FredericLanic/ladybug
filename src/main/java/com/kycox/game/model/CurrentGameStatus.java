@@ -49,20 +49,11 @@ public class CurrentGameStatus
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
 		switch (nbrAction) {
-			case TO_INGAME:
-				setInGame();
-				break;
-			case TO_PROGRAM_START:
-				setProgramStart();
-				break;
-			case TO_PRESENTATION:
-				setGamePresentation();
-				break;
-			case TO_LEVEL_START:
-				setLevelStart();
-				break;
-			default:
-				logger.debug("no number " + nbrAction + " action");
+			case TO_INGAME -> setInGame();
+			case TO_PROGRAM_START -> setProgramStart();
+			case TO_PRESENTATION -> setGamePresentation();
+			case TO_LEVEL_START -> setLevelStart();
+			default -> logger.debug("no number " + nbrAction + " action");
 		}
 	}
 

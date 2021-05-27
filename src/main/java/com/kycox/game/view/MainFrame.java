@@ -23,6 +23,7 @@ import java.awt.Frame;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame implements IMainGraphicStructure {
 	private static final long serialVersionUID = 1L;
 	private Dimension gameDimension = new Dimension();
 	@Inject
-	private GameView gameView;
+	private CentralView gameView;
 	private Dimension lineDimension = new Dimension();
 	private Dimension pageDimension = new Dimension();
 	@Inject
@@ -63,6 +64,9 @@ public class MainFrame extends JFrame implements IMainGraphicStructure {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setUndecorated(true);
+
+		ImageIcon monIcone = new ImageIcon(getClass().getResource("/images/ghosts/color/oxiane.png"));
+		setIconImage(monIcone.getImage());
 
 		initScreenSize();
 		addPanels();
