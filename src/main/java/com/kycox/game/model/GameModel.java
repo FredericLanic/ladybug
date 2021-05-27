@@ -48,13 +48,12 @@ import com.kycox.game.model.strategy.actions.GameModelLevelIsEnded;
 import com.kycox.game.model.strategy.actions.GameModelLevelIsEnding;
 import com.kycox.game.model.strategy.actions.GameModelLevelIsStarting;
 import com.kycox.game.model.strategy.actions.GameModelNoAction;
-import com.kycox.game.model.strategy.actions.GameModelPresentationStatus;
+import com.kycox.game.model.strategy.actions.GameModelPresentation;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du
@@ -69,7 +68,6 @@ public class GameModel extends Observable
 	@Inject
 	@Getter
 	private CurrentGameStatus currentGameStatus;
-
 	@Inject
 	private GameModelGameIsEnding gameModeGameIsEnding;
 	@Inject
@@ -91,7 +89,7 @@ public class GameModel extends Observable
 	@Inject
 	private GameModelNoAction gameModelNoAction;
 	@Inject
-	private GameModelPresentationStatus gameModelPresentationStatus;
+	private GameModelPresentation gameModelPresentation;
 	@Getter
 	@Inject
 	private GameScore gameScore;
@@ -116,7 +114,6 @@ public class GameModel extends Observable
 	@Inject
 	private ScreenData screenData;
 	@Getter
-	@Setter
 	private boolean soundActive = true;
 
 	/*
@@ -127,10 +124,24 @@ public class GameModel extends Observable
 	 * enum privée à ta classe, avec les cas de test dessus, les méthodes métier,
 	 * écrites par lambda, et tu aurais un bloc qui s'écrit en une ligne.
 	 */
+	// Workflow du programme :
+	// PROGRAM_START
+	// PROGRAM_STARTING -> timer puis
+	// TO_PRESENTATION : en attente d'action de l'utilisateur
+	// GAME_START
+	// LEVEL START
+	// LEVEL_STARTING -> timer puis
+	// IN_GAME
+	// LEVEL_END
+	// LEVEL_ENDING puis soit LEVEL_START soit GAME_END
+	// GAME_END
+	// GAME_ENDING -> timer puis
+	// TO_PRESENTATION
+
 	private void actionsByTimerBip() {
 		switch (currentGameStatus.getGameStatus()) {
 			case PROGRAM_START -> gameModelManageAction.changeStrategy(gameModelInitialisationProgram);
-			case GAME_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentationStatus);
+			case GAME_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentation);
 			case GAME_START -> gameModelManageAction.changeStrategy(gameModeGameStarting);
 			case LEVEL_START -> gameModelManageAction.changeStrategy(gameModeLevelStarting);
 			case IN_GAME -> gameModelManageAction.changeStrategy(gameModelGameIsInGame);
@@ -157,7 +168,7 @@ public class GameModel extends Observable
 		if (gameTimer.isRunning()) {
 			logger.info("Force Stop Game");
 			gameScore.setOldScore(-1);
-			currentGameStatus.setProgramStart();
+			currentGameStatus.setGameEnd();
 		}
 	}
 
@@ -200,7 +211,7 @@ public class GameModel extends Observable
 
 	@Override
 	public boolean isInGame() {
-		return getCurrentGameStatus().isInGame();
+		return currentGameStatus.isInGame();
 	}
 
 	public void setBeginningMilliseconds(long beginningMilliseconds) {
@@ -215,7 +226,7 @@ public class GameModel extends Observable
 	@Override
 	public void setGhostRequest(Point ghostRequest) {
 		gameModeGameIsPlaying.setGhostRequest(ghostRequest);
-		gameModelPresentationStatus.setGhostRequest(ghostRequest);
+		gameModelPresentation.setGhostRequest(ghostRequest);
 	}
 
 	@Override

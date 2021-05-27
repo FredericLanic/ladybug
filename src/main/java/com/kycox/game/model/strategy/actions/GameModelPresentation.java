@@ -11,7 +11,7 @@ import com.kycox.game.model.strategy.IGameModelAction;
 import lombok.Setter;
 
 @Named("GameModelPresentationStatus")
-public class GameModelPresentationStatus extends AbstratGameModel implements IGameModelAction {
+public class GameModelPresentation extends AbstratGameModel implements IGameModelAction {
 
 	@Setter
 	private Point ghostRequest = Constants.POINT_ZERO;
