@@ -122,7 +122,7 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");
 			drawPresentationGhosts(g2d);
 		} else if (gameModel.getCurrentGameStatus().isGameStarting()) {
-			drawTwoCenterTextLines(g2d, "eNJOY", "yOUR GAME");
+			drawThreeCenterTextLines(g2d, "eNJOY", "yOUR GAME", "gET READY");
 		} else if (gameModel.getCurrentGameStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
@@ -208,6 +208,17 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 			y = message.getPosition().y + Constants.BLOCK_SIZE / 2;
 			g2d.drawString(message.getValue() + message.getMessageType().getEndMessage(), x, y);
 		}
+	}
+
+	private void drawThreeCenterTextLines(Graphics2D g2d, String line1, String line2, String line3) {
+		int x = gameModel.getScreenData().getScreenWidth();
+		int y = gameModel.getScreenData().getScreenHeight();
+		FontMetrics metr = this.getFontMetrics(defaultFont);
+		g2d.setColor(Color.white);
+		g2d.setFont(defaultFont);
+		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - 2 * Constants.BLOCK_SIZE);
+		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2);
+		g2d.drawString(line3, (x - metr.stringWidth(line2)) / 2, y / 2 + 2 * Constants.BLOCK_SIZE);
 	}
 
 	private void drawTwoCenterTextLines(Graphics2D g2d, String line1, String line2) {
