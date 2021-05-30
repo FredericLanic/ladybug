@@ -16,10 +16,12 @@ Coté technique CTEC :
 - CTEC19 : faire une fct dans gameModel pour envoyer la requete de ladybug depuis le controleur
 - CTEC20 : faire une fct dans gameModel pour mettre le jeu en mode configuration depuis le controleur
 - CTEC25 : lorsque le fantôme est regénéré, sa direction continue même s'il existe une bordure (contexte Level9NG)
+- CTEC26 : faire en sorte que les sons s'arrêtent convenablement entre les états du jeu
+- CTEC27 : modifier l'arborescence des resources pour qu'il y ait toujours un contexte "par défaut", un contexte "oxiane" (ladybug en bleu + le "OX" + des fantômes à la mode OXiane), un contexte "flash" (ladybug en rouge + l'éclair + des fantômes à la mode LSS)
 
 Coté fonctionnalités CFCT :
 
-- CFCT2 : augemnter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug 
+- CFCT2 : augmenter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug 
 - CFCT3 : ajouter le notion de fruit  
 	- quand faire apparaitre un fruit 
 	- où le positionner
@@ -27,12 +29,14 @@ Coté fonctionnalités CFCT :
 	- le nombre de point a ajouter au score
 	- quel son est emis jeu quand le fruit apparait
 	- quel son est emis quand le fruit est disponible
-- CFCT5  : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
+- CFCT5 : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
+- CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
+
 
 DONE :
 - CFCT0 : faire un skin OXiane pour Ladybug
 - CFCT4 : faire un point de téléportation -> téléporter sur un point quelconque existant
-	- OK quand afficher ce point : au chartgement du level
+	- OK quand afficher ce point : au chargement du level
 	- OK où le positionner : aléatoire dans chaque niveau
 	- OK comment le visualiser : rond fixe
 	- OK rajouter du son : son gratuit trouvé sur internet
