@@ -8,6 +8,8 @@ import javax.inject.Named;
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
+import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.model.CurrentGameStatus;
@@ -78,6 +80,32 @@ public class AbstratGameModel {
 	}
 
 	/**
+	 * Initialise les variables au lancement du programme
+	 */
+	protected void initGame() {
+		// initialisation du numéro du niveau; incrémenté dans initLevel
+		currentGameStatus.setNumLevel(1);
+		// utilisé juste pour l'affichage de la fenêtre d'initialisation
+		screenData.setLevelMap(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
+		// 3 vies par défaut
+		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
+		// ladybug n'est pas en vie lors de l'initialisation du jeu
+		ladybug.setStatus(LadybugStatus.DEAD);
+		// initialise les scores
+		gameScore.init();
+		// Initialise le groupe de fantôme
+		groupGhosts.setNumLevel(Constants.PRESENTATION_LEVEL);
+		// mise de la vitesse du niveau 3 pour la présentation
+		groupGhosts.setInitSpeeds(Constants.PRESENTATION_LEVEL);
+		// initialise les positions des fantômes
+		groupGhosts.initializePositions(screenData);
+		// initialise les fantômes pour la présentation
+		groupGhosts.setStatus(GhostStatus.NORMAL);
+		// initialise les vies de fantômes
+		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
+	}
+
+	/**
 	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
 	 */
 	protected void setSoundRequests() {
@@ -87,7 +115,7 @@ public class AbstratGameModel {
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
 		newSounds.addIntermission(
-		        currentGameStatus.isGamePresentation() && musicOn || currentGameStatus.isLevelEnding());
+		        currentGameStatus.isProgramPresentation() && musicOn || currentGameStatus.isLevelEnding());
 		newSounds.addScaredGhost(groupGhosts.hasScaredOrFlashedGhost());
 		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
 		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());

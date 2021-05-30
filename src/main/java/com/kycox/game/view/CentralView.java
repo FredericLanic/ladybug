@@ -117,7 +117,7 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 			drawGhosts(g2d);
 			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
 			// autre solution
-			gameModel.getCurrentGameStatus().setGamePresentation();
+			gameModel.getCurrentGameStatus().setProgramPresentation();
 		} else if (gameModel.getCurrentGameStatus().isProgramStarting()) {
 			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");
 			drawPresentationGhosts(g2d);
@@ -128,7 +128,7 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 			drawGhosts(g2d);
 			String text = "lEVEL " + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
-		} else if (gameModel.getCurrentGameStatus().isGamePresentation()) {
+		} else if (gameModel.getCurrentGameStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
 			drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "OR c TO cONFIG");
 		} else if (gameModel.getCurrentGameStatus().isGameEnding() || gameModel.getCurrentGameStatus().isGameEnd()) {

@@ -52,5 +52,6 @@ DONE :
 - CTEC22 : Refacto du timerView
 - CTEC23 : dissocier les yeux et les plugins lors de l'affichage
 - CTEC24 : correction display son lors de la regeration du fantôme
+- CTEC26 : problème, le nombre de vies de ladybug n'est plus initialisié pour une nouvelle partie
 
 REJECT : 

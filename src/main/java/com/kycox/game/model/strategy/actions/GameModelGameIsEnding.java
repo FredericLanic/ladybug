@@ -18,6 +18,6 @@ public class GameModelGameIsEnding extends AbstratGameModel implements IGameMode
 	public void execute() {
 		currentGameStatus.setGameEnding();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-		waitAndDoActionAfterTimer.launch(timeEnding, currentGameStatus, CurrentGameStatus.TO_PRESENTATION);
+		waitAndDoActionAfterTimer.launch(timeEnding, currentGameStatus, CurrentGameStatus.TO_PROGRAM_PRESENTATION_START);
 	}
 }

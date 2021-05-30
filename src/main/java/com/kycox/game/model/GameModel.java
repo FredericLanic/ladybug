@@ -49,6 +49,7 @@ import com.kycox.game.model.strategy.actions.GameModelLevelIsEnding;
 import com.kycox.game.model.strategy.actions.GameModelLevelIsStarting;
 import com.kycox.game.model.strategy.actions.GameModelNoAction;
 import com.kycox.game.model.strategy.actions.GameModelPresentation;
+import com.kycox.game.model.strategy.actions.GameModelPresentationStarting;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
@@ -90,6 +91,8 @@ public class GameModel extends Observable
 	private GameModelNoAction gameModelNoAction;
 	@Inject
 	private GameModelPresentation gameModelPresentation;
+	@Inject
+	private GameModelPresentationStarting gameModelPresentationStarting;
 	@Getter
 	@Inject
 	private GameScore gameScore;
@@ -127,7 +130,8 @@ public class GameModel extends Observable
 	// Workflow du programme :
 	// PROGRAM_START
 	// PROGRAM_STARTING -> timer puis
-	// TO_PRESENTATION : en attente d'action de l'utilisateur
+	// PROGRAM_PRESENTATION_START
+	// PROGRAM_PRESENTATION : en attente d'action de l'utilisateur
 	// GAME_START
 	// LEVEL START
 	// LEVEL_STARTING -> timer puis
@@ -136,12 +140,13 @@ public class GameModel extends Observable
 	// LEVEL_ENDING puis soit LEVEL_START soit GAME_END
 	// GAME_END
 	// GAME_ENDING -> timer puis
-	// TO_PRESENTATION
+	// PROGRAM_PRESENTATION_START
 
 	private void actionsByTimerBip() {
 		switch (currentGameStatus.getGameStatus()) {
 			case PROGRAM_START -> gameModelManageAction.changeStrategy(gameModelInitialisationProgram);
-			case GAME_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentation);
+			case PROGRAM_PRESENTATION_START -> gameModelManageAction.changeStrategy(gameModelPresentationStarting);
+			case PROGRAM_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentation);
 			case GAME_START -> gameModelManageAction.changeStrategy(gameModeGameStarting);
 			case LEVEL_START -> gameModelManageAction.changeStrategy(gameModeLevelStarting);
 			case IN_GAME -> gameModelManageAction.changeStrategy(gameModelGameIsInGame);
@@ -205,7 +210,7 @@ public class GameModel extends Observable
 
 	@Override
 	public boolean isGamePresentation() {
-		return currentGameStatus.isGamePresentation();
+		return currentGameStatus.isProgramPresentation();
 	}
 
 	@Override

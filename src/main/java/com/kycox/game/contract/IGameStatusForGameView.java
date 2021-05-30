@@ -23,7 +23,7 @@ public interface IGameStatusForGameView extends IGameCommon {
 
 	public boolean isGameEnding();
 
-	public boolean isGamePresentation();
+	public boolean isProgramPresentation();
 
 	public boolean isGameStarting();
 
@@ -36,5 +36,5 @@ public interface IGameStatusForGameView extends IGameCommon {
 	public boolean isToConfiguration();
 
 	// FIXME : hmmm ?
-	public void setGamePresentation();
+	public void setProgramPresentation();
 }

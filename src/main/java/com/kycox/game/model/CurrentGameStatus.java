@@ -37,7 +37,7 @@ public class CurrentGameStatus
 	private static final Log logger = LogFactory.getLog(CurrentGameStatus.class);
 	public static final int TO_INGAME = 0;
 	public static final int TO_LEVEL_START = 3;
-	public static final int TO_PRESENTATION = 2;
+	public static final int TO_PROGRAM_PRESENTATION_START = 2;
 	public static final int TO_PROGRAM_START = 1;
 	@Getter
 	private GameStatus gameStatus;
@@ -51,7 +51,7 @@ public class CurrentGameStatus
 		switch (nbrAction) {
 			case TO_INGAME -> setInGame();
 			case TO_PROGRAM_START -> setProgramStart();
-			case TO_PRESENTATION -> setGamePresentation();
+			case TO_PROGRAM_PRESENTATION_START -> setProgramPresentationStart();
 			case TO_LEVEL_START -> setLevelStart();
 			default -> logger.debug("no number " + nbrAction + " action");
 		}
@@ -70,11 +70,6 @@ public class CurrentGameStatus
 	@Override
 	public boolean isGameEnding() {
 		return gameStatus == GameStatus.GAME_ENDING;
-	}
-
-	@Override
-	public boolean isGamePresentation() {
-		return gameStatus == GameStatus.GAME_PRESENTATION;
 	}
 
 	public boolean isGameStart() {
@@ -109,6 +104,11 @@ public class CurrentGameStatus
 		return gameStatus == GameStatus.LEVEL_STARTING;
 	}
 
+	@Override
+	public boolean isProgramPresentation() {
+		return gameStatus == GameStatus.PROGRAM_PRESENTATION;
+	}
+
 	public boolean isProgramStart() {
 		return gameStatus == GameStatus.PROGRAM_START;
 	}
@@ -135,12 +135,6 @@ public class CurrentGameStatus
 
 	public void setGameEnding() {
 		gameStatus = GameStatus.GAME_ENDING;
-		logger.info("Passage du status en " + gameStatus);
-	}
-
-	@Override
-	public void setGamePresentation() {
-		gameStatus = GameStatus.GAME_PRESENTATION;
 		logger.info("Passage du status en " + gameStatus);
 	}
 
@@ -177,6 +171,17 @@ public class CurrentGameStatus
 
 	public void setLevelStarting() {
 		gameStatus = GameStatus.LEVEL_STARTING;
+		logger.info("Passage du status en " + gameStatus);
+	}
+
+	@Override
+	public void setProgramPresentation() {
+		gameStatus = GameStatus.PROGRAM_PRESENTATION;
+		logger.info("Passage du status en " + gameStatus);
+	}
+
+	public void setProgramPresentationStart() {
+		gameStatus = GameStatus.PROGRAM_PRESENTATION_START;
 		logger.info("Passage du status en " + gameStatus);
 	}
 
