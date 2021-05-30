@@ -59,7 +59,7 @@ public class GhostsGroup implements IGroupGhostForGameView {
 	}
 
 	public boolean hasRegeneratedGhost() {
-		return (lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATING).count() > 0);
+		return (lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATED).count() > 0);
 	}
 
 	public boolean hasScaredOrFlashedGhost() {
@@ -107,9 +107,14 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(Ghost::lostsALife);
 	}
 
-	private void setGhostStatusAfterRegeneration() {
-		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATING)
+	private void setGhostStatusAfterRegenerated() {
+		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATED)
 		        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
+	}
+
+	private void setGhostStatusAfterToBeRegenerated() {
+		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.TOBEREGERENATED)
+		        .forEach(g -> g.setStatus(GhostStatus.REGENERATED));
 	}
 
 	public void setInitSpeeds(int numLevel) {
@@ -143,7 +148,9 @@ public class GhostsGroup implements IGroupGhostForGameView {
 		// modifier la vitesse des fantôme en cours de partie
 		setSpeed(numLevel, percentageEatenPoints);
 		// Etat des fantômes de REGENERATING à NORMAL
-		setGhostStatusAfterRegeneration();
+		setGhostStatusAfterRegenerated();
+		// Passage de l'état TOBEREGENERATED to REGENERATED
+		setGhostStatusAfterToBeRegenerated();
 	}
 
 	/**

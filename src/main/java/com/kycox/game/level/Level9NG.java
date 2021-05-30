@@ -25,40 +25,40 @@ import javax.inject.Named;
 
 import com.kycox.game.constant.LevelConstruct;
 
-@Named("Level8NG")
-public class Level8NG extends LevelNG {
-	public Level8NG() {
+@Named("Level9NG")
+public class Level9NG extends LevelNG {
+	public Level9NG() {
 		// nombre de blocks par ligne
 		nbrBlocksPerLine = 15;
 		// nombre de lignes
 		nbrLines = 15;
 		levelDATA = new LevelConstruct[] {
-		        // 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
-		        B, N, B, B, B, B, B, B, N, N, N, B, B, B, B, //
-		        B, B, B, N, N, N, N, B, N, B, B, B, N, N, B, //
-		        N, B, N, N, N, N, B, B, B, B, N, B, B, N, B, //
-		        B, B, B, B, B, B, B, N, B, N, N, N, B, N, B, //
-		        B, B, N, B, N, N, B, N, B, N, N, B, B, N, B, //
-		        N, N, N, B, N, B, B, B, B, N, N, B, N, N, B, //
-		        B, B, B, B, N, B, B, B, B, B, B, B, B, B, B, //
-		        N, B, N, N, N, B, B, B, B, N, B, N, N, N, B, //
-		        N, B, B, B, B, B, B, B, B, N, B, N, N, N, B, //
-		        N, B, N, N, N, B, B, B, B, N, B, B, N, N, B, //
-		        B, B, N, B, N, N, N, B, N, N, N, B, N, N, B, //
-		        B, N, N, B, B, N, N, B, B, B, B, B, B, B, B, //
-		        B, N, B, B, B, B, B, B, N, N, N, B, N, N, B, //
-		        B, N, N, N, B, N, N, N, N, B, B, B, N, N, B, //
-		        B, B, B, B, B, B, B, B, B, B, N, N, N, N, B };
+		        // 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+		        B, B, B, N, B, B, B, B, B, N, B, B, B, B, B, //
+		        N, B, B, N, B, B, B, B, B, N, B, B, B, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
+		        N, B, B, B, B, B, N, B, B, B, B, B, N, B, B, //
+		        N, B, B, B, B, B, N, B, B, B, B, B, N, B, B }; //
 	}
 
 	@Override
 	public Point getGhostRegenerateBlockPoint() {
-		return new Point(7, 1);
+		return new Point(0, 0);
 	}
 
 	@Override
 	public Point getInitLadybugBlockPos() {
-		return new Point(7, 14);
+		return new Point(14, 14);
 	}
 
 	@Override

@@ -131,7 +131,7 @@ public class GameModel extends Observable
 	// GAME_START
 	// LEVEL START
 	// LEVEL_STARTING -> timer puis
-	// IN_GAME
+	// IN_GAME (jeu)
 	// LEVEL_END
 	// LEVEL_ENDING puis soit LEVEL_START soit GAME_END
 	// GAME_END
@@ -177,7 +177,6 @@ public class GameModel extends Observable
 		if (gameTimer.isRunning()) {
 			logger.info("Game in pause");
 			gameTimer.stop();
-			;
 		} else {
 			logger.info("Game regoes");
 			startGameTimer();
@@ -236,7 +235,7 @@ public class GameModel extends Observable
 
 	@Override
 	public void startGame() {
-		logger.info("Start Game");
+		logger.info("Initialize a new game");
 		currentGameStatus.initNumLevel();
 		currentGameStatus.setGameStart();
 	}

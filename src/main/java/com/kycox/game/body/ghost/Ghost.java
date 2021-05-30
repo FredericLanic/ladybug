@@ -98,7 +98,7 @@ public abstract class Ghost extends UserBody {
 
 	@Override
 	protected boolean isAllowedToDoActions() {
-		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATING;
+		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATED;
 	}
 
 	public boolean isComputed() {
@@ -128,7 +128,12 @@ public abstract class Ghost extends UserBody {
 			case DYING -> moveToRegeneratePoint(screenData);
 			case FLASH, SCARED -> scaredOrFlashedMoving(ladybugPosBlock, screenData);
 			case NORMAL -> normalMoving(ladybug, screenData);
-			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
+			case REGENERATED -> {
+				// Do nothing
+			}
+			default -> {
+				logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
+			}
 		}
 	}
 
@@ -190,7 +195,7 @@ public abstract class Ghost extends UserBody {
 			if (shorterWay.size() == 1) {
 				// Le fantôme est arrivé au point de regénération, il redevient "normal" avec
 				// une vitesse "normale" aussi
-				setStatus(GhostStatus.REGENERATING);
+				setStatus(GhostStatus.TOBEREGERENATED);
 			} else {
 				// On prend le premier block cible
 				Point currentPoint = shorterWay.get(0);

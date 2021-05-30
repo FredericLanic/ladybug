@@ -15,6 +15,7 @@ Coté technique CTEC :
 - CTEC14 : tests fonctionnels
 - CTEC19 : faire une fct dans gameModel pour envoyer la requete de ladybug depuis le controleur
 - CTEC20 : faire une fct dans gameModel pour mettre le jeu en mode configuration depuis le controleur
+- CTEC25 : lorsque le fantôme est regénéré, sa direction continue même s'il existe une bordure (contexte Level9NG)
 
 Coté fonctionnalités CFCT :
 
@@ -50,5 +51,6 @@ DONE :
 - CTEC21 : rendre plus lisible le design pattern des images de ladybug
 - CTEC22 : Refacto du timerView
 - CTEC23 : dissocier les yeux et les plugins lors de l'affichage
+- CTEC24 : correction display son lors de la regeration du fantôme
 
 REJECT : 
