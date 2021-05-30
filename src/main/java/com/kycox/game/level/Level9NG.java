@@ -35,7 +35,7 @@ public class Level9NG extends LevelNG {
 		levelDATA = new LevelConstruct[] {
 		        // 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
 		        B, B, B, N, B, B, B, B, B, N, B, B, B, B, B, //
-		        N, B, B, N, B, B, B, B, B, N, B, B, B, B, B, //
+		        B, B, B, N, B, B, B, B, B, N, B, B, B, B, B, //
 		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
 		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
 		        N, B, B, N, B, B, N, B, B, N, B, B, N, B, B, //
@@ -53,7 +53,7 @@ public class Level9NG extends LevelNG {
 
 	@Override
 	public Point getGhostRegenerateBlockPoint() {
-		return new Point(0, 0);
+		return new Point(1, 1);
 	}
 
 	@Override

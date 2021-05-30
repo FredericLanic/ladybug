@@ -107,7 +107,7 @@
 				<ref bean="Level6NG" />
 				<ref bean="Level7NG" />
 				<ref bean="Level8NG" />
-				<!-- ref bean="Level9NG" /--> <!--  à mettre en jeu lorsque le soucis de la direction du fantôme regénéré sera corrigé -->
+				<ref bean="Level9NG" /> <!--  à mettre en jeu lorsque le soucis de la direction du fantôme regénéré sera corrigé -->
 			</list>
 		</property>
 	</bean>
