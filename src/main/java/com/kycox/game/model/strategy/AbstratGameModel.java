@@ -12,7 +12,7 @@ import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.level.ScreenData;
-import com.kycox.game.model.CurrentGameStatus;
+import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
@@ -26,7 +26,7 @@ import lombok.Setter;
 public class AbstratGameModel {
 	@Getter
 	@Inject
-	protected CurrentGameStatus currentGameStatus;
+	protected CurrentProgramStatus currentGameStatus;
 
 	@Getter
 	@Inject

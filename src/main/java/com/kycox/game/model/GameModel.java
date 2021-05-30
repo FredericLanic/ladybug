@@ -33,10 +33,9 @@ import org.apache.commons.logging.LogFactory;
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
-import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.IGameModelForController;
-import com.kycox.game.contract.IGameModelForGameSounds;
-import com.kycox.game.contract.IGameModelForGameView;
+import com.kycox.game.contract.IGameModelForSounds;
+import com.kycox.game.contract.IGameModelForViews;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.model.strategy.GameModelManageAction;
 import com.kycox.game.model.strategy.actions.GameModelGameIsEnding;
@@ -63,12 +62,11 @@ import lombok.Getter;
  */
 @SuppressWarnings("deprecation")
 @Named("GameModel")
-public class GameModel extends Observable
-        implements IGameModelForGameView, IGameModelForGameSounds, IGameModelForController {
+public class GameModel extends Observable implements IGameModelForViews, IGameModelForSounds, IGameModelForController {
 	private static final Log logger = LogFactory.getLog(GameModel.class);
 	@Inject
 	@Getter
-	private CurrentGameStatus currentGameStatus;
+	private CurrentProgramStatus currentProgramStatus;
 	@Inject
 	private GameModelGameIsEnding gameModeGameIsEnding;
 	@Inject
@@ -96,8 +94,6 @@ public class GameModel extends Observable
 	@Getter
 	@Inject
 	private GameScore gameScore;
-	private final Timer gameTimer = createGameTimer();
-	Point ghostRequest = Constants.POINT_ZERO;
 	@Getter
 	@Inject
 	private GhostsGroup groupGhosts;
@@ -113,24 +109,26 @@ public class GameModel extends Observable
 	@Getter
 	@Inject
 	private NewSounds newSounds;
+	private final Timer programTimer = createProgramTimer();
 	@Getter
 	@Inject
 	private ScreenData screenData;
 	@Getter
 	private boolean soundActive = true;
 
+	// Remarque de Christophe M :
 	/*
-	 * Remarque de Christophe M : Sur ce gros if, tes conditions sont difficilement
-	 * lisibles. Tu pourrais créer une méthode pour chaque test, avec un nom métier
-	 * qui exprime la règle métier, et pas la règle technique. Ceci fait, ton
-	 * pattern startegy apparaitra plus naturellement. Tu pourras introduire une
-	 * enum privée à ta classe, avec les cas de test dessus, les méthodes métier,
-	 * écrites par lambda, et tu aurais un bloc qui s'écrit en une ligne.
+	 * Sur ce gros if, tes conditions sont difficilement lisibles. Tu pourrais créer
+	 * une méthode pour chaque test, avec un nom métier qui exprime la règle métier,
+	 * et pas la règle technique. Ceci fait, ton pattern startegy apparaitra plus
+	 * naturellement. Tu pourras introduire une enum privée à ta classe, avec les
+	 * cas de test dessus, les méthodes métier, écrites par lambda, et tu aurais un
+	 * bloc qui s'écrit en une ligne.
 	 */
 	// Workflow du programme :
 	// PROGRAM_START
 	// PROGRAM_STARTING -> timer puis
-	// PROGRAM_PRESENTATION_START
+	// PROGRAM_PRESENTATION_START : initialise la nouvelle partie
 	// PROGRAM_PRESENTATION : en attente d'action de l'utilisateur
 	// GAME_START
 	// LEVEL START
@@ -143,7 +141,7 @@ public class GameModel extends Observable
 	// PROGRAM_PRESENTATION_START
 
 	private void actionsByTimerBip() {
-		switch (currentGameStatus.getGameStatus()) {
+		switch (currentProgramStatus.getGameStatus()) {
 			case PROGRAM_START -> gameModelManageAction.changeStrategy(gameModelInitialisationProgram);
 			case PROGRAM_PRESENTATION_START -> gameModelManageAction.changeStrategy(gameModelPresentationStarting);
 			case PROGRAM_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentation);
@@ -157,11 +155,13 @@ public class GameModel extends Observable
 		}
 		gameModelManageAction.execute();
 
+		logger.debug("CurrentStatus : " + currentProgramStatus.getGameStatus());
+
 		setChanged();
 		notifyObservers();
 	}
 
-	private Timer createGameTimer() {
+	private Timer createProgramTimer() {
 		ActionListener action = event -> {
 			actionsByTimerBip();
 		};
@@ -170,21 +170,21 @@ public class GameModel extends Observable
 
 	@Override
 	public void forceStopGame() {
-		if (gameTimer.isRunning()) {
+		if (programTimer.isRunning()) {
 			logger.info("Force Stop Game");
 			gameScore.setOldScore(-1);
-			currentGameStatus.setGameEnd();
+			currentProgramStatus.setGameEnd();
 		}
 	}
 
 	@Override
 	public void gameInPause() {
-		if (gameTimer.isRunning()) {
+		if (programTimer.isRunning()) {
 			logger.info("Game in pause");
-			gameTimer.stop();
+			programTimer.stop();
 		} else {
 			logger.info("Game regoes");
-			startGameTimer();
+			startProgramTimer();
 		}
 	}
 
@@ -203,19 +203,19 @@ public class GameModel extends Observable
 
 	@PostConstruct
 	private void init() {
-		currentGameStatus.setProgramStart();
+		currentProgramStatus.setProgramStart();
 		gameModelManageAction.changeStrategy(gameModelNoAction);
-		startGameTimer();
+		startProgramTimer();
 	}
 
 	@Override
 	public boolean isGamePresentation() {
-		return currentGameStatus.isProgramPresentation();
+		return currentProgramStatus.isProgramPresentation();
 	}
 
 	@Override
 	public boolean isInGame() {
-		return currentGameStatus.isInGame();
+		return currentProgramStatus.isInGame();
 	}
 
 	public void setBeginningMilliseconds(long beginningMilliseconds) {
@@ -230,27 +230,27 @@ public class GameModel extends Observable
 	@Override
 	public void setGhostRequest(Point ghostRequest) {
 		gameModeGameIsPlaying.setGhostRequest(ghostRequest);
-		gameModelPresentation.setGhostRequest(ghostRequest);
+		// gameModelPresentation.setGhostRequest(ghostRequest);
 	}
 
 	@Override
 	public void setLadybugRequest(Point point) {
-		getLadybug().setUserRequest(point);
+		ladybug.setUserRequest(point);
 	}
 
 	@Override
 	public void startGame() {
 		logger.info("Initialize a new game");
-		currentGameStatus.initNumLevel();
-		currentGameStatus.setGameStart();
+		currentProgramStatus.initNumLevel();
+		currentProgramStatus.setGameStart();
 	}
 
 	/**
 	 * Lancement du timer qui rythme le jeu
 	 */
-	private void startGameTimer() {
+	private void startProgramTimer() {
 		logger.info("Start Game Timer");
-		gameTimer.start();
+		programTimer.start();
 	}
 
 	/**

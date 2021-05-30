@@ -20,8 +20,8 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GameScore;
 import com.kycox.game.score.GroupMessages;
 
-public interface IGameModelForGameView extends IGameCommon {
-	public IGameStatusForGameView getCurrentGameStatus();
+public interface IGameModelForViews extends IGameCommon {
+	public IGameStatusForGameView getCurrentProgramStatus();
 
 	public GameScore getGameScore();
 

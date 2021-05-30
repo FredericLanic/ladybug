@@ -100,7 +100,7 @@ public class KeyGameController extends KeyAdapter {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
 			case KeyEvent.VK_S -> gameModel.startGame();
-			case KeyEvent.VK_C -> gameModel.getCurrentGameStatus().setConfiguration();
+			case KeyEvent.VK_C -> gameModel.getCurrentProgramStatus().setConfiguration();
 			case KeyEvent.VK_ESCAPE -> System.exit(0); // FIXME : c'est au modèle de sortir proprement du jeu
 		}
 	}

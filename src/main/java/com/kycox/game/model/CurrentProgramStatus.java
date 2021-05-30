@@ -31,10 +31,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Named("CurrentGameStatus")
-public class CurrentGameStatus
+public class CurrentProgramStatus
         implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController, IDoActionAfterTimer {
 
-	private static final Log logger = LogFactory.getLog(CurrentGameStatus.class);
+	private static final Log logger = LogFactory.getLog(CurrentProgramStatus.class);
 	public static final int TO_INGAME = 0;
 	public static final int TO_LEVEL_START = 3;
 	public static final int TO_PROGRAM_PRESENTATION_START = 2;

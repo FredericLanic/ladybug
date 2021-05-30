@@ -23,7 +23,7 @@ import javax.inject.Named;
 import javax.sound.sampled.Clip;
 
 import com.kycox.game.constant.Sounds;
-import com.kycox.game.contract.IGameModelForGameSounds;
+import com.kycox.game.contract.IGameModelForSounds;
 import com.kycox.game.contract.INewSoundsForGameSounds;
 
 /**
@@ -32,7 +32,7 @@ import com.kycox.game.contract.INewSoundsForGameSounds;
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
-	private IGameModelForGameSounds gameModel;
+	private IGameModelForSounds gameModel;
 	private INewSoundsForGameSounds newSounds;
 
 	/**
@@ -101,7 +101,7 @@ public class GameSounds implements Observer {
 
 	@Override
 	public void update(Observable gameModelForSound, Object arg) {
-		gameModel = (IGameModelForGameSounds) gameModelForSound;
+		gameModel = (IGameModelForSounds) gameModelForSound;
 		newSounds = gameModel.getNewSounds();
 		if (gameModel.isSoundActive()) {
 			playSounds();

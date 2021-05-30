@@ -5,7 +5,7 @@ import java.awt.Point;
 import javax.inject.Named;
 
 import com.kycox.game.constant.Constants;
-import com.kycox.game.model.CurrentGameStatus;
+import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
@@ -21,7 +21,7 @@ public class GameModelGameIsStarting extends AbstratGameModel implements IGameMo
 	public void execute() {
 		currentGameStatus.setGameStarting();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-		waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentGameStatus.TO_LEVEL_START);
+		waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentProgramStatus.TO_LEVEL_START);
 		setSoundRequests();
 	}
 }

@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.model.CurrentGameStatus;
+import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
@@ -32,7 +32,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		initLevel();
 		currentGameStatus.setLevelStarting();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-		waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentGameStatus.TO_INGAME);
+		waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentProgramStatus.TO_INGAME);
 		setSoundRequests();
 	}
 

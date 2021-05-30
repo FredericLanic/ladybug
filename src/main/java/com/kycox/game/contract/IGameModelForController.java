@@ -23,7 +23,7 @@ public interface IGameModelForController extends IGameCommon {
 
 	public void gameInPause();
 
-	public IGameStatusForController getCurrentGameStatus();
+	public IGameStatusForController getCurrentProgramStatus();
 
 	public ILadybugForController getLadybug();
 

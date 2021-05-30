@@ -42,7 +42,7 @@ import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.IDoActionAfterTimer;
-import com.kycox.game.contract.IGameModelForGameView;
+import com.kycox.game.contract.IGameModelForViews;
 import com.kycox.game.controller.KeyGameController;
 import com.kycox.game.font.GameFont;
 import com.kycox.game.score.Message;
@@ -73,7 +73,7 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 	private long durationLadybugNewLife;
 	@Inject
 	private KeyGameController gameController;
-	private IGameModelForGameView gameModel;
+	private IGameModelForViews gameModel;
 	@Inject
 	private GhostView ghostView;
 	@Inject
@@ -112,29 +112,31 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 			newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
-		if (gameModel.getCurrentGameStatus().isToConfiguration()) {
+		if (gameModel.getCurrentProgramStatus().isToConfiguration()) {
 			confJDialog.setVisible(true);
 			drawGhosts(g2d);
 			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
 			// autre solution
-			gameModel.getCurrentGameStatus().setProgramPresentation();
-		} else if (gameModel.getCurrentGameStatus().isProgramStarting()) {
+			gameModel.getCurrentProgramStatus().setProgramPresentation();
+		} else if (gameModel.getCurrentProgramStatus().isProgramStarting()) {
 			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");
 			drawPresentationGhosts(g2d);
-		} else if (gameModel.getCurrentGameStatus().isGameStarting()) {
+		} else if (gameModel.getCurrentProgramStatus().isGameStarting()) {
 			drawThreeCenterTextLines(g2d, "eNJOY", "yOUR GAME", "gET READY");
-		} else if (gameModel.getCurrentGameStatus().isLevelStarting()) {
+		} else if (gameModel.getCurrentProgramStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
-			String text = "lEVEL " + Utils.integerToRoman(gameModel.getCurrentGameStatus().getNumLevel()).toLowerCase();
+			String text = "lEVEL "
+			        + Utils.integerToRoman(gameModel.getCurrentProgramStatus().getNumLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
-		} else if (gameModel.getCurrentGameStatus().isProgramPresentation()) {
+		} else if (gameModel.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
 			drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "OR c TO cONFIG");
-		} else if (gameModel.getCurrentGameStatus().isGameEnding() || gameModel.getCurrentGameStatus().isGameEnd()) {
+		} else if (gameModel.getCurrentProgramStatus().isGameEnding()
+		        || gameModel.getCurrentProgramStatus().isGameEnd()) {
 			drawGhosts(g2d);
 			drawOneCenterTextLine(g2d, "gAME oVER");
-		} else if (gameModel.getCurrentGameStatus().isLevelEnding()) {
+		} else if (gameModel.getCurrentProgramStatus().isLevelEnding()) {
 			drawTwoCenterTextLines(g2d, "nEXT LEVEL", "gET READY");
 		} else if (gameModel.getLadybug().getStatus() == LadybugStatus.DYING) {
 			ladybugDyingView.inProgress();
@@ -147,7 +149,7 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
 		} else {
-			String msg = "NO DISPLAY FOR STATUS " + gameModel.getCurrentGameStatus();
+			String msg = "NO DISPLAY FOR STATUS " + gameModel.getCurrentProgramStatus();
 			drawOneCenterTextLine(g2d, msg);
 			logger.error(msg);
 		}
@@ -250,7 +252,7 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 
 	@Override
 	public void update(Observable gameModel, Object used) {
-		this.gameModel = (IGameModelForGameView) gameModel;
+		this.gameModel = (IGameModelForViews) gameModel;
 		repaint();
 	}
 }

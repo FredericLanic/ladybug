@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.Constants;
-import com.kycox.game.model.CurrentGameStatus;
+import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
@@ -24,7 +24,7 @@ public class GameModelInitialisationProgram extends AbstratGameModel implements 
 		currentGameStatus.setProgramStarting();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 		waitAndDoActionAfterTimer.launch(Constants.PROGRAM_STARTING_MILLISECONDS, currentGameStatus,
-		        CurrentGameStatus.TO_PROGRAM_PRESENTATION_START);
+		        CurrentProgramStatus.TO_PROGRAM_PRESENTATION_START);
 	}
 
 }
