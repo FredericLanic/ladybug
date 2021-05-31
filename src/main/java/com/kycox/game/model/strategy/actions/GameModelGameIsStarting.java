@@ -18,7 +18,7 @@ public class GameModelGameIsStarting extends AbstratGameModel implements IGameMo
 	private Point ghostRequest = Constants.POINT_ZERO;
 
 	@Override
-	public void execute() {
+	public void programBeat() {
 		currentGameStatus.setGameStarting();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 		waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentProgramStatus.TO_LEVEL_START);

@@ -21,7 +21,7 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
-import com.kycox.game.contract.IDoActionAfterTimer;
+import com.kycox.game.contract.DoActionAfterTimer;
 
 /**
  * Timer qui permet d'afficher le score un certain temps à l'écran
@@ -47,7 +47,7 @@ public class WaitAndDoActionAfterTimer {
 	}
 
 	@Inject
-	private IDoActionAfterTimer doActionAfterTimer;
+	private DoActionAfterTimer doActionAfterTimer;
 	private Timer timer = new Timer(true);
 
 	/**
@@ -66,7 +66,7 @@ public class WaitAndDoActionAfterTimer {
 	 *
 	 * @param millisecondsDuration temps en milli secondes
 	 */
-	public void launch(long millisecondsDuration, IDoActionAfterTimer iDoActionAfterTimer, int nbrAction) {
+	public void launch(long millisecondsDuration, DoActionAfterTimer iDoActionAfterTimer, int nbrAction) {
 		this.doActionAfterTimer = iDoActionAfterTimer;
 		timer.schedule(new WaitTimer(nbrAction), millisecondsDuration);
 	}

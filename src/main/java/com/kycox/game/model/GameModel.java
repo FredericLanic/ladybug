@@ -33,9 +33,9 @@ import org.apache.commons.logging.LogFactory;
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
-import com.kycox.game.contract.IGameModelForController;
-import com.kycox.game.contract.IGameModelForSounds;
-import com.kycox.game.contract.IGameModelForViews;
+import com.kycox.game.contract.GameModelForController;
+import com.kycox.game.contract.GameModelForSounds;
+import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.model.strategy.GameModelManageAction;
 import com.kycox.game.model.strategy.actions.GameModelGameIsEnding;
@@ -49,7 +49,7 @@ import com.kycox.game.model.strategy.actions.GameModelLevelIsStarting;
 import com.kycox.game.model.strategy.actions.GameModelNoAction;
 import com.kycox.game.model.strategy.actions.GameModelPresentation;
 import com.kycox.game.model.strategy.actions.GameModelPresentationStarting;
-import com.kycox.game.score.GameScore;
+import com.kycox.game.score.Score;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
 
@@ -62,7 +62,7 @@ import lombok.Getter;
  */
 @SuppressWarnings("deprecation")
 @Named("GameModel")
-public class GameModel extends Observable implements IGameModelForViews, IGameModelForSounds, IGameModelForController {
+public class GameModel extends Observable implements GameModelForViews, GameModelForSounds, GameModelForController {
 	private static final Log logger = LogFactory.getLog(GameModel.class);
 	@Inject
 	@Getter
@@ -93,7 +93,7 @@ public class GameModel extends Observable implements IGameModelForViews, IGameMo
 	private GameModelPresentationStarting gameModelPresentationStarting;
 	@Getter
 	@Inject
-	private GameScore gameScore;
+	private Score gameScore;
 	@Getter
 	@Inject
 	private GhostsGroup groupGhosts;

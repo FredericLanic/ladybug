@@ -22,13 +22,13 @@ import java.util.Optional;
 
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.contract.IGroupGhostForGameView;
+import com.kycox.game.contract.GroupGhostForGameView;
 import com.kycox.game.level.ScreenData;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class GhostsGroup implements IGroupGhostForGameView {
+public class GhostsGroup implements GroupGhostForGameView {
 	@Getter
 	@Setter
 	private List<Ghost> lstGhosts;

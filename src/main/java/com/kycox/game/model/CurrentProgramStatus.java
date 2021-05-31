@@ -22,17 +22,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.GameStatus;
-import com.kycox.game.contract.IDoActionAfterTimer;
-import com.kycox.game.contract.IGameStatusForController;
-import com.kycox.game.contract.IGameStatusForGameSounds;
-import com.kycox.game.contract.IGameStatusForGameView;
+import com.kycox.game.contract.DoActionAfterTimer;
+import com.kycox.game.contract.GameStatusForController;
+import com.kycox.game.contract.GameStatusForGameSounds;
+import com.kycox.game.contract.GameStatusForGameView;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Named("CurrentGameStatus")
 public class CurrentProgramStatus
-        implements IGameStatusForGameView, IGameStatusForGameSounds, IGameStatusForController, IDoActionAfterTimer {
+        implements GameStatusForGameView, GameStatusForGameSounds, GameStatusForController, DoActionAfterTimer {
 
 	private static final Log logger = LogFactory.getLog(CurrentProgramStatus.class);
 	public static final int TO_INGAME = 0;

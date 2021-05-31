@@ -23,8 +23,8 @@ import javax.inject.Named;
 import javax.sound.sampled.Clip;
 
 import com.kycox.game.constant.Sounds;
-import com.kycox.game.contract.IGameModelForSounds;
-import com.kycox.game.contract.INewSoundsForGameSounds;
+import com.kycox.game.contract.GameModelForSounds;
+import com.kycox.game.contract.NewSoundsForGameSounds;
 
 /**
  * Gestion du son dans le jeu
@@ -32,8 +32,8 @@ import com.kycox.game.contract.INewSoundsForGameSounds;
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
-	private IGameModelForSounds gameModel;
-	private INewSoundsForGameSounds newSounds;
+	private GameModelForSounds gameModel;
+	private NewSoundsForGameSounds newSounds;
 
 	/**
 	 * Retourne le temps en millisecondes de la musique de la mort de ladybug
@@ -101,7 +101,7 @@ public class GameSounds implements Observer {
 
 	@Override
 	public void update(Observable gameModelForSound, Object arg) {
-		gameModel = (IGameModelForSounds) gameModelForSound;
+		gameModel = (GameModelForSounds) gameModelForSound;
 		newSounds = gameModel.getNewSounds();
 		if (gameModel.isSoundActive()) {
 			playSounds();

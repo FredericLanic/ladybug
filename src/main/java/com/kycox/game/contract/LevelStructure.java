@@ -16,7 +16,21 @@
  */
 package com.kycox.game.contract;
 
-public interface IGameStatusForGameSounds {
-	// FIXME : c'est le mal
-	public void setInGame();
+import java.awt.Point;
+import java.util.List;
+
+import com.kycox.game.level.ScreenBlock;
+
+public interface LevelStructure {
+	public Point getGhostRegenerateBlockPoint();
+
+	public Point getInitLadybugBlockPos();
+
+	public List<ScreenBlock> getLstBlocks();
+
+	public int getNbrBlocksByLine();
+
+	public int getNbrLines();
+
+	public int getNbrMegaPoints();
 }

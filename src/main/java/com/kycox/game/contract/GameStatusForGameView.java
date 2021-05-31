@@ -16,21 +16,25 @@
  */
 package com.kycox.game.contract;
 
-import java.awt.Point;
-import java.util.List;
+public interface GameStatusForGameView extends GameCommon {
+	public int getNumLevel();
 
-import com.kycox.game.level.ScreenBlock;
+	public boolean isGameEnd();
 
-public interface ILevel {
-	public Point getGhostRegenerateBlockPoint();
+	public boolean isGameEnding();
 
-	public Point getInitLadybugBlockPos();
+	public boolean isProgramPresentation();
 
-	public List<ScreenBlock> getLstBlocks();
+	public boolean isGameStarting();
 
-	public int getNbrBlocksByLine();
+	public boolean isLevelEnding();
 
-	public int getNbrLines();
+	public boolean isLevelStarting();
 
-	public int getNbrMegaPoints();
+	public boolean isProgramStarting();
+
+	public boolean isToConfiguration();
+
+	// FIXME : hmmm ?
+	public void setProgramPresentation();
 }

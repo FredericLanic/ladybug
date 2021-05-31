@@ -16,24 +16,8 @@
  */
 package com.kycox.game.contract;
 
-import java.awt.Point;
+import com.kycox.game.constant.Sounds;
 
-public interface IGameModelForController extends IGameCommon {
-	public void forceStopGame();
-
-	public void gameInPause();
-
-	public IGameStatusForController getCurrentProgramStatus();
-
-	public ILadybugForController getLadybug();
-
-	public boolean isGamePresentation();
-
-	public void setGhostRequest(Point point);
-
-	public void setLadybugRequest(Point point);
-
-	public void startGame();
-
-	public void startStopSoundActive();
+public interface NewSoundsForGameSounds {
+	public boolean hasSound(Sounds soundsEnum);
 }

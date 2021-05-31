@@ -18,16 +18,22 @@ package com.kycox.game.contract;
 
 import java.awt.Point;
 
-import com.kycox.game.constant.ladybug.LadybugStatus;
+public interface GameModelForController extends GameCommon {
+	public void forceStopGame();
 
-public interface ILadybugForGameView {
-	public int getLeftLifes();
+	public void gameInPause();
 
-	public Point getPosition();
+	public GameStatusForController getCurrentProgramStatus();
 
-	public LadybugStatus getStatus();
+	public LadybugForController getLadybug();
 
-	public Point getViewDirection();
+	public boolean isGamePresentation();
 
-	public boolean isNewLife();
+	public void setGhostRequest(Point point);
+
+	public void setLadybugRequest(Point point);
+
+	public void startGame();
+
+	public void startStopSoundActive();
 }

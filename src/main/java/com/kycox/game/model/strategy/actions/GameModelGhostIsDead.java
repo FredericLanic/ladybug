@@ -9,7 +9,7 @@ import com.kycox.game.model.strategy.IGameModelAction;
 public class GameModelGhostIsDead extends AbstratGameModel implements IGameModelAction {
 
 	@Override
-	public void execute() {
+	public void programBeat() {
 		currentGameStatus.setGameEnd();
 	}
 }

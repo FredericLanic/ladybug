@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kycox.game.constant.LevelConstruct;
-import com.kycox.game.contract.ILevel;
+import com.kycox.game.contract.LevelStructure;
 
-public abstract class LevelNG implements ILevel {
+public abstract class LevelNG implements LevelStructure {
 	private static final int DOWN = 8;
 	private static final int LEFT = 1;
 	static final int NOT_ACCESSIBLE_POINT = 128;
@@ -68,7 +68,7 @@ public abstract class LevelNG implements ILevel {
 	}
 
 	/**
-	 * FIXME : Refacto !!
+	 * FIXME : Refacto !! TODO : mettre des optional
 	 *
 	 * @param x
 	 * @param y

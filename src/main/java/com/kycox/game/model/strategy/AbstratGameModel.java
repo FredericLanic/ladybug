@@ -13,7 +13,7 @@ import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.model.CurrentProgramStatus;
-import com.kycox.game.score.GameScore;
+import com.kycox.game.score.Score;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.sound.NewSounds;
 import com.kycox.game.timer.SuperPowerTimer;
@@ -30,7 +30,7 @@ public class AbstratGameModel {
 
 	@Getter
 	@Inject
-	protected GameScore gameScore;
+	protected Score gameScore;
 
 	@Getter
 	@Inject

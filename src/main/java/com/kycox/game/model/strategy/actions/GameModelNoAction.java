@@ -8,6 +8,6 @@ import com.kycox.game.model.strategy.IGameModelAction;
 @Named("GameModelNoAction")
 public class GameModelNoAction extends AbstratGameModel implements IGameModelAction {
 	@Override
-	public void execute() {
+	public void programBeat() {
 	}
 }

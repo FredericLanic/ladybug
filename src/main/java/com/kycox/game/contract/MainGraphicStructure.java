@@ -16,6 +16,18 @@
  */
 package com.kycox.game.contract;
 
-public interface IGameCommon {
-	public boolean isInGame();
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+
+public interface MainGraphicStructure {
+	public void add(Component comp, Object constraints);
+
+	default void addPanel(JPanel jPanel, Dimension dimension, String borderLayout) {
+		jPanel.setBackground(Color.BLACK);
+		jPanel.setPreferredSize(dimension);
+		add(jPanel, borderLayout);
+	}
 }

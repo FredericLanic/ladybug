@@ -41,8 +41,8 @@ import org.apache.commons.logging.LogFactory;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.contract.IDoActionAfterTimer;
-import com.kycox.game.contract.IGameModelForViews;
+import com.kycox.game.contract.DoActionAfterTimer;
+import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.controller.KeyGameController;
 import com.kycox.game.font.GameFont;
 import com.kycox.game.score.Message;
@@ -64,7 +64,7 @@ import lombok.Setter;
  *
  */
 @Named("CentralView")
-public class CentralView extends JPanel implements Observer, IDoActionAfterTimer {
+public class CentralView extends JPanel implements Observer, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CentralView.class);
 	private static final long serialVersionUID = 1L;
 	private ConfJDialog confJDialog;
@@ -73,7 +73,7 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 	private long durationLadybugNewLife;
 	@Inject
 	private KeyGameController gameController;
-	private IGameModelForViews gameModel;
+	private GameModelForViews gameModel;
 	@Inject
 	private GhostView ghostView;
 	@Inject
@@ -252,7 +252,7 @@ public class CentralView extends JPanel implements Observer, IDoActionAfterTimer
 
 	@Override
 	public void update(Observable gameModel, Object used) {
-		this.gameModel = (IGameModelForViews) gameModel;
+		this.gameModel = (GameModelForViews) gameModel;
 		repaint();
 	}
 }

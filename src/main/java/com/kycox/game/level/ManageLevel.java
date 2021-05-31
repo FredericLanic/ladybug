@@ -18,25 +18,25 @@ package com.kycox.game.level;
 
 import java.util.List;
 
-import com.kycox.game.contract.ILevel;
+import com.kycox.game.contract.LevelStructure;
 import com.kycox.game.tools.Utils;
 
 import lombok.Setter;
 
-public final class Levels {
+public final class ManageLevel {
 	@Setter
-	private List<ILevel> lstLevel;
+	private List<LevelStructure> levels;
 
 	/**
 	 * Retourne le niveau demand�
 	 *
 	 * @param i : le numéro du niveau demandé
 	 */
-	public ILevel getLevel(int i) {
+	public LevelStructure getLevel(int i) {
 		int num = i;
-		if (num > lstLevel.size())
-			num = 1 + Utils.generateRandomInt(lstLevel.size());
-		return lstLevel.get(num - 1);
+		if (num > levels.size())
+			num = 1 + Utils.generateRandomInt(levels.size());
+		return levels.get(num - 1);
 	}
 
 }

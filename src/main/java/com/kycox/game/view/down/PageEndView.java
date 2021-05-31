@@ -32,18 +32,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.ghost.image.GhostsColorImages;
-import com.kycox.game.contract.IGameModelForViews;
-import com.kycox.game.contract.IMainGraphicStructure;
+import com.kycox.game.contract.GameModelForViews;
+import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.ladybug.LadybugView;
 
 import lombok.Setter;
 
 @Named("PageEndView")
-public class PageEndView extends JPanel implements Observer, IMainGraphicStructure {
+public class PageEndView extends JPanel implements Observer, MainGraphicStructure {
 	private static final Log logger = LogFactory.getLog(PageEndView.class);
 	private static final long serialVersionUID = 1L;
-	private transient IGameModelForViews gameModel;
+	private transient GameModelForViews gameModel;
 	@Setter
 	private int height;
 	private JPanel jPanelLadybugKinematique = new JPanel();
@@ -90,7 +90,7 @@ public class PageEndView extends JPanel implements Observer, IMainGraphicStructu
 		initJPanelInside(preferredSize);
 	}
 
-	private void setVariableToScoreView(IGameModelForViews gameModel) {
+	private void setVariableToScoreView(GameModelForViews gameModel) {
 		statusGameView.setGhostNbrLifes(gameModel.getGhostLeftLifes());
 		// Rajouter les yeux
 		statusGameView.setImageGhostPlayer(GhostsColorImages.GHOST_COLOR_GREY.getImage());
@@ -106,7 +106,7 @@ public class PageEndView extends JPanel implements Observer, IMainGraphicStructu
 	@Override
 	public void update(Observable gameModel, Object arg) {
 		if (gameModel != null) {
-			this.gameModel = (IGameModelForViews) gameModel;
+			this.gameModel = (GameModelForViews) gameModel;
 			setVariableToScoreView(this.gameModel);
 			repaint();
 		} else {

@@ -43,7 +43,7 @@ public enum Sounds {
 	// FIXME : see why LADYBUG_EAT_FRUIT is not used ?
 
 	@Getter
-	private Clip clip = null;
+	private Clip clip;
 
 	/**
 	 * Constructeur

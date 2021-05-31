@@ -22,12 +22,12 @@ import java.util.List;
 import javax.inject.Named;
 
 import com.kycox.game.constant.Sounds;
-import com.kycox.game.contract.INewSoundsForGameSounds;
+import com.kycox.game.contract.NewSoundsForGameSounds;
 
 import lombok.Getter;
 
 @Named("NewSounds")
-public class NewSounds implements INewSoundsForGameSounds {
+public class NewSounds implements NewSoundsForGameSounds {
 	@Getter
 	private List<Sounds> sounds = new ArrayList<>();
 

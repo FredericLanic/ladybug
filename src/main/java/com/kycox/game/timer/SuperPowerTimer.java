@@ -131,7 +131,7 @@ public class SuperPowerTimer {
 		}
 		// Création du timer
 		timer = new Timer(true);
-		// lancement du timer apr�s n secondes
+		// lancement du timer après n secondes
 		timer.schedule(new PowerTimer(), (long) (seconds) * 1000);
 	}
 }

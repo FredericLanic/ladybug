@@ -22,8 +22,8 @@ import com.kycox.game.action.ladybug.LadybugActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.contract.ILadybugForController;
-import com.kycox.game.contract.ILadybugForGameView;
+import com.kycox.game.contract.LadybugForController;
+import com.kycox.game.contract.LadybugForGameView;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
@@ -35,7 +35,7 @@ import lombok.Setter;
  * Spécificités de Ladybug
  *
  */
-public class Ladybug extends UserBody implements ILadybugForController, ILadybugForGameView {
+public class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
 	@Getter
 	private LadybugActions ladybugActions;
 	@Setter

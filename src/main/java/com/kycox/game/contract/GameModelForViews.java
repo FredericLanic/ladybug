@@ -16,10 +16,26 @@
  */
 package com.kycox.game.contract;
 
-import java.util.List;
+import com.kycox.game.level.ScreenData;
+import com.kycox.game.score.Score;
+import com.kycox.game.score.GroupMessages;
 
-import com.kycox.game.body.ghost.Ghost;
+public interface GameModelForViews extends GameCommon {
+	public GameStatusForGameView getCurrentProgramStatus();
 
-public interface IGroupGhostForGameView {
-	public List<Ghost> getLstGhosts();
+	public Score getGameScore();
+
+	public int getGhostLeftLifes();
+
+	public GroupGhostForGameView getGroupGhosts();
+
+	public GroupMessages getGroupMessages();
+
+	public LadybugForGameView getLadybug();
+
+	public int getNbrPlayers();
+
+	public ScreenData getScreenData();
+
+	public boolean isSoundActive();
 }

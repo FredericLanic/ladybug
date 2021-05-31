@@ -93,9 +93,9 @@
 	</bean>
 
 	<!-- Levels in ScreenData -->
-	<bean id="Levels" class="com.kycox.game.level.Levels"
+	<bean id="ManageLevel" class="com.kycox.game.level.ManageLevel"
 		scope="singleton">
-		<property name="lstLevel">
+		<property name="levels">
 			<list>
 				<!-- ref bean="Level1" /--> <!-- niveau bof bof -->				
 				<!-- ref bean="Level3"/--> <!-- niveau pour test, à ne pas utiliser pour le jeu -->

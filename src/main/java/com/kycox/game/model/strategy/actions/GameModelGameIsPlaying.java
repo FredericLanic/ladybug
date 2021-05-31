@@ -50,36 +50,6 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 		}
 	}
 
-	@Override
-	public void execute() {
-		gameIsPlaying();
-	}
-
-	private void gameIsPlaying() {
-		// ***
-		caseOfNewLadybugLife();
-		// ***
-		setBodiesActions();
-		// ***
-		updateGhostSeetings();
-		// ***
-		caseOfGhostEatLadybug();
-		// ***
-		manageSuperPower();
-		// ***
-		caseOfLadybugEatAMegaPoint();
-		// ***
-		manageScores();
-		// ***
-		updateScreenBlock();
-		// ***
-		setSoundRequests();
-		// ***
-		moveBodies();
-		// ***
-		checkEndMaze();
-	}
-
 	private boolean hasEnoughtPointForANewLife() {
 		return gameScore.getIncrementScore() >= Constants.NEW_LIFE_BY_SCORE;
 	}
@@ -105,11 +75,33 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 
 	private void moveBodies() {
 		ladybug.move(screenData);
-		moveGhosts();
+		groupGhosts.move(ladybug, screenData, ghostRequest);
 	}
 
-	private void moveGhosts() {
-		groupGhosts.move(ladybug, screenData, ghostRequest);
+	@Override
+	public void programBeat() {
+		// ***
+		caseOfNewLadybugLife();
+		// ***
+		setBodiesActions();
+		// ***
+		updateGhostSeetings();
+		// ***
+		caseOfGhostEatLadybug();
+		// ***
+		manageSuperPower();
+		// ***
+		caseOfLadybugEatAMegaPoint();
+		// ***
+		manageScores();
+		// ***
+		updateScreenBlock();
+		// ***
+		setSoundRequests();
+		// ***
+		moveBodies();
+		// ***
+		checkEndMaze();
 	}
 
 	/**

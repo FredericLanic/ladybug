@@ -11,6 +11,6 @@ public class GameModelManageAction {
 	}
 
 	public void execute() {
-		iGameModelAction.execute();
+		iGameModelAction.programBeat();
 	}
 }

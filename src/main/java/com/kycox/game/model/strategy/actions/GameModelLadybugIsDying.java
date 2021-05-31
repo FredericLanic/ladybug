@@ -10,7 +10,7 @@ import com.kycox.game.model.strategy.IGameModelAction;
 public class GameModelLadybugIsDying extends AbstratGameModel implements IGameModelAction {
 
 	@Override
-	public void execute() {
+	public void programBeat() {
 		ladybugDying.inProgress();
 		if (ladybugDying.isInPogress()) {
 			newSounds.initSounds();

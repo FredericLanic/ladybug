@@ -26,7 +26,7 @@ public enum GhostHatImages {
 	GHOST_HAT("Hat.png");
 
 	@Getter
-	private Image image = null;
+	private Image image;
 
 	// constructor other than ghost
 	private GhostHatImages(String fileName) {

@@ -29,8 +29,8 @@ import lombok.Setter;
  * Score du jeu
  *
  */
-@Named("GameScore")
-public class GameScore {
+@Named("Score")
+public class Score {
 	@Getter
 	private int incrementScore;
 	@Getter

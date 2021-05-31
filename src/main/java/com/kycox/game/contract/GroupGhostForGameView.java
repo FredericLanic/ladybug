@@ -16,6 +16,10 @@
  */
 package com.kycox.game.contract;
 
-public interface IGameStatusForController extends IGameCommon {
-	public void setConfiguration();
+import java.util.List;
+
+import com.kycox.game.body.ghost.Ghost;
+
+public interface GroupGhostForGameView {
+	public List<Ghost> getLstGhosts();
 }

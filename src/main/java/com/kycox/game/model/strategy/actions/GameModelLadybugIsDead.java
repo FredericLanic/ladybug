@@ -14,7 +14,7 @@ public class GameModelLadybugIsDead extends AbstratGameModel implements IGameMod
 	private static final Log logger = LogFactory.getLog(GameModelLadybugIsDead.class);
 
 	@Override
-	public void execute() {
+	public void programBeat() {
 		logger.info("Ladybug is dead");
 		ladybug.lostsALife();
 		// test fin du jeu

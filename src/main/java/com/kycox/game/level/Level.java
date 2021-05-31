@@ -20,11 +20,11 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kycox.game.contract.ILevel;
+import com.kycox.game.contract.LevelStructure;
 
 import lombok.Getter;
 
-public abstract class Level implements ILevel {
+public abstract class Level implements LevelStructure {
 	// Map
 	protected int[] levelDATA;
 	// Nombre de blocks par ligne

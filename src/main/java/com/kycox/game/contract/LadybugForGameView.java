@@ -16,8 +16,18 @@
  */
 package com.kycox.game.contract;
 
-import com.kycox.game.constant.Sounds;
+import java.awt.Point;
 
-public interface INewSoundsForGameSounds {
-	public boolean hasSound(Sounds soundsEnum);
+import com.kycox.game.constant.ladybug.LadybugStatus;
+
+public interface LadybugForGameView {
+	public int getLeftLifes();
+
+	public Point getPosition();
+
+	public LadybugStatus getStatus();
+
+	public Point getViewDirection();
+
+	public boolean isNewLife();
 }

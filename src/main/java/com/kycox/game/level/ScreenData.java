@@ -25,7 +25,7 @@ import javax.inject.Named;
 
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
-import com.kycox.game.contract.ILevel;
+import com.kycox.game.contract.LevelStructure;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
 
@@ -38,13 +38,13 @@ import lombok.Getter;
 @Named("ScreenData")
 public final class ScreenData {
 	@Getter
-	private ILevel currentLevel;
+	private LevelStructure currentLevel;
 	@Inject
-	private Levels gameLevels;
+	private ManageLevel manageLevel;
 	private int initNbrBlocksWithPoint = 0;
-	private List<ScreenBlock> lstDataBlocks = new ArrayList<>();
+	private List<ScreenBlock> dataBlocks = new ArrayList<>();
 	@Getter
-	private List<ScreenBlock> lstViewBlocks = new ArrayList<>();
+	private List<ScreenBlock> viewBlocks = new ArrayList<>();
 
 	/**
 	 * Convert le ScreenData en une List<UnitDijkstra>
@@ -54,7 +54,7 @@ public final class ScreenData {
 	public List<UnitDijkstra> convertToDjistraList() {
 		List<UnitDijkstra> lstUnitDijkstra = new ArrayList<>();
 		// java8 : faire un stream
-		for (ScreenBlock block : lstDataBlocks) {
+		for (ScreenBlock block : dataBlocks) {
 			lstUnitDijkstra.add(new UnitDijkstra(block));
 		}
 		return lstUnitDijkstra;
@@ -68,7 +68,7 @@ public final class ScreenData {
 	 */
 	public ScreenBlock getDataBlock(Point posPoint) {
 		// java8 :
-		return lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
+		return dataBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public final class ScreenData {
 	 * Retourne le nombre de points à manger par ladybug présents dans le IData
 	 */
 	public int getNbrBlocksWithPoint() {
-		return (int) lstDataBlocks.stream().filter(ScreenBlock::isPoint).count();
+		return (int) dataBlocks.stream().filter(ScreenBlock::isPoint).count();
 	}
 
 	/**
@@ -119,8 +119,8 @@ public final class ScreenData {
 	private int getPosNumPoint(int numPoint) {
 		int nbrPoint = 0;
 		int pos = 0;
-		for (int i = 0; i < lstDataBlocks.size(); i++) {
-			if (lstDataBlocks.get(i).isPoint()) {
+		for (int i = 0; i < dataBlocks.size(); i++) {
+			if (dataBlocks.get(i).isPoint()) {
 				nbrPoint++;
 				if (nbrPoint == numPoint)
 					pos = i;
@@ -184,7 +184,7 @@ public final class ScreenData {
 	 */
 	public ScreenBlock getViewBlock(Point posPoint) {
 		// java8 :
-		return lstViewBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
+		return viewBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
 	/***
@@ -194,29 +194,29 @@ public final class ScreenData {
 	 */
 	public void setLevelMap(int numLevel, boolean mustDisplayMegaPoints) {
 		// récupération du level associé au numLevel
-		currentLevel = gameLevels.getLevel(numLevel);
+		currentLevel = manageLevel.getLevel(numLevel);
 		// Création des blocks
-		lstDataBlocks = currentLevel.getLstBlocks();
+		dataBlocks = currentLevel.getLstBlocks();
 		// vérification des bordure des blocks
 		CheckScreenBlockBorders checkScreenBlockBorders = new CheckScreenBlockBorders(this);
 		checkScreenBlockBorders.checkDataBlockBorder();
-		lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
+		dataBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
 		        .forEach(ScreenBlock::addGhostReviver);
 		// ajout des mega points aléatoires
 		if (mustDisplayMegaPoints) {
 			for (int i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
 				Point randomPoint = getRandomPosOnAPoint();
-				lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
+				dataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
 				        .forEach(ScreenBlock::addMegaPoint);
 			}
 			// @FIXME : Ajout Téléportation pour test
 			Point randomPoint = getRandomPosOnAPoint();
-			lstDataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
+			dataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
 			        .forEach(ScreenBlock::addTeleportation);
 		}
-		lstViewBlocks.clear();
+		viewBlocks.clear();
 		// on clone la liste
-		lstDataBlocks.stream().forEach(sb -> lstViewBlocks.add(sb.clone()));
+		dataBlocks.stream().forEach(sb -> viewBlocks.add(sb.clone()));
 		checkScreenBlockBorders.checkViewBlockBorder();
 		initNbrBlocksWithPoint = getNbrBlocksWithPoint();
 	}
@@ -233,7 +233,7 @@ public final class ScreenData {
 			ScreenBlock currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
 			currentScreenBlock.removePoint();
 			// Suppression du point dans de ScreenBlock de lstViewBlocks
-			lstViewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate()))
+			viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate()))
 			        .findFirst().orElseThrow().removePoint();
 		}
 	}

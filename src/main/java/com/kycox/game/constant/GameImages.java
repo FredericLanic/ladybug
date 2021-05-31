@@ -36,7 +36,7 @@ public enum GameImages {
 	TELEPORTATION("images/Teleportation.png");
 
 	@Getter
-	private Image image = null;
+	private Image image;
 
 	private GameImages(String fileName) {
 		image = new ImageIcon(GameImages.class.getClassLoader().getResource(fileName)).getImage();

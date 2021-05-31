@@ -42,6 +42,7 @@ public class CheckScreenBlockBorders {
 	}
 
 	// FIXME : un peu de refacto ?
+	// TODO : mettre un optional
 	private void checkDataBlockBorder(Point point) {
 		ScreenBlock screenBlock = screenData.getDataBlock(point);
 		ScreenBlock otherScreenBlock;

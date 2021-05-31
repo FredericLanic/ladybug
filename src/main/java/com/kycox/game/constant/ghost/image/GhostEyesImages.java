@@ -27,7 +27,7 @@ public enum GhostEyesImages {
 	GHOST_UP_EYES("UpEyes.png");
 
 	@Getter
-	private Image image = null;
+	private Image image;
 
 	// constructor other than ghost
 	private GhostEyesImages(String fileName) {

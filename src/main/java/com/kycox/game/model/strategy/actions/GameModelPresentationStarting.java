@@ -14,7 +14,7 @@ public class GameModelPresentationStarting extends AbstratGameModel implements I
 	private static final Log logger = LogFactory.getLog(GameModelPresentationStarting.class);
 
 	@Override
-	public void execute() {
+	public void programBeat() {
 		// TODO Auto-generated method stub
 		initGame();
 		currentGameStatus.setProgramPresentation();

@@ -16,25 +16,7 @@
  */
 package com.kycox.game.contract;
 
-public interface IGameStatusForGameView extends IGameCommon {
-	public int getNumLevel();
-
-	public boolean isGameEnd();
-
-	public boolean isGameEnding();
-
-	public boolean isProgramPresentation();
-
-	public boolean isGameStarting();
-
-	public boolean isLevelEnding();
-
-	public boolean isLevelStarting();
-
-	public boolean isProgramStarting();
-
-	public boolean isToConfiguration();
-
-	// FIXME : hmmm ?
-	public void setProgramPresentation();
+public interface GameStatusForGameSounds {
+	// FIXME : c'est le mal
+	public void setInGame();
 }

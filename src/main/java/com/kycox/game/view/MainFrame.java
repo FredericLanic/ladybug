@@ -27,7 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.kycox.game.contract.IMainGraphicStructure;
+import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.down.PageEndView;
 
@@ -38,7 +38,7 @@ import com.kycox.game.view.down.PageEndView;
  *
  */
 @Named("MainFrame")
-public class MainFrame extends JFrame implements IMainGraphicStructure {
+public class MainFrame extends JFrame implements MainGraphicStructure {
 	private static final long serialVersionUID = 1L;
 	private Dimension gameDimension = new Dimension();
 	@Inject

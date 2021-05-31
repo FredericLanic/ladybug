@@ -17,7 +17,7 @@ public class GameModelInitialisationProgram extends AbstratGameModel implements 
 	private static final Log logger = LogFactory.getLog(GameModelInitialisationProgram.class);
 
 	@Override
-	public void execute() {
+	public void programBeat() {
 		// TODO Auto-generated method stub
 		initGame();
 		setSoundActive(false);

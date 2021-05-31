@@ -16,26 +16,8 @@
  */
 package com.kycox.game.contract;
 
-import com.kycox.game.level.ScreenData;
-import com.kycox.game.score.GameScore;
-import com.kycox.game.score.GroupMessages;
+import java.awt.Point;
 
-public interface IGameModelForViews extends IGameCommon {
-	public IGameStatusForGameView getCurrentProgramStatus();
-
-	public GameScore getGameScore();
-
-	public int getGhostLeftLifes();
-
-	public IGroupGhostForGameView getGroupGhosts();
-
-	public GroupMessages getGroupMessages();
-
-	public ILadybugForGameView getLadybug();
-
-	public int getNbrPlayers();
-
-	public ScreenData getScreenData();
-
-	public boolean isSoundActive();
+public interface LadybugForController {
+	public void setUserRequest(Point userRequest);
 }

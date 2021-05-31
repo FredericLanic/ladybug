@@ -27,15 +27,6 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 	@Setter
 	private Point ghostRequest = Constants.POINT_ZERO;
 
-	@Override
-	public void execute() {
-		initLevel();
-		currentGameStatus.setLevelStarting();
-		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-		waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentProgramStatus.TO_INGAME);
-		setSoundRequests();
-	}
-
 	/**
 	 * Initialise le niveau en fonction du niveau précédent
 	 */
@@ -57,6 +48,15 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		ladybug.setStatus(LadybugStatus.NORMAL);
 		// on continue le level
 		continueLevel();
+	}
+
+	@Override
+	public void programBeat() {
+		initLevel();
+		currentGameStatus.setLevelStarting();
+		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
+		waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentProgramStatus.TO_INGAME);
+		setSoundRequests();
 	}
 
 	/**

@@ -23,7 +23,7 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 	private GameModelManageAction gameModelManageAction;
 
 	@Override
-	public void execute() {
+	public void programBeat() {
 		if (ladybug.getStatus() == LadybugStatus.DEAD) {
 			gameModelManageAction.changeStrategy(gameModeLadybugIsDead);
 		} else if (ladybug.getStatus() == LadybugStatus.DYING) {

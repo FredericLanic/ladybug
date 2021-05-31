@@ -1,5 +1,5 @@
 package com.kycox.game.contract;
 
-public interface IDoActionAfterTimer {
+public interface DoActionAfterTimer {
 	public void doActionAfterTimer(int nbrAction);
 }

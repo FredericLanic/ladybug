@@ -26,7 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.Constants;
-import com.kycox.game.contract.IGameModelForController;
+import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.properties.GameProperties;
 
 /**
@@ -40,7 +40,7 @@ import com.kycox.game.properties.GameProperties;
 public class KeyGameController extends KeyAdapter {
 	private static final Log logger = LogFactory.getLog(KeyGameController.class);
 	@Inject
-	private IGameModelForController gameModel;
+	private GameModelForController gameModel;
 	@Inject
 	private GameProperties gameProperties;
 
