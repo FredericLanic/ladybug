@@ -67,7 +67,7 @@ public class SpeedFunction {
 	}
 
 	public void init() {
-		a = (HIGHT_LIMIT - lowLimit) / (Constants.NIVEAU_MAX - 1);
+		a = (HIGHT_LIMIT - lowLimit) / (Constants.NBR_LEVELS - 1);
 		b = lowLimit - a;
 	}
 }

@@ -32,12 +32,12 @@ import lombok.Setter;
 @Named("Score")
 public class Score {
 	@Getter
-	private int incrementScore;
+	private int	incrementScore;
 	@Getter
 	@Setter
-	private int oldScore = -1;
+	private int	oldScore = -1;
 	@Getter
-	private int score;
+	private int	score;
 
 	/**
 	 * Ajout du score et du score incrémental
@@ -45,8 +45,12 @@ public class Score {
 	 * @param score
 	 */
 	public void addScore(int score) {
-		this.score += score;
-		this.incrementScore += score;
+		this.score			+= score;
+		this.incrementScore	+= score;
+	}
+
+	public int getNbrPointsForNewLife() {
+		return Constants.NBR_POINTS_FOR_NEW_LIFE;
 	}
 
 	/**
@@ -62,27 +66,30 @@ public class Score {
 	}
 
 	/**
+	 * Adjust the score number
+	 */
+	public void setScoreAndMessages(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
+		setScore(ghostsGroup, ladybug);
+		setMessages(ghostsGroup, ladybug, groupMessages);
+	}
+
+	/**
 	 * FIXME : on doit sortir cette méthode du score.
 	 */
 	private void setMessages(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
-
 		// Ladybug digère et elle laisse tout derrière elle :/
 //		if (ladybug.isEatenAPoint() && !ladybug.isEatenAMegaPoint() && !ladybug.isToBeTeleported()
 //		        && ghostsGroup.getNbrEatenGhosts() == 0) {
 //			groupMessages.add(ladybug.getPosition(), "💩 💩", MessageType.STRING);
 //		}
-
 		if (ladybug.isEatenAMegaPoint()) {
 			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_MEGA_POINT), MessageType.POINT);
 		}
-
 		if (ladybug.isToBeTeleported()) {
 			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_TELEPORT_POINT),
 			        MessageType.POINT);
 		}
-
 		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
-
 		ghostsGroup.getLstGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
 		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST),
 		                MessageType.POINT));
@@ -92,23 +99,12 @@ public class Score {
 		if (ladybug.isEatenAPoint()) {
 			addScore(Constants.SCORE_SIMPLE_POINT);
 		}
-
 		if (ladybug.isEatenAMegaPoint()) {
 			addScore(Constants.SCORE_MEGA_POINT);
 		}
-
 		if (ladybug.isToBeTeleported()) {
 			addScore(Constants.SCORE_TELEPORT_POINT);
 		}
-
 		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
-	}
-
-	/**
-	 * Adjust the score number
-	 */
-	public void setScoreAndMessages(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
-		setScore(ghostsGroup, ladybug);
-		setMessages(ghostsGroup, ladybug, groupMessages);
 	}
 }

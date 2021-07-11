@@ -65,27 +65,27 @@ import lombok.Setter;
  */
 @Named("CentralView")
 public class CentralView extends JPanel implements Observer, DoActionAfterTimer {
-	private static final Log logger = LogFactory.getLog(CentralView.class);
+	private static final Log  logger		   = LogFactory.getLog(CentralView.class);
 	private static final long serialVersionUID = 1L;
-	private ConfJDialog confJDialog;
-	private final Font defaultFont = GameFont.PACFONT.getDefaultFont();
+	private ConfJDialog		  confJDialog;
+	private final Font		  defaultFont	   = GameFont.PACFONT.getDefaultFont();
 	@Setter
-	private long durationLadybugNewLife;
+	private long			  durationLadybugNewLife;
 	@Inject
 	private KeyGameController gameController;
 	private GameModelForViews gameModel;
 	@Inject
-	private GhostView ghostView;
+	private GhostView		  ghostView;
 	@Inject
-	private LadybugDyingView ladybugDyingView;
+	private LadybugDyingView  ladybugDyingView;
 	@Inject
-	private LadybugView ladybugView;
-	private JFrame mainFrame = (JFrame) SwingUtilities.getRoot(this);
+	private LadybugView		  ladybugView;
+	private JFrame			  mainFrame		   = (JFrame) SwingUtilities.getRoot(this);
 	// todo : sécuriser le timer en mode deux joueurs
 	private WaitAndDoActionAfterTimer newLiveTimer;
-	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
+	private final Font				  scoreFont	= new Font("CrackMan", Font.BOLD, 14);
 	@Inject
-	private ScreenBlockView screenBlockView;
+	private ScreenBlockView			  screenBlockView;
 
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
@@ -96,6 +96,29 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 			default:
 				logger.debug("no number " + nbrAction + " action");
 		}
+	}
+
+	@PostConstruct
+	public void init() {
+		setFocusable(true);
+		setBackground(Color.black);
+		confJDialog = new ConfJDialog(mainFrame);
+		confJDialog.setVisible(false);
+		addKeyListener(gameController); // key listener pour les touches
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		if (gameModel != null) {
+			super.paintComponent(g);
+			draw(g);
+		}
+	}
+
+	@Override
+	public void update(Observable gameModel, Object used) {
+		this.gameModel = (GameModelForViews) gameModel;
+		repaint();
 	}
 
 	/**
@@ -161,9 +184,9 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	private void drawLadybug(Graphics2D g2d, LadybugCommun ladybugCommon) {
-		Point viewDirection = gameModel.getLadybug().getViewDirection();
-		Point getPosition = gameModel.getLadybug().getPosition();
-		Image image = ladybugCommon.getImage(viewDirection);
+		Point viewDirection	= gameModel.getLadybug().getViewDirection();
+		Point getPosition	= gameModel.getLadybug().getPosition();
+		Image image			= ladybugCommon.getImage(viewDirection);
 		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
 	}
 
@@ -177,9 +200,9 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	private void drawOneCenterTextLine(Graphics2D g2d, String text) {
-		int x = gameModel.getScreenData().getScreenWidth();
-		int y = gameModel.getScreenData().getScreenHeight();
-		FontMetrics metr = this.getFontMetrics(defaultFont);
+		int			x	 = gameModel.getScreenData().getScreenWidth();
+		int			y	 = gameModel.getScreenData().getScreenHeight();
+		FontMetrics	metr = this.getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
 		g2d.drawString(text, (x - metr.stringWidth(text)) / 2, y / 2 - Constants.BLOCK_SIZE);
@@ -189,9 +212,9 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	 * FIXME : utiliser les streams comme dans drawGhosts(Graphics2D g2d)
 	 */
 	private void drawPresentationGhosts(Graphics2D g2d) {
-		int x = gameModel.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
-		int y = gameModel.getScreenData().getScreenHeight() / 2;
-		List<Ghost> ghosts = gameModel.getGroupGhosts().getLstGhosts().stream().collect(Collectors.toList());
+		int			x	   = gameModel.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
+		int			y	   = gameModel.getScreenData().getScreenHeight() / 2;
+		List<Ghost>	ghosts = gameModel.getGroupGhosts().getLstGhosts().stream().collect(Collectors.toList());
 		for (Ghost ghost : ghosts) {
 			g2d.drawImage(ghostView.getImage(ghost), x, y, this);
 			x += 2 * Constants.BLOCK_SIZE;
@@ -201,9 +224,9 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private void drawScoresIncrement(Graphics2D g2d) {
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(scoreFont);
-		FontMetrics metr = this.getFontMetrics(scoreFont);
-		int x;
-		int y;
+		FontMetrics	metr = this.getFontMetrics(scoreFont);
+		int			x;
+		int			y;
 		// Affichage des scores incréments
 		for (Message message : gameModel.getGroupMessages().getMessages()) {
 			x = message.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
@@ -213,9 +236,9 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	private void drawThreeCenterTextLines(Graphics2D g2d, String line1, String line2, String line3) {
-		int x = gameModel.getScreenData().getScreenWidth();
-		int y = gameModel.getScreenData().getScreenHeight();
-		FontMetrics metr = this.getFontMetrics(defaultFont);
+		int			x	 = gameModel.getScreenData().getScreenWidth();
+		int			y	 = gameModel.getScreenData().getScreenHeight();
+		FontMetrics	metr = this.getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
 		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - 2 * Constants.BLOCK_SIZE);
@@ -224,35 +247,12 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	private void drawTwoCenterTextLines(Graphics2D g2d, String line1, String line2) {
-		int x = gameModel.getScreenData().getScreenWidth();
-		int y = gameModel.getScreenData().getScreenHeight();
-		FontMetrics metr = this.getFontMetrics(defaultFont);
+		int			x	 = gameModel.getScreenData().getScreenWidth();
+		int			y	 = gameModel.getScreenData().getScreenHeight();
+		FontMetrics	metr = this.getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
 		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - Constants.BLOCK_SIZE);
 		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 + Constants.BLOCK_SIZE);
-	}
-
-	@PostConstruct
-	public void init() {
-		setFocusable(true);
-		setBackground(Color.black);
-		confJDialog = new ConfJDialog(mainFrame);
-		confJDialog.setVisible(false);
-		addKeyListener(gameController); // key listener pour les touches
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		if (gameModel != null) {
-			super.paintComponent(g);
-			draw(g);
-		}
-	}
-
-	@Override
-	public void update(Observable gameModel, Object used) {
-		this.gameModel = (GameModelForViews) gameModel;
-		repaint();
 	}
 }

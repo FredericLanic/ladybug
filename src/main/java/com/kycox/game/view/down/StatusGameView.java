@@ -34,88 +34,29 @@ import lombok.Setter;
 
 @Named("StatusGameView")
 public class StatusGameView extends JPanel {
-	private static final Log logger = LogFactory.getLog(StatusGameView.class);
+	private static final Log  logger		   = LogFactory.getLog(StatusGameView.class);
 	private static final long serialVersionUID = 4546077700634533519L;
 	@Setter
-	private int ghostNbrLifes;
+	private int				  ghostNbrLifes;
 	@Setter
-	private Image imageGhostPlayer;
+	private Image			  imageGhostPlayer;
 	@Setter
-	private Image imageLadybugPlayer;
+	private Image			  imageLadybugPlayer;
 	@Setter
-	private boolean isInGame;
+	private int				  incrementScore;
 	@Setter
-	private int ladybugNbrLifes;
+	private boolean			  isInGame;
 	@Setter
-	private int nbrPlayers;
+	private int				  ladybugNbrLifes;
 	@Setter
-	private int numLevel;
+	private int				  nbrPlayers;
 	@Setter
-	private int score;
-	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
+	private int				  nbrPointsForNewLife;
 	@Setter
-	private boolean soundActive;
-
-	private void diplayCurrentScoreAndLevel(Graphics g) {
-		if (!isInGame)
-			return;
-		StringBuilder message = new StringBuilder();
-		message.append("Level: ");
-		message.append(numLevel);
-		message.append(" - Score: ");
-		message.append(score);
-		message.append(" - Sound");
-		message.append(soundActive ? " ON" : " OFF");
-		displayTexte(g, message.toString());
-	}
-
-	private void display(Graphics g) {
-		int x = 0;
-		int y = 0;
-		int delta = 2;
-		int imageBorderSize = (this.getHeight() - 6 * delta) / 2;
-		// number ladybug lifes
-		displayNbrLifes(g, ImageUtils.resizeImage(imageLadybugPlayer, imageBorderSize, imageBorderSize),
-		        ladybugNbrLifes, x + delta, y);
-		// number ghost lifes
-		if (nbrPlayers > 1) {
-			displayNbrLifes(g, ImageUtils.resizeImage(imageGhostPlayer, imageBorderSize, imageBorderSize),
-			        ghostNbrLifes, x + delta, y + this.getHeight() / 2);
-		}
-		// text
-		diplayCurrentScoreAndLevel(g);
-		displayOffGame(g);
-	}
-
-	private void displayNbrLifes(Graphics g, Image imageBody, int nbrLifes, int x, int y) {
-		if (!isInGame)
-			return;
-		g.drawImage(imageBody, x, y, this);
-		g.setColor(Color.YELLOW);
-		g.setFont(smallFont);
-		int coordX = x + imageBody.getWidth(null);
-		int coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
-		g.drawString("x " + nbrLifes, coordX, coordY);
-	}
-
-	private void displayOffGame(Graphics g) {
-		if (isInGame)
-			return;
-		StringBuilder message = new StringBuilder();
-		message.append("Game config : ");
-		message.append(nbrPlayers);
-		message.append(" player");
-		message.append((nbrPlayers > 1 ? "s" : ""));
-		displayTexte(g, message.toString());
-	}
-
-	private void displayTexte(Graphics g, String message) {
-		g.setFont(smallFont);
-		g.setColor(new Color(96, 128, 255));
-		int coordX = this.getWidth() / 2;
-		int coordY = this.getHeight() / 4 + smallFont.getSize() / 2;
-		g.drawString(message, coordX, coordY);
-	}
+	private int				  numLevel;
+	@Setter
+	private int				  score;
+	private final Font		  smallFont		   = new Font("CrackMan", Font.BOLD, 14);
 
 	@PostConstruct
 	public void init() {
@@ -126,5 +67,69 @@ public class StatusGameView extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		display(g);
+	}
+
+	private void display(Graphics g) {
+		int	x				= 0;
+		int	y				= 0;
+		int	delta			= 2;
+		int	imageBorderSize	= (this.getHeight() - 6 * delta) / 2;
+		// number ladybug lifes
+		displayNbrLifes(g, ImageUtils.resizeImage(imageLadybugPlayer, imageBorderSize, imageBorderSize),
+		        ladybugNbrLifes, x + delta, y);
+		// number ghost lifes
+		if (nbrPlayers > 1) {
+			displayNbrLifes(g, ImageUtils.resizeImage(imageGhostPlayer, imageBorderSize, imageBorderSize),
+			        ghostNbrLifes, x + delta, y + this.getHeight() / 2);
+		}
+		// text
+		displayMessageForPlayer(g);
+	}
+
+	private void displayMessageDuringGame(Graphics g) {
+		StringBuilder message = new StringBuilder();
+		message.append("Level: ");
+		message.append(numLevel);
+		message.append(" - New Life: ");
+		message.append(incrementScore);
+		message.append("/");
+		message.append(nbrPointsForNewLife);
+		message.append(" - Score: ");
+		message.append(score);
+		displayMessageToRight(g, message.toString());
+	}
+
+	private void displayMessageForPlayer(Graphics g) {
+		if (isInGame) {
+			displayMessageDuringGame(g);
+		} else {
+			displayOffGame(g);
+		}
+	}
+
+	private void displayMessageToRight(Graphics g, String message) {
+		g.setFont(smallFont);
+		g.setColor(new Color(96, 128, 255));
+		int	coordX = this.getWidth() / 2;
+		int	coordY = this.getHeight() / 4 + smallFont.getSize() / 2;
+		g.drawString(message, coordX, coordY);
+	}
+
+	private void displayNbrLifes(Graphics g, Image imageBody, int nbrLifes, int x, int y) {
+		g.drawImage(imageBody, x, y, this);
+		g.setColor(Color.YELLOW);
+		g.setFont(smallFont);
+		int	coordX = x + imageBody.getWidth(null);
+		int	coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
+		g.drawString("x " + nbrLifes, coordX, coordY);
+	}
+
+	private void displayOffGame(Graphics g) {
+		StringBuilder message = new StringBuilder();
+		message.append("Game config : ");
+		message.append(nbrPlayers);
+		message.append(" player");
+		message.append((nbrPlayers > 1 ? "s" : ""));
+		displayMessageToRight(g, message.toString());
 	}
 }

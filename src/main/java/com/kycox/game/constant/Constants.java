@@ -30,8 +30,8 @@ import java.util.List;
  */
 public final class Constants {
 	// taille d'un block
-	public static final int BLOCK_SIZE = 48;
-	public static final Color BLUE_LADYBUG = new Color(33, 33, 255);
+	public static final int	  BLOCK_SIZE			  = 48;
+	public static final Color BLUE_LADYBUG			  = new Color(33, 33, 255);
 	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
 	// distance ou le fantôme fuit Ladybug
 	public static final int DISTANCE_GHOST_SCARED = 100;
@@ -42,9 +42,9 @@ public final class Constants {
 	// nombre de secondes de super pouvoir de pacman
 	public static final int NBR_SECONDS_SUPER_POWER = 15;
 	// Nouvelle vie en fonction du score incrémental
-	public static final int NEW_LIFE_BY_SCORE = 100;
+	public static final int NBR_POINTS_FOR_NEW_LIFE = 200;
 	// Niveau max
-	public static final int NIVEAU_MAX = 30;
+	public static final int NBR_LEVELS = 30;
 	// Période du timer du jeu
 	public static final int PACE = 40; // rythme en anglais :/
 	// Point en bas

@@ -41,40 +41,23 @@ import lombok.Setter;
 
 @Named("PageEndView")
 public class PageEndView extends JPanel implements Observer, MainGraphicStructure {
-	private static final Log logger = LogFactory.getLog(PageEndView.class);
-	private static final long serialVersionUID = 1L;
-	private transient GameModelForViews gameModel;
+	private static final Log			logger					 = LogFactory.getLog(PageEndView.class);
+	private static final long			serialVersionUID		 = 1L;
+	private transient GameModelForViews	gameModel;
 	@Setter
-	private int height;
-	private JPanel jPanelLadybugKinematique = new JPanel();
-	private JPanel jPanelMainScore = new JPanel();
+	private int							height;
+	private JPanel						jPanelLadybugKinematique = new JPanel();
+	private JPanel						jPanelMainScore			 = new JPanel();
 	@Inject
-	private LadybugView ladybugView;
+	private LadybugView					ladybugView;
 	@Inject
-	private Screen screen;
+	private Screen						screen;
 	@Inject
-	private StatusGameView statusGameView;
+	private StatusGameView				statusGameView;
 
 	@PostConstruct
 	public void init() {
 		setFocusable(false);
-	}
-
-	private void initJPanelInside(Dimension parentDimension) {
-		Dimension dimension = new Dimension();
-		dimension.setSize(parentDimension.getWidth(), parentDimension.getHeight() / 2);
-		//
-
-		addPanel(jPanelMainScore, dimension, BorderLayout.PAGE_START);
-		addPanel(jPanelLadybugKinematique, dimension, BorderLayout.PAGE_END);
-		//
-		Dimension preferredSize = new Dimension();
-		preferredSize.setSize(screen.getEdgeGameSide(), dimension.getHeight());
-		statusGameView.setPreferredSize(preferredSize);
-		jPanelMainScore.add(statusGameView, BorderLayout.CENTER);
-		//
-		jPanelMainScore.setBackground(Color.BLACK);
-		jPanelLadybugKinematique.setBackground(Color.BLACK);
 	}
 
 	@Override
@@ -90,6 +73,33 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 		initJPanelInside(preferredSize);
 	}
 
+	@Override
+	public void update(Observable gameModel, Object arg) {
+		if (gameModel != null) {
+			this.gameModel = (GameModelForViews) gameModel;
+			setVariableToScoreView(this.gameModel);
+			repaint();
+		} else {
+			logger.info("GameModel is null in " + PageEndView.class);
+		}
+	}
+
+	private void initJPanelInside(Dimension parentDimension) {
+		Dimension dimension = new Dimension();
+		dimension.setSize(parentDimension.getWidth(), parentDimension.getHeight() / 2);
+		//
+		addPanel(jPanelMainScore, dimension, BorderLayout.PAGE_START);
+		addPanel(jPanelLadybugKinematique, dimension, BorderLayout.PAGE_END);
+		//
+		Dimension preferredSize = new Dimension();
+		preferredSize.setSize(screen.getEdgeGameSide(), dimension.getHeight());
+		statusGameView.setPreferredSize(preferredSize);
+		jPanelMainScore.add(statusGameView, BorderLayout.CENTER);
+		//
+		jPanelMainScore.setBackground(Color.BLACK);
+		jPanelLadybugKinematique.setBackground(Color.BLACK);
+	}
+
 	private void setVariableToScoreView(GameModelForViews gameModel) {
 		statusGameView.setGhostNbrLifes(gameModel.getGhostLeftLifes());
 		// Rajouter les yeux
@@ -100,17 +110,7 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 		statusGameView.setNbrPlayers(gameModel.getNbrPlayers());
 		statusGameView.setNumLevel(gameModel.getCurrentProgramStatus().getNumLevel());
 		statusGameView.setScore(gameModel.getGameScore().getScore());
-		statusGameView.setSoundActive(gameModel.isSoundActive());
-	}
-
-	@Override
-	public void update(Observable gameModel, Object arg) {
-		if (gameModel != null) {
-			this.gameModel = (GameModelForViews) gameModel;
-			setVariableToScoreView(this.gameModel);
-			repaint();
-		} else {
-			logger.info("GameModel is null in " + PageEndView.class);
-		}
+		statusGameView.setIncrementScore(gameModel.getIncrementScore());
+		statusGameView.setNbrPointsForNewLife(gameModel.getNbrPointsForNewLife());
 	}
 }

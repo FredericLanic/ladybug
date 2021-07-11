@@ -31,6 +31,7 @@ Coté fonctionnalités CFCT :
 	- quel son est emis quand le fruit est disponible
 - CFCT5 : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
 - CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
+- CFCT8 : revoir les moments d'initialisation des points incrément avant de gagner une nouvelle vie
 
 
 DONE :
@@ -57,5 +58,6 @@ DONE :
 - CTEC23 : dissocier les yeux et les plugins lors de l'affichage
 - CTEC24 : correction display son lors de la regeration du fantôme
 - CTEC26 : problème, le nombre de vies de ladybug n'est plus initialisié pour une nouvelle partie
+- CFCT7 : rajouter une notion d'affichage des points increments avant de gagner une nouvelle vie
 
 REJECT : 

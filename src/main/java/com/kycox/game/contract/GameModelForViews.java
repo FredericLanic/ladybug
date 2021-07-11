@@ -17,8 +17,8 @@
 package com.kycox.game.contract;
 
 import com.kycox.game.level.ScreenData;
-import com.kycox.game.score.Score;
 import com.kycox.game.score.GroupMessages;
+import com.kycox.game.score.Score;
 
 public interface GameModelForViews extends GameCommon {
 	public GameStatusForGameView getCurrentProgramStatus();
@@ -31,9 +31,13 @@ public interface GameModelForViews extends GameCommon {
 
 	public GroupMessages getGroupMessages();
 
+	public int getIncrementScore();
+
 	public LadybugForGameView getLadybug();
 
 	public int getNbrPlayers();
+
+	public int getNbrPointsForNewLife();
 
 	public ScreenData getScreenData();
 

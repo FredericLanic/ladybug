@@ -49,8 +49,8 @@ import com.kycox.game.model.strategy.actions.GameModelLevelIsStarting;
 import com.kycox.game.model.strategy.actions.GameModelNoAction;
 import com.kycox.game.model.strategy.actions.GameModelPresentation;
 import com.kycox.game.model.strategy.actions.GameModelPresentationStarting;
-import com.kycox.game.score.Score;
 import com.kycox.game.score.GroupMessages;
+import com.kycox.game.score.Score;
 import com.kycox.game.sound.NewSounds;
 
 import lombok.Getter;
@@ -63,110 +63,58 @@ import lombok.Getter;
 @SuppressWarnings("deprecation")
 @Named("GameModel")
 public class GameModel extends Observable implements GameModelForViews, GameModelForSounds, GameModelForController {
-	private static final Log logger = LogFactory.getLog(GameModel.class);
+	private static final Log			   logger		= LogFactory.getLog(GameModel.class);
 	@Inject
 	@Getter
-	private CurrentProgramStatus currentProgramStatus;
+	private CurrentProgramStatus		   currentProgramStatus;
 	@Inject
-	private GameModelGameIsEnding gameModeGameIsEnding;
+	private GameModelGameIsEnding		   gameModeGameIsEnding;
 	@Inject
-	private GameModelGameIsPlaying gameModeGameIsPlaying;
+	private GameModelGameIsPlaying		   gameModeGameIsPlaying;
 	@Inject
-	private GameModelGameIsStarting gameModeGameStarting;
+	private GameModelGameIsStarting		   gameModeGameStarting;
 	@Inject
-	private GameModelLevelIsEnding gameModeLevelIsEnding;
+	private GameModelLevelIsEnding		   gameModeLevelIsEnding;
 	@Inject
-	private GameModelLevelIsEnded gameModeLevelIsEnds;
+	private GameModelLevelIsEnded		   gameModeLevelIsEnds;
 	@Inject
-	private GameModelLevelIsStarting gameModeLevelStarting;
+	private GameModelLevelIsStarting	   gameModeLevelStarting;
 	@Inject
-	private GameModelGameIsInGame gameModelGameIsInGame;
+	private GameModelGameIsInGame		   gameModelGameIsInGame;
 	@Inject
 	private GameModelInitialisationProgram gameModelInitialisationProgram;
 	@Inject
-	private GameModelManageAction gameModelManageAction;
+	private GameModelManageAction		   gameModelManageAction;
 	@Inject
-	private GameModelNoAction gameModelNoAction;
+	private GameModelNoAction			   gameModelNoAction;
 	@Inject
-	private GameModelPresentation gameModelPresentation;
+	private GameModelPresentation		   gameModelPresentation;
 	@Inject
-	private GameModelPresentationStarting gameModelPresentationStarting;
+	private GameModelPresentationStarting  gameModelPresentationStarting;
 	@Getter
 	@Inject
-	private Score gameScore;
+	private Score						   gameScore;
 	@Getter
 	@Inject
-	private GhostsGroup groupGhosts;
+	private GhostsGroup					   groupGhosts;
 	@Getter
 	@Inject
-	private GroupMessages groupMessages;
+	private GroupMessages				   groupMessages;
 	@Getter
 	@Inject
-	private Ladybug ladybug;
+	private Ladybug						   ladybug;
 	@Getter
 	@Inject
-	private LadybugDying ladybugDying;
+	private LadybugDying				   ladybugDying;
 	@Getter
 	@Inject
-	private NewSounds newSounds;
-	private final Timer programTimer = createProgramTimer();
+	private NewSounds					   newSounds;
+	private final Timer					   programTimer	= createProgramTimer();
 	@Getter
 	@Inject
-	private ScreenData screenData;
+	private ScreenData					   screenData;
 	@Getter
-	private boolean soundActive = true;
-
-	// Remarque de Christophe M :
-	/*
-	 * Sur ce gros if, tes conditions sont difficilement lisibles. Tu pourrais créer
-	 * une méthode pour chaque test, avec un nom métier qui exprime la règle métier,
-	 * et pas la règle technique. Ceci fait, ton pattern startegy apparaitra plus
-	 * naturellement. Tu pourras introduire une enum privée à ta classe, avec les
-	 * cas de test dessus, les méthodes métier, écrites par lambda, et tu aurais un
-	 * bloc qui s'écrit en une ligne.
-	 */
-	// Workflow du programme :
-	// PROGRAM_START
-	// PROGRAM_STARTING -> timer puis
-	// PROGRAM_PRESENTATION_START : initialise la nouvelle partie
-	// PROGRAM_PRESENTATION : en attente d'action de l'utilisateur
-	// GAME_START
-	// LEVEL START
-	// LEVEL_STARTING -> timer puis
-	// IN_GAME (jeu)
-	// LEVEL_END
-	// LEVEL_ENDING puis soit LEVEL_START soit GAME_END
-	// GAME_END
-	// GAME_ENDING -> timer puis
-	// PROGRAM_PRESENTATION_START
-
-	private void actionsByTimerBip() {
-		switch (currentProgramStatus.getGameStatus()) {
-			case PROGRAM_START -> gameModelManageAction.changeStrategy(gameModelInitialisationProgram);
-			case PROGRAM_PRESENTATION_START -> gameModelManageAction.changeStrategy(gameModelPresentationStarting);
-			case PROGRAM_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentation);
-			case GAME_START -> gameModelManageAction.changeStrategy(gameModeGameStarting);
-			case LEVEL_START -> gameModelManageAction.changeStrategy(gameModeLevelStarting);
-			case IN_GAME -> gameModelManageAction.changeStrategy(gameModelGameIsInGame);
-			case LEVEL_END -> gameModelManageAction.changeStrategy(gameModeLevelIsEnds);
-			case LEVEL_ENDING -> gameModelManageAction.changeStrategy(gameModeLevelIsEnding);
-			case GAME_END -> gameModelManageAction.changeStrategy(gameModeGameIsEnding);
-			default -> gameModelManageAction.changeStrategy(gameModelNoAction);
-		}
-		gameModelManageAction.execute();
-
-		logger.debug("CurrentStatus : " + currentProgramStatus.getGameStatus());
-
-		setChanged();
-		notifyObservers();
-	}
-
-	private Timer createProgramTimer() {
-		ActionListener action = event -> {
-			actionsByTimerBip();
-		};
-		return new Timer(PACE, action);
-	}
+	private boolean						   soundActive	= true;
 
 	@Override
 	public void forceStopGame() {
@@ -193,6 +141,10 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		return groupGhosts.getLeftLives();
 	}
 
+	public int getIncrementScore() {
+		return gameScore.getIncrementScore();
+	}
+
 	@Override
 	public int getNbrPlayers() {
 		if (groupGhosts.hasGhostUser()) {
@@ -201,11 +153,8 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		return 1;
 	}
 
-	@PostConstruct
-	private void init() {
-		currentProgramStatus.setProgramStart();
-		gameModelManageAction.changeStrategy(gameModelNoAction);
-		startProgramTimer();
+	public int getNbrPointsForNewLife() {
+		return gameScore.getNbrPointsForNewLife();
 	}
 
 	@Override
@@ -246,14 +195,6 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	}
 
 	/**
-	 * Lancement du timer qui rythme le jeu
-	 */
-	private void startProgramTimer() {
-		logger.info("Start Game Timer");
-		programTimer.start();
-	}
-
-	/**
 	 * FIXME : peut être gérer en fonction de l'état du jeu quand par exemple on est
 	 * en intro
 	 */
@@ -261,5 +202,60 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	public void startStopSoundActive() {
 		logger.info("startStopSoundActive : " + soundActive);
 		soundActive = !soundActive;
+	}
+
+	// Workflow du programme :
+	// PROGRAM_START
+	// * PROGRAM_STARTING -> timer puis
+	// * PROGRAM_PRESENTATION_START : initialise la nouvelle partie
+	// * PROGRAM_PRESENTATION : en attente d'action de l'utilisateur
+	// * GAME_START
+	// * LEVEL START
+	// * LEVEL_STARTING -> timer puis
+	// * IN_GAME (jeu)
+	// * LEVEL_END
+	// * LEVEL_ENDING puis soit LEVEL_START soit GAME_END
+	// * GAME_END
+	// * GAME_ENDING -> timer puis
+	// * PROGRAM_PRESENTATION_START
+	private void actionsByTimerBip() {
+		switch (currentProgramStatus.getGameStatus()) {
+			case PROGRAM_START -> gameModelManageAction.changeStrategy(gameModelInitialisationProgram);
+			case PROGRAM_PRESENTATION_START -> gameModelManageAction.changeStrategy(gameModelPresentationStarting);
+			case PROGRAM_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentation);
+			case GAME_START -> gameModelManageAction.changeStrategy(gameModeGameStarting);
+			case LEVEL_START -> gameModelManageAction.changeStrategy(gameModeLevelStarting);
+			case IN_GAME -> gameModelManageAction.changeStrategy(gameModelGameIsInGame);
+			case LEVEL_END -> gameModelManageAction.changeStrategy(gameModeLevelIsEnds);
+			case LEVEL_ENDING -> gameModelManageAction.changeStrategy(gameModeLevelIsEnding);
+			case GAME_END -> gameModelManageAction.changeStrategy(gameModeGameIsEnding);
+			default -> gameModelManageAction.changeStrategy(gameModelNoAction);
+		}
+		gameModelManageAction.execute();
+		// logger.debug("CurrentStatus : " + currentProgramStatus.getGameStatus());
+		setChanged();
+		notifyObservers();
+	}
+
+	private Timer createProgramTimer() {
+		ActionListener action = event -> {
+			actionsByTimerBip();
+		};
+		return new Timer(PACE, action);
+	}
+
+	@PostConstruct
+	private void init() {
+		currentProgramStatus.setProgramStart();
+		gameModelManageAction.changeStrategy(gameModelNoAction);
+		startProgramTimer();
+	}
+
+	/**
+	 * Lancement du timer qui rythme le jeu
+	 */
+	private void startProgramTimer() {
+		logger.info("Start Game Timer");
+		programTimer.start();
 	}
 }

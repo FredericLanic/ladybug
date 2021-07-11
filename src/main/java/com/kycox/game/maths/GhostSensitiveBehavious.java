@@ -50,7 +50,7 @@ public class GhostSensitiveBehavious {
 	public void setNumLevel(int numLevel) {
 		double a = 0;
 		double b = 0;
-		a = (HIGH_LIMIT - LOW_LIMIT) / (Constants.NIVEAU_MAX - 1);
+		a = (HIGH_LIMIT - LOW_LIMIT) / (Constants.NBR_LEVELS - 1);
 		b = LOW_LIMIT - a;
 		y = (a * numLevel + b);
 	}
