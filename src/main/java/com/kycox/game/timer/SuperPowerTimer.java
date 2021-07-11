@@ -48,7 +48,7 @@ public class SuperPowerTimer {
 			} else {
 				// Fin du second timer
 				superPowerTimerStatus = SuperPowerTimerStatus.STOP;
-				superPowerTimer = null;
+				superPowerTimer		  = null;
 			}
 		}
 	}
@@ -123,7 +123,7 @@ public class SuperPowerTimer {
 	public void launch(int seconds) {
 		if (numTimer == 1) {
 			// Début du premier timer
-			seconds = seconds - FLASH_DELAY;
+			seconds				  = seconds - FLASH_DELAY;
 			superPowerTimerStatus = SuperPowerTimerStatus.RUN;
 		} else {
 			// Début du second timer

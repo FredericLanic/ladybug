@@ -39,12 +39,12 @@ public final class Constants {
 	public static final int DISTANCE_LADYBUG_DEATH = 20;
 	// nombre de vie au début du jeu
 	public static final int NBR_INIT_LIFE = 3;
-	// nombre de secondes de super pouvoir de pacman
-	public static final int NBR_SECONDS_SUPER_POWER = 15;
-	// Nouvelle vie en fonction du score incrémental
-	public static final int NBR_POINTS_FOR_NEW_LIFE = 200;
 	// Niveau max
 	public static final int NBR_LEVELS = 30;
+	// Nouvelle vie en fonction du score incrémental
+	public static final int NBR_POINTS_FOR_NEW_LIFE = 200;
+	// nombre de secondes de super pouvoir de pacman
+	public static final int NBR_SECONDS_SUPER_POWER = 15;
 	// Période du timer du jeu
 	public static final int PACE = 40; // rythme en anglais :/
 	// Point en bas

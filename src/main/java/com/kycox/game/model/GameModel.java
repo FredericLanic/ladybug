@@ -141,6 +141,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		return groupGhosts.getLeftLives();
 	}
 
+	@Override
 	public int getIncrementScore() {
 		return gameScore.getIncrementScore();
 	}
@@ -153,6 +154,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		return 1;
 	}
 
+	@Override
 	public int getNbrPointsForNewLife() {
 		return gameScore.getNbrPointsForNewLife();
 	}

@@ -13,7 +13,6 @@ import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 
 @Named("GameModelInitialisationProgram")
 public class GameModelInitialisationProgram extends AbstratGameModel implements IGameModelAction {
-
 	private static final Log logger = LogFactory.getLog(GameModelInitialisationProgram.class);
 
 	@Override
@@ -26,5 +25,4 @@ public class GameModelInitialisationProgram extends AbstratGameModel implements 
 		waitAndDoActionAfterTimer.launch(Constants.PROGRAM_STARTING_MILLISECONDS, currentGameStatus,
 		        CurrentProgramStatus.TO_PROGRAM_PRESENTATION_START);
 	}
-
 }

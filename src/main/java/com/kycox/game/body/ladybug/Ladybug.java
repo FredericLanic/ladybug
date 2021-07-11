@@ -40,9 +40,9 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 	private LadybugActions ladybugActions;
 	@Setter
 	@Getter
-	private LadybugStatus status = LadybugStatus.NORMAL;
+	private LadybugStatus  status		 = LadybugStatus.NORMAL;
 	@Getter
-	private Point viewDirection = Constants.POINT_UP;
+	private Point		   viewDirection = Constants.POINT_UP;
 
 	@Override
 	public boolean isAllowedToDoActions() {
@@ -106,18 +106,18 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
 
-	private void teleport(ScreenData screenData) {
-		if (isPerfectOnABlock() && screenData.getNbrBlocksWithPoint() > 0) {
-			Point newPoint = screenData.getRandomPosOnAPoint();
-			setPosition(Utils.convertPointToGraphicUnit(newPoint));
-		}
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Ladybug ");
 		sb.append("position: " + getPosition());
 		return sb.toString();
+	}
+
+	private void teleport(ScreenData screenData) {
+		if (isPerfectOnABlock() && screenData.getNbrBlocksWithPoint() > 0) {
+			Point newPoint = screenData.getRandomPosOnAPoint();
+			setPosition(Utils.convertPointToGraphicUnit(newPoint));
+		}
 	}
 }

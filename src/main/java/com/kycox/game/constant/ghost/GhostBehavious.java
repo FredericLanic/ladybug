@@ -23,7 +23,6 @@ package com.kycox.game.constant.ghost;
 public enum GhostBehavious {
     // agressif, timide, débile, intelligent
 	AGGRESSIVE, SHY, SMART, STUPID;
-
 	// FIXME : utilisation de SHY ?
 	// FIXME : utilisation de STUPID ?
 

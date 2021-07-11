@@ -23,13 +23,13 @@ public interface GameStatusForGameView extends GameCommon {
 
 	public boolean isGameEnding();
 
-	public boolean isProgramPresentation();
-
 	public boolean isGameStarting();
 
 	public boolean isLevelEnding();
 
 	public boolean isLevelStarting();
+
+	public boolean isProgramPresentation();
 
 	public boolean isProgramStarting();
 

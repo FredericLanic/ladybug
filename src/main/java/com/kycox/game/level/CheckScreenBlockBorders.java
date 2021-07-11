@@ -41,11 +41,22 @@ public class CheckScreenBlockBorders {
 		}
 	}
 
+	/**
+	 * Vérifie les bordures des ScreenBlocks utilisés pour la Vue
+	 */
+	public void checkViewBlockBorder() {
+		for (int x = 0; x < screenData.getCurrentLevel().getNbrBlocksByLine(); x++) {
+			for (int y = 0; y < screenData.getCurrentLevel().getNbrLines(); y++) {
+				checkViewBlockBorder(new Point(x, y));
+			}
+		}
+	}
+
 	// FIXME : un peu de refacto ?
 	// TODO : mettre un optional
 	private void checkDataBlockBorder(Point point) {
-		ScreenBlock screenBlock = screenData.getDataBlock(point);
-		ScreenBlock otherScreenBlock;
+		ScreenBlock	screenBlock	= screenData.getDataBlock(point);
+		ScreenBlock	otherScreenBlock;
 		if (screenBlock == null)
 			return;
 		// vérification des bordures principales !!!
@@ -77,20 +88,9 @@ public class CheckScreenBlockBorders {
 			otherScreenBlock.addBorderRight();
 	}
 
-	/**
-	 * Vérifie les bordures des ScreenBlocks utilisés pour la Vue
-	 */
-	public void checkViewBlockBorder() {
-		for (int x = 0; x < screenData.getCurrentLevel().getNbrBlocksByLine(); x++) {
-			for (int y = 0; y < screenData.getCurrentLevel().getNbrLines(); y++) {
-				checkViewBlockBorder(new Point(x, y));
-			}
-		}
-	}
-
 	private void checkViewBlockBorder(Point point) {
-		ScreenBlock screenBlock = screenData.getViewBlock(point);
-		ScreenBlock otherScreenBlock;
+		ScreenBlock	screenBlock	= screenData.getViewBlock(point);
+		ScreenBlock	otherScreenBlock;
 		if (!screenBlock.isNotAccessible())
 			return;
 		otherScreenBlock = screenData.getViewBlock(new Point(point.x, point.y - 1));

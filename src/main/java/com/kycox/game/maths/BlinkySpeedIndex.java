@@ -28,10 +28,10 @@ public class BlinkySpeedIndex {
 	 * 1 < R < T
 	 *
 	 */
-	private static double centPerCent = 100.0;
-	private double a;
-	private double b;
-	private double levelPerCent = 80.0;
+	private static double centPerCent  = 100.0;
+	private double		  a;
+	private double		  b;
+	private double		  levelPerCent = 80.0;
 
 	/**
 	 * Return the number of index to increment

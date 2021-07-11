@@ -39,9 +39,9 @@ import com.kycox.game.constant.ghost.image.GhostsBodyImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 
 public class ConfJDialog extends JDialog implements ActionListener {
-	private static final Log logger = LogFactory.getLog(ConfJDialog.class);
+	private static final Log  logger		   = LogFactory.getLog(ConfJDialog.class);
 	private static final long serialVersionUID = 1L;
-	private ButtonGroup group = new ButtonGroup();
+	private ButtonGroup		  group			   = new ButtonGroup();
 
 	public ConfJDialog(JFrame mainFrame) {
 		super(mainFrame, "Configuration", true);

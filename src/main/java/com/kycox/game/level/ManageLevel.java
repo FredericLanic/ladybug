@@ -38,5 +38,4 @@ public final class ManageLevel {
 			num = 1 + Utils.generateRandomInt(levels.size());
 		return levels.get(num - 1);
 	}
-
 }

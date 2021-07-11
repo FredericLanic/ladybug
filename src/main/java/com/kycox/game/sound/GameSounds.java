@@ -32,7 +32,7 @@ import com.kycox.game.contract.NewSoundsForGameSounds;
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
-	private GameModelForSounds gameModel;
+	private GameModelForSounds	   gameModel;
 	private NewSoundsForGameSounds newSounds;
 
 	/**
@@ -83,6 +83,17 @@ public class GameSounds implements Observer {
 		}
 	}
 
+	@Override
+	public void update(Observable gameModelForSound, Object arg) {
+		gameModel = (GameModelForSounds) gameModelForSound;
+		newSounds = gameModel.getNewSounds();
+		if (gameModel.isSoundActive()) {
+			playSounds();
+		} else {
+			stopAllSounds();
+		}
+	}
+
 	private void stopAllSounds() {
 		Sounds[] soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
@@ -96,17 +107,6 @@ public class GameSounds implements Observer {
 			if (!soundsEnum.equals(sound)) {
 				soundsEnum.stopSound();
 			}
-		}
-	}
-
-	@Override
-	public void update(Observable gameModelForSound, Object arg) {
-		gameModel = (GameModelForSounds) gameModelForSound;
-		newSounds = gameModel.getNewSounds();
-		if (gameModel.isSoundActive()) {
-			playSounds();
-		} else {
-			stopAllSounds();
 		}
 	}
 }

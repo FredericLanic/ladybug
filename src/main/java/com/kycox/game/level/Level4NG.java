@@ -31,23 +31,23 @@ public class Level4NG extends LevelNG {
 		// nombre de blocks par ligne
 		nbrBlocksPerLine = 15;
 		// nombre de lignes
-		nbrLines = 15;
+		nbrLines  = 15;
 		levelDATA = new LevelConstruct[] {
 		        // 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-		        N, B, B, N, B, B, B, B, B, B, B, N, B, B, N, //
-		        B, B, B, N, B, N, N, B, N, N, B, N, B, B, B, //
-		        N, N, B, B, B, B, B, B, B, B, B, B, B, N, N, //
-		        N, B, B, B, N, B, B, N, B, B, N, B, B, B, N, //
-		        N, B, N, N, N, N, B, B, B, N, N, N, N, B, N, //
-		        N, B, N, B, N, B, B, B, B, B, N, B, N, B, N, //
-		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B, //
-		        B, N, N, N, N, N, N, N, N, N, N, N, N, N, B, //
-		        B, B, B, N, B, B, B, B, B, B, B, N, B, B, B, //
-		        N, N, B, N, N, B, N, B, N, B, N, N, B, N, N, //
-		        B, N, B, B, N, N, N, B, N, N, N, B, B, N, B, //
-		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, //
-		        N, B, N, N, N, B, B, B, B, B, N, N, N, B, N, //
-		        B, B, N, B, N, N, N, B, N, N, N, B, N, B, B, //
+		        N, B, B, N, B, B, B, B, B, B, B, N, B, B, N,   //
+		        B, B, B, N, B, N, N, B, N, N, B, N, B, B, B,   //
+		        N, N, B, B, B, B, B, B, B, B, B, B, B, N, N,   //
+		        N, B, B, B, N, B, B, N, B, B, N, B, B, B, N,   //
+		        N, B, N, N, N, N, B, B, B, N, N, N, N, B, N,   //
+		        N, B, N, B, N, B, B, B, B, B, N, B, N, B, N,   //
+		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B,   //
+		        B, N, N, N, N, N, N, N, N, N, N, N, N, N, B,   //
+		        B, B, B, N, B, B, B, B, B, B, B, N, B, B, B,   //
+		        N, N, B, N, N, B, N, B, N, B, N, N, B, N, N,   //
+		        B, N, B, B, N, N, N, B, N, N, N, B, B, N, B,   //
+		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,   //
+		        N, B, N, N, N, B, B, B, B, B, N, N, N, B, N,   //
+		        B, B, N, B, N, N, N, B, N, N, N, B, N, B, B,   //
 		        N, B, B, B, B, B, N, B, N, B, B, B, B, B, N };
 	}
 

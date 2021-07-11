@@ -34,9 +34,9 @@ import lombok.Setter;
 @Named("ScreenBlockView")
 public class ScreenBlockView {
 	// Couleur d'un point
-	private static final Color dotColor = new Color(192, 192, 0);
+	private static final Color dotColor	 = new Color(192, 192, 0);
 	@Setter
-	private Color colorMaze = Constants.BLUE_LADYBUG;
+	private Color			   colorMaze = Constants.BLUE_LADYBUG;
 	// Couleur du labyrinthe
 	private final Color megaPointColor = new Color(255, 128, 0);
 	// Couleur du lieu revivor
@@ -135,8 +135,8 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isBorderRight()) {
 			g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
 		}
-		ScreenBlock sbTmp = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y));
-		ScreenBlock sbTmp1 = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1));
+		ScreenBlock	sbTmp  = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y));
+		ScreenBlock	sbTmp1 = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1));
 		if (screenBlock.isBorderRight() && screenBlock.isBorderDown() && currentCoord.x > 0
 		        && (sbTmp.isBorderDown() || sbTmp.isBorderRight())) {
 			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE);

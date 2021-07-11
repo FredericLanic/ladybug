@@ -38,7 +38,7 @@ public class ListenSound extends Thread {
 	 * @param clip
 	 */
 	public ListenSound(Clip clip) {
-		this.clip = clip;
+		this.clip		  = clip;
 		microsecondLength = clip.getMicrosecondLength();
 	}
 

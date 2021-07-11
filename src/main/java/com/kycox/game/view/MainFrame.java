@@ -40,15 +40,15 @@ import com.kycox.game.view.down.PageEndView;
 @Named("MainFrame")
 public class MainFrame extends JFrame implements MainGraphicStructure {
 	private static final long serialVersionUID = 1L;
-	private Dimension gameDimension = new Dimension();
+	private Dimension		  gameDimension	   = new Dimension();
 	@Inject
-	private CentralView gameView;
-	private Dimension lineDimension = new Dimension();
-	private Dimension pageDimension = new Dimension();
+	private CentralView		  gameView;
+	private Dimension		  lineDimension	   = new Dimension();
+	private Dimension		  pageDimension	   = new Dimension();
 	@Inject
-	private PageEndView pageEndView;
+	private PageEndView		  pageEndView;
 	@Inject
-	private Screen screen;
+	private Screen			  screen;
 
 	private void addPanels() {
 		addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);
@@ -64,10 +64,8 @@ public class MainFrame extends JFrame implements MainGraphicStructure {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setUndecorated(true);
-
 		ImageIcon monIcone = new ImageIcon(getClass().getResource("/images/ghosts/color/oxiane.png"));
 		setIconImage(monIcone.getImage());
-
 		initScreenSize();
 		addPanels();
 	}

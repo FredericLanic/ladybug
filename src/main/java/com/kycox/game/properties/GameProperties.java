@@ -30,8 +30,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GameProperties {
-	private static final Log logger = LogFactory.getLog(GameProperties.class);
-	private static String TRUE_PROPERTY = "1";
+	private static final Log  logger		= LogFactory.getLog(GameProperties.class);
+	private static String	  TRUE_PROPERTY	= "1";
 	private ClassPathResource classPathResource;
 	// ghost.hat
 	private Optional<String> ghostHat = Optional.empty();
@@ -41,7 +41,7 @@ public class GameProperties {
 	private Optional<String> ladybugColor = Optional.empty();
 	// ladybug.ski
 	private Optional<String> ladybugSkin = Optional.empty();
-	private Properties props;
+	private Properties		 props;
 
 	public void changeGhostHat() {
 		if (hasHatSkin()) {
@@ -67,13 +67,6 @@ public class GameProperties {
 		}
 	}
 
-	private void displayPropertiesInLog() {
-		logger.info("Game Properties");
-		logger.info("Ladybug color:" + getLadybugColor());
-		logger.info("Ladybug skin:" + hasLadybugSkin());
-		logger.info("Ghost headband:" + hasGhostHeadBand());
-	}
-
 	public String getLadybugColor() {
 		return ladybugColor.isPresent() ? ladybugColor.get() : "blue";
 	}
@@ -94,15 +87,22 @@ public class GameProperties {
 	public void init() {
 		try {
 			classPathResource = new ClassPathResource("ladybug.properties");
-			props = PropertiesLoaderUtils.loadProperties(classPathResource);
-			ladybugColor = readProperty("ladybug.color");
-			ladybugSkin = readProperty("ladybug.skin");
-			ghostsHeadband = readProperty("ghosts.headband");
-			ghostHat = readProperty("ghosts.hat");
+			props			  = PropertiesLoaderUtils.loadProperties(classPathResource);
+			ladybugColor	  = readProperty("ladybug.color");
+			ladybugSkin		  = readProperty("ladybug.skin");
+			ghostsHeadband	  = readProperty("ghosts.headband");
+			ghostHat		  = readProperty("ghosts.hat");
 		} catch (IOException ioException) {
 			logger.error(ioException);
 		}
 		displayPropertiesInLog();
+	}
+
+	private void displayPropertiesInLog() {
+		logger.info("Game Properties");
+		logger.info("Ladybug color:" + getLadybugColor());
+		logger.info("Ladybug skin:" + hasLadybugSkin());
+		logger.info("Ghost headband:" + hasGhostHeadBand());
 	}
 
 	private Optional<String> readProperty(String property) {

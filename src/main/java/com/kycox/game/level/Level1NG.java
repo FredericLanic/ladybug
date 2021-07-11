@@ -31,24 +31,24 @@ public class Level1NG extends LevelNG {
 		// nombre de blocks par ligne
 		nbrBlocksPerLine = 15;
 		// nombre de lignes
-		nbrLines = 15;
+		nbrLines  = 15;
 		levelDATA = new LevelConstruct[] {
 		        // 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B, // 1
-		        B, N, N, B, B, B, B, N, B, B, B, B, N, N, B, // 2
-		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B, // 3
-		        B, N, B, B, B, N, B, N, B, N, B, B, N, N, B, // 4
-		        B, N, N, N, B, N, B, N, B, N, B, N, N, N, B, // 5
-		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, // 6
-		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N, // 7
-		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N, // 8
-		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N, // 9
-		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B, // 10
-		        B, N, N, N, N, B, N, B, N, B, N, N, N, N, B, // 11
-		        B, N, N, N, N, B, B, B, B, B, N, N, N, N, B, // 12
-		        B, B, B, B, N, B, N, N, N, B, N, B, B, B, B, // 13
-		        B, N, N, B, B, B, B, N, B, B, B, B, N, N, B, // 14
-		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B // 15
+		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B,	  // 1
+		        B, N, N, B, B, B, B, N, B, B, B, B, N, N, B,	  // 2
+		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B,	  // 3
+		        B, N, B, B, B, N, B, N, B, N, B, B, N, N, B,	  // 4
+		        B, N, N, N, B, N, B, N, B, N, B, N, N, N, B,	  // 5
+		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,	  // 6
+		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 7
+		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 8
+		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 9
+		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,	  // 10
+		        B, N, N, N, N, B, N, B, N, B, N, N, N, N, B,	  // 11
+		        B, N, N, N, N, B, B, B, B, B, N, N, N, N, B,	  // 12
+		        B, B, B, B, N, B, N, N, N, B, N, B, B, B, B,	  // 13
+		        B, N, N, B, B, B, B, N, B, B, B, B, N, N, B,	  // 14
+		        B, B, B, B, N, N, B, B, B, N, N, B, B, B, B		  // 15
 		};
 	}
 

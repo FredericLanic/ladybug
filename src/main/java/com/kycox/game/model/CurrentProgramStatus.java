@@ -33,18 +33,16 @@ import lombok.Setter;
 @Named("CurrentGameStatus")
 public class CurrentProgramStatus
         implements GameStatusForGameView, GameStatusForGameSounds, GameStatusForController, DoActionAfterTimer {
-
-	private static final Log logger = LogFactory.getLog(CurrentProgramStatus.class);
-	public static final int TO_INGAME = 0;
-	public static final int TO_LEVEL_START = 3;
-	public static final int TO_PROGRAM_PRESENTATION_START = 2;
-	public static final int TO_PROGRAM_START = 1;
+	public static final int	 TO_INGAME					   = 0;
+	public static final int	 TO_LEVEL_START				   = 3;
+	public static final int	 TO_PROGRAM_PRESENTATION_START = 2;
+	public static final int	 TO_PROGRAM_START			   = 1;
+	private static final Log logger						   = LogFactory.getLog(CurrentProgramStatus.class);
 	@Getter
-	private GameStatus gameStatus;
-
+	private GameStatus		 gameStatus;
 	@Getter
 	@Setter
-	private int numLevel;
+	private int				 numLevel;
 
 	@Override
 	public void doActionAfterTimer(int nbrAction) {

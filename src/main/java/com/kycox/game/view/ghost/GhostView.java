@@ -36,26 +36,6 @@ public class GhostView {
 	@Inject
 	private GameProperties gameProperties;
 
-	private Image addEyes(Point direction) {
-		if (direction.equals(Constants.POINT_LEFT))
-			return GhostEyesImages.GHOST_LEFT_EYES.getImage();
-		if (direction.equals(Constants.POINT_DOWN))
-			return GhostEyesImages.GHOST_DOWN_EYES.getImage();
-		if (direction.equals(Constants.POINT_UP))
-			return GhostEyesImages.GHOST_UP_EYES.getImage();
-		return GhostEyesImages.GHOST_RIGHT_EYES.getImage();
-	}
-
-	private Image addHeadband(Point direction) {
-		if (direction.equals(Constants.POINT_LEFT))
-			return GhostHeadbandImages.HEADBAND_LEFT.getImage();
-		if (direction.equals(Constants.POINT_DOWN))
-			return GhostHeadbandImages.HEADBAND_DOWN.getImage();
-		if (direction.equals(Constants.POINT_UP))
-			return GhostHeadbandImages.HEADBAND_UP.getImage();
-		return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
-	}
-
 	public Image getImage(Ghost ghost) {
 		Image ghostImg;
 		// ajout le corps
@@ -77,5 +57,25 @@ public class GhostView {
 			ghostImg = ImageUtils.appendImages(ghostImg, GhostHatImages.GHOST_HAT.getImage());
 		}
 		return ghostImg;
+	}
+
+	private Image addEyes(Point direction) {
+		if (direction.equals(Constants.POINT_LEFT))
+			return GhostEyesImages.GHOST_LEFT_EYES.getImage();
+		if (direction.equals(Constants.POINT_DOWN))
+			return GhostEyesImages.GHOST_DOWN_EYES.getImage();
+		if (direction.equals(Constants.POINT_UP))
+			return GhostEyesImages.GHOST_UP_EYES.getImage();
+		return GhostEyesImages.GHOST_RIGHT_EYES.getImage();
+	}
+
+	private Image addHeadband(Point direction) {
+		if (direction.equals(Constants.POINT_LEFT))
+			return GhostHeadbandImages.HEADBAND_LEFT.getImage();
+		if (direction.equals(Constants.POINT_DOWN))
+			return GhostHeadbandImages.HEADBAND_DOWN.getImage();
+		if (direction.equals(Constants.POINT_UP))
+			return GhostHeadbandImages.HEADBAND_UP.getImage();
+		return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
 	}
 }

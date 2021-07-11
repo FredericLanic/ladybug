@@ -27,6 +27,10 @@ public abstract class UserBody extends Body {
 	@Setter
 	protected Point userRequest = Constants.POINT_ZERO;
 
+	private boolean userRequestHasChanged() {
+		return userRequest.x != 0 || userRequest.y != 0;
+	}
+
 	protected boolean canMove(Point direction, ScreenBlock screenBlock) {
 		return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isBorderLeft() //
 		        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isBorderRight() //
@@ -46,9 +50,5 @@ public abstract class UserBody extends Body {
 				setDirection(Constants.POINT_ZERO);
 			}
 		}
-	}
-
-	private boolean userRequestHasChanged() {
-		return userRequest.x != 0 || userRequest.y != 0;
 	}
 }

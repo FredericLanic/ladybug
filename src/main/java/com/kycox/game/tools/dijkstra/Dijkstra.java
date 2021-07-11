@@ -39,14 +39,14 @@ public class Dijkstra {
 	 * @return List<Point>
 	 */
 	public static List<Point> getShorterWay(Point startCoordinate, Point endCoordinate, ScreenData screenData) {
-		List<Point> shorterWay;
-		Dijkstra dijkstra = new Dijkstra(screenData);
+		List<Point>	shorterWay;
+		Dijkstra	dijkstra = new Dijkstra(screenData);
 		dijkstra.init(startCoordinate, screenData);
 		// Lancement de la recherche
 		dijkstra.search(startCoordinate, null, screenData);
 		// Récupération de l'unité final
-		int idx = dijkstra.getPos(endCoordinate, screenData);
-		UnitDijkstra unitDijstraEnd = dijkstra.getListUnitDijkstra().get(idx);
+		int			 idx			= dijkstra.getPos(endCoordinate, screenData);
+		UnitDijkstra unitDijstraEnd	= dijkstra.getListUnitDijkstra().get(idx);
 		// Récupération du chemin le plus court
 		shorterWay = unitDijstraEnd.getShorterWay();
 		// FIXME : peut être des vérifications ? / capture d'exceptions au cas de Level
@@ -56,7 +56,7 @@ public class Dijkstra {
 
 	@Getter
 	private List<UnitDijkstra> listUnitDijkstra;
-	int nbrAccessibleBlocks;
+	int						   nbrAccessibleBlocks;
 
 	/**
 	 * Calcul du parcours le plus court en partant de startCoordonnate (coordonnées
@@ -104,7 +104,7 @@ public class Dijkstra {
 		// on rcupère la position
 		int currentPos = getPos(currentCoordinate, screenData);
 		// on initialise le flag weightHasChanged
-		boolean weightHasChanged = false;
+		boolean		 weightHasChanged	 = false;
 		UnitDijkstra currentUnitDijkstra = listUnitDijkstra.get(currentPos);
 		// on pose le poids
 		if (previousUnitDijkstra == null) { // toute première case
@@ -123,10 +123,10 @@ public class Dijkstra {
 		// On récupère le Block courant
 		ScreenBlock screenBlockCurrent = currentUnitDijkstra.getScreenBlock();
 		// Définition des prochains points
-		Point coordinateUp = new Point(currentCoordinate.x, currentCoordinate.y - 1);
-		Point coordinateLeft = new Point(currentCoordinate.x - 1, currentCoordinate.y);
+		Point coordinateUp	  = new Point(currentCoordinate.x, currentCoordinate.y - 1);
+		Point coordinateLeft  = new Point(currentCoordinate.x - 1, currentCoordinate.y);
 		Point coordinateRight = new Point(currentCoordinate.x + 1, currentCoordinate.y);
-		Point coordinateDown = new Point(currentCoordinate.x, currentCoordinate.y + 1);
+		Point coordinateDown  = new Point(currentCoordinate.x, currentCoordinate.y + 1);
 		// Lancement de la recherche en haut quand c'est possible
 		if (weightHasChanged && !screenBlockCurrent.isBorderUp()) {
 			search(coordinateUp, currentUnitDijkstra, screenData);

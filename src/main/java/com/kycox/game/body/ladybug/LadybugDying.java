@@ -25,7 +25,7 @@ import lombok.Setter;
 
 @Named("LadybugDeath")
 public class LadybugDying {
-	private int bip;
+	private int	 bip;
 	@Setter
 	@Getter
 	private long millisecondLenght = 0;

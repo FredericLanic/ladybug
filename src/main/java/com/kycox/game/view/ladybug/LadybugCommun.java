@@ -39,13 +39,21 @@ import lombok.Setter;
 public abstract class LadybugCommun {
 	@Getter
 	@Setter
-	private BodyImg bodyUpCurrent;
-	private Map<Point, Integer> convertPointToDegrees = new HashMap<>();
+	private BodyImg				bodyUpCurrent;
+	private Map<Point, Integer>	convertPointToDegrees = new HashMap<>();
 	@Inject
-	private GameProperties gameProperties;
+	private GameProperties		gameProperties;
 
-	protected void addConvertPointToDegrees(Point point, Integer integer) {
-		convertPointToDegrees.put(point, integer);
+	public Image getImage(Point direction) {
+		Image ladybugImage = ImageUtils.rotateImage(bodyUpCurrent.getImage(), convertPointToDegrees.get(direction));
+		return addSkin(ladybugImage, direction);
+	}
+
+	public Image getStaticView() {
+		Point direction	   = Constants.POINT_RIGHT;
+		Image ladybugImage = ImageUtils.rotateImage(LadybugImages.LADYBUG_UP_2.getImage(),
+		        convertPointToDegrees.get(direction));
+		return addSkin(ladybugImage, direction);
 	}
 
 	private Image addSkin(Image image, Point direction) {
@@ -57,18 +65,6 @@ public abstract class LadybugCommun {
 		return image;
 	}
 
-	public Image getImage(Point direction) {
-		Image ladybugImage = ImageUtils.rotateImage(bodyUpCurrent.getImage(), convertPointToDegrees.get(direction));
-		return addSkin(ladybugImage, direction);
-	}
-
-	public Image getStaticView() {
-		Point direction = Constants.POINT_RIGHT;
-		Image ladybugImage = ImageUtils.rotateImage(LadybugImages.LADYBUG_UP_2.getImage(),
-		        convertPointToDegrees.get(direction));
-		return addSkin(ladybugImage, direction);
-	}
-
 	@PostConstruct
 	private void initConvertPointToDegrees() {
 		convertPointToDegrees.put(Constants.POINT_UP, 0);
@@ -76,6 +72,10 @@ public abstract class LadybugCommun {
 		convertPointToDegrees.put(Constants.POINT_LEFT, 90);
 		convertPointToDegrees.put(Constants.POINT_RIGHT, -90);
 		convertPointToDegrees.put(Constants.POINT_DOWN, 180);
+	}
+
+	protected void addConvertPointToDegrees(Point point, Integer integer) {
+		convertPointToDegrees.put(point, integer);
 	}
 
 	protected void setNextImage() {

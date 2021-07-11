@@ -43,7 +43,6 @@ public class GhostsGroup implements GroupGhostForGameView {
 			return optGhost.get().getLeftLifes();
 		}
 		return 0;
-
 	}
 
 	public int getNbrEatenGhosts() {
@@ -100,23 +99,6 @@ public class GhostsGroup implements GroupGhostForGameView {
 		        .forEach(g -> g.setStatus(GhostStatus.FLASH));
 	}
 
-	private void setGhostSettingAfterLadybugContact(int numLevel) {
-		// Mis à jour du statut
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug())
-		        .forEach(g -> g.setSettingAfterBeEaten(numLevel));
-		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(Ghost::lostsALife);
-	}
-
-	private void setGhostStatusAfterRegenerated() {
-		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATED)
-		        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
-	}
-
-	private void setGhostStatusAfterToBeRegenerated() {
-		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.TOBEREGERENATED)
-		        .forEach(g -> g.setStatus(GhostStatus.REGENERATED));
-	}
-
 	public void setInitSpeeds(int numLevel) {
 		lstGhosts.stream().forEach(g -> g.setInitSpeed(numLevel));
 	}
@@ -127,10 +109,6 @@ public class GhostsGroup implements GroupGhostForGameView {
 
 	public void setNumLevel(int numLevel) {
 		lstGhosts.stream().forEach(g -> g.setNumLevel(numLevel));
-	}
-
-	private void setSpeed(int numLevel, int perCent) {
-		lstGhosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
 	}
 
 	public void setStartLevel(int numLevel, ScreenData screenData) {
@@ -160,5 +138,26 @@ public class GhostsGroup implements GroupGhostForGameView {
 		long nbrDeadUserGhost = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
 		        .count();
 		return (nbrDeadUserGhost > 0);
+	}
+
+	private void setGhostSettingAfterLadybugContact(int numLevel) {
+		// Mis à jour du statut
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug())
+		        .forEach(g -> g.setSettingAfterBeEaten(numLevel));
+		lstGhosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).forEach(Ghost::lostsALife);
+	}
+
+	private void setGhostStatusAfterRegenerated() {
+		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATED)
+		        .forEach(g -> g.setStatus(GhostStatus.NORMAL));
+	}
+
+	private void setGhostStatusAfterToBeRegenerated() {
+		lstGhosts.stream().filter(g -> g.getStatus() == GhostStatus.TOBEREGERENATED)
+		        .forEach(g -> g.setStatus(GhostStatus.REGENERATED));
+	}
+
+	private void setSpeed(int numLevel, int perCent) {
+		lstGhosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
 	}
 }

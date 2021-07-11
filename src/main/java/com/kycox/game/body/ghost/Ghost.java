@@ -41,84 +41,24 @@ import lombok.Getter;
 import lombok.Setter;
 
 public abstract class Ghost extends UserBody {
-	private static final Log logger = LogFactory.getLog(Ghost.class);
+	private static final Log		logger = LogFactory.getLog(Ghost.class);
 	@Getter
 	@Setter
-	private GhostBehavious behavious;
+	private GhostBehavious			behavious;
 	@Getter
 	@Setter
-	private GhostsBodyImages color;
+	private GhostsBodyImages		color;
 	@Getter
-	private GhostActions ghostActions;
+	private GhostActions			ghostActions;
 	@Setter
 	@Getter
-	private GhostSensitiveBehavious sensitiveBehavious;
+	private GhostSensitiveBehavious	sensitiveBehavious;
 	@Getter
 	@Setter
-	private GhostStatus status = GhostStatus.NORMAL;
-
-	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
-	// nécessaire
-	private void defaultMoving(ScreenData screenData) {
-		List<Point> lstDirections = new ArrayList<>();
-		Point posPoint = getPosition();
-		if (isPerfectOnABlock()) {
-			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(posPoint));
-			if (!currentScreenBlock.isBorderLeft() && getDirection().x != 1) {
-				lstDirections.add(Constants.POINT_LEFT);
-			}
-			if (!currentScreenBlock.isBorderUp() && getDirection().y != 1) {
-				lstDirections.add(Constants.POINT_UP);
-			}
-			if (!currentScreenBlock.isBorderRight() && getDirection().x != -1) {
-				lstDirections.add(Constants.POINT_RIGHT);
-			}
-			if (!currentScreenBlock.isBorderDown() && getDirection().y != -1) {
-				lstDirections.add(Constants.POINT_DOWN);
-			}
-			// mise à jour de la direction
-			if (lstDirections.isEmpty() && currentScreenBlock.isBlocked()) {
-				setDirection(Constants.POINT_ZERO);
-			} else if (lstDirections.isEmpty() && currentScreenBlock.isDeadEnd()) {
-				setDirection(currentScreenBlock.getDirectionInDeadEnd());
-			} else if (lstDirections.isEmpty()) {
-				// NOTE : je ne sais pas si on arrive un jour ici
-				logger.info("On ne devrait pas passer par ici");
-				setDirection(new Point(getDirection().x, -getDirection().y));
-			} else {
-				setDirection(lstDirections.get(Utils.generateRandomInt(lstDirections.size())));
-			}
-		}
-		posPoint.translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-	}
-
-	private boolean hasTouchedLadybug(Ladybug ladybug) {
-		return isTooNearOfLadybug(ladybug) && isAllowedToDoActions() && ladybug.isAllowedToDoActions();
-	}
-
-	@Override
-	protected boolean isAllowedToDoActions() {
-		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATED;
-	}
+	private GhostStatus				status = GhostStatus.NORMAL;
 
 	public boolean isComputed() {
 		return color.isComputed();
-	}
-
-	private boolean isScaredOrFlashed() {
-		return getStatus() == GhostStatus.SCARED || getStatus() == GhostStatus.FLASH;
-	}
-
-	private boolean isTooNearOfLadybug(Ladybug ladybug) {
-		return getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2);
-	}
-
-	private void moveByBehaviour(Point ladybugPosBlock, Point ladybugDirection, ScreenData screenData) {
-		switch (behavious) {
-			case SMART -> smartMoving(ladybugPosBlock, ladybugDirection, screenData);
-			case AGGRESSIVE -> moveTo(ladybugPosBlock, screenData);
-			default -> defaultMoving(screenData);
-		}
 	}
 
 	public void moveComputedGhost(Ladybug ladybug, ScreenData screenData) {
@@ -145,93 +85,6 @@ public abstract class Ghost extends UserBody {
 		} else {
 			moveComputedGhost(ladybug, screenData);
 		}
-	}
-
-	private void moveScared(Point ladybugPosBlock, ScreenData screenData) {
-		Point ptCurrentScreenGhost = getPosition();
-		boolean canScaredMove = false;
-		Point scaredDirection = Constants.POINT_ZERO;
-		if (isPerfectOnABlock()) {
-			Point ptCurrentBlockGhost = Utils.convertPointToBlockUnit(ptCurrentScreenGhost);
-			ScreenBlock currentBlockGhost = screenData.getDataBlock(ptCurrentBlockGhost);
-			List<Point> shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
-			if (shorterWay.size() != 1) {
-				Point point0 = shorterWay.get(0);
-				Point point1 = shorterWay.get(1);
-				scaredDirection = new Point(point0.x - point1.x, point0.y - point1.y);
-				canScaredMove = canMove(scaredDirection, currentBlockGhost);
-			}
-		}
-		if (canScaredMove) {
-			setDirection(scaredDirection);
-			ptCurrentScreenGhost.translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-		} else {
-			defaultMoving(screenData);
-		}
-	}
-
-	private void moveTo(Point ladybugPosBlock, ScreenData screenData) {
-		if (isPerfectOnABlock()) {
-			Point ptCurrentBlockGhost = Utils.convertPointToBlockUnit(getPosition());
-			List<Point> shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
-			Point point0 = shorterWay.get(0);
-			if (shorterWay.size() != 1) {
-				Point point1 = shorterWay.get(1);
-				setDirection(new Point(point1.x - point0.x, point1.y - point0.y));
-			} else {
-				setDirection(new Point(ptCurrentBlockGhost.x - point0.x, ptCurrentBlockGhost.y - point0.y));
-			}
-		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-	}
-
-	private void moveToRegeneratePoint(ScreenData screenData) {
-		// Le fantôme est arrivé au limite du block
-		if (isPerfectOnABlock()) {
-			// calcul du chemin le plus court :
-			List<Point> shorterWay = Dijkstra.getShorterWay(Utils.convertPointToBlockUnit(getPosition()),
-			        Utils.convertPointToBlockUnit(screenData.getRevivorGhostPos()), screenData);
-			// S'il ne reste plus qu'un bloc, le fantôme est arrivé
-			if (shorterWay.size() == 1) {
-				// Le fantôme est arrivé au point de regénération, il redevient "normal" avec
-				// une vitesse "normale" aussi
-				setStatus(GhostStatus.TOBEREGERENATED);
-			} else {
-				// On prend le premier block cible
-				Point currentPoint = shorterWay.get(0);
-				// calcul du prochain endroit à déplacer le fantôme mangé
-				Point nextPoint = shorterWay.get(1);
-				int moveX = nextPoint.x - currentPoint.x;
-				int moveY = nextPoint.y - currentPoint.y;
-				if (moveX > 0) {
-					setDirection(Constants.POINT_RIGHT);
-				} else if (moveX < 0) {
-					setDirection(Constants.POINT_LEFT);
-				} else if (moveY > 0) {
-					setDirection(Constants.POINT_DOWN);
-				} else if (moveY < 0) {
-					setDirection(Constants.POINT_UP);
-				}
-			}
-		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-	}
-
-	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
-		Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
-		Point ladybugDirection = ladybug.getDirection();
-
-		if (sensitiveBehavious.isActive() && ladybug.getStatus() != LadybugStatus.DEAD)
-			moveByBehaviour(ladybugPosBlock, ladybugDirection, screenData);
-		else
-			defaultMoving(screenData);
-	}
-
-	private void scaredOrFlashedMoving(Point ladybugPosBlock, ScreenData screenData) {
-		if (Utils.convertPointToGraphicUnit(ladybugPosBlock).distance(getPosition()) < 5 * Constants.BLOCK_SIZE)
-			moveScared(ladybugPosBlock, screenData);
-		else
-			defaultMoving(screenData);
 	}
 
 	/**
@@ -269,6 +122,147 @@ public abstract class Ghost extends UserBody {
 
 	public abstract void setSpeed(int numLevel, int perCent);
 
+	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
+	// nécessaire
+	private void defaultMoving(ScreenData screenData) {
+		List<Point>	lstDirections = new ArrayList<>();
+		Point		posPoint	  = getPosition();
+		if (isPerfectOnABlock()) {
+			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(posPoint));
+			if (!currentScreenBlock.isBorderLeft() && getDirection().x != 1) {
+				lstDirections.add(Constants.POINT_LEFT);
+			}
+			if (!currentScreenBlock.isBorderUp() && getDirection().y != 1) {
+				lstDirections.add(Constants.POINT_UP);
+			}
+			if (!currentScreenBlock.isBorderRight() && getDirection().x != -1) {
+				lstDirections.add(Constants.POINT_RIGHT);
+			}
+			if (!currentScreenBlock.isBorderDown() && getDirection().y != -1) {
+				lstDirections.add(Constants.POINT_DOWN);
+			}
+			// mise à jour de la direction
+			if (lstDirections.isEmpty() && currentScreenBlock.isBlocked()) {
+				setDirection(Constants.POINT_ZERO);
+			} else if (lstDirections.isEmpty() && currentScreenBlock.isDeadEnd()) {
+				setDirection(currentScreenBlock.getDirectionInDeadEnd());
+			} else if (lstDirections.isEmpty()) {
+				// NOTE : je ne sais pas si on arrive un jour ici
+				logger.info("On ne devrait pas passer par ici");
+				setDirection(new Point(getDirection().x, -getDirection().y));
+			} else {
+				setDirection(lstDirections.get(Utils.generateRandomInt(lstDirections.size())));
+			}
+		}
+		posPoint.translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+	}
+
+	private boolean hasTouchedLadybug(Ladybug ladybug) {
+		return isTooNearOfLadybug(ladybug) && isAllowedToDoActions() && ladybug.isAllowedToDoActions();
+	}
+
+	private boolean isScaredOrFlashed() {
+		return getStatus() == GhostStatus.SCARED || getStatus() == GhostStatus.FLASH;
+	}
+
+	private boolean isTooNearOfLadybug(Ladybug ladybug) {
+		return getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2);
+	}
+
+	private void moveByBehaviour(Point ladybugPosBlock, Point ladybugDirection, ScreenData screenData) {
+		switch (behavious) {
+			case SMART -> smartMoving(ladybugPosBlock, ladybugDirection, screenData);
+			case AGGRESSIVE -> moveTo(ladybugPosBlock, screenData);
+			default -> defaultMoving(screenData);
+		}
+	}
+
+	private void moveScared(Point ladybugPosBlock, ScreenData screenData) {
+		Point	ptCurrentScreenGhost = getPosition();
+		boolean	canScaredMove		 = false;
+		Point	scaredDirection		 = Constants.POINT_ZERO;
+		if (isPerfectOnABlock()) {
+			Point		ptCurrentBlockGhost	= Utils.convertPointToBlockUnit(ptCurrentScreenGhost);
+			ScreenBlock	currentBlockGhost	= screenData.getDataBlock(ptCurrentBlockGhost);
+			List<Point>	shorterWay			= Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
+			if (shorterWay.size() != 1) {
+				Point point0 = shorterWay.get(0);
+				Point point1 = shorterWay.get(1);
+				scaredDirection	= new Point(point0.x - point1.x, point0.y - point1.y);
+				canScaredMove	= canMove(scaredDirection, currentBlockGhost);
+			}
+		}
+		if (canScaredMove) {
+			setDirection(scaredDirection);
+			ptCurrentScreenGhost.translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+		} else {
+			defaultMoving(screenData);
+		}
+	}
+
+	private void moveTo(Point ladybugPosBlock, ScreenData screenData) {
+		if (isPerfectOnABlock()) {
+			Point		ptCurrentBlockGhost	= Utils.convertPointToBlockUnit(getPosition());
+			List<Point>	shorterWay			= Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
+			Point		point0				= shorterWay.get(0);
+			if (shorterWay.size() != 1) {
+				Point point1 = shorterWay.get(1);
+				setDirection(new Point(point1.x - point0.x, point1.y - point0.y));
+			} else {
+				setDirection(new Point(ptCurrentBlockGhost.x - point0.x, ptCurrentBlockGhost.y - point0.y));
+			}
+		}
+		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+	}
+
+	private void moveToRegeneratePoint(ScreenData screenData) {
+		// Le fantôme est arrivé au limite du block
+		if (isPerfectOnABlock()) {
+			// calcul du chemin le plus court :
+			List<Point> shorterWay = Dijkstra.getShorterWay(Utils.convertPointToBlockUnit(getPosition()),
+			        Utils.convertPointToBlockUnit(screenData.getRevivorGhostPos()), screenData);
+			// S'il ne reste plus qu'un bloc, le fantôme est arrivé
+			if (shorterWay.size() == 1) {
+				// Le fantôme est arrivé au point de regénération, il redevient "normal" avec
+				// une vitesse "normale" aussi
+				setStatus(GhostStatus.TOBEREGERENATED);
+			} else {
+				// On prend le premier block cible
+				Point currentPoint = shorterWay.get(0);
+				// calcul du prochain endroit à déplacer le fantôme mangé
+				Point nextPoint	= shorterWay.get(1);
+				int	  moveX		= nextPoint.x - currentPoint.x;
+				int	  moveY		= nextPoint.y - currentPoint.y;
+				if (moveX > 0) {
+					setDirection(Constants.POINT_RIGHT);
+				} else if (moveX < 0) {
+					setDirection(Constants.POINT_LEFT);
+				} else if (moveY > 0) {
+					setDirection(Constants.POINT_DOWN);
+				} else if (moveY < 0) {
+					setDirection(Constants.POINT_UP);
+				}
+			}
+		}
+		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+	}
+
+	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
+		Point ladybugPosBlock  = Utils.convertPointToBlockUnit(ladybug.getPosition());
+		Point ladybugDirection = ladybug.getDirection();
+		if (sensitiveBehavious.isActive() && ladybug.getStatus() != LadybugStatus.DEAD)
+			moveByBehaviour(ladybugPosBlock, ladybugDirection, screenData);
+		else
+			defaultMoving(screenData);
+	}
+
+	private void scaredOrFlashedMoving(Point ladybugPosBlock, ScreenData screenData) {
+		if (Utils.convertPointToGraphicUnit(ladybugPosBlock).distance(getPosition()) < 5 * Constants.BLOCK_SIZE)
+			moveScared(ladybugPosBlock, screenData);
+		else
+			defaultMoving(screenData);
+	}
+
 	private void smartMoving(Point ladybugPosBlock, Point ladybugDirection, ScreenData screenData) {
 		// Point ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
 		ScreenBlock ladybugScreenBlock = screenData.getDataBlock(ladybugPosBlock);
@@ -283,5 +277,10 @@ public abstract class Ghost extends UserBody {
 			ladybugPosBlock.x--;
 		}
 		moveTo(ladybugPosBlock, screenData);
+	}
+
+	@Override
+	protected boolean isAllowedToDoActions() {
+		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATED;
 	}
 }

@@ -10,7 +10,6 @@ import com.kycox.game.model.strategy.IGameModelAction;
 
 @Named("GameModelLadybugIsDead")
 public class GameModelLadybugIsDead extends AbstratGameModel implements IGameModelAction {
-
 	private static final Log logger = LogFactory.getLog(GameModelLadybugIsDead.class);
 
 	@Override

@@ -21,11 +21,11 @@ import com.kycox.game.constant.Constants;
 import lombok.Setter;
 
 public class SpeedFunction {
-	private double a = 0;
-	private double b = 0;
+	private double		 a			 = 0;
+	private double		 b			 = 0;
 	private final double HIGHT_LIMIT = Constants.VALID_SPEEDS.size();
 	@Setter
-	private double lowLimit;
+	private double		 lowLimit;
 
 	/**
 	 * Retourne la vitesse calculée de ladybug en fonction du niveau

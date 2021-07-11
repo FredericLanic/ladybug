@@ -18,6 +18,7 @@ Coté technique CTEC :
 - CTEC25 : lorsque le fantôme est regénéré, sa direction continue même s'il existe une bordure (contexte Level9NG)
 - CTEC26 : faire en sorte que les sons s'arrêtent convenablement entre les états du jeu
 - CTEC27 : modifier l'arborescence des resources pour qu'il y ait toujours un contexte "par défaut", un contexte "oxiane" (ladybug en bleu + le "OX" + des fantômes à la mode OXiane), un contexte "flash" (ladybug en rouge + l'éclair + des fantômes à la mode LSS)
+- CTEC28 : rajouter dans le github le formatage du poste OXiane des fichiers java 
 
 Coté fonctionnalités CFCT :
 

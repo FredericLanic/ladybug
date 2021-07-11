@@ -27,25 +27,25 @@ import lombok.Setter;
 public abstract class Body {
 	@Getter
 	@Setter
-	private Point direction = Constants.POINT_ZERO;
+	private Point	direction = Constants.POINT_ZERO;
 	@Getter
 	@Setter
-	private int leftLifes = 0;
+	private int		leftLifes = 0;
 	@Getter
 	@Setter
-	private boolean newLife = false;
+	private boolean	newLife	  = false;
 	// Position dans le JPanel
 	@Getter
 	@Setter
-	private Point position = Constants.POINT_ZERO;
+	private Point		  position		  = Constants.POINT_ZERO;
 	@Setter
 	@Getter
 	private SpeedFunction speedFunction;
 	@Getter
 	@Setter
-	private int speedIndex = 0;
+	private int			  speedIndex	  = 0;
 	@Getter
-	private int startSpeedIndex = 0;
+	private int			  startSpeedIndex = 0;
 
 	public int getSpeed() {
 		return Constants.VALID_SPEEDS
@@ -58,11 +58,9 @@ public abstract class Body {
 	 * @param speedIndex
 	 */
 	public void initSpeedIndex(int speedIndex) {
-		this.speedIndex = speedIndex;
+		this.speedIndex		 = speedIndex;
 		this.startSpeedIndex = speedIndex;
 	}
-
-	protected abstract boolean isAllowedToDoActions();
 
 	public boolean isPerfectOnABlock() {
 		Point pointPos = getPosition();
@@ -79,4 +77,6 @@ public abstract class Body {
 			leftLifes++;
 		}
 	}
+
+	protected abstract boolean isAllowedToDoActions();
 }

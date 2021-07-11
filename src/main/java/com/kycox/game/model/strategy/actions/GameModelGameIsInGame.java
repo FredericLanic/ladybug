@@ -10,17 +10,16 @@ import com.kycox.game.model.strategy.IGameModelAction;
 
 @Named("GameModelGameIsInGame")
 public class GameModelGameIsInGame extends AbstratGameModel implements IGameModelAction {
-
 	@Inject
-	private GameModelGameIsPlaying gameModeGameIsPlaying;
+	private GameModelGameIsPlaying	gameModeGameIsPlaying;
 	@Inject
-	private GameModelGhostIsDead gameModeGhostIsDead;
+	private GameModelGhostIsDead	gameModeGhostIsDead;
 	@Inject
-	private GameModelLadybugIsDead gameModeLadybugIsDead;
+	private GameModelLadybugIsDead	gameModeLadybugIsDead;
 	@Inject
-	private GameModelLadybugIsDying gameModeLadybugIsDying;
+	private GameModelLadybugIsDying	gameModeLadybugIsDying;
 	@Inject
-	private GameModelManageAction gameModelManageAction;
+	private GameModelManageAction	gameModelManageAction;
 
 	@Override
 	public void programBeat() {
@@ -33,7 +32,6 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 		} else {
 			gameModelManageAction.changeStrategy(gameModeGameIsPlaying);
 		}
-
 		gameModelManageAction.execute();
 	}
 }

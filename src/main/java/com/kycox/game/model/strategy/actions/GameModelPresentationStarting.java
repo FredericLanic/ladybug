@@ -10,7 +10,6 @@ import com.kycox.game.model.strategy.IGameModelAction;
 
 @Named("GameModelPresentationStarting")
 public class GameModelPresentationStarting extends AbstratGameModel implements IGameModelAction {
-
 	private static final Log logger = LogFactory.getLog(GameModelPresentationStarting.class);
 
 	@Override
@@ -19,5 +18,4 @@ public class GameModelPresentationStarting extends AbstratGameModel implements I
 		initGame();
 		currentGameStatus.setProgramPresentation();
 	}
-
 }

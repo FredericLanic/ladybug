@@ -27,12 +27,12 @@ import com.kycox.game.constant.LevelConstruct;
 import com.kycox.game.contract.LevelStructure;
 
 public abstract class LevelNG implements LevelStructure {
-	private static final int DOWN = 8;
-	private static final int LEFT = 1;
-	static final int NOT_ACCESSIBLE_POINT = 128;
-	private static final int POINT = 16;
-	private static final int RIGHT = 4;
-	private static final int UP = 2;
+	private static final int DOWN				  = 8;
+	private static final int LEFT				  = 1;
+	private static final int POINT				  = 16;
+	private static final int RIGHT				  = 4;
+	private static final int UP					  = 2;
+	static final int		 NOT_ACCESSIBLE_POINT = 128;
 	// Map
 	protected LevelConstruct[] levelDATA;
 	// Nombre de blocks par ligne
@@ -40,17 +40,13 @@ public abstract class LevelNG implements LevelStructure {
 	// Nombre de lignes
 	protected int nbrLines;
 
-	private int dataPosition(int x, int y) {
-		return y * nbrBlocksPerLine + x;
-	}
-
 	@Override
 	public List<ScreenBlock> getLstBlocks() {
 		List<ScreenBlock> lstBlocks = new ArrayList<>();
 		for (int i = 0; i < levelDATA.length; i++) {
-			int x = i % nbrBlocksPerLine;
-			int y = i / nbrBlocksPerLine;
-			ScreenBlock block = new ScreenBlock(screenBlockValue(x, y));
+			int			x	  = i % nbrBlocksPerLine;
+			int			y	  = i / nbrBlocksPerLine;
+			ScreenBlock	block = new ScreenBlock(screenBlockValue(x, y));
 			block.setCoordinate(new Point(x, y));
 			lstBlocks.add(block);
 		}
@@ -67,6 +63,10 @@ public abstract class LevelNG implements LevelStructure {
 		return nbrLines;
 	}
 
+	private int dataPosition(int x, int y) {
+		return y * nbrBlocksPerLine + x;
+	}
+
 	/**
 	 * FIXME : Refacto !! TODO : mettre des optional
 	 *
@@ -75,11 +75,11 @@ public abstract class LevelNG implements LevelStructure {
 	 * @return
 	 */
 	private int screenBlockValue(int x, int y) {
-		int pointValue = 0;
-		LevelConstruct block = levelDATA[dataPosition(x, y)];
-		LevelConstruct blockUp = null;
-		LevelConstruct blockDown = null;
-		LevelConstruct blockLeft = null;
+		int			   pointValue = 0;
+		LevelConstruct block	  = levelDATA[dataPosition(x, y)];
+		LevelConstruct blockUp	  = null;
+		LevelConstruct blockDown  = null;
+		LevelConstruct blockLeft  = null;
 		LevelConstruct blockRight = null;
 		// Si y = 0 on est en haut de la grille
 		if (y > 0)

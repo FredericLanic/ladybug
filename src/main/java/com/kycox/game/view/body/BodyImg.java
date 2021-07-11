@@ -22,9 +22,9 @@ import lombok.Getter;
 
 public class BodyImg {
 	@Getter
-	private Image image;
+	private Image	image;
 	@Getter
-	private BodyImg next;
+	private BodyImg	next;
 
 	public BodyImg(Image img) {
 		this.image = img;

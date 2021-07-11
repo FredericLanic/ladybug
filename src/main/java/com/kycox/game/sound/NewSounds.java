@@ -79,12 +79,6 @@ public class NewSounds implements NewSoundsForGameSounds {
 		}
 	}
 
-	private void addSounds(Sounds soundsEnum, boolean mustBeAdded) {
-		if (mustBeAdded) {
-			sounds.add(soundsEnum);
-		}
-	}
-
 	public void addTeleport(boolean mustBeAdded) {
 		addSounds(Sounds.COMMON_TELEPORT, mustBeAdded);
 	}
@@ -96,5 +90,11 @@ public class NewSounds implements NewSoundsForGameSounds {
 
 	public void initSounds() {
 		sounds.clear();
+	}
+
+	private void addSounds(Sounds soundsEnum, boolean mustBeAdded) {
+		if (mustBeAdded) {
+			sounds.add(soundsEnum);
+		}
 	}
 }
