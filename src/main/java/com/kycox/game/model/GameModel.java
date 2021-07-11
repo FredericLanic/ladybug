@@ -54,6 +54,7 @@ import com.kycox.game.score.Score;
 import com.kycox.game.sound.NewSounds;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du
@@ -113,6 +114,9 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Getter
 	@Inject
 	private ScreenData					   screenData;
+	@Getter
+	@Setter
+	private boolean						   showHelp		= false;
 	@Getter
 	private boolean						   soundActive	= true;
 

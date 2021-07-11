@@ -57,15 +57,15 @@
     </display>  
   </class>  
   <association id="7">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="8" name="gameSounds">        
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="8" name="mainFrame">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="9" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="10">    
@@ -81,15 +81,15 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="13">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="14" name="mainFrame">        
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="14" name="gameSounds">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="15" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

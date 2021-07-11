@@ -58,8 +58,17 @@ public class KeyGameController extends KeyAdapter {
 		}
 	}
 
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		switch (keyCode) {
+			case KeyEvent.VK_F1 -> gameModel.setShowHelp(false);
+		}
+	}
+
 	private void manageCommonKeys(int keyCode) {
 		switch (keyCode) {
+			case KeyEvent.VK_F1 -> gameModel.setShowHelp(true);
 			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
 			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
 			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();

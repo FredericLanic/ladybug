@@ -29,6 +29,8 @@ public interface GameModelForController extends GameCommon {
 
 	public boolean isGamePresentation();
 
+	public void setShowHelp(boolean showHelp);
+
 	public void setGhostRequest(Point point);
 
 	public void setLadybugRequest(Point point);

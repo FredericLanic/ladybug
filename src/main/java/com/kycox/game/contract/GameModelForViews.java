@@ -41,5 +41,7 @@ public interface GameModelForViews extends GameCommon {
 
 	public ScreenData getScreenData();
 
+	public boolean isShowHelp();
+
 	public boolean isSoundActive();
 }

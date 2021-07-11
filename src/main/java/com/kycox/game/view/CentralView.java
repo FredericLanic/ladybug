@@ -154,7 +154,12 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 			drawOneCenterTextLine(g2d, text);
 		} else if (gameModel.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
-			drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "OR c TO cONFIG");
+			if (gameModel.isShowHelp()) {
+				drawSevenCenterTextLines(g2d, "hELP", "FII: sOUND ON/OFF", "FIII: lADYBUG sKIN", "FIV: gHOST hEADBAND",
+				        "FV: gHOST hAT", "ARROWS: lADYBUG mOVE", "ZQSD: gHOST mOVE");
+			} else {
+				drawThreeCenterTextLines(g2d, "PRESS s TO sTART", "c TO cONFIG", "OR fI FOR hELP");
+			}
 		} else if (gameModel.getCurrentProgramStatus().isGameEnding()
 		        || gameModel.getCurrentProgramStatus().isGameEnd()) {
 			drawGhosts(g2d);
@@ -235,6 +240,22 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		}
 	}
 
+	private void drawSevenCenterTextLines(Graphics2D g2d, String line1, String line2, String line3, String line4,
+	        String line5, String line6, String line7) {
+		int			x	 = gameModel.getScreenData().getScreenWidth();
+		int			y	 = gameModel.getScreenData().getScreenHeight();
+		FontMetrics	metr = this.getFontMetrics(defaultFont);
+		g2d.setColor(Color.white);
+		g2d.setFont(defaultFont);
+		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - 6 * Constants.BLOCK_SIZE);
+		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 - 4 * Constants.BLOCK_SIZE);
+		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 - 2 * Constants.BLOCK_SIZE);
+		g2d.drawString(line4, (x - metr.stringWidth(line4)) / 2, y / 2);
+		g2d.drawString(line5, (x - metr.stringWidth(line5)) / 2, y / 2 + 2 * Constants.BLOCK_SIZE);
+		g2d.drawString(line6, (x - metr.stringWidth(line6)) / 2, y / 2 + 4 * Constants.BLOCK_SIZE);
+		g2d.drawString(line7, (x - metr.stringWidth(line7)) / 2, y / 2 + 6 * Constants.BLOCK_SIZE);
+	}
+
 	private void drawThreeCenterTextLines(Graphics2D g2d, String line1, String line2, String line3) {
 		int			x	 = gameModel.getScreenData().getScreenWidth();
 		int			y	 = gameModel.getScreenData().getScreenHeight();
@@ -243,7 +264,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		g2d.setFont(defaultFont);
 		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - 2 * Constants.BLOCK_SIZE);
 		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2);
-		g2d.drawString(line3, (x - metr.stringWidth(line2)) / 2, y / 2 + 2 * Constants.BLOCK_SIZE);
+		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 + 2 * Constants.BLOCK_SIZE);
 	}
 
 	private void drawTwoCenterTextLines(Graphics2D g2d, String line1, String line2) {
