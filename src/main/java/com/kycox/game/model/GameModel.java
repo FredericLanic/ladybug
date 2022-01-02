@@ -42,7 +42,7 @@ import com.kycox.game.model.strategy.actions.GameModelGameIsEnding;
 import com.kycox.game.model.strategy.actions.GameModelGameIsInGame;
 import com.kycox.game.model.strategy.actions.GameModelGameIsPlaying;
 import com.kycox.game.model.strategy.actions.GameModelGameIsStarting;
-import com.kycox.game.model.strategy.actions.GameModelInitialisationProgram;
+import com.kycox.game.model.strategy.actions.GameModelProgramStarting;
 import com.kycox.game.model.strategy.actions.GameModelLevelIsEnded;
 import com.kycox.game.model.strategy.actions.GameModelLevelIsEnding;
 import com.kycox.game.model.strategy.actions.GameModelLevelIsStarting;
@@ -83,7 +83,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Inject
 	private GameModelGameIsInGame		   gameModelGameIsInGame;
 	@Inject
-	private GameModelInitialisationProgram gameModelInitialisationProgram;
+	private GameModelProgramStarting 	   gameModelProgramStarting; 
 	@Inject
 	private GameModelManageAction		   gameModelManageAction;
 	@Inject
@@ -226,7 +226,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	// * PROGRAM_PRESENTATION_START
 	private void actionsByTimerBip() {
 		switch (currentProgramStatus.getGameStatus()) {
-			case PROGRAM_START -> gameModelManageAction.changeStrategy(gameModelInitialisationProgram);
+			case PROGRAM_START -> gameModelManageAction.changeStrategy(gameModelProgramStarting);
 			case PROGRAM_PRESENTATION_START -> gameModelManageAction.changeStrategy(gameModelPresentationStarting);
 			case PROGRAM_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentation);
 			case GAME_START -> gameModelManageAction.changeStrategy(gameModeGameStarting);

@@ -162,8 +162,11 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 			}
 		} else if (gameModel.getCurrentProgramStatus().isGameEnding()
 		        || gameModel.getCurrentProgramStatus().isGameEnd()) {
-			drawGhosts(g2d);
-			drawOneCenterTextLine(g2d, "gAME oVER");
+			drawGhosts(g2d);		
+			String levelText = "eND lEVEL "
+			        + Utils.integerToRoman(gameModel.getCurrentProgramStatus().getNumLevel()).toLowerCase();
+			
+			drawTwoCenterTextLines(g2d, "gAME oVER", levelText);
 		} else if (gameModel.getCurrentProgramStatus().isLevelEnding()) {
 			drawTwoCenterTextLines(g2d, "nEXT LEVEL", "gET READY");
 		} else if (gameModel.getLadybug().getStatus() == LadybugStatus.DYING) {

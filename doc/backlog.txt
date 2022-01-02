@@ -44,6 +44,7 @@ DONE :
 	- OK rajouter du son : son gratuit trouvé sur internet
 - CFCT1 : paramétrer l'utilisation du skin OXiane pour Ladybug
 - CFCT9 : permettre la téléportation des fantômes
+- CFCT10 : rajouter le niveau dans le message du game over
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
