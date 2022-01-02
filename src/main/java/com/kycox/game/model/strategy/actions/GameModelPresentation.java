@@ -33,6 +33,6 @@ public class GameModelPresentation extends AbstratGameModel implements IGameMode
 
 	private void setBodiesActions() {
 		ladybug.setActions(screenData);
-		groupGhosts.setActions(ladybug);
+		groupGhosts.setActions(ladybug, screenData);
 	}
 }

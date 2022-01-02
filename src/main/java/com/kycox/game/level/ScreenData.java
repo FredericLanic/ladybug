@@ -81,6 +81,13 @@ public final class ScreenData {
 	}
 
 	/**
+	 * Retourne le nombre de points mangé par ladybug présents dans le IData
+	 */
+	public int getNbrBlocksWithEatenPoint() {
+		return (int) dataBlocks.stream().filter(ScreenBlock::isEatenPoint).count();
+	}
+
+	/**
 	 * Retourne le nombre de points à manger par ladybug présents dans le IData
 	 */
 	public int getNbrBlocksWithPoint() {
@@ -114,6 +121,19 @@ public final class ScreenData {
 	 */
 	public int getPercentageEatenPoint() {
 		return (initNbrBlocksWithPoint - getNbrBlocksWithPoint()) * 100 / initNbrBlocksWithPoint;
+	}
+
+	/**
+	 * Retourne les coordonnées aléatoire GRAPHIQUE d'un block qui contient un point
+	 * à manger par ladybug
+	 *
+	 * @return
+	 */
+	public Point getRandomPosOnAEatenPoint() {
+		int	pos	   = getRandomPosNumEatenPoint();
+		int	yBlock = pos / currentLevel.getNbrBlocksByLine();
+		int	xBlock = pos % currentLevel.getNbrBlocksByLine();
+		return new Point(xBlock, yBlock);
 	}
 
 	/**
@@ -212,10 +232,24 @@ public final class ScreenData {
 			// Suppression du point dans le ScreenBlock de lstDataBlocks
 			ScreenBlock currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
 			currentScreenBlock.removePoint();
+			currentScreenBlock.addEatenPoint();
 			// Suppression du point dans de ScreenBlock de lstViewBlocks
 			viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
 			        .orElseThrow().removePoint();
 		}
+	}
+
+	private int getPosNumEatenPoint(int numPoint) {
+		int	nbrPoint = 0;
+		int	pos		 = 0;
+		for (int i = 0; i < dataBlocks.size(); i++) {
+			if (dataBlocks.get(i).isEatenPoint()) {
+				nbrPoint++;
+				if (nbrPoint == numPoint)
+					pos = i;
+			}
+		}
+		return pos;
 	}
 
 	private int getPosNumPoint(int numPoint) {
@@ -229,6 +263,12 @@ public final class ScreenData {
 			}
 		}
 		return pos;
+	}
+
+	private int getRandomPosNumEatenPoint() {
+		int	nbrPoints	= getNbrBlocksWithEatenPoint();
+		int	randomPoint	= Utils.generateRandomInt(nbrPoints) + 1;
+		return getPosNumEatenPoint(randomPoint);
 	}
 
 	private int getRandomPosNumPoint() {

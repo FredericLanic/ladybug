@@ -118,11 +118,11 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 
 	private void setBodiesActions() {
 		ladybug.setActions(screenData);
-		groupGhosts.setActions(ladybug);
+		groupGhosts.setActions(ladybug, screenData);
 	}
 
 	private void updateGhostSeetings() {
-		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData.getPercentageEatenPoint());
+		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData);
 	}
 
 	private void updateScreenBlock() {

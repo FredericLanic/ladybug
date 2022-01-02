@@ -18,10 +18,12 @@ package com.kycox.game.action.ghost;
 
 import java.awt.Point;
 
+import com.kycox.game.action.BodyActions;
+
 import lombok.Getter;
 import lombok.Setter;
 
-public class GhostActions {
+public class GhostActions extends BodyActions {
 	@Setter
 	@Getter
 	private boolean	eatenByLadybug = false;

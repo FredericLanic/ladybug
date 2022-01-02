@@ -32,6 +32,7 @@ import lombok.Setter;
  */
 public class ScreenBlock implements Cloneable {
 	private static final int DOWN			= 8;
+	private static final int EATEN_POINT	= 512;
 	private static final int GHOST_REVIVER	= 64;
 	private static final int LEFT			= 1;
 	private static final Log logger			= LogFactory.getLog(ScreenBlock.class);
@@ -66,6 +67,10 @@ public class ScreenBlock implements Cloneable {
 
 	public void addBorderUp() {
 		content |= UP;
+	}
+
+	public void addEatenPoint() {
+		content |= EATEN_POINT;
 	}
 
 	public void addGhostReviver() {
@@ -139,6 +144,10 @@ public class ScreenBlock implements Cloneable {
 		if (isBorderDown())
 			nbrBorders++;
 		return nbrBorders == 3;
+	}
+
+	public boolean isEatenPoint() {
+		return (content & EATEN_POINT) != 0;
 	}
 
 	public boolean isGhostReviver() {

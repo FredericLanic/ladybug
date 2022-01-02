@@ -70,6 +70,11 @@ public class GhostsGroup implements GroupGhostForGameView {
 		lstGhosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
 	}
 
+	public boolean hasTeleportedGhosts() {
+		long nbrTeleportedGhosts = lstGhosts.stream().filter(g -> g.getGhostActions().isToBeTeleported()).count();
+		return (nbrTeleportedGhosts > 0);
+	}
+
 	public void manageNewLife() {
 		lstGhosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
@@ -80,8 +85,8 @@ public class GhostsGroup implements GroupGhostForGameView {
 		        .forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
 	}
 
-	public void setActions(Ladybug ladybug) {
-		lstGhosts.stream().forEach(g -> g.setGhostActions(ladybug));
+	public void setActions(Ladybug ladybug, ScreenData screenData) {
+		lstGhosts.stream().forEach(g -> g.setGhostActions(ladybug, screenData));
 	}
 
 	public void setFear(boolean fear) {
@@ -121,14 +126,16 @@ public class GhostsGroup implements GroupGhostForGameView {
 		lstGhosts.stream().forEach(g -> g.setStatus(status));
 	}
 
-	public void updateSeetings(int numLevel, int percentageEatenPoints) {
+	public void updateSeetings(int numLevel, ScreenData screenData) {
 		setGhostSettingAfterLadybugContact(numLevel);
 		// modifier la vitesse des fantôme en cours de partie
-		setSpeed(numLevel, percentageEatenPoints);
+		setSpeed(numLevel, screenData.getPercentageEatenPoint());
 		// Etat des fantômes de REGENERATING à NORMAL
 		setGhostStatusAfterRegenerated();
 		// Passage de l'état TOBEREGENERATED to REGENERATED
 		setGhostStatusAfterToBeRegenerated();
+		// Téléportation du fantôme
+		setGhostPositionAfterTeleportation(screenData);
 	}
 
 	/**
@@ -138,6 +145,10 @@ public class GhostsGroup implements GroupGhostForGameView {
 		long nbrDeadUserGhost = lstGhosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
 		        .count();
 		return (nbrDeadUserGhost > 0);
+	}
+
+	private void setGhostPositionAfterTeleportation(ScreenData screenData) {
+		lstGhosts.stream().filter(g -> g.getGhostActions().isToBeTeleported()).forEach(g -> g.teleport(screenData));
 	}
 
 	private void setGhostSettingAfterLadybugContact(int numLevel) {

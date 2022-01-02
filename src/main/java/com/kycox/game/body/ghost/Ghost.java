@@ -93,7 +93,7 @@ public abstract class Ghost extends UserBody {
 	 * @param ladybug
 	 * @return
 	 */
-	public void setGhostActions(Ladybug ladybug) {
+	public void setGhostActions(Ladybug ladybug, ScreenData screenData) {
 		ghostActions = new GhostActions();
 		ghostActions.setPosition((Point) getPosition().clone());
 		// Détection de la collision avec un fantôme et ladybug
@@ -103,6 +103,11 @@ public abstract class Ghost extends UserBody {
 			} else {
 				ghostActions.setEatLadybug(true);
 			}
+		}
+		// calcule uniquement lorsque ladybug rempli le block
+		if (isPerfectOnABlock()) {
+			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+			ghostActions.setToBeTeleported(currentScreenBlock.isTeleportation());
 		}
 	}
 
@@ -121,6 +126,14 @@ public abstract class Ghost extends UserBody {
 	}
 
 	public abstract void setSpeed(int numLevel, int perCent);
+
+	public void teleport(ScreenData screenData) {
+		System.out.println("le fantôme doit être téléporté sur une cellule dans point");
+		if (isPerfectOnABlock() && screenData.getNbrBlocksWithEatenPoint() > 0) {
+			Point newPoint = screenData.getRandomPosOnAEatenPoint();
+			setPosition(Utils.convertPointToGraphicUnit(newPoint));
+		}
+	}
 
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
 	// nécessaire
