@@ -48,6 +48,8 @@ public class ScreenBlock implements Cloneable {
 	@Getter
 	@Setter
 	private Point			 coordinate		= Constants.POINT_ZERO;
+	@Getter
+	private Point 			 destinationPoint;
 
 	public ScreenBlock(int content) {
 		this.content = content;
@@ -81,7 +83,8 @@ public class ScreenBlock implements Cloneable {
 		content |= MEGA_POINT;
 	}
 
-	public void addTeleportation() {
+	public void addTeleportation(Point destinationPoint) {
+		this.destinationPoint = destinationPoint;
 		content |= TELEPORTATION;
 	}
 

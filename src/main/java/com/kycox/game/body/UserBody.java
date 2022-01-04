@@ -20,6 +20,8 @@ import java.awt.Point;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.level.ScreenBlock;
+import com.kycox.game.level.ScreenData;
+import com.kycox.game.tools.Utils;
 
 import lombok.Setter;
 
@@ -49,6 +51,15 @@ public abstract class UserBody extends Body {
 			if (!canMove(getDirection(), screenBlock)) {
 				setDirection(Constants.POINT_ZERO);
 			}
+		}
+	}
+	
+	public void teleport(ScreenData screenData) {
+		if (isPerfectOnABlock()) {
+			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+			Point destinationPoint = Utils.convertPointToGraphicUnit(currentScreenBlock.getDestinationPoint());
+			setPosition(destinationPoint);
+			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		}
 	}
 }

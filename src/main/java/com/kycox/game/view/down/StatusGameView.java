@@ -90,7 +90,7 @@ public class StatusGameView extends JPanel {
 		StringBuilder message = new StringBuilder();
 		message.append("Level: ");
 		message.append(numLevel);
-		message.append(" - New Life: ");
+		message.append(" - new life: ");
 		message.append(incrementScore);
 		message.append("/");
 		message.append(nbrPointsForNewLife);

@@ -18,7 +18,9 @@ package com.kycox.game.level;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -209,10 +211,15 @@ public final class ScreenData {
 				dataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
 				        .forEach(ScreenBlock::addMegaPoint);
 			}
-			// @FIXME : Ajout Téléportation pour test
-			Point randomPoint = getRandomPosOnAPoint();
-			dataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
-			        .forEach(ScreenBlock::addTeleportation);
+			
+			Map<Point, Point> teleportPoints = currentLevel.getTeleportPoints();
+			//Parcourir le Hashmap avec la boucle For
+	        for (Map.Entry<Point, Point> m : teleportPoints.entrySet()) {
+	        	System.out.println(m.getKey());
+				dataBlocks.stream().filter(b -> b.getCoordinate().equals(m.getKey()))
+		        .forEach(sb -> sb.addTeleportation(m.getValue()));
+	        }
+	        
 		}
 		viewBlocks.clear();
 		// on clone la liste

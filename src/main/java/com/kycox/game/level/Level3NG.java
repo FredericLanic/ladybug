@@ -20,6 +20,8 @@ import static com.kycox.game.constant.LevelConstruct.B;
 import static com.kycox.game.constant.LevelConstruct.N;
 
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -65,5 +67,13 @@ public class Level3NG extends LevelNG {
 	@Override
 	public int getNbrMegaPoints() {
 		return 2;
+	}
+	
+	@Override
+	public Map<Point, Point> getTeleportPoints() {
+		Map<Point, Point> teleportPoint = new HashMap<Point, Point>();		 
+		teleportPoint.put(new Point(0,0), new Point(14,14));
+		teleportPoint.put(new Point(14,14), new Point(0,0));		
+		return teleportPoint;	
 	}
 }

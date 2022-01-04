@@ -18,7 +18,9 @@ package com.kycox.game.level;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.kycox.game.contract.LevelStructure;
 
@@ -45,5 +47,9 @@ public abstract class Level implements LevelStructure {
 			lstBlocks.add(block);
 		}
 		return lstBlocks;
+	}
+	
+	public Map<Point, Point> getTeleportPoints() {
+		return new HashMap<Point, Point>();	
 	}
 }

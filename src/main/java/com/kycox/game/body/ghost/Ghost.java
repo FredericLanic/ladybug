@@ -127,14 +127,6 @@ public abstract class Ghost extends UserBody {
 
 	public abstract void setSpeed(int numLevel, int perCent);
 
-	public void teleport(ScreenData screenData) {
-		System.out.println("le fantôme doit être téléporté sur une cellule dans point");
-		if (isPerfectOnABlock() && screenData.getNbrBlocksWithEatenPoint() > 0) {
-			Point newPoint = screenData.getRandomPosOnAEatenPoint();
-			setPosition(Utils.convertPointToGraphicUnit(newPoint));
-		}
-	}
-
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
 	// nécessaire
 	private void defaultMoving(ScreenData screenData) {

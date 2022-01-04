@@ -21,7 +21,9 @@ import static com.kycox.game.constant.LevelConstruct.N;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.kycox.game.constant.LevelConstruct;
 import com.kycox.game.contract.LevelStructure;
@@ -124,5 +126,9 @@ public abstract class LevelNG implements LevelStructure {
 				pointValue += RIGHT;
 		}
 		return pointValue;
+	}
+	
+	public Map<Point, Point> getTeleportPoints() {
+		return new HashMap<Point, Point>();	
 	}
 }

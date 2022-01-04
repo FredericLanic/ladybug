@@ -114,10 +114,4 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return sb.toString();
 	}
 
-	private void teleport(ScreenData screenData) {
-		if (isPerfectOnABlock() && screenData.getNbrBlocksWithPoint() > 0) {
-			Point newPoint = screenData.getRandomPosOnAPoint();
-			setPosition(Utils.convertPointToGraphicUnit(newPoint));
-		}
-	}
 }

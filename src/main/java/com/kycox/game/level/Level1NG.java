@@ -20,6 +20,8 @@ import static com.kycox.game.constant.LevelConstruct.B;
 import static com.kycox.game.constant.LevelConstruct.N;
 
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -41,7 +43,7 @@ public class Level1NG extends LevelNG {
 		        B, N, N, N, B, N, B, N, B, N, B, N, N, N, B,	  // 5
 		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,	  // 6
 		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 7
-		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 8
+		        B, B, N, B, N, B, N, N, N, B, N, B, N, B, B,	  // 8
 		        N, B, N, B, N, B, N, N, N, B, N, B, N, B, N,	  // 9
 		        B, B, B, B, B, B, B, B, B, B, B, B, B, B, B,	  // 10
 		        B, N, N, N, N, B, N, B, N, B, N, N, N, N, B,	  // 11
@@ -65,5 +67,13 @@ public class Level1NG extends LevelNG {
 	@Override
 	public int getNbrMegaPoints() {
 		return 2;
+	}
+	
+	@Override
+	public Map<Point, Point> getTeleportPoints() {
+		Map<Point, Point> teleportPoint = new HashMap<Point, Point>();		 
+		teleportPoint.put(new Point(0,7), new Point(14,7));
+		teleportPoint.put(new Point(14,7), new Point(0,7));		
+		return teleportPoint;	
 	}
 }

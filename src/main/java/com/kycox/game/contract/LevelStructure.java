@@ -18,6 +18,7 @@ package com.kycox.game.contract;
 
 import java.awt.Point;
 import java.util.List;
+import java.util.Map;
 
 import com.kycox.game.level.ScreenBlock;
 
@@ -33,4 +34,6 @@ public interface LevelStructure {
 	public int getNbrLines();
 
 	public int getNbrMegaPoints();
+	
+	public Map<Point, Point> getTeleportPoints();
 }
