@@ -23,6 +23,6 @@ package com.kycox.game.constant.ghost;
 public enum GhostStatus {
 	DYING, FLASH, NORMAL, REGENERATED, SCARED, TOBEREGERENATED;
 
-	private GhostStatus() {
+	GhostStatus() {
 	}
 }

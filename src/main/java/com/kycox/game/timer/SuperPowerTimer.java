@@ -48,7 +48,7 @@ public class SuperPowerTimer {
 			} else {
 				// Fin du second timer
 				superPowerTimerStatus = SuperPowerTimerStatus.STOP;
-				superPowerTimer		  = null;
+				superPowerTimer = null;
 			}
 		}
 	}
@@ -67,7 +67,7 @@ public class SuperPowerTimer {
 	private Timer timer;
 
 	public SuperPowerTimer() {
-		this.numTimer = 1;
+		numTimer = 1;
 	}
 
 	/**
@@ -104,8 +104,9 @@ public class SuperPowerTimer {
 	 */
 	public SuperPowerTimerStatus getStatus() {
 		// Priorité au deuxième timer s'il existe
-		if (superPowerTimer != null)
+		if (superPowerTimer != null) {
 			return superPowerTimer.getStatus();
+		}
 		return superPowerTimerStatus;
 	}
 
@@ -123,7 +124,7 @@ public class SuperPowerTimer {
 	public void launch(int seconds) {
 		if (numTimer == 1) {
 			// Début du premier timer
-			seconds				  = seconds - FLASH_DELAY;
+			seconds = seconds - FLASH_DELAY;
 			superPowerTimerStatus = SuperPowerTimerStatus.RUN;
 		} else {
 			// Début du second timer

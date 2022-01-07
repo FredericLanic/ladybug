@@ -21,27 +21,27 @@ import com.kycox.game.score.GroupMessages;
 import com.kycox.game.score.Score;
 
 public interface GameModelForViews extends GameCommon {
-	public GameStatusForGameView getCurrentProgramStatus();
+	GameStatusForGameView getCurrentProgramStatus();
 
-	public Score getGameScore();
+	Score getGameScore();
 
-	public int getGhostLeftLifes();
+	int getGhostLeftLifes();
 
-	public GroupGhostForGameView getGroupGhosts();
+	GroupGhostForGameView getGroupGhosts();
 
-	public GroupMessages getGroupMessages();
+	GroupMessages getGroupMessages();
 
-	public int getIncrementScore();
+	int getIncrementScore();
 
-	public LadybugForGameView getLadybug();
+	LadybugForGameView getLadybug();
 
-	public int getNbrPlayers();
+	int getNbrPlayers();
 
-	public int getNbrPointsForNewLife();
+	int getNbrPointsForNewLife();
 
-	public ScreenData getScreenData();
+	ScreenData getScreenData();
 
-	public boolean isShowHelp();
+	boolean isShowHelp();
 
-	public boolean isSoundActive();
+	boolean isSoundActive();
 }

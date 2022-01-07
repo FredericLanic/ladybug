@@ -8,7 +8,7 @@ public enum MessageType {
 	@Getter
 	private String endMessage;
 
-	private MessageType(String endMessage) {
+	MessageType(String endMessage) {
 		this.endMessage = endMessage;
 	}
 }

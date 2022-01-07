@@ -49,10 +49,10 @@ public enum Sounds {
 	 *
 	 * @param fileName
 	 */
-	private Sounds(String fileName) {
+	Sounds(String fileName) {
 		try {
-			URL				 url			  = Sounds.class.getClassLoader().getResource("sound/wav/" + fileName);
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+			var url = Sounds.class.getClassLoader().getResource("sound/wav/" + fileName);
+			var audioInputStream = AudioSystem.getAudioInputStream(url);
 			// Get a sound clip resource.
 			clip = AudioSystem.getClip();
 			// Open audio clip and load samples from the audio input stream.

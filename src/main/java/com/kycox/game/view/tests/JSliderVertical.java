@@ -20,7 +20,7 @@ public class JSliderVertical extends JPanel {
 	public static void showFrame() {
 		JPanel panel = new JSliderVertical();
 		panel.setOpaque(true);
-		JFrame frame = new JFrame();
+		var frame = new JFrame();
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setTitle("Vertical JSlider");
 		frame.setContentPane(panel);
@@ -37,7 +37,7 @@ public class JSliderVertical extends JPanel {
 		setPreferredSize(new Dimension(500, 200));
 		// Creates a vertical JSlider that accept value in the
 		// range between 0 and 20. The initial value is set to 4.
-		JSlider slider = new JSlider(JSlider.VERTICAL, 0, 20, 4);
+		var slider = new JSlider(JSlider.VERTICAL, 0, 20, 4);
 		slider.setPaintTicks(true);
 		slider.setPaintLabels(true);
 		slider.setMinorTickSpacing(1);

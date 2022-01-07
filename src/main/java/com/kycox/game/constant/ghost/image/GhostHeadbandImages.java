@@ -29,8 +29,8 @@ public enum GhostHeadbandImages {
 	@Getter
 	private Image image;
 
-	private GhostHeadbandImages(String fileName) {
-		String pathName = "images/ghosts/headband/" + fileName;
+	GhostHeadbandImages(String fileName) {
+		var pathName = "images/ghosts/headband/" + fileName;
 		image = new ImageIcon(GhostHeadbandImages.class.getClassLoader().getResource(pathName)).getImage();
 	}
 }

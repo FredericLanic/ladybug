@@ -31,12 +31,12 @@ public class GhostDyingView implements TimerView {
 		return ghostEatenlView;
 	}
 
-	private BodyImg	currentImg;
-	private BodyImg	downEyes  = new BodyImg(GhostEyesImages.GHOST_DOWN_EYES.getImage());
-	private BodyImg	leftEyes  = new BodyImg(GhostEyesImages.GHOST_LEFT_EYES.getImage());
-	private BodyImg	rightEyes = new BodyImg(GhostEyesImages.GHOST_RIGHT_EYES.getImage());
-	private Timer	timer;
-	private BodyImg	upEyes	  = new BodyImg(GhostEyesImages.GHOST_UP_EYES.getImage());
+	private BodyImg currentImg;
+	private BodyImg downEyes = new BodyImg(GhostEyesImages.GHOST_DOWN_EYES.getImage());
+	private BodyImg leftEyes = new BodyImg(GhostEyesImages.GHOST_LEFT_EYES.getImage());
+	private BodyImg rightEyes = new BodyImg(GhostEyesImages.GHOST_RIGHT_EYES.getImage());
+	private Timer timer;
+	private BodyImg upEyes = new BodyImg(GhostEyesImages.GHOST_UP_EYES.getImage());
 
 	/**
 	 * Constructeur privé pour assurer le singleton

@@ -19,6 +19,6 @@ package com.kycox.game.constant.ladybug;
 public enum LadybugStatus {
 	DEAD, DYING, NORMAL;
 
-	private LadybugStatus() {
+	LadybugStatus() {
 	}
 }

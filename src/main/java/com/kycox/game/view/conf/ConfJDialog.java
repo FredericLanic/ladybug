@@ -39,9 +39,9 @@ import com.kycox.game.constant.ghost.image.GhostsBodyImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 
 public class ConfJDialog extends JDialog implements ActionListener {
-	private static final Log  logger		   = LogFactory.getLog(ConfJDialog.class);
+	private static final Log logger = LogFactory.getLog(ConfJDialog.class);
 	private static final long serialVersionUID = 1L;
-	private ButtonGroup		  group			   = new ButtonGroup();
+	private ButtonGroup group = new ButtonGroup();
 
 	public ConfJDialog(JFrame mainFrame) {
 		super(mainFrame, "Configuration", true);
@@ -51,30 +51,30 @@ public class ConfJDialog extends JDialog implements ActionListener {
 		setLocationRelativeTo(mainFrame);
 		setBackground(Color.BLACK);
 		setUndecorated(true);
-		JPanel northPanel = new JPanel();
+		var northPanel = new JPanel();
 		northPanel.setBackground(Color.GRAY);
-		JLabel jLabelTitle = new JLabel("GAME CONFIGURATION");
+		var jLabelTitle = new JLabel("GAME CONFIGURATION");
 		jLabelTitle.setForeground(Color.WHITE);
 		northPanel.add(jLabelTitle);
-		JPanel centerPanel = new JPanel();
+		var centerPanel = new JPanel();
 		centerPanel.setBackground(Color.BLACK);
 		JPanel ghostPanel = new JGhostChoice(group);
 		ghostPanel.setBackground(Color.BLACK);
-		JLabel ladybugImg = new JLabel(new ImageIcon(LadybugImages.LADYBUG_UP_3.getImage()));
+		var ladybugImg = new JLabel(new ImageIcon(LadybugImages.LADYBUG_UP_3.getImage()));
 		ladybugImg.setHorizontalAlignment(SwingConstants.CENTER);
 		centerPanel.setLayout(new GridLayout(1, 2));
 		centerPanel.add(ghostPanel);
 		// Sud : les boutons 1 ou 2 joueurs
-		JPanel southPanel = new JPanel();
+		var southPanel = new JPanel();
 		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.LINE_AXIS));
 		southPanel.setBackground(Color.GRAY);
 		// bouton 1 joueur
-		Button button1Player = new Button("1 player");
+		var button1Player = new Button("1 player");
 		button1Player.addActionListener(this);
 		button1Player.setBackground(Color.BLACK);
 		button1Player.setForeground(Color.WHITE);
 		// bouton 2 joueurs
-		Button button2Players = new Button("2 players");
+		var button2Players = new Button("2 players");
 		button2Players.addActionListener(this);
 		button2Players.setBackground(Color.BLACK);
 		button2Players.setForeground(Color.WHITE);
@@ -95,14 +95,14 @@ public class ConfJDialog extends JDialog implements ActionListener {
 				GhostsBodyImages.RED.setComputed(true);
 				GhostsBodyImages.BLUE.setComputed(true);
 				GhostsBodyImages.PINK.setComputed(true);
-				this.dispose();
+				dispose();
 				break;
 			case "2 players":
 				GhostsBodyImages.ORANGE.setComputed(true);
 				GhostsBodyImages.RED.setComputed(true);
 				GhostsBodyImages.BLUE.setComputed(true);
 				GhostsBodyImages.PINK.setComputed(true);
-				String actionCommand = group.getSelection().getActionCommand();
+				var actionCommand = group.getSelection().getActionCommand();
 				switch (actionCommand) {
 					case JGhostChoice.BLINKY_CHOICE -> GhostsBodyImages.RED.setComputed(false);
 					case JGhostChoice.INKY_CHOICE -> GhostsBodyImages.BLUE.setComputed(false);
@@ -110,10 +110,10 @@ public class ConfJDialog extends JDialog implements ActionListener {
 					case JGhostChoice.PINKY_CHOICE -> GhostsBodyImages.PINK.setComputed(false);
 					default -> logger.info("No associated action for " + actionCommand);
 				}
-				this.dispose();
+				dispose();
 			default:
 				break;
 		}
-		this.dispose();
+		dispose();
 	}
 }

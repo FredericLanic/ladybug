@@ -26,6 +26,6 @@ public enum GhostBehavious {
 	// FIXME : utilisation de SHY ?
 	// FIXME : utilisation de STUPID ?
 
-	private GhostBehavious() {
+	GhostBehavious() {
 	}
 }

@@ -19,23 +19,23 @@ package com.kycox.game.contract;
 import java.awt.Point;
 
 public interface GameModelForController extends GameCommon {
-	public void forceStopGame();
+	void forceStopGame();
 
-	public void gameInPause();
+	void gameInPause();
 
-	public GameStatusForController getCurrentProgramStatus();
+	GameStatusForController getCurrentProgramStatus();
 
-	public LadybugForController getLadybug();
+	LadybugForController getLadybug();
 
-	public boolean isGamePresentation();
+	boolean isGamePresentation();
 
-	public void setShowHelp(boolean showHelp);
+	void setGhostRequest(Point point);
 
-	public void setGhostRequest(Point point);
+	void setLadybugRequest(Point point);
 
-	public void setLadybugRequest(Point point);
+	void setShowHelp(boolean showHelp);
 
-	public void startGame();
+	void startGame();
 
-	public void startStopSoundActive();
+	void startStopSoundActive();
 }

@@ -30,8 +30,8 @@ import java.util.List;
  */
 public final class Constants {
 	// taille d'un block
-	public static final int	  BLOCK_SIZE			  = 48;
-	public static final Color BLUE_LADYBUG			  = new Color(33, 33, 255);
+	public static final int BLOCK_SIZE = 48;
+	public static final Color BLUE_LADYBUG = new Color(33, 33, 255);
 	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
 	// distance ou le fantôme fuit Ladybug
 	public static final int DISTANCE_GHOST_SCARED = 100;
@@ -45,6 +45,7 @@ public final class Constants {
 	public static final int NBR_POINTS_FOR_NEW_LIFE = 200;
 	// nombre de secondes de super pouvoir de pacman
 	public static final int NBR_SECONDS_SUPER_POWER = 15;
+	public static final int NOFRUITID = -1;
 	// Période du timer du jeu
 	public static final int PACE = 40; // rythme en anglais :/
 	// Point en bas
@@ -73,14 +74,13 @@ public final class Constants {
 	public static final int SCORE_SIMPLE_POINT = 1;
 	// Score quand Ladybug mange un super point
 	public static final int SCORE_TELEPORT_POINT = 15;
+
 	// Tableau des vitesses disponibles : les vitesses doivent être un multiple de
 	// 24 (taille d'un BLOCK_SIZE) pour que le programme puisse détecter le
 	// changement de ScreenBlock
 	public static final List<Integer> VALID_SPEEDS = Collections
 	        .unmodifiableList(Arrays.asList(1, 2, 3, 4, 6, 8, 12/* ,24 */));
 
-	public static final int NOFRUITID		= -1;
-	
 	private Constants() {
 	}
 }

@@ -29,15 +29,11 @@ public abstract class UserBody extends Body {
 	@Setter
 	protected Point userRequest = Constants.POINT_ZERO;
 
-	private boolean userRequestHasChanged() {
-		return userRequest.x != 0 || userRequest.y != 0;
-	}
-
 	protected boolean canMove(Point direction, ScreenBlock screenBlock) {
-		return !(direction.equals(Constants.POINT_LEFT) && screenBlock.isBorderLeft() //
-		        || direction.equals(Constants.POINT_RIGHT) && screenBlock.isBorderRight() //
-		        || direction.equals(Constants.POINT_UP) && screenBlock.isBorderUp() //
-		        || direction.equals(Constants.POINT_DOWN) && screenBlock.isBorderDown());
+		return ((!direction.equals(Constants.POINT_LEFT) || !screenBlock.isBorderLeft())
+		        && (!direction.equals(Constants.POINT_RIGHT) || !screenBlock.isBorderRight())
+		        && (!direction.equals(Constants.POINT_UP) || !screenBlock.isBorderUp())
+		        && (!direction.equals(Constants.POINT_DOWN) || !screenBlock.isBorderDown()));
 	}
 
 	protected void move(ScreenBlock screenBlock) {
@@ -53,13 +49,17 @@ public abstract class UserBody extends Body {
 			}
 		}
 	}
-	
+
 	public void teleport(ScreenData screenData) {
 		if (isPerfectOnABlock()) {
-			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
-			Point destinationPoint = Utils.convertPointToGraphicUnit(currentScreenBlock.getDestinationPoint());
+			var currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+			var destinationPoint = Utils.convertPointToGraphicUnit(currentScreenBlock.getDestinationPoint());
 			setPosition(destinationPoint);
 			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		}
+	}
+
+	private boolean userRequestHasChanged() {
+		return userRequest.x != 0 || userRequest.y != 0;
 	}
 }

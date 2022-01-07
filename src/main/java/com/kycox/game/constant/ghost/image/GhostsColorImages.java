@@ -30,8 +30,8 @@ public enum GhostsColorImages {
 	@Getter
 	private Image image;
 
-	private GhostsColorImages(String fileName) {
-		String pathName = "images/ghosts/color/" + fileName;
+	GhostsColorImages(String fileName) {
+		var pathName = "images/ghosts/color/" + fileName;
 		image = new ImageIcon(GhostsColorImages.class.getClassLoader().getResource(pathName)).getImage();
 	}
 }

@@ -23,12 +23,12 @@ import javax.swing.Timer;
 import com.kycox.game.constant.Constants;
 
 public interface TimerView {
-	final int period = 3 * Constants.PACE;
+	int period = 3 * Constants.PACE;
 
-	public default Timer createTimer() {
+	default Timer createTimer() {
 		ActionListener action = event -> doAction();
 		return new Timer(period, action);
 	}
 
-	public abstract void doAction();
+	void doAction();
 }

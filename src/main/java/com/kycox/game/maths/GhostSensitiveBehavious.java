@@ -30,10 +30,10 @@ import com.kycox.game.tools.Utils;
  *
  */
 public class GhostSensitiveBehavious {
-	private final double HIGH_LIMIT	= 90;
-	private final double LOW_LIMIT	= 20;
-	private final int	 SCALE		= 100;
-	private double		 y			= 0;
+	private final double HIGH_LIMIT = 90;
+	private final double LOW_LIMIT = 20;
+	private final int SCALE = 100;
+	private double y = 0;
 
 	/**
 	 *
@@ -48,8 +48,8 @@ public class GhostSensitiveBehavious {
 	}
 
 	public void setNumLevel(int numLevel) {
-		double a = 0;
-		double b = 0;
+		double a;
+		double b;
 		a = (HIGH_LIMIT - LOW_LIMIT) / (Constants.NBR_LEVELS - 1);
 		b = LOW_LIMIT - a;
 		y = (a * numLevel + b);

@@ -17,5 +17,5 @@
 package com.kycox.game.contract;
 
 public interface GameStatusForController extends GameCommon {
-	public void setConfiguration();
+	void setConfiguration();
 }

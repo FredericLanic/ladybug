@@ -39,24 +39,23 @@ public class Dijkstra {
 	 * @return List<Point>
 	 */
 	public static List<Point> getShorterWay(Point startCoordinate, Point endCoordinate, ScreenData screenData) {
-		List<Point>	shorterWay;
-		Dijkstra	dijkstra = new Dijkstra(screenData);
+		List<Point> shorterWay;
+		var dijkstra = new Dijkstra(screenData);
 		dijkstra.init(startCoordinate, screenData);
 		// Lancement de la recherche
 		dijkstra.search(startCoordinate, null, screenData);
 		// Récupération de l'unité final
-		int			 idx			= dijkstra.getPos(endCoordinate, screenData);
-		UnitDijkstra unitDijstraEnd	= dijkstra.getListUnitDijkstra().get(idx);
-		// Récupération du chemin le plus court
-		shorterWay = unitDijstraEnd.getShorterWay();
+		var idx = dijkstra.getPos(endCoordinate, screenData);
+		var unitDijstraEnd = dijkstra.getListUnitDijkstra().get(idx);
+
 		// FIXME : peut être des vérifications ? / capture d'exceptions au cas de Level
 		// non valide ?
-		return shorterWay;
+		return unitDijstraEnd.getShorterWay();
 	}
 
 	@Getter
 	private List<UnitDijkstra> listUnitDijkstra;
-	int						   nbrAccessibleBlocks;
+	int nbrAccessibleBlocks;
 
 	/**
 	 * Calcul du parcours le plus court en partant de startCoordonnate (coordonnées
@@ -89,7 +88,7 @@ public class Dijkstra {
 	 */
 	private void init(Point startCoordinate, ScreenData screenData) {
 		// Initialisation du block de début
-		int posStart = getPos(startCoordinate, screenData);
+		var posStart = getPos(startCoordinate, screenData);
 		listUnitDijkstra.get(posStart).setDistance(0);
 	}
 
@@ -102,10 +101,10 @@ public class Dijkstra {
 	 */
 	private void search(Point currentCoordinate, UnitDijkstra previousUnitDijkstra, ScreenData screenData) {
 		// on rcupère la position
-		int currentPos = getPos(currentCoordinate, screenData);
+		var currentPos = getPos(currentCoordinate, screenData);
 		// on initialise le flag weightHasChanged
-		boolean		 weightHasChanged	 = false;
-		UnitDijkstra currentUnitDijkstra = listUnitDijkstra.get(currentPos);
+		var weightHasChanged = false;
+		var currentUnitDijkstra = listUnitDijkstra.get(currentPos);
 		// on pose le poids
 		if (previousUnitDijkstra == null) { // toute première case
 			currentUnitDijkstra.setDistance(0);
@@ -121,12 +120,12 @@ public class Dijkstra {
 			weightHasChanged = true;
 		}
 		// On récupère le Block courant
-		ScreenBlock screenBlockCurrent = currentUnitDijkstra.getScreenBlock();
+		var screenBlockCurrent = currentUnitDijkstra.getScreenBlock();
 		// Définition des prochains points
-		Point coordinateUp	  = new Point(currentCoordinate.x, currentCoordinate.y - 1);
-		Point coordinateLeft  = new Point(currentCoordinate.x - 1, currentCoordinate.y);
-		Point coordinateRight = new Point(currentCoordinate.x + 1, currentCoordinate.y);
-		Point coordinateDown  = new Point(currentCoordinate.x, currentCoordinate.y + 1);
+		var coordinateUp = new Point(currentCoordinate.x, currentCoordinate.y - 1);
+		var coordinateLeft = new Point(currentCoordinate.x - 1, currentCoordinate.y);
+		var coordinateRight = new Point(currentCoordinate.x + 1, currentCoordinate.y);
+		var coordinateDown = new Point(currentCoordinate.x, currentCoordinate.y + 1);
 		// Lancement de la recherche en haut quand c'est possible
 		if (weightHasChanged && !screenBlockCurrent.isBorderUp()) {
 			search(coordinateUp, currentUnitDijkstra, screenData);

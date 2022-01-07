@@ -15,13 +15,6 @@ public class GameModelPresentation extends AbstratGameModel implements IGameMode
 	@Setter
 	private Point ghostRequest = Constants.POINT_ZERO;
 
-	@Override
-	public void programBeat() {
-		setBodiesActions();
-		moveBodies();
-		setSoundRequests();
-	}
-
 	private void moveBodies() {
 		ladybug.move(screenData);
 		moveGhosts();
@@ -29,6 +22,13 @@ public class GameModelPresentation extends AbstratGameModel implements IGameMode
 
 	private void moveGhosts() {
 		groupGhosts.move(ladybug, screenData, ghostRequest);
+	}
+
+	@Override
+	public void programBeat() {
+		setBodiesActions();
+		moveBodies();
+		setSoundRequests();
 	}
 
 	private void setBodiesActions() {

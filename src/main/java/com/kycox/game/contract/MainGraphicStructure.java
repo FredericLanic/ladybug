@@ -23,7 +23,7 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 public interface MainGraphicStructure {
-	public void add(Component comp, Object constraints);
+	void add(Component comp, Object constraints);
 
 	default void addPanel(JPanel jPanel, Dimension dimension, String borderLayout) {
 		jPanel.setBackground(Color.BLACK);

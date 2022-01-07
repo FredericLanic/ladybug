@@ -34,60 +34,49 @@ import lombok.Setter;
 
 @Named("StatusGameView")
 public class StatusGameView extends JPanel {
-	private static final Log  logger		   = LogFactory.getLog(StatusGameView.class);
+	private static final Log logger = LogFactory.getLog(StatusGameView.class);
 	private static final long serialVersionUID = 4546077700634533519L;
 	@Setter
-	private int				  ghostNbrLifes;
+	private int ghostNbrLifes;
 	@Setter
-	private Image			  imageGhostPlayer;
+	private Image imageGhostPlayer;
 	@Setter
-	private Image			  imageLadybugPlayer;
+	private Image imageLadybugPlayer;
 	@Setter
-	private int				  incrementScore;
+	private int incrementScore;
 	@Setter
-	private boolean			  isInGame;
+	private boolean isInGame;
 	@Setter
-	private int				  ladybugNbrLifes;
+	private int ladybugNbrLifes;
 	@Setter
-	private int				  nbrPlayers;
+	private int nbrPlayers;
 	@Setter
-	private int				  nbrPointsForNewLife;
+	private int nbrPointsForNewLife;
 	@Setter
-	private int				  numLevel;
+	private int numLevel;
 	@Setter
-	private int				  score;
-	private final Font		  smallFont		   = new Font("CrackMan", Font.BOLD, 14);
-
-	@PostConstruct
-	public void init() {
-		setBackground(Color.BLACK);
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		display(g);
-	}
+	private int score;
+	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
 
 	private void display(Graphics g) {
-		int	x				= 0;
-		int	y				= 0;
-		int	delta			= 2;
-		int	imageBorderSize	= (this.getHeight() - 6 * delta) / 2;
+		var x = 0;
+		var y = 0;
+		var delta = 2;
+		var imageBorderSize = (getHeight() - 6 * delta) / 2;
 		// number ladybug lifes
 		displayNbrLifes(g, ImageUtils.resizeImage(imageLadybugPlayer, imageBorderSize, imageBorderSize),
 		        ladybugNbrLifes, x + delta, y);
 		// number ghost lifes
 		if (nbrPlayers > 1) {
 			displayNbrLifes(g, ImageUtils.resizeImage(imageGhostPlayer, imageBorderSize, imageBorderSize),
-			        ghostNbrLifes, x + delta, y + this.getHeight() / 2);
+			        ghostNbrLifes, x + delta, y + getHeight() / 2);
 		}
 		// text
 		displayMessageForPlayer(g);
 	}
 
 	private void displayMessageDuringGame(Graphics g) {
-		StringBuilder message = new StringBuilder();
+		var message = new StringBuilder();
 		message.append("Level: ");
 		message.append(numLevel);
 		message.append(" - new life: ");
@@ -110,8 +99,8 @@ public class StatusGameView extends JPanel {
 	private void displayMessageToRight(Graphics g, String message) {
 		g.setFont(smallFont);
 		g.setColor(new Color(96, 128, 255));
-		int	coordX = this.getWidth() / 2;
-		int	coordY = this.getHeight() / 4 + smallFont.getSize() / 2;
+		var coordX = getWidth() / 2;
+		var coordY = getHeight() / 4 + smallFont.getSize() / 2;
 		g.drawString(message, coordX, coordY);
 	}
 
@@ -119,17 +108,28 @@ public class StatusGameView extends JPanel {
 		g.drawImage(imageBody, x, y, this);
 		g.setColor(Color.YELLOW);
 		g.setFont(smallFont);
-		int	coordX = x + imageBody.getWidth(null);
-		int	coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
+		var coordX = x + imageBody.getWidth(null);
+		var coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
 		g.drawString("x " + nbrLifes, coordX, coordY);
 	}
 
 	private void displayOffGame(Graphics g) {
-		StringBuilder message = new StringBuilder();
+		var message = new StringBuilder();
 		message.append("Game config : ");
 		message.append(nbrPlayers);
 		message.append(" player");
 		message.append((nbrPlayers > 1 ? "s" : ""));
 		displayMessageToRight(g, message.toString());
+	}
+
+	@PostConstruct
+	public void init() {
+		setBackground(Color.BLACK);
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		display(g);
 	}
 }

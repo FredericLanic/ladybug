@@ -31,10 +31,6 @@ public class NewSounds implements NewSoundsForGameSounds {
 	@Getter
 	private List<Sounds> sounds = new ArrayList<>();
 
-	public void addLaybugEatenFruit(boolean mustBeAdded) {
-		addSounds(Sounds.LADYBUG_EAT_FRUIT, mustBeAdded);
-	}
-	
 	public void addDyingGhost(boolean mustBeAdded) {
 		addSounds(Sounds.GHOST_EATEN, mustBeAdded);
 	}
@@ -57,6 +53,10 @@ public class NewSounds implements NewSoundsForGameSounds {
 
 	public void addLadybugIsDying(boolean mustBeAdded, boolean startFenerarium) {
 		addSounds(Sounds.LADYBUG_IS_DYING, mustBeAdded && startFenerarium);
+	}
+
+	public void addLaybugEatenFruit(boolean mustBeAdded) {
+		addSounds(Sounds.LADYBUG_EAT_FRUIT, mustBeAdded);
 	}
 
 	public void addNewLife(boolean mustBeAdded) {
@@ -83,6 +83,12 @@ public class NewSounds implements NewSoundsForGameSounds {
 		}
 	}
 
+	private void addSounds(Sounds soundsEnum, boolean mustBeAdded) {
+		if (mustBeAdded) {
+			sounds.add(soundsEnum);
+		}
+	}
+
 	public void addTeleport(boolean mustBeAdded) {
 		addSounds(Sounds.COMMON_TELEPORT, mustBeAdded);
 	}
@@ -94,11 +100,5 @@ public class NewSounds implements NewSoundsForGameSounds {
 
 	public void initSounds() {
 		sounds.clear();
-	}
-
-	private void addSounds(Sounds soundsEnum, boolean mustBeAdded) {
-		if (mustBeAdded) {
-			sounds.add(soundsEnum);
-		}
 	}
 }

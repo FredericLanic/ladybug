@@ -31,41 +31,33 @@ import lombok.Setter;
  *
  */
 public class ScreenBlock implements Cloneable {
-	private static final int DOWN			= 8;
-	private static final int EATEN_POINT	= 512;
-	private static final int GHOST_REVIVER	= 64;
-	private static final int LEFT			= 1;
-	private static final Log logger			= LogFactory.getLog(ScreenBlock.class);
-	private static final int MEGA_POINT		= 32;
-	private static final int NOT_ACCESSIBLE	= 128;
-	private static final int POINT			= 16;
-	private static final int RIGHT			= 4;
-	private static final int TELEPORTATION	= 256;
-	private static final int UP				= 2;
+	private static final int DOWN = 8;
+	private static final int EATEN_POINT = 512;
+	private static final int GHOST_REVIVER = 64;
+	private static final int LEFT = 1;
+	private static final Log logger = LogFactory.getLog(ScreenBlock.class);
+	private static final int MEGA_POINT = 32;
+	private static final int NOT_ACCESSIBLE = 128;
+	private static final int POINT = 16;
+	private static final int RIGHT = 4;
+	private static final int TELEPORTATION = 256;
+	private static final int UP = 2;
 	@Getter
 	@Setter
-	private int				 content;
+	private int content;
 	@Getter
 	@Setter
-	private Point			 coordinate		= Constants.POINT_ZERO;
+	private Point coordinate = Constants.POINT_ZERO;
 	@Getter
-	private Point 			 destinationPoint;
+	private Point destinationPoint;
 	@Getter
 	private int idRefFruit;
-	
+
 	public ScreenBlock(int content) {
 		this.content = content;
 		resetIdRefFruit();
 	}
 
-	public void setIdRefFruit(int id) {
-		this.idRefFruit = id;
-	}
-	
-	public void resetIdRefFruit() {
-		idRefFruit = Constants.NOFRUITID;
-	}
-	
 	public void addBorderDown() {
 		content |= DOWN;
 	}
@@ -111,14 +103,18 @@ public class ScreenBlock implements Cloneable {
 	}
 
 	public Point getDirectionInDeadEnd() {
-		if (!isBorderLeft())
+		if (!isBorderLeft()) {
 			return Constants.POINT_LEFT;
-		if (!isBorderRight())
+		}
+		if (!isBorderRight()) {
 			return Constants.POINT_RIGHT;
-		if (!isBorderUp())
+		}
+		if (!isBorderUp()) {
 			return Constants.POINT_UP;
-		if (!isBorderDown())
+		}
+		if (!isBorderDown()) {
 			return Constants.POINT_DOWN;
+		}
 		return Constants.POINT_ZERO;
 	}
 
@@ -148,15 +144,19 @@ public class ScreenBlock implements Cloneable {
 	}
 
 	public boolean isDeadEnd() {
-		int nbrBorders = 0;
-		if (isBorderLeft())
+		var nbrBorders = 0;
+		if (isBorderLeft()) {
 			nbrBorders++;
-		if (isBorderRight())
+		}
+		if (isBorderRight()) {
 			nbrBorders++;
-		if (isBorderUp())
+		}
+		if (isBorderUp()) {
 			nbrBorders++;
-		if (isBorderDown())
+		}
+		if (isBorderDown()) {
 			nbrBorders++;
+		}
 		return nbrBorders == 3;
 	}
 
@@ -202,5 +202,13 @@ public class ScreenBlock implements Cloneable {
 
 	public void removePoint() {
 		content &= ~(POINT | MEGA_POINT);
+	}
+
+	public void resetIdRefFruit() {
+		idRefFruit = Constants.NOFRUITID;
+	}
+
+	public void setIdRefFruit(int id) {
+		idRefFruit = id;
 	}
 }

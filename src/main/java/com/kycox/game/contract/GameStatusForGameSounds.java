@@ -18,5 +18,5 @@ package com.kycox.game.contract;
 
 public interface GameStatusForGameSounds {
 	// FIXME : c'est le mal
-	public void setInGame();
+	void setInGame();
 }

@@ -26,34 +26,34 @@ import lombok.Setter;
 public class AbstratGameModel {
 	@Getter
 	@Inject
-	protected CurrentProgramStatus		currentGameStatus;
+	protected CurrentProgramStatus currentGameStatus;
 	@Getter
 	@Inject
-	protected Score						gameScore;
+	protected Score gameScore;
 	@Getter
 	@Inject
-	protected GhostsGroup				groupGhosts;
+	protected GhostsGroup groupGhosts;
 	@Getter
 	@Inject
-	protected GroupMessages				groupMessages;
+	protected GroupMessages groupMessages;
 	@Getter
 	@Inject
-	protected Ladybug					ladybug;
+	protected Ladybug ladybug;
 	@Getter
 	@Inject
-	protected LadybugDying				ladybugDying;
+	protected LadybugDying ladybugDying;
 	@Getter
 	@Inject
-	protected NewSounds					newSounds;
+	protected NewSounds newSounds;
 	@Getter
 	@Inject
-	protected ScreenData				screenData;
+	protected ScreenData screenData;
 	@Getter
 	@Setter
-	protected boolean					soundActive	= true;
+	protected boolean soundActive = true;
 	@Inject
-	protected SuperPowerTimer			superPowerTimer;
-	protected WaitAndDoActionAfterTimer	waitAndDoActionAfterTimer;
+	protected SuperPowerTimer superPowerTimer;
+	protected WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;
 
 	/**
 	 * Paramêtrage des fantômes dans le niveau actuel
@@ -99,7 +99,7 @@ public class AbstratGameModel {
 	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
 	 */
 	protected void setSoundRequests() {
-		boolean musicOn = new SecureRandom().nextInt(1000) > 997;
+		var musicOn = new SecureRandom().nextInt(1000) > 997;
 		newSounds.initSounds();
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
 		newSounds.addIntermission(

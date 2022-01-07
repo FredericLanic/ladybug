@@ -17,9 +17,9 @@
 package com.kycox.game.contract;
 
 public interface GameModelForSounds {
-	public GameStatusForGameSounds getCurrentProgramStatus();
+	GameStatusForGameSounds getCurrentProgramStatus();
 
-	public NewSoundsForGameSounds getNewSounds();
+	NewSoundsForGameSounds getNewSounds();
 
-	public boolean isSoundActive();
+	boolean isSoundActive();
 }

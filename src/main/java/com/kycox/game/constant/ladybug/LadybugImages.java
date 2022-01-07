@@ -45,7 +45,7 @@ public enum LadybugImages {
 		@PostConstruct
 		public void postConstruct() {
 			for (LadybugImages rt : EnumSet.allOf(LadybugImages.class)) {
-				String pathName = "images/ladybug/color/" + gameProperties.getLadybugColor() + "/";
+				var pathName = "images/ladybug/color/" + gameProperties.getLadybugColor() + "/";
 				rt.setImage(pathName);
 			}
 		}
@@ -55,9 +55,9 @@ public enum LadybugImages {
 	private String color;
 	private String fileName;
 	@Getter
-	private Image  image;
+	private Image image;
 
-	private LadybugImages(String fileName) {
+	LadybugImages(String fileName) {
 		this.fileName = fileName;
 	}
 

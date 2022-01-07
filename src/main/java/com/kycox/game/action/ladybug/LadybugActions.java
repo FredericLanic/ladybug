@@ -26,19 +26,19 @@ import lombok.Setter;
 public class LadybugActions extends BodyActions {
 	@Setter
 	@Getter
-	private ScreenBlock	currentScreenBlock;
+	private ScreenBlock currentScreenBlock;
 	@Setter
 	@Getter
-	private boolean		eatenAMegaPoint;
+	private int eatenAIdRefFruit;
 	@Setter
 	@Getter
-	private boolean		eatenAPoint;
+	private boolean eatenAMegaPoint;
 	@Setter
 	@Getter
-	private int	    eatenAIdRefFruit;
-	
+	private boolean eatenAPoint;
+
 	public LadybugActions() {
 		eatenAIdRefFruit = Constants.NOFRUITID;
-	}	
-	
+	}
+
 }

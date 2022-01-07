@@ -29,12 +29,12 @@ import com.kycox.game.constant.LevelConstruct;
 import com.kycox.game.contract.LevelStructure;
 
 public abstract class LevelNG implements LevelStructure {
-	private static final int DOWN				  = 8;
-	private static final int LEFT				  = 1;
-	private static final int POINT				  = 16;
-	private static final int RIGHT				  = 4;
-	private static final int UP					  = 2;
-	static final int		 NOT_ACCESSIBLE_POINT = 128;
+	private static final int DOWN = 8;
+	private static final int LEFT = 1;
+	static final int NOT_ACCESSIBLE_POINT = 128;
+	private static final int POINT = 16;
+	private static final int RIGHT = 4;
+	private static final int UP = 2;
 	// Map
 	protected LevelConstruct[] levelDATA;
 	// Nombre de blocks par ligne
@@ -42,13 +42,17 @@ public abstract class LevelNG implements LevelStructure {
 	// Nombre de lignes
 	protected int nbrLines;
 
+	private int dataPosition(int x, int y) {
+		return y * nbrBlocksPerLine + x;
+	}
+
 	@Override
 	public List<ScreenBlock> getLstBlocks() {
 		List<ScreenBlock> lstBlocks = new ArrayList<>();
-		for (int i = 0; i < levelDATA.length; i++) {
-			int			x	  = i % nbrBlocksPerLine;
-			int			y	  = i / nbrBlocksPerLine;
-			ScreenBlock	block = new ScreenBlock(screenBlockValue(x, y));
+		for (var i = 0; i < levelDATA.length; i++) {
+			var x = i % nbrBlocksPerLine;
+			var y = i / nbrBlocksPerLine;
+			var block = new ScreenBlock(screenBlockValue(x, y));
 			block.setCoordinate(new Point(x, y));
 			lstBlocks.add(block);
 		}
@@ -65,8 +69,9 @@ public abstract class LevelNG implements LevelStructure {
 		return nbrLines;
 	}
 
-	private int dataPosition(int x, int y) {
-		return y * nbrBlocksPerLine + x;
+	@Override
+	public Map<Point, Point> getTeleportPoints() {
+		return new HashMap<>();
 	}
 
 	/**
@@ -77,58 +82,66 @@ public abstract class LevelNG implements LevelStructure {
 	 * @return
 	 */
 	private int screenBlockValue(int x, int y) {
-		int			   pointValue = 0;
-		LevelConstruct block	  = levelDATA[dataPosition(x, y)];
-		LevelConstruct blockUp	  = null;
-		LevelConstruct blockDown  = null;
-		LevelConstruct blockLeft  = null;
+		var pointValue = 0;
+		var block = levelDATA[dataPosition(x, y)];
+		LevelConstruct blockUp = null;
+		LevelConstruct blockDown = null;
+		LevelConstruct blockLeft = null;
 		LevelConstruct blockRight = null;
 		// Si y = 0 on est en haut de la grille
-		if (y > 0)
+		if (y > 0) {
 			blockUp = levelDATA[dataPosition(x, y - 1)];
-		else
+		} else {
 			pointValue += UP;
+		}
 		// Si y = nb ligne => on est sur le bas de la grille
-		if (y < nbrLines - 1)
+		if (y < nbrLines - 1) {
 			blockDown = levelDATA[dataPosition(x, y + 1)];
-		else
+		} else {
 			pointValue += DOWN;
+		}
 		// Si x = 0 => on est sur le bord gauche de la grille
-		if (x > 0)
+		if (x > 0) {
 			blockLeft = levelDATA[dataPosition(x - 1, y)];
-		else
+		} else {
 			pointValue += LEFT;
+		}
 		// Si x = nb block par ligne => on est sur le bord droit de la grille
-		if (x < nbrBlocksPerLine - 1)
+		if (x < nbrBlocksPerLine - 1) {
 			blockRight = levelDATA[dataPosition(x + 1, y)];
-		else
+		} else {
 			pointValue += RIGHT;
+		}
 		if (block == N) {
 			pointValue += NOT_ACCESSIBLE_POINT;
-			if (blockUp != null && blockUp != N)
+			if (blockUp != null && blockUp != N) {
 				pointValue += UP;
-			if (blockDown != null && blockDown != N)
+			}
+			if (blockDown != null && blockDown != N) {
 				pointValue += DOWN;
-			if (blockLeft != null && blockLeft != N)
+			}
+			if (blockLeft != null && blockLeft != N) {
 				pointValue += LEFT;
-			if (blockRight != null && blockRight != N)
+			}
+			if (blockRight != null && blockRight != N) {
 				pointValue += RIGHT;
+			}
 		}
 		if (block == B) {
 			pointValue += POINT;
-			if (blockUp != null && blockUp == N)
+			if (blockUp != null && blockUp == N) {
 				pointValue += UP;
-			if (blockDown != null && blockDown == N)
+			}
+			if (blockDown != null && blockDown == N) {
 				pointValue += DOWN;
-			if (blockLeft != null && blockLeft == N)
+			}
+			if (blockLeft != null && blockLeft == N) {
 				pointValue += LEFT;
-			if (blockRight != null && blockRight == N)
+			}
+			if (blockRight != null && blockRight == N) {
 				pointValue += RIGHT;
+			}
 		}
 		return pointValue;
-	}
-	
-	public Map<Point, Point> getTeleportPoints() {
-		return new HashMap<Point, Point>();	
 	}
 }

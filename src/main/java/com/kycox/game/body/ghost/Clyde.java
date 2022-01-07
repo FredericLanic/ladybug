@@ -32,9 +32,10 @@ public class Clyde extends Ghost {
 		if (!isPerfectOnABlock()) {
 			return;
 		}
-		if (getStatus() == GhostStatus.SCARED)
+		if (getStatus() == GhostStatus.SCARED) {
 			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
-		else
+		} else {
 			setSpeedIndex(getStartSpeedIndex());
+		}
 	}
 }

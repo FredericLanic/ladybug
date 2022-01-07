@@ -7,23 +7,23 @@ import lombok.Setter;
 
 class Fruit {
 	@Getter
-	private int idFruit;
-	@Getter
-	private FruitsImages fruitImage;
-	@Getter
-	private int score;
-	@Getter
 	@Setter
 	private int activationPercent;
 	@Getter
+	private FruitsImages fruitImage;
+	@Getter
+	private int idFruit;
+	@Getter
 	@Setter
-	private Fruit next;	
-	
+	private Fruit next;
+	@Getter
+	private int score;
+
 	public Fruit(int idFruit, FruitsImages fruitImage, int score, int activationPercent) {
 		this.idFruit = idFruit;
 		this.fruitImage = fruitImage;
 		this.score = score;
 		this.activationPercent = activationPercent;
 	}
-	 
+
 }

@@ -30,8 +30,8 @@ public class GhostFlashView implements TimerView {
 		return ghostFlashView;
 	}
 
-	private boolean	showScared;
-	private Timer	timer;
+	private boolean showScared;
+	private Timer timer;
 
 	private GhostFlashView() {
 		timer = createTimer();
@@ -44,9 +44,9 @@ public class GhostFlashView implements TimerView {
 	}
 
 	public Image getImage(Ghost ghost) {
-		if (showScared)
+		if (showScared) {
 			return GhostScaredView.getInstance().getImage(ghost);
-		else
-			return GhostDefautlView.getInstance().getImage(ghost);
+		}
+		return GhostDefautlView.getInstance().getImage(ghost);
 	}
 }

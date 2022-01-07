@@ -19,37 +19,10 @@ import lombok.Setter;
 @Named("GameModelGameIsPlaying")
 public class GameModelGameIsPlaying extends AbstratGameModel implements IGameModelAction {
 	private static final Log logger = LogFactory.getLog(GameModelGameIsPlaying.class);
-	@Setter
-	private Point ghostRequest = Constants.POINT_ZERO;
 	@Inject
 	private Fruits fruits;
-
-	@Override
-	public void programBeat() {
-		addNewFruit();
-		// ***
-		caseOfNewLadybugLife();
-		// ***
-		setBodiesActions();
-		// ***
-		updateGhostSeetings();
-		// ***
-		caseOfGhostEatLadybug();
-		// ***
-		manageSuperPower();
-		// ***
-		caseOfLadybugEatAMegaPoint();
-		// ***
-		manageScores();
-		// ***
-		updateScreenBlock();
-		// ***
-		setSoundRequests();
-		// ***
-		moveBodies();
-		// ***
-		checkEndMaze();
-	}
+	@Setter
+	private Point ghostRequest = Constants.POINT_ZERO;
 
 	private void addNewFruit() {
 		if (fruits.getActivationPercent() < screenData.getPercentageEatenPoint()) {
@@ -112,6 +85,33 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	private void moveBodies() {
 		ladybug.move(screenData);
 		groupGhosts.move(ladybug, screenData, ghostRequest);
+	}
+
+	@Override
+	public void programBeat() {
+		addNewFruit();
+		// ***
+		caseOfNewLadybugLife();
+		// ***
+		setBodiesActions();
+		// ***
+		updateGhostSeetings();
+		// ***
+		caseOfGhostEatLadybug();
+		// ***
+		manageSuperPower();
+		// ***
+		caseOfLadybugEatAMegaPoint();
+		// ***
+		manageScores();
+		// ***
+		updateScreenBlock();
+		// ***
+		setSoundRequests();
+		// ***
+		moveBodies();
+		// ***
+		checkEndMaze();
 	}
 
 	/**

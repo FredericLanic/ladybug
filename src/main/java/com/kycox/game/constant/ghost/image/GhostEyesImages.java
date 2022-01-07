@@ -30,8 +30,8 @@ public enum GhostEyesImages {
 	private Image image;
 
 	// constructor other than ghost
-	private GhostEyesImages(String fileName) {
-		String pathName = "images/ghosts/eyes/" + fileName;
+	GhostEyesImages(String fileName) {
+		var pathName = "images/ghosts/eyes/" + fileName;
 		image = new ImageIcon(GhostEyesImages.class.getClassLoader().getResource(pathName)).getImage();
 	}
 }

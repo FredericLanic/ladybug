@@ -35,7 +35,7 @@ public final class Level1 extends Level {
 		// nombre de blocks par ligne
 		nbrBlocksByLine = 15;
 		// nombre de lignes
-		nbrLines  = 15;
+		nbrLines = 15;
 		levelDATA = new int[] { 19, 26, 26, 26, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22, 21, 128, 128, 128, 17, 16,
 		        16, 16, 16, 16, 16, 16, 16, 16, 20, 17, 26, 10, 26, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20, 21, 128,
 		        128, 128, 17, 16, 16, 24, 16, 16, 16, 16, 16, 16, 20, 17, 18, 18, 18, 16, 16, 20, 128, 17, 16, 16, 16,

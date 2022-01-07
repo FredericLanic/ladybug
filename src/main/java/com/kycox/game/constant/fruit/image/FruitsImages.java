@@ -7,19 +7,14 @@ import javax.swing.ImageIcon;
 import lombok.Getter;
 
 public enum FruitsImages {
-	CHERRY("cherry.png"),
-	HEART("heart.png"),
-	ORANGE("orange.png"),
-	STRAWBERRY("strawberry.png"),
-	APPLE("apple.png"),
-	PEAR("pear.png"),
-	BANANA("banana.png");
-	
+	APPLE("apple.png"), BANANA("banana.png"), CHERRY("cherry.png"), HEART("heart.png"), ORANGE("orange.png"),
+	PEAR("pear.png"), STRAWBERRY("strawberry.png");
+
 	@Getter
 	private Image image;
 
-	private FruitsImages(String fileName) {
-		String pathName = "images/fruits/" + fileName;
+	FruitsImages(String fileName) {
+		var pathName = "images/fruits/" + fileName;
 		image = new ImageIcon(FruitsImages.class.getClassLoader().getResource(pathName)).getImage();
 	}
 }

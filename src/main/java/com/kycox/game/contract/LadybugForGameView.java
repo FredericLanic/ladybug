@@ -21,13 +21,13 @@ import java.awt.Point;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 
 public interface LadybugForGameView {
-	public int getLeftLifes();
+	int getLeftLifes();
 
-	public Point getPosition();
+	Point getPosition();
 
-	public LadybugStatus getStatus();
+	LadybugStatus getStatus();
 
-	public Point getViewDirection();
+	Point getViewDirection();
 
-	public boolean isNewLife();
+	boolean isNewLife();
 }

@@ -17,5 +17,5 @@
 package com.kycox.game.contract;
 
 public interface GameCommon {
-	public boolean isInGame();
+	boolean isInGame();
 }

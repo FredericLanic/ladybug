@@ -23,17 +23,17 @@ import java.util.Map;
 import com.kycox.game.level.ScreenBlock;
 
 public interface LevelStructure {
-	public Point getGhostRegenerateBlockPoint();
+	Point getGhostRegenerateBlockPoint();
 
-	public Point getInitLadybugBlockPos();
+	Point getInitLadybugBlockPos();
 
-	public List<ScreenBlock> getLstBlocks();
+	List<ScreenBlock> getLstBlocks();
 
-	public int getNbrBlocksByLine();
+	int getNbrBlocksByLine();
 
-	public int getNbrLines();
+	int getNbrLines();
 
-	public int getNbrMegaPoints();
-	
-	public Map<Point, Point> getTeleportPoints();
+	int getNbrMegaPoints();
+
+	Map<Point, Point> getTeleportPoints();
 }

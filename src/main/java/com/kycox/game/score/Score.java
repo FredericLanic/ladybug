@@ -34,14 +34,14 @@ import lombok.Setter;
 @Named("Score")
 public class Score {
 	@Inject
-	private Fruits fruits;	
+	private Fruits fruits;
 	@Getter
-	private int	incrementScore;
+	private int incrementScore;
 	@Getter
 	@Setter
-	private int	oldScore = -1;
+	private int oldScore = -1;
 	@Getter
-	private int	score;
+	private int score;
 
 	/**
 	 * Ajout du score et du score incrémental
@@ -49,8 +49,8 @@ public class Score {
 	 * @param score
 	 */
 	public void addScore(int score) {
-		this.score			+= score;
-		this.incrementScore	+= score;
+		this.score += score;
+		incrementScore += score;
 	}
 
 	public int getNbrPointsForNewLife() {
@@ -70,14 +70,6 @@ public class Score {
 	}
 
 	/**
-	 * Adjust the score number
-	 */
-	public void setScoreAndMessages(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
-		setScore(ghostsGroup, ladybug);
-		setMessages(ghostsGroup, ladybug, groupMessages);
-	}
-
-	/**
 	 * FIXME : on doit sortir cette méthode du score.
 	 */
 	private void setMessages(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
@@ -94,8 +86,8 @@ public class Score {
 			        MessageType.POINT);
 		}
 		if (ladybug.hasEatenAFruit()) {
-			groupMessages.add(ladybug.getPosition(), Integer.toString(fruits.getScoreFruitById(ladybug.getEatenAIdRefFruit())),
-			        MessageType.POINT);
+			groupMessages.add(ladybug.getPosition(),
+			        Integer.toString(fruits.getScoreFruitById(ladybug.getEatenAIdRefFruit())), MessageType.POINT);
 		}
 		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
 		ghostsGroup.getLstGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
@@ -118,5 +110,13 @@ public class Score {
 		}
 
 		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
+	}
+
+	/**
+	 * Adjust the score number
+	 */
+	public void setScoreAndMessages(GhostsGroup ghostsGroup, Ladybug ladybug, GroupMessages groupMessages) {
+		setScore(ghostsGroup, ladybug);
+		setMessages(ghostsGroup, ladybug, groupMessages);
 	}
 }

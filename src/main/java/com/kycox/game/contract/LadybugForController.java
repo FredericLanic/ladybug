@@ -19,5 +19,5 @@ package com.kycox.game.contract;
 import java.awt.Point;
 
 public interface LadybugForController {
-	public void setUserRequest(Point userRequest);
+	void setUserRequest(Point userRequest);
 }

@@ -21,5 +21,5 @@ import java.util.List;
 import com.kycox.game.body.ghost.Ghost;
 
 public interface GroupGhostForGameView {
-	public List<Ghost> getLstGhosts();
+	List<Ghost> getLstGhosts();
 }

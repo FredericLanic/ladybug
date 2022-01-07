@@ -32,7 +32,7 @@ import com.kycox.game.contract.NewSoundsForGameSounds;
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
-	private GameModelForSounds	   gameModel;
+	private GameModelForSounds gameModel;
 	private NewSoundsForGameSounds newSounds;
 
 	/**
@@ -42,22 +42,22 @@ public class GameSounds implements Observer {
 	 * @return
 	 */
 	public long getMillisecondLadybugDeath() {
-		Clip clipLadybugDying = Sounds.LADYBUG_IS_DYING.getClip();
+		var clipLadybugDying = Sounds.LADYBUG_IS_DYING.getClip();
 		return clipLadybugDying.getMicrosecondLength() / 1000;
 	}
 
 	public long getMillisecondNewLife() {
-		Clip clipNewLife = Sounds.LADYBUG_EXTRA_PAC.getClip();
+		var clipNewLife = Sounds.LADYBUG_EXTRA_PAC.getClip();
 		return clipNewLife.getMicrosecondLength() / 1000;
 	}
 
 	public long getMillisecondsBeginning() {
-		Clip clipBeginning = Sounds.GAME_BEGIN_LEVEL.getClip();
+		var clipBeginning = Sounds.GAME_BEGIN_LEVEL.getClip();
 		return clipBeginning.getMicrosecondLength() / 1000;
 	}
 
 	public long getMillisecondsIntermission() {
-		Clip clipBeginning = Sounds.LADYBUG_INTERMISSION.getClip();
+		var clipBeginning = Sounds.LADYBUG_INTERMISSION.getClip();
 		return clipBeginning.getMicrosecondLength() / 1000;
 	}
 
@@ -75,10 +75,26 @@ public class GameSounds implements Observer {
 		if (newSounds.hasSound(Sounds.LADYBUG_INTERMISSION)) {
 			stopAllSoundsExcept(Sounds.LADYBUG_INTERMISSION);
 		}
-		Sounds[] soundsEnums = Sounds.values();
+		var soundsEnums = Sounds.values();
 		for (Sounds soundsEnum : soundsEnums) {
 			if (newSounds.hasSound(soundsEnum)) {
 				new ListenSound(soundsEnum.getClip()).start();
+			}
+		}
+	}
+
+	private void stopAllSounds() {
+		var soundsEnums = Sounds.values();
+		for (Sounds soundsEnum : soundsEnums) {
+			soundsEnum.stopSound();
+		}
+	}
+
+	private void stopAllSoundsExcept(Sounds sound) {
+		var soundsEnums = Sounds.values();
+		for (Sounds soundsEnum : soundsEnums) {
+			if (!soundsEnum.equals(sound)) {
+				soundsEnum.stopSound();
 			}
 		}
 	}
@@ -91,22 +107,6 @@ public class GameSounds implements Observer {
 			playSounds();
 		} else {
 			stopAllSounds();
-		}
-	}
-
-	private void stopAllSounds() {
-		Sounds[] soundsEnums = Sounds.values();
-		for (Sounds soundsEnum : soundsEnums) {
-			soundsEnum.stopSound();
-		}
-	}
-
-	private void stopAllSoundsExcept(Sounds sound) {
-		Sounds[] soundsEnums = Sounds.values();
-		for (Sounds soundsEnum : soundsEnums) {
-			if (!soundsEnum.equals(sound)) {
-				soundsEnum.stopSound();
-			}
 		}
 	}
 }

@@ -38,7 +38,7 @@ public class ListenSound extends Thread {
 	 * @param clip
 	 */
 	public ListenSound(Clip clip) {
-		this.clip		  = clip;
+		this.clip = clip;
 		microsecondLength = clip.getMicrosecondLength();
 	}
 
@@ -47,15 +47,16 @@ public class ListenSound extends Thread {
 	 */
 	@Override
 	public void run() {
-		boolean end = false;
+		var end = false;
 		try {
 			// Si le clip n'est pas déjà lancé
 			if (!clip.isRunning()) {
 				clip.start();
 				while (!end) {
 					Thread.sleep(1);
-					if (clip.getMicrosecondPosition() >= microsecondLength)
+					if (clip.getMicrosecondPosition() >= microsecondLength) {
 						end = true;
+					}
 				}
 				// Réinitialisation du clip pour une prochaine fois
 				if (clip.isActive()) {

@@ -19,5 +19,5 @@ package com.kycox.game.contract;
 import com.kycox.game.constant.Sounds;
 
 public interface NewSoundsForGameSounds {
-	public boolean hasSound(Sounds soundsEnum);
+	boolean hasSound(Sounds soundsEnum);
 }

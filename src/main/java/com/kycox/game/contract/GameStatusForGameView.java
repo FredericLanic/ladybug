@@ -17,24 +17,24 @@
 package com.kycox.game.contract;
 
 public interface GameStatusForGameView extends GameCommon {
-	public int getNumLevel();
+	int getNumLevel();
 
-	public boolean isGameEnd();
+	boolean isGameEnd();
 
-	public boolean isGameEnding();
+	boolean isGameEnding();
 
-	public boolean isGameStarting();
+	boolean isGameStarting();
 
-	public boolean isLevelEnding();
+	boolean isLevelEnding();
 
-	public boolean isLevelStarting();
+	boolean isLevelStarting();
 
-	public boolean isProgramPresentation();
+	boolean isProgramPresentation();
 
-	public boolean isProgramStarting();
+	boolean isProgramStarting();
 
-	public boolean isToConfiguration();
+	boolean isToConfiguration();
 
 	// FIXME : hmmm ?
-	public void setProgramPresentation();
+	void setProgramPresentation();
 }

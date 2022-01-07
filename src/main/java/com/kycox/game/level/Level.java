@@ -39,17 +39,18 @@ public abstract class Level implements LevelStructure {
 	@Override
 	public List<ScreenBlock> getLstBlocks() {
 		List<ScreenBlock> lstBlocks = new ArrayList<>();
-		for (int i = 0; i < levelDATA.length; i++) {
-			int			x	  = i % nbrBlocksByLine;
-			int			y	  = i / nbrBlocksByLine;
-			ScreenBlock	block = new ScreenBlock(levelDATA[i]);
+		for (var i = 0; i < levelDATA.length; i++) {
+			var x = i % nbrBlocksByLine;
+			var y = i / nbrBlocksByLine;
+			var block = new ScreenBlock(levelDATA[i]);
 			block.setCoordinate(new Point(x, y));
 			lstBlocks.add(block);
 		}
 		return lstBlocks;
 	}
-	
+
+	@Override
 	public Map<Point, Point> getTeleportPoints() {
-		return new HashMap<Point, Point>();	
+		return new HashMap<>();
 	}
 }

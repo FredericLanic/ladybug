@@ -39,11 +39,12 @@ public class Blinky extends Ghost {
 
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
-		if (!isPerfectOnABlock())
+		if (!isPerfectOnABlock()) {
 			return;
-		if (getStatus() == GhostStatus.SCARED)
+		}
+		if (getStatus() == GhostStatus.SCARED) {
 			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
-		else {
+		} else {
 			// Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
 			// map
 			setSpeedIndex(getStartSpeedIndex() + blinkySpeedIndex.getIncrementSpeedIndex(perCent));

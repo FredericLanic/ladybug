@@ -40,9 +40,17 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 	private LadybugActions ladybugActions;
 	@Setter
 	@Getter
-	private LadybugStatus  status		 = LadybugStatus.NORMAL;
+	private LadybugStatus status = LadybugStatus.NORMAL;
 	@Getter
-	private Point		   viewDirection = Constants.POINT_UP;
+	private Point viewDirection = Constants.POINT_UP;
+
+	public int getEatenAIdRefFruit() {
+		return ladybugActions.getEatenAIdRefFruit();
+	}
+
+	public boolean hasEatenAFruit() {
+		return getEatenAIdRefFruit() != Constants.NOFRUITID;
+	}
 
 	@Override
 	public boolean isAllowedToDoActions() {
@@ -57,14 +65,6 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return ladybugActions.isEatenAPoint();
 	}
 
-	public boolean hasEatenAFruit() {
-		return getEatenAIdRefFruit() != Constants.NOFRUITID;
-	}
-	
-	public int getEatenAIdRefFruit() {
-		return ladybugActions.getEatenAIdRefFruit();
-	}
-	
 	public boolean isToBeTeleported() {
 		return ladybugActions.isToBeTeleported();
 	}
@@ -74,10 +74,11 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 			teleport(screenData);
 			return;
 		}
-		ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+		var currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
 		if (isPerfectOnABlock()) {
-			if (canMove(userRequest, currentScreenBlock))
+			if (canMove(userRequest, currentScreenBlock)) {
 				viewDirection = userRequest;
+			}
 			move(currentScreenBlock);
 		}
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
@@ -85,15 +86,16 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 
 	public LadybugActions setActions(ScreenData screenData) {
 		ladybugActions = new LadybugActions();
-		if (getStatus() == LadybugStatus.DEAD)
+		if (getStatus() == LadybugStatus.DEAD) {
 			return ladybugActions;
+		}
 		if (userRequest.equals(new Point(getDirection().x, -getDirection().y))) {
 			setDirection(userRequest);
-			this.viewDirection = getDirection();
+			viewDirection = getDirection();
 		}
 		// calcule uniquement lorsque ladybug rempli le block
 		if (isPerfectOnABlock()) {
-			ScreenBlock currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+			var currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
 			ladybugActions.setEatenAMegaPoint(currentScreenBlock.isMegaPoint());
@@ -117,7 +119,7 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		var sb = new StringBuilder();
 		sb.append("Ladybug ");
 		sb.append("position: " + getPosition());
 		return sb.toString();

@@ -38,7 +38,7 @@ public enum GameImages {
 	@Getter
 	private Image image;
 
-	private GameImages(String fileName) {
+	GameImages(String fileName) {
 		image = new ImageIcon(GameImages.class.getClassLoader().getResource(fileName)).getImage();
 	}
 }

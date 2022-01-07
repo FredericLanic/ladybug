@@ -39,30 +39,34 @@ import lombok.Setter;
 public abstract class LadybugCommun {
 	@Getter
 	@Setter
-	private BodyImg				bodyUpCurrent;
-	private Map<Point, Integer>	convertPointToDegrees = new HashMap<>();
+	private BodyImg bodyUpCurrent;
+	private Map<Point, Integer> convertPointToDegrees = new HashMap<>();
 	@Inject
-	private GameProperties		gameProperties;
+	private GameProperties gameProperties;
 
-	public Image getImage(Point direction) {
-		Image ladybugImage = ImageUtils.rotateImage(bodyUpCurrent.getImage(), convertPointToDegrees.get(direction));
-		return addSkin(ladybugImage, direction);
-	}
-
-	public Image getStaticView() {
-		Point direction	   = Constants.POINT_RIGHT;
-		Image ladybugImage = ImageUtils.rotateImage(LadybugImages.LADYBUG_UP_2.getImage(),
-		        convertPointToDegrees.get(direction));
-		return addSkin(ladybugImage, direction);
+	protected void addConvertPointToDegrees(Point point, Integer integer) {
+		convertPointToDegrees.put(point, integer);
 	}
 
 	private Image addSkin(Image image, Point direction) {
 		if (gameProperties.hasLadybugSkin()) {
-			Image imagePluginOX = ImageUtils.rotateImage(GameImages.LADYBUG_PLUGIN_OX_UP.getImage(),
+			var imagePluginOX = ImageUtils.rotateImage(GameImages.LADYBUG_PLUGIN_OX_UP.getImage(),
 			        convertPointToDegrees.get(direction));
 			return ImageUtils.appendImages(image, imagePluginOX);
 		}
 		return image;
+	}
+
+	public Image getImage(Point direction) {
+		var ladybugImage = ImageUtils.rotateImage(bodyUpCurrent.getImage(), convertPointToDegrees.get(direction));
+		return addSkin(ladybugImage, direction);
+	}
+
+	public Image getStaticView() {
+		var direction = Constants.POINT_RIGHT;
+		var ladybugImage = ImageUtils.rotateImage(LadybugImages.LADYBUG_UP_2.getImage(),
+		        convertPointToDegrees.get(direction));
+		return addSkin(ladybugImage, direction);
 	}
 
 	@PostConstruct
@@ -72,10 +76,6 @@ public abstract class LadybugCommun {
 		convertPointToDegrees.put(Constants.POINT_LEFT, 90);
 		convertPointToDegrees.put(Constants.POINT_RIGHT, -90);
 		convertPointToDegrees.put(Constants.POINT_DOWN, 180);
-	}
-
-	protected void addConvertPointToDegrees(Point point, Integer integer) {
-		convertPointToDegrees.put(point, integer);
 	}
 
 	protected void setNextImage() {

@@ -18,7 +18,6 @@ package com.kycox.game.level;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -40,13 +39,20 @@ import lombok.Getter;
 @Named("ScreenData")
 public final class ScreenData {
 	@Getter
-	private LevelStructure	  currentLevel;
-	private List<ScreenBlock> dataBlocks			 = new ArrayList<>();
-	private int				  initNbrBlocksWithPoint = 0;
+	private LevelStructure currentLevel;
+	private List<ScreenBlock> dataBlocks = new ArrayList<>();
+	private int initNbrBlocksWithPoint = 0;
 	@Inject
-	private ManageLevel		  manageLevel;
+	private ManageLevel manageLevel;
 	@Getter
-	private List<ScreenBlock> viewBlocks			 = new ArrayList<>();
+	private List<ScreenBlock> viewBlocks = new ArrayList<>();
+
+	public void addNewFruit(int idRefFruit) {
+		var currentScreenBlock = dataBlocks.get(getRandomPosNumEatenPoint());
+		currentScreenBlock.setIdRefFruit(idRefFruit);
+		viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
+		        .orElseThrow().setIdRefFruit(idRefFruit);
+	}
 
 	/**
 	 * Convert le ScreenData en une List<UnitDijkstra>
@@ -125,6 +131,46 @@ public final class ScreenData {
 		return (initNbrBlocksWithPoint - getNbrBlocksWithPoint()) * 100 / initNbrBlocksWithPoint;
 	}
 
+	private int getPosNumEatenPoint(int numPoint) {
+		var nbrPoint = 0;
+		var pos = 0;
+		for (var i = 0; i < dataBlocks.size(); i++) {
+			if (dataBlocks.get(i).isEatenPoint()) {
+				nbrPoint++;
+				if (nbrPoint == numPoint) {
+					pos = i;
+				}
+			}
+		}
+		return pos;
+	}
+
+	private int getPosNumPoint(int numPoint) {
+		var nbrPoint = 0;
+		var pos = 0;
+		for (var i = 0; i < dataBlocks.size(); i++) {
+			if (dataBlocks.get(i).isPoint()) {
+				nbrPoint++;
+				if (nbrPoint == numPoint) {
+					pos = i;
+				}
+			}
+		}
+		return pos;
+	}
+
+	private int getRandomPosNumEatenPoint() {
+		var nbrPoints = getNbrBlocksWithEatenPoint();
+		var randomPoint = Utils.generateRandomInt(nbrPoints) + 1;
+		return getPosNumEatenPoint(randomPoint);
+	}
+
+	private int getRandomPosNumPoint() {
+		var nbrPoints = getNbrBlocksWithPoint();
+		var randomPoint = Utils.generateRandomInt(nbrPoints) + 1;
+		return getPosNumPoint(randomPoint);
+	}
+
 	/**
 	 * Retourne les coordonnées aléatoire GRAPHIQUE d'un block qui contient un point
 	 * à manger par ladybug
@@ -132,9 +178,9 @@ public final class ScreenData {
 	 * @return
 	 */
 	public Point getRandomPosOnAEatenPoint() {
-		int	pos	   = getRandomPosNumEatenPoint();
-		int	yBlock = pos / currentLevel.getNbrBlocksByLine();
-		int	xBlock = pos % currentLevel.getNbrBlocksByLine();
+		var pos = getRandomPosNumEatenPoint();
+		var yBlock = pos / currentLevel.getNbrBlocksByLine();
+		var xBlock = pos % currentLevel.getNbrBlocksByLine();
 		return new Point(xBlock, yBlock);
 	}
 
@@ -145,9 +191,9 @@ public final class ScreenData {
 	 * @return
 	 */
 	public Point getRandomPosOnAPoint() {
-		int	pos	   = getRandomPosNumPoint();
-		int	yBlock = pos / currentLevel.getNbrBlocksByLine();
-		int	xBlock = pos % currentLevel.getNbrBlocksByLine();
+		var pos = getRandomPosNumPoint();
+		var yBlock = pos / currentLevel.getNbrBlocksByLine();
+		var xBlock = pos % currentLevel.getNbrBlocksByLine();
 		return new Point(xBlock, yBlock);
 	}
 
@@ -200,24 +246,24 @@ public final class ScreenData {
 		// Création des blocks
 		dataBlocks = currentLevel.getLstBlocks();
 		// vérification des bordure des blocks
-		CheckScreenBlockBorders checkScreenBlockBorders = new CheckScreenBlockBorders(this);
+		var checkScreenBlockBorders = new CheckScreenBlockBorders(this);
 		checkScreenBlockBorders.checkDataBlockBorder();
 		dataBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
 		        .forEach(ScreenBlock::addGhostReviver);
 		// ajout des mega points aléatoires
 		if (mustDisplayMegaPoints) {
-			for (int i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
-				Point randomPoint = getRandomPosOnAPoint();
+			for (var i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
+				var randomPoint = getRandomPosOnAPoint();
 				dataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
 				        .forEach(ScreenBlock::addMegaPoint);
 			}
-			
-			Map<Point, Point> teleportPoints = currentLevel.getTeleportPoints();
-	        for (Map.Entry<Point, Point> m : teleportPoints.entrySet()) {
+
+			var teleportPoints = currentLevel.getTeleportPoints();
+			for (Map.Entry<Point, Point> m : teleportPoints.entrySet()) {
 				dataBlocks.stream().filter(b -> b.getCoordinate().equals(m.getKey()))
-		        .forEach(sb -> sb.addTeleportation(m.getValue()));
-	        }
-	        
+				        .forEach(sb -> sb.addTeleportation(m.getValue()));
+			}
+
 		}
 		viewBlocks.clear();
 		// on clone la liste
@@ -234,7 +280,7 @@ public final class ScreenData {
 	 */
 	public void updateScreenBlock(Ladybug ladybug) {
 		// Suppression du point dans le ScreenBlock de lstDataBlocks
-		ScreenBlock currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
+		var currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
 		if (ladybug.isEatenAMegaPoint() || ladybug.isEatenAPoint()) {
 			currentScreenBlock.removePoint();
 			currentScreenBlock.addEatenPoint();
@@ -245,53 +291,8 @@ public final class ScreenData {
 		if (ladybug.hasEatenAFruit()) {
 			currentScreenBlock.resetIdRefFruit();
 			viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
-	        .orElseThrow().resetIdRefFruit();
+			        .orElseThrow().resetIdRefFruit();
 
 		}
-	}
-	
-	public void addNewFruit(int idRefFruit) {
-		ScreenBlock currentScreenBlock = dataBlocks.get(getRandomPosNumEatenPoint()); 
-		currentScreenBlock.setIdRefFruit(idRefFruit);
-		viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
-        .orElseThrow().setIdRefFruit(idRefFruit);		
-	}
-
-	private int getPosNumEatenPoint(int numPoint) {
-		int	nbrPoint = 0;
-		int	pos		 = 0;
-		for (int i = 0; i < dataBlocks.size(); i++) {
-			if (dataBlocks.get(i).isEatenPoint()) {
-				nbrPoint++;
-				if (nbrPoint == numPoint)
-					pos = i;
-			}
-		}
-		return pos;
-	}
-
-	private int getPosNumPoint(int numPoint) {
-		int	nbrPoint = 0;
-		int	pos		 = 0;
-		for (int i = 0; i < dataBlocks.size(); i++) {
-			if (dataBlocks.get(i).isPoint()) {
-				nbrPoint++;
-				if (nbrPoint == numPoint)
-					pos = i;
-			}
-		}
-		return pos;
-	}
-
-	private int getRandomPosNumEatenPoint() {
-		int	nbrPoints	= getNbrBlocksWithEatenPoint();
-		int	randomPoint	= Utils.generateRandomInt(nbrPoints) + 1;
-		return getPosNumEatenPoint(randomPoint);
-	}
-
-	private int getRandomPosNumPoint() {
-		int	nbrPoints	= getNbrBlocksWithPoint();
-		int	randomPoint	= Utils.generateRandomInt(nbrPoints) + 1;
-		return getPosNumPoint(randomPoint);
 	}
 }

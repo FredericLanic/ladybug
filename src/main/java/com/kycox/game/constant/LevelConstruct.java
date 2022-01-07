@@ -23,6 +23,6 @@ package com.kycox.game.constant;
 public enum LevelConstruct {
 	B, N;
 
-	private LevelConstruct() {
+	LevelConstruct() {
 	}
 }

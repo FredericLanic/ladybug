@@ -24,12 +24,15 @@ import com.kycox.game.constant.ghost.image.GhostHeadbandImages;
 
 public class PirateHeadband {
 	public static Image getPirateHeadband(Point viewDirection) {
-		if (Constants.POINT_LEFT.equals(viewDirection))
+		if (Constants.POINT_LEFT.equals(viewDirection)) {
 			return GhostHeadbandImages.HEADBAND_LEFT.getImage();
-		if (Constants.POINT_RIGHT.equals(viewDirection))
+		}
+		if (Constants.POINT_RIGHT.equals(viewDirection)) {
 			return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
-		if (Constants.POINT_DOWN.equals(viewDirection))
+		}
+		if (Constants.POINT_DOWN.equals(viewDirection)) {
 			return GhostHeadbandImages.HEADBAND_DOWN.getImage();
+		}
 		return GhostHeadbandImages.HEADBAND_UP.getImage();
 	}
 

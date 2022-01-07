@@ -33,9 +33,10 @@ public final class ManageLevel {
 	 * @param i : le numéro du niveau demandé
 	 */
 	public LevelStructure getLevel(int i) {
-		int num = i;
-		if (num > levels.size())
+		var num = i;
+		if (num > levels.size()) {
 			num = 1 + Utils.generateRandomInt(levels.size());
+		}
 		return levels.get(num - 1);
 	}
 }

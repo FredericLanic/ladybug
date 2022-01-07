@@ -35,12 +35,12 @@ import lombok.Setter;
 
 @Named("ScreenBlockView")
 public class ScreenBlockView {
+	// Couleur d'un point
+	private static final Color dotColor = new Color(192, 192, 0);
+	@Setter
+	private Color colorMaze = Constants.BLUE_LADYBUG;
 	@Inject
 	private Fruits fruits;
-	// Couleur d'un point
-	private static final Color dotColor	 = new Color(192, 192, 0);
-	@Setter
-	private Color			   colorMaze = Constants.BLUE_LADYBUG;
 	// Couleur du labyrinthe
 	private final Color megaPointColor = new Color(255, 128, 0);
 	// Couleur du lieu revivor
@@ -67,9 +67,9 @@ public class ScreenBlockView {
 	 * @param y
 	 */
 	private void displayBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		ScreenBlock screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		g2d.setStroke(new BasicStroke(2));
-		Point currentCoord = screenBlock.getCoordinate();
+		var currentCoord = screenBlock.getCoordinate();
 		// affichage de la barre à gauche
 		if (screenBlock.isBorderLeft() && !screenBlock.isBorderUp() && !screenBlock.isBorderDown()
 		        || currentCoord.x == 0 && currentCoord.y != 0 && currentCoord.y != screenData.getNbrLines() - 1) {
@@ -93,7 +93,7 @@ public class ScreenBlockView {
 		                && currentCoord.x != screenData.getCurrentLevel().getNbrBlocksByLine() - 1) {
 			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE);
 		}
-		int rayon = Constants.BLOCK_SIZE;
+		var rayon = Constants.BLOCK_SIZE;
 		// affichage de la courbe gauche vers haut
 		if (screenBlock.isBorderLeft() && screenBlock.isBorderUp()) {
 			g2d.drawArc(x, y, rayon, rayon, 90, 90);
@@ -140,8 +140,8 @@ public class ScreenBlockView {
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isBorderRight()) {
 			g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
 		}
-		ScreenBlock	sbTmp  = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y));
-		ScreenBlock	sbTmp1 = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1));
+		var sbTmp = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y));
+		var sbTmp1 = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1));
 		if (screenBlock.isBorderRight() && screenBlock.isBorderDown() && currentCoord.x > 0
 		        && (sbTmp.isBorderDown() || sbTmp.isBorderRight())) {
 			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE);
@@ -189,6 +189,13 @@ public class ScreenBlockView {
 		}
 	}
 
+	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
+		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		if (screenBlock.getIdRefFruit() != Constants.NOFRUITID) {
+			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
+		}
+	}
+
 	/**
 	 * Display the points into the map
 	 *
@@ -198,7 +205,7 @@ public class ScreenBlockView {
 	 * @param y
 	 */
 	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		ScreenBlock screenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		var screenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		// affichage du méga point
 		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
 			g2d.setColor(megaPointColor);
@@ -233,18 +240,11 @@ public class ScreenBlockView {
 	}
 
 	private void displayTeleportation(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		ScreenBlock screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		if (screenBlock.isTeleportation()) {
 			g2d.setColor(teleportationColor);
 			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 10, 10);
 			g2d.drawImage(GameImages.TELEPORTATION.getImage(), x, y, null);
-		}
-	}
-	
-	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		ScreenBlock screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
-		if (screenBlock.getIdRefFruit() !=  Constants.NOFRUITID) {
-			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
 		}
 	}
 }

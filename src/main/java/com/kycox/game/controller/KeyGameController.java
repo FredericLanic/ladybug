@@ -38,18 +38,18 @@ import com.kycox.game.properties.GameProperties;
  */
 @Named("KeyGameController")
 public class KeyGameController extends KeyAdapter {
-	private static final Log	   logger = LogFactory.getLog(KeyGameController.class);
+	private static final Log logger = LogFactory.getLog(KeyGameController.class);
 	@Inject
 	private GameModelForController gameModel;
 	@Inject
-	private GameProperties		   gameProperties;
+	private GameProperties gameProperties;
 
 	/**
 	 * Action sur les touches Gestion des touches pressées
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int keyCode = e.getKeyCode();
+		var keyCode = e.getKeyCode();
 		manageCommonKeys(keyCode);
 		if (gameModel.isGamePresentation()) {
 			manageKeysInPresentation(keyCode);
@@ -60,7 +60,7 @@ public class KeyGameController extends KeyAdapter {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		int keyCode = e.getKeyCode();
+		var keyCode = e.getKeyCode();
 		switch (keyCode) {
 			case KeyEvent.VK_F1 -> gameModel.setShowHelp(false);
 		}

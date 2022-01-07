@@ -18,14 +18,15 @@ public class PanelTexteDefilant {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Container container;
-			Point	  positionducomposant;
-			container			   = m_àScroller.getParent();
-			positionducomposant	   = m_àScroller.getLocation();
+			Point positionducomposant;
+			container = m_àScroller.getParent();
+			positionducomposant = m_àScroller.getLocation();
 			positionducomposant.y -= 1;
 //			if (positionducomposant.y > m_àScroller.getParent().getSize().height)
 //				positionducomposant.y = 0;
-			if (positionducomposant.y < -200)
+			if (positionducomposant.y < -200) {
 				positionducomposant.y = m_àScroller.getParent().getSize().height;
+			}
 			positionducomposant.x = 50;
 			m_àScroller.setLocation(positionducomposant);
 			m_àScroller.getParent().repaint();

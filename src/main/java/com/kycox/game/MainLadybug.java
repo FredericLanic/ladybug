@@ -16,8 +16,6 @@
  */
 package com.kycox.game;
 
-import java.lang.Runtime.Version;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +30,8 @@ import com.kycox.game.view.MainFrame;
  * C'est elle qui faut lancer :)
  */
 public class MainLadybug {
-	private static String	 cruxLine = "******************************";
-	private static final Log logger	  = LogFactory.getLog(MainLadybug.class);
+	private static String cruxLine = "******************************";
+	private static final Log logger = LogFactory.getLog(MainLadybug.class);
 
 	/** Lancement du jeu */
 	public static void main(String[] args) {
@@ -43,10 +41,10 @@ public class MainLadybug {
 	/** lecture du contexte Spring de l'application */
 	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
 	@Autowired
-	private MainFrame		   mainFrame		  = applicationContext.getBean("MainFrame", MainFrame.class);
+	private MainFrame mainFrame = applicationContext.getBean("MainFrame", MainFrame.class);
 
-	public void launchTheGame() {  
-		Version javaVersion = Runtime.version();
+	public void launchTheGame() {
+		var javaVersion = Runtime.version();
 		logger.info(cruxLine);
 		logger.info("*  LadyBug v0.3.1 SnapShot   *");
 		logger.info("*  for Java 16+ by kycox     *");
