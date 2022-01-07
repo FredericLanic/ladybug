@@ -31,6 +31,10 @@ public class NewSounds implements NewSoundsForGameSounds {
 	@Getter
 	private List<Sounds> sounds = new ArrayList<>();
 
+	public void addLaybugEatenFruit(boolean mustBeAdded) {
+		addSounds(Sounds.LADYBUG_EAT_FRUIT, mustBeAdded);
+	}
+	
 	public void addDyingGhost(boolean mustBeAdded) {
 		addSounds(Sounds.GHOST_EATEN, mustBeAdded);
 	}

@@ -2,6 +2,7 @@ package com.kycox.game.model.strategy.actions;
 
 import java.awt.Point;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.logging.Log;
@@ -9,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
+import com.kycox.game.fruit.Fruits;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 
@@ -16,12 +18,15 @@ import lombok.Setter;
 
 @Named("GameModelGameIsPlaying")
 public class GameModelGameIsPlaying extends AbstratGameModel implements IGameModelAction {
-	private static final Log logger		  = LogFactory.getLog(GameModelGameIsPlaying.class);
+	private static final Log logger = LogFactory.getLog(GameModelGameIsPlaying.class);
 	@Setter
-	private Point			 ghostRequest = Constants.POINT_ZERO;
+	private Point ghostRequest = Constants.POINT_ZERO;
+	@Inject
+	private Fruits fruits;
 
 	@Override
 	public void programBeat() {
+		addNewFruit();
 		// ***
 		caseOfNewLadybugLife();
 		// ***
@@ -44,6 +49,13 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 		moveBodies();
 		// ***
 		checkEndMaze();
+	}
+
+	private void addNewFruit() {
+		if (fruits.getActivationPercent() < screenData.getPercentageEatenPoint()) {
+			screenData.addNewFruit(fruits.getCurrentIdFruit());
+			fruits.next();
+		}
 	}
 
 	private void caseOfGhostEatLadybug() {

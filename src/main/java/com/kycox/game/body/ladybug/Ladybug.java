@@ -57,6 +57,14 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return ladybugActions.isEatenAPoint();
 	}
 
+	public boolean hasEatenAFruit() {
+		return getEatenAIdRefFruit() != Constants.NOFRUITID;
+	}
+	
+	public int getEatenAIdRefFruit() {
+		return ladybugActions.getEatenAIdRefFruit();
+	}
+	
 	public boolean isToBeTeleported() {
 		return ladybugActions.isToBeTeleported();
 	}
@@ -90,6 +98,7 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
 			ladybugActions.setEatenAMegaPoint(currentScreenBlock.isMegaPoint());
 			ladybugActions.setToBeTeleported(currentScreenBlock.isTeleportation());
+			ladybugActions.setEatenAIdRefFruit(currentScreenBlock.getIdRefFruit());
 		}
 		return ladybugActions;
 	}

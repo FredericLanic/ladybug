@@ -114,5 +114,6 @@ public class AbstratGameModel {
 		newSounds.addSirenSound(ladybug.getStatus() == LadybugStatus.NORMAL && currentGameStatus.isInGame(),
 		        screenData.getPercentageEatenPoint());
 		newSounds.addLadybugIsDying(ladybug.getStatus() == LadybugStatus.DYING, !ladybugDying.isInPogress());
+		newSounds.addLaybugEatenFruit(ladybug.hasEatenAFruit());
 	}
 }

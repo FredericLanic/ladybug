@@ -16,11 +16,13 @@
  */
 package com.kycox.game.score;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
+import com.kycox.game.fruit.Fruits;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +33,8 @@ import lombok.Setter;
  */
 @Named("Score")
 public class Score {
+	@Inject
+	private Fruits fruits;	
 	@Getter
 	private int	incrementScore;
 	@Getter
@@ -89,6 +93,10 @@ public class Score {
 			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_TELEPORT_POINT),
 			        MessageType.POINT);
 		}
+		if (ladybug.hasEatenAFruit()) {
+			groupMessages.add(ladybug.getPosition(), Integer.toString(fruits.getScoreFruitById(ladybug.getEatenAIdRefFruit())),
+			        MessageType.POINT);
+		}
 		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
 		ghostsGroup.getLstGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
 		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST),
@@ -105,6 +113,10 @@ public class Score {
 		if (ladybug.isToBeTeleported()) {
 			addScore(Constants.SCORE_TELEPORT_POINT);
 		}
+		if (ladybug.hasEatenAFruit()) {
+			addScore(fruits.getScoreFruitById(ladybug.getEatenAIdRefFruit()));
+		}
+
 		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
 	}
 }

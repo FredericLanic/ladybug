@@ -17,6 +17,7 @@
 package com.kycox.game.action.ladybug;
 
 import com.kycox.game.action.BodyActions;
+import com.kycox.game.constant.Constants;
 import com.kycox.game.level.ScreenBlock;
 
 import lombok.Getter;
@@ -32,4 +33,12 @@ public class LadybugActions extends BodyActions {
 	@Setter
 	@Getter
 	private boolean		eatenAPoint;
+	@Setter
+	@Getter
+	private int	    eatenAIdRefFruit;
+	
+	public LadybugActions() {
+		eatenAIdRefFruit = Constants.NOFRUITID;
+	}	
+	
 }

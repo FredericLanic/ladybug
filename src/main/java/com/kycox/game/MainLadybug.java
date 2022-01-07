@@ -45,12 +45,12 @@ public class MainLadybug {
 	@Autowired
 	private MainFrame		   mainFrame		  = applicationContext.getBean("MainFrame", MainFrame.class);
 
-	public void launchTheGame() {
+	public void launchTheGame() {  
 		Version javaVersion = Runtime.version();
 		logger.info(cruxLine);
-		logger.info("*  LadyBug v0.3.0 SnapShot   *");
-		logger.info("*  for Java 14+ by kycox     *");
-		if (javaVersion.feature() >= 14) {
+		logger.info("*  LadyBug v0.3.1 SnapShot   *");
+		logger.info("*  for Java 16+ by kycox     *");
+		if (javaVersion.feature() >= 16) {
 			logger.info(cruxLine);
 			mainFrame.setVisible(true);
 		} else {

@@ -50,11 +50,22 @@ public class ScreenBlock implements Cloneable {
 	private Point			 coordinate		= Constants.POINT_ZERO;
 	@Getter
 	private Point 			 destinationPoint;
-
+	@Getter
+	private int idRefFruit;
+	
 	public ScreenBlock(int content) {
 		this.content = content;
+		resetIdRefFruit();
 	}
 
+	public void setIdRefFruit(int id) {
+		this.idRefFruit = id;
+	}
+	
+	public void resetIdRefFruit() {
+		idRefFruit = Constants.NOFRUITID;
+	}
+	
 	public void addBorderDown() {
 		content |= DOWN;
 	}

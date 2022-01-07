@@ -213,9 +213,7 @@ public final class ScreenData {
 			}
 			
 			Map<Point, Point> teleportPoints = currentLevel.getTeleportPoints();
-			//Parcourir le Hashmap avec la boucle For
 	        for (Map.Entry<Point, Point> m : teleportPoints.entrySet()) {
-	        	System.out.println(m.getKey());
 				dataBlocks.stream().filter(b -> b.getCoordinate().equals(m.getKey()))
 		        .forEach(sb -> sb.addTeleportation(m.getValue()));
 	        }
@@ -235,15 +233,28 @@ public final class ScreenData {
 	 * l'instance de Ladybug
 	 */
 	public void updateScreenBlock(Ladybug ladybug) {
+		// Suppression du point dans le ScreenBlock de lstDataBlocks
+		ScreenBlock currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
 		if (ladybug.isEatenAMegaPoint() || ladybug.isEatenAPoint()) {
-			// Suppression du point dans le ScreenBlock de lstDataBlocks
-			ScreenBlock currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
 			currentScreenBlock.removePoint();
 			currentScreenBlock.addEatenPoint();
 			// Suppression du point dans de ScreenBlock de lstViewBlocks
 			viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
 			        .orElseThrow().removePoint();
 		}
+		if (ladybug.hasEatenAFruit()) {
+			currentScreenBlock.resetIdRefFruit();
+			viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
+	        .orElseThrow().resetIdRefFruit();
+
+		}
+	}
+	
+	public void addNewFruit(int idRefFruit) {
+		ScreenBlock currentScreenBlock = dataBlocks.get(getRandomPosNumEatenPoint()); 
+		currentScreenBlock.setIdRefFruit(idRefFruit);
+		viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
+        .orElseThrow().setIdRefFruit(idRefFruit);		
 	}
 
 	private int getPosNumEatenPoint(int numPoint) {

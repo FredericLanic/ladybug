@@ -79,6 +79,8 @@ public final class Constants {
 	public static final List<Integer> VALID_SPEEDS = Collections
 	        .unmodifiableList(Arrays.asList(1, 2, 3, 4, 6, 8, 12/* ,24 */));
 
+	public static final int NOFRUITID		= -1;
+	
 	private Constants() {
 	}
 }

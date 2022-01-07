@@ -21,10 +21,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
+import com.kycox.game.fruit.Fruits;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
@@ -33,6 +35,8 @@ import lombok.Setter;
 
 @Named("ScreenBlockView")
 public class ScreenBlockView {
+	@Inject
+	private Fruits fruits;
 	// Couleur d'un point
 	private static final Color dotColor	 = new Color(192, 192, 0);
 	@Setter
@@ -49,6 +53,7 @@ public class ScreenBlockView {
 		displayBorders(g2d, screenData, x, y);
 		displayPoints(g2d, screenData, x, y);
 		displayTeleportation(g2d, screenData, x, y);
+		displayFruit(g2d, screenData, x, y);
 	}
 
 	/**
@@ -233,6 +238,13 @@ public class ScreenBlockView {
 			g2d.setColor(teleportationColor);
 			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 10, 10);
 			g2d.drawImage(GameImages.TELEPORTATION.getImage(), x, y, null);
+		}
+	}
+	
+	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
+		ScreenBlock screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		if (screenBlock.getIdRefFruit() !=  Constants.NOFRUITID) {
+			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
 		}
 	}
 }

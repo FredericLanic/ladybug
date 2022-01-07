@@ -2,6 +2,7 @@ package com.kycox.game.model.strategy.actions;
 
 import java.awt.Point;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.logging.Log;
@@ -9,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
+import com.kycox.game.fruit.Fruits;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
@@ -18,6 +20,8 @@ import lombok.Setter;
 
 @Named("GameModelLevelIsStarting")
 public class GameModelLevelIsStarting extends AbstratGameModel implements IGameModelAction {
+	@Inject
+	private Fruits fruits;
 	private static final Log logger		  = LogFactory.getLog(GameModelLevelIsStarting.class);
 	@Setter
 	private long			 beginningMilliseconds;
@@ -52,6 +56,8 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		setSoundActive(true);
 		// ladybug est vivant
 		ladybug.setStatus(LadybugStatus.NORMAL);
+		// initialise les fruits
+		fruits.init();		
 		// on continue le level
 		continueLevel();
 	}
