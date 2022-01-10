@@ -3,7 +3,6 @@ package com.kycox.game.font;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

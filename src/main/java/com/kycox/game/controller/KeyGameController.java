@@ -22,9 +22,6 @@ import java.awt.event.KeyEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.properties.GameProperties;
@@ -38,7 +35,6 @@ import com.kycox.game.properties.GameProperties;
  */
 @Named("KeyGameController")
 public class KeyGameController extends KeyAdapter {
-	private static final Log logger = LogFactory.getLog(KeyGameController.class);
 	@Inject
 	private GameModelForController gameModel;
 	@Inject
@@ -60,9 +56,8 @@ public class KeyGameController extends KeyAdapter {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		var keyCode = e.getKeyCode();
-		switch (keyCode) {
-			case KeyEvent.VK_F1 -> gameModel.setShowHelp(false);
+		if (e.getKeyCode() == KeyEvent.VK_F1) {
+			gameModel.setShowHelp(false);
 		}
 	}
 

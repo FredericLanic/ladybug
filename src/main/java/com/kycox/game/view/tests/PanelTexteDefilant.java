@@ -1,6 +1,5 @@
 package com.kycox.game.view.tests;
 
-import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 
@@ -17,9 +16,7 @@ public class PanelTexteDefilant {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Container container;
 			Point positionducomposant;
-			container = m_àScroller.getParent();
 			positionducomposant = m_àScroller.getLocation();
 			positionducomposant.y -= 1;
 //			if (positionducomposant.y > m_àScroller.getParent().getSize().height)

@@ -25,16 +25,12 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.swing.JPanel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.tools.ImageUtils;
 
 import lombok.Setter;
 
 @Named("StatusGameView")
 public class StatusGameView extends JPanel {
-	private static final Log logger = LogFactory.getLog(StatusGameView.class);
 	private static final long serialVersionUID = 4546077700634533519L;
 	@Setter
 	private int ghostNbrLifes;

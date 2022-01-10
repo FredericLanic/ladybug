@@ -18,7 +18,6 @@ package com.kycox.game.body.ghost;
 
 import java.awt.Point;
 import java.util.List;
-import java.util.Optional;
 
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;

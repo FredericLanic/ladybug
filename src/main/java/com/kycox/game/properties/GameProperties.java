@@ -31,8 +31,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameProperties {
 	private static final Log logger = LogFactory.getLog(GameProperties.class);
-	private static String TRUE_PROPERTY = "1";
-	private ClassPathResource classPathResource;
+	private static final String TRUE_PROPERTY = "1";
 	// ghost.hat
 	private Optional<String> ghostHat = Optional.empty();
 	// ghosts.headband
@@ -93,8 +92,7 @@ public class GameProperties {
 	@PostConstruct
 	public void init() {
 		try {
-			classPathResource = new ClassPathResource("ladybug.properties");
-			props = PropertiesLoaderUtils.loadProperties(classPathResource);
+			props = PropertiesLoaderUtils.loadProperties(new ClassPathResource("ladybug.properties"));
 			ladybugColor = readProperty("ladybug.color");
 			ladybugSkin = readProperty("ladybug.skin");
 			ghostsHeadband = readProperty("ghosts.headband");

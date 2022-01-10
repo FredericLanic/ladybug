@@ -31,7 +31,6 @@ import com.kycox.game.constant.ghost.GhostBehavious;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.image.GhostsBodyImages;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.maths.GhostSensitiveBehavious;
 import com.kycox.game.tools.Utils;
@@ -131,9 +130,8 @@ public abstract class Ghost extends UserBody {
 			case REGENERATED -> {
 				// Do nothing
 			}
-			default -> {
-				logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
-			}
+			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
+
 		}
 	}
 

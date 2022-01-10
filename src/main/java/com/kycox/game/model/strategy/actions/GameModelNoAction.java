@@ -9,5 +9,6 @@ import com.kycox.game.model.strategy.IGameModelAction;
 public class GameModelNoAction extends AbstratGameModel implements IGameModelAction {
 	@Override
 	public void programBeat() {
+		// No action, so we do nothing
 	}
 }

@@ -35,7 +35,7 @@ public class Screen {
 	}
 
 	public double getEdgeGameSide() {
-		return 15 * Constants.BLOCK_SIZE;
+		return 15.0 * Constants.BLOCK_SIZE;
 	}
 
 	public double getScreenHeight() {

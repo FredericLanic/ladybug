@@ -18,11 +18,8 @@ package com.kycox.game.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -81,8 +78,6 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	@Inject
 	private LadybugView ladybugView;
 	private JFrame mainFrame = (JFrame) SwingUtilities.getRoot(this);
-	// todo : sécuriser le timer en mode deux joueurs
-	private WaitAndDoActionAfterTimer newLiveTimer;
 	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
 	@Inject
 	private ScreenBlockView screenBlockView;
@@ -109,7 +104,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		drawMaze(g2d);
 		if (gameModel.getLadybug().isNewLife()) {
 			screenBlockView.setColorMaze(Constants.COLOR_EXTRA_PAC_LADYBUG);
-			newLiveTimer = new WaitAndDoActionAfterTimer();
+			var newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
 		if (gameModel.getCurrentProgramStatus().isToConfiguration()) {
@@ -126,8 +121,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		} else if (gameModel.getCurrentProgramStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
-			var text = "lEVEL "
-			        + Utils.integerToRoman(gameModel.getCurrentProgramStatus().getNumLevel()).toLowerCase();
+			var text = "lEVEL " + Utils.integerToRoman(gameModel.getCurrentProgramStatus().getNumLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
 		} else if (gameModel.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);

@@ -27,7 +27,6 @@ import javax.inject.Named;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.fruit.Fruits;
-import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
 

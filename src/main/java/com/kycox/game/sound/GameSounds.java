@@ -20,7 +20,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.inject.Named;
-import javax.sound.sampled.Clip;
 
 import com.kycox.game.constant.Sounds;
 import com.kycox.game.contract.GameModelForSounds;

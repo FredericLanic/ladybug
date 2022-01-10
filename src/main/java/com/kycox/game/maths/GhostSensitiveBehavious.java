@@ -30,9 +30,9 @@ import com.kycox.game.tools.Utils;
  *
  */
 public class GhostSensitiveBehavious {
-	private final double HIGH_LIMIT = 90;
-	private final double LOW_LIMIT = 20;
-	private final int SCALE = 100;
+	private static final double HIGH_LIMIT = 90;
+	private static final double LOW_LIMIT = 20;
+	private static final int SCALE = 100;
 	private double y = 0;
 
 	/**

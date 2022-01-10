@@ -19,7 +19,6 @@ package com.kycox.game.tools.dijkstra;
 import java.awt.Point;
 import java.util.List;
 
-import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 
 import lombok.Getter;
@@ -39,7 +38,6 @@ public class Dijkstra {
 	 * @return List<Point>
 	 */
 	public static List<Point> getShorterWay(Point startCoordinate, Point endCoordinate, ScreenData screenData) {
-		List<Point> shorterWay;
 		var dijkstra = new Dijkstra(screenData);
 		dijkstra.init(startCoordinate, screenData);
 		// Lancement de la recherche
