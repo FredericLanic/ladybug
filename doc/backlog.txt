@@ -24,7 +24,6 @@ Coté fonctionnalités CFCT :
 
 - CFCT2 : augmenter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug 
 - CFCT5 : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
-- CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
 - CFCT8 : revoir les moments d'initialisation des points incrément avant de gagner une nouvelle vie
 
 
@@ -46,6 +45,7 @@ DONE :
 	- le nombre de point a ajouter au score
 	- quel son est emis jeu quand le fruit apparait
 	- quel son est emis quand le fruit est disponible
+-  CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 

@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.fruit.Fruits;
+import com.kycox.game.maths.LitLampMode;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
@@ -49,6 +50,8 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		ladybug.setStatus(LadybugStatus.NORMAL);
 		// initialise les fruits
 		fruits.init();
+		// init litLampMode
+		screenData.setLitLampMode(LitLampMode.isLitLampMode(currentGameStatus.getNumLevel()));
 		// on continue le level
 		continueLevel();
 	}

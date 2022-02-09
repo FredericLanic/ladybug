@@ -19,6 +19,8 @@ package com.kycox.game.contract;
 import java.awt.Point;
 
 public interface GameModelForController extends GameCommon {
+	void changeLitLampMode();
+
 	void forceStopGame();
 
 	void gameInPause();

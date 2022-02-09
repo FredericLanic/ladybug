@@ -56,8 +56,8 @@ public class KeyGameController extends KeyAdapter {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_F1) {
-			gameModel.setShowHelp(false);
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_F1 -> gameModel.setShowHelp(false);
 		}
 	}
 
@@ -68,6 +68,9 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
 			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();
 			case KeyEvent.VK_F5 -> gameProperties.changeGhostHat();
+			// Mode lampe allumée
+			case KeyEvent.VK_F6 -> gameModel.changeLitLampMode();
+
 		}
 	}
 

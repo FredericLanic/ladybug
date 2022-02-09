@@ -31,6 +31,7 @@ import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * La map du jeu en cours
@@ -42,6 +43,9 @@ public final class ScreenData {
 	private LevelStructure currentLevel;
 	private List<ScreenBlock> dataBlocks = new ArrayList<>();
 	private int initNbrBlocksWithPoint = 0;
+	@Getter
+	@Setter
+	private boolean litLampMode = false;
 	@Inject
 	private ManageLevel manageLevel;
 	@Getter

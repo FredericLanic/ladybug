@@ -153,6 +153,10 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		notifyObservers();
 	}
 
+	public void changeLitLampMode() {
+		screenData.setLitLampMode(!screenData.isLitLampMode());
+	}
+
 	private Timer createProgramTimer() {
 		ActionListener action = event -> {
 			actionsByTimerBip();

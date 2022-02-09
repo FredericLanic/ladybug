@@ -31,7 +31,6 @@ import com.kycox.game.contract.NewSoundsForGameSounds;
  */
 @Named("GameSounds")
 public class GameSounds implements Observer {
-	private GameModelForSounds gameModel;
 	private NewSoundsForGameSounds newSounds;
 
 	/**
@@ -100,7 +99,7 @@ public class GameSounds implements Observer {
 
 	@Override
 	public void update(Observable gameModelForSound, Object arg) {
-		gameModel = (GameModelForSounds) gameModelForSound;
+		var gameModel = (GameModelForSounds) gameModelForSound;
 		newSounds = gameModel.getNewSounds();
 		if (gameModel.isSoundActive()) {
 			playSounds();
