@@ -3,7 +3,7 @@ Coté technique CTEC :
 - CTEC1 : extraire isComputed de l'enumération GhostsImagesEnum -> 
 	impact dans la fenêtre de configuration
 	=> solution à court terme : changer le nom de l'énumération GhostsImagesEnum en GhostsConfigEnum par exemple => nan, je pense que c'est un mauvais choix
-- CTEC2 : synchroniser les statuts entre les fantômes et ladybug; faire une énumeration status commun pour les fantômes et ladybug
+- CTEC2 : synchroniser les statuts entre les fantômes et ladybug; faire une énumeration status commun pour les fantômes et ladybug -> nan, je pense que c'est un mauvais choix
 - CTEC3 : revoir le design pattern MVC et revoir la notion de controleur
 - CTEC4 : revoir le pom.xml; voir jeff & tristan; version de java; rajouter un plugin pour sélectionner une version de java spécifique pour builder avec maven
 - CTEC5 : faire une refactor pour l'affichage
@@ -45,7 +45,8 @@ DONE :
 	- le nombre de point a ajouter au score
 	- quel son est emis jeu quand le fruit apparait
 	- quel son est emis quand le fruit est disponible
--  CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
+- CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
+- CFCT12 : faire un mode lampe allumée + F6
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 

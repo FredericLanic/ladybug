@@ -153,6 +153,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		notifyObservers();
 	}
 
+	@Override
 	public void changeLitLampMode() {
 		screenData.setLitLampMode(!screenData.isLitLampMode());
 	}
@@ -170,6 +171,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 			logger.info("Force Stop Game");
 			gameScore.setOldScore(-1);
 			currentProgramStatus.setGameEnd();
+			initSounds();
 		}
 	}
 
@@ -212,6 +214,10 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		currentProgramStatus.setProgramStart();
 		gameModelManageAction.changeStrategy(gameModelNoAction);
 		startProgramTimer();
+	}
+
+	public void initSounds() {
+		newSounds.initSounds();
 	}
 
 	@Override
