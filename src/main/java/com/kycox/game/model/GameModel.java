@@ -242,7 +242,6 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Override
 	public void setGhostRequest(Point ghostRequest) {
 		gameModeGameIsPlaying.setGhostRequest(ghostRequest);
-		// gameModelPresentation.setGhostRequest(ghostRequest);
 	}
 
 	@Override

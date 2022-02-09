@@ -101,19 +101,21 @@ public class AbstratGameModel {
 	protected void setSoundRequests() {
 		var musicOn = new SecureRandom().nextInt(1000) > 997;
 		newSounds.initSounds();
+
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());
 		newSounds.addIntermission(
 		        currentGameStatus.isProgramPresentation() && musicOn || currentGameStatus.isLevelEnding());
-		newSounds.addScaredGhost(groupGhosts.hasScaredOrFlashedGhost());
-		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost());
-		newSounds.addDyingGhost(groupGhosts.hasDyingGhost());
-		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhosts() > 0);
+		newSounds.addScaredGhost(groupGhosts.hasScaredOrFlashedGhost() && currentGameStatus.isInGame());
+		newSounds.addRegeneratedGhost(groupGhosts.hasRegeneratedGhost() && currentGameStatus.isInGame());
+		newSounds.addDyingGhost(groupGhosts.hasDyingGhost() && currentGameStatus.isInGame());
+		newSounds.addLadybugEatGhost(groupGhosts.getNbrEatenGhosts() > 0 && currentGameStatus.isInGame());
 		newSounds.addLadybugEatenAPoint(ladybug.isEatenAPoint() && currentGameStatus.isInGame());
-		newSounds.addNewLife(ladybug.isNewLife());
-		newSounds.addTeleport(ladybug.isToBeTeleported() || groupGhosts.hasTeleportedGhosts());
+		newSounds.addNewLife(ladybug.isNewLife() && currentGameStatus.isInGame());
+		newSounds.addTeleport(
+		        (ladybug.isToBeTeleported() || groupGhosts.hasTeleportedGhosts() && currentGameStatus.isInGame()));
 		newSounds.addSirenSound(ladybug.getStatus() == LadybugStatus.NORMAL && currentGameStatus.isInGame(),
 		        screenData.getPercentageEatenPoint());
 		newSounds.addLadybugIsDying(ladybug.getStatus() == LadybugStatus.DYING, !ladybugDying.isInPogress());
-		newSounds.addLaybugEatenFruit(ladybug.hasEatenAFruit());
+		newSounds.addLaybugEatenFruit(ladybug.hasEatenAFruit() && currentGameStatus.isInGame());
 	}
 }

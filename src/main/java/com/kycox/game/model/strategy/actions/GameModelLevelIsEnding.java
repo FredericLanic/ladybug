@@ -9,7 +9,6 @@ import com.kycox.game.model.strategy.IGameModelAction;
 public class GameModelLevelIsEnding extends AbstratGameModel implements IGameModelAction {
 	@Override
 	public void programBeat() {
-		setSoundActive(true);
 		setSoundRequests();
 	}
 }
