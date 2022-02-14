@@ -16,7 +16,6 @@ Coté technique CTEC :
 - CTEC19 : faire une fct dans gameModel pour envoyer la requete de ladybug depuis le controleur
 - CTEC20 : faire une fct dans gameModel pour mettre le jeu en mode configuration depuis le controleur
 - CTEC25 : lorsque le fantôme est regénéré, sa direction continue même s'il existe une bordure (contexte Level9NG)
-- CTEC26 : faire en sorte que les sons s'arrêtent convenablement entre les états du jeu
 - CTEC27 : modifier l'arborescence des resources pour qu'il y ait toujours un contexte "par défaut", un contexte "oxiane" (ladybug en bleu + le "OX" + des fantômes à la mode OXiane), un contexte "flash" (ladybug en rouge + l'éclair + des fantômes à la mode LSS)
 - CTEC28 : rajouter dans le github le formatage du poste OXiane des fichiers java 
 
@@ -47,6 +46,7 @@ DONE :
 	- quel son est emis quand le fruit est disponible
 - CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
 - CFCT12 : faire un mode lampe allumée + F6
+- CFCT 13 : ghost en mode lampe allumée
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
@@ -64,5 +64,6 @@ DONE :
 - CTEC24 : correction display son lors de la regeration du fantôme
 - CTEC26 : problème, le nombre de vies de ladybug n'est plus initialisié pour une nouvelle partie
 - CFCT7 : rajouter une notion d'affichage des points increments avant de gagner une nouvelle vie
+- CTEC26 : faire en sorte que les sons s'arrêtent convenablement entre les états du jeu
 
 REJECT : 
