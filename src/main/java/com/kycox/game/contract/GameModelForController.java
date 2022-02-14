@@ -25,8 +25,6 @@ public interface GameModelForController extends GameCommon {
 
 	void gameInPause();
 
-	GameStatusForController getCurrentProgramStatus();
-
 	LadybugForController getLadybug();
 
 	boolean isGamePresentation();
@@ -34,6 +32,8 @@ public interface GameModelForController extends GameCommon {
 	void setGhostRequest(Point point);
 
 	void setLadybugRequest(Point point);
+
+	void setMultiPlayers(boolean isMuliPlayers);
 
 	void setShowHelp(boolean showHelp);
 

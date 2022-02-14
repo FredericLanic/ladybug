@@ -20,6 +20,8 @@ import static com.kycox.game.constant.Constants.PACE;
 
 import java.awt.Point;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
+import com.kycox.game.constant.ghost.image.GhostsBodyImages;
 import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.GameModelForViews;
@@ -52,6 +55,7 @@ import com.kycox.game.model.strategy.actions.GameModelProgramStarting;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.score.Score;
 import com.kycox.game.sound.NewSounds;
+import com.kycox.game.tools.Utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -247,6 +251,16 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Override
 	public void setLadybugRequest(Point point) {
 		ladybug.setUserRequest(point);
+	}
+
+	@Override
+	public void setMultiPlayers(boolean isMuliPlayers) {
+		List<GhostsBodyImages> ghostBodyImages = Arrays.asList(GhostsBodyImages.values());
+		ghostBodyImages.forEach(ghostBodyImage -> ghostBodyImage.setComputed(true));
+
+		if (isMuliPlayers) {
+			Utils.randomEnum(GhostsBodyImages.class).setComputed(false);
+		}
 	}
 
 	@Override

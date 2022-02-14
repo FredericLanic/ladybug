@@ -62,6 +62,11 @@ public final class Utils {
 		return roman.toString();
 	}
 
+	public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
+		var x = secureRandom.nextInt(clazz.getEnumConstants().length);
+		return clazz.getEnumConstants()[x];
+	}
+
 	/**
 	 * Constructeur privé
 	 */

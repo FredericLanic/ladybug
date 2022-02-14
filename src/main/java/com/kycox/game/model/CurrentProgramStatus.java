@@ -23,7 +23,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.GameStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
-import com.kycox.game.contract.GameStatusForController;
 import com.kycox.game.contract.GameStatusForGameSounds;
 import com.kycox.game.contract.GameStatusForGameView;
 
@@ -31,8 +30,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Named("CurrentGameStatus")
-public class CurrentProgramStatus
-        implements GameStatusForGameView, GameStatusForGameSounds, GameStatusForController, DoActionAfterTimer {
+public class CurrentProgramStatus implements GameStatusForGameView, GameStatusForGameSounds, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CurrentProgramStatus.class);
 	public static final int TO_INGAME = 0;
 	public static final int TO_LEVEL_START = 3;
@@ -114,17 +112,6 @@ public class CurrentProgramStatus
 	@Override
 	public boolean isProgramStarting() {
 		return gameStatus == GameStatus.PROGRAM_STARTING;
-	}
-
-	@Override
-	public boolean isToConfiguration() {
-		return gameStatus == GameStatus.TO_CONF_LOCAL_USR;
-	}
-
-	@Override
-	public void setConfiguration() {
-		gameStatus = GameStatus.TO_CONF_LOCAL_USR;
-		logger.info("Passage du status en " + gameStatus);
 	}
 
 	public void setGameEnd() {

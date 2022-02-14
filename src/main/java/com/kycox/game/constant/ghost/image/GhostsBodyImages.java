@@ -27,6 +27,7 @@ public enum GhostsBodyImages {
 
 	@Getter
 	private GhostsColorImages ghostColorBody;
+
 	@Getter
 	@Setter // ici je triche
 	private boolean isComputed;

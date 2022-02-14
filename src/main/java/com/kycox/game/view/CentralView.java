@@ -46,7 +46,6 @@ import com.kycox.game.font.GameFont;
 import com.kycox.game.score.Message;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
-import com.kycox.game.view.conf.ConfJDialog;
 import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugCommun;
 import com.kycox.game.view.ladybug.LadybugDyingView;
@@ -56,16 +55,13 @@ import com.kycox.game.view.map.ScreenBlockView;
 import lombok.Setter;
 
 /**
- * Vue du jeu MVC
- *
- * @author kycox
+ * Vue du jeu MVC O
  *
  */
 @Named("CentralView")
 public class CentralView extends JPanel implements Observer, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CentralView.class);
 	private static final long serialVersionUID = 1L;
-	private ConfJDialog confJDialog;
 	private final Font defaultFont = GameFont.PACFONT.getDefaultFont();
 	@Setter
 	private long durationLadybugNewLife;
@@ -108,13 +104,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 			var newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
-		if (gameModel.getCurrentProgramStatus().isToConfiguration()) {
-			confJDialog.setVisible(true);
-			drawGhosts(g2d);
-			// FIXME : Ici c'est la vue qui modifie le status du jeu; c'est mal; trouver une
-			// autre solution
-			gameModel.getCurrentProgramStatus().setProgramPresentation();
-		} else if (gameModel.getCurrentProgramStatus().isProgramStarting()) {
+		if (gameModel.getCurrentProgramStatus().isProgramStarting()) {
 			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");
 			drawPresentationGhosts(g2d);
 		} else if (gameModel.getCurrentProgramStatus().isGameStarting()) {
@@ -127,10 +117,10 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		} else if (gameModel.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
 			if (gameModel.isShowHelp()) {
-				drawSevenCenterTextLines(g2d, "hELP", "FII: sOUND ON/OFF", "FIII: lADYBUG sKIN", "FIV: gHOST hEADBAND",
-				        "FV: gHOST hAT", "ARROWS: lADYBUG mOVE", "ZQSD: gHOST mOVE");
+				drawEightCenterTextLines(g2d, "hELP", "FII: sOUND ON OFF", "FIII: lADYBUG sKIN", "FIV: gHOST hEADBAND",
+				        "FV: gHOST hAT", "ARROWS: lADYBUG mOVE", "ZQSD: gHOST mOVE", "i OR ii: pLAYERS");
 			} else {
-				drawThreeCenterTextLines(g2d, "PRESS s TO sTART", "c TO cONFIG", "OR fI FOR hELP");
+				drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "OR fI FOR hELP");
 			}
 		} else if (gameModel.getCurrentProgramStatus().isGameEnding()
 		        || gameModel.getCurrentProgramStatus().isGameEnd()) {
@@ -156,6 +146,23 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 			drawOneCenterTextLine(g2d, msg);
 			logger.error(msg);
 		}
+	}
+
+	private void drawEightCenterTextLines(Graphics2D g2d, String line1, String line2, String line3, String line4,
+	        String line5, String line6, String line7, String line8) {
+		var x = gameModel.getScreenData().getScreenWidth();
+		var y = gameModel.getScreenData().getScreenHeight();
+		var metr = getFontMetrics(defaultFont);
+		g2d.setColor(Color.white);
+		g2d.setFont(defaultFont);
+		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - (int) (6.5 * Constants.BLOCK_SIZE));
+		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 - (int) (4.65 * Constants.BLOCK_SIZE));
+		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 - (int) (2.78 * Constants.BLOCK_SIZE));
+		g2d.drawString(line4, (x - metr.stringWidth(line4)) / 2, y / 2 - (int) (0.93 * Constants.BLOCK_SIZE));
+		g2d.drawString(line5, (x - metr.stringWidth(line5)) / 2, y / 2 + (int) (0.93 * Constants.BLOCK_SIZE));
+		g2d.drawString(line6, (x - metr.stringWidth(line6)) / 2, y / 2 + (int) (2.78 * Constants.BLOCK_SIZE));
+		g2d.drawString(line7, (x - metr.stringWidth(line7)) / 2, y / 2 + (int) (4.65 * Constants.BLOCK_SIZE));
+		g2d.drawString(line8, (x - metr.stringWidth(line8)) / 2, y / 2 + (int) (6.5 * Constants.BLOCK_SIZE));
 	}
 
 	private void drawGhosts(Graphics2D g2d) {
@@ -275,8 +282,6 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	public void init() {
 		setFocusable(true);
 		setBackground(Color.black);
-		confJDialog = new ConfJDialog(mainFrame);
-		confJDialog.setVisible(false);
 		addKeyListener(gameController); // key listener pour les touches
 	}
 

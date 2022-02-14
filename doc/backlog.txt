@@ -48,6 +48,7 @@ DONE :
 - CFCT12 : faire un mode lampe allumée + F6
 - CFCT 13 : ghost en mode lampe allumée
 - CFCT 14 : en mode deux joueurs, afficher le fantôme en bas à gauche de l'écran
+- CFCT 15 : refactorisation de la mise en multijoueurs
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
