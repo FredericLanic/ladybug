@@ -47,6 +47,7 @@ DONE :
 - CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
 - CFCT12 : faire un mode lampe allumée + F6
 - CFCT 13 : ghost en mode lampe allumée
+- CFCT 14 : en mode deux joueurs, afficher le fantôme en bas à gauche de l'écran
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 

@@ -31,10 +31,10 @@ import javax.swing.JPanel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kycox.game.constant.ghost.image.GhostsColorImages;
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
+import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugView;
 
 import lombok.Setter;
@@ -44,6 +44,8 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 	private static final Log logger = LogFactory.getLog(PageEndView.class);
 	private static final long serialVersionUID = 1L;
 	private transient GameModelForViews gameModel;
+	@Inject
+	private GhostView ghostView;
 	@Setter
 	private int height;
 	private JPanel jPanelLadybugKinematique = new JPanel();
@@ -91,8 +93,10 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 
 	private void setVariableToScoreView(GameModelForViews gameModel) {
 		statusGameView.setGhostNbrLifes(gameModel.getGhostLeftLifes());
-		// Rajouter les yeux
-		statusGameView.setImageGhostPlayer(GhostsColorImages.GHOST_COLOR_GREY.getImage());
+		var humanGhost = gameModel.getGroupGhosts().getLstGhosts().stream().filter(g -> !g.isComputed()).findFirst();
+		if (humanGhost.isPresent()) {
+			statusGameView.setImageGhostPlayer(ghostView.getImage(humanGhost.get()));
+		}
 		statusGameView.setImageLadybugPlayer(ladybugView.getStaticView());
 		statusGameView.setInGame(gameModel.isInGame());
 		statusGameView.setLadybugNbrLifes(gameModel.getLadybug().getLeftLifes());
