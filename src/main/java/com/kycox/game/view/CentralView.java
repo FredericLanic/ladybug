@@ -168,9 +168,9 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private void drawGhosts(Graphics2D g2d) {
 		var ladybugPosition = gameModel.getLadybug().getPosition();
 		gameModel
-		        .getGroupGhosts().getLstGhosts().stream().filter(
+		        .getGroupGhosts().getGhosts().stream().filter(
 		                g -> g.getPosition().distance(ladybugPosition) <= 4 * Constants.BLOCK_SIZE || !g.isComputed()
-		                        || gameModel.getGroupGhosts().getLstGhosts().stream().filter(gc -> !gc.isComputed()
+		                        || gameModel.getGroupGhosts().getGhosts().stream().filter(gc -> !gc.isComputed()
 		                                && g.getPosition().distance(gc.getPosition()) <= 4 * Constants.BLOCK_SIZE)
 		                                .count() > 0
 		                        || !gameModel.getCurrentProgramStatus().isInGame()
@@ -193,7 +193,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 				var positionScreenBlock = new Point(x, y);
 
 				if ((ladybugPosition.distance(positionScreenBlock) <= 3.5 * Constants.BLOCK_SIZE)
-				        || gameModel.getGroupGhosts().getLstGhosts().stream().filter(g -> !g.isComputed()).filter(
+				        || gameModel.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).filter(
 				                g -> g.getPosition().distance(positionScreenBlock) <= 3.5 * Constants.BLOCK_SIZE)
 				                .count() > 0
 				        || !gameModel.getCurrentProgramStatus().isInGame()
@@ -220,7 +220,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private void drawPresentationGhosts(Graphics2D g2d) {
 		var x = gameModel.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
 		var y = gameModel.getScreenData().getScreenHeight() / 2;
-		List<Ghost> ghosts = gameModel.getGroupGhosts().getLstGhosts().stream().collect(Collectors.toList());
+		List<Ghost> ghosts = gameModel.getGroupGhosts().getGhosts().stream().collect(Collectors.toList());
 		for (Ghost ghost : ghosts) {
 			g2d.drawImage(ghostView.getImage(ghost), x, y, this);
 			x += 2 * Constants.BLOCK_SIZE;

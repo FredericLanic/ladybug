@@ -90,7 +90,7 @@ public class Score {
 			        Integer.toString(fruits.getScoreFruitById(ladybug.getEatenAIdRefFruit())), MessageType.POINT);
 		}
 		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
-		ghostsGroup.getLstGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
+		ghostsGroup.getGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
 		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST),
 		                MessageType.POINT));
 	}
