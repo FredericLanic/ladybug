@@ -75,7 +75,7 @@ Ajout du framework Spring vi application-context.xml dans Ladybug
 
 # Idées techniques
 * modifier le pattern Observer avec java 9+
-* faire un installer avec java 14+ pour windows
+* faire un installer avec java 16+ pour windows
 * faire des tests unitaires avec JUnit
 
 # Bugs détectés
