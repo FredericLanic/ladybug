@@ -170,9 +170,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		gameModel
 		        .getGroupGhosts().getGhosts().stream().filter(
 		                g -> g.getPosition().distance(ladybugPosition) <= 4 * Constants.BLOCK_SIZE || !g.isComputed()
-		                        || gameModel.getGroupGhosts().getGhosts().stream().filter(gc -> !gc.isComputed()
+		                        || gameModel.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed()
 		                                && g.getPosition().distance(gc.getPosition()) <= 4 * Constants.BLOCK_SIZE)
-		                                .count() > 0
 		                        || !gameModel.getCurrentProgramStatus().isInGame()
 		                        || !gameModel.getScreenData().isLitLampMode())
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
@@ -193,9 +192,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 				var positionScreenBlock = new Point(x, y);
 
 				if ((ladybugPosition.distance(positionScreenBlock) <= 3.5 * Constants.BLOCK_SIZE)
-				        || gameModel.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).filter(
+				        || gameModel.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).anyMatch(
 				                g -> g.getPosition().distance(positionScreenBlock) <= 3.5 * Constants.BLOCK_SIZE)
-				                .count() > 0
 				        || !gameModel.getCurrentProgramStatus().isInGame()
 				        || !gameModel.getScreenData().isLitLampMode()) {
 					screenBlockView.display(g2d, gameModel.getScreenData(), x, y);

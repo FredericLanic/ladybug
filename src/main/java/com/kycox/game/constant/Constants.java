@@ -61,7 +61,7 @@ public final class Constants {
 	// Point neutre
 	public static final Point POINT_ZERO = new Point(0, 0);
 	// niveau pour la fenêtre de présentation
-	public static final int PRESENTATION_LEVEL = 2;
+	public static final int PRESENTATION_LEVEL = 3;
 	// durée d'affichage du message de bienvenue
 	public static final int PROGRAM_STARTING_MILLISECONDS = 2500;
 	// Score quand un fantôme est mangé

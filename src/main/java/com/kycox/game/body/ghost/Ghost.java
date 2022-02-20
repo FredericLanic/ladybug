@@ -124,24 +124,29 @@ public abstract class Ghost extends UserBody {
 		var ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
 		// Déplacement en fonction du status du fantôme
 		switch (getStatus()) {
-			case DYING -> moveToRegeneratePoint(screenData);
+			case DYING -> regeneratePointMoving(screenData);
 			case FLASH, SCARED -> scaredOrFlashedMoving(ladybugPosBlock, screenData);
 			case NORMAL -> normalMoving(ladybug, screenData);
 			case REGENERATED -> {
 				// Do nothing
 			}
 			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
-
 		}
 	}
 
 	public void moveGhostUser(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
 		setUserRequest(ghostRequest);
-		if (isPerfectOnABlock() && getStatus() == GhostStatus.NORMAL) {
-			move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
-			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-		} else {
-			moveComputedGhost(ladybug, screenData);
+
+		switch (getStatus()) {
+			case DYING -> moveComputedGhost(ladybug, screenData);
+			case REGENERATED -> {
+				// Do nothing
+			}
+			case FLASH, SCARED, NORMAL -> {
+				move(screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition())));
+				getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+			}
+			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
 		}
 	}
 
@@ -183,7 +188,17 @@ public abstract class Ghost extends UserBody {
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
 
-	private void moveToRegeneratePoint(ScreenData screenData) {
+	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
+		var ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
+		var ladybugDirection = ladybug.getDirection();
+		if (sensitiveBehavious.isActive() && ladybug.getStatus() != LadybugStatus.DEAD) {
+			moveByBehaviour(ladybugPosBlock, ladybugDirection, screenData);
+		} else {
+			defaultMoving(screenData);
+		}
+	}
+
+	private void regeneratePointMoving(ScreenData screenData) {
 		// Le fantôme est arrivé au limite du block
 		if (isPerfectOnABlock()) {
 			// calcul du chemin le plus court :
@@ -213,16 +228,6 @@ public abstract class Ghost extends UserBody {
 			}
 		}
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
-	}
-
-	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
-		var ladybugPosBlock = Utils.convertPointToBlockUnit(ladybug.getPosition());
-		var ladybugDirection = ladybug.getDirection();
-		if (sensitiveBehavious.isActive() && ladybug.getStatus() != LadybugStatus.DEAD) {
-			moveByBehaviour(ladybugPosBlock, ladybugDirection, screenData);
-		} else {
-			defaultMoving(screenData);
-		}
 	}
 
 	private void scaredOrFlashedMoving(Point ladybugPosBlock, ScreenData screenData) {

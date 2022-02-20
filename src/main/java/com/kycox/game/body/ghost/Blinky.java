@@ -27,7 +27,6 @@ public class Blinky extends Ghost {
 
 	@Override
 	public void setInitSpeed(int numLevel) {
-		// Vitesse de Ladybug moins 1
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel));
 	}
 
@@ -43,7 +42,9 @@ public class Blinky extends Ghost {
 			return;
 		}
 		if (getStatus() == GhostStatus.SCARED) {
-			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
+			setSpeedIndex(getStartSpeedIndex() - 1);
+		} else if (!isComputed()) {
+			setSpeedIndex(getStartSpeedIndex());
 		} else {
 			// Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
 			// map

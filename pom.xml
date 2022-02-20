@@ -46,12 +46,6 @@
 			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>    
-			 
-        <!--  >dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency -->
    		
 		<dependency>
 			<groupId>javax.inject</groupId>
@@ -64,11 +58,33 @@
 			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
+		<!-- essai manette xbox : https://github.com/williamahartman/Jamepad -->
+	    <dependency>
+	        <groupId>com.github.WilliamAHartman</groupId>
+	        <artifactId>Jamepad</artifactId>
+	        <version>1.3.2</version>
+	    </dependency>
     </dependencies>
-    
+
+	<repositories>
+		<!-- essai manette xbox : https://github.com/williamahartman/Jamepad -->
+	    <repository>
+	        <snapshots>
+	            <enabled>false</enabled>
+	        </snapshots>
+	        <id>central</id>
+	        <name>bintray</name>
+	        <url>https://jcenter.bintray.com</url>
+	    </repository>
+	    <repository>
+	        <id>jitpack.io</id>
+	        <url>https://jitpack.io</url>
+	    </repository>
+	</repositories>    
+
     <build>
-        <plugins>
+    	<plugins>
 			<plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-surefire-plugin</artifactId>
@@ -81,6 +97,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- set the main class for release mvn step -->
+	            <configuration>
+	                <mainClass>com.kycox.game.MainLadybug</mainClass>
+	            </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.springframework</groupId>

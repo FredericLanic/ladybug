@@ -26,15 +26,13 @@ public class Clyde extends Ghost {
 
 	@Override
 	public void setSpeed(int numLevel, int perCent) {
-		/*
-		 * Idée : faire accélerer ou ralentir Clyde de manière aléatoire....
-		 */
 		if (!isPerfectOnABlock()) {
 			return;
 		}
 		if (getStatus() == GhostStatus.SCARED) {
-			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
+			setSpeedIndex(getStartSpeedIndex() - 1);
 		} else {
+			// isComputed or !isComputed
 			setSpeedIndex(getStartSpeedIndex());
 		}
 	}

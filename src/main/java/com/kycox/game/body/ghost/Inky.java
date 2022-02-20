@@ -18,10 +18,6 @@ package com.kycox.game.body.ghost;
 
 import com.kycox.game.constant.ghost.GhostStatus;
 
-/**
- * Spécificités du fantôme Inky
- *
- */
 public class Inky extends Ghost {
 	@Override
 	public void setInitSpeed(int numLevel) {
@@ -34,8 +30,9 @@ public class Inky extends Ghost {
 			return;
 		}
 		if (getStatus() == GhostStatus.SCARED) {
-			setSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel) - 1);
+			setSpeedIndex(getStartSpeedIndex() - 1);
 		} else {
+			// isComputed or !isComputed
 			setSpeedIndex(getStartSpeedIndex());
 		}
 	}

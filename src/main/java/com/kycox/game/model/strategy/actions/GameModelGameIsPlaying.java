@@ -35,7 +35,8 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 		if (groupGhosts.eatLadybug()) {
 			ladybug.setStatus(LadybugStatus.DYING);
 			ladybugDying.initBip();
-			groupGhosts.manageNewLife();
+			// TODO : when user ghost has new life ?
+			groupGhosts.manageNewLifeUnComputedGhost();
 		}
 	}
 

@@ -33,9 +33,10 @@ public class GhostsGroup implements GroupGhostForGameView {
 	private List<Ghost> ghosts;
 
 	public boolean eatLadybug() {
-		return ghosts.stream().filter(g -> g.getGhostActions().isEatLadybug()).count() > 0;
+		return ghosts.stream().anyMatch(g -> g.getGhostActions().isEatLadybug());
 	}
 
+	// TODO : voir si on peut faire mieux
 	public int getLeftLives() {
 		var optGhost = ghosts.stream().filter(g -> !g.isComputed()).findFirst();
 		if (optGhost.isPresent()) {
@@ -49,39 +50,32 @@ public class GhostsGroup implements GroupGhostForGameView {
 	}
 
 	public boolean hasDyingGhost() {
-		return (ghosts.stream().filter(g -> g.getStatus() == GhostStatus.DYING).count() > 0);
+		return (ghosts.stream().anyMatch(g -> g.getStatus() == GhostStatus.DYING));
 	}
 
 	public boolean hasGhostUser() {
-		return ghosts.stream().filter(g -> !g.isComputed()).findFirst().isPresent();
+		return ghosts.stream().anyMatch(g -> !g.isComputed());
 	}
 
 	public boolean hasRegeneratedGhost() {
-		return (ghosts.stream().filter(g -> g.getStatus() == GhostStatus.REGENERATED).count() > 0);
+		return (ghosts.stream().anyMatch(g -> g.getStatus() == GhostStatus.REGENERATED));
 	}
 
 	public boolean hasScaredOrFlashedGhost() {
-		return ((ghosts.stream().filter(g -> g.getStatus() == GhostStatus.SCARED).count()
-		        + ghosts.stream().filter(g -> g.getStatus() == GhostStatus.FLASH).count()) > 0);
+		return ghosts.stream().anyMatch(g -> g.getStatus() == GhostStatus.SCARED || g.getStatus() == GhostStatus.FLASH);
 	}
 
 	public boolean hasTeleportedGhosts() {
-		var nbrTeleportedGhosts = ghosts.stream().filter(g -> g.getGhostActions().isToBeTeleported()).count();
-		return (nbrTeleportedGhosts > 0);
+		return ghosts.stream().anyMatch(g -> g.getGhostActions().isToBeTeleported());
 	}
 
-	public void initializePositions(ScreenData screenData) {
-		ghosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
-	}
-
-	public void manageNewLife() {
+	public void manageNewLifeUnComputedGhost() {
 		ghosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
 	public void move(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
 		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, screenData));
-		ghosts.stream().filter(g -> !g.isComputed())
-		        .forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
+		ghosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
 	}
 
 	public void setActions(Ladybug ladybug, ScreenData screenData) {
@@ -99,8 +93,7 @@ public class GhostsGroup implements GroupGhostForGameView {
 	}
 
 	public void setFlashActive() {
-		ghosts.stream().filter(g -> g.getStatus() == GhostStatus.SCARED)
-		        .forEach(g -> g.setStatus(GhostStatus.FLASH));
+		ghosts.stream().filter(g -> g.getStatus() == GhostStatus.SCARED).forEach(g -> g.setStatus(GhostStatus.FLASH));
 	}
 
 	private void setGhostPositionAfterTeleportation(ScreenData screenData) {
@@ -124,7 +117,11 @@ public class GhostsGroup implements GroupGhostForGameView {
 		        .forEach(g -> g.setStatus(GhostStatus.REGENERATED));
 	}
 
-	public void setInitSpeeds(int numLevel) {
+	public void setInitSpeedsComputedGhost(int numLevel) {
+		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.setInitSpeed(numLevel));
+	}
+
+	public void setInitSpeedsForPresentation(int numLevel) {
 		ghosts.stream().forEach(g -> g.setInitSpeed(numLevel));
 	}
 
@@ -136,14 +133,18 @@ public class GhostsGroup implements GroupGhostForGameView {
 		ghosts.stream().forEach(g -> g.setNumLevel(numLevel));
 	}
 
+	public void setPositionToRevivorGhostPoint(ScreenData screenData) {
+		ghosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
+	}
+
 	private void setSpeed(int numLevel, int perCent) {
 		ghosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
 	}
 
 	public void setStartLevel(int numLevel, ScreenData screenData) {
 		setStatus(GhostStatus.NORMAL);
-		setInitSpeeds(numLevel);
-		initializePositions(screenData);
+		setInitSpeedsComputedGhost(numLevel);
+		setPositionToRevivorGhostPoint(screenData);
 	}
 
 	public void setStatus(GhostStatus status) {
@@ -166,8 +167,6 @@ public class GhostsGroup implements GroupGhostForGameView {
 	 * Retourne vrai si le fantôme n'a plus de vie
 	 */
 	public boolean userGhostHasNoLife() {
-		var nbrDeadUserGhost = ghosts.stream().filter(g -> !g.isComputed()).filter(g -> (g.getLeftLifes() <= 0))
-		        .count();
-		return (nbrDeadUserGhost > 0);
+		return ghosts.stream().anyMatch(g -> !g.isComputed() && g.getLeftLifes() <= 0);
 	}
 }

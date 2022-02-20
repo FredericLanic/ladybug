@@ -67,6 +67,9 @@ public class AbstratGameModel {
 		ladybug.settingsForNewLevel(currentGameStatus.getNumLevel(), screenData.getInitLadybugPos());
 		// initialise les fantômes
 		groupGhosts.setStartLevel(currentGameStatus.getNumLevel(), screenData);
+
+		groupGhosts.getGhosts().stream().filter(g -> !g.isComputed())
+		        .forEach(gu -> gu.initSpeedIndex(ladybug.getSpeedIndex()));
 	}
 
 	/**
@@ -85,10 +88,10 @@ public class AbstratGameModel {
 		gameScore.init();
 		// Initialise le groupe de fantôme
 		groupGhosts.setNumLevel(Constants.PRESENTATION_LEVEL);
-		// mise de la vitesse du niveau 3 pour la présentation
-		groupGhosts.setInitSpeeds(Constants.PRESENTATION_LEVEL);
+		// mise de la vitesse du niveau PRESENTATION_LEVEL
+		groupGhosts.setInitSpeedsForPresentation(Constants.PRESENTATION_LEVEL);
 		// initialise les positions des fantômes
-		groupGhosts.initializePositions(screenData);
+		groupGhosts.setPositionToRevivorGhostPoint(screenData);
 		// initialise les fantômes pour la présentation
 		groupGhosts.setStatus(GhostStatus.NORMAL);
 		// initialise les vies de fantômes

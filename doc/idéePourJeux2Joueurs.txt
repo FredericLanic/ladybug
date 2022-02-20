@@ -1,0 +1,33 @@
+Idées pour Ladybug :
+
+1/ En mode deux joueurs :
+- initier la vitesse du fantôme dirigé par l'utilisateur à la même que LadyBug
+	- vitesse initiale
+	- vitesse courante
+- quand ladybug a son super pouvoir, la vitesse du fantôme dirigé par l'utilisateur doit être sa vitesse -1
+
+2/ En mode deux joueurs :
+ajouter un point de super pouvoir pour les fantômes :
+lorsque le fantôme mange le super pouvoir
+=> ladybug change de statut : SCARED
+=> les fantômes retrouvent leur status : NORMAL
+
+
+
+
+
+2/ ajouter un point de diminution de vitesse : PAV
+- ajouter un point de diminution de vitesse : PDV
+- lorsque Ladybug ou le fantôme dirigé par le joureur passe sur un point PAV :
+	- la vitesse est augmentée pendant 30 secondes
+	- un son Vitesse Supérieure est émis pour la prise en compte du PAV
+- lorsque Ladybug ou le fantôme dirigé par le joureur passe sur un point PDV :
+	- la vitesse est augmentée pendant 15 secondes
+	- un son Vitesse Supérieure est émis pour la prise en compte du PDV
+
+Réfléchir lorsque Ladybug a le pouvoir de manger les fantômes :
+- la vitesse est déjà réduite
+=> lorsque 
+
+3/ En mode deux joueurs :
+Lorsque Ladybug a le pouvoir de manger les fantômes, le fantôme dirigé par l'utilisateur est manipulable par l'utilisateur.
