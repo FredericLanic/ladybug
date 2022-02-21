@@ -43,7 +43,7 @@ import lombok.Setter;
 public class PageEndView extends JPanel implements Observer, MainGraphicStructure {
 	private static final Log logger = LogFactory.getLog(PageEndView.class);
 	private static final long serialVersionUID = 1L;
-	private transient GameModelForViews gameModel;
+	private transient GameModelForViews gameModelForViews;
 	@Inject
 	private GhostView ghostView;
 	@Setter
@@ -80,7 +80,7 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 
 	@Override
 	public void paintComponent(Graphics g) {
-		if (gameModel != null) {
+		if (gameModelForViews != null) {
 			super.paintComponent(g);
 		}
 	}
@@ -91,30 +91,32 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 		initJPanelInside(preferredSize);
 	}
 
-	private void setVariableToScoreView(GameModelForViews gameModel) {
-		statusGameView.setGhostNbrLifes(gameModel.getGhostLeftLifes());
-		var humanGhost = gameModel.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).findFirst();
+	private void setVariableToScoreView(GameModelForViews gameModelForViews) {
+		statusGameView.setGhostNbrLifes(gameModelForViews.getGhostLeftLifes());
+		var humanGhost = gameModelForViews.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed())
+		        .findFirst();
 		if (humanGhost.isPresent()) {
 			statusGameView.setImageGhostPlayer(ghostView.getImage(humanGhost.get()));
 		}
 		statusGameView.setImageLadybugPlayer(ladybugView.getStaticView());
-		statusGameView.setInGame(gameModel.isInGame());
-		statusGameView.setLadybugNbrLifes(gameModel.getLadybug().getLeftLifes());
-		statusGameView.setNbrPlayers(gameModel.getNbrPlayers());
-		statusGameView.setNumLevel(gameModel.getCurrentProgramStatus().getNumLevel());
-		statusGameView.setScore(gameModel.getGameScore().getScore());
-		statusGameView.setIncrementScore(gameModel.getIncrementScore());
-		statusGameView.setNbrPointsForNewLife(gameModel.getNbrPointsForNewLife());
+		statusGameView.setInGame(gameModelForViews.isInGame());
+		statusGameView.setLadybugNbrLifes(gameModelForViews.getLadybug().getLeftLifes());
+		statusGameView.setNbrPlayers(gameModelForViews.getNbrPlayers());
+		statusGameView.setNumLevel(gameModelForViews.getCurrentProgramStatus().getNumLevel());
+		statusGameView.setScore(gameModelForViews.getGameScore().getScore());
+		statusGameView.setIncrementScore(gameModelForViews.getIncrementScore());
+		statusGameView.setNbrPointsForNewLife(gameModelForViews.getNbrPointsForNewLife());
+		statusGameView.setSoundActive(gameModelForViews.isSoundActive());
 	}
 
 	@Override
-	public void update(Observable gameModel, Object arg) {
-		if (gameModel != null) {
-			this.gameModel = (GameModelForViews) gameModel;
-			setVariableToScoreView(this.gameModel);
+	public void update(Observable gameModelForViews, Object arg) {
+		if (gameModelForViews != null) {
+			this.gameModelForViews = (GameModelForViews) gameModelForViews;
+			setVariableToScoreView(this.gameModelForViews);
 			repaint();
 		} else {
-			logger.info("GameModel is null in " + PageEndView.class);
+			logger.info("gameModelForViews is null in " + PageEndView.class);
 		}
 	}
 }

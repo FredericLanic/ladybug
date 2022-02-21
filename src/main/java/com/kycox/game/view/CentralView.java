@@ -41,7 +41,7 @@ import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
 import com.kycox.game.contract.GameModelForViews;
-import com.kycox.game.controller.KeyGameController;
+import com.kycox.game.controller.key.KeyGameController;
 import com.kycox.game.font.GameFont;
 import com.kycox.game.score.Message;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
@@ -66,8 +66,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	@Setter
 	private long durationLadybugNewLife;
 	@Inject
-	private KeyGameController gameController;
-	private GameModelForViews gameModel;
+	private KeyGameController keyGameController;
+	private GameModelForViews gameModelForView;
 	@Inject
 	private GhostView ghostView;
 	@Inject
@@ -99,50 +99,51 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private void draw(Graphics g) {
 		var g2d = (Graphics2D) g;
 		drawMaze(g2d);
-		if (gameModel.getLadybug().isNewLife()) {
+		if (gameModelForView.getLadybug().isNewLife()) {
 			screenBlockView.setColorMaze(Constants.COLOR_EXTRA_PAC_LADYBUG);
 			var newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
-		if (gameModel.getCurrentProgramStatus().isProgramStarting()) {
+		if (gameModelForView.getCurrentProgramStatus().isProgramStarting()) {
 			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");
 			drawPresentationGhosts(g2d);
-		} else if (gameModel.getCurrentProgramStatus().isGameStarting()) {
+		} else if (gameModelForView.getCurrentProgramStatus().isGameStarting()) {
 			drawThreeCenterTextLines(g2d, "eNJOY", "yOUR GAME", "gET READY");
-		} else if (gameModel.getCurrentProgramStatus().isLevelStarting()) {
+		} else if (gameModelForView.getCurrentProgramStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
-			var text = "lEVEL " + Utils.integerToRoman(gameModel.getCurrentProgramStatus().getNumLevel()).toLowerCase();
+			var text = "lEVEL "
+			        + Utils.integerToRoman(gameModelForView.getCurrentProgramStatus().getNumLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
-		} else if (gameModel.getCurrentProgramStatus().isProgramPresentation()) {
+		} else if (gameModelForView.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
-			if (gameModel.isShowHelp()) {
+			if (gameModelForView.isShowHelp()) {
 				drawEightCenterTextLines(g2d, "hELP", "FII: sOUND ON OFF", "FIII: lADYBUG sKIN", "FIV: gHOST hEADBAND",
 				        "FV: gHOST hAT", "ARROWS: lADYBUG mOVE", "ZQSD: gHOST mOVE", "i OR ii: pLAYERS");
 			} else {
 				drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "OR fI FOR hELP");
 			}
-		} else if (gameModel.getCurrentProgramStatus().isGameEnding()
-		        || gameModel.getCurrentProgramStatus().isGameEnd()) {
+		} else if (gameModelForView.getCurrentProgramStatus().isGameEnding()
+		        || gameModelForView.getCurrentProgramStatus().isGameEnd()) {
 			drawGhosts(g2d);
 			var levelText = "eND lEVEL "
-			        + Utils.integerToRoman(gameModel.getCurrentProgramStatus().getNumLevel()).toLowerCase();
+			        + Utils.integerToRoman(gameModelForView.getCurrentProgramStatus().getNumLevel()).toLowerCase();
 
 			drawTwoCenterTextLines(g2d, "gAME oVER", levelText);
-		} else if (gameModel.getCurrentProgramStatus().isLevelEnding()) {
+		} else if (gameModelForView.getCurrentProgramStatus().isLevelEnding()) {
 			drawTwoCenterTextLines(g2d, "nEXT LEVEL", "gET READY");
-		} else if (gameModel.getLadybug().getStatus() == LadybugStatus.DYING) {
+		} else if (gameModelForView.getLadybug().getStatus() == LadybugStatus.DYING) {
 			ladybugDyingView.inProgress();
 			drawGhosts(g2d);
 			drawLadybug(g2d, ladybugDyingView);
-		} else if (gameModel.getLadybug().getStatus() == LadybugStatus.DEAD) {
+		} else if (gameModelForView.getLadybug().getStatus() == LadybugStatus.DEAD) {
 			ladybugDyingView.init();
-		} else if (gameModel.getLadybug().getStatus() != LadybugStatus.DEAD) {
+		} else if (gameModelForView.getLadybug().getStatus() != LadybugStatus.DEAD) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
 		} else {
-			var msg = "NO DISPLAY FOR STATUS " + gameModel.getCurrentProgramStatus();
+			var msg = "NO DISPLAY FOR STATUS " + gameModelForView.getCurrentProgramStatus();
 			drawOneCenterTextLine(g2d, msg);
 			logger.error(msg);
 		}
@@ -150,8 +151,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 
 	private void drawEightCenterTextLines(Graphics2D g2d, String line1, String line2, String line3, String line4,
 	        String line5, String line6, String line7, String line8) {
-		var x = gameModel.getScreenData().getScreenWidth();
-		var y = gameModel.getScreenData().getScreenHeight();
+		var x = gameModelForView.getScreenData().getScreenWidth();
+		var y = gameModelForView.getScreenData().getScreenHeight();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -166,37 +167,37 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	private void drawGhosts(Graphics2D g2d) {
-		var ladybugPosition = gameModel.getLadybug().getPosition();
-		gameModel
-		        .getGroupGhosts().getGhosts().stream().filter(
-		                g -> g.getPosition().distance(ladybugPosition) <= 4 * Constants.BLOCK_SIZE || !g.isComputed()
-		                        || gameModel.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed()
+		var ladybugPosition = gameModelForView.getLadybug().getPosition();
+		gameModelForView.getGroupGhosts().getGhosts().stream()
+		        .filter(g -> g.getPosition().distance(ladybugPosition) <= 4 * Constants.BLOCK_SIZE || !g.isComputed()
+		                || gameModelForView.getGroupGhosts().getGhosts().stream()
+		                        .anyMatch(gc -> !gc.isComputed()
 		                                && g.getPosition().distance(gc.getPosition()) <= 4 * Constants.BLOCK_SIZE)
-		                        || !gameModel.getCurrentProgramStatus().isInGame()
-		                        || !gameModel.getScreenData().isLitLampMode())
+		                || !gameModelForView.getCurrentProgramStatus().isInGame()
+		                || !gameModelForView.getScreenData().isLitLampMode())
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
 	}
 
 	private void drawLadybug(Graphics2D g2d, LadybugCommun ladybugCommon) {
-		var viewDirection = gameModel.getLadybug().getViewDirection();
-		var getPosition = gameModel.getLadybug().getPosition();
+		var viewDirection = gameModelForView.getLadybug().getViewDirection();
+		var getPosition = gameModelForView.getLadybug().getPosition();
 		var image = ladybugCommon.getImage(viewDirection);
 		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
 	}
 
 	private void drawMaze(Graphics2D g2d) {
-		var ladybugPosition = gameModel.getLadybug().getPosition();
-		for (var y = 0; y < gameModel.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
-			for (var x = 0; x < gameModel.getScreenData().getCurrentLevel().getNbrBlocksByLine()
+		var ladybugPosition = gameModelForView.getLadybug().getPosition();
+		for (var y = 0; y < gameModelForView.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
+			for (var x = 0; x < gameModelForView.getScreenData().getCurrentLevel().getNbrBlocksByLine()
 			        * Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE) {
 				var positionScreenBlock = new Point(x, y);
 
 				if ((ladybugPosition.distance(positionScreenBlock) <= 3.5 * Constants.BLOCK_SIZE)
-				        || gameModel.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).anyMatch(
+				        || gameModelForView.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).anyMatch(
 				                g -> g.getPosition().distance(positionScreenBlock) <= 3.5 * Constants.BLOCK_SIZE)
-				        || !gameModel.getCurrentProgramStatus().isInGame()
-				        || !gameModel.getScreenData().isLitLampMode()) {
-					screenBlockView.display(g2d, gameModel.getScreenData(), x, y);
+				        || !gameModelForView.getCurrentProgramStatus().isInGame()
+				        || !gameModelForView.getScreenData().isLitLampMode()) {
+					screenBlockView.display(g2d, gameModelForView.getScreenData(), x, y);
 				}
 
 			}
@@ -204,8 +205,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	private void drawOneCenterTextLine(Graphics2D g2d, String text) {
-		var x = gameModel.getScreenData().getScreenWidth();
-		var y = gameModel.getScreenData().getScreenHeight();
+		var x = gameModelForView.getScreenData().getScreenWidth();
+		var y = gameModelForView.getScreenData().getScreenHeight();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -216,9 +217,9 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	 * FIXME : utiliser les streams comme dans drawGhosts(Graphics2D g2d)
 	 */
 	private void drawPresentationGhosts(Graphics2D g2d) {
-		var x = gameModel.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
-		var y = gameModel.getScreenData().getScreenHeight() / 2;
-		List<Ghost> ghosts = gameModel.getGroupGhosts().getGhosts().stream().collect(Collectors.toList());
+		var x = gameModelForView.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
+		var y = gameModelForView.getScreenData().getScreenHeight() / 2;
+		List<Ghost> ghosts = gameModelForView.getGroupGhosts().getGhosts().stream().collect(Collectors.toList());
 		for (Ghost ghost : ghosts) {
 			g2d.drawImage(ghostView.getImage(ghost), x, y, this);
 			x += 2 * Constants.BLOCK_SIZE;
@@ -232,7 +233,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		int x;
 		int y;
 		// Affichage des scores incréments
-		for (Message message : gameModel.getGroupMessages().getMessages()) {
+		for (Message message : gameModelForView.getGroupMessages().getMessages()) {
 			x = message.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
 			y = message.getPosition().y + Constants.BLOCK_SIZE / 2;
 			g2d.drawString(message.getValue() + message.getMessageType().getEndMessage(), x, y);
@@ -241,8 +242,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 
 	private void drawSevenCenterTextLines(Graphics2D g2d, String line1, String line2, String line3, String line4,
 	        String line5, String line6, String line7) {
-		var x = gameModel.getScreenData().getScreenWidth();
-		var y = gameModel.getScreenData().getScreenHeight();
+		var x = gameModelForView.getScreenData().getScreenWidth();
+		var y = gameModelForView.getScreenData().getScreenHeight();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -256,8 +257,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	private void drawThreeCenterTextLines(Graphics2D g2d, String line1, String line2, String line3) {
-		var x = gameModel.getScreenData().getScreenWidth();
-		var y = gameModel.getScreenData().getScreenHeight();
+		var x = gameModelForView.getScreenData().getScreenWidth();
+		var y = gameModelForView.getScreenData().getScreenHeight();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -267,8 +268,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	private void drawTwoCenterTextLines(Graphics2D g2d, String line1, String line2) {
-		var x = gameModel.getScreenData().getScreenWidth();
-		var y = gameModel.getScreenData().getScreenHeight();
+		var x = gameModelForView.getScreenData().getScreenWidth();
+		var y = gameModelForView.getScreenData().getScreenHeight();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -280,12 +281,12 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	public void init() {
 		setFocusable(true);
 		setBackground(Color.black);
-		addKeyListener(gameController); // key listener pour les touches
+		addKeyListener(keyGameController); // key listener pour les touches
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		if (gameModel != null) {
+		if (gameModelForView != null) {
 			super.paintComponent(g);
 			draw(g);
 		}
@@ -293,7 +294,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 
 	@Override
 	public void update(Observable gameModel, Object used) {
-		this.gameModel = (GameModelForViews) gameModel;
+		gameModelForView = (GameModelForViews) gameModel;
 		repaint();
 	}
 }

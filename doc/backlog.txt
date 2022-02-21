@@ -24,7 +24,6 @@ Coté fonctionnalités CFCT :
 - CFCT2 : augmenter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug 
 - CFCT5 : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
 - CFCT8 : revoir les moments d'initialisation des points incrément avant de gagner une nouvelle vie
-- CFCT16 : en mode deux joueurs, le fantôme user a la même vitesse que Ladybug
 
 DONE :
 - CFCT0 : faire un skin OXiane pour Ladybug
@@ -49,6 +48,7 @@ DONE :
 - CFCT 13 : ghost en mode lampe allumée
 - CFCT 14 : en mode deux joueurs, afficher le fantôme en bas à gauche de l'écran
 - CFCT 15 : refactorisation de la mise en multijoueurs
+- CFCT 16 : en mode deux joueurs, le fantôme user a la même vitesse que Ladybug
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 

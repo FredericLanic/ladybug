@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.controller;
+package com.kycox.game.controller.key;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -36,7 +36,7 @@ import com.kycox.game.properties.GameProperties;
 @Named("KeyGameController")
 public class KeyGameController extends KeyAdapter {
 	@Inject
-	private GameModelForController gameModel;
+	private GameModelForController gameModelForController;
 	@Inject
 	private GameProperties gameProperties;
 
@@ -47,9 +47,9 @@ public class KeyGameController extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		var keyCode = e.getKeyCode();
 		manageCommonKeys(keyCode);
-		if (gameModel.isGamePresentation()) {
+		if (gameModelForController.isGamePresentation()) {
 			manageKeysInPresentation(keyCode);
-		} else if (gameModel.isInGame()) {
+		} else if (gameModelForController.isInGame()) {
 			manageKeysInGame(keyCode);
 		}
 	}
@@ -57,19 +57,17 @@ public class KeyGameController extends KeyAdapter {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-			case KeyEvent.VK_F1 -> gameModel.setShowHelp(false);
+			case KeyEvent.VK_F1 -> gameModelForController.setShowHelp(false);
 		}
 	}
 
 	private void manageCommonKeys(int keyCode) {
 		switch (keyCode) {
-			case KeyEvent.VK_F1 -> gameModel.setShowHelp(true);
-			case KeyEvent.VK_F2 -> gameModel.startStopSoundActive();
+			case KeyEvent.VK_F1 -> gameModelForController.setShowHelp(true);
+			case KeyEvent.VK_F2 -> gameModelForController.startStopSoundActive();
 			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
 			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();
 			case KeyEvent.VK_F5 -> gameProperties.changeGhostHat();
-			// Mode lampe allumée
-			case KeyEvent.VK_F6 -> gameModel.changeLitLampMode();
 
 		}
 	}
@@ -82,19 +80,21 @@ public class KeyGameController extends KeyAdapter {
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
 			// Mouvement L
-			case KeyEvent.VK_LEFT -> gameModel.setLadybugRequest(Constants.POINT_LEFT);
-			case KeyEvent.VK_RIGHT -> gameModel.setLadybugRequest(Constants.POINT_RIGHT);
-			case KeyEvent.VK_UP -> gameModel.setLadybugRequest(Constants.POINT_UP);
-			case KeyEvent.VK_DOWN -> gameModel.setLadybugRequest(Constants.POINT_DOWN);
+			case KeyEvent.VK_LEFT -> gameModelForController.setLadybugRequest(Constants.POINT_LEFT);
+			case KeyEvent.VK_RIGHT -> gameModelForController.setLadybugRequest(Constants.POINT_RIGHT);
+			case KeyEvent.VK_UP -> gameModelForController.setLadybugRequest(Constants.POINT_UP);
+			case KeyEvent.VK_DOWN -> gameModelForController.setLadybugRequest(Constants.POINT_DOWN);
 			// Mouvement du fantôme (joueur 2)
-			case KeyEvent.VK_Z -> gameModel.setGhostRequest(Constants.POINT_UP);
-			case KeyEvent.VK_S -> gameModel.setGhostRequest(Constants.POINT_DOWN);
-			case KeyEvent.VK_Q -> gameModel.setGhostRequest(Constants.POINT_LEFT);
-			case KeyEvent.VK_D -> gameModel.setGhostRequest(Constants.POINT_RIGHT);
+			case KeyEvent.VK_Z -> gameModelForController.setGhostRequest(Constants.POINT_UP);
+			case KeyEvent.VK_S -> gameModelForController.setGhostRequest(Constants.POINT_DOWN);
+			case KeyEvent.VK_Q -> gameModelForController.setGhostRequest(Constants.POINT_LEFT);
+			case KeyEvent.VK_D -> gameModelForController.setGhostRequest(Constants.POINT_RIGHT);
 			// Partie en pause
-			case KeyEvent.VK_PAUSE -> gameModel.gameInPause();
+			case KeyEvent.VK_PAUSE -> gameModelForController.gameInPause();
 			// Arret de la partie
-			case KeyEvent.VK_ESCAPE -> gameModel.forceStopGame();
+			case KeyEvent.VK_ESCAPE -> gameModelForController.forceStopGame();
+			// Mode lampe allumée
+			case KeyEvent.VK_F6 -> gameModelForController.changeLitLampMode();
 		}
 	}
 
@@ -106,10 +106,9 @@ public class KeyGameController extends KeyAdapter {
 	private void manageKeysInPresentation(int keyCode) {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
-			case KeyEvent.VK_S -> gameModel.startGame();
-
-			case KeyEvent.VK_1 -> gameModel.setMultiPlayers(false);
-			case KeyEvent.VK_2 -> gameModel.setMultiPlayers(true);
+			case KeyEvent.VK_S -> gameModelForController.startGame();
+			case KeyEvent.VK_1 -> gameModelForController.setMultiPlayers(false);
+			case KeyEvent.VK_2 -> gameModelForController.setMultiPlayers(true);
 			case KeyEvent.VK_ESCAPE -> System.exit(0); // FIXME : c'est au modèle de sortir proprement du jeu
 		}
 	}

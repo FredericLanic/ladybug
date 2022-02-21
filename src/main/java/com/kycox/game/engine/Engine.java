@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.kycox.game.controller.xboxone.XboxOneController;
 import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.CentralView;
@@ -35,6 +36,8 @@ public class Engine {
 	private GameSounds gameSounds;
 	@Inject
 	private PageEndView pageEndView;
+	@Inject
+	private XboxOneController xboxOneController;
 
 	/**
 	 * note : use PAD CONTROLLER PadController padController = new
@@ -45,6 +48,7 @@ public class Engine {
 		gameModel.addObserver(centralView);
 		gameModel.addObserver(gameSounds);
 		gameModel.addObserver(pageEndView);
+		gameModel.addObserver(xboxOneController);
 		// on récupère la longueur du son de la mort de ladybug et on l'affecte
 		gameModel.getLadybugDying().setMillisecondLenght(gameSounds.getMillisecondLadybugDeath());
 		gameModel.setBeginningMilliseconds(gameSounds.getMillisecondsBeginning());

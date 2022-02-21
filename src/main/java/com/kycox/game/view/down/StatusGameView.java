@@ -35,13 +35,13 @@ public class StatusGameView extends JPanel {
 	@Setter
 	private int ghostNbrLifes;
 	@Setter
-	private Image imageGhostPlayer;
+	private transient Image imageGhostPlayer;
 	@Setter
-	private Image imageLadybugPlayer;
+	private transient Image imageLadybugPlayer;
 	@Setter
 	private int incrementScore;
 	@Setter
-	private boolean isInGame;
+	private boolean inGame;
 	@Setter
 	private int ladybugNbrLifes;
 	@Setter
@@ -53,6 +53,8 @@ public class StatusGameView extends JPanel {
 	@Setter
 	private int score;
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
+	@Setter
+	private boolean soundActive;
 
 	private void display(Graphics g) {
 		var x = 0;
@@ -85,7 +87,7 @@ public class StatusGameView extends JPanel {
 	}
 
 	private void displayMessageForPlayer(Graphics g) {
-		if (isInGame) {
+		if (inGame) {
 			displayMessageDuringGame(g);
 		} else {
 			displayOffGame(g);
@@ -96,8 +98,13 @@ public class StatusGameView extends JPanel {
 		g.setFont(smallFont);
 		g.setColor(new Color(96, 128, 255));
 		var coordX = getWidth() / 2;
-		var coordY = getHeight() / 4 + smallFont.getSize() / 2;
+		var coordY = getHeight() / 3;
 		g.drawString(message, coordX, coordY);
+
+		if (!soundActive) {
+			var coordY1 = coordY + smallFont.getSize();
+			g.drawString("Sound off", coordX, coordY1);
+		}
 	}
 
 	private void displayNbrLifes(Graphics g, Image imageBody, int nbrLifes, int x, int y) {
