@@ -57,13 +57,13 @@ public class KeyGameController extends KeyAdapter {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-			case KeyEvent.VK_F1 -> gameModelForController.setShowHelp(false);
+			case KeyEvent.VK_F1 -> gameModelForController.setShowHelpForKeys(false);
 		}
 	}
 
 	private void manageCommonKeys(int keyCode) {
 		switch (keyCode) {
-			case KeyEvent.VK_F1 -> gameModelForController.setShowHelp(true);
+			case KeyEvent.VK_F1 -> gameModelForController.setShowHelpForKeys(true);
 			case KeyEvent.VK_F2 -> gameModelForController.startStopSoundActive();
 			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
 			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();

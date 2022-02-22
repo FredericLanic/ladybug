@@ -41,7 +41,9 @@ public interface GameModelForViews extends GameCommon {
 
 	ScreenData getScreenData();
 
-	boolean isShowHelp();
+	boolean isShowHelpForKeys();
+
+	boolean isShowHelpForXboxes();
 
 	boolean isSoundActive();
 }

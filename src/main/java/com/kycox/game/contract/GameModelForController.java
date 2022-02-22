@@ -35,7 +35,9 @@ public interface GameModelForController extends GameCommon {
 
 	void setMultiPlayers(boolean isMuliPlayers);
 
-	void setShowHelp(boolean showHelp);
+	void setShowHelpForKeys(boolean showHelp);
+
+	void setShowHelpForXboxes(boolean showHelp);
 
 	void startGame();
 

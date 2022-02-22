@@ -65,11 +65,11 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private final Font defaultFont = GameFont.PACFONT.getDefaultFont();
 	@Setter
 	private long durationLadybugNewLife;
-	@Inject
-	private KeyGameController keyGameController;
 	private GameModelForViews gameModelForView;
 	@Inject
 	private GhostView ghostView;
+	@Inject
+	private KeyGameController keyGameController;
 	@Inject
 	private LadybugDyingView ladybugDyingView;
 	@Inject
@@ -117,9 +117,13 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 			drawOneCenterTextLine(g2d, text);
 		} else if (gameModelForView.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
-			if (gameModelForView.isShowHelp()) {
+			if (gameModelForView.isShowHelpForKeys()) {
 				drawEightCenterTextLines(g2d, "hELP", "FII: sOUND ON OFF", "FIII: lADYBUG sKIN", "FIV: gHOST hEADBAND",
 				        "FV: gHOST hAT", "ARROWS: lADYBUG mOVE", "ZQSD: gHOST mOVE", "i OR ii: pLAYERS");
+			} else if (gameModelForView.isShowHelpForXboxes()) {
+				drawEightCenterTextLines(g2d, "hELP", "x UP: sOUND ON OFF", "x DOWN: lADYBUG sKIN",
+				        "x RIGHT: gHOST h'BAND", "x LEFT: gHOST hAT", "STICK i: lADYBUG mOVE", "STICK ii: gHOST mOVE",
+				        "x OR y: pLAYERS");
 			} else {
 				drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "OR fI FOR hELP");
 			}

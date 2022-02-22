@@ -65,7 +65,7 @@ public class XboxOneController implements Observer {
 			gameModelForController.setMultiPlayers(true);
 		}
 		gameModelForController
-		        .setShowHelp(xboxRequestLadybug.isBackButton() || xboxRequestUnComputedGhost.isBackButton());
+		        .setShowHelpForXboxes(xboxRequestLadybug.isBackButton() || xboxRequestUnComputedGhost.isBackButton());
 	}
 
 	private void manageLadybugXboxOneInGame() {

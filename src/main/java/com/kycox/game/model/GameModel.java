@@ -120,7 +120,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	private ScreenData screenData;
 	@Getter
 	@Setter
-	private boolean showHelp = false;
+	private boolean showHelpForKeys = false;
+	@Getter
+	@Setter
+	private boolean showHelpForXboxes = false;
+
 	@Getter
 	private boolean soundActive = true;
 
