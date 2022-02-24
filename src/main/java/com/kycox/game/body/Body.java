@@ -19,6 +19,7 @@ package com.kycox.game.body;
 import java.awt.Point;
 
 import com.kycox.game.constant.Constants;
+import com.kycox.game.level.ScreenData;
 import com.kycox.game.maths.SpeedFunction;
 import com.kycox.game.tools.Utils;
 
@@ -47,6 +48,22 @@ public abstract class Body {
 	private int speedIndex = 0;
 	@Getter
 	private int startSpeedIndex = 0;
+
+	public Point getFrontPositionBlock(ScreenData screenData) {
+		var positionBlock = (Point) getPositionBlock().clone();
+		var screenBlock = screenData.getScreenBlock(positionBlock);
+		if (direction.equals(Constants.POINT_UP) && !screenBlock.isBorderUp()) {
+			positionBlock.y--;
+		} else if (direction.equals(Constants.POINT_DOWN) && !screenBlock.isBorderDown()) {
+			positionBlock.y++;
+		} else if (direction.equals(Constants.POINT_RIGHT) && !screenBlock.isBorderRight()) {
+			positionBlock.x++;
+		} else if (direction.equals(Constants.POINT_LEFT) && !screenBlock.isBorderLeft()) {
+			positionBlock.x--;
+		}
+		return positionBlock;
+
+	}
 
 	public Point getPositionBlock() {
 		return Utils.convertPointToBlockUnit(getPosition());

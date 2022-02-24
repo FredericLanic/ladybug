@@ -73,17 +73,6 @@ public final class ScreenData {
 	}
 
 	/**
-	 * Retourne un objet de type ScreenBlock qui représente le block
-	 *
-	 * @param pointPos : coordonnées BLOCK (x,y) dans la fenêtre
-	 * @return
-	 */
-	public ScreenBlock getScreenBlock(Point posPoint) {
-		// java8 :
-		return dataBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
-	}
-
-	/**
 	 * Retourne la position initiale de ladybug
 	 *
 	 * @return
@@ -208,6 +197,16 @@ public final class ScreenData {
 	 */
 	public Point getRevivorGhostPos() {
 		return Utils.convertPointToGraphicUnit(currentLevel.getGhostRegenerateBlockPoint());
+	}
+
+	/**
+	 * Retourne un objet de type ScreenBlock qui représente le block
+	 *
+	 * @param pointPos : coordonnées BLOCK (x,y) dans la fenêtre
+	 * @return
+	 */
+	public ScreenBlock getScreenBlock(Point posPoint) {
+		return dataBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
 	/**

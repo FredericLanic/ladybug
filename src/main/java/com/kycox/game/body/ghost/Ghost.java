@@ -111,20 +111,19 @@ public abstract class Ghost extends UserBody {
 		return getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2);
 	}
 
-	private void moveByBehaviour(Point ladybugPosBlock, Point ladybugDirection, ScreenData screenData) {
+	private void moveByBehaviour(Ladybug ladybug, ScreenData screenData) {
 		switch (behavious) {
-			case SMART -> smartMoving(ladybugPosBlock, ladybugDirection, screenData);
-			case AGGRESSIVE -> moveTo(ladybugPosBlock, screenData);
+			case SMART -> smartMoving(ladybug, screenData);
+			case AGGRESSIVE -> moveTo(ladybug.getPositionBlock(), screenData);
 			default -> defaultMoving(screenData);
 		}
 	}
 
 	public void moveComputedGhost(Ladybug ladybug, ScreenData screenData) {
-		var ladybugPosBlock = ladybug.getPositionBlock();
 		// Déplacement en fonction du status du fantôme
 		switch (getStatus()) {
 			case DYING -> regeneratePointMoving(screenData);
-			case FLASH, SCARED -> scaredOrFlashedMoving(ladybugPosBlock, screenData);
+			case FLASH, SCARED -> scaredOrFlashedMoving(ladybug.getPositionBlock(), screenData);
 			case NORMAL -> normalMoving(ladybug, screenData);
 			case REGENERATED -> {
 				// Do nothing
@@ -150,7 +149,6 @@ public abstract class Ghost extends UserBody {
 	}
 
 	private void moveScared(Point ladybugPosBlock, ScreenData screenData) {
-		var ptCurrentScreenGhost = getPosition();
 		var canScaredMove = false;
 		var scaredDirection = Constants.POINT_ZERO;
 		if (isPerfectOnABlock()) {
@@ -188,10 +186,8 @@ public abstract class Ghost extends UserBody {
 	}
 
 	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
-		var ladybugPosBlock = ladybug.getPositionBlock();
-		var ladybugDirection = ladybug.getDirection();
 		if (sensitiveBehavious.isActive() && ladybug.getStatus() != LadybugStatus.DEAD) {
-			moveByBehaviour(ladybugPosBlock, ladybugDirection, screenData);
+			moveByBehaviour(ladybug, screenData);
 		} else {
 			defaultMoving(screenData);
 		}
@@ -277,17 +273,7 @@ public abstract class Ghost extends UserBody {
 
 	public abstract void setSpeed(int numLevel, int perCent);
 
-	private void smartMoving(Point ladybugPosBlock, Point ladybugDirection, ScreenData screenData) {
-		var ladybugScreenBlock = screenData.getScreenBlock(ladybugPosBlock);
-		if (ladybugDirection.equals(Constants.POINT_UP) && !ladybugScreenBlock.isBorderUp()) {
-			ladybugPosBlock.y--;
-		} else if (ladybugDirection.equals(Constants.POINT_DOWN) && !ladybugScreenBlock.isBorderDown()) {
-			ladybugPosBlock.y++;
-		} else if (ladybugDirection.equals(Constants.POINT_RIGHT) && !ladybugScreenBlock.isBorderRight()) {
-			ladybugPosBlock.x++;
-		} else if (ladybugDirection.equals(Constants.POINT_LEFT) && !ladybugScreenBlock.isBorderLeft()) {
-			ladybugPosBlock.x--;
-		}
-		moveTo(ladybugPosBlock, screenData);
+	private void smartMoving(Ladybug ladybug, ScreenData screenData) {
+		moveTo(ladybug.getFrontPositionBlock(screenData), screenData);
 	}
 }

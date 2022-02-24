@@ -36,8 +36,6 @@ public enum Sounds {
 	GHOST_SURVIVOR("ghost_survivor.wav"), LADYBUG_CHOMP("ladybug_chomp.wav"), LADYBUG_EAT_FRUIT("ladybug_eatfruit.wav"),
 	LADYBUG_EAT_GHOST("ladybug_eatghost.wav"), LADYBUG_EXTRA_PAC("ladybug_extralife.wav"),
 	LADYBUG_INTERMISSION("ladybug_intermission.wav"), LADYBUG_IS_DYING("ladybug_death.wav");
-	// FIXME : see why GHOST_SURVIVOR is not used ?
-	// FIXME : see why LADYBUG_EAT_FRUIT is not used ?
 
 	@Getter
 	private Clip clip;
