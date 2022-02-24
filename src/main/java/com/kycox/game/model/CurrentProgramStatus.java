@@ -23,14 +23,13 @@ import org.apache.commons.logging.LogFactory;
 
 import com.kycox.game.constant.GameStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
-import com.kycox.game.contract.GameStatusForGameSounds;
 import com.kycox.game.contract.GameStatusForGameView;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Named("CurrentGameStatus")
-public class CurrentProgramStatus implements GameStatusForGameView, GameStatusForGameSounds, DoActionAfterTimer {
+public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CurrentProgramStatus.class);
 	public static final int TO_INGAME = 0;
 	public static final int TO_LEVEL_START = 3;
@@ -133,8 +132,7 @@ public class CurrentProgramStatus implements GameStatusForGameView, GameStatusFo
 		logger.info("Passage du status en " + gameStatus);
 	}
 
-	@Override
-	public void setInGame() {
+	private void setInGame() {
 		gameStatus = GameStatus.IN_GAME;
 		logger.info("Passage du status en " + gameStatus);
 	}
