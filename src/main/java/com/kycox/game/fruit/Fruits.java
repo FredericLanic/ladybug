@@ -52,7 +52,7 @@ public class Fruits {
 	}
 
 	private Fruit getFruitById(Fruit fruit, int idRefFruit) {
-		if (fruit.getIdFruit() != idRefFruit && fruit.getIdFruit() != ID_BOUCHON) {
+		if (fruit.getIdFruit() != idRefFruit && fruit.getIdFruit() != idBouchon) {
 			return getFruitById(fruit.getNext(), idRefFruit);
 		}
 		return fruit;
