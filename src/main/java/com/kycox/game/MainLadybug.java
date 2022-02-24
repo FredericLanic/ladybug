@@ -46,7 +46,7 @@ public class MainLadybug {
 	public void launchTheGame() {
 		var javaVersion = Runtime.version();
 		logger.info(cruxLine);
-		logger.info("*  LadyBug v0.3.1 SnapShot   *");
+		logger.info("*  LadyBug v0.3.1            *");
 		logger.info("*  for Java 16+ by kycox     *");
 		if (javaVersion.feature() >= 16) {
 			logger.info(cruxLine);

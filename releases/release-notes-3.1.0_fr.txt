@@ -1,0 +1,13 @@
+Principales améliorations fonctionnelles :
+- ajout chapeau aux fantômes
+- ajout son
+- amélioration rendu
+- ajout de fruits
+- ajout de points de téléportation
+- ajout des manette Xbox
+
+Principales améliorations techniques :
+- correction bug vitesse
+- correction bug son
+- workflow du jeu
+- refacto du code
