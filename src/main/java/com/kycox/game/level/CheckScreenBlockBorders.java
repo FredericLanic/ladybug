@@ -44,7 +44,7 @@ public class CheckScreenBlockBorders {
 	// FIXME : un peu de refacto ?
 	// TODO : mettre un optional
 	private void checkDataBlockBorder(Point point) {
-		var screenBlock = screenData.getDataBlock(point);
+		var screenBlock = screenData.getScreenBlock(point);
 		ScreenBlock otherScreenBlock;
 		if (screenBlock == null) {
 			return;
@@ -63,24 +63,24 @@ public class CheckScreenBlockBorders {
 			screenBlock.addBorderDown();
 		}
 		// vérification de la bordure en haut
-		otherScreenBlock = screenData.getDataBlock(new Point(point.x, point.y - 1));
+		otherScreenBlock = screenData.getScreenBlock(new Point(point.x, point.y - 1));
 		if (screenBlock.isBorderUp() && point.y > 0 && otherScreenBlock != null && !otherScreenBlock.isBorderDown()) {
 			otherScreenBlock.addBorderDown();
 		}
 		// vérification de la bordure en bas
-		otherScreenBlock = screenData.getDataBlock(new Point(point.x, point.y + 1));
+		otherScreenBlock = screenData.getScreenBlock(new Point(point.x, point.y + 1));
 		if (screenBlock.isBorderDown() && point.y < screenData.getCurrentLevel().getNbrLines() - 1
 		        && otherScreenBlock != null && !otherScreenBlock.isBorderUp()) {
 			otherScreenBlock.addBorderUp();
 		}
 		// vérification de la bordure à droite
-		otherScreenBlock = screenData.getDataBlock(new Point(point.x + 1, point.y));
+		otherScreenBlock = screenData.getScreenBlock(new Point(point.x + 1, point.y));
 		if (screenBlock.isBorderRight() && point.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && otherScreenBlock != null && !otherScreenBlock.isBorderLeft()) {
 			otherScreenBlock.addBorderLeft();
 		}
 		// vérification de la bordure à gauche
-		otherScreenBlock = screenData.getDataBlock(new Point(point.x - 1, point.y));
+		otherScreenBlock = screenData.getScreenBlock(new Point(point.x - 1, point.y));
 		if (screenBlock.isBorderLeft() && point.x > 0 && otherScreenBlock != null
 		        && !otherScreenBlock.isBorderRight()) {
 			otherScreenBlock.addBorderRight();

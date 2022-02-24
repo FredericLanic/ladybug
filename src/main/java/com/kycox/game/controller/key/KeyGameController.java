@@ -68,7 +68,6 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
 			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();
 			case KeyEvent.VK_F5 -> gameProperties.changeGhostHat();
-
 		}
 	}
 

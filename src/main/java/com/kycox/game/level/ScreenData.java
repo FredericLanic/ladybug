@@ -78,7 +78,7 @@ public final class ScreenData {
 	 * @param pointPos : coordonnées BLOCK (x,y) dans la fenêtre
 	 * @return
 	 */
-	public ScreenBlock getDataBlock(Point posPoint) {
+	public ScreenBlock getScreenBlock(Point posPoint) {
 		// java8 :
 		return dataBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}

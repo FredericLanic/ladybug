@@ -204,7 +204,7 @@ public class ScreenBlockView {
 	 * @param y
 	 */
 	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		var screenBlock = screenData.getScreenBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		// affichage du méga point
 		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
 			g2d.setColor(megaPointColor);

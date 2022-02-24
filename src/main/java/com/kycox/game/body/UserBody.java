@@ -52,7 +52,7 @@ public abstract class UserBody extends Body {
 
 	public void teleport(ScreenData screenData) {
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
 			var destinationPoint = Utils.convertPointToGraphicUnit(currentScreenBlock.getDestinationPoint());
 			setPosition(destinationPoint);
 			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());

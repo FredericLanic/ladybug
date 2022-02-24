@@ -20,6 +20,7 @@ import java.awt.Point;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.maths.SpeedFunction;
+import com.kycox.game.tools.Utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -46,6 +47,10 @@ public abstract class Body {
 	private int speedIndex = 0;
 	@Getter
 	private int startSpeedIndex = 0;
+
+	public Point getPositionBlock() {
+		return Utils.convertPointToBlockUnit(getPosition());
+	}
 
 	public int getSpeed() {
 		return Constants.VALID_SPEEDS

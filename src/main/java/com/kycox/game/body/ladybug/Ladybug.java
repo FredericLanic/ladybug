@@ -25,7 +25,6 @@ import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.LadybugForController;
 import com.kycox.game.contract.LadybugForGameView;
 import com.kycox.game.level.ScreenData;
-import com.kycox.game.tools.Utils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -73,7 +72,7 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 			teleport(screenData);
 			return;
 		}
-		var currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+		var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
 		if (isPerfectOnABlock()) {
 			if (canMove(userRequest, currentScreenBlock)) {
 				viewDirection = userRequest;
@@ -94,7 +93,7 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		}
 		// calcule uniquement lorsque ladybug rempli le block
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
 			ladybugActions.setEatenAMegaPoint(currentScreenBlock.isMegaPoint());

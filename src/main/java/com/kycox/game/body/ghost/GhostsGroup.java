@@ -36,13 +36,11 @@ public class GhostsGroup implements GroupGhostForGameView {
 		return ghosts.stream().anyMatch(g -> g.getGhostActions().isEatLadybug());
 	}
 
-	// TODO : voir si on peut faire mieux
 	public int getLeftLives() {
-		var optGhost = ghosts.stream().filter(g -> !g.isComputed()).findFirst();
-		if (optGhost.isPresent()) {
-			return optGhost.get().getLeftLifes();
-		}
-		return 0;
+		return ghosts.stream().filter(g -> !g.isComputed()) //
+		        .findFirst() //
+		        .map(Ghost::getLeftLifes) //
+		        .orElse(0); //
 	}
 
 	public int getNbrEatenGhosts() {
