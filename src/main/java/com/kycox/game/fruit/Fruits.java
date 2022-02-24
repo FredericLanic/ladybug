@@ -12,19 +12,28 @@ import lombok.Getter;
 @Named("Fruits")
 public class Fruits {
 
-	private static int ID_BOUCHON = 0;
-	private Fruit apple = new Fruit(5, FruitsImages.APPLE, 25, 85);
-	private Fruit banana = new Fruit(7, FruitsImages.BANANA, 35, 95);
-	private Fruit cherry = new Fruit(1, FruitsImages.CHERRY, 5, 50);
+	private static int idBouchon = 0;
+	private Fruit apple;
+	private Fruit banana;
+	private Fruit cherry;
 	@Getter
 	private Fruit currentFruit;
-	private Fruit fruitLimit = new Fruit(ID_BOUCHON, FruitsImages.CHERRY, 0, 110);
-	private Fruit heart = new Fruit(2, FruitsImages.HEART, 10, 60);
-	private Fruit orange = new Fruit(3, FruitsImages.ORANGE, 15, 70);
-	private Fruit pear = new Fruit(6, FruitsImages.PEAR, 30, 92);
-	private Fruit strawberry = new Fruit(4, FruitsImages.STRAWBERRY, 20, 77);
+	private Fruit fruitLimit;
+	private Fruit heart;
+	private Fruit orange;
+	private Fruit pear;
+	private Fruit strawberry;
 
 	public Fruits() {
+		cherry = new Fruit(1, FruitsImages.CHERRY, 5, 50);
+		heart = new Fruit(2, FruitsImages.HEART, 10, 60);
+		orange = new Fruit(3, FruitsImages.ORANGE, 15, 70);
+		strawberry = new Fruit(4, FruitsImages.STRAWBERRY, 20, 77);
+		apple = new Fruit(5, FruitsImages.APPLE, 25, 85);
+		pear = new Fruit(6, FruitsImages.PEAR, 30, 92);
+		banana = new Fruit(7, FruitsImages.BANANA, 35, 95);
+		fruitLimit = new Fruit(idBouchon, FruitsImages.CHERRY, 0, 110);
+
 		cherry.setNext(heart);
 		heart.setNext(orange);
 		orange.setNext(strawberry);
