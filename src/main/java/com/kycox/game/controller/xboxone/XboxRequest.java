@@ -39,7 +39,7 @@ public class XboxRequest {
 	private boolean yButton;
 
 	private int getDirection(float value) {
-		return value > 0 ? ConstanteXboxOne.UP_VALUE : ConstanteXboxOne.LOW_VALUE;
+		return value > 0 ? ConstantXboxOne.UP_VALUE : ConstantXboxOne.LOW_VALUE;
 	}
 
 	public boolean isConnected() {
@@ -47,27 +47,27 @@ public class XboxRequest {
 	}
 
 	public boolean isDownRightStick() {
-		return (isRightStickY() && getDirection(rightStickY) == ConstanteXboxOne.LOW_VALUE);
+		return (isRightStickY() && getDirection(rightStickY) == ConstantXboxOne.LOW_VALUE);
 	}
 
 	public boolean isLeftRightStick() {
-		return (isRightStickX() && getDirection(rightStickX) == ConstanteXboxOne.LOW_VALUE);
+		return (isRightStickX() && getDirection(rightStickX) == ConstantXboxOne.LOW_VALUE);
 	}
 
 	public boolean isRighRightStickt() {
-		return (isRightStickX() && getDirection(rightStickX) == ConstanteXboxOne.UP_VALUE);
+		return (isRightStickX() && getDirection(rightStickX) == ConstantXboxOne.UP_VALUE);
 	}
 
 	private boolean isRightStickX() {
-		return (rightStickX >= ConstanteXboxOne.SENSITIVE || rightStickX <= -ConstanteXboxOne.SENSITIVE);
+		return (rightStickX >= ConstantXboxOne.SENSITIVE || rightStickX <= -ConstantXboxOne.SENSITIVE);
 	}
 
 	public boolean isRightStickY() {
-		return (rightStickY >= ConstanteXboxOne.SENSITIVE || rightStickY <= -ConstanteXboxOne.SENSITIVE);
+		return (rightStickY >= ConstantXboxOne.SENSITIVE || rightStickY <= -ConstantXboxOne.SENSITIVE);
 	}
 
 	public boolean isUpRightStick() {
-		return (isRightStickY() && getDirection(rightStickY) == ConstanteXboxOne.UP_VALUE);
+		return (isRightStickY() && getDirection(rightStickY) == ConstantXboxOne.UP_VALUE);
 	}
 
 	public void readCurrentState() {

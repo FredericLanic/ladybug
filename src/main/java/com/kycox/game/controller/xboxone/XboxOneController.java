@@ -26,8 +26,8 @@ public class XboxOneController implements Observer {
 
 	@PostConstruct
 	public void initialize() {
-		xboxRequestLadybug.setNbrXboxRequest(ConstanteXboxOne.LADYBUG_XBOXONE);
-		xboxRequestUnComputedGhost.setNbrXboxRequest(ConstanteXboxOne.GHOST_XBOXONE);
+		xboxRequestLadybug.setNbrXboxRequest(ConstantXboxOne.LADYBUG_XBOXONE);
+		xboxRequestUnComputedGhost.setNbrXboxRequest(ConstantXboxOne.GHOST_XBOXONE);
 	}
 
 	private void manageBothXbosesOneCommon() {

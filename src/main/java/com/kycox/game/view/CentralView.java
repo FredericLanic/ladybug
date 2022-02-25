@@ -24,7 +24,6 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -223,7 +222,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private void drawPresentationGhosts(Graphics2D g2d) {
 		var x = gameModelForView.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
 		var y = gameModelForView.getScreenData().getScreenHeight() / 2;
-		List<Ghost> ghosts = gameModelForView.getGroupGhosts().getGhosts().stream().collect(Collectors.toList());
+		var ghosts = gameModelForView.getGroupGhosts().getGhosts().stream().toList();
 		for (Ghost ghost : ghosts) {
 			g2d.drawImage(ghostView.getImage(ghost), x, y, this);
 			x += 2 * Constants.BLOCK_SIZE;
