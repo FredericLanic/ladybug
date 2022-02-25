@@ -35,6 +35,9 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 	public static final int TO_LEVEL_START = 3;
 	public static final int TO_PROGRAM_PRESENTATION_START = 2;
 	public static final int TO_PROGRAM_START = 1;
+	@Setter
+	@Getter
+	private boolean gameInPause;
 	@Getter
 	private GameStatus gameStatus;
 	@Getter
@@ -148,6 +151,7 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 	}
 
 	public void setLevelStart() {
+		gameInPause = false;
 		gameStatus = GameStatus.LEVEL_START;
 		logger.info("Passage du status en " + gameStatus);
 	}

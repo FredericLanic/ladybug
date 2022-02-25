@@ -18,5 +18,4 @@ public class XBoxOneControllerManager {
 		controllerManager = new ControllerManager();
 		controllerManager.initSDLGamepad();
 	}
-
 }

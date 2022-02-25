@@ -41,6 +41,8 @@ public interface GameModelForViews extends GameCommon {
 
 	ScreenData getScreenData();
 
+	boolean isAtLeastOneXboxOneConnected();
+
 	boolean isShowHelpForKeys();
 
 	boolean isShowHelpForXboxes();

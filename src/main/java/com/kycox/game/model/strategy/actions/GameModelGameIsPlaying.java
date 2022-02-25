@@ -90,29 +90,31 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 
 	@Override
 	public void programBeat() {
-		addNewFruit();
-		// ***
-		caseOfNewLadybugLife();
-		// ***
-		setBodiesActions();
-		// ***
-		updateGhostSeetings();
-		// ***
-		caseOfGhostEatLadybug();
-		// ***
-		manageSuperPower();
-		// ***
-		caseOfLadybugEatAMegaPoint();
-		// ***
-		manageScores();
-		// ***
-		updateScreenBlock();
-		// ***
-		setSoundRequests();
-		// ***
-		moveBodies();
-		// ***
-		checkEndMaze();
+		if (!currentGameStatus.isGameInPause()) {
+			addNewFruit();
+			// ***
+			caseOfNewLadybugLife();
+			// ***
+			setBodiesActions();
+			// ***
+			updateGhostSeetings();
+			// ***
+			caseOfGhostEatLadybug();
+			// ***
+			manageSuperPower();
+			// ***
+			caseOfLadybugEatAMegaPoint();
+			// ***
+			manageScores();
+			// ***
+			updateScreenBlock();
+			// ***
+			setSoundRequests();
+			// ***
+			moveBodies();
+			// ***
+			checkEndMaze();
+		}
 	}
 
 	/**

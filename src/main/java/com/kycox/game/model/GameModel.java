@@ -69,6 +69,9 @@ import lombok.Setter;
 @Named("GameModel")
 public class GameModel extends Observable implements GameModelForViews, GameModelForSounds, GameModelForController {
 	private static final Log logger = LogFactory.getLog(GameModel.class);
+	@Setter
+	@Getter
+	private boolean atLeastOneXboxOneConnected;
 	@Inject
 	@Getter
 	private CurrentProgramStatus currentProgramStatus;
@@ -124,7 +127,6 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Getter
 	@Setter
 	private boolean showHelpForXboxes = false;
-
 	@Getter
 	private boolean soundActive = true;
 
@@ -156,7 +158,6 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 			default -> gameModelManageAction.changeStrategy(gameModelNoAction);
 		}
 		gameModelManageAction.execute();
-		// logger.debug("CurrentStatus : " + currentProgramStatus.getGameStatus());
 		setChanged();
 		notifyObservers();
 	}
@@ -180,17 +181,6 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 			gameScore.setOldScore(-1);
 			currentProgramStatus.setGameEnd();
 			initSounds();
-		}
-	}
-
-	@Override
-	public void gameInPause() {
-		if (programTimer.isRunning()) {
-			logger.info("Game in pause");
-			programTimer.stop();
-		} else {
-			logger.info("Game regoes");
-			startProgramTimer();
 		}
 	}
 
@@ -221,7 +211,8 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	private void init() {
 		currentProgramStatus.setProgramStart();
 		gameModelManageAction.changeStrategy(gameModelNoAction);
-		startProgramTimer();
+		logger.info("Start Game Timer");
+		programTimer.start();
 	}
 
 	public void initSounds() {
@@ -245,6 +236,12 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 
 	public void setEndingLevelMilliseconds(long endingLevelMilliseconds) {
 		gameModeLevelIsEnds.setEndingLevelMilliseconds(endingLevelMilliseconds);
+	}
+
+	@Override
+	public void setGameInPause() {
+		currentProgramStatus.setGameInPause(!currentProgramStatus.isGameInPause());
+		logger.info("Game in pause: " + currentProgramStatus.isGameInPause());
 	}
 
 	@Override
@@ -274,18 +271,6 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		currentProgramStatus.setGameStart();
 	}
 
-	/**
-	 * Lancement du timer qui rythme le jeu
-	 */
-	private void startProgramTimer() {
-		logger.info("Start Game Timer");
-		programTimer.start();
-	}
-
-	/**
-	 * FIXME : peut être gérer en fonction de l'état du jeu quand par exemple on est
-	 * en intro
-	 */
 	@Override
 	public void startStopSoundActive() {
 		logger.info("startStopSoundActive : " + soundActive);

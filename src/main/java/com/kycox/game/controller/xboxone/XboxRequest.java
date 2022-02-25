@@ -31,6 +31,8 @@ public class XboxRequest {
 	private int nbrXboxRequest;
 	private float rightStickX;
 	private float rightStickY;
+	@Getter
+	private boolean start;
 	@Inject
 	private XBoxOneControllerManager xBoxOneControllerManager;
 	@Getter
@@ -43,7 +45,7 @@ public class XboxRequest {
 	}
 
 	public boolean isConnected() {
-		return controllerState.isConnected;
+		return controllerState != null ? controllerState.isConnected : false;
 	}
 
 	public boolean isDownRightStick() {
@@ -83,6 +85,7 @@ public class XboxRequest {
 		dpadUp = controllerState.dpadUpJustPressed;
 		dpadLeft = controllerState.dpadLeftJustPressed;
 		dpadRight = controllerState.dpadRightJustPressed;
+		start = controllerState.startJustPressed;
 	}
 
 	public void setNbrXboxRequest(int nbrXboxRequest) {

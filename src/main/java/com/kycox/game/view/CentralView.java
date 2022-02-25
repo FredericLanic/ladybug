@@ -21,7 +21,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -123,8 +122,10 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 				drawEightCenterTextLines(g2d, "hELP", "x UP: sOUND ON OFF", "x DOWN: lADYBUG sKIN",
 				        "x RIGHT: gHOST h'BAND", "x LEFT: gHOST hAT", "STICK i: lADYBUG mOVE", "STICK ii: gHOST mOVE",
 				        "x OR y: pLAYERS");
+			} else if (gameModelForView.isAtLeastOneXboxOneConnected()) {
+				drawTwoCenterTextLines(g2d, "PRESS s OR a TO sTART", "fI OR vIEW FOR hELP");
 			} else {
-				drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "OR fI FOR hELP");
+				drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "fI FOR hELP");
 			}
 		} else if (gameModelForView.getCurrentProgramStatus().isGameEnding()
 		        || gameModelForView.getCurrentProgramStatus().isGameEnd()) {

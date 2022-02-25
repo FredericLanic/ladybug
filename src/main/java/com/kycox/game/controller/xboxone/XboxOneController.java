@@ -20,91 +20,99 @@ public class XboxOneController implements Observer {
 
 	int number = 0;
 	@Inject
-	private XboxRequest xboxRequestLadybug;
+	private XboxRequest xboxOneLadybug;
 	@Inject
-	private XboxRequest xboxRequestUnComputedGhost;
+	private XboxRequest xboxOneUnComputedGhost;
 
 	@PostConstruct
 	public void initialize() {
-		xboxRequestLadybug.setNbrXboxRequest(ConstantXboxOne.LADYBUG_XBOXONE);
-		xboxRequestUnComputedGhost.setNbrXboxRequest(ConstantXboxOne.GHOST_XBOXONE);
+		xboxOneLadybug.setNbrXboxRequest(ConstantXboxOne.LADYBUG_XBOXONE);
+		xboxOneUnComputedGhost.setNbrXboxRequest(ConstantXboxOne.GHOST_XBOXONE);
+	}
+
+	private boolean isOneXboxOneConnected() {
+		return (xboxOneUnComputedGhost.isConnected() || xboxOneLadybug.isConnected());
 	}
 
 	private void manageBothXbosesOneCommon() {
-		if (xboxRequestLadybug.isDpadUp() || xboxRequestUnComputedGhost.isDpadUp()) {
+		if (xboxOneLadybug.isDpadUp() || xboxOneUnComputedGhost.isDpadUp()) {
 			gameModelForController.startStopSoundActive();
 		}
-		if (xboxRequestLadybug.isDpadDown() || xboxRequestUnComputedGhost.isDpadDown()) {
+		if (xboxOneLadybug.isDpadDown() || xboxOneUnComputedGhost.isDpadDown()) {
 			gameProperties.changeLadybugSkin();
 		}
-		if (xboxRequestLadybug.isDpadRight() || xboxRequestUnComputedGhost.isDpadRight()) {
+		if (xboxOneLadybug.isDpadRight() || xboxOneUnComputedGhost.isDpadRight()) {
 			gameProperties.changeGhostHeadBand();
 		}
-		if (xboxRequestLadybug.isDpadLeft() || xboxRequestUnComputedGhost.isDpadLeft()) {
+		if (xboxOneLadybug.isDpadLeft() || xboxOneUnComputedGhost.isDpadLeft()) {
 			gameProperties.changeGhostHat();
 		}
 	}
 
 	private void manageBothXboxesOneInGame() {
-		if (xboxRequestLadybug.isBButton() || xboxRequestUnComputedGhost.isBButton()) {
+		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
 			gameModelForController.forceStopGame();
+		}
+		if (xboxOneLadybug.isStart() || xboxOneUnComputedGhost.isStart()) {
+			gameModelForController.setGameInPause();
 		}
 	}
 
 	private void manageBothXboxesOneInPresentation() {
-		if (xboxRequestLadybug.isAButton() || xboxRequestUnComputedGhost.isAButton()) {
+		if (xboxOneLadybug.isAButton() || xboxOneUnComputedGhost.isAButton()) {
 			gameModelForController.startGame();
 		}
-		if (xboxRequestLadybug.isBButton() || xboxRequestUnComputedGhost.isBButton()) {
+		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
 			System.exit(0); // FIXME : c'est au modèle de sortir proprement du jeu
 		}
-		if (xboxRequestLadybug.isXButton() || xboxRequestUnComputedGhost.isXButton()) {
+		if (xboxOneLadybug.isXButton() || xboxOneUnComputedGhost.isXButton()) {
 			gameModelForController.setMultiPlayers(false);
 		}
-		if (xboxRequestLadybug.isYButton() || xboxRequestUnComputedGhost.isYButton()) {
+		if (xboxOneLadybug.isYButton() || xboxOneUnComputedGhost.isYButton()) {
 			gameModelForController.setMultiPlayers(true);
 		}
 		gameModelForController
-		        .setShowHelpForXboxes(xboxRequestLadybug.isBackButton() || xboxRequestUnComputedGhost.isBackButton());
+		        .setShowHelpForXboxes(xboxOneLadybug.isBackButton() || xboxOneUnComputedGhost.isBackButton());
 	}
 
 	private void manageLadybugXboxOneInGame() {
-		if (!xboxRequestLadybug.isConnected()) {
+		if (!xboxOneLadybug.isConnected()) {
 			return;
 		}
-		if (xboxRequestLadybug.isRighRightStickt()) {
+		if (xboxOneLadybug.isRighRightStickt()) {
 			gameModelForController.setLadybugRequest(Constants.POINT_RIGHT);
 		}
-		if (xboxRequestLadybug.isLeftRightStick()) {
+		if (xboxOneLadybug.isLeftRightStick()) {
 			gameModelForController.setLadybugRequest(Constants.POINT_LEFT);
 		}
-		if (xboxRequestLadybug.isUpRightStick()) {
+		if (xboxOneLadybug.isUpRightStick()) {
 			gameModelForController.setLadybugRequest(Constants.POINT_UP);
 		}
-		if (xboxRequestLadybug.isDownRightStick()) {
+		if (xboxOneLadybug.isDownRightStick()) {
 			gameModelForController.setLadybugRequest(Constants.POINT_DOWN);
 		}
 	}
 
 	private void manageUnComputedGhostXboxOneInGame() {
-		if (!xboxRequestUnComputedGhost.isConnected()) {
+		if (!xboxOneUnComputedGhost.isConnected()) {
 			return;
 		}
-		if (xboxRequestUnComputedGhost.isRighRightStickt()) {
+		if (xboxOneUnComputedGhost.isRighRightStickt()) {
 			gameModelForController.setGhostRequest(Constants.POINT_RIGHT);
 		}
-		if (xboxRequestUnComputedGhost.isLeftRightStick()) {
+		if (xboxOneUnComputedGhost.isLeftRightStick()) {
 			gameModelForController.setGhostRequest(Constants.POINT_LEFT);
 		}
-		if (xboxRequestUnComputedGhost.isUpRightStick()) {
+		if (xboxOneUnComputedGhost.isUpRightStick()) {
 			gameModelForController.setGhostRequest(Constants.POINT_UP);
 		}
-		if (xboxRequestUnComputedGhost.isDownRightStick()) {
+		if (xboxOneUnComputedGhost.isDownRightStick()) {
 			gameModelForController.setGhostRequest(Constants.POINT_DOWN);
 		}
 	}
 
 	private void manageXboxesOneInGame() {
+		gameModelForController.setAtLeastOneXboxOneConnected(isOneXboxOneConnected());
 		readXboxOneStates();
 		manageBothXbosesOneCommon();
 		if (gameModelForController.isGamePresentation()) {
@@ -117,8 +125,8 @@ public class XboxOneController implements Observer {
 	}
 
 	private void readXboxOneStates() {
-		xboxRequestLadybug.readCurrentState();
-		xboxRequestUnComputedGhost.readCurrentState();
+		xboxOneLadybug.readCurrentState();
+		xboxOneUnComputedGhost.readCurrentState();
 	}
 
 	@Override
@@ -126,4 +134,5 @@ public class XboxOneController implements Observer {
 		this.gameModelForController = (GameModelForController) gameModelForController;
 		manageXboxesOneInGame();
 	}
+
 }

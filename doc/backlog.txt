@@ -45,10 +45,12 @@ DONE :
 	- quel son est emis quand le fruit est disponible
 - CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
 - CFCT12 : faire un mode lampe allumée + F6
-- CFCT 13 : ghost en mode lampe allumée
-- CFCT 14 : en mode deux joueurs, afficher le fantôme en bas à gauche de l'écran
-- CFCT 15 : refactorisation de la mise en multijoueurs
-- CFCT 16 : en mode deux joueurs, le fantôme user a la même vitesse que Ladybug
+- CFCT13 : ghost en mode lampe allumée
+- CFCT14 : en mode deux joueurs, afficher le fantôme en bas à gauche de l'écran
+- CFCT15 : refactorisation de la mise en multijoueurs
+- CFCT16 : en mode deux joueurs, le fantôme user a la même vitesse que Ladybug
+- CFCT17 : mode pause à partir de la manette
+- CFCT18 : modifier le texte d'attente quand il y a au moins une manette
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 

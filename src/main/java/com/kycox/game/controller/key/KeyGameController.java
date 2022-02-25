@@ -89,7 +89,7 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_Q -> gameModelForController.setGhostRequest(Constants.POINT_LEFT);
 			case KeyEvent.VK_D -> gameModelForController.setGhostRequest(Constants.POINT_RIGHT);
 			// Partie en pause
-			case KeyEvent.VK_PAUSE -> gameModelForController.gameInPause();
+			case KeyEvent.VK_PAUSE -> gameModelForController.setGameInPause();
 			// Arret de la partie
 			case KeyEvent.VK_ESCAPE -> gameModelForController.forceStopGame();
 			// Mode lampe allumée

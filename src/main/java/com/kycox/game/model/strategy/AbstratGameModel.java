@@ -98,6 +98,10 @@ public class AbstratGameModel {
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
 	}
 
+	protected boolean isGameInPause() {
+		return currentGameStatus.isGameInPause();
+	}
+
 	/**
 	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
 	 */

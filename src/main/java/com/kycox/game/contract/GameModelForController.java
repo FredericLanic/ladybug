@@ -23,7 +23,7 @@ public interface GameModelForController extends GameCommon {
 
 	void forceStopGame();
 
-	void gameInPause();
+	void setGameInPause();
 
 	LadybugForController getLadybug();
 
@@ -34,6 +34,8 @@ public interface GameModelForController extends GameCommon {
 	void setLadybugRequest(Point point);
 
 	void setMultiPlayers(boolean isMuliPlayers);
+
+	void setAtLeastOneXboxOneConnected(boolean pasConnected);
 
 	void setShowHelpForKeys(boolean showHelp);
 
