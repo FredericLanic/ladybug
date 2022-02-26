@@ -168,9 +168,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	}
 
 	private Timer createProgramTimer() {
-		ActionListener action = event -> {
-			actionsByTimerBip();
-		};
+		ActionListener action = event -> actionsByTimerBip();
 		return new Timer(PACE, action);
 	}
 

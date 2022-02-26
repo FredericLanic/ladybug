@@ -27,9 +27,7 @@ import java.util.Observer;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -72,7 +70,6 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private LadybugDyingView ladybugDyingView;
 	@Inject
 	private LadybugView ladybugView;
-	private JFrame mainFrame = (JFrame) SwingUtilities.getRoot(this);
 	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
 	@Inject
 	private ScreenBlockView screenBlockView;
@@ -80,17 +77,14 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
 		switch (nbrAction) {
-			case 0:
-				screenBlockView.setColorMaze(Constants.BLUE_LADYBUG);
-				break;
-			default:
-				logger.debug("no number " + nbrAction + " action");
+			case 0 -> screenBlockView.setColorMaze(Constants.BLUE_LADYBUG);
+			default -> logger.debug("no number " + nbrAction + " action");
 		}
 	}
 
 	/**
-	 * FIXME : même remarque que dans le modèle du jeu; appliquer un design pattern;
-	 * ça devient un peu dificile à lire
+	 * FIXME : même remarque que dans le modèle du jeu; appliquer un design pattern
+	 * strategy; ça devient un peu dificile à lire
 	 *
 	 * @param g
 	 */
@@ -234,12 +228,10 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(scoreFont);
 		var metr = getFontMetrics(scoreFont);
-		int x;
-		int y;
 		// Affichage des scores incréments
 		for (Message message : gameModelForView.getGroupMessages().getMessages()) {
-			x = message.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
-			y = message.getPosition().y + Constants.BLOCK_SIZE / 2;
+			var x = message.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
+			var y = message.getPosition().y + Constants.BLOCK_SIZE / 2;
 			g2d.drawString(message.getValue() + message.getMessageType().getEndMessage(), x, y);
 		}
 	}
