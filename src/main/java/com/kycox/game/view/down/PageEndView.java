@@ -91,7 +91,7 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 		initJPanelInside(preferredSize);
 	}
 
-	private void setVariableToScoreView(GameModelForViews gameModelForViews) {
+	private void setVariableToScoreView() {
 		statusGameView.setGhostNbrLifes(gameModelForViews.getGhostLeftLifes());
 		var humanGhost = gameModelForViews.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed())
 		        .findFirst();
@@ -113,7 +113,7 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 	public void update(Observable gameModelForViews, Object arg) {
 		if (gameModelForViews != null) {
 			this.gameModelForViews = (GameModelForViews) gameModelForViews;
-			setVariableToScoreView(this.gameModelForViews);
+			setVariableToScoreView();
 			repaint();
 		} else {
 			logger.info("gameModelForViews is null in " + PageEndView.class);

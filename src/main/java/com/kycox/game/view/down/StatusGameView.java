@@ -57,47 +57,38 @@ public class StatusGameView extends JPanel {
 	private boolean soundActive;
 
 	private void display(Graphics g) {
-		var x = 0;
-		var y = 0;
 		var delta = 2;
 		var imageBorderSize = (getHeight() - 6 * delta) / 2;
 		// number ladybug lifes
 		displayNbrLifes(g, ImageUtils.resizeImage(imageLadybugPlayer, imageBorderSize, imageBorderSize),
-		        ladybugNbrLifes, x + delta, y);
+		        ladybugNbrLifes, delta, 0);
 		// number ghost lifes
 		if (nbrPlayers > 1) {
-			displayNbrLifes(g, ImageUtils.resizeImage(imageGhostPlayer, imageBorderSize, imageBorderSize),
-			        ghostNbrLifes, x + delta, y + getHeight() / 2);
+			var ghost = ImageUtils.resizeImage(imageGhostPlayer, imageBorderSize, imageBorderSize);
+			displayNbrLifes(g, ghost, ghostNbrLifes, delta + ghost.getWidth(null) + 30, 0);
+
 		}
 		// text
 		displayMessageForPlayer(g);
 	}
 
 	private void displayMessageDuringGame(Graphics g) {
-		var message = new StringBuilder();
-		message.append("Level: ");
-		message.append(numLevel);
-		message.append(" - new life: ");
-		message.append(incrementScore);
-		message.append("/");
-		message.append(nbrPointsForNewLife);
-		message.append(" - Score: ");
-		message.append(score);
-		displayMessageToRight(g, message.toString());
+		var scoreMessage = new StringBuilder();
+		scoreMessage.append("Score: ");
+		scoreMessage.append(score);
+		displayMessageToRight(g, scoreMessage.toString());
 	}
 
 	private void displayMessageForPlayer(Graphics g) {
 		if (inGame) {
 			displayMessageDuringGame(g);
-		} else {
-			displayOffGame(g);
 		}
 	}
 
 	private void displayMessageToRight(Graphics g, String message) {
 		g.setFont(smallFont);
 		g.setColor(new Color(96, 128, 255));
-		var coordX = getWidth() / 2;
+		var coordX = getWidth() - 100;
 		var coordY = getHeight() / 3;
 		g.drawString(message, coordX, coordY);
 
@@ -114,15 +105,6 @@ public class StatusGameView extends JPanel {
 		var coordX = x + imageBody.getWidth(null);
 		var coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
 		g.drawString("x " + nbrLifes, coordX, coordY);
-	}
-
-	private void displayOffGame(Graphics g) {
-		var message = new StringBuilder();
-		message.append("Game config : ");
-		message.append(nbrPlayers);
-		message.append(" player");
-		message.append((nbrPlayers > 1 ? "s" : ""));
-		displayMessageToRight(g, message.toString());
 	}
 
 	@PostConstruct

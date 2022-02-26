@@ -229,6 +229,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		return currentProgramStatus.isInGame();
 	}
 
+	@Override
+	public void programForceExit() {
+		System.exit(0);
+	}
+
 	public void setBeginningMilliseconds(long beginningMilliseconds) {
 		gameModeGameIsEnding.setTimeEnding(beginningMilliseconds);
 		gameModeLevelStarting.setBeginningMilliseconds(beginningMilliseconds);

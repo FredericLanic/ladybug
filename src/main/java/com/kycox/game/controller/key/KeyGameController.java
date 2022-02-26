@@ -26,13 +26,6 @@ import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.properties.GameProperties;
 
-/**
- * Contrôleur du jeu : MVC
- *
- * voir https://github.com/marcelschoen/gamepad4j pour brancher une manette usb
- * pour le jeu utiliser plutôt Jamepad qui me semble facilement utilisable;
- *
- */
 @Named("KeyGameController")
 public class KeyGameController extends KeyAdapter {
 	@Inject
@@ -40,9 +33,6 @@ public class KeyGameController extends KeyAdapter {
 	@Inject
 	private GameProperties gameProperties;
 
-	/**
-	 * Action sur les touches Gestion des touches pressées
-	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		var keyCode = e.getKeyCode();
@@ -71,11 +61,6 @@ public class KeyGameController extends KeyAdapter {
 		}
 	}
 
-	/**
-	 * Gestion des touches in game
-	 *
-	 * @param keyCode
-	 */
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
 			// Mouvement L
@@ -97,18 +82,14 @@ public class KeyGameController extends KeyAdapter {
 		}
 	}
 
-	/**
-	 * Gestion des touches durant la présentation
-	 *
-	 * @param keyCode
-	 */
 	private void manageKeysInPresentation(int keyCode) {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
 			case KeyEvent.VK_S -> gameModelForController.startGame();
 			case KeyEvent.VK_1 -> gameModelForController.setMultiPlayers(false);
 			case KeyEvent.VK_2 -> gameModelForController.setMultiPlayers(true);
-			case KeyEvent.VK_ESCAPE -> System.exit(0); // FIXME : c'est au modèle de sortir proprement du jeu
+			case KeyEvent.VK_ESCAPE -> gameModelForController.programForceExit(); // FIXME : c'est au modèle de sortir
+			                                                                      // proprement du jeu
 		}
 	}
 }

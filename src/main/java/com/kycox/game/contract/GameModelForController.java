@@ -23,19 +23,21 @@ public interface GameModelForController extends GameCommon {
 
 	void forceStopGame();
 
-	void setGameInPause();
-
 	LadybugForController getLadybug();
 
 	boolean isGamePresentation();
+
+	void programForceExit();
+
+	void setAtLeastOneXboxOneConnected(boolean pasConnected);
+
+	void setGameInPause();
 
 	void setGhostRequest(Point point);
 
 	void setLadybugRequest(Point point);
 
 	void setMultiPlayers(boolean isMuliPlayers);
-
-	void setAtLeastOneXboxOneConnected(boolean pasConnected);
 
 	void setShowHelpForKeys(boolean showHelp);
 

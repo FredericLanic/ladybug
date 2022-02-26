@@ -17,8 +17,6 @@ public class XboxOneController implements Observer {
 	private GameModelForController gameModelForController;
 	@Inject
 	private GameProperties gameProperties;
-
-	int number = 0;
 	@Inject
 	private XboxRequest xboxOneLadybug;
 	@Inject
@@ -63,7 +61,7 @@ public class XboxOneController implements Observer {
 			gameModelForController.startGame();
 		}
 		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
-			System.exit(0); // FIXME : c'est au modèle de sortir proprement du jeu
+			gameModelForController.programForceExit();
 		}
 		if (xboxOneLadybug.isXButton() || xboxOneUnComputedGhost.isXButton()) {
 			gameModelForController.setMultiPlayers(false);
