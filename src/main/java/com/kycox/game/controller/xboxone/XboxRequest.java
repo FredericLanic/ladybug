@@ -1,6 +1,5 @@
 package com.kycox.game.controller.xboxone;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -32,12 +31,9 @@ public class XboxRequest {
 	private boolean hasBeenConnected = false;
 	@Getter
 	private boolean hasBeenDisConnected = false;
-	private int nbrXboxRequest;
 	@Getter
 	private boolean start;
 	private boolean wasConnected = false;
-	@Inject
-	private XBoxOneControllerManager xBoxOneControllerManager;
 	@Getter
 	private boolean xButton;
 	private float xLeftStick;
@@ -104,9 +100,9 @@ public class XboxRequest {
 		return (yRightStick >= ConstantXboxOne.SENSITIVE || yRightStick <= -ConstantXboxOne.SENSITIVE);
 	}
 
-	public void readCurrentState() {
+	public void readCurrentState(ControllerState controllerState) {
 		setEventOnConnection();
-		controllerState = xBoxOneControllerManager.getControllerManager().getState(nbrXboxRequest);
+		this.controllerState = controllerState; // to check isConnected
 		xRightStick = controllerState.rightStickX;
 		yRightStick = controllerState.rightStickY;
 		xLeftStick = controllerState.leftStickX;
@@ -138,7 +134,4 @@ public class XboxRequest {
 		wasConnected = isConnected;
 	}
 
-	public void setNbrXboxRequest(int nbrXboxRequest) {
-		this.nbrXboxRequest = nbrXboxRequest;
-	}
 }

@@ -22,12 +22,12 @@ import java.awt.Point;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.image.GhostEyesImages;
 import com.kycox.game.constant.ghost.image.GhostHatImages;
 import com.kycox.game.constant.ghost.image.GhostHeadbandImages;
+import com.kycox.game.contract.GhostForView;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
 
@@ -62,22 +62,22 @@ public class GhostView {
 		return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
 	}
 
-	public Image getImage(Ghost ghost) {
+	public Image getImage(GhostForView ghostForView) {
 		Image ghostImg;
 		// ajout le corps
-		switch (ghost.getStatus()) {
-			case FLASH -> ghostImg = GhostFlashView.getInstance().getImage(ghost);
-			case SCARED -> ghostImg = GhostScaredView.getInstance().getImage(ghost);
+		switch (ghostForView.getStatus()) {
+			case FLASH -> ghostImg = GhostFlashView.getInstance().getImage(ghostForView);
+			case SCARED -> ghostImg = GhostScaredView.getInstance().getImage(ghostForView);
 			case DYING -> ghostImg = GhostDyingView.getInstance().getImage();
-			default -> ghostImg = GhostDefautlView.getInstance().getImage(ghost);
+			default -> ghostImg = GhostDefautlView.getInstance().getImage(ghostForView);
 		}
 		// ajout les yeux en fonction de la direction
-		if (ghost.getStatus() != GhostStatus.DYING) {
-			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.getDirection()));
+		if (ghostForView.getStatus() != GhostStatus.DYING) {
+			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghostForView.getDirection()));
 		}
 		// ajout du bandeau
-		if (ghost.getStatus() != GhostStatus.DYING && gameProperties.hasGhostHeadBand()) {
-			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.getDirection()));
+		if (ghostForView.getStatus() != GhostStatus.DYING && gameProperties.hasGhostHeadBand()) {
+			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghostForView.getDirection()));
 		}
 		if (gameProperties.hasHatSkin()) {
 			ghostImg = ImageUtils.appendImages(ghostImg, GhostHatImages.GHOST_HAT.getImage());

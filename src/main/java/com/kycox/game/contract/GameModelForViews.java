@@ -16,6 +16,9 @@
  */
 package com.kycox.game.contract;
 
+import java.util.Optional;
+
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.score.GroupMessages;
@@ -43,6 +46,8 @@ public interface GameModelForViews extends GameCommon {
 	int getNbrPointsForNewLife();
 
 	ScreenData getScreenData();
+
+	Optional<Ghost> getUnComputedGhost();
 
 	boolean isAtLeastOneXboxOneConnected();
 

@@ -16,39 +16,9 @@
  */
 package com.kycox.game.contract;
 
-import java.awt.Point;
-import java.util.Optional;
+public interface GhostForController {
 
-import com.kycox.game.body.ghost.Ghost;
+	boolean isDying();
 
-public interface GameModelForController extends GameCommon {
-	void changeLitLampMode();
-
-	void forceStopGame();
-
-	LadybugForController getLadybug();
-
-	Optional<Ghost> getUnComputedGhost();
-
-	boolean isGamePresentation();
-
-	void programForceExit();
-
-	void setAtLeastOneXboxOneConnected(boolean pasConnected);
-
-	void setGameInPause();
-
-	void setGhostRequest(Point point);
-
-	void setLadybugRequest(Point point);
-
-	void setMultiPlayers(boolean isMuliPlayers);
-
-	void setShowHelpForKeys(boolean showHelp);
-
-	void setShowHelpForXboxes(boolean showHelp);
-
-	void startGame();
-
-	void startStopSoundActive();
+	boolean isToBeTeleported();
 }

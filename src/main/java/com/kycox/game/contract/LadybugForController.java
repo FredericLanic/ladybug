@@ -19,5 +19,9 @@ package com.kycox.game.contract;
 import java.awt.Point;
 
 public interface LadybugForController {
+	boolean isEatenAMegaPoint();
+
+	boolean isToBeTeleported();
+
 	void setUserRequest(Point userRequest);
 }

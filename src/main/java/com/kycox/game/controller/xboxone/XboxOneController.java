@@ -3,18 +3,18 @@ package com.kycox.game.controller.xboxone;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.GameModelForController;
+import com.kycox.game.contract.GhostForController;
 import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
 
 @Named("XboxOneController")
-public class XboxOneController implements Observer {
+public class XboxOneController extends XBoxOneControllerManager implements Observer {
 
 	@Inject
 	private GameMessaging gameMessaging;
@@ -26,10 +26,22 @@ public class XboxOneController implements Observer {
 	@Inject
 	private XboxRequest xboxOneUnComputedGhost;
 
-	@PostConstruct
-	public void initialize() {
-		xboxOneLadybug.setNbrXboxRequest(ConstantXboxOne.LADYBUG_XBOXONE);
-		xboxOneUnComputedGhost.setNbrXboxRequest(ConstantXboxOne.GHOST_XBOXONE);
+	private void doVibrationsInGame() {
+		var ladybugForController = gameModelForController.getLadybug();
+		if (ladybugForController.isToBeTeleported() || ladybugForController.isEatenAMegaPoint()) {
+			getControllerManager().doVibration(ConstantXboxOne.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 100);
+		}
+
+		var unComputedGhost = gameModelForController.getUnComputedGhost();
+		if (!unComputedGhost.isEmpty()) {
+			GhostForController ghostForController = unComputedGhost.get();
+			if (ghostForController.isToBeTeleported()) {
+				getControllerManager().doVibration(ConstantXboxOne.GHOST_XBOXONE_INDEX, 0f, 0.5f, 100);
+			}
+			if (ghostForController.isDying()) {
+				getControllerManager().doVibration(ConstantXboxOne.GHOST_XBOXONE_INDEX, 0f, 0.5f, 35);
+			}
+		}
 	}
 
 	private boolean isOneXboxOneConnected() {
@@ -124,12 +136,13 @@ public class XboxOneController implements Observer {
 			manageBothXboxesOneInGame();
 			manageLadybugXboxOneInGame();
 			manageUnComputedGhostXboxOneInGame();
+			doVibrationsInGame();
 		}
 	}
 
 	private void readXboxOneStates() {
-		xboxOneLadybug.readCurrentState();
-		xboxOneUnComputedGhost.readCurrentState();
+		xboxOneLadybug.readCurrentState(getControllerManager().getState(ConstantXboxOne.LADYBUG_XBOXONE_INDEX));
+		xboxOneUnComputedGhost.readCurrentState(getControllerManager().getState(ConstantXboxOne.GHOST_XBOXONE_INDEX));
 	}
 
 	private void setProgramMessagesAccordingXboxOneConnectionOrDisconnection() {

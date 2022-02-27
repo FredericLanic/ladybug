@@ -31,6 +31,8 @@ import com.kycox.game.constant.ghost.GhostBehavious;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.image.GhostsBodyImages;
 import com.kycox.game.constant.ladybug.LadybugStatus;
+import com.kycox.game.contract.GhostForController;
+import com.kycox.game.contract.GhostForView;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.maths.GhostSensitiveBehavious;
 import com.kycox.game.tools.Utils;
@@ -39,7 +41,7 @@ import com.kycox.game.tools.dijkstra.Dijkstra;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class Ghost extends UserBody {
+public abstract class Ghost extends UserBody implements GhostForController, GhostForView {
 	private static final Log logger = LogFactory.getLog(Ghost.class);
 	@Getter
 	@Setter
@@ -103,8 +105,17 @@ public abstract class Ghost extends UserBody {
 		return color.isComputed();
 	}
 
-	private boolean isScaredOrFlashed() {
+	@Override
+	public boolean isDying() {
+		return getStatus() == GhostStatus.DYING;
+	}
+
+	public boolean isScaredOrFlashed() {
 		return getStatus() == GhostStatus.SCARED || getStatus() == GhostStatus.FLASH;
+	}
+
+	public boolean isToBeTeleported() {
+		return ghostActions.isToBeTeleported();
 	}
 
 	private boolean isTooNearOfLadybug(Ladybug ladybug) {

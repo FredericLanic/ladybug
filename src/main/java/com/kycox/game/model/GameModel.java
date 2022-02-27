@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -32,6 +33,7 @@ import javax.swing.Timer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
@@ -208,6 +210,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Override
 	public int getNbrPointsForNewLife() {
 		return gameScore.getNbrPointsForNewLife();
+	}
+
+	@Override
+	public Optional<Ghost> getUnComputedGhost() {
+		return getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).findFirst();
 	}
 
 	@PostConstruct
