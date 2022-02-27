@@ -61,6 +61,12 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 		if (xboxOneLadybug.isDpadLeft() || xboxOneUnComputedGhost.isDpadLeft()) {
 			gameProperties.changeGhostHat();
 		}
+		if (xboxOneLadybug.isRightStick()) {
+			gameMessaging.put(GameMessages.I_AM_LADYBUG.getMessage());
+		}
+		if (xboxOneUnComputedGhost.isRightStick()) {
+			gameMessaging.put(GameMessages.I_AM_GHOST.getMessage());
+		}
 	}
 
 	private void manageBothXboxesOneInGame() {

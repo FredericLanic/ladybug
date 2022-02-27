@@ -32,6 +32,10 @@ public class XboxRequest {
 	@Getter
 	private boolean hasBeenDisConnected = false;
 	@Getter
+	private boolean leftStick;
+	@Getter
+	private boolean rightStick;
+	@Getter
 	private boolean start;
 	private boolean wasConnected = false;
 	@Getter
@@ -117,6 +121,8 @@ public class XboxRequest {
 		dpadLeft = controllerState.dpadLeftJustPressed;
 		dpadRight = controllerState.dpadRightJustPressed;
 		start = controllerState.startJustPressed;
+		rightStick = controllerState.rightStickJustClicked;
+		leftStick = controllerState.leftStickJustClicked;
 	}
 
 	private void setEventOnConnection() {

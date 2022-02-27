@@ -52,6 +52,7 @@ DONE :
 - CFCT19 : mode pause avec les manettes XboxOne
 - CFCT20 : mettre des messages du programme (xbox connected, messages fun...)
 - CFCT21 : vibration sur les mannettes xbox
+- CFCT22 : distinction manette appui sur right stick
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
