@@ -16,9 +16,6 @@
  */
 package com.kycox.game.constant;
 
-public enum SuperPowerTimerStatus {
+public enum TimerStatus {
 	RUN, STOP, STOPPING;
-
-	SuperPowerTimerStatus() {
-	}
 }

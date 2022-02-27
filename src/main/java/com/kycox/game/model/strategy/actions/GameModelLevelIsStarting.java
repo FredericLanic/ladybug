@@ -12,6 +12,7 @@ import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.fruit.Fruits;
 import com.kycox.game.maths.LitLampMode;
+import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
@@ -26,6 +27,8 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 	private long beginningMilliseconds;
 	@Inject
 	private Fruits fruits;
+	@Inject
+	private GameMessaging gameMessaging;
 	@Setter
 	private Point ghostRequest = Constants.POINT_ZERO;
 
@@ -52,6 +55,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		fruits.init();
 		// init litLampMode
 		screenData.setLitLampMode(LitLampMode.isLitLampMode(currentGameStatus.getNumLevel()));
+		gameMessaging.init();
 		// on continue le level
 		continueLevel();
 	}

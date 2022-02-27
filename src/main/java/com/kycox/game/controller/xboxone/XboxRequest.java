@@ -28,54 +28,89 @@ public class XboxRequest {
 	private boolean dpadRight;
 	@Getter
 	private boolean dpadUp;
+	@Getter
+	private boolean hasBeenConnected = false;
+	@Getter
+	private boolean hasBeenDisConnected = false;
 	private int nbrXboxRequest;
-	private float rightStickX;
-	private float rightStickY;
 	@Getter
 	private boolean start;
+	private boolean wasConnected = false;
 	@Inject
 	private XBoxOneControllerManager xBoxOneControllerManager;
 	@Getter
 	private boolean xButton;
+	private float xLeftStick;
+	private float xRightStick;
 	@Getter
 	private boolean yButton;
+
+	private float yLeftStick;
+	private float yRightStick;
 
 	private int getDirection(float value) {
 		return value > 0 ? ConstantXboxOne.UP_VALUE : ConstantXboxOne.LOW_VALUE;
 	}
 
 	public boolean isConnected() {
-		return controllerState != null ? controllerState.isConnected : false;
+		return controllerState != null && controllerState.isConnected;
+	}
+
+	public boolean isDownLeftStick() {
+		return (isYLeftStick() && getDirection(yLeftStick) == ConstantXboxOne.LOW_VALUE);
 	}
 
 	public boolean isDownRightStick() {
-		return (isRightStickY() && getDirection(rightStickY) == ConstantXboxOne.LOW_VALUE);
+		return (isYRightStick() && getDirection(yRightStick) == ConstantXboxOne.LOW_VALUE);
+	}
+
+	public boolean isLeftLeftStick() {
+		return (isXLeftStick() && getDirection(xLeftStick) == ConstantXboxOne.LOW_VALUE);
 	}
 
 	public boolean isLeftRightStick() {
-		return (isRightStickX() && getDirection(rightStickX) == ConstantXboxOne.LOW_VALUE);
+		return (isXRightStick() && getDirection(xRightStick) == ConstantXboxOne.LOW_VALUE);
 	}
 
-	public boolean isRighRightStickt() {
-		return (isRightStickX() && getDirection(rightStickX) == ConstantXboxOne.UP_VALUE);
+	public boolean isRightLeftStick() {
+		return (isXLeftStick() && getDirection(xLeftStick) == ConstantXboxOne.UP_VALUE);
 	}
 
-	private boolean isRightStickX() {
-		return (rightStickX >= ConstantXboxOne.SENSITIVE || rightStickX <= -ConstantXboxOne.SENSITIVE);
+	public boolean isRightRightStick() {
+		return (isXRightStick() && getDirection(xRightStick) == ConstantXboxOne.UP_VALUE);
 	}
 
-	public boolean isRightStickY() {
-		return (rightStickY >= ConstantXboxOne.SENSITIVE || rightStickY <= -ConstantXboxOne.SENSITIVE);
+	public boolean isUpLeftStick() {
+		return (isYLeftStick() && getDirection(yLeftStick) == ConstantXboxOne.UP_VALUE);
 	}
 
 	public boolean isUpRightStick() {
-		return (isRightStickY() && getDirection(rightStickY) == ConstantXboxOne.UP_VALUE);
+		return (isYRightStick() && getDirection(yRightStick) == ConstantXboxOne.UP_VALUE);
+	}
+
+	private boolean isXLeftStick() {
+		return (xLeftStick >= ConstantXboxOne.SENSITIVE || xLeftStick <= -ConstantXboxOne.SENSITIVE);
+	}
+
+	private boolean isXRightStick() {
+		return (xRightStick >= ConstantXboxOne.SENSITIVE || xRightStick <= -ConstantXboxOne.SENSITIVE);
+	}
+
+	private boolean isYLeftStick() {
+		return (yLeftStick >= ConstantXboxOne.SENSITIVE || yLeftStick <= -ConstantXboxOne.SENSITIVE);
+	}
+
+	private boolean isYRightStick() {
+		return (yRightStick >= ConstantXboxOne.SENSITIVE || yRightStick <= -ConstantXboxOne.SENSITIVE);
 	}
 
 	public void readCurrentState() {
+		setEventOnConnection();
 		controllerState = xBoxOneControllerManager.getControllerManager().getState(nbrXboxRequest);
-		rightStickX = controllerState.rightStickX;
-		rightStickY = controllerState.rightStickY;
+		xRightStick = controllerState.rightStickX;
+		yRightStick = controllerState.rightStickY;
+		xLeftStick = controllerState.leftStickX;
+		yLeftStick = controllerState.leftStickY;
 		aButton = controllerState.a;
 		bButton = controllerState.b;
 		xButton = controllerState.xJustPressed;
@@ -86,6 +121,21 @@ public class XboxRequest {
 		dpadLeft = controllerState.dpadLeftJustPressed;
 		dpadRight = controllerState.dpadRightJustPressed;
 		start = controllerState.startJustPressed;
+	}
+
+	private void setEventOnConnection() {
+		var isConnected = isConnected();
+		hasBeenConnected = false;
+		hasBeenDisConnected = false;
+
+		if (wasConnected != isConnected) {
+			if (isConnected) {
+				hasBeenConnected = true;
+			} else {
+				hasBeenDisConnected = true;
+			}
+		}
+		wasConnected = isConnected;
 	}
 
 	public void setNbrXboxRequest(int nbrXboxRequest) {

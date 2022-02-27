@@ -12,6 +12,7 @@ import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.level.ScreenData;
+import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.score.Score;
@@ -27,6 +28,8 @@ public class AbstratGameModel {
 	@Getter
 	@Inject
 	protected CurrentProgramStatus currentGameStatus;
+	@Inject
+	protected GameMessaging gameMessaging;
 	@Getter
 	@Inject
 	protected Score gameScore;
@@ -96,6 +99,7 @@ public class AbstratGameModel {
 		groupGhosts.setStatus(GhostStatus.NORMAL);
 		// initialise les vies de fantômes
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
+		gameMessaging.init();
 	}
 
 	protected boolean isGameInPause() {

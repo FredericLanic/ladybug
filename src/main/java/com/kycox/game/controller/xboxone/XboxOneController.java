@@ -9,11 +9,15 @@ import javax.inject.Named;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.GameModelForController;
+import com.kycox.game.message.GameMessages;
+import com.kycox.game.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
 
 @Named("XboxOneController")
 public class XboxOneController implements Observer {
 
+	@Inject
+	private GameMessaging gameMessaging;
 	private GameModelForController gameModelForController;
 	@Inject
 	private GameProperties gameProperties;
@@ -77,7 +81,7 @@ public class XboxOneController implements Observer {
 		if (!xboxOneLadybug.isConnected()) {
 			return;
 		}
-		if (xboxOneLadybug.isRighRightStickt()) {
+		if (xboxOneLadybug.isRightRightStick()) {
 			gameModelForController.setLadybugRequest(Constants.POINT_RIGHT);
 		}
 		if (xboxOneLadybug.isLeftRightStick()) {
@@ -95,7 +99,7 @@ public class XboxOneController implements Observer {
 		if (!xboxOneUnComputedGhost.isConnected()) {
 			return;
 		}
-		if (xboxOneUnComputedGhost.isRighRightStickt()) {
+		if (xboxOneUnComputedGhost.isRightRightStick()) {
 			gameModelForController.setGhostRequest(Constants.POINT_RIGHT);
 		}
 		if (xboxOneUnComputedGhost.isLeftRightStick()) {
@@ -111,6 +115,7 @@ public class XboxOneController implements Observer {
 
 	private void manageXboxesOneInGame() {
 		gameModelForController.setAtLeastOneXboxOneConnected(isOneXboxOneConnected());
+		setProgramMessagesAccordingXboxOneConnectionOrDisconnection();
 		readXboxOneStates();
 		manageBothXbosesOneCommon();
 		if (gameModelForController.isGamePresentation()) {
@@ -125,6 +130,21 @@ public class XboxOneController implements Observer {
 	private void readXboxOneStates() {
 		xboxOneLadybug.readCurrentState();
 		xboxOneUnComputedGhost.readCurrentState();
+	}
+
+	private void setProgramMessagesAccordingXboxOneConnectionOrDisconnection() {
+		if (xboxOneLadybug.isHasBeenConnected()) {
+			gameMessaging.put(GameMessages.XBOX_LADYBUG_CONNECTION.getMessage());
+		}
+		if (xboxOneLadybug.isHasBeenDisConnected()) {
+			gameMessaging.put(GameMessages.XBOX_LADYBUG_DISCONNECTION.getMessage());
+		}
+		if (xboxOneUnComputedGhost.isHasBeenConnected()) {
+			gameMessaging.put(GameMessages.XBOX_GHOST_CONNECTION.getMessage());
+		}
+		if (xboxOneUnComputedGhost.isHasBeenDisConnected()) {
+			gameMessaging.put(GameMessages.XBOX_GHOST_DISCONNECTION.getMessage());
+		}
 	}
 
 	@Override

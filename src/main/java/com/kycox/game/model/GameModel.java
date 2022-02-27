@@ -40,6 +40,8 @@ import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.level.ScreenData;
+import com.kycox.game.message.GameMessages;
+import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.strategy.GameModelManageAction;
 import com.kycox.game.model.strategy.actions.GameModelGameIsEnding;
 import com.kycox.game.model.strategy.actions.GameModelGameIsInGame;
@@ -58,7 +60,7 @@ import com.kycox.game.sound.NewSounds;
 import com.kycox.game.tools.Utils;
 
 import lombok.Getter;
-import lombok.Setter;
+import lombok.Setter;;
 
 /**
  * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du
@@ -75,6 +77,9 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Inject
 	@Getter
 	private CurrentProgramStatus currentProgramStatus;
+	@Getter
+	@Inject
+	private GameMessaging gameMessaging;
 	@Inject
 	private GameModelGameIsEnding gameModeGameIsEnding;
 	@Inject
@@ -209,7 +214,6 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	private void init() {
 		currentProgramStatus.setProgramStart();
 		gameModelManageAction.changeStrategy(gameModelNoAction);
-		logger.info("Start Game Timer");
 		programTimer.start();
 	}
 
@@ -244,7 +248,8 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Override
 	public void setGameInPause() {
 		currentProgramStatus.setGameInPause(!currentProgramStatus.isGameInPause());
-		logger.info("Game in pause: " + currentProgramStatus.isGameInPause());
+		gameMessaging.put(currentProgramStatus.isGameInPause() ? GameMessages.GAME_IN_PAUSE.getMessage()
+		        : GameMessages.HEY_WE_GO.getMessage());
 	}
 
 	@Override
@@ -264,6 +269,9 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 
 		if (isMuliPlayers) {
 			Utils.randomEnum(GhostsBodyImages.class).setComputed(false);
+			gameMessaging.put(GameMessages.TWO_PLAYERS_MODE.getMessage());
+		} else {
+			gameMessaging.put(GameMessages.ONE_PLAYER_MODE.getMessage());
 		}
 	}
 
@@ -278,5 +286,6 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	public void startStopSoundActive() {
 		logger.info("startStopSoundActive : " + soundActive);
 		soundActive = !soundActive;
+		gameMessaging.put(soundActive ? GameMessages.SOUND_ACTIVE.getMessage() : GameMessages.SOUND_OFF.getMessage());
 	}
 }

@@ -33,6 +33,8 @@ import lombok.Setter;
 public class StatusGameView extends JPanel {
 	private static final long serialVersionUID = 4546077700634533519L;
 	@Setter
+	private String currentProgramMessage;
+	@Setter
 	private int ghostNbrLifes;
 	@Setter
 	private transient Image imageGhostPlayer;
@@ -68,34 +70,30 @@ public class StatusGameView extends JPanel {
 			displayNbrLifes(g, ghost, ghostNbrLifes, delta + ghost.getWidth(null) + 30, 0);
 
 		}
-		// text
-		displayMessageForPlayer(g);
-	}
-
-	private void displayMessageDuringGame(Graphics g) {
-		var scoreMessage = new StringBuilder();
-		scoreMessage.append("Score: ");
-		scoreMessage.append(score);
-		displayMessageToRight(g, scoreMessage.toString());
-	}
-
-	private void displayMessageForPlayer(Graphics g) {
 		if (inGame) {
-			displayMessageDuringGame(g);
+			displayScoreDuringGame(g);
+		}
+		displayMessageToRight(g, currentProgramMessage);
+	}
+
+	private void displayCentralMessage(Graphics g, String gameMessage) {
+		if (gameMessage != null) {
+			g.setFont(smallFont);
+			g.setColor(Color.WHITE);
+			var metr = getFontMetrics(smallFont);
+			var coordX = (getWidth() - metr.stringWidth(gameMessage)) / 2;
+			var coordY = getHeight() / 4;
+			g.drawString(gameMessage, coordX, coordY);
 		}
 	}
 
 	private void displayMessageToRight(Graphics g, String message) {
 		g.setFont(smallFont);
-		g.setColor(new Color(96, 128, 255));
-		var coordX = getWidth() - 100;
-		var coordY = getHeight() / 3;
+		g.setColor(Color.WHITE);
+		var metr = getFontMetrics(smallFont);
+		var coordX = getWidth() - metr.stringWidth(message) - 5;
+		var coordY = 10;
 		g.drawString(message, coordX, coordY);
-
-		if (!soundActive) {
-			var coordY1 = coordY + smallFont.getSize();
-			g.drawString("Sound off", coordX, coordY1);
-		}
 	}
 
 	private void displayNbrLifes(Graphics g, Image imageBody, int nbrLifes, int x, int y) {
@@ -105,6 +103,13 @@ public class StatusGameView extends JPanel {
 		var coordX = x + imageBody.getWidth(null);
 		var coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
 		g.drawString("x " + nbrLifes, coordX, coordY);
+	}
+
+	private void displayScoreDuringGame(Graphics g) {
+		var scoreMessage = new StringBuilder();
+		scoreMessage.append("Score: ");
+		scoreMessage.append(score);
+		displayCentralMessage(g, scoreMessage.toString());
 	}
 
 	@PostConstruct

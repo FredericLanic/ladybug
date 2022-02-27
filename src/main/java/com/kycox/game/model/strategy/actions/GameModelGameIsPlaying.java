@@ -1,6 +1,7 @@
 package com.kycox.game.model.strategy.actions;
 
 import java.awt.Point;
+import java.security.SecureRandom;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,8 +12,10 @@ import org.apache.commons.logging.LogFactory;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.fruit.Fruits;
+import com.kycox.game.message.GameAutomaticFunMessages;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
+import com.kycox.game.tools.Utils;
 
 import lombok.Setter;
 
@@ -29,6 +32,14 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 			screenData.addNewFruit(fruits.getCurrentIdFruit());
 			fruits.next();
 		}
+	}
+
+	private void addNewFunProgramMessage() {
+		var addFunMessages = new SecureRandom().nextInt(1000) > 996;
+		if (addFunMessages) {
+			gameMessaging.put(Utils.randomEnum(GameAutomaticFunMessages.class).getMessage());
+		}
+
 	}
 
 	private void caseOfGhostEatLadybug() {
@@ -114,6 +125,8 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 			moveBodies();
 			// ***
 			checkEndMaze();
+			// ***
+			addNewFunProgramMessage();
 		}
 	}
 

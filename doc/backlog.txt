@@ -50,6 +50,7 @@ DONE :
 - CFCT17 : mode pause à partir de la manette
 - CFCT18 : modifier le texte d'attente quand il y a au moins une manette
 - CFCT19 : mode pause avec les manettes XboxOne
+- CFCT20 : mettre des messages du programme (xbox connected, messages fun...)
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 

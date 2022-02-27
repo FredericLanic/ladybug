@@ -17,11 +17,14 @@
 package com.kycox.game.contract;
 
 import com.kycox.game.level.ScreenData;
+import com.kycox.game.message.GameMessaging;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.score.Score;
 
 public interface GameModelForViews extends GameCommon {
 	GameStatusForGameView getCurrentProgramStatus();
+
+	GameMessaging getGameMessaging();
 
 	Score getGameScore();
 
