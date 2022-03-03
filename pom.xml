@@ -108,35 +108,9 @@
                         <version>${spring-loaded.version}</version>
                     </dependency>
                 </dependencies>
-            </plugin>			           
+            </plugin>
 
-        	<plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-shade-plugin</artifactId>
-	            <executions>
-	                <execution>
-	                    <phase>package</phase>
-	                    <goals>
-	                        <goal>shade</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
-	            <configuration>
-	                <shadedArtifactAttached>true</shadedArtifactAttached>
-	                <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
-	                <filters>
-	                    <filter>
-	                        <artifact>*:*</artifact>
-	                        <excludes>
-	                            <exclude>META-INF/*.SF</exclude>
-	                            <exclude>META-INF/*.DSA</exclude>
-	                            <exclude>META-INF/*.RSA</exclude>
-	                        </excludes>
-	                    </filter>
-	                </filters>
-	            </configuration>
-	        </plugin> 
-               
+
         	<!-- voir https://spring.io/blog/2020/03/11/spring-tips-java-14-or-can-your-java-do-this -->
 			
         </plugins>
