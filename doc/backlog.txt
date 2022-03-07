@@ -75,3 +75,11 @@ DONE :
 
 REJECT : 
 - CTEC20 : faire une fct dans gameModel pour mettre le jeu en mode configuration depuis le controleur
+
+
+super pouvoire 
+
+plus de vidtes soit pour pac man soit pour famtome 
+bonus coeur pour famtome et pac man 
+famtome peux eviter de se faire manger 
+pac man peux manger le famtome 
