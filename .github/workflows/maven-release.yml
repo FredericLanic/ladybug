@@ -1,0 +1,75 @@
+# Création des releases avec le Maven Release Plugin,
+#   déploiement des articats Maven sur le repository Maven Github package,
+#   et publication des releases sur GitHub Release
+# ==================================================
+
+name: Maven Release
+
+# i.e. uniquement lors d'un déclenchement manuel du workflow
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Version to produce'
+        required: true
+      devVersion:
+        description: 'Next SNAPSHOT version (please suffix with --SNAPSHOT)'
+        required: true
+
+env:
+  INPUT_RELEASE_VERSION: ${{ github.event.inputs.releaseVersion }}
+  INPUT_DEV_VERSION: ${{ github.event.inputs.devVersion }}
+  
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: fregante/setup-git-user@v1 # Git config user.name / user.email
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+    - name: Prepare Release
+      run: >
+           mvn -B release:prepare
+           -DreleaseVersion=$INPUT_RELEASE_VERSION
+           -DdevelopmentVersion=$INPUT_DEV_VERSION
+           -Dusername=$GITHUB_ACTOR
+           -Dpassword=${{ secrets.GITHUB_TOKEN }}
+
+    - name: Perform Release
+      run: >
+           mvn -B release:perform
+           -DreleaseVersion=$INPUT_RELEASE_VERSION
+           -DdevelopmentVersion=$INPUT_DEV_VERSION
+           -Dusername=$GITHUB_ACTOR
+           -Dpassword=${{ secrets.GITHUB_TOKEN }}
+           -Darguments="-s $GITHUB_WORKSPACE/settings.xml"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    # Récupération du nom du tag git créé à l'étape précédente par
+    # le Maven-release-plugin (qui sera donc ici l'avant dernier commit=> HEAD~)
+    # 
+    # Le format du tag (ex: préfixe avec 'v') est défini dans le pom.xml,
+    # on ne souhaite donc pas le répéter ici pour des raisons de maintenance.
+    - name: Get tag name
+      id: tag-name
+      run: |
+           export TAG=$(git describe --tags --abbrev=0 HEAD~)
+           echo "::set-output name=TAG::$TAG"
+    
+    # Création d'une Release Github
+    - name: Publish Github Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.tag-name.outputs.TAG }} # On récupère le tag extrait au step précédent.
+        files: target/*.jar # Attachement du jar produit à la release Github
