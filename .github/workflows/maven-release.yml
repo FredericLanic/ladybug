@@ -29,10 +29,10 @@ jobs:
     
     - uses: fregante/setup-git-user@v1 # Git config user.name / user.email
 
-    - name: Set up JDK 11
+    - name: Set up JDK 16
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
+        java-version: '16'
         distribution: 'temurin'
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
