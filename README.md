@@ -1,3 +1,4 @@
+
 # Ladybug, "encore" un autre Pacman.
 J'ai réalisé le programme "Ladybug" dans une optique de créer une application Java pour ré-apprendre et connaitre mieux Java en m'amusant.
 
@@ -40,7 +41,7 @@ Ces classes proviennent du site https://fxrobin.developpez.com/tutoriels/java/lo
 
 Voir aussi https://www.baeldung.com/intro-to-project-lombok
 
-# Comprendre Ladybug
+# Quels mots architecture de Ladybug
 
 Pour rentrer dans le code de Ladybug, je vais vous donner mon point de vue
 
@@ -63,8 +64,31 @@ La classe qui les relie ensemble par le design pattern Observer : com.kycox.game
 
 > Je trouve que la mise en place du framework Spring ne met pas en avant l'architecture MVC en tant que telle. Elle l'a plutôt diluée. Il y a, me semble-t-il du travail à faire dans ce sens.
 
-# Septembre 2020
-Ajout du framework Spring vi application-context.xml dans Ladybug
+# C'est quoi le but du jeu ?
+Vous être Ladybug, une cousine bien lointaine de Pacman, et vous n'avez qu'un seul but dans la vie : manger des gommes. Vous avez faim de gommes.
+Pour cela, vous avez mis votre OX-Tshirt bleu préféré, qui vous donne la force et l'envie d'avancer dans les niveaux.
+
+
+Evidemment, votre vie serait bien trop simple, et peut être ennuyante, si vous étiez seule dans votre monde à déguster tranquillement les gommes : des fantômes rodent dans votre parcours, et malheureusement, leur contact peut être mortel. 
+
+
+Pourtant, vous avez la chance de pouvoir faire des erreurs, et la capacité de vous regénérer automatiquement si un fantôme assez futé vous touche. Dès le lancement de votre partie, le destin vous donne la possibilité de faire 3 erreurs. A fur et à mesure de votre expérience et de votre appétit, vous allez pouvoir augmenter le nombre d'erreurs possibles : votre XP augmente, votre nombre de vos vies aussi.
+
+## Les fantômes
+Les fantômes sont rancuniers; ils se souviennent de leurs trop nombreuses expériences avec Pacman, et ils veulent se venger. Leur unique but et d'empêcher sa cousine lointaine, Ladybug, de manger les gommes.
+
+La nature étant imparfaite, les fantôme ont plus ou moins un tempérament intelligent, agressif voire stupide, et aussi des facultés de déplacement plus ou moins rapides et progressives à chaque niveau.
+
+### Voici leurs présentations
+Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. De plus, plus vous mangez de gommes, plus il s'énerve et il déplace de plus en plus vite. 
+
+Inky, le fantôme bleu, lui est bien différent. Le destin lui a apporté une comportement négligent; il mène son parcours comme il lui semble, sans prendre en compte le monde extérieur. Tout en étant tranquille, son chemin peut être surprenant. 
+
+Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller devant vous, et peut être vous prendre en tenaille avec Blinky.
+
+Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Peut être un jour il se réveillera....
+
+### Début du jeu
 
 # Idées du jeu à appronfondir
 * rajouter dans le Jpanel à droite les remerciements (hors jeu)
@@ -73,8 +97,9 @@ Ajout du framework Spring vi application-context.xml dans Ladybug
 
 # Idées techniques
 * modifier le pattern Observer avec java 9+ (peut être via des listeners)
-* faire un installer avec java 16+ pour windows
+* faire un installer avec java 16+ pour windows (en cours par Jim)
 * faire des tests unitaires avec JUnit
 
 # Bugs détectés
 * J'ai défini dans le fichier backlog.txt les différentes améliotions techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolitions (c'est mon Jira à moi ;))
+
