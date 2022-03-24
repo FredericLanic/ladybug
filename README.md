@@ -65,6 +65,8 @@ La classe qui les relie ensemble par le design pattern Observer : com.kycox.game
 > Je trouve que la mise en place du framework Spring ne met pas en avant l'architecture MVC en tant que telle. Elle l'a plutôt diluée. Il y a, me semble-t-il du travail à faire dans ce sens.
 
 # C'est quoi le but du jeu ?
+![Introduction](/readme/introduction.png)
+
 Vous être Ladybug, une cousine bien lointaine de Pacman, et vous n'avez qu'un seul but dans la vie : manger des gommes. Vous avez faim de gommes.
 Pour cela, vous avez mis votre OX-Tshirt bleu préféré, qui vous donne la force et l'envie d'avancer dans les niveaux.
 
@@ -79,16 +81,14 @@ Les fantômes sont rancuniers; ils se souviennent de leurs trop nombreuses expé
 
 La nature étant imparfaite, les fantôme ont plus ou moins un tempérament intelligent, agressif voire stupide, et aussi des facultés de déplacement plus ou moins rapides et progressives à chaque niveau.
 
-### Voici leurs présentations
-Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. De plus, plus vous mangez de gommes, plus il s'énerve et il déplace de plus en plus vite. 
+| Hey ! Photo  | Description |
+| ------------- | ------------- |
+| ![I'm Blinky](/readme/ghosts/blinky.png) | Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. De plus, plus vous mangez de gommes, plus il s'énerve et il se déplace de plus en plus vite.   |
+| ![I'm Inky](/readme/ghosts/inky.png) | Inky, le fantôme bleu, lui est bien différent. Le destin lui a apporté une comportement négligent; il mène son parcours comme il lui semble, sans prendre en compte le monde extérieur. Tout en étant tranquille, son chemin peut être surprenant.  |
+| ![I'm Pinky](/readme/ghosts/pinky.png) | Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller devant vous, et peut être vous prendre en tenaille avec Blinky.  |
+| ![I'm Clyde](/readme/ghosts/clyde.png) | Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Peut être un jour il se réveillera.... |
 
-Inky, le fantôme bleu, lui est bien différent. Le destin lui a apporté une comportement négligent; il mène son parcours comme il lui semble, sans prendre en compte le monde extérieur. Tout en étant tranquille, son chemin peut être surprenant. 
-
-Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller devant vous, et peut être vous prendre en tenaille avec Blinky.
-
-Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Peut être un jour il se réveillera....
-
-### Début du jeu
+## Début du jeu
 
 # Idées du jeu à appronfondir
 * rajouter dans le Jpanel à droite les remerciements (hors jeu)
