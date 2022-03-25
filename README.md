@@ -94,9 +94,9 @@ En résumé, le build génère un fat jar : un jar qui contient toutes les dépe
 
 La commande pour lancer le jeu est :
 
-**java -jar ladybug-0.3.2-SNAPSHOT-jar-with-dependencies.jar**
+**java -jar ladybug-0.3.2-SNAPSHOT.jar**
 
-Pour le jeu en lui-même, je vous laisse trouver la gestion des propriétés et l'application-contexte pour gérer la configuration du jeu, l'affichage des plugins, la couleur de Ladybug ...
+Pour le jeu en lui-même, je vous laisse trouver la gestion des propriétés et l'application-context pour gérer la configuration du jeu, l'affichage des plugins, la couleur de Ladybug ...
 
 ## Pour développer Ladybug
 Je l'ai développé sous Eclipse ; actuellement, j'utilise la version 2022-03. Je ne pense pas que la version soit très importante en fait.
