@@ -81,7 +81,7 @@ Tip : si vous utilisez une manette XboxOne, veuillez la brancher en USB.
 ## Les branches sous GitHub
 Dans GitHub, le projet Ladybug possède deux branches : une branche **master** et une branche **develop**
 
-La branche **master** est en théorie la branche qui contient des versions (releases) taguées.
+La branche **master** est en théorie la branche qui contient les versions (releases) taguées.
 
 La branche **develop** est la branche en développement ; en bref, elle contient la prochaine version en mode draft : le développement en cours, et potentiellement aussi, quelques nouveaux bugs restant à corriger.
 
