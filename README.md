@@ -36,11 +36,11 @@ Vous pouvez alors commencer tranquillement à vous régaler des gommes qui sont 
 
 Pour vous défendre, vous avez une arme forte : la méga-gomme ![mega gum](/readme/gamePoint/megaGum.png). Il y en a quelques-unes par niveau. 
 
-Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantômes deviennent ultra stressés, tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important que leur vitesse diminue. Puis, petit à petit, ils regagnent confiance, leurs états "intial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter. Leur vitesse de déplacement revient petit à petit comme avant.
+Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantômes deviennent ultra stressés, tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important que leur vitesse diminue. Puis, petit à petit, ils se calment et regagnent confiance, leurs états "intial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter. Leur vitesse de déplacement revient petit à petit comme avant.
 
 Voici un fantôme stressé : ![Scared ghost](/readme/ghosts/scared.png)
 
-Lorsque les fantômes sont dans cet état de stress, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Mangés, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de re-génération dans le but de récupérer leur état et leur instinct initiaux envers vous.
+Lorsque les fantômes sont dans cet état de stress avancé, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Mangés, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de re-génération dans le but de récupérer leur état et leur instinct initiaux envers vous.
 
 ## Les élements importants du jeu
 
@@ -55,6 +55,25 @@ Pour vous aider dans votre quête de gommes, voici les principaux éléments gra
 |![All fruits](/readme/gamePoint/allFruits.png)| Les fruits apparaissent durant chaque niveau. Ils vous servent à augmenter votre expérience, et donc, à vous faciliter à récupérer de nouvelles vies|
 
 ## Les commandes du clavier
+
+Voici les commandes du clavier que vous utiliserez 
+
+| Touches du clavier  | Description |
+| --------------- |---------------|
+| Les flèches | Permet de changer de direction à Ladybug|
+| Z Q S D | Permet de changer de direction  foantôme (mode deux joueurs) |
+| 1 ou 2 | Définition du mode du jeu : 1 ou 2 joueurs - avant la partie |
+| F1 | Affichage de l'aide |
+| F2 | Gestion du son (on/off) |
+| F3 | Retirer/ afficher le logo sur le TShirt de Ladybug |
+| F4 | Porter / enlever le bandeau des fantômes |
+| F5 | Porter / enlever le chapeau des fantômes |
+| F6 | Gestion deu mode "lampe allumée" (on/off) lors du jeu |
+| Pause | Mise en pause du jeu / reprise |
+| ESC | Fin du niveau / sortie du jeu |
+
+Je vous laisse le plaisir de deviner les boutons de la manette XboxOne associés à ces actions.
+Tip : si vous utilisez une mannette XboxOne, veuillez la brancher en USB.
 
 # Quelques mots sur le projet en tant que tel
 
