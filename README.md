@@ -74,7 +74,7 @@ Voici les commandes du clavier que vous utiliserez
 
 Je vous laisse le plaisir de deviner les boutons de la manette XboxOne associés à ces actions.
 
-Tip : si vous utilisez une mannette XboxOne, veuillez la brancher en USB.
+Tip : si vous utilisez une manette XboxOne, veuillez la brancher en USB.
 
 # Quelques mots sur le projet en tant que tel
 
