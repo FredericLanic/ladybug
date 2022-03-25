@@ -1,4 +1,5 @@
 
+
 # Ladybug, "encore" un autre Pacman.
 J'ai réalisé le programme "Ladybug" dans une optique de créer une application Java pour ré-apprendre et connaitre mieux Java en m'amusant.
 
@@ -65,30 +66,42 @@ La classe qui les relie ensemble par le design pattern Observer : com.kycox.game
 > Je trouve que la mise en place du framework Spring ne met pas en avant l'architecture MVC en tant que telle. Elle l'a plutôt diluée. Il y a, me semble-t-il du travail à faire dans ce sens.
 
 # C'est quoi le but du jeu ?
-Vous être Ladybug, une cousine bien lointaine de Pacman, et vous n'avez qu'un seul but dans la vie : manger des gommes. Vous avez faim de gommes.
-Pour cela, vous avez mis votre OX-Tshirt bleu préféré, qui vous donne la force et l'envie d'avancer dans les niveaux.
+
+Vous être Ladybug, une cousine bien lointaine de Pacman, et vous n'avez qu'un seul but dans la vie : manger des gommes. Vous avez faim de gommes. Pour cela, vous avez mis votre OX-Tshirt bleu préféré, qui vous donne la force et l'envie d'avancer dans les niveaux.
 
 
-Evidemment, votre vie serait bien trop simple, et peut être ennuyante, si vous étiez seule dans votre monde à déguster tranquillement les gommes : des fantômes rodent dans votre parcours, et malheureusement, leur contact peut être mortel. 
+Evidemment, votre vie serait bien trop simple, et peut être ennuyante, si vous étiez seule dans votre monde à déguster paisiblement les gommes : des fantômes rodent sur votre parcours, et malheureusement, leur contact peut être mortel. 
 
+![Introduction](/readme/introduction.png)
 
-Pourtant, vous avez la chance de pouvoir faire des erreurs, et la capacité de vous regénérer automatiquement si un fantôme assez futé vous touche. Dès le lancement de votre partie, le destin vous donne la possibilité de faire 3 erreurs. A fur et à mesure de votre expérience et de votre appétit, vous allez pouvoir augmenter le nombre d'erreurs possibles : votre XP augmente, votre nombre de vos vies aussi.
+Heureusement, si un fantôme assez futé vous touche, vous avez la chance et la capacité de vous regénérer au point de départ du niveau. Dès le lancement de votre partie, le destin vous donne la possibilité de commettre 3 erreurs. A fur et à mesure de votre expérience et de votre appétit, vous allez pouvoir augmenter le nombre d'erreurs possibles : votre XP augmente, votre nombre de vos vies aussi.
+
 
 ## Les fantômes
 Les fantômes sont rancuniers; ils se souviennent de leurs trop nombreuses expériences avec Pacman, et ils veulent se venger. Leur unique but et d'empêcher sa cousine lointaine, Ladybug, de manger les gommes.
 
-La nature étant imparfaite, les fantôme ont plus ou moins un tempérament intelligent, agressif voire stupide, et aussi des facultés de déplacement plus ou moins rapides et progressives à chaque niveau.
+La nature étant imparfaite, les fantôme ont plus ou moins un tempérament intelligent, agressif voire négligeant, avec aussi des facultés de déplacement plus ou moins rapides et progressives à chaque niveau.
 
-### Voici leurs présentations
-Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. De plus, plus vous mangez de gommes, plus il s'énerve et il déplace de plus en plus vite. 
+| Hey ! Photo  | Description |
+| ------------- | ------------- |
+| ![I'm Blinky](/readme/ghosts/blinky.png) | Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. De plus, plus vous mangez de gommes, plus il s'énerve et il se déplace de plus en plus vite.   |
+| ![I'm Inky](/readme/ghosts/inky.png) | Inky, le fantôme bleu, lui est bien différent. Le destin lui a apporté une comportement négligeant; il mène son parcours comme bon lui semble, sans prendre en compte le monde extérieur. Tout en étant tranquille, son chemin peut être surprenant.  |
+| ![I'm Pinky](/readme/ghosts/pinky.png) | Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller devant vous, et peut être vous prendre en tenaille avec Blinky.  |
+| ![I'm Clyde](/readme/ghosts/clyde.png) | Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Peut être un jour il se réveillera.... |
 
-Inky, le fantôme bleu, lui est bien différent. Le destin lui a apporté une comportement négligent; il mène son parcours comme il lui semble, sans prendre en compte le monde extérieur. Tout en étant tranquille, son chemin peut être surprenant. 
+## Allez, on joue !
+Lorsqu'un niveau débute, vous, Ladybug êtes assez loin de fantômes. Ils débutent tous regroupés sur un point précis : leur point de re-génération [image du point de re-génération]. Vous pouvez alors commencer tranquillement à vous régaler des gommes qui sont tout autour de vous.
 
-Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller devant vous, et peut être vous prendre en tenaille avec Blinky.
 
-Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Peut être un jour il se réveillera....
+Mais attention, les fantômes arrivent vite !!
 
-### Début du jeu
+
+Pour vous défendre, vous avez une arme forte : la méga-gomme [mettre l'image de la méga-gomme]. Il y en a quelques-unes par niveau. Les fantômes en ont une peur maladive. Dès que vous l'avalez, les fantômes deviennent ultra stressés, tellement stressés qu'il en change de couleur [mettre un fantôme gris], qu'ils essaient de s'éloigner de vous, tout en se déplaçant moins rapidement. Puis, petit à petit, il reprennent confiance, leurs états "intial" et "stressé" alternent et c'est pour ça qu'ils se mettent à clignoter. Leur vitesse revient petit à petit comme avant.
+
+
+Quand les fantômes sont dans un état de stress, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Ils deviennent alors totalement inoffensif et se dirige instinctivement vers leur point de re-génération [Mettre l'image de point de regénération] dans le but de récupérer leur état et leur instinct initiaux envers vous.
+
+
 
 # Idées du jeu à appronfondir
 * rajouter dans le Jpanel à droite les remerciements (hors jeu)
