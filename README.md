@@ -40,7 +40,7 @@ Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantôm
 
 Voici un fantôme stressé : ![Scared ghost](/readme/ghosts/scared.png)
 
-Lorsque les fantômes sont dans cet état de stress avancé, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Mangés, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de re-génération dans le but de récupérer leur état et leur instinct envers vous initiaux.
+Lorsque les fantômes sont dans cet état de stress avancé, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Mangés, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de regénération dans le but de récupérer leur état et leur instinct envers vous initiaux.
 
 ## Les élements importants du jeu
 
