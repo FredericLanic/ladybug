@@ -28,11 +28,17 @@ La nature étant imparfaite, les fantômes ont plus ou moins un tempérament int
 Evidemment, plus vous montez dans les niveaux, plus leur comportement personnel se dévoile et leur rapidité de déplacement accroît.
 
 ## Allez, on joue !
-Lorsqu'un niveau débute, vous, Ladybug, êtes assez loin de fantômes. Ils débutent tous regroupés sur un point précis : ![Ghost regeneration point](/readme/gamePoint/ghostRegenerationPoint.png), leur point de départ qui est aussi leur point de re-génération. 
+Lorsqu'un niveau débute, vous, Ladybug, êtes assez loin de fantômes. 
+
+Ils débutent tous regroupés sur un point précis : ![Ghost regeneration point](/readme/gamePoint/ghostRegenerationPoint.png), leur point de départ qui est aussi leur point de re-génération. 
 
 Vous pouvez alors commencer tranquillement à vous régaler des gommes qui sont tout autour de vous. Mais attention, les fantômes arrivent vite !!
 
-Pour vous défendre, vous avez une arme forte : la méga-gomme ![mega gum](/readme/gamePoint/megaGum.png). Il y en a quelques-unes par niveau. Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantômes deviennent ultra stressés, tellement stressés qu'il en change de couleur ![Scared ghost](/readme/ghosts/scared.png), qu'ils essaient de s'éloigner de vous. Leur stress est tellement important que leur vitesse diminue. Puis, petit à petit, ils regagnent confiance, leurs états "intial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter. Leur vitesse de déplacement revient petit à petit comme avant.
+Pour vous défendre, vous avez une arme forte : la méga-gomme ![mega gum](/readme/gamePoint/megaGum.png). Il y en a quelques-unes par niveau. 
+
+Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantômes deviennent ultra stressés, tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important que leur vitesse diminue. Puis, petit à petit, ils regagnent confiance, leurs états "intial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter. Leur vitesse de déplacement revient petit à petit comme avant.
+
+Voici un fantôme stressé : ![Scared ghost](/readme/ghosts/scared.png)
 
 Lorsque les fantômes sont dans cet état de stress, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Mangés, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de re-génération dans le but de récupérer leur état et leur instinct initiaux envers vous.
 
@@ -85,7 +91,6 @@ Tips : n'oubliez pas de faire un clean sous Eclipse => Menu "Projet -> clean" pu
 A ce jour, vous pouvez vérifier que les classes du package "test.lombox" soient correctement buildées.
 
 Ces classes proviennent du site https://fxrobin.developpez.com/tutoriels/java/lombok-retour-experience/
-=> on retrouve "François-Xavier Robin"
 
 Voir aussi https://www.baeldung.com/intro-to-project-lombok
 
@@ -135,6 +140,8 @@ La classe com.kycox.game.engine.Engine les relie ensemble par le design pattern 
 
 # Remerciements
 Je remercie en premier Alex pour m'avoir apporté sa confiance en mon remise à niveau en java, Jean-Michel pour son aide à l'amorçage du jeu, à Cyril pour m'avoir aidé à faciliter la création des niveaux.
+
+Merci également à François 
 
 Je tiens à apporter mes remerciements à Jim et à Christophe pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
 
