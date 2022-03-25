@@ -36,7 +36,7 @@ Vous pouvez alors commencer tranquillement à vous régaler des gommes qui sont 
 
 Pour vous défendre, vous avez une arme forte : la méga-gomme ![mega gum](/readme/gamePoint/megaGum.png). Il y en a quelques-unes par niveau. 
 
-Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantômes deviennent ultras stressés, tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important que leur vitesse diminue. Puis, petit à petit, ils se calment et regagnent confiance, leurs états "intial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter. Leur vitesse de déplacement revient petit à petit comme avant.
+Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantômes deviennent ultras stressés, tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important que leur vitesse diminue. Puis, petit à petit, ils se calment et regagnent confiance, leurs états "initial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter, avant de reprendre leur comportement et leur vitesse de déplacement initiaux.
 
 Voici un fantôme stressé : ![Scared ghost](/readme/ghosts/scared.png)
 
