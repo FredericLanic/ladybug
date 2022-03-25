@@ -150,11 +150,11 @@ Voir mon application du  design pattern [mvc](/readme/architecture/mvc.jpg)
 * faire des tests unitaires avec JUnit
 
 ## Améliorations / Bugs détectés
-* J'ai défini dans le fichier backlog.txt les différentes améliotions techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolitions (c'est mon Jira à moi ;))
+* J'ai défini dans le fichier backlog.txt les différentes améliotions techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolutions (c'est le Jira du pauvre ;) )
 
 ## Les ressources extérieures utilisées
 * les sons : les sons utilisés dans ce jeu proviennent du site web https://www.classicgaming.cc/classics/pac-man/sounds
-* les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/_inWork_ à l'exception des fruits : https://dribbble.com/shots/3217754-Ms-Pac-Man# que j'ai un peu remaniés.
+* les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/_inWork_ à l'exception des images des fruits : https://dribbble.com/shots/3217754-Ms-Pac-Man# que j'ai un peu remaniées.
 * la police de caractères utilisée provient du site https://www.dafont.com/pacfont.font
 * la gestion des manettes XboxOne : la dépendance utilsée pour connecter les manettes XboxOne provient du repo GitHUb https://github.com/williamahartman/Jamepad
 
