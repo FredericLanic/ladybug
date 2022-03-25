@@ -5,6 +5,46 @@ J'ai réalisé le programme "Ladybug" dans une optique de créer une application
 
 J'ai essayé d'appliquer quelques trucs sympas : le motif d'architecture MVC, le framework Spring, d'utiliser des designs patterns, la hiérarchie des classes, le polymorphisme, les threads....
 
+# C'est quoi le but du jeu ?
+
+Vous être Ladybug, une cousine bien lointaine de Pacman, et vous n'avez qu'un seul but dans la vie : manger des gommes. Vous avez faim de gommes. Pour cela, vous avez mis votre OX-Tshirt bleu préféré, qui vous donne la force et l'envie d'avancer dans les niveaux.
+
+
+Evidemment, votre vie serait bien trop simple, et peut être ennuyante, si vous étiez seule dans votre monde à déguster paisiblement les gommes : des fantômes rodent sur votre parcours, et malheureusement, leur contact peut être mortel. 
+
+![Introduction](/readme/introduction.png)
+
+Heureusement, si un fantôme assez futé vous touche, vous avez la chance et la capacité de vous regénérer à votre point de départ du niveau. Dès le lancement de votre partie, le destin vous donne la possibilité de commettre 3 erreurs. A fur et à mesure de votre expérience et de votre appétit, vous allez pouvoir augmenter le nombre d'erreurs possibles : votre XP augmente, votre nombre de vos vies aussi.
+
+
+## Les fantômes
+Les fantômes sont rancuniers; ils se souviennent de leurs trop nombreuses expériences avec Pacman, et ils veulent se venger. Leur unique but est vous empêcher, vous, Ladybug, la cousine lointaine de Pacman, de manger les gommes.
+
+La nature étant imparfaite, les fantômes ont plus ou moins un tempérament intelligent, agressif voire négligeant, avec aussi des facultés de déplacement plus ou moins rapide et progressif à chaque niveau.
+
+| Hey ! Photo  | Description |
+| ------------- | ------------- |
+| ![I'm Blinky](/readme/ghosts/blinky.png) | Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. De plus, plus vous mangez de gommes, plus il s'énerve et il se déplace de plus en plus vite.   |
+| ![I'm Inky](/readme/ghosts/inky.png) | Inky, le fantôme bleu, lui est bien différent. Le destin lui a apporté une comportement négligeant; il mène son parcours comme bon lui semble, sans prendre en compte le monde extérieur. Tout en étant tranquille, son chemin peut être surprenant.  |
+| ![I'm Pinky](/readme/ghosts/pinky.png) | Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller à votre rencontre, devant vous, et peut être vous prendre en tenaille avec Blinky.  |
+| ![I'm Clyde](/readme/ghosts/clyde.png) | Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Peut être un jour il se réveillera.... |
+
+Evidemment, plus vous montez dans les niveaux, plus leur comportement personnel se dévoile et leur rapidité de déplacement accroît.
+
+## Allez, on joue !
+Lorsqu'un niveau débute, vous, Ladybug êtes assez loin de fantômes. Ils débutent tous regroupés sur un point précis : 
+
+leur point de re-génération ![Ghost regeneration point](/readme/gamePoint/ghostRegenerationPoint.png). 
+
+Vous pouvez alors commencer tranquillement à vous régaler des gommes qui sont tout autour de vous. Mais attention, les fantômes arrivent vite !!
+
+
+Pour vous défendre, vous avez une arme forte : la méga-gomme [mettre l'image de la méga-gomme]. Il y en a quelques-unes par niveau. Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantômes deviennent ultra stressés, tellement stressés qu'il en change de couleur [mettre un fantôme gris], qu'ils essaient de s'éloigner de vous. Leur stress est tellement important que leur vitesse est diminuée. Puis, petit à petit, il repgagnent confiance, leurs états "intial" et "stressé" alternent et c'est pour ça qu'ils se mettent à clignoter. Leur vitesse revient petit à petit comme avant.
+
+
+Lorsque les fantômes sont dans cet état de stress, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Mangés, ils deviennent alors totalement inoffensif et se dirige instinctivement vers leur point de re-génération [Mettre l'image de point de regénération] dans le but de récupérer leur état et leur instinct initiaux envers vous.
+
+
 # Les branches sous GitHub
 Dans GitHub, Ladybug possède deux branches : une branche **master** et une branche **develop**
 
@@ -64,44 +104,6 @@ Le modèle MVC que j'ai essayé d'appliquer est en fait les classes :
 La classe qui les relie ensemble par le design pattern Observer : com.kycox.game.engine.Engine
 
 > Je trouve que la mise en place du framework Spring ne met pas en avant l'architecture MVC en tant que telle. Elle l'a plutôt diluée. Il y a, me semble-t-il du travail à faire dans ce sens.
-
-# C'est quoi le but du jeu ?
-
-Vous être Ladybug, une cousine bien lointaine de Pacman, et vous n'avez qu'un seul but dans la vie : manger des gommes. Vous avez faim de gommes. Pour cela, vous avez mis votre OX-Tshirt bleu préféré, qui vous donne la force et l'envie d'avancer dans les niveaux.
-
-
-Evidemment, votre vie serait bien trop simple, et peut être ennuyante, si vous étiez seule dans votre monde à déguster paisiblement les gommes : des fantômes rodent sur votre parcours, et malheureusement, leur contact peut être mortel. 
-
-![Introduction](/readme/introduction.png)
-
-Heureusement, si un fantôme assez futé vous touche, vous avez la chance et la capacité de vous regénérer au point de départ du niveau. Dès le lancement de votre partie, le destin vous donne la possibilité de commettre 3 erreurs. A fur et à mesure de votre expérience et de votre appétit, vous allez pouvoir augmenter le nombre d'erreurs possibles : votre XP augmente, votre nombre de vos vies aussi.
-
-
-## Les fantômes
-Les fantômes sont rancuniers; ils se souviennent de leurs trop nombreuses expériences avec Pacman, et ils veulent se venger. Leur unique but et d'empêcher sa cousine lointaine, Ladybug, de manger les gommes.
-
-La nature étant imparfaite, les fantôme ont plus ou moins un tempérament intelligent, agressif voire négligeant, avec aussi des facultés de déplacement plus ou moins rapides et progressives à chaque niveau.
-
-| Hey ! Photo  | Description |
-| ------------- | ------------- |
-| ![I'm Blinky](/readme/ghosts/blinky.png) | Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. De plus, plus vous mangez de gommes, plus il s'énerve et il se déplace de plus en plus vite.   |
-| ![I'm Inky](/readme/ghosts/inky.png) | Inky, le fantôme bleu, lui est bien différent. Le destin lui a apporté une comportement négligeant; il mène son parcours comme bon lui semble, sans prendre en compte le monde extérieur. Tout en étant tranquille, son chemin peut être surprenant.  |
-| ![I'm Pinky](/readme/ghosts/pinky.png) | Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller devant vous, et peut être vous prendre en tenaille avec Blinky.  |
-| ![I'm Clyde](/readme/ghosts/clyde.png) | Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Peut être un jour il se réveillera.... |
-
-## Allez, on joue !
-Lorsqu'un niveau débute, vous, Ladybug êtes assez loin de fantômes. Ils débutent tous regroupés sur un point précis : leur point de re-génération [image du point de re-génération]. Vous pouvez alors commencer tranquillement à vous régaler des gommes qui sont tout autour de vous.
-
-
-Mais attention, les fantômes arrivent vite !!
-
-
-Pour vous défendre, vous avez une arme forte : la méga-gomme [mettre l'image de la méga-gomme]. Il y en a quelques-unes par niveau. Les fantômes en ont une peur maladive. Dès que vous l'avalez, les fantômes deviennent ultra stressés, tellement stressés qu'il en change de couleur [mettre un fantôme gris], qu'ils essaient de s'éloigner de vous, tout en se déplaçant moins rapidement. Puis, petit à petit, il reprennent confiance, leurs états "intial" et "stressé" alternent et c'est pour ça qu'ils se mettent à clignoter. Leur vitesse revient petit à petit comme avant.
-
-
-Quand les fantômes sont dans un état de stress, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Ils deviennent alors totalement inoffensif et se dirige instinctivement vers leur point de re-génération [Mettre l'image de point de regénération] dans le but de récupérer leur état et leur instinct initiaux envers vous.
-
-
 
 # Idées du jeu à appronfondir
 * rajouter dans le Jpanel à droite les remerciements (hors jeu)
