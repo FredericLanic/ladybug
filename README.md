@@ -154,14 +154,12 @@ Voir mon application du  design pattern [mvc](/readme/architecture/mvc.jpg)
 
 ## Les ressources extérieures utilisées
 * les sons : les sons utilisés dans ce jeu proviennent du site web https://www.classicgaming.cc/classics/pac-man/sounds
-* les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/_inWork_ à l'exception des fruits : https://dribbble.com/shots/3217754-Ms-Pac-Man# que j'ai un peu remanier.
+* les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/_inWork_ à l'exception des fruits : https://dribbble.com/shots/3217754-Ms-Pac-Man# que j'ai un peu remaniés.
 * la police de caractères utilisée provient du site https://www.dafont.com/pacfont.font
 * la gestion des manettes XboxOne : la dépendance utilsée pour connecter les manettes XboxOne provient du repo GitHUb https://github.com/williamahartman/Jamepad
 
 # Remerciements
 Je remercie en premier Alex pour m'avoir apporté sa confiance en mon remise à niveau en java, Jean-Michel pour son aide à l'amorçage du jeu, à Cyril pour m'avoir aidé à faciliter la création des niveaux.
-
-Merci également à François 
 
 Je tiens à apporter mes remerciements à Jim et à Christophe pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
 
