@@ -115,7 +115,7 @@ Le modèle MVC que j'ai essayé d'appliquer regroupe les classes suivantes :
 
 La classe com.kycox.game.engine.Engine les relie ensemble par le design pattern Observer.
 
-![simple gum](/readme/architecture/mvc.png)
+Voir [mvc](/readme/architecture/mvc.jpg)
 
 > Je trouve que la mise en place du framework Spring ne met pas en avant l'architecture MVC en tant que telle. Elle l'a plutôt diluée. Il y a, me semble-t-il, du travail à faire dans ce sens.
 
