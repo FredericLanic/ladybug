@@ -16,7 +16,7 @@ Heureusement, si un fantôme assez futé vous touche, vous avez la chance et la 
 ## Les fantômes
 Les fantômes sont rancuniers ; ils se souviennent de leurs trop nombreuses expériences, souvent agaçantes, avec Pacman. Leur unique but est vous empêcher, vous, Ladybug, la cousine lointaine de Pacman, de manger les gommes.
 
-La nature étant imparfaite, les fantômes ont plus ou moins un tempérament intelligent, agressif voire négligeant; ils ont aussi des facultés de déplacement plus ou moins rapide et progressif à chaque niveau.
+La nature étant imparfaite, les fantômes ont plus ou moins un tempérament intelligent, agressif voire négligeant ; ils ont aussi des facultés de déplacement plus ou moins rapide et progressif à chaque niveau.
 
 | Hey ! Photo  | Description |
 | ------------- | ------------- |
