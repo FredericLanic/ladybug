@@ -1,7 +1,7 @@
 # Ladybug, "encore" un autre Pacman.
 J'ai réalisé le programme "Ladybug" dans une optique de créer une application Java pour ré-apprendre et connaitre mieux Java en m'amusant.
 
-J'ai essayé d'appliquer quelques trucs de programmation sympas : le motif d'architecture MVC, le framework Spring, utilisation des designs patterns, la hiérarchie des classes, le polymorphisme, les threads....
+J'ai essayé d'appliquer quelques trucs de programmation sympas : le motif d'architecture MVC, le framework Spring, l'utilisation des designs patterns, la hiérarchie des classes, le polymorphisme, les threads....
 
 # C'est quoi le but du jeu ?
 
