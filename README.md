@@ -156,11 +156,13 @@ Voir mon application du design pattern [mvc](/readme/architecture/mvc.jpg)
 * les sons : les sons utilisés dans ce jeu proviennent du site web https://www.classicgaming.cc/classics/pac-man/sounds
 * les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/_inWork_ à l'exception des images des fruits : https://dribbble.com/shots/3217754-Ms-Pac-Man# que j'ai un peu remaniées.
 * la police de caractères utilisée provient du site https://www.dafont.com/pacfont.font
-* la gestion des manettes XboxOne : la dépendance utilisée pour connecter les manettes XboxOne provient du repo GitHUb https://github.com/williamahartman/Jamepad
+* la gestion des manettes XboxOne : la dépendance utilisée pour connecter les manettes XboxOne provient du repo GitHub https://github.com/williamahartman/Jamepad
 
 # Remerciements
-Je remercie en premier Alex pour m'avoir apporté sa confiance en ma remise à niveau en java, Jean-Michel pour son aide à l'interconnexion des classes principales du projet, à Cyril pour m'avoir aidé à faciliter la création des niveaux.
+Je remercie en premier Alex pour m'avoir apporté sa confiance en ma remise à niveau en java, Jean-Michel pour son aide à l'interconnexion des classes principales du projet, à Cyril pour m'avoir aidé à faciliter la création des nouveaux niveaux.
 
 Je tiens à apporter mes remerciements à Jim et à Christophe pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
 
-Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe pour réaliser les nombreuses parties afin de tester et de valider le jeu. Il apporte également des idées, plus ou moins farfelues mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide est très précieuse.
+Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe pour réaliser les nombreuses parties dans le but de tester et de valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins farfelues mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide est très précieuse.
+
+Portez-vous bien !
