@@ -129,7 +129,7 @@ La classe com.kycox.game.engine.Engine les relie ensemble par le design pattern 
 
 ## Les ressources extérieures utilisées
 * les sons : les sons utilisés dans ce jeu proviennent du site web https://www.classicgaming.cc/classics/pac-man/sounds
-* les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/_inWork/
+* les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/_inWork_ à l'exception des fruits : https://dribbble.com/shots/3217754-Ms-Pac-Man# que j'ai un peu remanier.
 * la police de caractères utilisée provient du site https://www.dafont.com/pacfont.font
 * la gestion des manettes XboxOne : la dépendance utilsée pour connecter les manettes XboxOne provient du repo GitHUb https://github.com/williamahartman/Jamepad
 
