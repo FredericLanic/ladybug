@@ -61,7 +61,7 @@ Voici les commandes du clavier que vous utiliserez
 | Touches du clavier  | Description |
 | --------------- |---------------|
 | Les flèches | Permet de changer de direction à Ladybug|
-| Z Q S D | Permet de changer de direction  foantôme (mode deux joueurs) |
+| Z Q S D | Permet de changer de direction du fantôme (en mode deux joueurs) |
 | 1 ou 2 | Définition du mode du jeu : 1 ou 2 joueurs - avant la partie |
 | F1 | Affichage de l'aide |
 | F2 | Gestion du son (on/off) |
@@ -70,7 +70,7 @@ Voici les commandes du clavier que vous utiliserez
 | F5 | Porter / enlever le chapeau des fantômes |
 | F6 | Gestion deu mode "lampe allumée" (on/off) lors du jeu |
 | Pause | Mise en pause du jeu / reprise |
-| ESC | Fin du niveau / sortie du jeu |
+| ESC | Fin du niveau ou Sortie du jeu |
 
 Je vous laisse le plaisir de deviner les boutons de la manette XboxOne associés à ces actions.
 Tip : si vous utilisez une mannette XboxOne, veuillez la brancher en USB.
