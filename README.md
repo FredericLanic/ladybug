@@ -60,8 +60,8 @@ Voici les commandes du clavier que vous utiliserez
 
 | Touches du clavier  | Description |
 | --------------- |---------------|
-| Les flèches | Permet de changer de direction à Ladybug|
-| Z Q S D | Permet de changer de direction du fantôme (en mode deux joueurs) |
+| Les flèches | Permet à Ladybug de changer de direction |
+| Z Q S D | Permet au fantôme de changer de direction (en mode deux joueurs) |
 | 1 ou 2 | Définition du mode du jeu : 1 ou 2 joueurs - avant la partie |
 | F1 | Affichage de l'aide |
 | F2 | Gestion du son (on/off) |
