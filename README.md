@@ -159,8 +159,8 @@ Voir mon application du  design pattern [mvc](/readme/architecture/mvc.jpg)
 * la gestion des manettes XboxOne : la dépendance utilsée pour connecter les manettes XboxOne provient du repo GitHUb https://github.com/williamahartman/Jamepad
 
 # Remerciements
-Je remercie en premier Alex pour m'avoir apporté sa confiance en mon remise à niveau en java, Jean-Michel pour son aide à l'amorçage du jeu, à Cyril pour m'avoir aidé à faciliter la création des niveaux.
+Je remercie en premier Alex pour m'avoir apporté sa confiance en ma remise à niveau en java, Jean-Michel pour son aide à l'interconnexion des classes principales du projet, à Cyril pour m'avoir aidé à faciliter la création des niveaux.
 
 Je tiens à apporter mes remerciements à Jim et à Christophe pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
 
-Une dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe à realiser les nombreuses parties pour tester et valider le jeu. Il apporte également des idées, plus ou moins farfelues, pour ajouter de nouvelles fonctionnalités. Son aide est très précieuse.
+Une dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe à realiser les nombreuses parties pour tester et valider le jeu. Il apporte également des idées, plus ou moins farfelues mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide est très précieuse.
