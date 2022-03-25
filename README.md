@@ -69,7 +69,7 @@ Voici les commandes du clavier que vous utiliserez
 | F4 | Porter / enlever le bandeau des fantômes |
 | F5 | Porter / enlever le chapeau des fantômes |
 | F6 | Gestion du mode "lampe allumée" (modes on/off) lors du jeu |
-| Pause | Mise en pause / Reprise du jeu |
+| Pause | Mise en pause / Reprise du niveau |
 | ESC | Fin du niveau ou Sortie du jeu |
 
 Je vous laisse le plaisir de deviner les boutons de la manette XboxOne associés à ces actions.
