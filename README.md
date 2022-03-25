@@ -51,7 +51,7 @@ Pour vous aider dans votre quête de gommes, voici les principaux éléments gra
 |![simple gum](/readme/gamePoint/simpleGum.png)| Gomme à manger. L'ensemble des gommes de chaque niveau est votre quête |
 |![mega gum](/readme/gamePoint/megaGum.png)| Méga gomme : idéal pour stresser les fantômes |
 |![teleport point](/readme/gamePoint/teleportPoint.png)| Point de téléportation : il vous mènera automatiquement à un autre point de téléportation. Attention, ces points de téléportation sont également utilisés par les fantômes |
-|![Ghost regeneration point](/readme/gamePoint/ghostRegenerationPoint.png)| Point de départ des fantômes en début de niveau. Il sert aussi à restituer l'état initial des fantômes après que vous les ayiez mangés |
+|![Ghost regeneration point](/readme/gamePoint/ghostRegenerationPoint.png)| Point de départ des fantômes en début de niveau. Il sert aussi aux fantômes de point de re-génération pour leur restituer leur état initial après que vous les ayez mangés |
 |![All fruits](/readme/gamePoint/allFruits.png)| Les fruits apparaissent durant chaque niveau. Ils vous servent à augmenter votre expérience, et donc, à vous faciliter à récupérer de nouvelles vies|
 
 ## Les commandes du clavier
