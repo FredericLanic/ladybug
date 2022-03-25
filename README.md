@@ -31,16 +31,17 @@ La nature étant imparfaite, les fantômes ont plus ou moins un tempérament int
 Lorsqu'un niveau débute, vous, Ladybug, êtes assez loin de fantômes. 
 
 Ils débutent tous regroupés sur un point précis : ![Ghost regeneration point](/readme/gamePoint/ghostRegenerationPoint.png), leur point de départ qui est aussi leur point de regénération. 
-
 Vous pouvez alors commencer tranquillement à vous régaler des gommes qui sont tout autour de vous. Mais attention, les fantômes arrivent vite !!
 
 Pour vous défendre, vous avez une arme forte : la méga-gomme ![mega gum](/readme/gamePoint/megaGum.png). Il y en a quelques-unes par niveau. 
 
-Les fantômes en ont une peur maladive. Dès que vous en avalez une, les fantômes deviennent ultras stressés, tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important que leur vitesse diminue. Puis, petit à petit, ils se calment et regagnent confiance, leurs états "initial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter, avant de reprendre leur comportement et leur vitesse de déplacement initiaux.
+Lorsque vous mangez une méga-gomme, vous obtenez, pendant un certain temps le pouvoir de manger l'enveloppe corporelle des fantômes. Les fantômes deviennent alors ultras stressés d'être absorbés ; tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important qu'il en est affaiblissant : leur vitesse alors diminue. 
+
+Si vous n'arrivez pas à les manger, petit à petit, ils se calment et regagnent confiance. Leurs états "initial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter, avant de reprendre leur comportement et leur vitesse de déplacement initiaux. Quand ils sont redevenus "normaux", les effets de la méga-gomme ont disparu.
 
 Voici un fantôme stressé : ![Scared ghost](/readme/ghosts/scared.png)
 
-Lorsque les fantômes sont dans cet état de stress avancé, vous avez le pouvoir de manger leur enveloppe corporelle, même s'ils clignotent. Mangés, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de regénération dans le but de récupérer leur état et leur instinct envers vous initiaux.
+Lorsque les fantômes sont dans cet état de stress avancé, même s'ils clignotent, vous pouvez manger leur enveloppe corporelle. Après avoir été croqués, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de regénération dans le but de récupérer leur état initial et leur instinct envers.
 
 ## Les élements importants du jeu
 
