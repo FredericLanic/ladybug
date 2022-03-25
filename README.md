@@ -68,11 +68,12 @@ Voici les commandes du clavier que vous utiliserez
 | F3 | Retirer/ afficher le logo sur le TShirt de Ladybug |
 | F4 | Porter / enlever le bandeau des fantômes |
 | F5 | Porter / enlever le chapeau des fantômes |
-| F6 | Gestion deu mode "lampe allumée" (on/off) lors du jeu |
-| Pause | Mise en pause du jeu / reprise |
+| F6 | Gestion du mode "lampe allumée" (on/off) lors du jeu |
+| Pause | Mise en pause / reprise du jeu |
 | ESC | Fin du niveau ou Sortie du jeu |
 
 Je vous laisse le plaisir de deviner les boutons de la manette XboxOne associés à ces actions.
+
 Tip : si vous utilisez une mannette XboxOne, veuillez la brancher en USB.
 
 # Quelques mots sur le projet en tant que tel
