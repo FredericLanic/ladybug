@@ -104,14 +104,9 @@ Je l'ai développé sous Eclipse ; actuellement, j'utilise la version 2022-03. J
 
 Pour limiter les longueurs de code dues aux Getter et Setter, j'ai fait le choix d'utiliser Lombok. Je n'ai pas eu de retours super positifs au sujet de lombok dans le cadre professionnel ; pour ma petite application, ça fait le job et ça ne me pose pas de soucis majeurs, plutôt le contraire : mon code s'éclaircit.
 
-Installation de "Lombok Eclipse" : voir http://www.jouvinio.net/wiki/index.php/Lombok_Eclipse
+Installation de "Lombok Eclipse" : voir http://www.jouvinio.net/wiki/index.php/Lombok_Eclipse J'ai suivi les indications du site. 
 
-J'ai suivi les indications du site. J'ai également modifié le "pom.xml" pour que maven puisse buidler de son côté en prenant compte des dépendances liées à Lombok.
-Tips : n'oubliez pas de faire un clean sous Eclipse => Menu "Projet -> clean" puis faire un "rebuild".
-
-A ce jour, vous pouvez vérifier que les classes du package "test.lombox" soient correctement buildées.
-
-Ces classes proviennent du site https://fxrobin.developpez.com/tutoriels/java/lombok-retour-experience/
+J'ai également modifié le "pom.xml" pour que maven puisse buidler de son côté en prenant compte des dépendances liées à Lombok. Tips : n'oubliez pas de faire un clean sous Eclipse => Menu "Projet -> clean" puis faire un "rebuild".
 
 Voir aussi https://www.baeldung.com/intro-to-project-lombok
 
