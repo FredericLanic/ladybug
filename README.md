@@ -13,6 +13,8 @@ Bien sûr, la vie serait bien trop simple, et peut être ennuyante, si vous éti
 
 Heureusement, si un fantôme assez futé vous touche, vous avez la chance et la capacité de vous régénérer à votre point de départ du niveau. Dès le lancement de votre partie, le destin vous donne la possibilité de commettre 3 erreurs. Au fur et à mesure de votre expérience et de votre appétit, vous allez pouvoir augmenter le nombre d'erreurs possibles : votre XP augmente, votre nombre de vos vies aussi.
 
+Vous finirez chaque niveau lorsque vous aurez mangé l'ensemble des gommes et des méga-gommes, peu importe le nombre de fruits restants. Regardez bien partout dans le niveau. Il se peut qu'il y ait des gommes plus ou moins cachées, notamment sur les points de téléportation ^^.
+
 ## Les fantômes
 Les fantômes sont rancuniers ; ils se souviennent de leurs trop nombreuses expériences, souvent agaçantes, avec Pacman. Leur unique but est de vous empêcher, vous, Ladybug, la cousine lointaine de Pacman, de manger les gommes.
 
