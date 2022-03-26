@@ -161,6 +161,6 @@ Je remercie en premier Alex pour m'avoir apporté sa confiance en ma remise à n
 
 Je tiens à apporter mes remerciements à Jim et à Christophe pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
 
-Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe pour réaliser les nombreuses parties dans le but de tester et de valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins farfelues mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide est très précieuse.
+Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe pour réaliser les nombreuses parties dans le but de tester et de valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins pertinentes mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide est très précieuse.
 
 Portez-vous bien !
