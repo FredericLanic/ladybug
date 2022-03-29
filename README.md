@@ -43,7 +43,7 @@ Si vous n'arrivez pas à les manger, petit à petit, ils se calment et regagnent
 
 Voici un fantôme stressé : ![Scared ghost](/readme/ghosts/scared.png)
 
-Lorsque les fantômes sont dans cet état de stress avancé, même s'ils clignotent, vous pouvez manger leur enveloppe corporelle. Après avoir été croqués, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de regénération dans le but de récupérer leur état initial et leur instinct envers.
+Lorsque les fantômes sont dans cet état de stress avancé, même s'ils clignotent, vous pouvez manger leur enveloppe corporelle. Après avoir été croqués, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de regénération dans le but de récupérer leur état initial et leur instinct envers vous.
 
 ## Les élements importants du jeu
 
