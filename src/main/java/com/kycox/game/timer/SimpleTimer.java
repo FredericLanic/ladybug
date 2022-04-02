@@ -13,30 +13,16 @@ import lombok.Setter;
 
 public class SimpleTimer {
 	private class WaiterTimer extends TimerTask {
-		private static final Log logger = LogFactory.getLog(WaiterTimer.class);
-		private long duration;
-
+		private long		duration;
 		@Getter
-		private Timer timer;
-
+		private Timer		timer;
 		@Setter
-		private TimerStatus timerStatus;
+		private TimerStatus	timerStatus;
 
 		private WaiterTimer(long time) {
-			timer = new Timer(true);
-			timerStatus = TimerStatus.RUN;
-			duration = time;
-		}
-
-		private void forcedStop() {
-			if (timer != null) {
-				timer.cancel();
-				timer.purge();
-			}
-		}
-
-		private boolean isRunning() {
-			return timerStatus == TimerStatus.RUN;
+			timer		= new Timer(true);
+			timerStatus	= TimerStatus.RUN;
+			duration	= time;
 		}
 
 		@Override
@@ -51,9 +37,21 @@ public class SimpleTimer {
 				timerStatus = TimerStatus.STOP;
 			}
 		}
+
+		private void forcedStop() {
+			if (timer != null) {
+				timer.cancel();
+				timer.purge();
+			}
+		}
+
+		private boolean isRunning() {
+			return timerStatus == TimerStatus.RUN;
+		}
 	}
 
-	private WaiterTimer waitTimer;
+	private static final Log logger	= LogFactory.getLog(WaiterTimer.class);
+	private WaiterTimer		 waitTimer;
 
 	public void forcedStop() {
 		if (waitTimer != null) {
