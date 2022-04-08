@@ -3,7 +3,7 @@
 
     <groupId>com.kycox</groupId>
     <artifactId>ladybug</artifactId>
-    <version>0.3.4</version>
+    <version>0.4.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>ladybug</name>
@@ -23,7 +23,7 @@
     <scm>
         <developerConnection>scm:git:https://github.com/FredericLanic/ladybug.git</developerConnection>
         <url>https://github.com/FredericLanic/ladybug</url>
-        <tag>v0.3.4</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
