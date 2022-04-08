@@ -1,15 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	
-	<groupId>com.kycox</groupId>
-	<artifactId>ladybug</artifactId>
-	<version>0.3.2-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	
-	<name>ladybug</name>
-	<url>http://maven.apache.org</url>
-	
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.kycox</groupId>
+    <artifactId>ladybug</artifactId>
+    <version>0.3.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>ladybug</name>
+    <url>http://maven.apache.org</url>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -18,30 +18,30 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>16</java.version>        
+        <java.version>16</java.version>
     </properties>
 
-      <scm>
-    <developerConnection>scm:git:https://github.com/FredericLanic/ladybug.git</developerConnection>
-    <url>https://github.com/FredericLanic/ladybug</url>
-    <tag>HEAD</tag>
-  </scm>
+    <scm>
+        <developerConnection>scm:git:https://github.com/FredericLanic/ladybug.git</developerConnection>
+        <url>https://github.com/FredericLanic/ladybug</url>
+        <tag>HEAD</tag>
+    </scm>
 
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/FredericLanic/ladybug</url>
-      <layout>default</layout>
-    </repository>
-    <snapshotRepository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/FredericLanic/ladybug</url>
-      <layout>default</layout>
-    </snapshotRepository>
-  </distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/FredericLanic/ladybug</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/FredericLanic/ladybug</url>
+            <layout>default</layout>
+        </snapshotRepository>
+    </distributionManagement>
 
-	<dependencyManagement>
-		<dependencies>
+    <dependencyManagement>
+        <dependencies>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -49,77 +49,78 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-		</dependencies>
-	</dependencyManagement>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
-	        
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>     
-      
-	    <dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.22</version>
-			<scope>provided</scope>
-		</dependency>    
-   		
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-		</dependency>
-    		
-    	<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
+        </dependency>
 
-		<!-- essai manette xbox : https://github.com/williamahartman/Jamepad -->
-	    <dependency>
-	        <groupId>com.github.WilliamAHartman</groupId>
-	        <artifactId>Jamepad</artifactId>
-	        <version>1.3.2</version>
-	    </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- essai manette xbox : https://github.com/williamahartman/Jamepad -->
+        <dependency>
+            <groupId>com.github.WilliamAHartman</groupId>
+            <artifactId>Jamepad</artifactId>
+            <version>1.3.2</version>
+        </dependency>
     </dependencies>
 
-	<repositories>
-		<!-- essai manette xbox : https://github.com/williamahartman/Jamepad -->
-	    <repository>
-	        <snapshots>
-	            <enabled>false</enabled>
-	        </snapshots>
-	        <id>central</id>
-	        <name>bintray</name>
-	        <url>https://jcenter.bintray.com</url>
-	    </repository>
-	    <repository>
-	        <id>jitpack.io</id>
-	        <url>https://jitpack.io</url>
-	    </repository>
-	</repositories>    
+    <repositories>
+        <!-- essai manette xbox : https://github.com/williamahartman/Jamepad -->
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray</name>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <build>
-    	<plugins>
-			<plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-surefire-plugin</artifactId>
-			    <!-- Cette version permet de détecter les fichiers de tests lancés par Maven
-			    	voir TP Oxiane Test Unitaire et https://stackoverflow.com/questions/6178583/maven-does-not-find-junit-tests-to-run  
-			    -->
-			    <version>2.22.2</version> 
-			</plugin>        
-        
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <!--
+                    Cette version permet de détecter les fichiers de tests lancés par Maven
+                    voir TP Oxiane Test Unitaire et https://stackoverflow.com/questions/6178583/maven-does-not-find-junit-tests-to-run  
+                -->
+                <version>2.22.2</version>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- set the main class for release mvn step -->
-	            <configuration>
-	                <mainClass>com.kycox.game.MainLadybug</mainClass>
-	            </configuration>
+                <!-- set the main class for release mvn step -->
+                <configuration>
+                    <mainClass>com.kycox.game.MainLadybug</mainClass>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.springframework</groupId>
@@ -138,9 +139,8 @@
                 </configuration>
             </plugin>
 
+            <!-- voir https://spring.io/blog/2020/03/11/spring-tips-java-14-or-can-your-java-do-this -->
 
-        	<!-- voir https://spring.io/blog/2020/03/11/spring-tips-java-14-or-can-your-java-do-this -->
-			
         </plugins>
     </build>
 </project>
