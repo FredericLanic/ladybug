@@ -16,22 +16,25 @@
  */
 package com.kycox.game.controller.key;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.properties.GameProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@Named("KeyGameController")
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+@Component
 public class KeyGameController extends KeyAdapter {
-	@Inject
-	private GameModelForController gameModelForController;
-	@Inject
-	private GameProperties gameProperties;
+	private final GameModelForController gameModelForController;
+	private final GameProperties gameProperties;
+
+	@Autowired
+	public KeyGameController(GameModelForController gameModelForController, GameProperties gameProperties) {
+		this.gameModelForController = gameModelForController;
+		this.gameProperties = gameProperties;
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {

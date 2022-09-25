@@ -1,25 +1,32 @@
 package com.kycox.game.model.strategy.actions;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.GameModelManageAction;
 import com.kycox.game.model.strategy.IGameModelAction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@Named("GameModelGameIsInGame")
+@Component
 public class GameModelGameIsInGame extends AbstratGameModel implements IGameModelAction {
-	@Inject
-	private GameModelGameIsPlaying gameModeGameIsPlaying;
-	@Inject
-	private GameModelGhostIsDead gameModeGhostIsDead;
-	@Inject
-	private GameModelLadybugIsDead gameModeLadybugIsDead;
-	@Inject
-	private GameModelLadybugIsDying gameModeLadybugIsDying;
-	@Inject
-	private GameModelManageAction gameModelManageAction;
+	private final GameModelGameIsPlaying gameModeGameIsPlaying;
+	private final GameModelGhostIsDead gameModeGhostIsDead;
+	private final GameModelLadybugIsDead gameModeLadybugIsDead;
+	private final GameModelLadybugIsDying gameModeLadybugIsDying;
+	private final GameModelManageAction gameModelManageAction;
+	@Autowired
+	public GameModelGameIsInGame(GameModelGameIsPlaying gameModeGameIsPlaying,
+								 GameModelGhostIsDead gameModeGhostIsDead,
+								 GameModelLadybugIsDead gameModeLadybugIsDead,
+								 GameModelLadybugIsDying gameModeLadybugIsDying,
+								 GameModelManageAction gameModelManageAction
+	) {
+		this.gameModeGameIsPlaying = gameModeGameIsPlaying;
+		this.gameModeGhostIsDead = gameModeGhostIsDead;
+		this.gameModeLadybugIsDead = gameModeLadybugIsDead;
+		this.gameModeLadybugIsDying = gameModeLadybugIsDying;
+		this.gameModelManageAction = gameModelManageAction;
+	}
 
 	@Override
 	public void programBeat() {

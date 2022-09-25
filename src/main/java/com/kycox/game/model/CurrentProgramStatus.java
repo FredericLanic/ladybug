@@ -16,19 +16,16 @@
  */
 package com.kycox.game.model;
 
-import javax.inject.Named;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.constant.GameStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
 import com.kycox.game.contract.GameStatusForGameView;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
-@Named("CurrentGameStatus")
+@Component
 public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CurrentProgramStatus.class);
 	public static final int TO_INGAME = 0;

@@ -1,8 +1,8 @@
 package com.kycox.game.model.strategy;
 
-import javax.inject.Named;
+import org.springframework.stereotype.Component;
 
-@Named("GameModelManageAction")
+@Component
 public class GameModelManageAction {
 	private IGameModelAction iGameModelAction;
 

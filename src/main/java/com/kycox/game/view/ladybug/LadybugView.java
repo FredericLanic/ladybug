@@ -16,15 +16,15 @@
  */
 package com.kycox.game.view.ladybug;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.swing.Timer;
-
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.timer.TimerView;
 import com.kycox.game.view.body.BodyImg;
+import org.springframework.stereotype.Component;
 
-@Named("LadybugView")
+import javax.annotation.PostConstruct;
+import javax.swing.*;
+
+@Component
 public class LadybugView extends LadybugCommun implements TimerView {
 	private BodyImg ladybugFull01 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
 	private BodyImg ladybugFull02 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());

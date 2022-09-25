@@ -1,13 +1,13 @@
 package com.kycox.game.message;
 
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-
-@Named("GameMessaging")
+@Component
 public class GameMessaging {
 	private List<String> messages;
 
@@ -22,7 +22,7 @@ public class GameMessaging {
 
 	@PostConstruct
 	public void init() {
-		messages = Collections.synchronizedList(new ArrayList<String>());
+		messages = Collections.synchronizedList(new ArrayList<>());
 	}
 
 	public void put(String message) {

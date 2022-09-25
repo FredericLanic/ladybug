@@ -1,10 +1,5 @@
 package com.kycox.game.model.strategy;
 
-import java.security.SecureRandom;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
@@ -19,11 +14,13 @@ import com.kycox.game.score.Score;
 import com.kycox.game.sound.NewSounds;
 import com.kycox.game.timer.SuperPowerTimer;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
-
 import lombok.Getter;
 import lombok.Setter;
 
-@Named("AbstratGameModel")
+import javax.inject.Inject;
+import java.security.SecureRandom;
+
+// @Component
 public class AbstratGameModel {
 	@Getter
 	@Inject
@@ -60,17 +57,12 @@ public class AbstratGameModel {
 
 	/**
 	 * Paramêtrage des fantômes dans le niveau actuel
-	 *
 	 * Initialisation des directions et de la vue de ladybug
-	 *
 	 * suite de l'initialisation du niveau ou quand ladybug meurt
 	 */
 	protected void continueLevel() {
-		// initialise ladybug pour le niveau
 		ladybug.settingsForNewLevel(currentGameStatus.getNumLevel(), screenData.getInitLadybugPos());
-		// initialise les fantômes
 		groupGhosts.setStartLevel(currentGameStatus.getNumLevel(), screenData);
-
 		groupGhosts.getGhosts().stream().filter(g -> !g.isComputed())
 		        .forEach(gu -> gu.initSpeedIndex(ladybug.getSpeedIndex()));
 	}
@@ -100,10 +92,6 @@ public class AbstratGameModel {
 		// initialise les vies de fantômes
 		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
 		gameMessaging.init();
-	}
-
-	protected boolean isGameInPause() {
-		return currentGameStatus.isGameInPause();
 	}
 
 	/**

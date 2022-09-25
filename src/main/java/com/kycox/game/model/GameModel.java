@@ -62,7 +62,8 @@ import com.kycox.game.sound.NewSounds;
 import com.kycox.game.tools.Utils;
 
 import lombok.Getter;
-import lombok.Setter;;
+import lombok.Setter;
+import org.springframework.stereotype.Component;;
 
 /**
  * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du
@@ -70,7 +71,7 @@ import lombok.Setter;;
  *
  */
 @SuppressWarnings("deprecation")
-@Named("GameModel")
+@Component
 public class GameModel extends Observable implements GameModelForViews, GameModelForSounds, GameModelForController {
 	private static final Log logger = LogFactory.getLog(GameModel.class);
 	@Setter

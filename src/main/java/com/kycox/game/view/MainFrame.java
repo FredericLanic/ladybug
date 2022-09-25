@@ -16,20 +16,15 @@
  */
 package com.kycox.game.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.down.PageEndView;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Frame principale du jeu.
@@ -37,7 +32,7 @@ import com.kycox.game.view.down.PageEndView;
  * FIXME : peut-être utiliser une autre techno que swing
  *
  */
-@Named("MainFrame")
+@Component("MainFrame")
 public class MainFrame extends JFrame implements MainGraphicStructure {
 	private static final long serialVersionUID = 1L;
 	private Dimension gameDimension = new Dimension();

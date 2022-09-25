@@ -16,28 +16,26 @@
  */
 package com.kycox.game.level;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.LevelStructure;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * La map du jeu en cours
  *
  */
-@Named("ScreenData")
+@Component
 public final class ScreenData {
 	@Getter
 	private LevelStructure currentLevel;
@@ -49,7 +47,7 @@ public final class ScreenData {
 	@Inject
 	private ManageLevel manageLevel;
 	@Getter
-	private List<ScreenBlock> viewBlocks = new ArrayList<>();
+	private final List<ScreenBlock> viewBlocks = new ArrayList<>();
 
 	public void addNewFruit(int idRefFruit) {
 		var currentScreenBlock = dataBlocks.get(getRandomPosNumEatenPoint());
@@ -58,11 +56,6 @@ public final class ScreenData {
 		        .orElseThrow().setIdRefFruit(idRefFruit);
 	}
 
-	/**
-	 * Convert le ScreenData en une List<UnitDijkstra>
-	 *
-	 * @return
-	 */
 	public List<UnitDijkstra> convertToDjistraList() {
 		List<UnitDijkstra> lstUnitDijkstra = new ArrayList<>();
 		// java8 : faire un stream
@@ -72,54 +65,28 @@ public final class ScreenData {
 		return lstUnitDijkstra;
 	}
 
-	/**
-	 * Retourne la position initiale de ladybug
-	 *
-	 * @return
-	 */
 	public Point getInitLadybugPos() {
 		return Utils.convertPointToGraphicUnit(currentLevel.getInitLadybugBlockPos());
 	}
 
-	/**
-	 * Retourne le nombre de points mangé par ladybug présents dans le IData
-	 */
 	public int getNbrBlocksWithEatenPoint() {
 		return (int) dataBlocks.stream().filter(ScreenBlock::isEatenPoint).count();
 	}
 
-	/**
-	 * Retourne le nombre de points à manger par ladybug présents dans le IData
-	 */
 	public int getNbrBlocksWithPoint() {
 		return (int) dataBlocks.stream().filter(ScreenBlock::isPoint).count();
 	}
 
-	/**
-	 * Retourne le nombre de lignes de la map du niveau
-	 *
-	 * @return
-	 */
 	public int getNbrLines() {
 		return currentLevel.getNbrLines();
 	}
 
-	/**
-	 * Retourne le nombre de méga point à mettre aléatoirement dans la map
-	 *
-	 * @return
-	 */
 	// FIXME : mettre ce nombre dans le Level ? ou bien faire un calcul du nombre de
 	// méga point en fonction du niveau
 	public int getNbrMegaPoint() {
 		return 2;
 	}
 
-	/**
-	 * Return the percentage of eaten point
-	 *
-	 * @return
-	 */
 	public int getPercentageEatenPoint() {
 		return (initNbrBlocksWithPoint - getNbrBlocksWithPoint()) * 100 / initNbrBlocksWithPoint;
 	}
@@ -164,12 +131,6 @@ public final class ScreenData {
 		return getPosNumPoint(randomPoint);
 	}
 
-	/**
-	 * Retourne les coordonnées aléatoire GRAPHIQUE d'un block qui contient un point
-	 * à manger par ladybug
-	 *
-	 * @return
-	 */
 	public Point getRandomPosOnAEatenPoint() {
 		var pos = getRandomPosNumEatenPoint();
 		var yBlock = pos / currentLevel.getNbrBlocksByLine();
@@ -177,12 +138,6 @@ public final class ScreenData {
 		return new Point(xBlock, yBlock);
 	}
 
-	/**
-	 * Retourne les coordonnées aléatoire GRAPHIQUE d'un block qui contient un point
-	 * à manger par ladybug
-	 *
-	 * @return
-	 */
 	public Point getRandomPosOnAPoint() {
 		var pos = getRandomPosNumPoint();
 		var yBlock = pos / currentLevel.getNbrBlocksByLine();
@@ -190,59 +145,27 @@ public final class ScreenData {
 		return new Point(xBlock, yBlock);
 	}
 
-	/**
-	 * Retourne le point ou les fantômes renaissent
-	 *
-	 * @return
-	 */
 	public Point getRevivorGhostPos() {
 		return Utils.convertPointToGraphicUnit(currentLevel.getGhostRegenerateBlockPoint());
 	}
 
-	/**
-	 * Retourne un objet de type ScreenBlock qui représente le block
-	 *
-	 * @param pointPos : coordonnées BLOCK (x,y) dans la fenêtre
-	 * @return
-	 */
 	public ScreenBlock getScreenBlock(Point posPoint) {
 		return dataBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
-	/**
-	 * Retourne la hauteur GRAPHIQUE de la map du jeu (coord y)
-	 *
-	 * @return
-	 */
 	public int getScreenHeight() {
 		return getNbrLines() * Constants.BLOCK_SIZE;
 	}
 
-	/**
-	 * Retourne la largeur GRAPHIQUE de la map du jeu (coord x)
-	 *
-	 * @return
-	 */
 	public int getScreenWidth() {
 		return currentLevel.getNbrBlocksByLine() * Constants.BLOCK_SIZE;
 	}
 
-	/**
-	 * Retourne un objet de type ScreenBlock qui représente le block
-	 *
-	 * @param pointPos : coordonnées BLOCK (x,y) dans la fenêtre
-	 * @return
-	 */
 	public ScreenBlock getViewBlock(Point posPoint) {
 		// java8 :
 		return viewBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
-	/***
-	 * Affecte la map en fonction du numero de niveau
-	 *
-	 * @param numLevel
-	 */
 	public void setLevelMap(int numLevel, boolean mustDisplayMegaPoints) {
 		// récupération du level associé au numLevel
 		currentLevel = manageLevel.getLevel(numLevel);
@@ -275,12 +198,6 @@ public final class ScreenData {
 		initNbrBlocksWithPoint = getNbrBlocksWithPoint();
 	}
 
-	/**
-	 * Update Point
-	 *
-	 * FIXME : à mettre ailleurs ou appeler différemment, par exemple sans
-	 * l'instance de Ladybug
-	 */
 	public void updateScreenBlock(Ladybug ladybug) {
 		// Suppression du point dans le ScreenBlock de lstDataBlocks
 		var currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();

@@ -16,28 +16,32 @@
  */
 package com.kycox.game.engine;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.controller.xboxone.XboxOneController;
 import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.CentralView;
 import com.kycox.game.view.down.PageEndView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@Named("Engine")
+import javax.annotation.PostConstruct;
+
+@Component
 public class Engine {
-	@Inject
-	private CentralView centralView;
-	@Inject
-	private GameModel gameModel;
-	@Inject
-	private GameSounds gameSounds;
-	@Inject
-	private PageEndView pageEndView;
-	@Inject
-	private XboxOneController xboxOneController;
+	private final CentralView centralView;
+	private final GameModel gameModel;
+	private final GameSounds gameSounds;
+	private final PageEndView pageEndView;
+	private final XboxOneController xboxOneController;
+
+	@Autowired
+	public Engine(CentralView centralView, GameModel gameModel, GameSounds gameSounds, PageEndView pageEndView, XboxOneController xboxOneController) {
+		this.centralView = centralView;
+		this.gameModel = gameModel;
+		this.gameSounds = gameSounds;
+		this.pageEndView = pageEndView;
+		this.xboxOneController = xboxOneController;
+	}
 
 	/**
 	 * note : use PAD CONTROLLER PadController padController = new

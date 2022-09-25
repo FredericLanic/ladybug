@@ -1,16 +1,19 @@
 package com.kycox.game.model.strategy.actions;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@Named("GameModelPresentationStarting")
+@Component
 public class GameModelPresentationStarting extends AbstratGameModel implements IGameModelAction {
-	@Inject
-	private GameMessaging gameMessaging;
+	private final GameMessaging gameMessaging;
+
+	@Autowired
+	public GameModelPresentationStarting(GameMessaging gameMessaging) {
+		this.gameMessaging = gameMessaging;
+	}
 
 	@Override
 	public void programBeat() {

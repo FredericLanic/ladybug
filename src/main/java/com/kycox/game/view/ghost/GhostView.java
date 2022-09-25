@@ -16,12 +16,6 @@
  */
 package com.kycox.game.view.ghost;
 
-import java.awt.Image;
-import java.awt.Point;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.image.GhostEyesImages;
@@ -30,8 +24,12 @@ import com.kycox.game.constant.ghost.image.GhostHeadbandImages;
 import com.kycox.game.contract.GhostForView;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
+import org.springframework.stereotype.Component;
 
-@Named("GhostView")
+import javax.inject.Inject;
+import java.awt.*;
+
+@Component
 public class GhostView {
 	@Inject
 	private GameProperties gameProperties;

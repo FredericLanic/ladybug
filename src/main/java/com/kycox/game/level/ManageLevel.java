@@ -16,19 +16,18 @@
  */
 package com.kycox.game.level;
 
-import java.util.List;
-
 import com.kycox.game.contract.LevelStructure;
 import com.kycox.game.tools.Utils;
-
 import lombok.Setter;
+
+import java.util.List;
 
 public final class ManageLevel {
 	@Setter
-	private List<LevelStructure> levels;
+	private List<LevelNG> levels;
 
 	/**
-	 * Retourne le niveau demand�
+	 * Retourne le niveau demandé
 	 *
 	 * @param i : le numéro du niveau demandé
 	 */

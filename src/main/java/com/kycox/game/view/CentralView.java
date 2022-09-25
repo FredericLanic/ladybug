@@ -16,22 +16,6 @@
  */
 package com.kycox.game.view;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.swing.JPanel;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
@@ -47,32 +31,48 @@ import com.kycox.game.view.ladybug.LadybugCommun;
 import com.kycox.game.view.ladybug.LadybugDyingView;
 import com.kycox.game.view.ladybug.LadybugView;
 import com.kycox.game.view.map.ScreenBlockView;
-
 import lombok.Setter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.swing.*;
+import java.awt.*;
+import java.io.Serial;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Vue du jeu MVC O
  *
  */
-@Named("CentralView")
+@Component
 public class CentralView extends JPanel implements Observer, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CentralView.class);
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private final Font defaultFont = GameFont.PACFONT.getDefaultFont();
+	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
 	@Setter
 	private long durationLadybugNewLife;
 	private GameModelForViews gameModelForView;
-	@Inject
-	private GhostView ghostView;
-	@Inject
-	private KeyGameController keyGameController;
-	@Inject
-	private LadybugDyingView ladybugDyingView;
-	@Inject
-	private LadybugView ladybugView;
-	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
-	@Inject
-	private ScreenBlockView screenBlockView;
+	private final GhostView ghostView;
+	private final KeyGameController keyGameController;
+	private final LadybugDyingView ladybugDyingView;
+	private final LadybugView ladybugView;
+	private final ScreenBlockView screenBlockView;
+
+	@Autowired
+	public CentralView(GhostView ghostView, KeyGameController keyGameController, LadybugDyingView ladybugDyingView, LadybugView ladybugView, ScreenBlockView screenBlockView)  {
+		this.ghostView = ghostView;
+		this.keyGameController = keyGameController;
+		this.ladybugDyingView = ladybugDyingView;
+		this.ladybugView = ladybugView;
+		this.screenBlockView = screenBlockView;
+	}
 
 	@Override
 	public void doActionAfterTimer(int nbrAction) {

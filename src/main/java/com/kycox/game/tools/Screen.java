@@ -16,13 +16,12 @@
  */
 package com.kycox.game.tools;
 
-import java.awt.Toolkit;
-
-import javax.inject.Named;
-
 import com.kycox.game.constant.Constants;
+import org.springframework.stereotype.Component;
 
-@Named("Screen")
+import java.awt.*;
+
+@Component
 public class Screen {
 	final Toolkit defaultToolKit = Toolkit.getDefaultToolkit();
 

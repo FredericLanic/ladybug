@@ -16,21 +16,18 @@
  */
 package com.kycox.game.view.down;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
+import com.kycox.game.tools.ImageUtils;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.io.Serial;
 
-import com.kycox.game.tools.ImageUtils;
-
-import lombok.Setter;
-
-@Named("StatusGameView")
+@Component
 public class StatusGameView extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 4546077700634533519L;
 	@Setter
 	private String currentProgramMessage;

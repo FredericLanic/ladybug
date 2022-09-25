@@ -16,24 +16,22 @@
  */
 package com.kycox.game.view.ladybug;
 
-import java.awt.Image;
-import java.awt.Point;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.view.body.BodyImg;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import java.awt.*;
 
 /**
  * Cinématique pour afficher / entendre lors de la mort de Ladybug
  *
  */
-@Named("LadybugDeathView")
+@Component
 public class LadybugDyingView extends LadybugCommun {
 	private int deltaBips;
 	private BodyImg empty = new BodyImg(GameImages.EMPTY.getImage());

@@ -1,14 +1,5 @@
 package com.kycox.game.model.strategy.actions;
 
-import java.awt.Point;
-import java.security.SecureRandom;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.fruit.Fruits;
@@ -16,16 +7,57 @@ import com.kycox.game.message.GameAutomaticFunMessages;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import com.kycox.game.tools.Utils;
-
 import lombok.Setter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@Named("GameModelGameIsPlaying")
+import java.awt.*;
+import java.security.SecureRandom;
+
+@Component
 public class GameModelGameIsPlaying extends AbstratGameModel implements IGameModelAction {
 	private static final Log logger = LogFactory.getLog(GameModelGameIsPlaying.class);
-	@Inject
-	private Fruits fruits;
+	private final Fruits fruits;
 	@Setter
 	private Point ghostRequest = Constants.POINT_ZERO;
+
+	@Autowired
+	public GameModelGameIsPlaying(Fruits fruits) {
+		this.fruits = fruits;
+	}
+
+	@Override
+	public void programBeat() {
+		if (!currentGameStatus.isGameInPause()) {
+			addNewFruit();
+			// ***
+			caseOfNewLadybugLife();
+			// ***
+			setBodiesActions();
+			// ***
+			updateGhostSeetings();
+			// ***
+			caseOfGhostEatLadybug();
+			// ***
+			manageSuperPower();
+			// ***
+			caseOfLadybugEatAMegaPoint();
+			// ***
+			manageScores();
+			// ***
+			updateScreenBlock();
+			// ***
+			setSoundRequests();
+			// ***
+			moveBodies();
+			// ***
+			checkEndMaze();
+			// ***
+			addNewFunProgramMessage();
+		}
+	}
 
 	private void addNewFruit() {
 		if (fruits.getActivationPercent() < screenData.getPercentageEatenPoint()) {
@@ -99,36 +131,6 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 		groupGhosts.move(ladybug, screenData, ghostRequest);
 	}
 
-	@Override
-	public void programBeat() {
-		if (!currentGameStatus.isGameInPause()) {
-			addNewFruit();
-			// ***
-			caseOfNewLadybugLife();
-			// ***
-			setBodiesActions();
-			// ***
-			updateGhostSeetings();
-			// ***
-			caseOfGhostEatLadybug();
-			// ***
-			manageSuperPower();
-			// ***
-			caseOfLadybugEatAMegaPoint();
-			// ***
-			manageScores();
-			// ***
-			updateScreenBlock();
-			// ***
-			setSoundRequests();
-			// ***
-			moveBodies();
-			// ***
-			checkEndMaze();
-			// ***
-			addNewFunProgramMessage();
-		}
-	}
 
 	/**
 	 * Lancement du timer pour le super power de ladybug

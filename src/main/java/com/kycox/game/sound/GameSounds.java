@@ -16,20 +16,19 @@
  */
 package com.kycox.game.sound;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.inject.Named;
-
 import com.kycox.game.constant.Sounds;
 import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.NewSoundsForGameSounds;
+import org.springframework.stereotype.Component;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Gestion du son dans le jeu
  *
  */
-@Named("GameSounds")
+@Component
 public class GameSounds implements Observer {
 	private NewSoundsForGameSounds newSounds;
 

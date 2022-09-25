@@ -16,14 +16,12 @@
  */
 package com.kycox.game.body.ladybug;
 
-import javax.inject.Named;
-
 import com.kycox.game.constant.Constants;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-@Named("LadybugDeath")
+@Component
 public class LadybugDying {
 	private int bip;
 	@Setter

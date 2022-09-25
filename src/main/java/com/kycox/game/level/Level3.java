@@ -16,11 +16,11 @@
  */
 package com.kycox.game.level;
 
-import java.awt.Point;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Named;
+import java.awt.*;
 
-@Named("Level3")
+@Component("Level3")
 public class Level3 extends Level {
 	public Level3() {
 		// nombre de blocks par ligne

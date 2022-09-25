@@ -16,26 +16,21 @@
  */
 package com.kycox.game.view.ladybug;
 
-import java.awt.Image;
-import java.awt.Point;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
 import com.kycox.game.view.body.BodyImg;
-
 import lombok.Getter;
 import lombok.Setter;
 
-@Named("LadybugCommun")
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class LadybugCommun {
 	@Getter
 	@Setter

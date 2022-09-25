@@ -16,21 +16,18 @@
  */
 package com.kycox.game;
 
+import com.kycox.game.view.MainFrame;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.kycox.game.view.MainFrame;
-
 /**
  * Classe principale du jeu
- *
  * C'est elle qui faut lancer :)
  */
 public class MainLadybug {
-	private static String cruxLine = "******************************";
+	private static final String cruxLine = "******************************";
 	private static final Log logger = LogFactory.getLog(MainLadybug.class);
 
 	/** Lancement du jeu */
@@ -39,9 +36,8 @@ public class MainLadybug {
 	}
 
 	/** lecture du contexte Spring de l'application */
-	private ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
-	@Autowired
-	private MainFrame mainFrame = applicationContext.getBean("MainFrame", MainFrame.class);
+	private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
+	private final MainFrame mainFrame = applicationContext.getBean("MainFrame", MainFrame.class);
 
 	public void launchTheGame() {
 		var javaVersion = Runtime.version();

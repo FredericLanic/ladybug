@@ -1,30 +1,36 @@
 package com.kycox.game.controller.xboxone;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.contract.GhostForController;
 import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-@Named("XboxOneController")
+import java.util.Observable;
+import java.util.Observer;
+
+@Component
 public class XboxOneController extends XBoxOneControllerManager implements Observer {
 
-	@Inject
-	private GameMessaging gameMessaging;
+	private final GameMessaging gameMessaging;
 	private GameModelForController gameModelForController;
-	@Inject
-	private GameProperties gameProperties;
-	@Inject
-	private XboxRequest xboxOneLadybug;
-	@Inject
-	private XboxRequest xboxOneUnComputedGhost;
+	private final GameProperties gameProperties;
+	private final XboxRequest xboxOneLadybug;
+	private final XboxRequest xboxOneUnComputedGhost;
+
+	@Autowired
+	public XboxOneController(GameMessaging gameMessaging,
+							 GameProperties gameProperties,
+							 XboxRequest xboxOneLadybug,
+							 XboxRequest xboxOneUnComputedGhost) {
+		this.gameMessaging =gameMessaging;
+		this.gameProperties = gameProperties;
+		this.xboxOneLadybug = xboxOneLadybug;
+		this.xboxOneUnComputedGhost = xboxOneUnComputedGhost;
+	}
 
 	private void doVibrationsInGame() {
 		var ladybugForController = gameModelForController.getLadybug();
@@ -33,7 +39,7 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 		}
 
 		var unComputedGhost = gameModelForController.getUnComputedGhost();
-		if (!unComputedGhost.isEmpty()) {
+		if (unComputedGhost.isPresent()) {
 			GhostForController ghostForController = unComputedGhost.get();
 			if (ghostForController.isToBeTeleported()) {
 				getControllerManager().doVibration(ConstantXboxOne.GHOST_XBOXONE_INDEX, 0f, 0.5f, 100);

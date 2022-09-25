@@ -16,22 +16,20 @@
  */
 package com.kycox.game.timer;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.inject.Named;
-
 import com.kycox.game.constant.TimerStatus;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Double timer utilisé pour afficher les fantômes qui ont peur et qui
  * clignottent ensuite. 5 Secondes avant la fin, les fantômes vont clignoter
  *
  */
-@Named("SuperPowerTimer")
+@Component
 public class SuperPowerTimer {
 	/**
 	 * Class TimerTask

@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:lang="http://www.springframework.org/schema/lang"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="
- 		http://www.springframework.org/schema/beans 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/lang
-		http://www.springframework.org/schema/lang/spring-lang.xsd
 		http://www.springframework.org/schema/context 
-		http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://www.springframework.org/schema/aop 
-		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
-	default-lazy-init="false">
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	   default-lazy-init="false">
 	<context:annotation-config />
 	<context:component-scan base-package="com.kycox" />
 
@@ -79,25 +72,22 @@
 		</property>
 	</bean>
 
-	<!-- SpeedFunctionLadybug in Ladybug -->
-	<bean id="SpeedFunctionLadybug"
-		class="com.kycox.game.maths.SpeedFunction" scope="prototype"
-		init-method="init">
-		<property name="lowLimit" value="4" />
-	</bean>
-
-	<!-- /!\ speedFunction est définie dans une classe parente -->
 	<bean id="Ladybug" class="com.kycox.game.body.ladybug.Ladybug"
 		scope="singleton">
-		<property name="speedFunction" ref="SpeedFunctionLadybug" />
+		<property name="speedFunction">
+			<bean class="com.kycox.game.maths.SpeedFunction" init-method="init">
+				<property name="lowLimit" value="4" />
+			</bean>
+		</property>
 	</bean>
 
 	<!-- Levels in ScreenData -->
+	<!-- Je pense qu'ici je peux faire une simplification de configuration afin que manageLevel contienne tous les Level par config spring -->
 	<bean id="ManageLevel" class="com.kycox.game.level.ManageLevel"
 		scope="singleton">
 		<property name="levels">
 			<list>
-				<!-- ref bean="Level1" /--> <!-- niveau bof bof -->				
+				<!-- ref bean="Level1" /--> <!-- niveau bof bof -->
 				<!-- ref bean="Level3"/--> <!-- niveau pour test, à ne pas utiliser pour le jeu -->
 				<ref bean="Level1NG" />
 				<ref bean="Level2NG" />

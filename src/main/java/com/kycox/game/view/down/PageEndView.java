@@ -16,21 +16,6 @@
  */
 package com.kycox.game.view.down;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.swing.JPanel;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.message.GameMessaging;
@@ -38,8 +23,18 @@ import com.kycox.game.timer.SimpleTimer;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugView;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
-@Named("PageEndView")
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
+
+@Component
 public class PageEndView extends JPanel implements Observer, MainGraphicStructure {
 	private static final long DURATION_MESSAGE_SHOWING = 500;
 	private static final Log logger = LogFactory.getLog(PageEndView.class);

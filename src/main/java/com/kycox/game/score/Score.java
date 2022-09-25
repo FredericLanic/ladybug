@@ -16,22 +16,21 @@
  */
 package com.kycox.game.score;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.fruit.Fruits;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
 
 /**
  * Score du jeu
  *
  */
-@Named("Score")
+@Component
 public class Score {
 	@Inject
 	private Fruits fruits;
