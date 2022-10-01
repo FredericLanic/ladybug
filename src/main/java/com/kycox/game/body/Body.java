@@ -36,7 +36,6 @@ public abstract class Body {
 	@Getter
 	@Setter
 	private boolean newLife = false;
-	// Position dans le JPanel
 	@Getter
 	@Setter
 	private Point position = Constants.POINT_ZERO;
@@ -74,14 +73,9 @@ public abstract class Body {
 		        .get(speedIndex < Constants.VALID_SPEEDS.size() ? speedIndex : Constants.VALID_SPEEDS.size() - 1);
 	}
 
-	/**
-	 * Initialise la vitesse du fantôme à la construction (speed & startSpeed)
-	 *
-	 * @param speedIndex
-	 */
 	public void initSpeedIndex(int speedIndex) {
 		this.speedIndex = speedIndex;
-		startSpeedIndex = speedIndex;
+		this.startSpeedIndex = speedIndex;
 	}
 
 	protected abstract boolean isAllowedToDoActions();
@@ -92,13 +86,13 @@ public abstract class Body {
 	}
 
 	public void lostsALife() {
-		leftLifes--;
+		this.leftLifes--;
 	}
 
 	public void manageNewLife() {
 		if (isNewLife()) {
 			setNewLife(false);
-			leftLifes++;
+			this.leftLifes++;
 		}
 	}
 }

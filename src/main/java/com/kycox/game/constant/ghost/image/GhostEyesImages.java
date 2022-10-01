@@ -27,9 +27,8 @@ public enum GhostEyesImages {
 	GHOST_UP_EYES("UpEyes.png");
 
 	@Getter
-	private Image image;
+	private final Image image;
 
-	// constructor other than ghost
 	GhostEyesImages(String fileName) {
 		var pathName = "images/ghosts/eyes/" + fileName;
 		image = new ImageIcon(GhostEyesImages.class.getClassLoader().getResource(pathName)).getImage();

@@ -24,15 +24,21 @@ import com.kycox.game.constant.ghost.image.GhostHeadbandImages;
 import com.kycox.game.contract.GhostForView;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import java.awt.*;
 
 @Component
 public class GhostView {
-	@Inject
-	private GameProperties gameProperties;
+	// FLA : Idea create enums for eyes, headband, image
+
+	private final GameProperties gameProperties;
+
+	@Autowired
+	public GhostView(GameProperties gameProperties) {
+		this.gameProperties = gameProperties;
+	}
 
 	private Image addEyes(Point direction) {
 		if (direction.equals(Constants.POINT_LEFT)) {

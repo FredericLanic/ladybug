@@ -21,11 +21,8 @@ import com.kycox.game.tools.Utils;
 
 /**
  * Probabilité de comportement
- *
  * Fonction y = ax + b où x est le niveau
- *
  * Qui résoud : (1, 20); (nbrMaxNiveau, 90)
- *
  * Retourne vrai si le nombre aléatoire (0-100) est en dessous de y
  *
  */
@@ -35,14 +32,6 @@ public class GhostSensitiveBehavious {
 	private static final int SCALE = 100;
 	private double y = 0;
 
-	/**
-	 *
-	 * Créé un nombre aléatoire [0-100] et définie si ce nombre est inférieur à une
-	 * règle spécifique [limiteBasse, limiteHaute]
-	 *
-	 * @param numLevel
-	 * @return
-	 */
 	public boolean isActive() {
 		return (Utils.generateRandomInt(SCALE) + 1) < y;
 	}

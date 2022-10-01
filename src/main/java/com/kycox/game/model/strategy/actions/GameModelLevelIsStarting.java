@@ -1,6 +1,5 @@
 package com.kycox.game.model.strategy.actions;
 
-import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.fruit.Fruits;
 import com.kycox.game.maths.LitLampMode;
@@ -14,8 +13,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.awt.*;
 
 @Component
 public class GameModelLevelIsStarting extends AbstratGameModel implements IGameModelAction {

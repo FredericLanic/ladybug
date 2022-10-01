@@ -30,15 +30,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GameProperties {
+	// @TODO : properties à la mode de Spring
 	private static final Log logger = LogFactory.getLog(GameProperties.class);
 	private static final String TRUE_PROPERTY = "1";
-	// ghost.hat
 	private Optional<String> ghostHat = Optional.empty();
-	// ghosts.headband
 	private Optional<String> ghostsHeadband = Optional.empty();
-	// ladybug.color
 	private Optional<String> ladybugColor = Optional.empty();
-	// ladybug.ski
 	private Optional<String> ladybugSkin = Optional.empty();
 	private Properties props;
 

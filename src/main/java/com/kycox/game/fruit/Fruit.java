@@ -10,14 +10,14 @@ class Fruit {
 	@Setter
 	private int activationPercent;
 	@Getter
-	private FruitsImages fruitImage;
+	private final FruitsImages fruitImage;
 	@Getter
-	private int idFruit;
+	private final int idFruit;
 	@Getter
 	@Setter
 	private Fruit next;
 	@Getter
-	private int score;
+	private final int score;
 
 	public Fruit(int idFruit, FruitsImages fruitImage, int score, int activationPercent) {
 		this.idFruit = idFruit;

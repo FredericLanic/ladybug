@@ -22,25 +22,26 @@ import com.kycox.game.fruit.Fruits;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import java.awt.*;
 
 @Component
 public class ScreenBlockView {
-	// Couleur d'un point
 	private static final Color dotColor = new Color(192, 192, 0);
 	@Setter
 	private Color colorMaze = Constants.BLUE_LADYBUG;
-	@Inject
-	private Fruits fruits;
-	// Couleur du labyrinthe
+
+	private final Fruits fruits;
 	private final Color megaPointColor = new Color(255, 128, 0);
-	// Couleur du lieu revivor
-	private final Color revivorColor = new Color(128, 255, 255);
-	// Couleur du labyrinthe
-	private final Color teleportationColor = new Color(255, 255, 255);
+	private final Color revivorPointColor = new Color(128, 255, 255);
+	private final Color teleportationPointColor = new Color(255, 255, 255);
+
+	@Autowired
+	public ScreenBlockView(Fruits fruits) {
+		this.fruits = fruits;
+	}
 
 	public void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		g2d.setColor(colorMaze);
@@ -173,13 +174,6 @@ public class ScreenBlockView {
 		}
 	}
 
-	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
-		if (screenBlock.getIdRefFruit() != Constants.NOFRUITID) {
-			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
-		}
-	}
-
 	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		var screenBlock = screenData.getScreenBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		// affichage du méga point
@@ -189,7 +183,7 @@ public class ScreenBlockView {
 		}
 		// affichage du point de survie des fantômes
 		if (screenBlock.isGhostReviver()) {
-			g2d.setColor(revivorColor);
+			g2d.setColor(revivorPointColor);
 			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 6, y + Constants.BLOCK_SIZE / 2 - 6, 8, 8);
 		}
 		// affichage des points
@@ -199,28 +193,35 @@ public class ScreenBlockView {
 		}
 		if (screenBlock.isPoint() && !screenBlock.isBorderUp()) {
 			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2, y + Constants.BLOCK_SIZE / 2 - 2 - Constants.BLOCK_SIZE / 3,
-			        2, 2);
+					2, 2);
 		}
 		if (screenBlock.isPoint() && !screenBlock.isBorderDown()) {
 			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2, y + Constants.BLOCK_SIZE / 2 - 2 + Constants.BLOCK_SIZE / 3,
-			        2, 2);
+					2, 2);
 		}
 		if (screenBlock.isPoint() && !screenBlock.isBorderLeft()) {
 			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2 - Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2 - 2,
-			        2, 2);
+					2, 2);
 		}
 		if (screenBlock.isPoint() && !screenBlock.isBorderRight()) {
 			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2 + Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2 - 2,
-			        2, 2);
+					2, 2);
 		}
 	}
 
 	private void displayTeleportation(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
 		if (screenBlock.isTeleportation()) {
-			g2d.setColor(teleportationColor);
+			g2d.setColor(teleportationPointColor);
 			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 10, 10);
 			g2d.drawImage(GameImages.TELEPORTATION.getImage(), x, y, null);
+		}
+	}
+
+	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
+		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		if (screenBlock.getIdRefFruit() != Constants.NOFRUITID) {
+			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
 		}
 	}
 }

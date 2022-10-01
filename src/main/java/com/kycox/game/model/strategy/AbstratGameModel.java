@@ -20,7 +20,6 @@ import lombok.Setter;
 import javax.inject.Inject;
 import java.security.SecureRandom;
 
-// @Component
 public class AbstratGameModel {
 	@Getter
 	@Inject

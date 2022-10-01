@@ -17,8 +17,7 @@ public enum GameFont {
 	private final Log logger = LogFactory.getLog(GameFont.class);
 
 	GameFont(String filePath) {
-		try {
-			var is = this.getClass().getResourceAsStream(filePath);
+		try(var is = this.getClass().getResourceAsStream(filePath)) {
 			defaultFont = Font.createFont(Font.TRUETYPE_FONT, is);
 			defaultFont = defaultFont.deriveFont((float) 38.0);
 		} catch (FontFormatException | IOException e) {

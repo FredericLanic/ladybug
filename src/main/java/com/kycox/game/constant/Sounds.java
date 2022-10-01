@@ -40,11 +40,6 @@ public enum Sounds {
 	@Getter
 	private Clip clip;
 
-	/**
-	 * Constructeur
-	 *
-	 * @param fileName
-	 */
 	Sounds(String fileName) {
 		try {
 			var url = Sounds.class.getClassLoader().getResource("sound/wav/" + fileName);

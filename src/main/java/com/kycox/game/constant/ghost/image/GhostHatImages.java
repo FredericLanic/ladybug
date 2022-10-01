@@ -26,9 +26,8 @@ public enum GhostHatImages {
 	GHOST_HAT("Hat.png");
 
 	@Getter
-	private Image image;
+	private final Image image;
 
-	// constructor other than ghost
 	GhostHatImages(String fileName) {
 		var pathName = "images/ghosts/hat/" + fileName;
 		image = new ImageIcon(GhostHatImages.class.getClassLoader().getResource(pathName)).getImage();

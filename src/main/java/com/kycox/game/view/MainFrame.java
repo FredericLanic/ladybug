@@ -19,31 +19,32 @@ package com.kycox.game.view;
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.down.PageEndView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * Frame principale du jeu.
- *
  * FIXME : peut-être utiliser une autre techno que swing
- *
  */
 @Component("MainFrame")
 public class MainFrame extends JFrame implements MainGraphicStructure {
-	private static final long serialVersionUID = 1L;
-	private Dimension gameDimension = new Dimension();
-	@Inject
-	private CentralView gameView;
-	private Dimension lineDimension = new Dimension();
-	private Dimension pageDimension = new Dimension();
-	@Inject
-	private PageEndView pageEndView;
-	@Inject
-	private Screen screen;
+	private final CentralView gameView;
+	private final PageEndView pageEndView;
+	private final Screen screen;
+	private final Dimension lineDimension = new Dimension();
+	private final Dimension pageDimension = new Dimension();
+	private final Dimension gameDimension = new Dimension();
+
+	@Autowired
+	public MainFrame(CentralView gameView, PageEndView pageEndView, Screen screen) {
+		this.gameView = gameView;
+		this.pageEndView = pageEndView;
+		this.screen = screen;
+	}
 
 	private void addPanels() {
 		addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);

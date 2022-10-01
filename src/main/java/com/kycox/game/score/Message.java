@@ -23,33 +23,21 @@ import com.kycox.game.timer.IncrementScoreTimer;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Contenu des valeurs afficées dans la map, lorsque ladybug fait des exploits
- *
- * @author kycox
- *
- */
 public class Message {
 	@Getter
 	@Setter
 	private boolean dying;
 	@Getter
-	private MessageType messageType = MessageType.POINT;
+	private final MessageType messageType;
 	/** Position dans la fenêtre où le score est affiché */
 	@Getter
-	private Point position;
+	private final Point position;
 	/** Timer d'affichage du score dans la fenêtre */
-	private IncrementScoreTimer scoreTimer;
+	private final IncrementScoreTimer scoreTimer;
 	/** Valeur à afficher */
 	@Getter
-	private String value;
+	private final String value;
 
-	/**
-	 * Constructeur
-	 *
-	 * @param position : position d'affichage du score
-	 * @param value    : valeur à afficher
-	 */
 	public Message(Point position, String value, MessageType messageType) {
 		this.position = position;
 		this.value = value;

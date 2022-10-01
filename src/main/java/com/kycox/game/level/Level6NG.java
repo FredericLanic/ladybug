@@ -24,7 +24,7 @@ import java.awt.*;
 import static com.kycox.game.constant.LevelConstruct.B;
 import static com.kycox.game.constant.LevelConstruct.N;
 
-@Component("Level6NG")
+@Component
 public class Level6NG extends LevelNG {
 	public Level6NG() {
 		// nombre de blocks par ligne

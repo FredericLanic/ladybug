@@ -16,23 +16,6 @@
  */
 package com.kycox.game.model;
 
-import static com.kycox.game.constant.Constants.PACE;
-
-import java.awt.Point;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Observable;
-import java.util.Optional;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.swing.Timer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
@@ -45,25 +28,28 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.strategy.GameModelManageAction;
-import com.kycox.game.model.strategy.actions.GameModelGameIsEnding;
-import com.kycox.game.model.strategy.actions.GameModelGameIsInGame;
-import com.kycox.game.model.strategy.actions.GameModelGameIsPlaying;
-import com.kycox.game.model.strategy.actions.GameModelGameIsStarting;
-import com.kycox.game.model.strategy.actions.GameModelLevelIsEnded;
-import com.kycox.game.model.strategy.actions.GameModelLevelIsEnding;
-import com.kycox.game.model.strategy.actions.GameModelLevelIsStarting;
-import com.kycox.game.model.strategy.actions.GameModelNoAction;
-import com.kycox.game.model.strategy.actions.GameModelPresentation;
-import com.kycox.game.model.strategy.actions.GameModelPresentationStarting;
-import com.kycox.game.model.strategy.actions.GameModelProgramStarting;
+import com.kycox.game.model.strategy.actions.*;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.score.Score;
 import com.kycox.game.sound.NewSounds;
 import com.kycox.game.tools.Utils;
-
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Observable;
+import java.util.Optional;
+
+import static com.kycox.game.constant.Constants.PACE;
 
 /**
  * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du
@@ -77,58 +63,36 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Setter
 	@Getter
 	private boolean atLeastOneXboxOneConnected;
-	@Inject
 	@Getter
-	private CurrentProgramStatus currentProgramStatus;
+	private final CurrentProgramStatus currentProgramStatus;
 	@Getter
-	@Inject
-	private GameMessaging gameMessaging;
-	@Inject
-	private GameModelGameIsEnding gameModeGameIsEnding;
-	@Inject
-	private GameModelGameIsPlaying gameModeGameIsPlaying;
-	@Inject
-	private GameModelGameIsStarting gameModeGameStarting;
-	@Inject
-	private GameModelLevelIsEnding gameModeLevelIsEnding;
-	@Inject
-	private GameModelLevelIsEnded gameModeLevelIsEnds;
-	@Inject
-	private GameModelLevelIsStarting gameModeLevelStarting;
-	@Inject
-	private GameModelGameIsInGame gameModelGameIsInGame;
-	@Inject
-	private GameModelManageAction gameModelManageAction;
-	@Inject
-	private GameModelNoAction gameModelNoAction;
-	@Inject
-	private GameModelPresentation gameModelPresentation;
-	@Inject
-	private GameModelPresentationStarting gameModelPresentationStarting;
-	@Inject
-	private GameModelProgramStarting gameModelProgramStarting;
+	private final GameMessaging gameMessaging;
+	private final GameModelGameIsEnding gameModeGameIsEnding;
+	private final GameModelGameIsPlaying gameModeGameIsPlaying;
+	private final GameModelGameIsStarting gameModeGameStarting;
+	private final GameModelLevelIsEnding gameModeLevelIsEnding;
+	private final GameModelLevelIsEnded gameModeLevelIsEnds;
+	private final GameModelLevelIsStarting gameModeLevelStarting;
+	private final GameModelGameIsInGame gameModelGameIsInGame;
+	private final GameModelManageAction gameModelManageAction;
+	private final GameModelNoAction gameModelNoAction;
+	private final GameModelPresentation gameModelPresentation;
+	private final GameModelPresentationStarting gameModelPresentationStarting;
+	private final GameModelProgramStarting gameModelProgramStarting;
 	@Getter
-	@Inject
-	private Score gameScore;
+	private final Score gameScore;
 	@Getter
-	@Inject
-	private GhostsGroup groupGhosts;
+	private final GhostsGroup groupGhosts;
 	@Getter
-	@Inject
-	private GroupMessages groupMessages;
+	private final GroupMessages groupMessages;
 	@Getter
-	@Inject
-	private Ladybug ladybug;
+	private final Ladybug ladybug;
 	@Getter
-	@Inject
-	private LadybugDying ladybugDying;
+	private final LadybugDying ladybugDying;
 	@Getter
-	@Inject
-	private NewSounds newSounds;
-	private final Timer programTimer = createProgramTimer();
+	private final NewSounds newSounds;
 	@Getter
-	@Inject
-	private ScreenData screenData;
+	private final ScreenData screenData;
 	@Getter
 	@Setter
 	private boolean showHelpForKeys = false;
@@ -137,6 +101,54 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	private boolean showHelpForXboxes = false;
 	@Getter
 	private boolean soundActive = true;
+	private final Timer programTimer = createProgramTimer();
+
+	@Autowired
+	public GameModel(CurrentProgramStatus currentProgramStatus,
+					 GameMessaging gameMessaging,
+					 GameModelGameIsEnding gameModeGameIsEnding,
+					 GameModelGameIsPlaying gameModeGameIsPlaying,
+					 GameModelGameIsStarting gameModeGameStarting,
+					 GameModelLevelIsEnding gameModeLevelIsEnding,
+					 GameModelLevelIsEnded gameModeLevelIsEnds,
+					 GameModelLevelIsStarting gameModeLevelStarting,
+					 GameModelGameIsInGame gameModelGameIsInGame,
+					 GameModelManageAction gameModelManageAction,
+					 GameModelNoAction gameModelNoAction,
+					 GameModelPresentation gameModelPresentation,
+					 GameModelPresentationStarting gameModelPresentationStarting,
+					 GameModelProgramStarting gameModelProgramStarting,
+					 Score gameScore,
+					 GhostsGroup groupGhosts,
+					 GroupMessages groupMessages,
+					 Ladybug ladybug,
+					 LadybugDying ladybugDying,
+					 NewSounds newSounds,
+					 ScreenData screenData) {
+		this.currentProgramStatus = currentProgramStatus;
+		this.gameMessaging = gameMessaging;
+		// états du jeu
+		this.gameModeGameIsEnding = gameModeGameIsEnding;
+		this.gameModeGameIsPlaying = gameModeGameIsPlaying;
+		this.gameModeGameStarting = gameModeGameStarting;
+		this.gameModeLevelIsEnding = gameModeLevelIsEnding;
+		this.gameModeLevelIsEnds = gameModeLevelIsEnds;
+		this.gameModeLevelStarting = gameModeLevelStarting;
+		this.gameModelGameIsInGame = gameModelGameIsInGame;
+		this.gameModelManageAction = gameModelManageAction;
+		this.gameModelNoAction = gameModelNoAction;
+		this.gameModelPresentation = gameModelPresentation;
+		this.gameModelPresentationStarting = gameModelPresentationStarting;
+		this.gameModelProgramStarting = gameModelProgramStarting;
+		//
+		this.gameScore = gameScore;
+		this.groupGhosts = groupGhosts;
+		this.groupMessages = groupMessages;
+		this.ladybug = ladybug;
+		this.ladybugDying = ladybugDying;
+		this.newSounds = newSounds;
+		this.screenData = screenData;
+	}
 
 	// Workflow du programme :
 	// PROGRAM_START

@@ -77,7 +77,7 @@ public class GhostsGroup implements GroupGhostForGameView {
 	}
 
 	public void setActions(Ladybug ladybug, ScreenData screenData) {
-		ghosts.stream().forEach(g -> g.setGhostActions(ladybug, screenData));
+		ghosts.forEach(g -> g.setGhostActions(ladybug, screenData));
 	}
 
 	public void setFear(boolean fear) {
@@ -120,23 +120,23 @@ public class GhostsGroup implements GroupGhostForGameView {
 	}
 
 	public void setInitSpeedsForPresentation(int numLevel) {
-		ghosts.stream().forEach(g -> g.setInitSpeed(numLevel));
+		ghosts.forEach(g -> g.setInitSpeed(numLevel));
 	}
 
 	public void setLeftLifes(int numLeftLives) {
-		ghosts.stream().forEach(g -> g.setLeftLifes(numLeftLives));
+		ghosts.forEach(g -> g.setLeftLifes(numLeftLives));
 	}
 
 	public void setNumLevel(int numLevel) {
-		ghosts.stream().forEach(g -> g.setNumLevel(numLevel));
+		ghosts.forEach(g -> g.setNumLevel(numLevel));
 	}
 
 	public void setPositionToRevivorGhostPoint(ScreenData screenData) {
-		ghosts.stream().forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
+		ghosts.forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
 	}
 
 	private void setSpeed(int numLevel, int perCent) {
-		ghosts.stream().forEach(g -> g.setSpeed(numLevel, perCent));
+		ghosts.forEach(g -> g.setSpeed(numLevel, perCent));
 	}
 
 	public void setStartLevel(int numLevel, ScreenData screenData) {
@@ -146,7 +146,7 @@ public class GhostsGroup implements GroupGhostForGameView {
 	}
 
 	public void setStatus(GhostStatus status) {
-		ghosts.stream().forEach(g -> g.setStatus(status));
+		ghosts.forEach(g -> g.setStatus(status));
 	}
 
 	public void updateSeetings(int numLevel, ScreenData screenData) {
@@ -161,9 +161,6 @@ public class GhostsGroup implements GroupGhostForGameView {
 		setGhostPositionAfterTeleportation(screenData);
 	}
 
-	/**
-	 * Retourne vrai si le fantôme n'a plus de vie
-	 */
 	public boolean userGhostHasNoLife() {
 		return ghosts.stream().anyMatch(g -> !g.isComputed() && g.getLeftLifes() <= 0);
 	}

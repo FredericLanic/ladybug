@@ -23,9 +23,9 @@ import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +44,14 @@ public final class ScreenData {
 	@Getter
 	@Setter
 	private boolean litLampMode = false;
-	@Inject
-	private ManageLevel manageLevel;
+	private final ManageLevel manageLevel;
 	@Getter
 	private final List<ScreenBlock> viewBlocks = new ArrayList<>();
+
+	@Autowired
+	public ScreenData(ManageLevel manageLevel) {
+		this.manageLevel = manageLevel;
+	}
 
 	public void addNewFruit(int idRefFruit) {
 		var currentScreenBlock = dataBlocks.get(getRandomPosNumEatenPoint());
@@ -79,12 +83,6 @@ public final class ScreenData {
 
 	public int getNbrLines() {
 		return currentLevel.getNbrLines();
-	}
-
-	// FIXME : mettre ce nombre dans le Level ? ou bien faire un calcul du nombre de
-	// méga point en fonction du niveau
-	public int getNbrMegaPoint() {
-		return 2;
 	}
 
 	public int getPercentageEatenPoint() {
@@ -129,13 +127,6 @@ public final class ScreenData {
 		var nbrPoints = getNbrBlocksWithPoint();
 		var randomPoint = Utils.generateRandomInt(nbrPoints) + 1;
 		return getPosNumPoint(randomPoint);
-	}
-
-	public Point getRandomPosOnAEatenPoint() {
-		var pos = getRandomPosNumEatenPoint();
-		var yBlock = pos / currentLevel.getNbrBlocksByLine();
-		var xBlock = pos % currentLevel.getNbrBlocksByLine();
-		return new Point(xBlock, yBlock);
 	}
 
 	public Point getRandomPosOnAPoint() {

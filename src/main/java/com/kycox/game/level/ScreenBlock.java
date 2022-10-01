@@ -134,11 +134,6 @@ public class ScreenBlock implements Cloneable {
 		return (content & RIGHT) != 0;
 	}
 
-	/**
-	 * Bordure en haut
-	 *
-	 * @return
-	 */
 	public boolean isBorderUp() {
 		return (content & UP) != 0;
 	}

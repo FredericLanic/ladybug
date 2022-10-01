@@ -19,13 +19,8 @@ package com.kycox.game.level;
 import java.awt.Point;
 
 public class CheckScreenBlockBorders {
-	private ScreenData screenData;
+	private final ScreenData screenData;
 
-	/**
-	 * Construteur
-	 *
-	 * @param screenData
-	 */
 	public CheckScreenBlockBorders(ScreenData screenData) {
 		this.screenData = screenData;
 	}

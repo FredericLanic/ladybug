@@ -81,25 +81,4 @@
 		</property>
 	</bean>
 
-	<!-- Levels in ScreenData -->
-	<!-- Je pense qu'ici je peux faire une simplification de configuration afin que manageLevel contienne tous les Level par config spring -->
-	<bean id="ManageLevel" class="com.kycox.game.level.ManageLevel"
-		scope="singleton">
-		<property name="levels">
-			<list>
-				<!-- ref bean="Level1" /--> <!-- niveau bof bof -->
-				<!-- ref bean="Level3"/--> <!-- niveau pour test, à ne pas utiliser pour le jeu -->
-				<ref bean="Level1NG" />
-				<ref bean="Level2NG" />
-				<ref bean="Level3NG" />
-				<ref bean="Level4NG" />
-				<ref bean="Level5NG" />
-				<ref bean="Level6NG" />
-				<ref bean="Level7NG" />
-				<ref bean="Level8NG" />
-				<ref bean="Level9NG" /> <!--  à mettre en jeu lorsque le soucis de la direction du fantôme regénéré sera corrigé -->
-			</list>
-		</property>
-	</bean>
-
 </beans>

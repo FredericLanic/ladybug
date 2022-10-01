@@ -33,10 +33,6 @@ public final class Constants {
 	public static final int BLOCK_SIZE = 48;
 	public static final Color BLUE_LADYBUG = new Color(33, 33, 255);
 	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
-	// distance ou le fantôme fuit Ladybug
-	public static final int DISTANCE_GHOST_SCARED = 100;
-	// distance min entre Ladybug et un fantôme => provoque la mort de Ladybug
-	public static final int DISTANCE_LADYBUG_DEATH = 20;
 	// nombre de vie au début du jeu
 	public static final int NBR_INIT_LIFE = 3;
 	// Niveau max
@@ -52,8 +48,6 @@ public final class Constants {
 	public static final Point POINT_DOWN = new Point(0, 1);
 	// Point à gauche
 	public static final Point POINT_LEFT = new Point(-1, 0);
-	// Point neutre
-	public static final Point POINT_OUTSIDE = new Point(-1, -1);
 	// Point à droite
 	public static final Point POINT_RIGHT = new Point(1, 0);
 	// Point en haut

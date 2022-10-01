@@ -16,11 +16,9 @@
  */
 package com.kycox.game.level;
 
-import org.springframework.stereotype.Component;
-
 import java.awt.*;
 
-@Component("Level3")
+//@Component
 public class Level3 extends Level {
 	public Level3() {
 		// nombre de blocks par ligne

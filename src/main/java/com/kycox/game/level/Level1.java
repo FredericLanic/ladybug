@@ -16,11 +16,9 @@
  */
 package com.kycox.game.level;
 
-import org.springframework.stereotype.Component;
-
 import java.awt.*;
 
-@Component("Level1")
+// @Component
 public final class Level1 extends Level {
 	// Représentation du level initial
 	// 0000001 : barre à gauche 1

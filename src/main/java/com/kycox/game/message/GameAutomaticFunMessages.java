@@ -9,7 +9,7 @@ public enum GameAutomaticFunMessages {
 	MSG7("try tomorrow, you will do better"), MSG8("do or no do, there is no try");
 
 	@Getter
-	private String message;
+	private final String message;
 
 	GameAutomaticFunMessages(String message) {
 		this.message = message;

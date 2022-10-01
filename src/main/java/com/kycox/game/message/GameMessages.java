@@ -10,7 +10,7 @@ public enum GameMessages {
 	XBOX_LADYBUG_DISCONNECTION("xboxone ladybug disconnected");
 
 	@Getter
-	private String message;
+	private final String message;
 
 	GameMessages(String message) {
 		this.message = message;

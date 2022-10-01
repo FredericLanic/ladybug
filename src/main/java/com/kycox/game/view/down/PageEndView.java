@@ -25,10 +25,10 @@ import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
@@ -38,22 +38,24 @@ import java.util.Observer;
 public class PageEndView extends JPanel implements Observer, MainGraphicStructure {
 	private static final long DURATION_MESSAGE_SHOWING = 500;
 	private static final Log logger = LogFactory.getLog(PageEndView.class);
-	private static final long serialVersionUID = 1L;
-	@Inject
-	private GameMessaging gameMessaging;
+	private final GameMessaging gameMessaging;
+	private final GhostView ghostView;
+	private final LadybugView ladybugView;
+	private final Screen screen;
+	private final StatusGameView statusGameView;
 	private transient GameModelForViews gameModelForViews;
-	@Inject
-	private GhostView ghostView;
-	private JPanel jPanelLadybugKinematique = new JPanel();
-	private JPanel jPanelMainScore = new JPanel();
-	@Inject
-	private LadybugView ladybugView;
-	@Inject
-	private Screen screen;
-	private SimpleTimer simpleTimer = new SimpleTimer();
+	private final JPanel jPanelLadybugKinematique = new JPanel();
+	private final JPanel jPanelMainScore = new JPanel();
+	private final SimpleTimer simpleTimer = new SimpleTimer();
 
-	@Inject
-	private StatusGameView statusGameView;
+	@Autowired
+	public PageEndView(GameMessaging gameMessaging, GhostView ghostView, LadybugView ladybugView, Screen screen, StatusGameView statusGameView) {
+		this.gameMessaging = gameMessaging;
+		this.ghostView = ghostView;
+		this.ladybugView = ladybugView;
+		this.screen = screen;
+		this.statusGameView = statusGameView;
+	}
 
 	@PostConstruct
 	public void init() {
@@ -92,9 +94,7 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 	private void setVariableToScoreView() {
 		statusGameView.setGhostNbrLifes(gameModelForViews.getGhostLeftLifes());
 		var ghostUnComputed = gameModelForViews.getUnComputedGhost();
-		if (ghostUnComputed.isPresent()) {
-			statusGameView.setImageGhostPlayer(ghostView.getImage(ghostUnComputed.get()));
-		}
+		ghostUnComputed.ifPresent(ghost -> statusGameView.setImageGhostPlayer(ghostView.getImage(ghost)));
 		statusGameView.setImageLadybugPlayer(ladybugView.getStaticView());
 		statusGameView.setInGame(gameModelForViews.isInGame());
 		statusGameView.setLadybugNbrLifes(gameModelForViews.getLadybug().getLeftLifes());
