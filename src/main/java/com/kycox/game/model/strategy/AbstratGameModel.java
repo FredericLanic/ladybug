@@ -16,41 +16,41 @@ import com.kycox.game.timer.SuperPowerTimer;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.inject.Inject;
 import java.security.SecureRandom;
 
 public class AbstratGameModel {
 	@Getter
-	@Inject
+	@Autowired
 	protected CurrentProgramStatus currentGameStatus;
-	@Inject
+	@Autowired
 	protected GameMessaging gameMessaging;
 	@Getter
-	@Inject
+	@Autowired
 	protected Score gameScore;
 	@Getter
-	@Inject
+	@Autowired
 	protected GhostsGroup groupGhosts;
 	@Getter
-	@Inject
+	@Autowired
 	protected GroupMessages groupMessages;
 	@Getter
-	@Inject
+	@Autowired
 	protected Ladybug ladybug;
 	@Getter
-	@Inject
+	@Autowired
 	protected LadybugDying ladybugDying;
 	@Getter
-	@Inject
+	@Autowired
 	protected NewSounds newSounds;
 	@Getter
-	@Inject
+	@Autowired
 	protected ScreenData screenData;
 	@Getter
 	@Setter
 	protected boolean soundActive = true;
-	@Inject
+	@Autowired
 	protected SuperPowerTimer superPowerTimer;
 	protected WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;
 

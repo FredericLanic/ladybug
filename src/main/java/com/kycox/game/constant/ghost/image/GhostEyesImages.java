@@ -16,11 +16,10 @@
  */
 package com.kycox.game.constant.ghost.image;
 
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
-
 import lombok.Getter;
+
+import javax.swing.*;
+import java.awt.*;
 
 public enum GhostEyesImages {
 	GHOST_DOWN_EYES("DownEyes.png"), GHOST_LEFT_EYES("LeftEyes.png"), GHOST_RIGHT_EYES("RightEyes.png"),

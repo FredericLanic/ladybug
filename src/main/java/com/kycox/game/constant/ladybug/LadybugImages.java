@@ -19,10 +19,10 @@ package com.kycox.game.constant.ladybug;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.properties.GameProperties;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 import java.util.EnumSet;
@@ -34,7 +34,7 @@ public enum LadybugImages {
 
 	@Component
 	public static class GamePropertiesInjector {
-		@Inject
+		@Autowired
 		private GameProperties gameProperties;
 
 		@PostConstruct

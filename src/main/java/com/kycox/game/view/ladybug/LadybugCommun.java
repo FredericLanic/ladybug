@@ -24,9 +24,9 @@ import com.kycox.game.tools.ImageUtils;
 import com.kycox.game.view.body.BodyImg;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +36,7 @@ public abstract class LadybugCommun {
 	@Setter
 	private BodyImg bodyUpCurrent;
 	private Map<Point, Integer> convertPointToDegrees = new HashMap<>();
-	@Inject
+	@Autowired
 	private GameProperties gameProperties;
 
 	protected void addConvertPointToDegrees(Point point, Integer integer) {
