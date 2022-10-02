@@ -31,7 +31,7 @@ public interface GameModelForViews extends GameCommon {
 
 	Score getGameScore();
 
-	int getGhostLeftLifes();
+	int getGhostLeftLives();
 
 	GroupGhostForGameView getGroupGhosts();
 

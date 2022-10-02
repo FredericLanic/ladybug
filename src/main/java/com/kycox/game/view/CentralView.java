@@ -44,10 +44,6 @@ import java.io.Serial;
 import java.util.Observable;
 import java.util.Observer;
 
-/**
- * Vue du jeu MVC O
- *
- */
 @Component
 public class CentralView extends JPanel implements Observer, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CentralView.class);
@@ -84,8 +80,6 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	/**
 	 * FIXME : même remarque que dans le modèle du jeu; appliquer un design pattern
 	 * strategy; ça devient un peu dificile à lire
-	 *
-	 * @param g
 	 */
 	private void draw(Graphics g) {
 		var g2d = (Graphics2D) g;

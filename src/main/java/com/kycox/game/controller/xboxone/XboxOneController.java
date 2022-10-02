@@ -142,7 +142,7 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 		setProgramMessagesAccordingXboxOneConnectionOrDisconnection();
 		readXboxOneStates();
 		manageBothXbosesOneCommon();
-		if (gameModelForController.isGamePresentation()) {
+		if (gameModelForController.isProgramPresentation()) {
 			manageBothXboxesOneInPresentation();
 		} else if (gameModelForController.isInGame()) {
 			manageBothXboxesOneInGame();

@@ -40,7 +40,7 @@ public class KeyGameController extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		var keyCode = e.getKeyCode();
 		manageCommonKeys(keyCode);
-		if (gameModelForController.isGamePresentation()) {
+		if (gameModelForController.isProgramPresentation()) {
 			manageKeysInPresentation(keyCode);
 		} else if (gameModelForController.isInGame()) {
 			manageKeysInGame(keyCode);

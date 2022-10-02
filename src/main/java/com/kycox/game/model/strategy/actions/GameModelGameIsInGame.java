@@ -7,6 +7,8 @@ import com.kycox.game.model.strategy.IGameModelAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+
 @Component
 public class GameModelGameIsInGame extends AbstratGameModel implements IGameModelAction {
 	private final GameModelGameIsPlaying gameModeGameIsPlaying;
@@ -40,5 +42,9 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 			gameModelManageAction.changeStrategy(gameModeGameIsPlaying);
 		}
 		gameModelManageAction.execute();
+	}
+
+	public void setGhostRequest(Point ghostRequest) {
+		gameModeGameIsPlaying.setGhostRequest(ghostRequest);
 	}
 }

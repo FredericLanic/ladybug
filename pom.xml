@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.2.7.RELEASE</version>
+		<version>2.7.4</version>
     </parent>
 
     <properties>
@@ -88,10 +88,9 @@
 			    <version>2.22.2</version> 
 			</plugin>        
         
-            <plugin>
+            <!--plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- set the main class for release mvn step -->
 	            <configuration>
 	                <mainClass>com.kycox.game.MainLadybug</mainClass>
 	            </configuration>
@@ -102,7 +101,7 @@
                         <version>${spring-loaded.version}</version>
                     </dependency>
                 </dependencies>
-            </plugin>			           
+            </plugin-->
 
         	<plugin>
 	            <groupId>org.apache.maven.plugins</groupId>

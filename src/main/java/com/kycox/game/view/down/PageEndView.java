@@ -92,7 +92,7 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 	}
 
 	private void setVariableToScoreView() {
-		statusGameView.setGhostNbrLifes(gameModelForViews.getGhostLeftLifes());
+		statusGameView.setGhostNbrLifes(gameModelForViews.getGhostLeftLives());
 		var ghostUnComputed = gameModelForViews.getUnComputedGhost();
 		ghostUnComputed.ifPresent(ghost -> statusGameView.setImageGhostPlayer(ghostView.getImage(ghost)));
 		statusGameView.setImageLadybugPlayer(ladybugView.getStaticView());

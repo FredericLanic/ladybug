@@ -30,7 +30,7 @@ public interface GameModelForController extends GameCommon {
 
 	Optional<Ghost> getUnComputedGhost();
 
-	boolean isGamePresentation();
+	boolean isProgramPresentation();
 
 	void programForceExit();
 

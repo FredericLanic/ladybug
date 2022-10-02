@@ -28,7 +28,7 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.strategy.GameModelManageAction;
-import com.kycox.game.model.strategy.actions.*;
+import com.kycox.game.model.strategy.ManageActionContext;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.score.Score;
 import com.kycox.game.sound.NewSounds;
@@ -52,33 +52,18 @@ import java.util.Optional;
 import static com.kycox.game.constant.Constants.PACE;
 
 /**
- * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du
- * jeu)
- *
+ * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du jeu)
  */
 @SuppressWarnings("deprecation")
 @Component
 public class GameModel extends Observable implements GameModelForViews, GameModelForSounds, GameModelForController {
 	private static final Log logger = LogFactory.getLog(GameModel.class);
-	@Setter
-	@Getter
-	private boolean atLeastOneXboxOneConnected;
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
 	@Getter
 	private final GameMessaging gameMessaging;
-	private final GameModelGameIsEnding gameModeGameIsEnding;
-	private final GameModelGameIsPlaying gameModeGameIsPlaying;
-	private final GameModelGameIsStarting gameModeGameStarting;
-	private final GameModelLevelIsEnding gameModeLevelIsEnding;
-	private final GameModelLevelIsEnded gameModeLevelIsEnds;
-	private final GameModelLevelIsStarting gameModeLevelStarting;
-	private final GameModelGameIsInGame gameModelGameIsInGame;
 	private final GameModelManageAction gameModelManageAction;
-	private final GameModelNoAction gameModelNoAction;
-	private final GameModelPresentation gameModelPresentation;
-	private final GameModelPresentationStarting gameModelPresentationStarting;
-	private final GameModelProgramStarting gameModelProgramStarting;
+	private final ManageActionContext manageActionContext;
 	@Getter
 	private final Score gameScore;
 	@Getter
@@ -102,45 +87,25 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Getter
 	private boolean soundActive = true;
 	private final Timer programTimer = createProgramTimer();
-
+	@Setter
+	@Getter
+	private boolean atLeastOneXboxOneConnected;
 	@Autowired
 	public GameModel(CurrentProgramStatus currentProgramStatus,
 					 GameMessaging gameMessaging,
-					 GameModelGameIsEnding gameModeGameIsEnding,
-					 GameModelGameIsPlaying gameModeGameIsPlaying,
-					 GameModelGameIsStarting gameModeGameStarting,
-					 GameModelLevelIsEnding gameModeLevelIsEnding,
-					 GameModelLevelIsEnded gameModeLevelIsEnds,
-					 GameModelLevelIsStarting gameModeLevelStarting,
-					 GameModelGameIsInGame gameModelGameIsInGame,
 					 GameModelManageAction gameModelManageAction,
-					 GameModelNoAction gameModelNoAction,
-					 GameModelPresentation gameModelPresentation,
-					 GameModelPresentationStarting gameModelPresentationStarting,
-					 GameModelProgramStarting gameModelProgramStarting,
 					 Score gameScore,
 					 GhostsGroup groupGhosts,
 					 GroupMessages groupMessages,
 					 Ladybug ladybug,
 					 LadybugDying ladybugDying,
 					 NewSounds newSounds,
-					 ScreenData screenData) {
+					 ScreenData screenData,
+					 ManageActionContext manageActionContext) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
-		// états du jeu
-		this.gameModeGameIsEnding = gameModeGameIsEnding;
-		this.gameModeGameIsPlaying = gameModeGameIsPlaying;
-		this.gameModeGameStarting = gameModeGameStarting;
-		this.gameModeLevelIsEnding = gameModeLevelIsEnding;
-		this.gameModeLevelIsEnds = gameModeLevelIsEnds;
-		this.gameModeLevelStarting = gameModeLevelStarting;
-		this.gameModelGameIsInGame = gameModelGameIsInGame;
 		this.gameModelManageAction = gameModelManageAction;
-		this.gameModelNoAction = gameModelNoAction;
-		this.gameModelPresentation = gameModelPresentation;
-		this.gameModelPresentationStarting = gameModelPresentationStarting;
-		this.gameModelProgramStarting = gameModelProgramStarting;
-		//
+		this.manageActionContext = manageActionContext;
 		this.gameScore = gameScore;
 		this.groupGhosts = groupGhosts;
 		this.groupMessages = groupMessages;
@@ -150,33 +115,15 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		this.screenData = screenData;
 	}
 
-	// Workflow du programme :
-	// PROGRAM_START
-	// * PROGRAM_STARTING -> timer puis
-	// * PROGRAM_PRESENTATION_START : initialise la nouvelle partie
-	// * PROGRAM_PRESENTATION : en attente d'action de l'utilisateur
-	// * GAME_START
-	// * LEVEL START
-	// * LEVEL_STARTING -> timer puis
-	// * IN_GAME (jeu)
-	// * LEVEL_END
-	// * LEVEL_ENDING puis soit LEVEL_START soit GAME_END
-	// * GAME_END
-	// * GAME_ENDING -> timer puis
-	// * PROGRAM_PRESENTATION_START
+	@PostConstruct
+	private void init() {
+		currentProgramStatus.setProgramStart();
+		gameModelManageAction.changeStrategy(manageActionContext.getNoAction());
+		programTimer.start();
+	}
+
 	private void actionsByTimerBip() {
-		switch (currentProgramStatus.getGameStatus()) {
-			case PROGRAM_START -> gameModelManageAction.changeStrategy(gameModelProgramStarting);
-			case PROGRAM_PRESENTATION_START -> gameModelManageAction.changeStrategy(gameModelPresentationStarting);
-			case PROGRAM_PRESENTATION -> gameModelManageAction.changeStrategy(gameModelPresentation);
-			case GAME_START -> gameModelManageAction.changeStrategy(gameModeGameStarting);
-			case LEVEL_START -> gameModelManageAction.changeStrategy(gameModeLevelStarting);
-			case IN_GAME -> gameModelManageAction.changeStrategy(gameModelGameIsInGame);
-			case LEVEL_END -> gameModelManageAction.changeStrategy(gameModeLevelIsEnds);
-			case LEVEL_ENDING -> gameModelManageAction.changeStrategy(gameModeLevelIsEnding);
-			case GAME_END -> gameModelManageAction.changeStrategy(gameModeGameIsEnding);
-			default -> gameModelManageAction.changeStrategy(gameModelNoAction);
-		}
+		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
 		setChanged();
 		notifyObservers();
@@ -203,7 +150,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	}
 
 	@Override
-	public int getGhostLeftLifes() {
+	public int getGhostLeftLives() {
 		return groupGhosts.getLeftLives();
 	}
 
@@ -230,19 +177,12 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		return getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).findFirst();
 	}
 
-	@PostConstruct
-	private void init() {
-		currentProgramStatus.setProgramStart();
-		gameModelManageAction.changeStrategy(gameModelNoAction);
-		programTimer.start();
-	}
-
 	public void initSounds() {
 		newSounds.initSounds();
 	}
 
 	@Override
-	public boolean isGamePresentation() {
+	public boolean isProgramPresentation() {
 		return currentProgramStatus.isProgramPresentation();
 	}
 
@@ -257,12 +197,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	}
 
 	public void setBeginningMilliseconds(long beginningMilliseconds) {
-		gameModeGameIsEnding.setTimeEnding(beginningMilliseconds);
-		gameModeLevelStarting.setBeginningMilliseconds(beginningMilliseconds);
+		manageActionContext.setBeginningMilliseconds(beginningMilliseconds);
 	}
 
 	public void setEndingLevelMilliseconds(long endingLevelMilliseconds) {
-		gameModeLevelIsEnds.setEndingLevelMilliseconds(endingLevelMilliseconds);
+		manageActionContext.setEndingLevelMilliseconds(endingLevelMilliseconds);
 	}
 
 	@Override
@@ -274,7 +213,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 
 	@Override
 	public void setGhostRequest(Point ghostRequest) {
-		gameModeGameIsPlaying.setGhostRequest(ghostRequest);
+		manageActionContext.setGhostRequest(ghostRequest);
 	}
 
 	@Override
