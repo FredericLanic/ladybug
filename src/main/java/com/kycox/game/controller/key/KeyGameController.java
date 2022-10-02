@@ -91,8 +91,7 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_S -> gameModelForController.startGame();
 			case KeyEvent.VK_1 -> gameModelForController.setMultiPlayers(false);
 			case KeyEvent.VK_2 -> gameModelForController.setMultiPlayers(true);
-			case KeyEvent.VK_ESCAPE -> gameModelForController.programForceExit(); // FIXME : c'est au modèle de sortir
-			                                                                      // proprement du jeu
+			case KeyEvent.VK_ESCAPE -> gameModelForController.programForceExit();
 		}
 	}
 }

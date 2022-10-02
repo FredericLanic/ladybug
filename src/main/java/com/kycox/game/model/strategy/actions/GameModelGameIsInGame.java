@@ -21,8 +21,7 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 								 GameModelGhostIsDead gameModeGhostIsDead,
 								 GameModelLadybugIsDead gameModeLadybugIsDead,
 								 GameModelLadybugIsDying gameModeLadybugIsDying,
-								 GameModelManageAction gameModelManageAction
-	) {
+								 GameModelManageAction gameModelManageAction) {
 		this.gameModeGameIsPlaying = gameModeGameIsPlaying;
 		this.gameModeGhostIsDead = gameModeGhostIsDead;
 		this.gameModeLadybugIsDead = gameModeLadybugIsDead;
