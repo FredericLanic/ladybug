@@ -40,7 +40,7 @@ public class LadybugDying {
 		return bip * Constants.PACE >= millisecondLenght;
 	}
 
-	public boolean isInPogress() {
+	public boolean isInProgress() {
 		return bip > 0;
 	}
 }

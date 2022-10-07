@@ -10,7 +10,7 @@ public class GameModelLadybugIsDying extends AbstratGameModel implements IGameMo
 	@Override
 	public void programBeat() {
 		ladybugDying.inProgress();
-		if (ladybugDying.isInPogress()) {
+		if (ladybugDying.isInProgress()) {
 			newSounds.initSounds();
 		}
 		if (ladybugDying.isEnd()) {
