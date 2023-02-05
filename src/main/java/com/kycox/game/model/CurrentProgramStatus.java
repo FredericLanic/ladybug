@@ -19,10 +19,12 @@ package com.kycox.game.model;
 import com.kycox.game.constant.GameStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
 import com.kycox.game.contract.GameStatusForGameView;
+import com.kycox.game.level.RepositoryLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -41,6 +43,12 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 	@Setter
 	private int numLevel;
 
+	private final RepositoryLevel repositoryLevel;
+
+	public CurrentProgramStatus(RepositoryLevel repositoryLevel) {
+		this.repositoryLevel = repositoryLevel;
+	}
+
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
 		switch (nbrAction) {
@@ -54,7 +62,18 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 
 	// KYLIAN C'EST ICI
 	public void initNumLevel() {
-		setNumLevel(0);
+		numLevel = 0;
+		repositoryLevel.saveNumLevel(numLevel);
+	}
+
+	// KYLIAN C'EST ICI AUSSI
+	public void getStoredNumLevel() {
+		setNumLevel(repositoryLevel.getNumLevel());
+	}
+
+	public void updateNextLevel() {
+		repositoryLevel.saveNumLevel(numLevel);
+		numLevel++;
 	}
 
 	@Override

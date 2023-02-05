@@ -237,7 +237,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Override
 	public void startGame() {
 		logger.info("Initialize a new game");
-		currentProgramStatus.initNumLevel();
+		currentProgramStatus.getStoredNumLevel();
 		currentProgramStatus.setGameStart();
 	}
 
@@ -246,5 +246,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		logger.info("startStopSoundActive : " + soundActive);
 		soundActive = !soundActive;
 		gameMessaging.put(soundActive ? GameMessages.SOUND_ACTIVE.getMessage() : GameMessages.SOUND_OFF.getMessage());
+	}
+
+	@Override
+	public void initNumLevel() {
+		currentProgramStatus.initNumLevel();
+		gameMessaging.put(GameMessages.INITIALIZE_LEVEL_NUMBER.getMessage());
 	}
 }

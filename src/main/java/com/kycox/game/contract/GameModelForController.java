@@ -51,4 +51,6 @@ public interface GameModelForController extends GameCommon {
 	void startGame();
 
 	void startStopSoundActive();
+
+    void initNumLevel();
 }

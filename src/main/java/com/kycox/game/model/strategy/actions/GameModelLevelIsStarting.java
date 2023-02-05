@@ -38,7 +38,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		// currentGameStatus.setLevelStart();
 		currentGameStatus.setGameStart();
 		// incrémente le numéro du niveau
-		currentGameStatus.setNumLevel(currentGameStatus.getNumLevel() + 1);
+		currentGameStatus.updateNextLevel();
 		// recopie les paramètres du niveau dans les données flottantes du niveau
 		screenData.setLevelMap(currentGameStatus.getNumLevel(), true);
 		// initialisation du super power
