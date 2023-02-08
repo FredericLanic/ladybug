@@ -4,7 +4,6 @@ import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.GameModelManageAction;
 import com.kycox.game.model.strategy.IGameModelAction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -16,7 +15,7 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 	private final GameModelLadybugIsDead gameModeLadybugIsDead;
 	private final GameModelLadybugIsDying gameModeLadybugIsDying;
 	private final GameModelManageAction gameModelManageAction;
-	@Autowired
+
 	public GameModelGameIsInGame(GameModelGameIsPlaying gameModeGameIsPlaying,
 								 GameModelGhostIsDead gameModeGhostIsDead,
 								 GameModelLadybugIsDead gameModeLadybugIsDead,

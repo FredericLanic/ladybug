@@ -27,21 +27,21 @@ public final class Utils {
 	/**
 	 * Converti un point du graphique en un block
 	 *
-	 * @param point
+	 * @param graphicPoint
 	 * @return
 	 */
-	public static Point convertPointToBlockUnit(Point point) {
-		return new Point(point.x / Constants.BLOCK_SIZE, point.y / Constants.BLOCK_SIZE);
+	public static Point convertGraphicPointToBlockPoint(Point graphicPoint) {
+		return new Point(graphicPoint.x / Constants.BLOCK_SIZE, graphicPoint.y / Constants.BLOCK_SIZE);
 	}
 
 	/**
 	 * Converti un block en un point du graphique
 	 *
-	 * @param point
+	 * @param blockPoint
 	 * @return
 	 */
-	public static Point convertPointToGraphicUnit(Point point) {
-		return new Point(point.x * Constants.BLOCK_SIZE, point.y * Constants.BLOCK_SIZE);
+	public static Point convertBlockPointToGraphicPoint(Point blockPoint) {
+		return new Point(blockPoint.x * Constants.BLOCK_SIZE, blockPoint.y * Constants.BLOCK_SIZE);
 	}
 
 	public static int generateRandomInt(int max) {
@@ -67,9 +67,6 @@ public final class Utils {
 		return clazz.getEnumConstants()[x];
 	}
 
-	/**
-	 * Constructeur privé
-	 */
 	private Utils() {
 	}
 }

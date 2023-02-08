@@ -16,15 +16,14 @@
  */
 package com.kycox.game.body;
 
-import java.awt.Point;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.maths.SpeedFunction;
 import com.kycox.game.tools.Utils;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.awt.*;
 
 public abstract class Body {
 	@Getter
@@ -65,7 +64,7 @@ public abstract class Body {
 	}
 
 	public Point getPositionBlock() {
-		return Utils.convertPointToBlockUnit(getPosition());
+		return Utils.convertGraphicPointToBlockPoint(getPosition());
 	}
 
 	public int getSpeed() {

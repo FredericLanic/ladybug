@@ -47,7 +47,6 @@ public class LadybugDyingView extends LadybugCommun {
 	private final BodyImg ladybugUp8 = new BodyImg(LadybugImages.LADYBUG_UP_8.getImage());
 	private final BodyImg ladybugUp9 = new BodyImg(LadybugImages.LADYBUG_UP_9.getImage());
 
-	@Autowired
 	public LadybugDyingView(LadybugDying ladybugDying) {
 		this.ladybugDying = ladybugDying;
 	}

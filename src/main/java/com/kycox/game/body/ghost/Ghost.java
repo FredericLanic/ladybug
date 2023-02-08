@@ -16,13 +16,6 @@
  */
 package com.kycox.game.body.ghost;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.action.ghost.GhostActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.body.ladybug.Ladybug;
@@ -37,9 +30,14 @@ import com.kycox.game.level.ScreenData;
 import com.kycox.game.maths.GhostSensitiveBehavious;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.Dijkstra;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Ghost extends UserBody implements GhostForController, GhostForView {
 	private static final Log logger = LogFactory.getLog(Ghost.class);
@@ -209,7 +207,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 		if (isPerfectOnABlock()) {
 			// calcul du chemin le plus court :
 			var shorterWay = Dijkstra.getShorterWay(getPositionBlock(),
-			        Utils.convertPointToBlockUnit(screenData.getRevivorGhostPos()), screenData);
+			        Utils.convertGraphicPointToBlockPoint(screenData.getRevivorGhostPos()), screenData);
 			// S'il ne reste plus qu'un bloc, le fantôme est arrivé
 			if (shorterWay.size() == 1) {
 				// Le fantôme est arrivé au point de regénération, il redevient "normal" avec
@@ -237,7 +235,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	}
 
 	private void scaredOrFlashedMoving(Point ladybugPosBlock, ScreenData screenData) {
-		if (Utils.convertPointToGraphicUnit(ladybugPosBlock).distance(getPosition()) < 5 * Constants.BLOCK_SIZE) {
+		if (Utils.convertBlockPointToGraphicPoint(ladybugPosBlock).distance(getPosition()) < 5 * Constants.BLOCK_SIZE) {
 			moveScared(ladybugPosBlock, screenData);
 		} else {
 			defaultMoving(screenData);
@@ -276,7 +274,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	}
 
 	public void setSettingAfterBeEaten(int numLevel) {
-		setPosition(Utils.convertPointToGraphicUnit(getPositionBlock()));
+		setPosition(Utils.convertBlockPointToGraphicPoint(getPositionBlock()));
 		// � d�placer dans
 		setStatus(GhostStatus.DYING);
 		setSpeedIndex(getSpeedFunction().getRealIndexSpeedPlus(numLevel));

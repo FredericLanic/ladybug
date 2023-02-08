@@ -21,7 +21,6 @@ import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.CentralView;
 import com.kycox.game.view.down.PageEndView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -34,7 +33,6 @@ public class Engine {
 	private final PageEndView pageEndView;
 	private final XboxOneController xboxOneController;
 
-	@Autowired
 	public Engine(CentralView centralView, GameModel gameModel, GameSounds gameSounds, PageEndView pageEndView, XboxOneController xboxOneController) {
 		this.centralView = centralView;
 		this.gameModel = gameModel;

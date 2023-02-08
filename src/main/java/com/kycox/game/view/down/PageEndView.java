@@ -48,7 +48,6 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 	private final JPanel jPanelMainScore = new JPanel();
 	private final SimpleTimer simpleTimer = new SimpleTimer();
 
-	@Autowired
 	public PageEndView(GameMessaging gameMessaging, GhostView ghostView, LadybugView ladybugView, Screen screen, StatusGameView statusGameView) {
 		this.gameMessaging = gameMessaging;
 		this.ghostView = ghostView;

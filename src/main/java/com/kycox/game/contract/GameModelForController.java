@@ -16,10 +16,10 @@
  */
 package com.kycox.game.contract;
 
-import java.awt.Point;
-import java.util.Optional;
-
 import com.kycox.game.body.ghost.Ghost;
+
+import java.awt.*;
+import java.util.Optional;
 
 public interface GameModelForController extends GameCommon {
 	void changeLitLampMode();
@@ -53,4 +53,8 @@ public interface GameModelForController extends GameCommon {
 	void startStopSoundActive();
 
     void initNumLevel();
+
+	boolean isProgramAskKeepPreviousGameLevel();
+
+	void initializeLevelNumAndStartGame(boolean initialize);
 }

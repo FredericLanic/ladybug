@@ -39,7 +39,6 @@ public class MainFrame extends JFrame implements MainGraphicStructure {
 	private final Dimension pageDimension = new Dimension();
 	private final Dimension gameDimension = new Dimension();
 
-	@Autowired
 	public MainFrame(CentralView gameView, PageEndView pageEndView, Screen screen) {
 		this.gameView = gameView;
 		this.pageEndView = pageEndView;

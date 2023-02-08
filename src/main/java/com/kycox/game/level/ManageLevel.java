@@ -18,8 +18,6 @@ package com.kycox.game.level;
 
 import com.kycox.game.contract.LevelStructure;
 import com.kycox.game.tools.Utils;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,7 +26,6 @@ import java.util.List;
 public final class ManageLevel {
 	private final List<LevelStructure> levels;
 
-	@Autowired
 	public ManageLevel(List<LevelStructure> levels) {
 		this.levels = levels;
 	}

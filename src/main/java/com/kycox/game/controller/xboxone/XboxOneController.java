@@ -6,7 +6,6 @@ import com.kycox.game.contract.GhostForController;
 import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Observable;
@@ -21,7 +20,6 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 	private final XboxRequest xboxOneLadybug;
 	private final XboxRequest xboxOneUnComputedGhost;
 
-	@Autowired
 	public XboxOneController(GameMessaging gameMessaging,
 							 GameProperties gameProperties,
 							 XboxRequest xboxOneLadybug,

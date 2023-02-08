@@ -34,7 +34,6 @@ import com.kycox.game.view.map.ScreenBlockView;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -53,14 +52,13 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
 	@Setter
 	private long durationLadybugNewLife;
-	private GameModelForViews gameModelForView;
-	private final GhostView ghostView;
-	private final KeyGameController keyGameController;
-	private final LadybugDyingView ladybugDyingView;
-	private final LadybugView ladybugView;
-	private final ScreenBlockView screenBlockView;
+	private transient GameModelForViews gameModelForView;
+	private final transient GhostView ghostView;
+	private final transient KeyGameController keyGameController;
+	private final transient LadybugDyingView ladybugDyingView;
+	private final transient LadybugView ladybugView;
+	private final transient ScreenBlockView screenBlockView;
 
-	@Autowired
 	public CentralView(GhostView ghostView, KeyGameController keyGameController, LadybugDyingView ladybugDyingView, LadybugView ladybugView, ScreenBlockView screenBlockView)  {
 		this.ghostView = ghostView;
 		this.keyGameController = keyGameController;
@@ -89,11 +87,15 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 			var newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
+
 		if (gameModelForView.getCurrentProgramStatus().isProgramStarting()) {
 			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");
 			drawPresentationGhosts(g2d);
+		} else if (gameModelForView.getCurrentProgramStatus().isProgramAskKeepPreviousGameLevel()) {
+			drawGhosts(g2d);
+			drawThreeCenterTextLines(g2d, "cONTINUE", "pREVIOUS GAME", "yES - nO");
 		} else if (gameModelForView.getCurrentProgramStatus().isGameStarting()) {
-			drawThreeCenterTextLines(g2d, "eNJOY", "yOUR GAME", "gET READY");
+			drawOneCenterTextLine(g2d, "gET READY");
 		} else if (gameModelForView.getCurrentProgramStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);

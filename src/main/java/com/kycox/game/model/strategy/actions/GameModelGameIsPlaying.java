@@ -10,7 +10,6 @@ import com.kycox.game.tools.Utils;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -23,7 +22,6 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	@Setter
 	private Point ghostRequest = Constants.POINT_ZERO;
 
-	@Autowired
 	public GameModelGameIsPlaying(Fruits fruits) {
 		this.fruits = fruits;
 	}

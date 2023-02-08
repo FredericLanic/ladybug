@@ -26,7 +26,8 @@ public class ManageActionContext {
 							   GameModelLevelIsEnded gameModelLevelIsEnded,
 							   GameModelLevelIsEnding gameModelLevelIsEnding,
 							   GameModelGameIsEnding gameModelGameIsEnding,
-							   GameModelNoAction gameModelNoAction) {
+							   GameModelNoAction gameModelNoAction,
+							   GameModelAskKeepPreviousGameLevel gameModelAskKeepPreviousGameLevel) {
 		this.gameModelGameIsEnding = gameModelGameIsEnding;
 		this.gameModelLevelIsStarting = gameModelLevelIsStarting;
 		this.gameModelLevelIsEnded = gameModelLevelIsEnded;
@@ -35,6 +36,7 @@ public class ManageActionContext {
 		mapGameContext.put(GameStatus.PROGRAM_START, gameModelProgramStarting);
 		mapGameContext.put(GameStatus.PROGRAM_PRESENTATION_START, gameModelPresentationStarting);
 		mapGameContext.put(GameStatus.PROGRAM_PRESENTATION, gameModelPresentation);
+		mapGameContext.put(GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL, gameModelAskKeepPreviousGameLevel);
 		mapGameContext.put(GameStatus.GAME_START, gameModelGameIsStarting);
 		mapGameContext.put(GameStatus.LEVEL_START, gameModelLevelIsStarting);
 		mapGameContext.put(GameStatus.IN_GAME, gameModelGameIsInGame);

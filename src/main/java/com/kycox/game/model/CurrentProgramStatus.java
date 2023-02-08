@@ -24,7 +24,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,6 +33,8 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 	public static final int TO_LEVEL_START = 3;
 	public static final int TO_PROGRAM_PRESENTATION_START = 2;
 	public static final int TO_PROGRAM_START = 1;
+	public static final int TO_PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL = 4;
+
 	@Setter
 	@Getter
 	private boolean gameInPause;
@@ -56,6 +57,7 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 			case TO_PROGRAM_START -> setProgramStart();
 			case TO_PROGRAM_PRESENTATION_START -> setProgramPresentationStart();
 			case TO_LEVEL_START -> setLevelStart();
+			case TO_PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL -> setProgramAskKeepPreviousGameLevel();
 			default -> logger.debug("no number " + nbrAction + " action");
 		}
 	}
@@ -63,7 +65,7 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 	// KYLIAN C'EST ICI
 	public void initNumLevel() {
 		numLevel = 0;
-		repositoryLevel.saveNumLevel(numLevel);
+		storeNumLevel();
 	}
 
 	// KYLIAN C'EST ICI AUSSI
@@ -71,8 +73,11 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 		setNumLevel(repositoryLevel.getNumLevel());
 	}
 
-	public void updateNextLevel() {
+	public void storeNumLevel() {
 		repositoryLevel.saveNumLevel(numLevel);
+	}
+
+	public void updateNextLevel() {
 		numLevel++;
 	}
 
@@ -119,10 +124,12 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 	}
 
 	@Override
+	public boolean isProgramAskKeepPreviousGameLevel() { return gameStatus == GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL;}
+
+	@Override
 	public boolean isProgramPresentation() {
 		return gameStatus == GameStatus.PROGRAM_PRESENTATION;
 	}
-
 	public boolean isProgramStart() {
 		return gameStatus == GameStatus.PROGRAM_START;
 	}
@@ -198,8 +205,14 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 		logger.info("Passage du status en " + gameStatus);
 	}
 
+	public void setProgramAskKeepPreviousGameLevel() {
+		gameStatus = GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL;
+		logger.info("Passage du status en " + gameStatus);
+	}
+
 	@Override
 	public String toString() {
 		return gameStatus.toString();
 	}
+
 }

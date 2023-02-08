@@ -22,7 +22,6 @@ import com.kycox.game.fruit.Fruits;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -38,7 +37,6 @@ public class ScreenBlockView {
 	private final Color revivorPointColor = new Color(128, 255, 255);
 	private final Color teleportationPointColor = new Color(255, 255, 255);
 
-	@Autowired
 	public ScreenBlockView(Fruits fruits) {
 		this.fruits = fruits;
 	}
@@ -52,7 +50,7 @@ public class ScreenBlockView {
 	}
 
 	private void displayBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
 		g2d.setStroke(new BasicStroke(2));
 		var currentCoord = screenBlock.getCoordinate();
 		// affichage de la barre à gauche
@@ -175,7 +173,7 @@ public class ScreenBlockView {
 	}
 
 	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getScreenBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		var screenBlock = screenData.getScreenBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
 		// affichage du méga point
 		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
 			g2d.setColor(megaPointColor);
@@ -210,7 +208,7 @@ public class ScreenBlockView {
 	}
 
 	private void displayTeleportation(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
 		if (screenBlock.isTeleportation()) {
 			g2d.setColor(teleportationPointColor);
 			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 10, 10);
@@ -219,7 +217,7 @@ public class ScreenBlockView {
 	}
 
 	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertPointToBlockUnit(new Point(x, y)));
+		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
 		if (screenBlock.getIdRefFruit() != Constants.NOFRUITID) {
 			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
 		}

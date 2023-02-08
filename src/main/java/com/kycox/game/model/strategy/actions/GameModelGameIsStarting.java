@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 public class GameModelGameIsStarting extends AbstratGameModel implements IGameModelAction {
 	private final GameMessaging gameMessaging;
 
-	@Autowired
 	public GameModelGameIsStarting(GameMessaging gameMessaging) {
 		this.gameMessaging = gameMessaging;
 	}

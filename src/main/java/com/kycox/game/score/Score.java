@@ -22,7 +22,6 @@ import com.kycox.game.constant.Constants;
 import com.kycox.game.fruit.Fruits;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,7 +35,6 @@ public class Score {
 	@Getter
 	private int score;
 
-	@Autowired
 	public Score(Fruits fruits) {
 		this.fruits = fruits;
 	}

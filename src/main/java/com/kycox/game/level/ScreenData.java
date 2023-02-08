@@ -23,7 +23,6 @@ import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -48,7 +47,6 @@ public final class ScreenData {
 	@Getter
 	private final List<ScreenBlock> viewBlocks = new ArrayList<>();
 
-	@Autowired
 	public ScreenData(ManageLevel manageLevel) {
 		this.manageLevel = manageLevel;
 	}
@@ -70,7 +68,7 @@ public final class ScreenData {
 	}
 
 	public Point getInitLadybugPos() {
-		return Utils.convertPointToGraphicUnit(currentLevel.getInitLadybugBlockPos());
+		return Utils.convertBlockPointToGraphicPoint(currentLevel.getInitLadybugBlockPos());
 	}
 
 	public int getNbrBlocksWithEatenPoint() {
@@ -137,7 +135,7 @@ public final class ScreenData {
 	}
 
 	public Point getRevivorGhostPos() {
-		return Utils.convertPointToGraphicUnit(currentLevel.getGhostRegenerateBlockPoint());
+		return Utils.convertBlockPointToGraphicPoint(currentLevel.getGhostRegenerateBlockPoint());
 	}
 
 	public ScreenBlock getScreenBlock(Point posPoint) {

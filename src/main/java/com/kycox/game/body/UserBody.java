@@ -16,14 +16,13 @@
  */
 package com.kycox.game.body;
 
-import java.awt.Point;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
-
 import lombok.Setter;
+
+import java.awt.*;
 
 public abstract class UserBody extends Body {
 	@Setter
@@ -41,9 +40,7 @@ public abstract class UserBody extends Body {
 			if (userRequestHasChanged() && canMove(userRequest, screenBlock)) {
 				setDirection(userRequest);
 			}
-			/**
-			 * Quand le body est coincé : au début ou quand il butte sur un mur.
-			 */
+			// Quand le body est coincé : au début ou quand il butte sur un mur.
 			if (!canMove(getDirection(), screenBlock)) {
 				setDirection(Constants.POINT_ZERO);
 			}
@@ -53,7 +50,7 @@ public abstract class UserBody extends Body {
 	public void teleport(ScreenData screenData) {
 		if (isPerfectOnABlock()) {
 			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
-			var destinationPoint = Utils.convertPointToGraphicUnit(currentScreenBlock.getDestinationPoint());
+			var destinationPoint = Utils.convertBlockPointToGraphicPoint(currentScreenBlock.getDestinationPoint());
 			setPosition(destinationPoint);
 			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 		}

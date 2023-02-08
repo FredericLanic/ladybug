@@ -37,7 +37,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -90,7 +89,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Setter
 	@Getter
 	private boolean atLeastOneXboxOneConnected;
-	@Autowired
+
 	public GameModel(CurrentProgramStatus currentProgramStatus,
 					 GameMessaging gameMessaging,
 					 GameModelManageAction gameModelManageAction,
@@ -187,6 +186,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	}
 
 	@Override
+	public boolean isProgramAskKeepPreviousGameLevel() {
+		return currentProgramStatus.isProgramAskKeepPreviousGameLevel();
+	}
+
+	@Override
 	public boolean isInGame() {
 		return currentProgramStatus.isInGame();
 	}
@@ -237,8 +241,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Override
 	public void startGame() {
 		logger.info("Initialize a new game");
-		currentProgramStatus.getStoredNumLevel();
-		currentProgramStatus.setGameStart();
+		currentProgramStatus.setProgramAskKeepPreviousGameLevel();
 	}
 
 	@Override
@@ -252,5 +255,14 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	public void initNumLevel() {
 		currentProgramStatus.initNumLevel();
 		gameMessaging.put(GameMessages.INITIALIZE_LEVEL_NUMBER.getMessage());
+	}
+
+	@Override
+	public void initializeLevelNumAndStartGame(boolean resetLevelNum) {
+		if (resetLevelNum) {
+			initNumLevel();
+		}
+		currentProgramStatus.getStoredNumLevel();
+		currentProgramStatus.setGameStart();
 	}
 }

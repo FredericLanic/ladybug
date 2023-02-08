@@ -19,7 +19,6 @@ package com.kycox.game.controller.key;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.properties.GameProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.awt.event.KeyAdapter;
@@ -30,7 +29,6 @@ public class KeyGameController extends KeyAdapter {
 	private final GameModelForController gameModelForController;
 	private final GameProperties gameProperties;
 
-	@Autowired
 	public KeyGameController(GameModelForController gameModelForController, GameProperties gameProperties) {
 		this.gameModelForController = gameModelForController;
 		this.gameProperties = gameProperties;
@@ -44,6 +42,15 @@ public class KeyGameController extends KeyAdapter {
 			manageKeysInPresentation(keyCode);
 		} else if (gameModelForController.isInGame()) {
 			manageKeysInGame(keyCode);
+		} else if(gameModelForController.isProgramAskKeepPreviousGameLevel()) {
+			manageKeysInAskKeepPreviousGameLevel(keyCode);
+		}
+	}
+
+	private void manageKeysInAskKeepPreviousGameLevel(int keyCode) {
+		switch (keyCode) {
+			case KeyEvent.VK_Y -> gameModelForController.initializeLevelNumAndStartGame(false);
+			case KeyEvent.VK_N -> gameModelForController.initializeLevelNumAndStartGame(true);
 		}
 	}
 
@@ -92,7 +99,6 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_1 -> gameModelForController.setMultiPlayers(false);
 			case KeyEvent.VK_2 -> gameModelForController.setMultiPlayers(true);
 			case KeyEvent.VK_ESCAPE -> gameModelForController.programForceExit();
-			case KeyEvent.VK_R -> gameModelForController.initNumLevel();
 		}
 	}
 }

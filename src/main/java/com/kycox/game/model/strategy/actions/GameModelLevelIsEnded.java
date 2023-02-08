@@ -16,6 +16,7 @@ public class GameModelLevelIsEnded extends AbstratGameModel implements IGameMode
 	public void programBeat() {
 		newSounds.initSounds();
 		currentGameStatus.setLevelEnding();
+		currentGameStatus.storeNumLevel();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 		waitAndDoActionAfterTimer.launch(endingLevelMilliseconds, currentGameStatus,
 		        CurrentProgramStatus.TO_LEVEL_START);

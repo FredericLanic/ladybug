@@ -11,7 +11,6 @@ import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +21,6 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 	private final Fruits fruits;
 	private final GameMessaging gameMessaging;
 
-	@Autowired
 	public GameModelLevelIsStarting(Fruits fruits, GameMessaging gameMessaging) {
 		this.fruits = fruits;
 		this.gameMessaging = gameMessaging;
@@ -35,9 +33,9 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		logger.info("Initialize level");
 		// suppression des composants techniques du niveau précédent
 		removePreviousLevelTasks();
-		// currentGameStatus.setLevelStart();
 		currentGameStatus.setGameStart();
 		// incrémente le numéro du niveau
+		currentGameStatus.getStoredNumLevel();;
 		currentGameStatus.updateNextLevel();
 		// recopie les paramètres du niveau dans les données flottantes du niveau
 		screenData.setLevelMap(currentGameStatus.getNumLevel(), true);
