@@ -74,8 +74,8 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 	}
 
 	private void manageBothXboxesOneInGame() {
-		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
-			gameModelForController.forceStopGame();
+		if (xboxOneLadybug.isXButton() || xboxOneUnComputedGhost.isXButton()) {
+			gameModelForController.askForceEndGame();
 		}
 		if (xboxOneLadybug.isStart() || xboxOneUnComputedGhost.isStart()) {
 			gameModelForController.setGameInPause();
@@ -83,7 +83,7 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 	}
 
 	private void manageBothXboxesOneInAskKeepPreviousGameLevel() {
-		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
+		if (xboxOneLadybug.isXButton() || xboxOneUnComputedGhost.isXButton()) {
 			gameModelForController.initializeLevelNumAndStartGame(true);
 		}
 		if (xboxOneLadybug.isYButton() || xboxOneUnComputedGhost.isYButton()) {
@@ -158,6 +158,17 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 			manageLadybugXboxOneInGame();
 			manageUnComputedGhostXboxOneInGame();
 			doVibrationsInGame();
+		} else if(gameModelForController.isGameAskForceEndGame()) {
+			manageBothXboxesOneInAskForceEndGame();
+		}
+	}
+
+	private void manageBothXboxesOneInAskForceEndGame() {
+		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
+			gameModelForController.setInGame();
+		}
+		if (xboxOneLadybug.isYButton() || xboxOneUnComputedGhost.isYButton()) {
+			gameModelForController.forceStopGame();
 		}
 	}
 

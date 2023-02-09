@@ -44,6 +44,15 @@ public class KeyGameController extends KeyAdapter {
 			manageKeysInGame(keyCode);
 		} else if(gameModelForController.isProgramAskKeepPreviousGameLevel()) {
 			manageKeysInAskKeepPreviousGameLevel(keyCode);
+		} else if (gameModelForController.isGameAskForceEndGame()) {
+			manageKeysInAskEndGame(keyCode);
+		}
+	}
+
+	private void manageKeysInAskEndGame(int keyCode) {
+		switch (keyCode) {
+			case KeyEvent.VK_Y -> gameModelForController.forceStopGame();
+			case KeyEvent.VK_N -> gameModelForController.setInGame();
 		}
 	}
 
@@ -86,7 +95,7 @@ public class KeyGameController extends KeyAdapter {
 			// Partie en pause
 			case KeyEvent.VK_PAUSE -> gameModelForController.setGameInPause();
 			// Arret de la partie
-			case KeyEvent.VK_ESCAPE -> gameModelForController.forceStopGame();
+			case KeyEvent.VK_ESCAPE -> gameModelForController.askForceEndGame();
 			// Mode lampe allumée
 			case KeyEvent.VK_F6 -> gameModelForController.changeLitLampMode();
 		}

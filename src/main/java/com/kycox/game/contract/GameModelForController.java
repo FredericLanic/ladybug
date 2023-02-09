@@ -57,4 +57,10 @@ public interface GameModelForController extends GameCommon {
 	boolean isProgramAskKeepPreviousGameLevel();
 
 	void initializeLevelNumAndStartGame(boolean initialize);
+
+	void askForceEndGame();
+
+	boolean isGameAskForceEndGame();
+
+	void setInGame();
 }

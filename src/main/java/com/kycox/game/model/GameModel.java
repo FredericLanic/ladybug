@@ -149,6 +149,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	}
 
 	@Override
+	public void askForceEndGame() {
+		currentProgramStatus.setGameAskForceEndGame();
+	}
+
+	@Override
 	public int getGhostLeftLives() {
 		return groupGhosts.getLeftLives();
 	}
@@ -186,8 +191,18 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	}
 
 	@Override
+	public void setInGame() {
+		currentProgramStatus.setInGame();
+	}
+
+	@Override
 	public void programForceExit() {
 		System.exit(0);
+	}
+
+	@Override
+	public boolean isGameAskForceEndGame() {
+		return currentProgramStatus.isGameAskForceEndGame();
 	}
 
 	public void setBeginningMilliseconds(long beginningMilliseconds) {

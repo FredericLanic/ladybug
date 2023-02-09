@@ -23,6 +23,7 @@ public class ManageActionContext {
 							   GameModelGameIsStarting gameModelGameIsStarting,
 							   GameModelLevelIsStarting gameModelLevelIsStarting,
 							   GameModelGameIsInGame gameModelGameIsInGame,
+							   GameModelGameAskForceEndGame gameModelGameAskForceEndGame,
 							   GameModelLevelIsEnded gameModelLevelIsEnded,
 							   GameModelLevelIsEnding gameModelLevelIsEnding,
 							   GameModelGameIsEnding gameModelGameIsEnding,
@@ -40,6 +41,7 @@ public class ManageActionContext {
 		mapGameContext.put(GameStatus.GAME_START, gameModelGameIsStarting);
 		mapGameContext.put(GameStatus.LEVEL_START, gameModelLevelIsStarting);
 		mapGameContext.put(GameStatus.IN_GAME, gameModelGameIsInGame);
+		mapGameContext.put(GameStatus.ASk_FORCE_END_GAME, gameModelGameAskForceEndGame);
 		mapGameContext.put(GameStatus.LEVEL_END, gameModelLevelIsEnded);
 		mapGameContext.put(GameStatus.LEVEL_ENDING, gameModelLevelIsEnding);
 		mapGameContext.put(GameStatus.GAME_END, gameModelGameIsEnding);

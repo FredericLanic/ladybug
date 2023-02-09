@@ -141,6 +141,7 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 
 	public void setGameEnd() {
 		gameStatus = GameStatus.GAME_END;
+		logger.info("Passage du status en " + gameStatus);
 	}
 
 	public void setGameEnding() {
@@ -158,9 +159,19 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 		logger.info("Passage du status en " + gameStatus);
 	}
 
-	private void setInGame() {
+	public void setInGame() {
 		gameStatus = GameStatus.IN_GAME;
 		logger.info("Passage du status en " + gameStatus);
+	}
+
+	public void setGameAskForceEndGame() {
+		gameStatus = GameStatus.ASk_FORCE_END_GAME;
+		logger.info("Passage du status en " + gameStatus);
+	}
+
+	@Override
+	public boolean isGameAskForceEndGame() {
+		return gameStatus == GameStatus.ASk_FORCE_END_GAME;
 	}
 
 	public void setLevelEnd() {
