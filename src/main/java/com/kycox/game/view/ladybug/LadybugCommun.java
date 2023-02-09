@@ -35,7 +35,8 @@ public abstract class LadybugCommun {
 	@Getter
 	@Setter
 	private BodyImg bodyUpCurrent;
-	private Map<Point, Integer> convertPointToDegrees = new HashMap<>();
+	private final Map<Point, Integer> convertPointToDegrees = new HashMap<>();
+
 	@Autowired
 	private GameProperties gameProperties;
 

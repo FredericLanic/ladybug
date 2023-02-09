@@ -154,21 +154,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	}
 
 	@Override
-	public int getIncrementScore() {
-		return gameScore.getIncrementScore();
-	}
-
-	@Override
 	public int getNbrPlayers() {
 		if (groupGhosts.hasGhostUser()) {
 			return 2;
 		}
 		return 1;
-	}
-
-	@Override
-	public int getNbrPointsForNewLife() {
-		return gameScore.getNbrPointsForNewLife();
 	}
 
 	@Override

@@ -38,22 +38,14 @@ public class StatusGameView extends JPanel {
 	@Setter
 	private transient Image imageLadybugPlayer;
 	@Setter
-	private int incrementScore;
-	@Setter
 	private boolean inGame;
 	@Setter
 	private int ladybugNbrLifes;
 	@Setter
 	private int nbrPlayers;
 	@Setter
-	private int nbrPointsForNewLife;
-	@Setter
-	private int numLevel;
-	@Setter
 	private int score;
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
-	@Setter
-	private boolean soundActive;
 
 	private void display(Graphics g) {
 		var delta = 2;
@@ -68,7 +60,7 @@ public class StatusGameView extends JPanel {
 
 		}
 		if (inGame) {
-			displayScoreDuringGame(g);
+			displayCentralMessage(g, "Score: " + score);
 		}
 		displayMessageToRight(g, currentProgramMessage);
 	}
@@ -100,13 +92,6 @@ public class StatusGameView extends JPanel {
 		var coordX = x + imageBody.getWidth(null);
 		var coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
 		g.drawString("x " + nbrLifes, coordX, coordY);
-	}
-
-	private void displayScoreDuringGame(Graphics g) {
-		var scoreMessage = new StringBuilder();
-		scoreMessage.append("Score: ");
-		scoreMessage.append(score);
-		displayCentralMessage(g, scoreMessage.toString());
 	}
 
 	@PostConstruct

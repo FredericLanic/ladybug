@@ -184,7 +184,6 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 		logger.info("Passage du status en " + gameStatus);
 	}
 
-	@Override
 	public void setProgramPresentation() {
 		gameStatus = GameStatus.PROGRAM_PRESENTATION;
 		logger.info("Passage du status en " + gameStatus);

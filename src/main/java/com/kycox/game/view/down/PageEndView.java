@@ -25,7 +25,6 @@ import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -38,15 +37,15 @@ import java.util.Observer;
 public class PageEndView extends JPanel implements Observer, MainGraphicStructure {
 	private static final long DURATION_MESSAGE_SHOWING = 500;
 	private static final Log logger = LogFactory.getLog(PageEndView.class);
-	private final GameMessaging gameMessaging;
-	private final GhostView ghostView;
-	private final LadybugView ladybugView;
-	private final Screen screen;
+	private final transient GameMessaging gameMessaging;
+	private final transient GhostView ghostView;
+	private final transient LadybugView ladybugView;
+	private final transient Screen screen;
 	private final StatusGameView statusGameView;
 	private transient GameModelForViews gameModelForViews;
 	private final JPanel jPanelLadybugKinematique = new JPanel();
 	private final JPanel jPanelMainScore = new JPanel();
-	private final SimpleTimer simpleTimer = new SimpleTimer();
+	private final transient SimpleTimer simpleTimer = new SimpleTimer();
 
 	public PageEndView(GameMessaging gameMessaging, GhostView ghostView, LadybugView ladybugView, Screen screen, StatusGameView statusGameView) {
 		this.gameMessaging = gameMessaging;
@@ -98,11 +97,7 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 		statusGameView.setInGame(gameModelForViews.isInGame());
 		statusGameView.setLadybugNbrLifes(gameModelForViews.getLadybug().getLeftLifes());
 		statusGameView.setNbrPlayers(gameModelForViews.getNbrPlayers());
-		statusGameView.setNumLevel(gameModelForViews.getCurrentProgramStatus().getNumLevel());
 		statusGameView.setScore(gameModelForViews.getGameScore().getScore());
-		statusGameView.setIncrementScore(gameModelForViews.getIncrementScore());
-		statusGameView.setNbrPointsForNewLife(gameModelForViews.getNbrPointsForNewLife());
-		statusGameView.setSoundActive(gameModelForViews.isSoundActive());
 		if (!simpleTimer.isRunning()) {
 			var newMessage = gameMessaging.get();
 			statusGameView.setCurrentProgramMessage(newMessage);
