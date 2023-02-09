@@ -60,8 +60,11 @@ public class ManageActionContext {
 	}
 
 	public void setBeginningMilliseconds(long beginningMilliseconds) {
-		gameModelGameIsEnding.setTimeEnding(beginningMilliseconds);
 		gameModelLevelIsStarting.setBeginningMilliseconds(beginningMilliseconds);
+	}
+
+	public void setTimeEndingMilliseconds(long timeEndingMilliseconds) {
+		gameModelGameIsEnding.setTimeEnding(timeEndingMilliseconds);
 	}
 
 	public void setEndingLevelMilliseconds(long endingLevelMilliseconds) {

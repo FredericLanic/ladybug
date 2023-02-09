@@ -194,6 +194,10 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		manageActionContext.setBeginningMilliseconds(beginningMilliseconds);
 	}
 
+	public void setTimeEndingMilliseconds(long timeEndingMilliseconds) {
+		manageActionContext.setTimeEndingMilliseconds(timeEndingMilliseconds);
+	}
+
 	public void setEndingLevelMilliseconds(long endingLevelMilliseconds) {
 		manageActionContext.setEndingLevelMilliseconds(endingLevelMilliseconds);
 	}
