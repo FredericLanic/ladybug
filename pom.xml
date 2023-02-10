@@ -1,59 +1,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
+	<properties>
+		<java.version>16</java.version>
+		<application.name>ladybug by kykox</application.name>
+		<application.version>0.5.0-SNAPSHOT</application.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>com.kycox.game.MainLadybug</start-class>
+	</properties>
+
 	<groupId>com.kycox</groupId>
 	<artifactId>ladybug</artifactId>
-	<version>0.4.0-SNAPSHOT</version>
+	<version>${application.version}</version>
 	<packaging>jar</packaging>
-	
-	<name>ladybug</name>
+	<name>${application.name}</name>
 	<url>http://maven.apache.org</url>
 	
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.4</version>
+		<version>3.0.2</version>
     </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>16</java.version>        
-    </properties>
-
-	<dependencyManagement>
-		<dependencies>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.7.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-		</dependencies>
-	</dependencyManagement>
-
-    <dependencies>
-	        
+	<dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>     
-      
+        </dependency>
 	    <dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>    
-
-    	<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- essai manette xbox : https://github.com/williamahartman/Jamepad -->
+		<!-- manette xbox : https://github.com/williamahartman/Jamepad -->
 	    <dependency>
 	        <groupId>com.github.WilliamAHartman</groupId>
 	        <artifactId>Jamepad</artifactId>
@@ -61,8 +42,17 @@
 	    </dependency>
     </dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
 	<repositories>
-		<!-- essai manette xbox : https://github.com/williamahartman/Jamepad -->
+		<!-- manette xbox : https://github.com/williamahartman/Jamepad -->
 	    <repository>
 	        <snapshots>
 	            <enabled>false</enabled>
@@ -77,61 +67,4 @@
 	    </repository>
 	</repositories>    
 
-    <build>
-    	<plugins>
-			<plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-surefire-plugin</artifactId>
-			    <!-- Cette version permet de détecter les fichiers de tests lancés par Maven
-			    	voir TP Oxiane Test Unitaire et https://stackoverflow.com/questions/6178583/maven-does-not-find-junit-tests-to-run  
-			    -->
-			    <version>2.22.2</version> 
-			</plugin>        
-        
-            <!--plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-	            <configuration>
-	                <mainClass>com.kycox.game.MainLadybug</mainClass>
-	            </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>${spring-loaded.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin-->
-
-        	<plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-shade-plugin</artifactId>
-	            <executions>
-	                <execution>
-	                    <phase>package</phase>
-	                    <goals>
-	                        <goal>shade</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
-	            <configuration>
-	                <shadedArtifactAttached>true</shadedArtifactAttached>
-	                <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
-	                <filters>
-	                    <filter>
-	                        <artifact>*:*</artifact>
-	                        <excludes>
-	                            <exclude>META-INF/*.SF</exclude>
-	                            <exclude>META-INF/*.DSA</exclude>
-	                            <exclude>META-INF/*.RSA</exclude>
-	                        </excludes>
-	                    </filter>
-	                </filters>
-	            </configuration>
-	        </plugin> 
-               
-        	<!-- voir https://spring.io/blog/2020/03/11/spring-tips-java-14-or-can-your-java-do-this -->
-			
-        </plugins>
-    </build>
 </project>
