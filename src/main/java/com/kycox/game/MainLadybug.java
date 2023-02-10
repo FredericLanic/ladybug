@@ -22,10 +22,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/**
- * Classe principale du jeu
- * C'est elle qui faut lancer :)
- */
 public class MainLadybug {
 	private static final String cruxLine = "******************************";
 	private static final Log logger = LogFactory.getLog(MainLadybug.class);
