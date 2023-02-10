@@ -21,6 +21,7 @@ import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.CentralView;
 import com.kycox.game.view.down.PageEndView;
+import com.kycox.game.view.left.PageLeftView;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
@@ -31,13 +32,15 @@ public class Engine {
 	private final GameModel gameModel;
 	private final GameSounds gameSounds;
 	private final PageEndView pageEndView;
+	private final PageLeftView pageLeftView;
 	private final XboxOneController xboxOneController;
 
-	public Engine(CentralView centralView, GameModel gameModel, GameSounds gameSounds, PageEndView pageEndView, XboxOneController xboxOneController) {
-		this.centralView = centralView;
+	public Engine(GameModel gameModel, GameSounds gameSounds, CentralView centralView, PageEndView pageEndView, PageLeftView pageLeftView, XboxOneController xboxOneController) {
 		this.gameModel = gameModel;
 		this.gameSounds = gameSounds;
+		this.centralView = centralView;
 		this.pageEndView = pageEndView;
+		this.pageLeftView = pageLeftView;
 		this.xboxOneController = xboxOneController;
 	}
 
@@ -50,6 +53,7 @@ public class Engine {
 		gameModel.addObserver(centralView);
 		gameModel.addObserver(gameSounds);
 		gameModel.addObserver(pageEndView);
+		gameModel.addObserver(pageLeftView);
 		gameModel.addObserver(xboxOneController);
 		// on récupère la longueur du son de la mort de ladybug et on l'affecte
 		gameModel.getLadybugDying().setMillisecondLenght(gameSounds.getMillisecondLadybugDeath());

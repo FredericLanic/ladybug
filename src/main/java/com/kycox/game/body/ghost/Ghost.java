@@ -59,6 +59,14 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	@Setter
 	private int maximumAttackDist;
 
+	@Getter
+	private MoveStyle moveStyle = MoveStyle.MOVE_DEFAULT;
+
+	// used only for debug view
+	public enum MoveStyle {
+		MOVE_TO, MOVE_SCARED, MOVE_DEFAULT, MOVE_REGENERATING;
+	}
+
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
 	// nécessaire
 	private void defaultMoving(ScreenData screenData) {
@@ -89,6 +97,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 			} else {
 				setDirection(lstDirections.get(Utils.generateRandomInt(lstDirections.size())));
 			}
+			moveStyle = MoveStyle.MOVE_DEFAULT;
 		}
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
@@ -171,6 +180,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 				scaredDirection = new Point(point0.x - point1.x, point0.y - point1.y);
 				canScaredMove = canMove(scaredDirection, currentBlockGhost);
 			}
+			moveStyle = MoveStyle.MOVE_SCARED;
 		}
 		if (canScaredMove) {
 			setDirection(scaredDirection);
@@ -191,6 +201,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 			} else {
 				setDirection(new Point(ptCurrentBlockGhost.x - point0.x, ptCurrentBlockGhost.y - point0.y));
 			}
+			moveStyle = MoveStyle.MOVE_TO;
 		}
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}
@@ -233,6 +244,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 					setDirection(Constants.POINT_UP);
 				}
 			}
+			moveStyle = MoveStyle.MOVE_REGENERATING;
 		}
 		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
 	}

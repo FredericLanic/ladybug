@@ -19,6 +19,7 @@ package com.kycox.game.view;
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.down.PageEndView;
+import com.kycox.game.view.left.PageLeftView;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 
@@ -33,23 +34,26 @@ import java.awt.*;
 public class MainFrame extends JFrame implements MainGraphicStructure {
 	private final CentralView gameView;
 	private final PageEndView pageEndView;
-	private final Screen screen;
+
+	private final PageLeftView pageLeftView;
+	private final transient Screen screen;
 	private final Dimension lineDimension = new Dimension();
 	private final Dimension pageDimension = new Dimension();
 	private final Dimension gameDimension = new Dimension();
 
-	public MainFrame(CentralView gameView, PageEndView pageEndView, Screen screen) {
+	public MainFrame(CentralView gameView, PageEndView pageEndView, PageLeftView pageLeftView, Screen screen) {
 		this.gameView = gameView;
 		this.pageEndView = pageEndView;
+		this.pageLeftView = pageLeftView;
 		this.screen = screen;
 	}
 
 	private void addPanels() {
 		addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);
-		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_START);
+		addPanel(pageLeftView, lineDimension, BorderLayout.LINE_START);
+		addPanel(gameView, gameDimension, BorderLayout.CENTER);
 		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_END);
 		addPanel(pageEndView, pageDimension, BorderLayout.PAGE_END);
-		addPanel(gameView, gameDimension, BorderLayout.CENTER);
 	}
 
 	@PostConstruct

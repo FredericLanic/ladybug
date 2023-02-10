@@ -60,7 +60,6 @@ public abstract class Body {
 			positionBlock.x--;
 		}
 		return positionBlock;
-
 	}
 
 	public Point getPositionBlock() {

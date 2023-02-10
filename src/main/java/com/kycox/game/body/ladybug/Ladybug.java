@@ -123,4 +123,9 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return sb.toString();
 	}
 
+	// FIXME: hmmm, utilisé uniquement en debug
+	@Override
+	public int getSpeedIndex() {
+		return super.getSpeedIndex();
+	}
 }

@@ -30,4 +30,6 @@ public interface LadybugForGameView {
 	Point getViewDirection();
 
 	boolean isNewLife();
+
+	int getSpeedIndex();
 }
