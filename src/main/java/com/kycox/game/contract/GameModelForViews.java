@@ -47,4 +47,6 @@ public interface GameModelForViews extends GameCommon {
 	boolean isShowHelpForKeys();
 
 	boolean isShowHelpForXboxes();
+
+	boolean isDebugMode();
 }

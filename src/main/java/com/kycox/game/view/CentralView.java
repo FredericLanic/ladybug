@@ -165,14 +165,25 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 
 	private void drawGhosts(Graphics2D g2d) {
 		var ladybugPosition = gameModelForView.getLadybug().getPosition();
-		gameModelForView.getGroupGhosts().getGhosts().stream()
-		        .filter(g -> g.getPosition().distance(ladybugPosition) <= 4 * Constants.BLOCK_SIZE || !g.isComputed()
-		                || gameModelForView.getGroupGhosts().getGhosts().stream()
-		                        .anyMatch(gc -> !gc.isComputed()
-		                                && g.getPosition().distance(gc.getPosition()) <= 4 * Constants.BLOCK_SIZE)
+		gameModelForView.getGroupGhosts()
+				.getGhosts()
+				.stream()
+		        .filter(ghost -> ghost.getPosition().distance(ladybugPosition) <= 4 * Constants.BLOCK_SIZE || !ghost.isComputed()
+		                || gameModelForView.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed() && ghost.getPosition().distance(gc.getPosition()) <= 4 * Constants.BLOCK_SIZE)
 		                || !gameModelForView.getCurrentProgramStatus().isInGame()
 		                || !gameModelForView.getScreenData().isLitLampMode())
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
+
+		if (gameModelForView.isDebugMode()) {
+			gameModelForView.getGroupGhosts()
+					.getGhosts()
+					.stream()
+					.filter(ghost -> ghost.getMaximumAttackDist() > 0)
+					.forEach(ghost -> g2d.drawOval(ghost.getPosition().x + 1 - ghost.getMaximumAttackDist() + Constants.BLOCK_SIZE / 2
+							, ghost.getPosition().y + 1 - ghost.getMaximumAttackDist() + Constants.BLOCK_SIZE / 2
+							, ghost.getMaximumAttackDist() * 2
+							, ghost.getMaximumAttackDist() * 2));
+		}
 	}
 
 	private void drawLadybug(Graphics2D g2d, LadybugCommun ladybugCommon) {

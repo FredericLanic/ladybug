@@ -89,6 +89,8 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	@Setter
 	@Getter
 	private boolean atLeastOneXboxOneConnected;
+	@Getter
+	boolean debugMode = false;
 
 	public GameModel(CurrentProgramStatus currentProgramStatus,
 					 GameMessaging gameMessaging,
@@ -274,4 +276,10 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		currentProgramStatus.getStoredNumLevel();
 		currentProgramStatus.setGameStart();
 	}
+
+	public void changeDebugMode() {
+		debugMode = !debugMode;
+		gameMessaging.put("Debug mode " + (debugMode? "on":"off" ));
+	}
+
 }

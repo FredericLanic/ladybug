@@ -74,6 +74,8 @@ public class KeyGameController extends KeyAdapter {
 		switch (keyCode) {
 			case KeyEvent.VK_F1 -> gameModelForController.setShowHelpForKeys(true);
 			case KeyEvent.VK_F2 -> gameModelForController.startStopSoundActive();
+			// Mode débug
+			case KeyEvent.VK_ENTER -> gameModelForController.changeDebugMode();
 			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
 			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();
 			case KeyEvent.VK_F5 -> gameProperties.changeGhostHat();

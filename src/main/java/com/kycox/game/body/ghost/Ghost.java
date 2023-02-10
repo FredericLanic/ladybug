@@ -20,14 +20,13 @@ import com.kycox.game.action.ghost.GhostActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.ghost.GhostBehavious;
+import com.kycox.game.constant.ghost.GhostBehaviour;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.image.GhostsBodyImages;
-import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.GhostForController;
 import com.kycox.game.contract.GhostForView;
 import com.kycox.game.level.ScreenData;
-import com.kycox.game.maths.GhostSensitiveBehavious;
+import com.kycox.game.maths.GhostSensitiveBehaviour;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.Dijkstra;
 import lombok.Getter;
@@ -43,7 +42,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	private static final Log logger = LogFactory.getLog(Ghost.class);
 	@Getter
 	@Setter
-	private GhostBehavious behavious;
+	private GhostBehaviour behaviour;
 	@Getter
 	@Setter
 	private GhostsBodyImages color;
@@ -51,10 +50,14 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	private GhostActions ghostActions;
 	@Setter
 	@Getter
-	private GhostSensitiveBehavious sensitiveBehavious;
+	private GhostSensitiveBehaviour sensitiveBehaviour;
 	@Getter
 	@Setter
 	private GhostStatus status = GhostStatus.NORMAL;
+
+	@Getter
+	@Setter
+	private int maximumAttackDist;
 
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
 	// nécessaire
@@ -121,7 +124,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	}
 
 	private void moveByBehaviour(Ladybug ladybug, ScreenData screenData) {
-		switch (behavious) {
+		switch (behaviour) {
 			case SMART -> smartMoving(ladybug, screenData);
 			case AGGRESSIVE -> moveTo(ladybug.getPositionBlock(), screenData);
 			default -> defaultMoving(screenData);
@@ -134,9 +137,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 			case DYING -> regeneratePointMoving(screenData);
 			case FLASH, SCARED -> scaredOrFlashedMoving(ladybug.getPositionBlock(), screenData);
 			case NORMAL -> normalMoving(ladybug, screenData);
-			case REGENERATED -> {
-				// Do nothing
-			}
+			case REGENERATED -> { /* Do nothing */ }
 			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
 		}
 	}
@@ -195,7 +196,9 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	}
 
 	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
-		if (sensitiveBehavious.isActive() && ladybug.getStatus() != LadybugStatus.DEAD) {
+		if (getPosition().distance(ladybug.getPosition()) < getMaximumAttackDist() && ladybug.isAllowedToDoActions()) {
+			moveTo(ladybug.getPositionBlock(), screenData);
+		} else if (sensitiveBehaviour.isActive() && ladybug.isAllowedToDoActions()) {
 			moveByBehaviour(ladybug, screenData);
 		} else {
 			defaultMoving(screenData);
@@ -270,12 +273,11 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 
 	public void setNumLevel(int numLevel) {
 		// initialise le comportement du fantôme en fonction du niveau
-		getSensitiveBehavious().setNumLevel(numLevel);
+		getSensitiveBehaviour().setNumLevel(numLevel);
 	}
 
 	public void setSettingAfterBeEaten(int numLevel) {
 		setPosition(Utils.convertBlockPointToGraphicPoint(getPositionBlock()));
-		// � d�placer dans
 		setStatus(GhostStatus.DYING);
 		setSpeedIndex(getSpeedFunction().getRealIndexSpeedPlus(numLevel));
 	}

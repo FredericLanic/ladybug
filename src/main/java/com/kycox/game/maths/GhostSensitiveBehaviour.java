@@ -26,7 +26,7 @@ import com.kycox.game.tools.Utils;
  * Retourne vrai si le nombre aléatoire (0-100) est en dessous de y
  *
  */
-public class GhostSensitiveBehavious {
+public class GhostSensitiveBehaviour {
 	private static final double HIGH_LIMIT = 90;
 	private static final double LOW_LIMIT = 20;
 	private static final int SCALE = 100;

@@ -37,10 +37,10 @@ public class GhostsGroup implements GroupGhostForGameView {
 	}
 
 	public int getLeftLives() {
-		return ghosts.stream().filter(g -> !g.isComputed()) //
-		        .findFirst() //
-		        .map(Ghost::getLeftLifes) //
-		        .orElse(0); //
+		return ghosts.stream().filter(g -> !g.isComputed())
+		        .findFirst()
+		        .map(Ghost::getLeftLifes)
+		        .orElse(0);
 	}
 
 	public int getNbrEatenGhosts() {

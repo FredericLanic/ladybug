@@ -63,4 +63,6 @@ public interface GameModelForController extends GameCommon {
 	boolean isGameAskForceEndGame();
 
 	void setInGame();
+
+	void changeDebugMode();
 }
