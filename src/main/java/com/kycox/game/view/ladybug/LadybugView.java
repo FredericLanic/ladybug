@@ -19,9 +19,9 @@ package com.kycox.game.view.ladybug;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.timer.TimerView;
 import com.kycox.game.view.body.BodyImg;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 
 @Component

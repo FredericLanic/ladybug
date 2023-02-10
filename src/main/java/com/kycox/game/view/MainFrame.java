@@ -19,10 +19,9 @@ package com.kycox.game.view;
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.down.PageEndView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import jakarta.annotation.PostConstruct;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 

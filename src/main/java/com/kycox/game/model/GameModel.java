@@ -33,13 +33,13 @@ import com.kycox.game.score.GroupMessages;
 import com.kycox.game.score.Score;
 import com.kycox.game.sound.NewSounds;
 import com.kycox.game.tools.Utils;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;

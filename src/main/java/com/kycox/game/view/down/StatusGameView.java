@@ -17,10 +17,10 @@
 package com.kycox.game.view.down;
 
 import com.kycox.game.tools.ImageUtils;
+import jakarta.annotation.PostConstruct;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serial;

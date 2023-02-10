@@ -18,11 +18,11 @@ package com.kycox.game.constant.ladybug;
 
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.properties.GameProperties;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 import java.util.EnumSet;

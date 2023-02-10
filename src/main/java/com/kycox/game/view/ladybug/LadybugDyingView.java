@@ -21,10 +21,9 @@ import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.view.body.BodyImg;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.awt.*;
 
 /**

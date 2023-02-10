@@ -21,9 +21,9 @@ import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.CentralView;
 import com.kycox.game.view.down.PageEndView;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 
 @Component
 public class Engine {

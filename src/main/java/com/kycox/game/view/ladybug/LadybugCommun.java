@@ -22,11 +22,11 @@ import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
 import com.kycox.game.view.body.BodyImg;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;

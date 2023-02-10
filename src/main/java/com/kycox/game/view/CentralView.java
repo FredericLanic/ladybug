@@ -31,12 +31,12 @@ import com.kycox.game.view.ladybug.LadybugCommun;
 import com.kycox.game.view.ladybug.LadybugDyingView;
 import com.kycox.game.view.ladybug.LadybugView;
 import com.kycox.game.view.map.ScreenBlockView;
+import jakarta.annotation.PostConstruct;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serial;

@@ -42,9 +42,9 @@ public class MainLadybug {
 	public void launchTheGame() {
 		var javaVersion = Runtime.version();
 		logger.info(cruxLine);
-		logger.info("*  LadyBug v0.4.0 SnapShot   *");
-		logger.info("*  for Java 16+ by kycox     *");
-		if (javaVersion.feature() >= 16) {
+		logger.info("*  LadyBug v0.5.0 SnapShot   *");
+		logger.info("*  for Java 19+ by kycox     *");
+		if (javaVersion.feature() >= 19) {
 			logger.info(cruxLine);
 			mainFrame.setVisible(true);
 		} else {

@@ -1,10 +1,10 @@
 package com.kycox.game.fruit;
 
 import com.kycox.game.constant.fruit.image.FruitsImages;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.awt.*;
 
 @Component

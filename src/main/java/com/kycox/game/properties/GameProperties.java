@@ -20,8 +20,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
-
+import jakarta.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
