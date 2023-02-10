@@ -43,7 +43,7 @@ public class MainLadybug {
 		var javaVersion = Runtime.version();
 		logger.info(cruxLine);
 		logger.info("*  LadyBug v0.5.0 SnapShot   *");
-		logger.info("*  for Java 19+ by kycox     *");
+		logger.info("*  for Java 19+ by Kycox     *");
 		if (javaVersion.feature() >= 19) {
 			logger.info(cruxLine);
 			mainFrame.setVisible(true);

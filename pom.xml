@@ -4,7 +4,7 @@
 
 	<properties>
 		<java.version>16</java.version>
-		<application.name>ladybug by kykox</application.name>
+		<application.name>ladybug by Kykox</application.name>
 		<application.version>0.5.0-SNAPSHOT</application.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>com.kycox.game.MainLadybug</start-class>
@@ -43,6 +43,15 @@
     </dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/_inWork/**/*.*</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
