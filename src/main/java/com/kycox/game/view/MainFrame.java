@@ -58,7 +58,7 @@ public class MainFrame extends JFrame implements MainGraphicStructure {
 
 	@PostConstruct
 	private void init() {
-		setTitle("LadyBug");
+		setTitle("Ladybug by Kycox");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setUndecorated(true);
