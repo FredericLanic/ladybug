@@ -48,7 +48,7 @@
 				<excludes>
 					<exclude>**/_inWork/**/*.*</exclude>
 				</excludes>
-				<filtering>true</filtering>
+				<!--filtering>true</filtering-->
 			</resource>
 		</resources>
 
