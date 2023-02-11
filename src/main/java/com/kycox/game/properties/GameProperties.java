@@ -16,49 +16,50 @@
  */
 package com.kycox.game.properties;
 
-import java.io.IOException;
-import java.util.Optional;
-import java.util.Properties;
-
 import jakarta.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-@Component
+@Configuration
+@PropertySource("classpath:ladybug.properties")
 public class GameProperties {
-	// @TODO : properties à la mode de Spring
 	private static final Log logger = LogFactory.getLog(GameProperties.class);
 	private static final String TRUE_PROPERTY = "1";
-	private Optional<String> ghostHat = Optional.empty();
-	private Optional<String> ghostsHeadband = Optional.empty();
-	private Optional<String> ladybugColor = Optional.empty();
-	private Optional<String> ladybugSkin = Optional.empty();
-	private Properties props;
+	private static final String FALSE_PROPERTY = "0";
+
+	@Value( "${ghosts.hat}" )
+	private String ghostHat;
+	@Value( "${ghosts.headband}" )
+	private String ghostsHeadband;
+	@Value( "${ladybug.color}" )
+	private String ladybugColor;
+	@Value( "${ladybug.skin}" )
+	private String ladybugSkin;
 
 	public void changeGhostHat() {
 		if (hasHatSkin()) {
-			ghostHat = Optional.empty();
+			ghostHat = FALSE_PROPERTY;
 		} else {
-			ghostHat = Optional.of(TRUE_PROPERTY);
+			ghostHat = TRUE_PROPERTY;
 		}
 	}
 
 	public void changeGhostHeadBand() {
 		if (hasGhostHeadBand()) {
-			ghostsHeadband = Optional.empty();
+			ghostsHeadband = FALSE_PROPERTY;
 		} else {
-			ghostsHeadband = Optional.of(TRUE_PROPERTY);
+			ghostsHeadband = TRUE_PROPERTY;
 		}
 	}
 
 	public void changeLadybugSkin() {
 		if (hasLadybugSkin()) {
-			ladybugSkin = Optional.empty();
+			ladybugSkin = FALSE_PROPERTY;
 		} else {
-			ladybugSkin = Optional.of(TRUE_PROPERTY);
+			ladybugSkin = TRUE_PROPERTY;
 		}
 	}
 
@@ -70,36 +71,23 @@ public class GameProperties {
 	}
 
 	public String getLadybugColor() {
-		return ladybugColor.isPresent() ? ladybugColor.get() : "blue";
+		return ladybugColor;
 	}
 
 	public boolean hasGhostHeadBand() {
-		return ghostsHeadband.isPresent() && TRUE_PROPERTY.equals(ghostsHeadband.get());
+		return ghostsHeadband.equals(TRUE_PROPERTY);
 	}
 
 	public boolean hasHatSkin() {
-		return ghostHat.isPresent() && TRUE_PROPERTY.equals(ghostHat.get());
+		return ghostHat.equals(TRUE_PROPERTY);
 	}
 
 	public boolean hasLadybugSkin() {
-		return ladybugSkin.isPresent() && TRUE_PROPERTY.equals(ladybugSkin.get());
+		return ladybugSkin.equals(TRUE_PROPERTY);
 	}
 
 	@PostConstruct
 	public void init() {
-		try {
-			props = PropertiesLoaderUtils.loadProperties(new ClassPathResource("ladybug.properties"));
-			ladybugColor = readProperty("ladybug.color");
-			ladybugSkin = readProperty("ladybug.skin");
-			ghostsHeadband = readProperty("ghosts.headband");
-			ghostHat = readProperty("ghosts.hat");
-		} catch (IOException ioException) {
-			logger.error(ioException);
-		}
 		displayPropertiesInLog();
-	}
-
-	private Optional<String> readProperty(String property) {
-		return Optional.ofNullable(props.getProperty(property));
 	}
 }
