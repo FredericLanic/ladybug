@@ -13,19 +13,21 @@ Bien sûr, la vie serait bien trop simple, et peut être ennuyante, si vous éti
 
 Heureusement, si un fantôme assez futé vous touche, vous avez la chance et la capacité de vous régénérer à votre point de départ du niveau. Dès le lancement de votre partie, le destin vous donne la possibilité de commettre 3 erreurs. Au fur et à mesure de votre expérience et de votre appétit, vous allez pouvoir augmenter le nombre d'erreurs possibles : votre XP augmente, votre nombre de vos vies aussi.
 
-Vous finirez chaque niveau lorsque vous aurez mangé l'ensemble des gommes et des méga-gommes, peu importe le nombre de fruits restants. Regardez bien partout dans le niveau. Il se peut qu'il y ait des gommes plus ou moins cachées, notamment sur les points de téléportation ^^.
+Vous finirez chaque niveau lorsque vous aurez mangé l'ensemble des gommes et des méga-gommes, peu importe le nombre de fruits restants. Regardez bien partout dans le niveau. 
+
+Astuce : il se peut qu'il y ait des gommes plus ou moins cachées, notamment sur les points de téléportation ^^.
 
 ## Les fantômes
 Les fantômes sont rancuniers ; ils se souviennent de leurs trop nombreuses expériences, souvent agaçantes, avec Pacman. Leur unique but est de vous empêcher, vous, Ladybug, la cousine lointaine de Pacman, de manger les gommes.
 
 La nature étant imparfaite, les fantômes ont plus ou moins un tempérament intelligent, agressif voire négligeant ; ils ont aussi des facultés de déplacement plus ou moins rapide et progressif à chaque niveau.
 
-| Hey ! Photo  | Description |
-| ------------- | ------------- |
-| ![I'm Blinky](/readme/ghosts/blinky.png) | Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. De plus, plus vous mangez de gommes dans le niveau, plus il s'énerve et il se déplace de plus en plus vite.   |
-| ![I'm Inky](/readme/ghosts/inky.png) | Inky, le fantôme vert-bleu, lui est bien différent. Le destin lui a apporté un comportement négligeant ; il mène son parcours comme bon lui semble, sans prendre en compte le monde extérieur. Tout en étant tranquille, son chemin peut être surprenant.  |
-| ![I'm Pinky](/readme/ghosts/pinky.png) | Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller à votre rencontre, devant vous, et peut être vous prendre en tenaille avec Blinky.  |
-| ![I'm Clyde](/readme/ghosts/clyde.png) | Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Peut-être un jour il se réveillera.... |
+| Hey ! Photo  | Description                                                                                                                                                                                                                                                                                             |
+| ------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![I'm Blinky](/readme/ghosts/blinky.png) | Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. <br/>De plus, plus vous mangez de gommes dans le niveau, plus il s'énerve et il se déplace de plus en plus vite.                                         |
+| ![I'm Inky](/readme/ghosts/inky.png) | Inky, le fantôme vert-bleu, lui est bien différent. Le destin lui a apporté un comportement négligeant ; il mène son parcours comme bon lui semble, sans prendre en compte le monde extérieur. <br/>Tout en étant tranquille, son chemin peut être surprenant. surtout lorsque Ladybug s'approche trop. |
+| ![I'm Pinky](/readme/ghosts/pinky.png) | Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller à votre rencontre, devant vous, et peut être vous prendre en tenaille avec Blinky.                                                                                                      |
+| ![I'm Clyde](/readme/ghosts/clyde.png) | Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Il se réveillera rien qua l'approche de Ladybug....                                                                                                                                                                                   |
 
 Évidemment, plus vous montez dans les niveaux, plus leur comportement personnel se dévoile et leur rapidité de déplacement accroît.
 
@@ -61,23 +63,24 @@ Pour vous aider dans votre quête de gommes, voici les principaux éléments gra
 
 Voici les commandes du clavier que vous utiliserez 
 
-| Touches du clavier  | Description |
-| --------------- |---------------|
-| Les flèches | Permet à Ladybug de changer de direction |
-| Z Q S D | Permet au fantôme de changer de direction (en mode deux joueurs) |
-| 1 ou 2 | Définition du mode du jeu : 1 ou 2 joueurs - avant la partie |
-| F1 | Affichage de l'aide |
-| F2 | Gestion du son (modes on/off) |
-| F3 | Retirer/ afficher le logo du TShirt de Ladybug |
-| F4 | Porter / enlever le bandeau des fantômes |
-| F5 | Porter / enlever le chapeau des fantômes |
-| F6 | Gestion du mode "lampe allumée" (modes on/off) lors du jeu |
-| Pause | Mise en pause / Reprise du niveau |
-| ESC | Fin du niveau ou Sortie du jeu |
+| Touches du clavier | Description                                                      |
+|--------------------|------------------------------------------------------------------|
+| Les flèches        | Permet à Ladybug de changer de direction                         |
+| Z Q S D            | Permet au fantôme de changer de direction (en mode deux joueurs) |
+| 1 ou 2             | Définition du mode du jeu : 1 ou 2 joueurs - avant la partie     |
+| F1                 | Affichage de l'aide                                              |
+| F2                 | Gestion du son (modes on/off)                                    |
+| F3                 | Retirer/ afficher le logo du TShirt de Ladybug                   |
+| F4                 | Porter / enlever le bandeau des fantômes                         |
+| F5                 | Porter / enlever le chapeau des fantômes                         |
+| F6                 | Gestion du mode "lampe allumée" (modes on/off) lors du jeu       |
+| Pause              | Mise en pause / Reprise du niveau                                |
+| ESC                | Fin du niveau ou Sortie du jeu                                   |
+| Enter              | Passage du jeu en mode "debug"                                    |
 
 Je vous laisse le plaisir de deviner les boutons de la manette XboxOne associés à ces actions.
 
-Tip : si vous utilisez une manette XboxOne, veuillez la brancher en USB. Vous pouvez brancher deux manettes XboxOne et les utiliser en mode deux joueurs.
+Astuce : si vous utilisez une manette XboxOne, veuillez la brancher en USB. Vous pouvez brancher deux manettes XboxOne et les utiliser en mode deux joueurs.
 
 # Quelques mots sur le projet en tant que tel
 
@@ -93,11 +96,11 @@ Le build de ladybug est réalisé par "maven" par la commande "mvn clean package
 
 En résumé, le build génère un fat jar : un jar qui contient toutes les dépendances décrites dans le fichier "pom.xml".
 
-À ce jour (25 Mars 2021), j'utilise la version **maven 3.8.5** et la version **jdk 16**.
+À ce jour (12 Février 2023), j'utilise la version **maven 3.8.5** et la version **jdk 19**.
 
 La commande pour lancer le jeu est :
 
-**java -jar ladybug-0.3.2-SNAPSHOT.jar**
+**java -jar ladybug-0.5.0.jar**
 
 Pour le jeu en lui-même, je vous laisse trouver la gestion des propriétés et l'application-context pour gérer la configuration du jeu, l'affichage des plugins, la couleur de Ladybug ...
 
@@ -108,11 +111,19 @@ Pour limiter les longueurs de code dues aux Getter et Setter, j'ai fait le choix
 
 Installation de "Lombok Eclipse" : voir http://www.jouvinio.net/wiki/index.php/Lombok_Eclipse J'ai suivi les indications du site. 
 
-J'ai également modifié le "pom.xml" pour que maven puisse buidler de son côté en prenant compte des dépendances liées à Lombok. Tips : n'oubliez pas de faire un clean sous Eclipse => Menu "Projet -> clean" puis faire un "rebuild".
+J'ai également modifié le "pom.xml" pour que maven puisse buidler de son côté en prenant compte des dépendances liées à Lombok. 
+
+/!\ n'oubliez pas de faire un clean sous Eclipse => Menu "Projet -> clean" puis faire un "rebuild".
 
 Voir aussi https://www.baeldung.com/intro-to-project-lombok
 
-## Quels mots sur l'architecture du projet
+### Passage en mode "Debug"
+
+Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "Debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages à gauche.
+
+![simple gum](/readme/mode_debug.png)
+
+### Quels mots sur l'architecture du projet
 
 Pour rentrer dans le code de Ladybug, je vais vous donner mon point de vue.
 
@@ -137,22 +148,21 @@ Voir mon application du design pattern [mvc](/readme/architecture/mvc.jpg) pour 
 
 > Je trouve que la mise en place du framework Spring ne met pas en avant l'architecture MVC en tant que telle. Elle l'a plutôt diluée. Il y a, me semble-t-il, du travail à faire dans ce sens.
 
-## Idées du jeu à approfondir
+### Idées du jeu à approfondir
 * rajouter dans le Jpanel à droite les remerciements (hors-jeu)
-* rajouter dans le JPanel à gauche une notion de vitesse instantanée des fantômes et de Ladybug
-* rajouter dans le JPanel à gauche une notion de comportement des fantômes
 
-## Idées techniques
+### Idées techniques
 * modifier le pattern Observer avec java 9+ (peut-être via des listeners)
-* faire un installer avec java 16+ pour Windows (pour cela, merci Jim, c'est en cours)
+* revoir l'architecture de lancement du jeu. Ce n'est pas un mode très académique pour un projet Spring.
+* faire un installer avec java 19+ pour Windows (pour cela, merci Jim, c'est en cours)
 * faire des tests unitaires avec JUnit
 
-## Améliorations / Bugs détectés
+### Améliorations / Bugs détectés
 * J'ai défini dans le fichier backlog.txt les différentes améliorations  techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolutions. (c'est le Jira du pauvre ;) )
 
 ## Les ressources extérieures utilisées
 * les sons : les sons utilisés dans ce jeu proviennent du site web https://www.classicgaming.cc/classics/pac-man/sounds
-* les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/_inWork_ à l'exception des images des fruits : https://dribbble.com/shots/3217754-Ms-Pac-Man# que j'ai un peu remaniées.
+* les images : j'ai réalisé toutes les images de Ladybug, des fantômes... avec Gimp. Les sources, tout ou partie, se trouvent dans les ressources du projet : ladybug/src/main/resources/images/__inWork_ à l'exception des images des fruits : https://dribbble.com/shots/3217754-Ms-Pac-Man# que j'ai un peu remaniées.
 * la police de caractères utilisée provient du site https://www.dafont.com/pacfont.font
 * la gestion des manettes XboxOne : la dépendance utilisée pour connecter les manettes XboxOne provient du repo GitHub https://github.com/williamahartman/Jamepad
 
@@ -161,6 +171,6 @@ Je remercie en premier Alex pour m'avoir apporté sa confiance en ma remise à n
 
 Je tiens à apporter mes remerciements à Jim et à Christophe pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
 
-Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe pour réaliser les nombreuses parties dans le but de tester et de valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins pertinentes mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide est très précieuse.
+Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe pour réaliser les nombreuses parties dans le but de tester et de valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins pertinentes mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide m'est très précieuse.
 
 Portez-vous bien !
