@@ -16,10 +16,6 @@
  */
 package com.kycox.game.constant.ghost;
 
-/**
- * Enumération des comportements des fantômes
- *
- */
 public enum GhostBehaviour {
 	AGGRESSIVE, SMART, CALM;
 

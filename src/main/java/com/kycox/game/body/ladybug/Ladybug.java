@@ -29,10 +29,6 @@ import com.kycox.game.level.ScreenData;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Spécificités de Ladybug
- *
- */
 public class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
 	@Getter
 	private LadybugActions ladybugActions;
@@ -103,9 +99,6 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return ladybugActions;
 	}
 
-	/**
-	 * Caractéristiques de ladybug en début de niveau
-	 */
 	public void settingsForNewLevel(int numLevel, Point startPosition) {
 		setPosition(startPosition);
 		setDirection(Constants.POINT_ZERO);

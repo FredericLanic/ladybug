@@ -25,7 +25,6 @@ import com.kycox.game.view.left.PageLeftView;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class Engine {
 	private final CentralView centralView;
