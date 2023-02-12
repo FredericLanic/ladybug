@@ -158,7 +158,7 @@ Voir mon application du design pattern [mvc](/readme/architecture/mvc.jpg) pour 
 * faire des tests unitaires avec JUnit
 
 ### Améliorations / Bugs détectés
-* J'ai défini dans le fichier backlog.txt les différentes améliorations  techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolutions. (c'est le Jira du pauvre ;) )
+* J'ai défini dans le fichier  [backlog.txt](/doc/backlog.txt) les différentes améliorations techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolutions. (c'est le Jira du pauvre ;) )
 
 ## Les ressources extérieures utilisées
 * les sons : les sons utilisés dans ce jeu proviennent du site web https://www.classicgaming.cc/classics/pac-man/sounds
