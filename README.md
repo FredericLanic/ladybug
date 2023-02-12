@@ -27,9 +27,9 @@ La nature étant imparfaite, les fantômes ont plus ou moins un tempérament int
 | ![I'm Blinky](/readme/ghosts/blinky.png) | Blinky, le fantôme rouge est celui que vous devriez vous méfier le plus. Plus votre niveau est élevé, plus il est agressif et vous pourchasse. <br/>De plus, plus vous mangez de gommes dans le niveau, plus il s'énerve et il se déplace de plus en plus vite.                                         |
 | ![I'm Inky](/readme/ghosts/inky.png) | Inky, le fantôme vert-bleu, lui est bien différent. Le destin lui a apporté un comportement négligeant ; il mène son parcours comme bon lui semble, sans prendre en compte le monde extérieur. <br/>Tout en étant tranquille, son chemin peut être surprenant. surtout lorsque Ladybug s'approche trop. |
 | ![I'm Pinky](/readme/ghosts/pinky.png) | Pinky, avec sa tenue rose, est du genre futée. Plus votre niveau est important, plus elle aura tendance à aller à votre rencontre, devant vous, et peut être vous prendre en tenaille avec Blinky.                                                                                                      |
-| ![I'm Clyde](/readme/ghosts/clyde.png) | Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Il se réveillera rien qua l'approche de Ladybug....                                                                                                                                                                                   |
+| ![I'm Clyde](/readme/ghosts/clyde.png) | Clyde, le fantôme orange, est plutôt du genre pépère, comme Inky. Il se réveillera rien qu'à l'approche de Ladybug....                                                                                                                                                                                 |
 
-Évidemment, plus vous montez dans les niveaux, plus leur comportement personnel se dévoile et leur rapidité de déplacement accroît.
+Évidemment, plus vous montez dans les niveaux, plus leurs comportements personnel se dévoilent et leurs rapidités de déplacement accroissent.
 
 ## Allez, on joue !
 Lorsqu'un niveau débute, vous, Ladybug, êtes assez loin de fantômes. 
@@ -39,13 +39,13 @@ Vous pouvez alors commencer tranquillement à vous régaler des gommes qui sont 
 
 Pour vous défendre, vous avez une arme forte : la méga-gomme ![mega gum](/readme/gamePoint/megaGum.png). Il y en a quelques-unes par niveau. 
 
-Lorsque vous mangez une méga-gomme, vous obtenez, pendant un certain temps le pouvoir de manger l'enveloppe corporelle des fantômes. Les fantômes deviennent alors ultras stressés d'être absorbés ; tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important qu'il en est affaiblissant : leur vitesse alors diminue. 
+Lorsque vous mangez une méga-gomme, vous obtenez, pendant un laps de temps le pouvoir de manger l'enveloppe "corporelle" des fantômes. Les fantômes deviennent alors ultras stressés d'être absorbés ; tellement stressés qu'il en change de couleur, qu'ils essaient de s'éloigner de vous. Leur stress est tellement important qu'il en est affaiblissant : leur vitesse alors diminue. 
 
 Si vous n'arrivez pas à les manger, petit à petit, ils se calment et regagnent confiance. Leurs états "initial" et "stressé" alternent, et c'est pour ça qu'ils se mettent à clignoter, avant de reprendre leur comportement et leur vitesse de déplacement initiaux. Quand ils sont redevenus "normaux", les effets de la méga-gomme ont disparu.
 
 Voici un fantôme stressé : ![Scared ghost](/readme/ghosts/scared.png)
 
-Lorsque les fantômes sont dans cet état de stress avancé, même s'ils clignotent, vous pouvez manger leur enveloppe corporelle. Après avoir été croqués, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de regénération dans le but de récupérer leur état initial et leur instinct envers vous.
+Lorsque les fantômes sont dans cet état de stress avancé, même s'ils clignotent, vous pouvez manger leur enveloppe "corporelle". Après avoir été croqués, ils deviennent alors totalement inoffensifs et se dirigent instinctivement vers leur point de regénération dans le but de récupérer leur état initial et leur instinct envers vous.
 
 ## Les élements importants du jeu
 
@@ -111,15 +111,15 @@ Pour limiter les longueurs de code dues aux Getter et Setter, j'ai fait le choix
 
 Installation de "Lombok Eclipse" : voir http://www.jouvinio.net/wiki/index.php/Lombok_Eclipse J'ai suivi les indications du site. 
 
-J'ai également modifié le "pom.xml" pour que maven puisse buidler de son côté en prenant compte des dépendances liées à Lombok. 
+J'ai également modifié le "pom.xml" pour que maven puisse builder de son côté en prenant compte des dépendances liées à Lombok. 
 
 /!\ n'oubliez pas de faire un clean sous Eclipse => Menu "Projet -> clean" puis faire un "rebuild".
 
 Voir aussi https://www.baeldung.com/intro-to-project-lombok
 
-### Passage en mode "Debug"
+### Passage en mode "debug"
 
-Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "Debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages à gauche.
+Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages à gauche.
 
 ![simple gum](/readme/mode_debug.png)
 
