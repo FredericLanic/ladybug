@@ -16,7 +16,6 @@
  */
 package com.kycox.game.engine;
 
-import com.kycox.game.controller.xboxone.XboxOneController;
 import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.CentralView;
@@ -32,15 +31,13 @@ public class Engine {
 	private final GameSounds gameSounds;
 	private final PageEndView pageEndView;
 	private final PageLeftView pageLeftView;
-	private final XboxOneController xboxOneController;
 
-	public Engine(GameModel gameModel, GameSounds gameSounds, CentralView centralView, PageEndView pageEndView, PageLeftView pageLeftView, XboxOneController xboxOneController) {
+	public Engine(GameModel gameModel, GameSounds gameSounds, CentralView centralView, PageEndView pageEndView, PageLeftView pageLeftView) {
 		this.gameModel = gameModel;
 		this.gameSounds = gameSounds;
 		this.centralView = centralView;
 		this.pageEndView = pageEndView;
 		this.pageLeftView = pageLeftView;
-		this.xboxOneController = xboxOneController;
 	}
 
 	/**
@@ -53,7 +50,6 @@ public class Engine {
 		gameModel.addObserver(gameSounds);
 		gameModel.addObserver(pageEndView);
 		gameModel.addObserver(pageLeftView);
-		gameModel.addObserver(xboxOneController);
 		// on récupère la longueur du son de la mort de ladybug et on l'affecte
 		gameModel.getLadybugDying().setMillisecondLenght(gameSounds.getMillisecondLadybugDeath());
 		gameModel.setBeginningMilliseconds(gameSounds.getMillisecondsBeginning());

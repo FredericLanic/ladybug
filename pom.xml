@@ -4,7 +4,7 @@
 
 	<groupId>com.kycox</groupId>
 	<artifactId>ladybug</artifactId>
-	<version>0.6.0-SNAPSHOT</version>
+	<version>0.5.1</version>
 	<packaging>jar</packaging>
 	<name>${application.name}</name>
 	<url>http://maven.apache.org</url>
@@ -16,7 +16,7 @@
     </parent>
 
 	<properties>
-		<java.version>16</java.version>
+		<java.version>19</java.version>
 		<application.name>Ladybug by Kykox</application.name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>com.kycox.game.MainLadybug</start-class>
@@ -33,12 +33,6 @@
 			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>    
-		<!-- manette xbox : https://github.com/williamahartman/Jamepad -->
-	    <dependency>
-	        <groupId>com.github.WilliamAHartman</groupId>
-	        <artifactId>Jamepad</artifactId>
-	        <version>1.3.2</version>
-	    </dependency>
     </dependencies>
 
 	<build>
@@ -59,21 +53,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<repositories>
-		<!-- manette xbox : https://github.com/williamahartman/Jamepad -->
-	    <repository>
-	        <snapshots>
-	            <enabled>false</enabled>
-	        </snapshots>
-	        <id>central</id>
-	        <name>bintray</name>
-	        <url>https://jcenter.bintray.com</url>
-	    </repository>
-	    <repository>
-	        <id>jitpack.io</id>
-	        <url>https://jitpack.io</url>
-	    </repository>
-	</repositories>    
 
 </project>
