@@ -1,0 +1,43 @@
+MainFrame
+	- lecture du fichier "application-context.xml"
+		- annotation config
+			in com.kycox.game.constant.ladybug.LadybugImages (qui n'est pas un composant)
+				=> GamePropertiesInjector
+			com.kycox.game.controller.key.KeyGameController
+			com.kycox.game.controller.xboxone.XboxOneController
+			com.kycox.game.controller.xboxone.XBoxOneControllerManager
+			com.kycox.game.controller.xboxone.XboxRequest
+			com.kycox.game.engine.Engine
+			com.kycox.game.fruit.Fruits
+			com.kycox.game.level.LevelNG
+			com.kycox.game.level.Leve2NG
+			[ici on continue]
+			
+		
+		- scan des composants spring à partir de "com.kycox"
+			- dans le fichier xml : création des beans
+				com.kycox.game.maths.SpeedFunction (prototype)
+				com.kycox.game.maths.GhostSensitiveBehaviour (prototype)
+				com.kycox.game.body.ghost.Clyde (prototype)
+					ref: SpeedFunction
+					ref: GhostSensitiveBehaviour
+				com.kycox.game.body.ghost.Blinky (prototype)
+					ref: SpeedFunction
+					ref: GhostSensitiveBehaviour
+					ref: BlinkySpeedIndex
+				com.kycox.game.body.ghost.Inky (prototype)
+					ref: SpeedFunction
+					ref: GhostSensitiveBehaviour
+				com.kycox.game.body.ghost.Pinky
+					ref: SpeedFunction
+					ref: GhostSensitiveBehaviour
+				com.kycox.game.body.ghost.GhostsGroup
+					ref: Clyde
+					ref: Blinky
+					ref: Inky
+					ref: Pinky
+				com.kycox.game.body.ladybug.Ladybug (singleton)
+					
+				
+	- récupération du bean MainFrame
+
