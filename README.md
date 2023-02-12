@@ -96,7 +96,7 @@ Le build de ladybug est réalisé par "maven" par la commande "mvn clean package
 
 En résumé, le build génère un fat jar : un jar qui contient toutes les dépendances décrites dans le fichier "pom.xml".
 
-À ce jour (12 Février 2023), j'utilise la version **maven 3.8.5** et la version **jdk 19**.
+À ce jour (12 Février 2023), j'utilise la version **maven 3.8.7** et la version **jdk 19**.
 
 La commande pour lancer le jeu est :
 
@@ -119,7 +119,7 @@ Voir aussi https://www.baeldung.com/intro-to-project-lombok
 
 ### Passage en mode "debug"
 
-Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages à gauche.
+Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages.
 
 ![simple gum](/readme/mode_debug.png)
 
@@ -158,7 +158,7 @@ Voir mon application du design pattern [mvc](/readme/architecture/mvc.jpg) pour 
 * faire des tests unitaires avec JUnit
 
 ### Améliorations / Bugs détectés
-* J'ai défini dans le fichier backlog.txt les différentes améliorations  techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolutions. (c'est le Jira du pauvre ;) )
+* J'ai défini dans le fichier  [backlog.txt](/doc/backlog.txt) les différentes améliorations techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolutions. (c'est le Jira du pauvre ;) )
 
 ## Les ressources extérieures utilisées
 * les sons : les sons utilisés dans ce jeu proviennent du site web https://www.classicgaming.cc/classics/pac-man/sounds
@@ -169,8 +169,10 @@ Voir mon application du design pattern [mvc](/readme/architecture/mvc.jpg) pour 
 # Remerciements
 Je remercie en premier Alex pour m'avoir apporté sa confiance en ma remise à niveau en java, Jean-Michel pour son aide à l'interconnexion des classes principales du projet, à Cyril pour m'avoir aidé à faciliter la création des nouveaux niveaux.
 
-Je tiens à apporter mes remerciements à Jim et à Christophe pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
+Je tiens à apporter mes remerciements à [Jim](https://github.com/jimetevenard) et à [Christophe](https://github.com/cmarchand) pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
 
-Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe pour réaliser les nombreuses parties dans le but de tester et de valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins pertinentes mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide m'est très précieuse.
+Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il investit à réaliser les nombreuses parties dans le but de tester et à valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins pertinentes mais toujours très intéressantes, pour ajouter de nouvelles fonctionnalités. 
+
+**Son aide m'est très précieuse.**
 
 Portez-vous bien !
