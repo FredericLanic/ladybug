@@ -14,18 +14,8 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.constant.ghost;
+package com.kycox.game.constant;
 
-/**
- * Enumération des comportements des fantômes
- *
- */
-public enum GhostBehavious {
-    // agressif, timide, débile, intelligent
-	AGGRESSIVE, SHY, SMART, STUPID;
-	// FIXME : utilisation de SHY ?
-	// FIXME : utilisation de STUPID ?
-
-	GhostBehavious() {
-	}
+public enum TimerStatus {
+	RUN, STOP, STOPPING;
 }

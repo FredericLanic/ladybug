@@ -1,17 +1,16 @@
 package com.kycox.game.model.strategy.actions;
 
-import javax.inject.Named;
-
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
+import org.springframework.stereotype.Component;
 
-@Named("GameModelLadybugIsDying")
+@Component
 public class GameModelLadybugIsDying extends AbstratGameModel implements IGameModelAction {
 	@Override
 	public void programBeat() {
 		ladybugDying.inProgress();
-		if (ladybugDying.isInPogress()) {
+		if (ladybugDying.isInProgress()) {
 			newSounds.initSounds();
 		}
 		if (ladybugDying.isEnd()) {

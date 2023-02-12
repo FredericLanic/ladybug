@@ -16,22 +16,20 @@
  */
 package com.kycox.game.timer;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.inject.Named;
-
-import com.kycox.game.constant.SuperPowerTimerStatus;
-
+import com.kycox.game.constant.TimerStatus;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Double timer utilisé pour afficher les fantômes qui ont peur et qui
  * clignottent ensuite. 5 Secondes avant la fin, les fantômes vont clignoter
  *
  */
-@Named("SuperPowerTimer")
+@Component
 public class SuperPowerTimer {
 	/**
 	 * Class TimerTask
@@ -47,7 +45,7 @@ public class SuperPowerTimer {
 				superPowerTimer.launch(FLASH_DELAY);
 			} else {
 				// Fin du second timer
-				superPowerTimerStatus = SuperPowerTimerStatus.STOP;
+				timerStatus = TimerStatus.STOP;
 				superPowerTimer = null;
 			}
 		}
@@ -62,7 +60,7 @@ public class SuperPowerTimer {
 	// objet powerFlashTimer utilisé pour le 2i�me timer
 	private SuperPowerTimer superPowerTimer = null;
 	// etat du superPower courant (1ier ou 2ieme selon le cas)
-	private SuperPowerTimerStatus superPowerTimerStatus = SuperPowerTimerStatus.STOP;
+	private TimerStatus timerStatus = TimerStatus.STOP;
 	// Timer du power
 	private Timer timer;
 
@@ -94,7 +92,7 @@ public class SuperPowerTimer {
 			superPowerTimer.forcedStop();
 			superPowerTimer = null;
 		}
-		superPowerTimerStatus = SuperPowerTimerStatus.STOP;
+		timerStatus = TimerStatus.STOP;
 	}
 
 	/**
@@ -102,20 +100,20 @@ public class SuperPowerTimer {
 	 *
 	 * @return
 	 */
-	public SuperPowerTimerStatus getStatus() {
+	public TimerStatus getStatus() {
 		// Priorité au deuxième timer s'il existe
 		if (superPowerTimer != null) {
 			return superPowerTimer.getStatus();
 		}
-		return superPowerTimerStatus;
+		return timerStatus;
 	}
 
 	public boolean isStopped() {
-		return getStatus() == SuperPowerTimerStatus.STOP;
+		return getStatus() == TimerStatus.STOP;
 	}
 
 	public boolean isStopping() {
-		return getStatus() == SuperPowerTimerStatus.STOPPING;
+		return getStatus() == TimerStatus.STOPPING;
 	}
 
 	/**
@@ -125,10 +123,10 @@ public class SuperPowerTimer {
 		if (numTimer == 1) {
 			// Début du premier timer
 			seconds = seconds - FLASH_DELAY;
-			superPowerTimerStatus = SuperPowerTimerStatus.RUN;
+			timerStatus = TimerStatus.RUN;
 		} else {
 			// Début du second timer
-			superPowerTimerStatus = SuperPowerTimerStatus.STOPPING;
+			timerStatus = TimerStatus.STOPPING;
 		}
 		// Création du timer
 		timer = new Timer(true);

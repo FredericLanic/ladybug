@@ -16,29 +16,20 @@
  */
 package com.kycox.game.maths;
 
-import javax.inject.Named;
+import org.springframework.stereotype.Component;
 
-@Named("BlinkySpeedIndex")
+@Component("BlinkySpeedIndex")
 public class BlinkySpeedIndex {
 	/**
 	 * aX²+bX+c (c=0)
-	 *
 	 * Point (0,0) Point (R,1) Point (T,3) (ici T=100%)
-	 *
 	 * 1 < R < T
-	 *
 	 */
-	private static double centPerCent = 100.0;
+	private final double centPerCent = 100.0;
 	private double a;
 	private double b;
-	private double levelPerCent = 80.0;
+	private final double levelPerCent = 80.0;
 
-	/**
-	 * Return the number of index to increment
-	 *
-	 * @param x
-	 * @return
-	 */
 	public int getIncrementSpeedIndex(int perCent) {
 		return (int) (a * perCent * perCent + b * perCent);
 	}

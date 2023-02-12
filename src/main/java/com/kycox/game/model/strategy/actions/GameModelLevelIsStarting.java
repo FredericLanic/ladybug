@@ -1,33 +1,30 @@
 package com.kycox.game.model.strategy.actions;
 
-import java.awt.Point;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.fruit.Fruits;
 import com.kycox.game.maths.LitLampMode;
+import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
-
 import lombok.Setter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
-@Named("GameModelLevelIsStarting")
+@Component
 public class GameModelLevelIsStarting extends AbstratGameModel implements IGameModelAction {
 	private static final Log logger = LogFactory.getLog(GameModelLevelIsStarting.class);
 	@Setter
 	private long beginningMilliseconds;
-	@Inject
-	private Fruits fruits;
-	@Setter
-	private Point ghostRequest = Constants.POINT_ZERO;
+	private final Fruits fruits;
+	private final GameMessaging gameMessaging;
+
+	public GameModelLevelIsStarting(Fruits fruits, GameMessaging gameMessaging) {
+		this.fruits = fruits;
+		this.gameMessaging = gameMessaging;
+	}
 
 	/**
 	 * Initialise le niveau en fonction du niveau précédent
@@ -36,10 +33,10 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		logger.info("Initialize level");
 		// suppression des composants techniques du niveau précédent
 		removePreviousLevelTasks();
-		// currentGameStatus.setLevelStart();
 		currentGameStatus.setGameStart();
 		// incrémente le numéro du niveau
-		currentGameStatus.setNumLevel(currentGameStatus.getNumLevel() + 1);
+		currentGameStatus.getStoredNumLevel();;
+		currentGameStatus.updateNextLevel();
 		// recopie les paramètres du niveau dans les données flottantes du niveau
 		screenData.setLevelMap(currentGameStatus.getNumLevel(), true);
 		// initialisation du super power
@@ -52,6 +49,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		fruits.init();
 		// init litLampMode
 		screenData.setLitLampMode(LitLampMode.isLitLampMode(currentGameStatus.getNumLevel()));
+		gameMessaging.init();
 		// on continue le level
 		continueLevel();
 	}

@@ -16,31 +16,39 @@
  */
 package com.kycox.game.model;
 
-import javax.inject.Named;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.constant.GameStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
-import com.kycox.game.contract.GameStatusForGameSounds;
 import com.kycox.game.contract.GameStatusForGameView;
-
+import com.kycox.game.level.RepositoryLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
-@Named("CurrentGameStatus")
-public class CurrentProgramStatus implements GameStatusForGameView, GameStatusForGameSounds, DoActionAfterTimer {
+@Component
+public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CurrentProgramStatus.class);
 	public static final int TO_INGAME = 0;
 	public static final int TO_LEVEL_START = 3;
 	public static final int TO_PROGRAM_PRESENTATION_START = 2;
 	public static final int TO_PROGRAM_START = 1;
+	public static final int TO_PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL = 4;
+
+	@Setter
+	@Getter
+	private boolean gameInPause;
 	@Getter
 	private GameStatus gameStatus;
 	@Getter
 	@Setter
 	private int numLevel;
+
+	private final RepositoryLevel repositoryLevel;
+
+	public CurrentProgramStatus(RepositoryLevel repositoryLevel) {
+		this.repositoryLevel = repositoryLevel;
+	}
 
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
@@ -49,13 +57,28 @@ public class CurrentProgramStatus implements GameStatusForGameView, GameStatusFo
 			case TO_PROGRAM_START -> setProgramStart();
 			case TO_PROGRAM_PRESENTATION_START -> setProgramPresentationStart();
 			case TO_LEVEL_START -> setLevelStart();
+			case TO_PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL -> setProgramAskKeepPreviousGameLevel();
 			default -> logger.debug("no number " + nbrAction + " action");
 		}
 	}
 
 	// KYLIAN C'EST ICI
 	public void initNumLevel() {
-		setNumLevel(0);
+		numLevel = 0;
+		storeNumLevel();
+	}
+
+	// KYLIAN C'EST ICI AUSSI
+	public void getStoredNumLevel() {
+		setNumLevel(repositoryLevel.getNumLevel());
+	}
+
+	public void storeNumLevel() {
+		repositoryLevel.saveNumLevel(numLevel);
+	}
+
+	public void updateNextLevel() {
+		numLevel++;
 	}
 
 	@Override
@@ -101,10 +124,12 @@ public class CurrentProgramStatus implements GameStatusForGameView, GameStatusFo
 	}
 
 	@Override
+	public boolean isProgramAskKeepPreviousGameLevel() { return gameStatus == GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL;}
+
+	@Override
 	public boolean isProgramPresentation() {
 		return gameStatus == GameStatus.PROGRAM_PRESENTATION;
 	}
-
 	public boolean isProgramStart() {
 		return gameStatus == GameStatus.PROGRAM_START;
 	}
@@ -116,6 +141,7 @@ public class CurrentProgramStatus implements GameStatusForGameView, GameStatusFo
 
 	public void setGameEnd() {
 		gameStatus = GameStatus.GAME_END;
+		logger.info("Passage du status en " + gameStatus);
 	}
 
 	public void setGameEnding() {
@@ -133,10 +159,19 @@ public class CurrentProgramStatus implements GameStatusForGameView, GameStatusFo
 		logger.info("Passage du status en " + gameStatus);
 	}
 
-	@Override
 	public void setInGame() {
 		gameStatus = GameStatus.IN_GAME;
 		logger.info("Passage du status en " + gameStatus);
+	}
+
+	public void setGameAskForceEndGame() {
+		gameStatus = GameStatus.ASk_FORCE_END_GAME;
+		logger.info("Passage du status en " + gameStatus);
+	}
+
+	@Override
+	public boolean isGameAskForceEndGame() {
+		return gameStatus == GameStatus.ASk_FORCE_END_GAME;
 	}
 
 	public void setLevelEnd() {
@@ -150,6 +185,7 @@ public class CurrentProgramStatus implements GameStatusForGameView, GameStatusFo
 	}
 
 	public void setLevelStart() {
+		gameInPause = false;
 		gameStatus = GameStatus.LEVEL_START;
 		logger.info("Passage du status en " + gameStatus);
 	}
@@ -159,7 +195,6 @@ public class CurrentProgramStatus implements GameStatusForGameView, GameStatusFo
 		logger.info("Passage du status en " + gameStatus);
 	}
 
-	@Override
 	public void setProgramPresentation() {
 		gameStatus = GameStatus.PROGRAM_PRESENTATION;
 		logger.info("Passage du status en " + gameStatus);
@@ -180,8 +215,14 @@ public class CurrentProgramStatus implements GameStatusForGameView, GameStatusFo
 		logger.info("Passage du status en " + gameStatus);
 	}
 
+	public void setProgramAskKeepPreviousGameLevel() {
+		gameStatus = GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL;
+		logger.info("Passage du status en " + gameStatus);
+	}
+
 	@Override
 	public String toString() {
 		return gameStatus.toString();
 	}
+
 }

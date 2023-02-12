@@ -16,35 +16,22 @@
  */
 package com.kycox.game.score;
 
-import java.awt.Point;
+import lombok.Getter;
+import org.springframework.stereotype.Component;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Named;
-
-import lombok.Getter;
-
-@Named("GroupIncrementScores")
+@Component
 public class GroupMessages {
-	/**
-	 * Liste des score incréments
-	 */
 	@Getter
-	private List<Message> messages = new ArrayList<>();
+	private final List<Message> messages = new ArrayList<>();
 
-	/**
-	 * Ajout d'un score incrément
-	 *
-	 * @param position
-	 * @param value
-	 */
 	public void add(Point position, String value, MessageType messageType) {
 		messages.add(new Message((Point) position.clone(), value, messageType));
 	}
 
-	/**
-	 * Suppression des score incrément qui sont en train de mourir
-	 */
 	public void removeIfDying() {
 		messages.removeIf(Message::isDying);
 	}

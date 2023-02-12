@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:lang="http://www.springframework.org/schema/lang"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="
- 		http://www.springframework.org/schema/beans 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/lang
-		http://www.springframework.org/schema/lang/spring-lang.xsd
 		http://www.springframework.org/schema/context 
-		http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://www.springframework.org/schema/aop 
-		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
-	default-lazy-init="false">
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	   default-lazy-init="false">
 	<context:annotation-config />
 	<context:component-scan base-package="com.kycox" />
 
@@ -23,27 +16,27 @@
 		<property name="lowLimit" value="2" />
 	</bean>
 
-	<bean id="GhostSensitiveBehavious"
-		class="com.kycox.game.maths.GhostSensitiveBehavious"
+	<bean id="GhostSensitiveBehaviour"
+		class="com.kycox.game.maths.GhostSensitiveBehaviour"
 		scope="prototype" />
 
 	<!-- Clyde in GroupGhost -->
 	<bean id="Clyde" class="com.kycox.game.body.ghost.Clyde"
 		scope="prototype">
 		<property name="color" value="ORANGE" />
-		<property name="behavious" value="STUPID" />
+		<property name="behaviour" value="CALM" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
-		<property name="sensitiveBehavious"
-			ref="GhostSensitiveBehavious" />
+		<property name="sensitiveBehaviour"	ref="GhostSensitiveBehaviour" />
+		<property name="maximumAttackDist" value="96"/>
 	</bean>
 
 	<!-- Blinky in GroupGhost -->
 	<bean id="Blinky" class="com.kycox.game.body.ghost.Blinky"
 		scope="prototype">
 		<property name="color" value="RED" />
-		<property name="behavious" value="AGGRESSIVE" />
+		<property name="behaviour" value="AGGRESSIVE" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
-		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious" />
+		<property name="sensitiveBehaviour" ref="GhostSensitiveBehaviour" />
 		<property name="blinkySpeedIndex" ref="BlinkySpeedIndex" />
 	</bean>
 
@@ -51,19 +44,19 @@
 	<bean id="Inky" class="com.kycox.game.body.ghost.Inky"
 		scope="prototype">
 		<property name="color" value="BLUE" />
-		<property name="behavious" value="STUPID" />
+		<property name="behaviour" value="CALM" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
-		<property name="sensitiveBehavious" ref="GhostSensitiveBehavious" />
+		<property name="sensitiveBehaviour" ref="GhostSensitiveBehaviour" />
+		<property name="maximumAttackDist" value="120"/>
 	</bean>
 
 	<!-- Pinky in GroupGhost -->
 	<bean id="Pinky" class="com.kycox.game.body.ghost.Pinky"
 		scope="prototype">
 		<property name="color" value="PINK" />
-		<property name="behavious" value="SMART" />
+		<property name="behaviour" value="SMART" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
-		<property name="sensitiveBehavious"
-			ref="GhostSensitiveBehavious" />
+		<property name="sensitiveBehaviour" ref="GhostSensitiveBehaviour" />
 	</bean>
 
 	<!-- GroupGhost list in GameModel -->
@@ -79,36 +72,12 @@
 		</property>
 	</bean>
 
-	<!-- SpeedFunctionLadybug in Ladybug -->
-	<bean id="SpeedFunctionLadybug"
-		class="com.kycox.game.maths.SpeedFunction" scope="prototype"
-		init-method="init">
-		<property name="lowLimit" value="4" />
-	</bean>
-
-	<!-- /!\ speedFunction est définie dans une classe parente -->
 	<bean id="Ladybug" class="com.kycox.game.body.ladybug.Ladybug"
 		scope="singleton">
-		<property name="speedFunction" ref="SpeedFunctionLadybug" />
-	</bean>
-
-	<!-- Levels in ScreenData -->
-	<bean id="ManageLevel" class="com.kycox.game.level.ManageLevel"
-		scope="singleton">
-		<property name="levels">
-			<list>
-				<!-- ref bean="Level1" /--> <!-- niveau bof bof -->				
-				<!-- ref bean="Level3"/--> <!-- niveau pour test, à ne pas utiliser pour le jeu -->
-				<ref bean="Level1NG" />
-				<ref bean="Level2NG" />
-				<ref bean="Level3NG" />
-				<ref bean="Level4NG" />
-				<ref bean="Level5NG" />
-				<ref bean="Level6NG" />
-				<ref bean="Level7NG" />
-				<ref bean="Level8NG" />
-				<ref bean="Level9NG" /> <!--  à mettre en jeu lorsque le soucis de la direction du fantôme regénéré sera corrigé -->
-			</list>
+		<property name="speedFunction">
+			<bean class="com.kycox.game.maths.SpeedFunction" init-method="init">
+				<property name="lowLimit" value="4" />
+			</bean>
 		</property>
 	</bean>
 

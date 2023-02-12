@@ -38,9 +38,6 @@ public class GhostDyingView implements TimerView {
 	private Timer timer;
 	private BodyImg upEyes = new BodyImg(GhostEyesImages.GHOST_UP_EYES.getImage());
 
-	/**
-	 * Constructeur privé pour assurer le singleton
-	 */
 	private GhostDyingView() {
 		currentImg = leftEyes;
 		leftEyes.setNext(upEyes);

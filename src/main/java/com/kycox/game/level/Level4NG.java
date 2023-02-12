@@ -16,18 +16,17 @@
  */
 package com.kycox.game.level;
 
-import static com.kycox.game.constant.LevelConstruct.B;
-import static com.kycox.game.constant.LevelConstruct.N;
+import com.kycox.game.constant.LevelConstruct;
+import org.springframework.stereotype.Component;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Named;
+import static com.kycox.game.constant.LevelConstruct.B;
+import static com.kycox.game.constant.LevelConstruct.N;
 
-import com.kycox.game.constant.LevelConstruct;
-
-@Named("Level4NG")
+@Component
 public class Level4NG extends LevelNG {
 	public Level4NG() {
 		// nombre de blocks par ligne

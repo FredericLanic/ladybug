@@ -16,22 +16,21 @@
  */
 package com.kycox.game.view.down;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.swing.JPanel;
-
 import com.kycox.game.tools.ImageUtils;
-
+import jakarta.annotation.PostConstruct;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-@Named("StatusGameView")
+import javax.swing.*;
+import java.awt.*;
+import java.io.Serial;
+
+@Component
 public class StatusGameView extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 4546077700634533519L;
+	@Setter
+	private String currentProgramMessage;
 	@Setter
 	private int ghostNbrLifes;
 	@Setter
@@ -39,72 +38,51 @@ public class StatusGameView extends JPanel {
 	@Setter
 	private transient Image imageLadybugPlayer;
 	@Setter
-	private int incrementScore;
-	@Setter
 	private boolean inGame;
 	@Setter
 	private int ladybugNbrLifes;
 	@Setter
 	private int nbrPlayers;
 	@Setter
-	private int nbrPointsForNewLife;
-	@Setter
-	private int numLevel;
-	@Setter
 	private int score;
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
-	@Setter
-	private boolean soundActive;
 
 	private void display(Graphics g) {
-		var x = 0;
-		var y = 0;
 		var delta = 2;
 		var imageBorderSize = (getHeight() - 6 * delta) / 2;
 		// number ladybug lifes
 		displayNbrLifes(g, ImageUtils.resizeImage(imageLadybugPlayer, imageBorderSize, imageBorderSize),
-		        ladybugNbrLifes, x + delta, y);
+		        ladybugNbrLifes, delta, 0);
 		// number ghost lifes
 		if (nbrPlayers > 1) {
-			displayNbrLifes(g, ImageUtils.resizeImage(imageGhostPlayer, imageBorderSize, imageBorderSize),
-			        ghostNbrLifes, x + delta, y + getHeight() / 2);
+			var ghost = ImageUtils.resizeImage(imageGhostPlayer, imageBorderSize, imageBorderSize);
+			displayNbrLifes(g, ghost, ghostNbrLifes, delta + ghost.getWidth(null) + 30, 0);
+
 		}
-		// text
-		displayMessageForPlayer(g);
-	}
-
-	private void displayMessageDuringGame(Graphics g) {
-		var message = new StringBuilder();
-		message.append("Level: ");
-		message.append(numLevel);
-		message.append(" - new life: ");
-		message.append(incrementScore);
-		message.append("/");
-		message.append(nbrPointsForNewLife);
-		message.append(" - Score: ");
-		message.append(score);
-		displayMessageToRight(g, message.toString());
-	}
-
-	private void displayMessageForPlayer(Graphics g) {
 		if (inGame) {
-			displayMessageDuringGame(g);
-		} else {
-			displayOffGame(g);
+			displayCentralMessage(g, "Score: " + score);
+		}
+		displayMessageToRight(g, currentProgramMessage);
+	}
+
+	private void displayCentralMessage(Graphics g, String gameMessage) {
+		if (gameMessage != null) {
+			g.setFont(smallFont);
+			g.setColor(Color.WHITE);
+			var metr = getFontMetrics(smallFont);
+			var coordX = (getWidth() - metr.stringWidth(gameMessage)) / 2;
+			var coordY = getHeight() / 4;
+			g.drawString(gameMessage, coordX, coordY);
 		}
 	}
 
 	private void displayMessageToRight(Graphics g, String message) {
 		g.setFont(smallFont);
-		g.setColor(new Color(96, 128, 255));
-		var coordX = getWidth() / 2;
-		var coordY = getHeight() / 3;
+		g.setColor(Color.WHITE);
+		var metr = getFontMetrics(smallFont);
+		var coordX = getWidth() - metr.stringWidth(message) - 5;
+		var coordY = 10;
 		g.drawString(message, coordX, coordY);
-
-		if (!soundActive) {
-			var coordY1 = coordY + smallFont.getSize();
-			g.drawString("Sound off", coordX, coordY1);
-		}
 	}
 
 	private void displayNbrLifes(Graphics g, Image imageBody, int nbrLifes, int x, int y) {
@@ -114,15 +92,6 @@ public class StatusGameView extends JPanel {
 		var coordX = x + imageBody.getWidth(null);
 		var coordY = y + imageBody.getHeight(null) / 2 + smallFont.getSize() / 2;
 		g.drawString("x " + nbrLifes, coordX, coordY);
-	}
-
-	private void displayOffGame(Graphics g) {
-		var message = new StringBuilder();
-		message.append("Game config : ");
-		message.append(nbrPlayers);
-		message.append(" player");
-		message.append((nbrPlayers > 1 ? "s" : ""));
-		displayMessageToRight(g, message.toString());
 	}
 
 	@PostConstruct

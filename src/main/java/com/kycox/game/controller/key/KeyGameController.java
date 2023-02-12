@@ -16,41 +16,50 @@
  */
 package com.kycox.game.controller.key;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.properties.GameProperties;
+import org.springframework.stereotype.Component;
 
-/**
- * Contrôleur du jeu : MVC
- *
- * voir https://github.com/marcelschoen/gamepad4j pour brancher une manette usb
- * pour le jeu utiliser plutôt Jamepad qui me semble facilement utilisable;
- *
- */
-@Named("KeyGameController")
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+@Component
 public class KeyGameController extends KeyAdapter {
-	@Inject
-	private GameModelForController gameModelForController;
-	@Inject
-	private GameProperties gameProperties;
+	private final GameModelForController gameModelForController;
+	private final GameProperties gameProperties;
 
-	/**
-	 * Action sur les touches Gestion des touches pressées
-	 */
+	public KeyGameController(GameModelForController gameModelForController, GameProperties gameProperties) {
+		this.gameModelForController = gameModelForController;
+		this.gameProperties = gameProperties;
+	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		var keyCode = e.getKeyCode();
 		manageCommonKeys(keyCode);
-		if (gameModelForController.isGamePresentation()) {
+		if (gameModelForController.isProgramPresentation()) {
 			manageKeysInPresentation(keyCode);
 		} else if (gameModelForController.isInGame()) {
 			manageKeysInGame(keyCode);
+		} else if(gameModelForController.isProgramAskKeepPreviousGameLevel()) {
+			manageKeysInAskKeepPreviousGameLevel(keyCode);
+		} else if (gameModelForController.isGameAskForceEndGame()) {
+			manageKeysInAskEndGame(keyCode);
+		}
+	}
+
+	private void manageKeysInAskEndGame(int keyCode) {
+		switch (keyCode) {
+			case KeyEvent.VK_Y -> gameModelForController.forceStopGame();
+			case KeyEvent.VK_N -> gameModelForController.setInGame();
+		}
+	}
+
+	private void manageKeysInAskKeepPreviousGameLevel(int keyCode) {
+		switch (keyCode) {
+			case KeyEvent.VK_Y -> gameModelForController.initializeLevelNumAndStartGame(false);
+			case KeyEvent.VK_N -> gameModelForController.initializeLevelNumAndStartGame(true);
 		}
 	}
 
@@ -65,18 +74,14 @@ public class KeyGameController extends KeyAdapter {
 		switch (keyCode) {
 			case KeyEvent.VK_F1 -> gameModelForController.setShowHelpForKeys(true);
 			case KeyEvent.VK_F2 -> gameModelForController.startStopSoundActive();
+			// Mode débug
+			case KeyEvent.VK_ENTER -> gameModelForController.changeDebugMode();
 			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
 			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();
 			case KeyEvent.VK_F5 -> gameProperties.changeGhostHat();
-
 		}
 	}
 
-	/**
-	 * Gestion des touches in game
-	 *
-	 * @param keyCode
-	 */
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
 			// Mouvement L
@@ -90,26 +95,21 @@ public class KeyGameController extends KeyAdapter {
 			case KeyEvent.VK_Q -> gameModelForController.setGhostRequest(Constants.POINT_LEFT);
 			case KeyEvent.VK_D -> gameModelForController.setGhostRequest(Constants.POINT_RIGHT);
 			// Partie en pause
-			case KeyEvent.VK_PAUSE -> gameModelForController.gameInPause();
+			case KeyEvent.VK_PAUSE -> gameModelForController.setGameInPause();
 			// Arret de la partie
-			case KeyEvent.VK_ESCAPE -> gameModelForController.forceStopGame();
+			case KeyEvent.VK_ESCAPE -> gameModelForController.askForceEndGame();
 			// Mode lampe allumée
 			case KeyEvent.VK_F6 -> gameModelForController.changeLitLampMode();
 		}
 	}
 
-	/**
-	 * Gestion des touches durant la présentation
-	 *
-	 * @param keyCode
-	 */
 	private void manageKeysInPresentation(int keyCode) {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
 			case KeyEvent.VK_S -> gameModelForController.startGame();
 			case KeyEvent.VK_1 -> gameModelForController.setMultiPlayers(false);
 			case KeyEvent.VK_2 -> gameModelForController.setMultiPlayers(true);
-			case KeyEvent.VK_ESCAPE -> System.exit(0); // FIXME : c'est au modèle de sortir proprement du jeu
+			case KeyEvent.VK_ESCAPE -> gameModelForController.programForceExit();
 		}
 	}
 }

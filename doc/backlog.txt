@@ -5,8 +5,7 @@ Coté technique CTEC :
 	=> solution à court terme : changer le nom de l'énumération GhostsImagesEnum en GhostsConfigEnum par exemple => nan, je pense que c'est un mauvais choix
 - CTEC2 : synchroniser les statuts entre les fantômes et ladybug; faire une énumeration status commun pour les fantômes et ladybug -> nan, je pense que c'est un mauvais choix
 - CTEC3 : revoir le design pattern MVC et revoir la notion de controleur
-- CTEC4 : revoir le pom.xml; voir jeff & tristan; version de java; rajouter un plugin pour sélectionner une version de java spécifique pour builder avec maven
-- CTEC5 : faire une refactor pour l'affichage
+- CTEC5 : faire une refactor pour l'affichage : design pattern strategy
 - CTEC7 : supprimer les lstIncrementScore lorque le niveau est terminé
 - CTEC8 : sortir la fonction checkEndMaze du block
 - CTEC10 : Mettre des notations d'injections spring pour la non-configuration du jeu en lui même
@@ -14,7 +13,6 @@ Coté technique CTEC :
 - CTEC13 : tests unitaires
 - CTEC14 : tests fonctionnels
 - CTEC19 : faire une fct dans gameModel pour envoyer la requete de ladybug depuis le controleur
-- CTEC20 : faire une fct dans gameModel pour mettre le jeu en mode configuration depuis le controleur
 - CTEC25 : lorsque le fantôme est regénéré, sa direction continue même s'il existe une bordure (contexte Level9NG)
 - CTEC27 : modifier l'arborescence des resources pour qu'il y ait toujours un contexte "par défaut", un contexte "oxiane" (ladybug en bleu + le "OX" + des fantômes à la mode OXiane), un contexte "flash" (ladybug en rouge + l'éclair + des fantômes à la mode LSS)
 - CTEC28 : rajouter dans le github le formatage du poste OXiane des fichiers java 
@@ -45,10 +43,16 @@ DONE :
 	- quel son est emis quand le fruit est disponible
 - CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
 - CFCT12 : faire un mode lampe allumée + F6
-- CFCT 13 : ghost en mode lampe allumée
-- CFCT 14 : en mode deux joueurs, afficher le fantôme en bas à gauche de l'écran
-- CFCT 15 : refactorisation de la mise en multijoueurs
-- CFCT 16 : en mode deux joueurs, le fantôme user a la même vitesse que Ladybug
+- CFCT13 : ghost en mode lampe allumée
+- CFCT14 : en mode deux joueurs, afficher le fantôme en bas à gauche de l'écran
+- CFCT15 : refactorisation de la mise en multijoueurs
+- CFCT16 : en mode deux joueurs, le fantôme user a la même vitesse que Ladybug
+- CFCT17 : mode pause à partir de la manette
+- CFCT18 : modifier le texte d'attente quand il y a au moins une manette
+- CFCT19 : mode pause avec les manettes XboxOne
+- CFCT20 : mettre des messages du programme (xbox connected, messages fun...)
+- CFCT21 : vibration sur les mannettes xbox
+- CFCT22 : distinction manette appui sur right stick
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
 - CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
@@ -67,5 +71,15 @@ DONE :
 - CTEC26 : problème, le nombre de vies de ladybug n'est plus initialisié pour une nouvelle partie
 - CFCT7 : rajouter une notion d'affichage des points increments avant de gagner une nouvelle vie
 - CTEC26 : faire en sorte que les sons s'arrêtent convenablement entre les états du jeu
+- CTEC4 : revoir le pom.xml; voir jeff & tristan; version de java; rajouter un plugin pour sélectionner une version de java spécifique pour builder avec maven
 
 REJECT : 
+- CTEC20 : faire une fct dans gameModel pour mettre le jeu en mode configuration depuis le controleur
+
+
+super pouvoire 
+
+plus de vidtes soit pour pac man soit pour famtome 
+bonus coeur pour famtome et pac man 
+famtome peux eviter de se faire manger 
+pac man peux manger le famtome 

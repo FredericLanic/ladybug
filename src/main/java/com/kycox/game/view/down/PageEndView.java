@@ -16,46 +16,44 @@
  */
 package com.kycox.game.view.down;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.swing.JPanel;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.MainGraphicStructure;
+import com.kycox.game.message.GameMessaging;
+import com.kycox.game.timer.SimpleTimer;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugView;
+import jakarta.annotation.PostConstruct;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
-import lombok.Setter;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
-@Named("PageEndView")
+@Component
 public class PageEndView extends JPanel implements Observer, MainGraphicStructure {
+	private static final long DURATION_MESSAGE_SHOWING = 500;
 	private static final Log logger = LogFactory.getLog(PageEndView.class);
-	private static final long serialVersionUID = 1L;
+	private final transient GameMessaging gameMessaging;
+	private final transient GhostView ghostView;
+	private final transient LadybugView ladybugView;
+	private final transient Screen screen;
+	private final StatusGameView statusGameView;
 	private transient GameModelForViews gameModelForViews;
-	@Inject
-	private GhostView ghostView;
-	@Setter
-	private int height;
-	private JPanel jPanelLadybugKinematique = new JPanel();
-	private JPanel jPanelMainScore = new JPanel();
-	@Inject
-	private LadybugView ladybugView;
-	@Inject
-	private Screen screen;
-	@Inject
-	private StatusGameView statusGameView;
+	private final JPanel jPanelLadybugKinematique = new JPanel();
+	private final JPanel jPanelMainScore = new JPanel();
+	private final transient SimpleTimer simpleTimer = new SimpleTimer();
+
+	public PageEndView(GameMessaging gameMessaging, GhostView ghostView, LadybugView ladybugView, Screen screen, StatusGameView statusGameView) {
+		this.gameMessaging = gameMessaging;
+		this.ghostView = ghostView;
+		this.ladybugView = ladybugView;
+		this.screen = screen;
+		this.statusGameView = statusGameView;
+	}
 
 	@PostConstruct
 	public void init() {
@@ -91,29 +89,27 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 		initJPanelInside(preferredSize);
 	}
 
-	private void setVariableToScoreView(GameModelForViews gameModelForViews) {
-		statusGameView.setGhostNbrLifes(gameModelForViews.getGhostLeftLifes());
-		var humanGhost = gameModelForViews.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed())
-		        .findFirst();
-		if (humanGhost.isPresent()) {
-			statusGameView.setImageGhostPlayer(ghostView.getImage(humanGhost.get()));
-		}
+	private void setVariableToScoreView() {
+		statusGameView.setGhostNbrLifes(gameModelForViews.getGhostLeftLives());
+		var ghostUnComputed = gameModelForViews.getUnComputedGhost();
+		ghostUnComputed.ifPresent(ghost -> statusGameView.setImageGhostPlayer(ghostView.getImage(ghost)));
 		statusGameView.setImageLadybugPlayer(ladybugView.getStaticView());
 		statusGameView.setInGame(gameModelForViews.isInGame());
 		statusGameView.setLadybugNbrLifes(gameModelForViews.getLadybug().getLeftLifes());
 		statusGameView.setNbrPlayers(gameModelForViews.getNbrPlayers());
-		statusGameView.setNumLevel(gameModelForViews.getCurrentProgramStatus().getNumLevel());
 		statusGameView.setScore(gameModelForViews.getGameScore().getScore());
-		statusGameView.setIncrementScore(gameModelForViews.getIncrementScore());
-		statusGameView.setNbrPointsForNewLife(gameModelForViews.getNbrPointsForNewLife());
-		statusGameView.setSoundActive(gameModelForViews.isSoundActive());
+		if (!simpleTimer.isRunning()) {
+			var newMessage = gameMessaging.get();
+			statusGameView.setCurrentProgramMessage(newMessage);
+			simpleTimer.launch(DURATION_MESSAGE_SHOWING);
+		}
 	}
 
 	@Override
 	public void update(Observable gameModelForViews, Object arg) {
 		if (gameModelForViews != null) {
 			this.gameModelForViews = (GameModelForViews) gameModelForViews;
-			setVariableToScoreView(this.gameModelForViews);
+			setVariableToScoreView();
 			repaint();
 		} else {
 			logger.info("gameModelForViews is null in " + PageEndView.class);

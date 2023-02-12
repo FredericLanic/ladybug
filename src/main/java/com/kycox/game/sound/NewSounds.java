@@ -16,17 +16,15 @@
  */
 package com.kycox.game.sound;
 
+import com.kycox.game.constant.Sounds;
+import com.kycox.game.contract.NewSoundsForGameSounds;
+import lombok.Getter;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Named;
-
-import com.kycox.game.constant.Sounds;
-import com.kycox.game.contract.NewSoundsForGameSounds;
-
-import lombok.Getter;
-
-@Named("NewSounds")
+@Component
 public class NewSounds implements NewSoundsForGameSounds {
 	@Getter
 	private List<Sounds> sounds = new ArrayList<>();

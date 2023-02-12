@@ -16,34 +16,37 @@
  */
 package com.kycox.game.contract;
 
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.score.GroupMessages;
 import com.kycox.game.score.Score;
+
+import java.util.Optional;
 
 public interface GameModelForViews extends GameCommon {
 	GameStatusForGameView getCurrentProgramStatus();
 
 	Score getGameScore();
 
-	int getGhostLeftLifes();
+	int getGhostLeftLives();
 
 	GroupGhostForGameView getGroupGhosts();
 
 	GroupMessages getGroupMessages();
 
-	int getIncrementScore();
-
 	LadybugForGameView getLadybug();
 
 	int getNbrPlayers();
 
-	int getNbrPointsForNewLife();
-
 	ScreenData getScreenData();
+
+	Optional<Ghost> getUnComputedGhost();
+
+	boolean isAtLeastOneXboxOneConnected();
 
 	boolean isShowHelpForKeys();
 
 	boolean isShowHelpForXboxes();
 
-	boolean isSoundActive();
+	boolean isDebugMode();
 }

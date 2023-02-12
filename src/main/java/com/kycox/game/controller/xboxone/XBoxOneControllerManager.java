@@ -1,13 +1,12 @@
 package com.kycox.game.controller.xboxone;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-
 import com.studiohartman.jamepad.ControllerManager;
-
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
-@Named("XBoxOneControllerManager")
+
+@Component
 public class XBoxOneControllerManager {
 
 	@Getter
@@ -18,5 +17,4 @@ public class XBoxOneControllerManager {
 		controllerManager = new ControllerManager();
 		controllerManager.initSDLGamepad();
 	}
-
 }

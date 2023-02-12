@@ -25,15 +25,10 @@ import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.LadybugForController;
 import com.kycox.game.contract.LadybugForGameView;
 import com.kycox.game.level.ScreenData;
-import com.kycox.game.tools.Utils;
 
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Spécificités de Ladybug
- *
- */
 public class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
 	@Getter
 	private LadybugActions ladybugActions;
@@ -73,7 +68,7 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 			teleport(screenData);
 			return;
 		}
-		var currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+		var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
 		if (isPerfectOnABlock()) {
 			if (canMove(userRequest, currentScreenBlock)) {
 				viewDirection = userRequest;
@@ -94,7 +89,7 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		}
 		// calcule uniquement lorsque ladybug rempli le block
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getDataBlock(Utils.convertPointToBlockUnit(getPosition()));
+			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
 			ladybugActions.setEatenAMegaPoint(currentScreenBlock.isMegaPoint());
@@ -104,9 +99,6 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return ladybugActions;
 	}
 
-	/**
-	 * Caractéristiques de ladybug en début de niveau
-	 */
 	public void settingsForNewLevel(int numLevel, Point startPosition) {
 		setPosition(startPosition);
 		setDirection(Constants.POINT_ZERO);
@@ -124,4 +116,9 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return sb.toString();
 	}
 
+	// FIXME: hmmm, utilisé uniquement en debug
+	@Override
+	public int getSpeedIndex() {
+		return super.getSpeedIndex();
+	}
 }

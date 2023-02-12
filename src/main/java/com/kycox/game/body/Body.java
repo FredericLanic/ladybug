@@ -16,13 +16,14 @@
  */
 package com.kycox.game.body;
 
-import java.awt.Point;
-
 import com.kycox.game.constant.Constants;
+import com.kycox.game.level.ScreenData;
 import com.kycox.game.maths.SpeedFunction;
-
+import com.kycox.game.tools.Utils;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.awt.*;
 
 public abstract class Body {
 	@Getter
@@ -34,7 +35,6 @@ public abstract class Body {
 	@Getter
 	@Setter
 	private boolean newLife = false;
-	// Position dans le JPanel
 	@Getter
 	@Setter
 	private Point position = Constants.POINT_ZERO;
@@ -47,19 +47,33 @@ public abstract class Body {
 	@Getter
 	private int startSpeedIndex = 0;
 
+	public Point getFrontPositionBlock(ScreenData screenData) {
+		var positionBlock = (Point) getPositionBlock().clone();
+		var screenBlock = screenData.getScreenBlock(positionBlock);
+		if (direction.equals(Constants.POINT_UP) && !screenBlock.isBorderUp()) {
+			positionBlock.y--;
+		} else if (direction.equals(Constants.POINT_DOWN) && !screenBlock.isBorderDown()) {
+			positionBlock.y++;
+		} else if (direction.equals(Constants.POINT_RIGHT) && !screenBlock.isBorderRight()) {
+			positionBlock.x++;
+		} else if (direction.equals(Constants.POINT_LEFT) && !screenBlock.isBorderLeft()) {
+			positionBlock.x--;
+		}
+		return positionBlock;
+	}
+
+	public Point getPositionBlock() {
+		return Utils.convertGraphicPointToBlockPoint(getPosition());
+	}
+
 	public int getSpeed() {
 		return Constants.VALID_SPEEDS
 		        .get(speedIndex < Constants.VALID_SPEEDS.size() ? speedIndex : Constants.VALID_SPEEDS.size() - 1);
 	}
 
-	/**
-	 * Initialise la vitesse du fantôme à la construction (speed & startSpeed)
-	 *
-	 * @param speedIndex
-	 */
 	public void initSpeedIndex(int speedIndex) {
 		this.speedIndex = speedIndex;
-		startSpeedIndex = speedIndex;
+		this.startSpeedIndex = speedIndex;
 	}
 
 	protected abstract boolean isAllowedToDoActions();
@@ -70,13 +84,13 @@ public abstract class Body {
 	}
 
 	public void lostsALife() {
-		leftLifes--;
+		this.leftLifes--;
 	}
 
 	public void manageNewLife() {
 		if (isNewLife()) {
 			setNewLife(false);
-			leftLifes++;
+			this.leftLifes++;
 		}
 	}
 }

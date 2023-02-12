@@ -16,10 +16,6 @@
  */
 package com.kycox.game.constant.ghost;
 
-/**
- * Enumération des états des fantômes
- *
- */
 public enum GhostStatus {
 	DYING, FLASH, NORMAL, REGENERATED, SCARED, TOBEREGERENATED;
 

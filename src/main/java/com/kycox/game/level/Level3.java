@@ -16,11 +16,9 @@
  */
 package com.kycox.game.level;
 
-import java.awt.Point;
+import java.awt.*;
 
-import javax.inject.Named;
-
-@Named("Level3")
+//@Component
 public class Level3 extends Level {
 	public Level3() {
 		// nombre de blocks par ligne

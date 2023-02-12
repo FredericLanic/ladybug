@@ -18,8 +18,8 @@ package com.kycox.game.view.ghost;
 
 import java.awt.Image;
 
-import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.ghost.image.GhostsColorImages;
+import com.kycox.game.contract.GhostForView;
 
 public class GhostScaredView {
 	private static GhostScaredView ghostScaredView = new GhostScaredView();
@@ -31,7 +31,7 @@ public class GhostScaredView {
 	private GhostScaredView() {
 	}
 
-	public Image getImage(Ghost ghost) {
+	public Image getImage(GhostForView ghostForView) {
 		return GhostsColorImages.GHOST_COLOR_GREY.getImage();
 	}
 }

@@ -27,23 +27,11 @@ public class SpeedFunction {
 	@Setter
 	private double lowLimit;
 
-	/**
-	 * Retourne la vitesse calculée de ladybug en fonction du niveau
-	 *
-	 * @param numLevel
-	 * @return
-	 */
 	public int getRealIndexSpeed(int numLevel) {
 		// calcul de l'index de la vitesse
 		return (int) (a * numLevel + b);
 	}
 
-	/**
-	 * Retourne la vitesse calculée -1 de ladybug en fonction du niveau
-	 *
-	 * @param numLevel
-	 * @return
-	 */
 	public int getRealIndexSpeedMinus(int numLevel) {
 		// calcul de l'index de la vitesse
 		var id = getRealIndexSpeed(numLevel);
@@ -53,12 +41,6 @@ public class SpeedFunction {
 		return id;
 	}
 
-	/**
-	 * Retourne la vitesse calculée +1 de ladybug en fonction du niveau
-	 *
-	 * @param numLevel
-	 * @return
-	 */
 	public int getRealIndexSpeedPlus(int numLevel) {
 		// calcul de l'index de la vitesse
 		var id = getRealIndexSpeed(numLevel);

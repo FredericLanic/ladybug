@@ -16,40 +16,39 @@
  */
 package com.kycox.game.view.ladybug;
 
-import java.awt.Image;
-import java.awt.Point;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.view.body.BodyImg;
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
+
+import java.awt.*;
 
 /**
  * Cinématique pour afficher / entendre lors de la mort de Ladybug
  *
  */
-@Named("LadybugDeathView")
+@Component
 public class LadybugDyingView extends LadybugCommun {
 	private int deltaBips;
-	private BodyImg empty = new BodyImg(GameImages.EMPTY.getImage());
-	@Inject
-	private LadybugDying ladybugDying;
-	private BodyImg ladybugFull = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
-	private BodyImg ladybugUp1 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
-	private BodyImg ladybugUp2 = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
-	private BodyImg ladybugUp3 = new BodyImg(LadybugImages.LADYBUG_UP_3.getImage());
-	private BodyImg ladybugUp4 = new BodyImg(LadybugImages.LADYBUG_UP_4.getImage());
-	private BodyImg ladybugUp5 = new BodyImg(LadybugImages.LADYBUG_UP_5.getImage());
-	private BodyImg ladybugUp6 = new BodyImg(LadybugImages.LADYBUG_UP_6.getImage());
-	private BodyImg ladybugUp7 = new BodyImg(LadybugImages.LADYBUG_UP_7.getImage());
-	private BodyImg ladybugUp8 = new BodyImg(LadybugImages.LADYBUG_UP_8.getImage());
-	private BodyImg ladybugUp9 = new BodyImg(LadybugImages.LADYBUG_UP_9.getImage());
-	private int nbrImages = 19;
+	private final BodyImg empty = new BodyImg(GameImages.EMPTY.getImage());
+	private final LadybugDying ladybugDying;
+	private final BodyImg ladybugFull = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
+	private final BodyImg ladybugUp1 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
+	private final BodyImg ladybugUp2 = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
+	private final BodyImg ladybugUp3 = new BodyImg(LadybugImages.LADYBUG_UP_3.getImage());
+	private final BodyImg ladybugUp4 = new BodyImg(LadybugImages.LADYBUG_UP_4.getImage());
+	private final BodyImg ladybugUp5 = new BodyImg(LadybugImages.LADYBUG_UP_5.getImage());
+	private final BodyImg ladybugUp6 = new BodyImg(LadybugImages.LADYBUG_UP_6.getImage());
+	private final BodyImg ladybugUp7 = new BodyImg(LadybugImages.LADYBUG_UP_7.getImage());
+	private final BodyImg ladybugUp8 = new BodyImg(LadybugImages.LADYBUG_UP_8.getImage());
+	private final BodyImg ladybugUp9 = new BodyImg(LadybugImages.LADYBUG_UP_9.getImage());
+
+	public LadybugDyingView(LadybugDying ladybugDying) {
+		this.ladybugDying = ladybugDying;
+	}
 
 	@Override
 	public Image getImage(Point direction) {
@@ -87,20 +86,10 @@ public class LadybugDyingView extends LadybugCommun {
 		deltaBips++;
 	}
 
-	public boolean isEnd() {
-		return ladybugDying.isEnd();
-	}
-
-	public boolean isInProgress() {
-		return ladybugDying.isInPogress();
-	}
-
 	private boolean mustNextImage() {
 		var nbrBips = ladybugDying.getMillisecondLenght() / Constants.PACE;
+		int nbrImages = 19;
 		var nbrBitPerImage = nbrBips / nbrImages;
-		if (deltaBips > nbrBitPerImage) {
-			return true;
-		}
-		return false;
+		return deltaBips > nbrBitPerImage;
 	}
 }

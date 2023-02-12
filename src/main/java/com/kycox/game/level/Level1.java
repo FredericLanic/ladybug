@@ -16,11 +16,9 @@
  */
 package com.kycox.game.level;
 
-import java.awt.Point;
+import java.awt.*;
 
-import javax.inject.Named;
-
-@Named("Level1")
+// @Component
 public final class Level1 extends Level {
 	// Représentation du level initial
 	// 0000001 : barre à gauche 1

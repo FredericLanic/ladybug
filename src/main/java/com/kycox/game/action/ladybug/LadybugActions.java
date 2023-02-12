@@ -36,7 +36,6 @@ public class LadybugActions extends BodyActions {
 	@Setter
 	@Getter
 	private boolean eatenAPoint;
-
 	public LadybugActions() {
 		eatenAIdRefFruit = Constants.NOFRUITID;
 	}

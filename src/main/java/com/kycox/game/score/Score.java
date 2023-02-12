@@ -16,25 +16,17 @@
  */
 package com.kycox.game.score;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.body.ghost.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.Constants;
 import com.kycox.game.fruit.Fruits;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-/**
- * Score du jeu
- *
- */
-@Named("Score")
+@Component
 public class Score {
-	@Inject
-	private Fruits fruits;
+	private final Fruits fruits;
 	@Getter
 	private int incrementScore;
 	@Getter
@@ -43,23 +35,19 @@ public class Score {
 	@Getter
 	private int score;
 
-	/**
-	 * Ajout du score et du score incrémental
-	 *
-	 * @param score
-	 */
-	public void addScore(int score) {
-		this.score += score;
-		incrementScore += score;
+	public Score(Fruits fruits) {
+		this.fruits = fruits;
+	}
+
+	public void addScore(int incrementScore) {
+		this.score += incrementScore;
+		this.incrementScore += incrementScore;
 	}
 
 	public int getNbrPointsForNewLife() {
 		return Constants.NBR_POINTS_FOR_NEW_LIFE;
 	}
 
-	/**
-	 * Initialise le score et le score incrémental
-	 */
 	public void init() {
 		initIncrementScore();
 		score = 0;

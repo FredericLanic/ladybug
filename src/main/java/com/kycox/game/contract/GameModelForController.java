@@ -16,18 +16,27 @@
  */
 package com.kycox.game.contract;
 
-import java.awt.Point;
+import com.kycox.game.body.ghost.Ghost;
+
+import java.awt.*;
+import java.util.Optional;
 
 public interface GameModelForController extends GameCommon {
 	void changeLitLampMode();
 
 	void forceStopGame();
 
-	void gameInPause();
-
 	LadybugForController getLadybug();
 
-	boolean isGamePresentation();
+	Optional<Ghost> getUnComputedGhost();
+
+	boolean isProgramPresentation();
+
+	void programForceExit();
+
+	void setAtLeastOneXboxOneConnected(boolean pasConnected);
+
+	void setGameInPause();
 
 	void setGhostRequest(Point point);
 
@@ -42,4 +51,18 @@ public interface GameModelForController extends GameCommon {
 	void startGame();
 
 	void startStopSoundActive();
+
+    void initNumLevel();
+
+	boolean isProgramAskKeepPreviousGameLevel();
+
+	void initializeLevelNumAndStartGame(boolean initialize);
+
+	void askForceEndGame();
+
+	boolean isGameAskForceEndGame();
+
+	void setInGame();
+
+	void changeDebugMode();
 }

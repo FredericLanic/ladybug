@@ -33,6 +33,7 @@ public interface GameStatusForGameView extends GameCommon {
 
 	boolean isProgramStarting();
 
-	// FIXME : hmmm ?
-	void setProgramPresentation();
+	boolean isProgramAskKeepPreviousGameLevel();
+
+	boolean isGameAskForceEndGame();
 }

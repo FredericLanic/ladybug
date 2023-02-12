@@ -1,14 +1,15 @@
 package com.kycox.game.model.strategy.actions;
 
-import javax.inject.Named;
-
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
+import org.springframework.stereotype.Component;
 
-@Named("GameModelLevelIsEnding")
+@Component
 public class GameModelLevelIsEnding extends AbstratGameModel implements IGameModelAction {
+
 	@Override
 	public void programBeat() {
+		gameMessaging.init();
 		setSoundRequests();
 	}
 }

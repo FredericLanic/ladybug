@@ -18,7 +18,7 @@ package com.kycox.game.view.ghost;
 
 import java.awt.Image;
 
-import com.kycox.game.body.ghost.Ghost;
+import com.kycox.game.contract.GhostForView;
 
 public class GhostDefautlView {
 	private static GhostDefautlView ghostDefautlView = new GhostDefautlView();
@@ -33,7 +33,7 @@ public class GhostDefautlView {
 	private GhostDefautlView() {
 	}
 
-	public Image getImage(Ghost ghost) {
-		return ghost.getColor().getImage();
+	public Image getImage(GhostForView ghostForView) {
+		return ghostForView.getColor().getImage();
 	}
 }

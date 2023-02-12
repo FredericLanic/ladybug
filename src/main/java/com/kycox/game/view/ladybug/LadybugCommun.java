@@ -16,32 +16,28 @@
  */
 package com.kycox.game.view.ladybug;
 
-import java.awt.Image;
-import java.awt.Point;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
 import com.kycox.game.view.body.BodyImg;
-
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Named("LadybugCommun")
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class LadybugCommun {
 	@Getter
 	@Setter
 	private BodyImg bodyUpCurrent;
-	private Map<Point, Integer> convertPointToDegrees = new HashMap<>();
-	@Inject
+	private final Map<Point, Integer> convertPointToDegrees = new HashMap<>();
+
+	@Autowired
 	private GameProperties gameProperties;
 
 	protected void addConvertPointToDegrees(Point point, Integer integer) {
