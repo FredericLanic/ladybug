@@ -119,7 +119,7 @@ Voir aussi https://www.baeldung.com/intro-to-project-lombok
 
 ### Passage en mode "debug"
 
-Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages à gauche.
+Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages.
 
 ![simple gum](/readme/mode_debug.png)
 
