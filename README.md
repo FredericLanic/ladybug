@@ -96,7 +96,7 @@ Le build de ladybug est réalisé par "maven" par la commande "mvn clean package
 
 En résumé, le build génère un fat jar : un jar qui contient toutes les dépendances décrites dans le fichier "pom.xml".
 
-À ce jour (12 Février 2023), j'utilise la version **maven 3.8.5** et la version **jdk 19**.
+À ce jour (12 Février 2023), j'utilise la version **maven 3.8.7** et la version **jdk 19**.
 
 La commande pour lancer le jeu est :
 
@@ -173,6 +173,6 @@ Je tiens à apporter mes remerciements à [Jim](https://github.com/jimetevenard)
 
 Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il investit à réaliser les nombreuses parties dans le but de tester et à valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins pertinentes mais toujours très intéressantes, pour ajouter de nouvelles fonctionnalités. 
 
-Son aide m'est très précieuse.
+**Son aide m'est très précieuse.**
 
 Portez-vous bien !
