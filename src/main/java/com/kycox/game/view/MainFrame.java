@@ -49,7 +49,7 @@ public class MainFrame extends JFrame implements MainGraphicStructure {
 	}
 
 	private void addPanels() {
-		addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);
+		//addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);
 		addPanel(pageLeftView, lineDimension, BorderLayout.LINE_START);
 		addPanel(gameView, gameDimension, BorderLayout.CENTER);
 		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_END);
