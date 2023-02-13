@@ -7,7 +7,6 @@ Coté technique CTEC :
 - CTEC3 : revoir le design pattern MVC et revoir la notion de controleur
 - CTEC5 : faire une refactor pour l'affichage : design pattern strategy
 - CTEC7 : supprimer les lstIncrementScore lorque le niveau est terminé
-- CTEC8 : sortir la fonction checkEndMaze du block
 - CTEC10 : Mettre des notations d'injections spring pour la non-configuration du jeu en lui même
 	HORS : gameStatus ...
 - CTEC13 : tests unitaires
@@ -15,12 +14,11 @@ Coté technique CTEC :
 - CTEC19 : faire une fct dans gameModel pour envoyer la requete de ladybug depuis le controleur
 - CTEC25 : lorsque le fantôme est regénéré, sa direction continue même s'il existe une bordure (contexte Level9NG)
 - CTEC27 : modifier l'arborescence des resources pour qu'il y ait toujours un contexte "par défaut", un contexte "oxiane" (ladybug en bleu + le "OX" + des fantômes à la mode OXiane), un contexte "flash" (ladybug en rouge + l'éclair + des fantômes à la mode LSS)
-- CTEC28 : rajouter dans le github le formatage du poste OXiane des fichiers java 
+- CTEC28 : rajouter dans le github le formatage du poste OXiane des fichiers java
+- CTEC29 : faire un démarrage spring propre
 
 Coté fonctionnalités CFCT :
 
-- CFCT2 : augmenter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug 
-- CFCT5 : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
 - CFCT8 : revoir les moments d'initialisation des points incrément avant de gagner une nouvelle vie
 
 DONE :
@@ -34,14 +32,14 @@ DONE :
 - CFCT9 : permettre la téléportation des fantômes
 - CFCT10 : rajouter le niveau dans le message du game over
 - CFCT11 : téléportation fixe
-- CFCT3 : ajouter le notion de fruit  
-	- quand faire apparaitre un fruit 
+- CFCT3 : ajouter le notion de fruit
+	- quand faire apparaitre un fruit
 	- où le positionner
-	- comment le fruit apparait 
+	- comment le fruit apparait
 	- le nombre de point a ajouter au score
 	- quel son est emis jeu quand le fruit apparait
 	- quel son est emis quand le fruit est disponible
-- CFCT6 : Synchroniser deux points de transferts (/!\ au bouclage)
+- CFCT6 : synchroniser deux points de transferts (/!\ au bouclage)
 - CFCT12 : faire un mode lampe allumée + F6
 - CFCT13 : ghost en mode lampe allumée
 - CFCT14 : en mode deux joueurs, afficher le fantôme en bas à gauche de l'écran
@@ -53,13 +51,15 @@ DONE :
 - CFCT20 : mettre des messages du programme (xbox connected, messages fun...)
 - CFCT21 : vibration sur les mannettes xbox
 - CFCT22 : distinction manette appui sur right stick
+- CFCT2 : augmenter la probabilités du comportement des fantômes en fonction du pourcentage de points mangés par Ladybug
+- CFCT5 : ajouter des éléments à rajouter sur les fantômes : bandeau de pirate, cigarette, chapeau....
 
 - CTEC6 : voir si on peut supprimer facilement Ghost de GhostAction
-- CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound 
+- CTEC9 : ajouter des interfaces pour limiter l'accessibilité de GameModel depuis GameView et GameSound
 - CTEC10 : Mettre des notations d'injections spring pour la non-configuration du jeu en lui même
 - CTEC11 : sortir getSirenSound(int percent) de GameModel - lié à CTEC15
 - CTEC12 : problème parfois pour se positionner de façon random sur un block contenant un point
-- CTEC15 : sortir la notion de nouveau son de GameModel : 
+- CTEC15 : sortir la notion de nouveau son de GameModel :
 	en fin de compte, j'ai fait un gros refacto sur la gestions des sons; l'instance NewSounds contient du coup une liste d'enum SoundsEnum à entendre
 - CTEC16 : sortir la gestion de gameModel dans la fonction GameSounds.playStartJingle()
 - CTEC17 : associer une interface à tous les objects générés dans/depuis GameModel lors de l'envoi en affichage
@@ -72,6 +72,7 @@ DONE :
 - CFCT7 : rajouter une notion d'affichage des points increments avant de gagner une nouvelle vie
 - CTEC26 : faire en sorte que les sons s'arrêtent convenablement entre les états du jeu
 - CTEC4 : revoir le pom.xml; voir jeff & tristan; version de java; rajouter un plugin pour sélectionner une version de java spécifique pour builder avec maven
+- CTEC8 : sortir la fonction checkEndMaze du block
 
 REJECT : 
 - CTEC20 : faire une fct dans gameModel pour mettre le jeu en mode configuration depuis le controleur
