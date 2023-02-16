@@ -21,6 +21,7 @@ import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.GroupGhostForGameView;
 import com.kycox.game.contract.LadybugForGameView;
 import com.kycox.game.contract.MainGraphicStructure;
+import com.kycox.game.view.ghost.GhostView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
@@ -60,9 +61,15 @@ public class PageLeftView extends JPanel implements Observer, MainGraphicStructu
 		groupGhost.getGhosts().stream().forEach(
 			ghost -> {
 				var className = ghost.getClass().toString();
+				switch (ghost.getColor()) {
+					case RED -> g2d.setColor(Color.RED);
+					case PINK -> g2d.setColor(Color.PINK);
+					case ORANGE -> g2d.setColor(Color.ORANGE);
+					case CYAN -> g2d.setColor(Color.CYAN);
+				}
 
-				g2d.setColor(Color.WHITE);
 				g2d.drawString(className.substring(className.lastIndexOf(".") + 1), 10  , y.getAndAdd(20));
+				g2d.setColor(Color.WHITE);
 				g2d.drawString("position: " + ghost.getPosition() + "", 50  , y.getAndAdd(20));
 				g2d.drawString("status: " + ghost.getStatus() + "", 50  , y.getAndAdd(20));
 

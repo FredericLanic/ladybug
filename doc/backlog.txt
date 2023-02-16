@@ -20,6 +20,10 @@ Coté technique CTEC :
 Coté fonctionnalités CFCT :
 
 - CFCT8 : revoir les moments d'initialisation des points incrément avant de gagner une nouvelle vie
+- CFCT23 : bonus quand tous les fantômes sont mangés par gommes;
+- CFCT24 : bonus quand tous les fruits sont mangés dans le niveau
+- CFCT25 : gestion dynamique de la couleur de Ladybug et de son logo
+- CFCT26 : faire un mode "camouflé" pour les fantômes : tous les fantômes auront alors une visaulisation identique en mode rambo
 
 DONE :
 - CFCT0 : faire un skin OXiane pour Ladybug

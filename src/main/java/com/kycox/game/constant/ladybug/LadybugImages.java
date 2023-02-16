@@ -17,46 +17,21 @@
 package com.kycox.game.constant.ladybug;
 
 import com.kycox.game.constant.GameImages;
-import com.kycox.game.properties.GameProperties;
-import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.EnumSet;
 
 public enum LadybugImages {
     LADYBUG_UP_1("up1.png"), LADYBUG_UP_2("up2.png"), LADYBUG_UP_3("up3.png"), LADYBUG_UP_4("up4.png"),
 	LADYBUG_UP_5("up5.png"), LADYBUG_UP_6("up6.png"), LADYBUG_UP_7("up7.png"), LADYBUG_UP_8("up8.png"),
 	LADYBUG_UP_9("up9.png"), LADYBUG_UP_FULL("upFull.png");
 
-	@Component
-	public static class GamePropertiesInjector {
-		private final GameProperties gameProperties;
-
-		public GamePropertiesInjector(GameProperties gameProperties) {
-			this.gameProperties = gameProperties;
-		}
-
-		@PostConstruct
-		public void postConstruct() {
-			for (LadybugImages rt : EnumSet.allOf(LadybugImages.class)) {
-				var pathName = "images/ladybug/color/" + gameProperties.getLadybugColor() + "/";
-				rt.setImage(pathName);
-			}
-		}
-	}
-
-	private final String fileName;
 	@Getter
 	private Image image;
 
 	LadybugImages(String fileName) {
-		this.fileName = fileName;
-	}
-
-	private void setImage(String pathName) {
-		image = new ImageIcon(GameImages.class.getClassLoader().getResource(pathName + fileName)).getImage();
+		var pathName = "images/ladybug/color/blue/" + fileName;
+		image = new ImageIcon(GameImages.class.getClassLoader().getResource(pathName)).getImage();
 	}
 }

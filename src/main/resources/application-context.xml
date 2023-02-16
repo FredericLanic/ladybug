@@ -43,7 +43,7 @@
 	<!-- Inky in GroupGhost -->
 	<bean id="Inky" class="com.kycox.game.body.ghost.Inky"
 		scope="prototype">
-		<property name="color" value="BLUE" />
+		<property name="color" value="CYAN" />
 		<property name="behaviour" value="CALM" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
 		<property name="sensitiveBehaviour" ref="GhostSensitiveBehaviour" />
