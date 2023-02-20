@@ -170,7 +170,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 
 	@Override
 	public Optional<Ghost> getUnComputedGhost() {
-		return getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).findFirst();
+		return groupGhosts.getGhosts().stream().filter(g -> !g.isComputed()).findFirst();
 	}
 
 	public void initSounds() {
@@ -280,6 +280,11 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	public void changeDebugMode() {
 		debugMode = !debugMode;
 		gameMessaging.put("Debug mode " + (debugMode? "on":"off" ));
+	}
+
+	public void manageGhostCamouflage() {
+		groupGhosts.changeGhostCamouflage();
+		groupGhosts.getGhosts().stream().forEach(ghost -> gameMessaging.put(ghost.getName() + " camouflage is " + (ghost.isCamouflage()? "on":"off" )));
 	}
 
 }

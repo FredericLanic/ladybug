@@ -69,7 +69,7 @@ public class GhostView {
 			case FLASH -> ghostImg = GhostFlashView.getInstance().getImage(ghostForView);
 			case SCARED -> ghostImg = GhostScaredView.getInstance().getImage(ghostForView);
 			case DYING -> ghostImg = GhostDyingView.getInstance().getImage();
-			default -> ghostImg = GhostDefautlView.getInstance().getImage(ghostForView);
+			default -> ghostImg = GhostDefaultView.getInstance().getImage(ghostForView);
 		}
 		// ajout les yeux en fonction de la direction
 		if (ghostForView.getStatus() != GhostStatus.DYING) {

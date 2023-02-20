@@ -21,7 +21,6 @@ import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.GroupGhostForGameView;
 import com.kycox.game.contract.LadybugForGameView;
 import com.kycox.game.contract.MainGraphicStructure;
-import com.kycox.game.view.ghost.GhostView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
@@ -60,7 +59,6 @@ public class PageLeftView extends JPanel implements Observer, MainGraphicStructu
 
 		groupGhost.getGhosts().stream().forEach(
 			ghost -> {
-				var className = ghost.getClass().toString();
 				switch (ghost.getColor()) {
 					case RED -> g2d.setColor(Color.RED);
 					case PINK -> g2d.setColor(Color.PINK);
@@ -68,7 +66,7 @@ public class PageLeftView extends JPanel implements Observer, MainGraphicStructu
 					case CYAN -> g2d.setColor(Color.CYAN);
 				}
 
-				g2d.drawString(className.substring(className.lastIndexOf(".") + 1), 10  , y.getAndAdd(20));
+				g2d.drawString(ghost.getName(), 10  , y.getAndAdd(20));
 				g2d.setColor(Color.WHITE);
 				g2d.drawString("position: " + ghost.getPosition() + "", 50  , y.getAndAdd(20));
 				g2d.drawString("status: " + ghost.getStatus() + "", 50  , y.getAndAdd(20));
@@ -93,10 +91,9 @@ public class PageLeftView extends JPanel implements Observer, MainGraphicStructu
 
 	private void drawLadybugInfos(Graphics2D g2d, LadybugForGameView ladybug) {
 		int y = 10;
-		var className = LadybugForGameView.class.toString();
 
 		g2d.setColor(Color.WHITE);
-		g2d.drawString(className.substring(className.lastIndexOf(".") + 1), 10, y+=20);
+		g2d.drawString(ladybug.getName(), 10, y+=20);
 		g2d.drawString("position: " + ladybug.getPosition() + "", 50, y+=20);
 		g2d.drawString("view direction: " + ladybug.getViewDirection() + "", 50, y+=20);
 		g2d.drawString("status: " + ladybug.getStatus() + "", 50, y+=20);

@@ -14,24 +14,31 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.contract;
+package com.kycox.game.view.ghost;
 
-import java.awt.Point;
+import com.kycox.game.constant.ghost.image.GhostsColorImages;
+import com.kycox.game.contract.GhostForView;
 
-import com.kycox.game.constant.ladybug.LadybugStatus;
+import java.awt.*;
 
-public interface LadybugForGameView {
-	int getLeftLifes();
+public class GhostDefaultView {
+	private static final GhostDefaultView ghostDefaultView = new GhostDefaultView();
 
-	Point getPosition();
+	public static GhostDefaultView getInstance() {
+		return ghostDefaultView;
+	}
 
-	LadybugStatus getStatus();
+	/**
+	 * Constructeur privé pour assurer le singleton
+	 */
+	private GhostDefaultView() {
+	}
 
-	Point getViewDirection();
-
-	boolean isNewLife();
-
-	int getSpeedIndex();
-
-	String getName();
+	public Image getImage(GhostForView ghostForView) {
+		if (ghostForView.isCamouflage()) {
+			return GhostsColorImages.GHOST_CAMOUFLAGE_COLOR.getImage();
+		} else {
+			return ghostForView.getColor().getImage();
+		}
+	}
 }

@@ -24,11 +24,11 @@ import lombok.Getter;
 
 // Is a subpart of GhostsBodyImage; please, don't use it in your program
 public enum GhostsColorImages {
-	GHOST_COLOR_CYAN("cyan.png"), GHOST_COLOR_GREY("grey.png"), GHOST_COLOR_ORANGE("orange.png"),
-	GHOST_COLOR_PINK("pink.png"), GHOST_COLOR_RED("red.png");
+	GHOST_CYAN_COLOR("cyan.png"), GHOST_GREY_COLOR("grey.png"), GHOST_ORANGE_COLOR("orange.png"),
+	GHOST_PINK_COLOR("pink.png"), GHOST_RED_COLOR("red.png"), GHOST_CAMOUFLAGE_COLOR("camouflage.png"), GHOST_GRAY_CAMOUFLAGE_COLOR("greyCamouflage.png");
 
 	@Getter
-	private Image image;
+	private final Image image;
 
 	GhostsColorImages(String fileName) {
 		var pathName = "images/ghosts/color/" + fileName;

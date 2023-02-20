@@ -59,4 +59,9 @@ public abstract class UserBody extends Body {
 	private boolean userRequestHasChanged() {
 		return userRequest.x != 0 || userRequest.y != 0;
 	}
+
+	public String getName() {
+		var className = getClass().toString();
+		return className.substring(className.lastIndexOf(".") + 1);
+	}
 }

@@ -65,4 +65,6 @@ public interface GameModelForController extends GameCommon {
 	void setInGame();
 
 	void changeDebugMode();
+
+	void manageGhostCamouflage();
 }

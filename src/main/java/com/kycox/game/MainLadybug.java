@@ -22,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+//@SpringBootApplication
 public class MainLadybug {
 	private static final String cruxLine = "******************************";
 	private static final Log logger = LogFactory.getLog(MainLadybug.class);
@@ -31,6 +32,9 @@ public class MainLadybug {
 		new MainLadybug().launchTheGame();
 	}
 
+//	public static void main(String[] args) {
+//		SpringApplication.run(MainLadybug.class, args);
+//	}
 	/** lecture du contexte Spring de l'application */
 	private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
 	private final MainFrame mainFrame = applicationContext.getBean("MainFrame", MainFrame.class);

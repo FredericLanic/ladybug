@@ -62,9 +62,12 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	@Getter
 	private MoveStyle moveStyle = MoveStyle.MOVE_DEFAULT;
 
+	@Setter
+	private boolean camouflage;
+
 	// used only for debug view
 	public enum MoveStyle {
-		MOVE_TO, MOVE_SCARED, MOVE_DEFAULT, MOVE_REGENERATING;
+		MOVE_TO, MOVE_SCARED, MOVE_DEFAULT, MOVE_REGENERATING
 	}
 
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
@@ -130,6 +133,11 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 
 	private boolean isTooNearOfLadybug(Ladybug ladybug) {
 		return getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2);
+	}
+
+	@Override
+	public boolean isCamouflage() {
+		return camouflage;
 	}
 
 	private void moveByBehaviour(Ladybug ladybug, ScreenData screenData) {
@@ -260,9 +268,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	/**
 	 * Retourne les actions détectées issu du fantôme.
 	 *
-	 * @param ladybug
-	 * @return
-	 */
+	 * */
 	public void setGhostActions(Ladybug ladybug, ScreenData screenData) {
 		ghostActions = new GhostActions();
 		ghostActions.setPosition((Point) getPosition().clone());

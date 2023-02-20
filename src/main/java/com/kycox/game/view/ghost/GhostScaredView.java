@@ -22,7 +22,7 @@ import com.kycox.game.constant.ghost.image.GhostsColorImages;
 import com.kycox.game.contract.GhostForView;
 
 public class GhostScaredView {
-	private static GhostScaredView ghostScaredView = new GhostScaredView();
+	private static final GhostScaredView ghostScaredView = new GhostScaredView();
 
 	public static GhostScaredView getInstance() {
 		return ghostScaredView;
@@ -32,6 +32,10 @@ public class GhostScaredView {
 	}
 
 	public Image getImage(GhostForView ghostForView) {
-		return GhostsColorImages.GHOST_COLOR_GREY.getImage();
+		if (ghostForView.isCamouflage()) {
+			return GhostsColorImages.GHOST_GRAY_CAMOUFLAGE_COLOR.getImage();
+		} else {
+			return GhostsColorImages.GHOST_GREY_COLOR.getImage();
+		}
 	}
 }

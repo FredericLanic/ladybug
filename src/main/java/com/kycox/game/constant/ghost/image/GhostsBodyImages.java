@@ -22,8 +22,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 public enum GhostsBodyImages {
-	CYAN(GhostsColorImages.GHOST_COLOR_CYAN, true), ORANGE(GhostsColorImages.GHOST_COLOR_ORANGE, true),
-	PINK(GhostsColorImages.GHOST_COLOR_PINK, true), RED(GhostsColorImages.GHOST_COLOR_RED, true);
+	CYAN(GhostsColorImages.GHOST_CYAN_COLOR, true), ORANGE(GhostsColorImages.GHOST_ORANGE_COLOR, true),
+	PINK(GhostsColorImages.GHOST_PINK_COLOR, true), RED(GhostsColorImages.GHOST_RED_COLOR, true);
 
 	@Getter
 	private final GhostsColorImages ghostColorBody;

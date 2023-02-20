@@ -24,7 +24,7 @@ import com.kycox.game.contract.GhostForView;
 import com.kycox.game.timer.TimerView;
 
 public class GhostFlashView implements TimerView {
-	private static GhostFlashView ghostFlashView = new GhostFlashView();
+	private static final GhostFlashView ghostFlashView = new GhostFlashView();
 
 	public static GhostFlashView getInstance() {
 		return ghostFlashView;
@@ -47,6 +47,6 @@ public class GhostFlashView implements TimerView {
 		if (showScared) {
 			return GhostScaredView.getInstance().getImage(ghostForView);
 		}
-		return GhostDefautlView.getInstance().getImage(ghostForView);
+		return GhostDefaultView.getInstance().getImage(ghostForView);
 	}
 }

@@ -13,4 +13,6 @@ public interface GhostForView {
 
 	GhostStatus getStatus();
 
+	boolean isCamouflage();
+
 }

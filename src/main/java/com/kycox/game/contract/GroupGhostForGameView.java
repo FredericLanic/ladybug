@@ -16,9 +16,9 @@
  */
 package com.kycox.game.contract;
 
-import java.util.List;
-
 import com.kycox.game.body.ghost.Ghost;
+
+import java.util.List;
 
 public interface GroupGhostForGameView {
 	List<Ghost> getGhosts();

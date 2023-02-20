@@ -16,16 +16,15 @@
  */
 package com.kycox.game.body.ghost;
 
-import java.awt.Point;
-import java.util.List;
-
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.contract.GroupGhostForGameView;
 import com.kycox.game.level.ScreenData;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.awt.*;
+import java.util.List;
 
 public class GhostsGroup implements GroupGhostForGameView {
 	@Getter
@@ -163,5 +162,9 @@ public class GhostsGroup implements GroupGhostForGameView {
 
 	public boolean userGhostHasNoLife() {
 		return ghosts.stream().anyMatch(g -> !g.isComputed() && g.getLeftLifes() <= 0);
+	}
+
+	public void changeGhostCamouflage() {
+		ghosts.forEach(ghost -> ghost.setCamouflage(!ghost.isCamouflage()));
 	}
 }
