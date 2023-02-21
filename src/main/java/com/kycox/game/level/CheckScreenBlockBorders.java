@@ -88,8 +88,25 @@ public class CheckScreenBlockBorders {
 	public void checkViewBlockBorder() {
 		for (var x = 0; x < screenData.getCurrentLevel().getNbrBlocksByLine(); x++) {
 			for (var y = 0; y < screenData.getCurrentLevel().getNbrLines(); y++) {
-				checkViewBlockBorder(new Point(x, y));
+				Point coord = new Point(x, y);
+				checkViewBlockBorder(coord);
+				removeExtraLimitBlockBorder(coord);
 			}
+		}
+	}
+
+	private void removeExtraLimitBlockBorder(Point coord) {
+		var screenBlock = screenData.getViewBlock(coord);
+		if (coord.x == 0) {
+			screenBlock.removeBorderLeft();
+		} else if (coord.x == screenData.getCurrentLevel().getNbrBlocksByLine() - 1) {
+			screenBlock.removeBorderRight();
+		}
+
+		if (coord.y == 0) {
+			screenBlock.removeBorderUp();
+		} else if (coord.y == screenData.getCurrentLevel().getNbrLines() - 1) {
+			screenBlock.removeBorderDown();
 		}
 	}
 

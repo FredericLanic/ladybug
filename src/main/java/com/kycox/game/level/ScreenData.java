@@ -38,30 +38,30 @@ import java.util.Map;
 public final class ScreenData {
 	@Getter
 	private LevelStructure currentLevel;
-	private List<ScreenBlock> dataBlocks = new ArrayList<>();
+	private List<ScreenBlock> dataScreenBlocks = new ArrayList<>();
 	private int initNbrBlocksWithPoint = 0;
 	@Getter
 	@Setter
 	private boolean litLampMode = false;
 	private final ManageLevel manageLevel;
 	@Getter
-	private final List<ScreenBlock> viewBlocks = new ArrayList<>();
+	private final List<ScreenBlock> viewScreenBlocks = new ArrayList<>();
 
 	public ScreenData(ManageLevel manageLevel) {
 		this.manageLevel = manageLevel;
 	}
 
 	public void addNewFruit(int idRefFruit) {
-		var currentScreenBlock = dataBlocks.get(getRandomPosNumEatenPoint());
+		var currentScreenBlock = dataScreenBlocks.get(getRandomPosNumEatenPoint());
 		currentScreenBlock.setIdRefFruit(idRefFruit);
-		viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
+		viewScreenBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
 		        .orElseThrow().setIdRefFruit(idRefFruit);
 	}
 
 	public List<UnitDijkstra> convertToDjistraList() {
 		List<UnitDijkstra> lstUnitDijkstra = new ArrayList<>();
 		// java8 : faire un stream
-		for (ScreenBlock block : dataBlocks) {
+		for (ScreenBlock block : dataScreenBlocks) {
 			lstUnitDijkstra.add(new UnitDijkstra(block));
 		}
 		return lstUnitDijkstra;
@@ -72,11 +72,11 @@ public final class ScreenData {
 	}
 
 	public int getNbrBlocksWithEatenPoint() {
-		return (int) dataBlocks.stream().filter(ScreenBlock::isEatenPoint).count();
+		return (int) dataScreenBlocks.stream().filter(ScreenBlock::isEatenPoint).count();
 	}
 
 	public int getNbrBlocksWithPoint() {
-		return (int) dataBlocks.stream().filter(ScreenBlock::isPoint).count();
+		return (int) dataScreenBlocks.stream().filter(ScreenBlock::isPoint).count();
 	}
 
 	public int getNbrLines() {
@@ -90,8 +90,8 @@ public final class ScreenData {
 	private int getPosNumEatenPoint(int numPoint) {
 		var nbrPoint = 0;
 		var pos = 0;
-		for (var i = 0; i < dataBlocks.size(); i++) {
-			if (dataBlocks.get(i).isEatenPoint()) {
+		for (var i = 0; i < dataScreenBlocks.size(); i++) {
+			if (dataScreenBlocks.get(i).isEatenPoint()) {
 				nbrPoint++;
 				if (nbrPoint == numPoint) {
 					pos = i;
@@ -104,8 +104,8 @@ public final class ScreenData {
 	private int getPosNumPoint(int numPoint) {
 		var nbrPoint = 0;
 		var pos = 0;
-		for (var i = 0; i < dataBlocks.size(); i++) {
-			if (dataBlocks.get(i).isPoint()) {
+		for (var i = 0; i < dataScreenBlocks.size(); i++) {
+			if (dataScreenBlocks.get(i).isPoint()) {
 				nbrPoint++;
 				if (nbrPoint == numPoint) {
 					pos = i;
@@ -139,7 +139,7 @@ public final class ScreenData {
 	}
 
 	public ScreenBlock getScreenBlock(Point posPoint) {
-		return dataBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
+		return dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
 	public int getScreenHeight() {
@@ -152,39 +152,44 @@ public final class ScreenData {
 
 	public ScreenBlock getViewBlock(Point posPoint) {
 		// java8 :
-		return viewBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
+		return viewScreenBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
 	public void setLevelMap(int numLevel, boolean mustDisplayMegaPoints) {
 		// récupération du level associé au numLevel
 		currentLevel = manageLevel.getLevel(numLevel);
 		// Création des blocks
-		dataBlocks = currentLevel.getLstBlocks();
-		// vérification des bordure des blocks
+		dataScreenBlocks = currentLevel.getLstBlocks();
+		// vérification des bordures des blocks
 		var checkScreenBlockBorders = new CheckScreenBlockBorders(this);
 		checkScreenBlockBorders.checkDataBlockBorder();
-		dataBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
+		dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
 		        .forEach(ScreenBlock::addGhostReviver);
 		// ajout des mega points aléatoires
 		if (mustDisplayMegaPoints) {
 			for (var i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
 				var randomPoint = getRandomPosOnAPoint();
-				dataBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
+				dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
 				        .forEach(ScreenBlock::addMegaPoint);
 			}
 
 			var teleportPoints = currentLevel.getTeleportPoints();
 			for (Map.Entry<Point, Point> m : teleportPoints.entrySet()) {
-				dataBlocks.stream().filter(b -> b.getCoordinate().equals(m.getKey()))
+				dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(m.getKey()))
 				        .forEach(sb -> sb.addTeleportation(m.getValue()));
 			}
 
 		}
-		viewBlocks.clear();
+		viewScreenBlocks.clear();
 		// on clone la liste
-		dataBlocks.stream().forEach(sb -> viewBlocks.add(sb.clone()));
+		setViewScreenBlocks();
+
 		checkScreenBlockBorders.checkViewBlockBorder();
 		initNbrBlocksWithPoint = getNbrBlocksWithPoint();
+	}
+
+	private void setViewScreenBlocks() {
+		dataScreenBlocks.stream().forEach(sb -> viewScreenBlocks.add(sb.clone()));
 	}
 
 	public void updateScreenBlock(Ladybug ladybug) {
@@ -194,12 +199,12 @@ public final class ScreenData {
 			currentScreenBlock.removePoint();
 			currentScreenBlock.addEatenPoint();
 			// Suppression du point dans de ScreenBlock de lstViewBlocks
-			viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
+			viewScreenBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
 			        .orElseThrow().removePoint();
 		}
 		if (ladybug.hasEatenAFruit()) {
 			currentScreenBlock.resetIdRefFruit();
-			viewBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
+			viewScreenBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
 			        .orElseThrow().resetIdRefFruit();
 
 		}

@@ -18,6 +18,7 @@ package com.kycox.game.view.map;
 
 import com.kycox.game.constant.Constants;
 import com.kycox.game.constant.GameImages;
+import com.kycox.game.constant.level.LevelImages;
 import com.kycox.game.fruit.Fruits;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
@@ -43,10 +44,50 @@ public class ScreenBlockView {
 
 	public void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		g2d.setColor(colorMaze);
-		displayBorders(g2d, screenData, x, y);
-		displayPoints(g2d, screenData, x, y);
+		// displayBorders(g2d, screenData, x, y);
+		displayBordersImages(g2d, screenData, x, y);
 		displayTeleportation(g2d, screenData, x, y);
+		displayPoints(g2d, screenData, x, y);
 		displayFruit(g2d, screenData, x, y);
+	}
+
+	private void displayBordersImages(Graphics2D g2d, ScreenData screenData, int x, int y) {
+		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
+		if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.NO_RIGHT_LEFT_UP_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.RIGHT_NO_LEFT_UP_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.RIGHT_LEFT_UP_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.RIGHT_LEFT_UP_NO_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isBorderRight() && screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.RIGHT_LEFT_NO_UP_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isBorderRight() && screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.RIGHT_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
+		} else if (!screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_UP_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.RIGHT_NO_LEFT_UP_NO_DOWN.getImage(), x, y, null);
+		} else if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.NO_RIGHT_LEFT_UP_NO_DOWN.getImage(), x, y, null);
+		} else if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.NO_RIGHT_LEFT_NO_UP_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.RIGHT_NO_LEFT_NO_UP_DOWN.getImage(), x, y, null);
+		} else if (!screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_UP_NO_DOWN.getImage(), x, y, null);
+		} else if (!screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_NO_UP_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.RIGHT_NO_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
+		} else if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
+			g2d.drawImage(LevelImages.NO_RIGHT_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
+		} else if (screenBlock.isNotAccessible()) {
+			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
+		}
+
+
 	}
 
 	private void displayBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
@@ -175,36 +216,43 @@ public class ScreenBlockView {
 	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		var screenBlock = screenData.getScreenBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
 		// affichage du méga point
-		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
-			g2d.setColor(megaPointColor);
-			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 8, y + Constants.BLOCK_SIZE / 2 - 8, 12, 12);
-		}
+
 		// affichage du point de survie des fantômes
 		if (screenBlock.isGhostReviver()) {
 			g2d.setColor(revivorPointColor);
-			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 6, y + Constants.BLOCK_SIZE / 2 - 6, 8, 8);
+			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 7, y + Constants.BLOCK_SIZE / 2 - 7 , 14, 14);
 		}
 		// affichage des points
-		g2d.setColor(dotColor);
-		if (screenBlock.isPoint() && !screenBlock.isMegaPoint()) {
-			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 4, 4);
+//		g2d.setColor(dotColor);
+//		if (screenBlock.isPoint() && !screenBlock.isMegaPoint()) {
+//			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 4, 4);
+//		}
+//		if (screenBlock.isPoint() && !screenBlock.isBorderUp()) {
+//			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2, y + Constants.BLOCK_SIZE / 2 - 2 - Constants.BLOCK_SIZE / 3,
+//					2, 2);
+//		}
+//		if (screenBlock.isPoint() && !screenBlock.isBorderDown()) {
+//			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2, y + Constants.BLOCK_SIZE / 2 - 2 + Constants.BLOCK_SIZE / 3,
+//					2, 2);
+//		}
+//		if (screenBlock.isPoint() && !screenBlock.isBorderLeft()) {
+//			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2 - Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2 - 2,
+//					2, 2);
+//		}
+//		if (screenBlock.isPoint() && !screenBlock.isBorderRight()) {
+//			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2 + Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2 - 2,
+//					2, 2);
+//		}
+
+		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
+			Image coin = LevelImages.MEGA_GOLD.getImage();
+			g2d.drawImage(coin, x + (Constants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (Constants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
+		} else 	if (screenBlock.isPoint()) {
+			Image coin = LevelImages.COIN.getImage();
+			g2d.drawImage(coin, x + (Constants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (Constants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
 		}
-		if (screenBlock.isPoint() && !screenBlock.isBorderUp()) {
-			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2, y + Constants.BLOCK_SIZE / 2 - 2 - Constants.BLOCK_SIZE / 3,
-					2, 2);
-		}
-		if (screenBlock.isPoint() && !screenBlock.isBorderDown()) {
-			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2, y + Constants.BLOCK_SIZE / 2 - 2 + Constants.BLOCK_SIZE / 3,
-					2, 2);
-		}
-		if (screenBlock.isPoint() && !screenBlock.isBorderLeft()) {
-			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2 - Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2 - 2,
-					2, 2);
-		}
-		if (screenBlock.isPoint() && !screenBlock.isBorderRight()) {
-			g2d.fillRect(x + Constants.BLOCK_SIZE / 2 - 2 + Constants.BLOCK_SIZE / 3, y + Constants.BLOCK_SIZE / 2 - 2,
-					2, 2);
-		}
+
+
 	}
 
 	private void displayTeleportation(Graphics2D g2d, ScreenData screenData, int x, int y) {
