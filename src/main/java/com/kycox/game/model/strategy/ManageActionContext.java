@@ -5,13 +5,11 @@ import com.kycox.game.model.strategy.actions.*;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 @Component
 public class ManageActionContext {
-	private final Map<GameStatus, IGameModelAction> mapGameContext = new HashMap<>();
-
+	private final EnumMap<GameStatus, IGameModelAction> mapGameContext = new EnumMap<>(GameStatus.class);
 	private final GameModelGameIsEnding gameModelGameIsEnding;
 	private final GameModelLevelIsStarting gameModelLevelIsStarting;
 	private final GameModelLevelIsEnded gameModelLevelIsEnded;

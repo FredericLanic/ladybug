@@ -22,6 +22,7 @@ import com.kycox.game.constant.level.LevelImages;
 import com.kycox.game.fruit.Fruits;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
+import com.kycox.game.view.map.rendering.DisplayRendering;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
@@ -34,21 +35,23 @@ public class ScreenBlockView {
 	private Color colorMaze = GameMainConstants.BLUE_LADYBUG;
 
 	private final Fruits fruits;
+
+	private final DisplayRendering displayRendering;
 	private final Color revivorPointColor = new Color(128, 255, 255);
 	private final Color teleportationPointColor = new Color(255, 255, 255);
 
-	public ScreenBlockView(Fruits fruits) {
+	public ScreenBlockView(Fruits fruits, DisplayRendering displayRendering) {
 		this.fruits = fruits;
+		this.displayRendering = displayRendering;
 	}
 
 	public void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		g2d.setColor(colorMaze);
-		screenData.getRendering().displayScreenBlockBorders(g2d, screenData, x, y);
+		displayRendering.display(g2d, screenData, x, y);
 		displayTeleportation(g2d, screenData, x, y);
 		displayPoints(g2d, screenData, x, y);
 		displayFruit(g2d, screenData, x, y);
 	}
-
 
 	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		var screenBlock = screenData.getScreenBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
@@ -59,6 +62,7 @@ public class ScreenBlockView {
 			g2d.fillOval(x + GameMainConstants.BLOCK_SIZE / 2 - 7, y + GameMainConstants.BLOCK_SIZE / 2 - 7 , 14, 14);
 		}
 
+		// affichage du mégapoint
 		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
 			Image coin = LevelImages.MEGA_GOLD.getImage();
 			g2d.drawImage(coin, x + (GameMainConstants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (GameMainConstants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
