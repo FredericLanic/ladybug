@@ -22,6 +22,8 @@ import com.kycox.game.contract.LevelStructure;
 import com.kycox.game.level.utils.CheckScreenBlockBorders;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
+import com.kycox.game.view.map.ManageRendering;
+import com.kycox.game.view.map.rendering.Rendering;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -45,11 +47,17 @@ public final class ScreenData {
 	@Setter
 	private boolean litLampMode = false;
 	private final ManageLevel manageLevel;
+
+	private final ManageRendering manageRendering;
 	@Getter
 	private final List<ScreenBlock> viewScreenBlocks = new ArrayList<>();
 
-	public ScreenData(ManageLevel manageLevel) {
+	@Getter
+	private Rendering rendering;
+
+	public ScreenData(ManageLevel manageLevel, ManageRendering manageRendering) {
 		this.manageLevel = manageLevel;
+		this.manageRendering = manageRendering;
 	}
 
 	public void addNewFruit(int idRefFruit) {
@@ -152,11 +160,11 @@ public final class ScreenData {
 	}
 
 	public ScreenBlock getViewBlock(Point posPoint) {
-		// java8 :
 		return viewScreenBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
-	public void setLevelMap(int numLevel, boolean mustDisplayMegaPoints) {
+	public void setLevelMap(int numLevel, boolean isInGame) {
+
 		// récupération du level associé au numLevel
 		currentLevel = manageLevel.getLevel(numLevel);
 		// Création des blocks
@@ -167,7 +175,7 @@ public final class ScreenData {
 		dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
 		        .forEach(ScreenBlock::addGhostReviver);
 		// ajout des mega points aléatoires
-		if (mustDisplayMegaPoints) {
+		if (isInGame) {
 			for (var i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
 				var randomPoint = getRandomPosOnAPoint();
 				dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
@@ -180,6 +188,9 @@ public final class ScreenData {
 				        .forEach(sb -> sb.addTeleportation(m.getValue()));
 			}
 
+			rendering = manageRendering.getRamdomizeRendering();
+		} else {
+			rendering = manageRendering.getFirstRendering();
 		}
 		viewScreenBlocks.clear();
 		// on clone la liste
