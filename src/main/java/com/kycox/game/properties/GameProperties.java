@@ -40,7 +40,7 @@ public class GameProperties {
 	private String ladybugSkin;
 
 	public void changeGhostHat() {
-		if (hasHatSkin()) {
+		if (hasGhostHat()) {
 			ghostHat = FALSE_PROPERTY;
 		} else {
 			ghostHat = TRUE_PROPERTY;
@@ -65,9 +65,10 @@ public class GameProperties {
 
 	private void displayPropertiesInLog() {
 		logger.info("Game Properties");
-		logger.info("Ladybug color:" + getLadybugColor());
-		logger.info("Ladybug skin:" + hasLadybugSkin());
-		logger.info("Ghost headband:" + hasGhostHeadBand());
+		logger.info("Ladybug color (unused): " + getLadybugColor());
+		logger.info("Ladybug skin: " + hasLadybugSkin());
+		logger.info("Ghost headband: " + hasGhostHeadBand());
+		logger.info("Ghost hat: " + hasGhostHat());
 	}
 
 	public String getLadybugColor() {
@@ -78,7 +79,7 @@ public class GameProperties {
 		return ghostsHeadband.equals(TRUE_PROPERTY);
 	}
 
-	public boolean hasHatSkin() {
+	public boolean hasGhostHat() {
 		return ghostHat.equals(TRUE_PROPERTY);
 	}
 

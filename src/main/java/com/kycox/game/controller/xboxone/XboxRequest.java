@@ -1,5 +1,6 @@
 package com.kycox.game.controller.xboxone;
 
+import com.kycox.game.constant.XboxOneConstants;
 import com.studiohartman.jamepad.ControllerState;
 import lombok.Getter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -46,7 +47,7 @@ public class XboxRequest {
 	private float yRightStick;
 
 	private int getDirection(float value) {
-		return value > 0 ? ConstantXboxOne.UP_VALUE : ConstantXboxOne.LOW_VALUE;
+		return value > 0 ? XboxOneConstants.UP_VALUE : XboxOneConstants.LOW_VALUE;
 	}
 
 	public boolean isConnected() {
@@ -54,51 +55,51 @@ public class XboxRequest {
 	}
 
 	public boolean isDownLeftStick() {
-		return (isYLeftStick() && getDirection(yLeftStick) == ConstantXboxOne.LOW_VALUE);
+		return (isYLeftStick() && getDirection(yLeftStick) == XboxOneConstants.LOW_VALUE);
 	}
 
 	public boolean isDownRightStick() {
-		return (isYRightStick() && getDirection(yRightStick) == ConstantXboxOne.LOW_VALUE);
+		return (isYRightStick() && getDirection(yRightStick) == XboxOneConstants.LOW_VALUE);
 	}
 
 	public boolean isLeftLeftStick() {
-		return (isXLeftStick() && getDirection(xLeftStick) == ConstantXboxOne.LOW_VALUE);
+		return (isXLeftStick() && getDirection(xLeftStick) == XboxOneConstants.LOW_VALUE);
 	}
 
 	public boolean isLeftRightStick() {
-		return (isXRightStick() && getDirection(xRightStick) == ConstantXboxOne.LOW_VALUE);
+		return (isXRightStick() && getDirection(xRightStick) == XboxOneConstants.LOW_VALUE);
 	}
 
 	public boolean isRightLeftStick() {
-		return (isXLeftStick() && getDirection(xLeftStick) == ConstantXboxOne.UP_VALUE);
+		return (isXLeftStick() && getDirection(xLeftStick) == XboxOneConstants.UP_VALUE);
 	}
 
 	public boolean isRightRightStick() {
-		return (isXRightStick() && getDirection(xRightStick) == ConstantXboxOne.UP_VALUE);
+		return (isXRightStick() && getDirection(xRightStick) == XboxOneConstants.UP_VALUE);
 	}
 
 	public boolean isUpLeftStick() {
-		return (isYLeftStick() && getDirection(yLeftStick) == ConstantXboxOne.UP_VALUE);
+		return (isYLeftStick() && getDirection(yLeftStick) == XboxOneConstants.UP_VALUE);
 	}
 
 	public boolean isUpRightStick() {
-		return (isYRightStick() && getDirection(yRightStick) == ConstantXboxOne.UP_VALUE);
+		return (isYRightStick() && getDirection(yRightStick) == XboxOneConstants.UP_VALUE);
 	}
 
 	private boolean isXLeftStick() {
-		return (xLeftStick >= ConstantXboxOne.SENSITIVE || xLeftStick <= -ConstantXboxOne.SENSITIVE);
+		return (xLeftStick >= XboxOneConstants.SENSITIVE || xLeftStick <= -XboxOneConstants.SENSITIVE);
 	}
 
 	private boolean isXRightStick() {
-		return (xRightStick >= ConstantXboxOne.SENSITIVE || xRightStick <= -ConstantXboxOne.SENSITIVE);
+		return (xRightStick >= XboxOneConstants.SENSITIVE || xRightStick <= -XboxOneConstants.SENSITIVE);
 	}
 
 	private boolean isYLeftStick() {
-		return (yLeftStick >= ConstantXboxOne.SENSITIVE || yLeftStick <= -ConstantXboxOne.SENSITIVE);
+		return (yLeftStick >= XboxOneConstants.SENSITIVE || yLeftStick <= -XboxOneConstants.SENSITIVE);
 	}
 
 	private boolean isYRightStick() {
-		return (yRightStick >= ConstantXboxOne.SENSITIVE || yRightStick <= -ConstantXboxOne.SENSITIVE);
+		return (yRightStick >= XboxOneConstants.SENSITIVE || yRightStick <= -XboxOneConstants.SENSITIVE);
 	}
 
 	public void readCurrentState(ControllerState controllerState) {

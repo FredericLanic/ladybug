@@ -19,7 +19,7 @@ package com.kycox.game.tools;
 import java.awt.Point;
 import java.security.SecureRandom;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 
 public final class Utils {
 	private static SecureRandom secureRandom = new SecureRandom();
@@ -31,7 +31,7 @@ public final class Utils {
 	 * @return
 	 */
 	public static Point convertGraphicPointToBlockPoint(Point graphicPoint) {
-		return new Point(graphicPoint.x / Constants.BLOCK_SIZE, graphicPoint.y / Constants.BLOCK_SIZE);
+		return new Point(graphicPoint.x / GameMainConstants.BLOCK_SIZE, graphicPoint.y / GameMainConstants.BLOCK_SIZE);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public final class Utils {
 	 * @return
 	 */
 	public static Point convertBlockPointToGraphicPoint(Point blockPoint) {
-		return new Point(blockPoint.x * Constants.BLOCK_SIZE, blockPoint.y * Constants.BLOCK_SIZE);
+		return new Point(blockPoint.x * GameMainConstants.BLOCK_SIZE, blockPoint.y * GameMainConstants.BLOCK_SIZE);
 	}
 
 	public static int generateRandomInt(int max) {

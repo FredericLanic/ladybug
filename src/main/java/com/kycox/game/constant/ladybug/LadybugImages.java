@@ -16,7 +16,7 @@
  */
 package com.kycox.game.constant.ladybug;
 
-import com.kycox.game.constant.GameImages;
+import com.kycox.game.constant.game.GameImages;
 import lombok.Getter;
 
 import javax.swing.*;

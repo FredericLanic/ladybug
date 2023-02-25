@@ -17,10 +17,10 @@
 package com.kycox.game.model;
 
 import com.kycox.game.body.ghost.Ghost;
-import com.kycox.game.body.ghost.GhostsGroup;
+import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
-import com.kycox.game.constant.ghost.image.GhostsBodyImages;
+import com.kycox.game.constant.ghost.GhostsBodyImages;
 import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.GameModelForViews;
@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Optional;
 
-import static com.kycox.game.constant.Constants.PACE;
+import static com.kycox.game.constant.GameMainConstants.PACE;
 
 /**
  * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du jeu)

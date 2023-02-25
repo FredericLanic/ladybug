@@ -16,7 +16,7 @@
  */
 package com.kycox.game.body;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
@@ -26,13 +26,13 @@ import java.awt.*;
 
 public abstract class UserBody extends Body {
 	@Setter
-	protected Point userRequest = Constants.POINT_ZERO;
+	protected Point userRequest = GameMainConstants.POINT_ZERO;
 
 	protected boolean canMove(Point direction, ScreenBlock screenBlock) {
-		return ((!direction.equals(Constants.POINT_LEFT) || !screenBlock.isBorderLeft())
-		        && (!direction.equals(Constants.POINT_RIGHT) || !screenBlock.isBorderRight())
-		        && (!direction.equals(Constants.POINT_UP) || !screenBlock.isBorderUp())
-		        && (!direction.equals(Constants.POINT_DOWN) || !screenBlock.isBorderDown()));
+		return ((!direction.equals(GameMainConstants.POINT_LEFT) || !screenBlock.isBorderLeft())
+		        && (!direction.equals(GameMainConstants.POINT_RIGHT) || !screenBlock.isBorderRight())
+		        && (!direction.equals(GameMainConstants.POINT_UP) || !screenBlock.isBorderUp())
+		        && (!direction.equals(GameMainConstants.POINT_DOWN) || !screenBlock.isBorderDown()));
 	}
 
 	protected void move(ScreenBlock screenBlock) {
@@ -42,7 +42,7 @@ public abstract class UserBody extends Body {
 			}
 			// Quand le body est coincé : au début ou quand il butte sur un mur.
 			if (!canMove(getDirection(), screenBlock)) {
-				setDirection(Constants.POINT_ZERO);
+				setDirection(GameMainConstants.POINT_ZERO);
 			}
 		}
 	}

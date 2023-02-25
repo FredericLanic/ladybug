@@ -133,7 +133,7 @@ Le modèle MVC que j'ai essayé d'appliquer regroupe les classes suivantes :
 
   C'est le cœur du jeu, son battement est défini par un timer.
   
-4. Le contrôleur : com.kycox.game.controller.key.KeyGameController 
+4. Le contrôleur : com.kycox.game.controller.KeyboardController 
 
   C'est les commandes du clavier du joueur.
   

@@ -1,6 +1,6 @@
 package com.kycox.game.model.strategy.actions;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
@@ -15,7 +15,7 @@ public class GameModelProgramStarting extends AbstratGameModel implements IGameM
 		setSoundActive(false);
 		currentGameStatus.setProgramStarting();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-		waitAndDoActionAfterTimer.launch(Constants.PROGRAM_STARTING_MILLISECONDS, currentGameStatus,
+		waitAndDoActionAfterTimer.launch(GameMainConstants.PROGRAM_STARTING_MILLISECONDS, currentGameStatus,
 		        CurrentProgramStatus.TO_PROGRAM_PRESENTATION_START);
 	}
 }

@@ -20,14 +20,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 
 public interface TimerView {
-	int period = 3 * Constants.PACE;
+	int PERIOD = 3 * GameMainConstants.PACE;
 
 	default Timer createTimer() {
 		ActionListener action = event -> doAction();
-		return new Timer(period, action);
+		return new Timer(PERIOD, action);
 	}
 
 	void doAction();

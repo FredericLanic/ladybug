@@ -16,7 +16,7 @@
  */
 package com.kycox.game.engine;
 
-import com.kycox.game.controller.xboxone.XboxOneController;
+import com.kycox.game.controller.XboxOneController;
 import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.CentralView;

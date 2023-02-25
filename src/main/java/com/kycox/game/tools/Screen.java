@@ -16,7 +16,7 @@
  */
 package com.kycox.game.tools;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -26,15 +26,15 @@ public class Screen {
 	final Toolkit defaultToolKit = Toolkit.getDefaultToolkit();
 
 	public double getBorderHeight() {
-		return (getScreenHeight() - 15 * Constants.BLOCK_SIZE) / 2;
+		return (getScreenHeight() - 15 * GameMainConstants.BLOCK_SIZE) / 2;
 	}
 
 	public double getBorderWidth() {
-		return (getScreenWidth() - 15 * Constants.BLOCK_SIZE) / 2;
+		return (getScreenWidth() - 15 * GameMainConstants.BLOCK_SIZE) / 2;
 	}
 
 	public double getEdgeGameSide() {
-		return 15.0 * Constants.BLOCK_SIZE;
+		return 15.0 * GameMainConstants.BLOCK_SIZE;
 	}
 
 	public double getScreenHeight() {

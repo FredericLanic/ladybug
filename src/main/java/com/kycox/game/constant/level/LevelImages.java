@@ -1,6 +1,6 @@
 package com.kycox.game.constant.level;
 
-import com.kycox.game.constant.fruit.image.FruitsImages;
+import com.kycox.game.constant.FruitsImages;
 import lombok.Getter;
 
 import javax.swing.*;

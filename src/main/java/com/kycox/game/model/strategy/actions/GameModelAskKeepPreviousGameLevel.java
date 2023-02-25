@@ -1,7 +1,7 @@
 package com.kycox.game.model.strategy.actions;
 
-import com.kycox.game.constant.Constants;
-import com.kycox.game.level.RepositoryLevel;
+import com.kycox.game.constant.GameMainConstants;
+import com.kycox.game.level.repo.LevelRepository;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import lombok.Setter;
@@ -11,13 +11,13 @@ import java.awt.*;
 
 @Component
 public class GameModelAskKeepPreviousGameLevel extends AbstratGameModel implements IGameModelAction {
-	private final RepositoryLevel repositoryLevel;
+	private final LevelRepository levelRepository;
 
 	@Setter
-	private Point ghostRequest = Constants.POINT_ZERO;
+	private Point ghostRequest = GameMainConstants.POINT_ZERO;
 
-	public GameModelAskKeepPreviousGameLevel(RepositoryLevel repositoryLevel) {
-		this.repositoryLevel = repositoryLevel;
+	public GameModelAskKeepPreviousGameLevel(LevelRepository levelRepository) {
+		this.levelRepository = levelRepository;
 	}
 
 	private void moveBodies() {
@@ -31,7 +31,7 @@ public class GameModelAskKeepPreviousGameLevel extends AbstratGameModel implemen
 
 	@Override
 	public void programBeat() {
-		if (repositoryLevel.getNumLevel() == 0) {
+		if (levelRepository.getNumLevel() == 0) {
 			currentGameStatus.setGameStart();
 		} else {
 			setBodiesActions();

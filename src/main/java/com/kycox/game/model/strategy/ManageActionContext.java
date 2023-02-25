@@ -1,6 +1,6 @@
 package com.kycox.game.model.strategy;
 
-import com.kycox.game.constant.GameStatus;
+import com.kycox.game.constant.game.GameStatus;
 import com.kycox.game.model.strategy.actions.*;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +41,7 @@ public class ManageActionContext {
 		mapGameContext.put(GameStatus.GAME_START, gameModelGameIsStarting);
 		mapGameContext.put(GameStatus.LEVEL_START, gameModelLevelIsStarting);
 		mapGameContext.put(GameStatus.IN_GAME, gameModelGameIsInGame);
-		mapGameContext.put(GameStatus.ASk_FORCE_END_GAME, gameModelGameAskForceEndGame);
+		mapGameContext.put(GameStatus.ASK_FORCE_END_GAME, gameModelGameAskForceEndGame);
 		mapGameContext.put(GameStatus.LEVEL_END, gameModelLevelIsEnded);
 		mapGameContext.put(GameStatus.LEVEL_ENDING, gameModelLevelIsEnding);
 		mapGameContext.put(GameStatus.GAME_END, gameModelGameIsEnding);

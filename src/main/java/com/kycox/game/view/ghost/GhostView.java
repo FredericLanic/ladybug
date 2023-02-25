@@ -16,11 +16,11 @@
  */
 package com.kycox.game.view.ghost;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.constant.ghost.image.GhostEyesImages;
-import com.kycox.game.constant.ghost.image.GhostHatImages;
-import com.kycox.game.constant.ghost.image.GhostHeadbandImages;
+import com.kycox.game.constant.ghost.GhostEyesImages;
+import com.kycox.game.constant.ghost.GhostHatImages;
+import com.kycox.game.constant.ghost.GhostHeadbandImages;
 import com.kycox.game.contract.GhostForView;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
@@ -37,26 +37,26 @@ public class GhostView {
 	}
 
 	private Image addEyes(Point direction) {
-		if (direction.equals(Constants.POINT_LEFT)) {
+		if (direction.equals(GameMainConstants.POINT_LEFT)) {
 			return GhostEyesImages.GHOST_LEFT_EYES.getImage();
 		}
-		if (direction.equals(Constants.POINT_DOWN)) {
+		if (direction.equals(GameMainConstants.POINT_DOWN)) {
 			return GhostEyesImages.GHOST_DOWN_EYES.getImage();
 		}
-		if (direction.equals(Constants.POINT_UP)) {
+		if (direction.equals(GameMainConstants.POINT_UP)) {
 			return GhostEyesImages.GHOST_UP_EYES.getImage();
 		}
 		return GhostEyesImages.GHOST_RIGHT_EYES.getImage();
 	}
 
 	private Image addHeadband(Point direction) {
-		if (direction.equals(Constants.POINT_LEFT)) {
+		if (direction.equals(GameMainConstants.POINT_LEFT)) {
 			return GhostHeadbandImages.HEADBAND_LEFT.getImage();
 		}
-		if (direction.equals(Constants.POINT_DOWN)) {
+		if (direction.equals(GameMainConstants.POINT_DOWN)) {
 			return GhostHeadbandImages.HEADBAND_DOWN.getImage();
 		}
-		if (direction.equals(Constants.POINT_UP)) {
+		if (direction.equals(GameMainConstants.POINT_UP)) {
 			return GhostHeadbandImages.HEADBAND_UP.getImage();
 		}
 		return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
@@ -79,7 +79,7 @@ public class GhostView {
 		if (ghostForView.getStatus() != GhostStatus.DYING && gameProperties.hasGhostHeadBand()) {
 			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghostForView.getDirection()));
 		}
-		if (gameProperties.hasHatSkin()) {
+		if (gameProperties.hasGhostHat()) {
 			ghostImg = ImageUtils.appendImages(ghostImg, GhostHatImages.GHOST_HAT.getImage());
 		}
 		return ghostImg;

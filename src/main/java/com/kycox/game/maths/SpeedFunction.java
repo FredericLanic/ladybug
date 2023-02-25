@@ -16,14 +16,14 @@
  */
 package com.kycox.game.maths;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 
 import lombok.Setter;
 
 public class SpeedFunction {
 	private double a = 0;
 	private double b = 0;
-	private final double HIGHT_LIMIT = Constants.VALID_SPEEDS.size();
+	private final double highLimit = GameMainConstants.VALID_SPEEDS.size();
 	@Setter
 	private double lowLimit;
 
@@ -44,14 +44,14 @@ public class SpeedFunction {
 	public int getRealIndexSpeedPlus(int numLevel) {
 		// calcul de l'index de la vitesse
 		var id = getRealIndexSpeed(numLevel);
-		if (id < HIGHT_LIMIT - 1) {
+		if (id < highLimit - 1) {
 			id++;
 		}
 		return id;
 	}
 
 	public void init() {
-		a = (HIGHT_LIMIT - lowLimit) / (Constants.NBR_LEVELS - 1);
+		a = (highLimit - lowLimit) / (GameMainConstants.NBR_LEVELS - 1);
 		b = lowLimit - a;
 	}
 }

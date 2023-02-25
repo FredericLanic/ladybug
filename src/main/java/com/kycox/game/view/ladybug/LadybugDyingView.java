@@ -17,8 +17,8 @@
 package com.kycox.game.view.ladybug;
 
 import com.kycox.game.body.ladybug.LadybugDying;
-import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.GameImages;
+import com.kycox.game.constant.GameMainConstants;
+import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.view.body.BodyImg;
 import jakarta.annotation.PostConstruct;
@@ -68,7 +68,7 @@ public class LadybugDyingView extends LadybugCommun {
 
 	@PostConstruct
 	private void initUpImages() {
-		addConvertPointToDegrees(Constants.POINT_UP, 0);
+		addConvertPointToDegrees(GameMainConstants.POINT_UP, 0);
 		ladybugFull.setNext(ladybugUp1);
 		ladybugUp1.setNext(ladybugUp2);
 		ladybugUp2.setNext(ladybugUp3);
@@ -87,7 +87,7 @@ public class LadybugDyingView extends LadybugCommun {
 	}
 
 	private boolean mustNextImage() {
-		var nbrBips = ladybugDying.getMillisecondLenght() / Constants.PACE;
+		var nbrBips = ladybugDying.getMillisecondLenght() / GameMainConstants.PACE;
 		int nbrImages = 19;
 		var nbrBitPerImage = nbrBips / nbrImages;
 		return deltaBips > nbrBitPerImage;

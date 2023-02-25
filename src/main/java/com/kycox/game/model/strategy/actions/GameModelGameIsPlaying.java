@@ -1,6 +1,6 @@
 package com.kycox.game.model.strategy.actions;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.fruit.Fruits;
 import com.kycox.game.message.GameAutomaticFunMessages;
@@ -20,7 +20,7 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	private static final Log logger = LogFactory.getLog(GameModelGameIsPlaying.class);
 	private final Fruits fruits;
 	@Setter
-	private Point ghostRequest = Constants.POINT_ZERO;
+	private Point ghostRequest = GameMainConstants.POINT_ZERO;
 
 	public GameModelGameIsPlaying(Fruits fruits) {
 		this.fruits = fruits;
@@ -95,7 +95,7 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 
 	private void checkEndMaze() {
 		if (screenData.getNbrBlocksWithPoint() == 0) {
-			gameScore.addScore(Constants.SCORE_END_LEVEL);
+			gameScore.addScore(GameMainConstants.SCORE_END_LEVEL);
 			gameScore.initIncrementScore();
 			currentGameStatus.setLevelEnd();
 		}
@@ -141,7 +141,7 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 		// on lance le timer
 		// IDEA : Il serait bien de d'apporter une notion du temps en fonction du
 		// niveau
-		superPowerTimer.launch(Constants.NBR_SECONDS_SUPER_POWER);
+		superPowerTimer.launch(GameMainConstants.NBR_SECONDS_SUPER_POWER);
 	}
 
 	private void setBodiesActions() {

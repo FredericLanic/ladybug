@@ -16,10 +16,10 @@
  */
 package com.kycox.game.model;
 
-import com.kycox.game.constant.GameStatus;
+import com.kycox.game.constant.game.GameStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
 import com.kycox.game.contract.GameStatusForGameView;
-import com.kycox.game.level.RepositoryLevel;
+import com.kycox.game.level.repo.LevelRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
@@ -44,10 +44,10 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 	@Setter
 	private int numLevel;
 
-	private final RepositoryLevel repositoryLevel;
+	private final LevelRepository levelRepository;
 
-	public CurrentProgramStatus(RepositoryLevel repositoryLevel) {
-		this.repositoryLevel = repositoryLevel;
+	public CurrentProgramStatus(LevelRepository levelRepository) {
+		this.levelRepository = levelRepository;
 	}
 
 	@Override
@@ -70,11 +70,11 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 
 	// KYLIAN C'EST ICI AUSSI
 	public void getStoredNumLevel() {
-		setNumLevel(repositoryLevel.getNumLevel());
+		setNumLevel(levelRepository.getNumLevel());
 	}
 
 	public void storeNumLevel() {
-		repositoryLevel.saveNumLevel(numLevel);
+		levelRepository.saveNumLevel(numLevel);
 	}
 
 	public void updateNextLevel() {
@@ -165,13 +165,13 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 	}
 
 	public void setGameAskForceEndGame() {
-		gameStatus = GameStatus.ASk_FORCE_END_GAME;
+		gameStatus = GameStatus.ASK_FORCE_END_GAME;
 		logger.info("Passage du status en " + gameStatus);
 	}
 
 	@Override
 	public boolean isGameAskForceEndGame() {
-		return gameStatus == GameStatus.ASk_FORCE_END_GAME;
+		return gameStatus == GameStatus.ASK_FORCE_END_GAME;
 	}
 
 	public void setLevelEnd() {

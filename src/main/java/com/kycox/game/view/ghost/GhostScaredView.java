@@ -18,7 +18,7 @@ package com.kycox.game.view.ghost;
 
 import java.awt.Image;
 
-import com.kycox.game.constant.ghost.image.GhostsColorImages;
+import com.kycox.game.constant.ghost.GhostsColorImages;
 import com.kycox.game.contract.GhostForView;
 
 public class GhostScaredView {

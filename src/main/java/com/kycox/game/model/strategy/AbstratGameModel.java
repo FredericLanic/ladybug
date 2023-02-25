@@ -1,9 +1,9 @@
 package com.kycox.game.model.strategy;
 
-import com.kycox.game.body.ghost.GhostsGroup;
+import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.level.ScreenData;
@@ -75,21 +75,21 @@ public class AbstratGameModel {
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation
 		screenData.setLevelMap(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
 		// 3 vies par défaut
-		ladybug.setLeftLifes(Constants.NBR_INIT_LIFE);
+		ladybug.setLeftLifes(GameMainConstants.NBR_INIT_LIFE);
 		// ladybug n'est pas en vie lors de l'initialisation du jeu
 		ladybug.setStatus(LadybugStatus.DEAD);
 		// initialise les scores
 		gameScore.init();
 		// Initialise le groupe de fantôme
-		groupGhosts.setNumLevel(Constants.PRESENTATION_LEVEL);
+		groupGhosts.setNumLevel(GameMainConstants.PRESENTATION_LEVEL);
 		// mise de la vitesse du niveau PRESENTATION_LEVEL
-		groupGhosts.setInitSpeedsForPresentation(Constants.PRESENTATION_LEVEL);
+		groupGhosts.setInitSpeedsForPresentation(GameMainConstants.PRESENTATION_LEVEL);
 		// initialise les positions des fantômes
 		groupGhosts.setPositionToRevivorGhostPoint(screenData);
 		// initialise les fantômes pour la présentation
 		groupGhosts.setStatus(GhostStatus.NORMAL);
 		// initialise les vies de fantômes
-		groupGhosts.setLeftLifes(Constants.NBR_INIT_LIFE);
+		groupGhosts.setLeftLifes(GameMainConstants.NBR_INIT_LIFE);
 		gameMessaging.init();
 	}
 

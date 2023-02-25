@@ -16,7 +16,7 @@
  */
 package com.kycox.game.body.ladybug;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -37,7 +37,7 @@ public class LadybugDying {
 	}
 
 	public boolean isEnd() {
-		return bip * Constants.PACE >= millisecondLenght;
+		return bip * GameMainConstants.PACE >= millisecondLenght;
 	}
 
 	public boolean isInProgress() {

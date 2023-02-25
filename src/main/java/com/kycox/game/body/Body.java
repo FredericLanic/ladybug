@@ -16,7 +16,7 @@
  */
 package com.kycox.game.body;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.maths.SpeedFunction;
 import com.kycox.game.tools.Utils;
@@ -28,7 +28,7 @@ import java.awt.*;
 public abstract class Body {
 	@Getter
 	@Setter
-	private Point direction = Constants.POINT_ZERO;
+	private Point direction = GameMainConstants.POINT_ZERO;
 	@Getter
 	@Setter
 	private int leftLifes = 0;
@@ -37,7 +37,7 @@ public abstract class Body {
 	private boolean newLife = false;
 	@Getter
 	@Setter
-	private Point position = Constants.POINT_ZERO;
+	private Point position = GameMainConstants.POINT_ZERO;
 	@Setter
 	@Getter
 	private SpeedFunction speedFunction;
@@ -50,13 +50,13 @@ public abstract class Body {
 	public Point getFrontPositionBlock(ScreenData screenData) {
 		var positionBlock = (Point) getPositionBlock().clone();
 		var screenBlock = screenData.getScreenBlock(positionBlock);
-		if (direction.equals(Constants.POINT_UP) && !screenBlock.isBorderUp()) {
+		if (direction.equals(GameMainConstants.POINT_UP) && !screenBlock.isBorderUp()) {
 			positionBlock.y--;
-		} else if (direction.equals(Constants.POINT_DOWN) && !screenBlock.isBorderDown()) {
+		} else if (direction.equals(GameMainConstants.POINT_DOWN) && !screenBlock.isBorderDown()) {
 			positionBlock.y++;
-		} else if (direction.equals(Constants.POINT_RIGHT) && !screenBlock.isBorderRight()) {
+		} else if (direction.equals(GameMainConstants.POINT_RIGHT) && !screenBlock.isBorderRight()) {
 			positionBlock.x++;
-		} else if (direction.equals(Constants.POINT_LEFT) && !screenBlock.isBorderLeft()) {
+		} else if (direction.equals(GameMainConstants.POINT_LEFT) && !screenBlock.isBorderLeft()) {
 			positionBlock.x--;
 		}
 		return positionBlock;
@@ -67,8 +67,8 @@ public abstract class Body {
 	}
 
 	public int getSpeed() {
-		return Constants.VALID_SPEEDS
-		        .get(speedIndex < Constants.VALID_SPEEDS.size() ? speedIndex : Constants.VALID_SPEEDS.size() - 1);
+		return GameMainConstants.VALID_SPEEDS
+		        .get(speedIndex < GameMainConstants.VALID_SPEEDS.size() ? speedIndex : GameMainConstants.VALID_SPEEDS.size() - 1);
 	}
 
 	public void initSpeedIndex(int speedIndex) {
@@ -80,7 +80,7 @@ public abstract class Body {
 
 	public boolean isPerfectOnABlock() {
 		var pointPos = getPosition();
-		return pointPos.x % Constants.BLOCK_SIZE == 0 && pointPos.y % Constants.BLOCK_SIZE == 0;
+		return pointPos.x % GameMainConstants.BLOCK_SIZE == 0 && pointPos.y % GameMainConstants.BLOCK_SIZE == 0;
 	}
 
 	public void lostsALife() {

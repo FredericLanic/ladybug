@@ -17,8 +17,9 @@
 package com.kycox.game.level;
 
 import com.kycox.game.body.ladybug.Ladybug;
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.contract.LevelStructure;
+import com.kycox.game.level.utils.CheckScreenBlockBorders;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
 import lombok.Getter;
@@ -143,11 +144,11 @@ public final class ScreenData {
 	}
 
 	public int getScreenHeight() {
-		return getNbrLines() * Constants.BLOCK_SIZE;
+		return getNbrLines() * GameMainConstants.BLOCK_SIZE;
 	}
 
 	public int getScreenWidth() {
-		return currentLevel.getNbrBlocksByLine() * Constants.BLOCK_SIZE;
+		return currentLevel.getNbrBlocksByLine() * GameMainConstants.BLOCK_SIZE;
 	}
 
 	public ScreenBlock getViewBlock(Point posPoint) {

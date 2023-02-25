@@ -61,7 +61,7 @@
 
 	<!-- GroupGhost list in GameModel -->
 	<bean id="GroupGhost"
-		class="com.kycox.game.body.ghost.GhostsGroup">
+		class="com.kycox.game.body.GhostsGroup">
 		<property name="ghosts">
 			<list>
 				<ref bean="Clyde" />

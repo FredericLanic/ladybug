@@ -1,6 +1,6 @@
 package com.kycox.game.model.strategy.actions;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.awt.*;
 @Component
 public class GameModelPresentation extends AbstratGameModel implements IGameModelAction {
 	@Setter
-	private Point ghostRequest = Constants.POINT_ZERO;
+	private Point ghostRequest = GameMainConstants.POINT_ZERO;
 
 	private void moveBodies() {
 		ladybug.move(screenData);

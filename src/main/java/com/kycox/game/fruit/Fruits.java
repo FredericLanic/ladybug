@@ -1,6 +1,6 @@
 package com.kycox.game.fruit;
 
-import com.kycox.game.constant.fruit.image.FruitsImages;
+import com.kycox.game.constant.FruitsImages;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import java.awt.*;
 @Component
 public class Fruits {
 
-	private static final int idBouchon = 0;
+	private final int idBouchon = 0;
 	private final Fruit cherry = new Fruit(1, FruitsImages.CHERRY, 5, 50);
 	private final Fruit orange = new Fruit(3, FruitsImages.ORANGE, 15, 70);
 	private final Fruit strawberry = new Fruit(4, FruitsImages.STRAWBERRY, 20, 77);

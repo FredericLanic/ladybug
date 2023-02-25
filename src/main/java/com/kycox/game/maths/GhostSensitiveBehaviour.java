@@ -16,7 +16,7 @@
  */
 package com.kycox.game.maths;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.tools.Utils;
 
 /**
@@ -39,7 +39,7 @@ public class GhostSensitiveBehaviour {
 	public void setNumLevel(int numLevel) {
 		double a;
 		double b;
-		a = (HIGH_LIMIT - LOW_LIMIT) / (Constants.NBR_LEVELS - 1);
+		a = (HIGH_LIMIT - LOW_LIMIT) / (GameMainConstants.NBR_LEVELS - 1);
 		b = LOW_LIMIT - a;
 		y = (a * numLevel + b);
 	}

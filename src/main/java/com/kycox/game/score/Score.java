@@ -16,9 +16,9 @@
  */
 package com.kycox.game.score;
 
-import com.kycox.game.body.ghost.GhostsGroup;
+import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.fruit.Fruits;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,7 +45,7 @@ public class Score {
 	}
 
 	public int getNbrPointsForNewLife() {
-		return Constants.NBR_POINTS_FOR_NEW_LIFE;
+		return GameMainConstants.NBR_POINTS_FOR_NEW_LIFE;
 	}
 
 	public void init() {
@@ -67,37 +67,37 @@ public class Score {
 //			groupMessages.add(ladybug.getPosition(), "💩 💩", MessageType.STRING);
 //		}
 		if (ladybug.isEatenAMegaPoint()) {
-			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_MEGA_POINT), MessageType.POINT);
+			groupMessages.add(ladybug.getPosition(), Integer.toString(GameMainConstants.SCORE_MEGA_POINT), MessageType.POINT);
 		}
 		if (ladybug.isToBeTeleported()) {
-			groupMessages.add(ladybug.getPosition(), Integer.toString(Constants.SCORE_TELEPORT_POINT),
+			groupMessages.add(ladybug.getPosition(), Integer.toString(GameMainConstants.SCORE_TELEPORT_POINT),
 			        MessageType.POINT);
 		}
 		if (ladybug.hasEatenAFruit()) {
 			groupMessages.add(ladybug.getPosition(),
 			        Integer.toString(fruits.getScoreFruitById(ladybug.getEatenAIdRefFruit())), MessageType.POINT);
 		}
-		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
+		addScore(ghostsGroup.getNbrEatenGhosts() * GameMainConstants.SCORE_EATEN_GHOST);
 		ghostsGroup.getGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
-		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(Constants.SCORE_EATEN_GHOST),
+		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(GameMainConstants.SCORE_EATEN_GHOST),
 		                MessageType.POINT));
 	}
 
 	private void setScore(GhostsGroup ghostsGroup, Ladybug ladybug) {
 		if (ladybug.isEatenAPoint()) {
-			addScore(Constants.SCORE_SIMPLE_POINT);
+			addScore(GameMainConstants.SCORE_SIMPLE_POINT);
 		}
 		if (ladybug.isEatenAMegaPoint()) {
-			addScore(Constants.SCORE_MEGA_POINT);
+			addScore(GameMainConstants.SCORE_MEGA_POINT);
 		}
 		if (ladybug.isToBeTeleported()) {
-			addScore(Constants.SCORE_TELEPORT_POINT);
+			addScore(GameMainConstants.SCORE_TELEPORT_POINT);
 		}
 		if (ladybug.hasEatenAFruit()) {
 			addScore(fruits.getScoreFruitById(ladybug.getEatenAIdRefFruit()));
 		}
 
-		addScore(ghostsGroup.getNbrEatenGhosts() * Constants.SCORE_EATEN_GHOST);
+		addScore(ghostsGroup.getNbrEatenGhosts() * GameMainConstants.SCORE_EATEN_GHOST);
 	}
 
 	/**

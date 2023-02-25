@@ -16,8 +16,8 @@
  */
 package com.kycox.game.view.ladybug;
 
-import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.GameImages;
+import com.kycox.game.constant.GameMainConstants;
+import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
@@ -59,7 +59,7 @@ public abstract class LadybugCommun {
 	}
 
 	public Image getStaticView() {
-		var direction = Constants.POINT_RIGHT;
+		var direction = GameMainConstants.POINT_RIGHT;
 		var ladybugImage = ImageUtils.rotateImage(LadybugImages.LADYBUG_UP_2.getImage(),
 		        convertPointToDegrees.get(direction));
 		return addSkin(ladybugImage, direction);
@@ -67,11 +67,11 @@ public abstract class LadybugCommun {
 
 	@PostConstruct
 	private void initConvertPointToDegrees() {
-		convertPointToDegrees.put(Constants.POINT_UP, 0);
-		convertPointToDegrees.put(Constants.POINT_ZERO, 0);
-		convertPointToDegrees.put(Constants.POINT_LEFT, 90);
-		convertPointToDegrees.put(Constants.POINT_RIGHT, -90);
-		convertPointToDegrees.put(Constants.POINT_DOWN, 180);
+		convertPointToDegrees.put(GameMainConstants.POINT_UP, 0);
+		convertPointToDegrees.put(GameMainConstants.POINT_ZERO, 0);
+		convertPointToDegrees.put(GameMainConstants.POINT_LEFT, 90);
+		convertPointToDegrees.put(GameMainConstants.POINT_RIGHT, -90);
+		convertPointToDegrees.put(GameMainConstants.POINT_DOWN, 180);
 	}
 
 	protected void setNextImage() {

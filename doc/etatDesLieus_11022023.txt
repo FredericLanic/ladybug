@@ -3,13 +3,13 @@ MainFrame
 		- annotation config
 			in com.kycox.game.constant.ladybug.LadybugImages (qui n'est pas un composant)
 				=> GamePropertiesInjector
-			com.kycox.game.controller.key.KeyGameController
-			com.kycox.game.controller.xboxone.XboxOneController
+			com.kycox.game.controller.KeyboardController
+			com.kycox.game.controller.XboxOneController
 			com.kycox.game.controller.xboxone.XBoxOneControllerManager
 			com.kycox.game.controller.xboxone.XboxRequest
 			com.kycox.game.engine.Engine
 			com.kycox.game.fruit.Fruits
-			com.kycox.game.level.LevelNG
+			com.kycox.game.level.data.SecondGenerationLevel
 			com.kycox.game.level.Leve2NG
 			[ici on continue]
 			
@@ -31,7 +31,7 @@ MainFrame
 				com.kycox.game.body.ghost.Pinky
 					ref: SpeedFunction
 					ref: GhostSensitiveBehaviour
-				com.kycox.game.body.ghost.GhostsGroup
+				com.kycox.game.body.GhostsGroup
 					ref: Clyde
 					ref: Blinky
 					ref: Inky

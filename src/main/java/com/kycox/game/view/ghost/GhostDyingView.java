@@ -20,7 +20,7 @@ import java.awt.Image;
 
 import javax.swing.Timer;
 
-import com.kycox.game.constant.ghost.image.GhostEyesImages;
+import com.kycox.game.constant.ghost.GhostEyesImages;
 import com.kycox.game.timer.TimerView;
 import com.kycox.game.view.body.BodyImg;
 

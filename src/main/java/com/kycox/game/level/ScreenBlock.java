@@ -21,7 +21,7 @@ import java.awt.Point;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +47,7 @@ public class ScreenBlock implements Cloneable {
 	private int content;
 	@Getter
 	@Setter
-	private Point coordinate = Constants.POINT_ZERO;
+	private Point coordinate = GameMainConstants.POINT_ZERO;
 	@Getter
 	private Point destinationPoint;
 	@Getter
@@ -104,22 +104,22 @@ public class ScreenBlock implements Cloneable {
 
 	public Point getDirectionInDeadEnd() {
 		if (!isBorderLeft()) {
-			return Constants.POINT_LEFT;
+			return GameMainConstants.POINT_LEFT;
 		}
 		if (!isBorderRight()) {
-			return Constants.POINT_RIGHT;
+			return GameMainConstants.POINT_RIGHT;
 		}
 		if (!isBorderUp()) {
-			return Constants.POINT_UP;
+			return GameMainConstants.POINT_UP;
 		}
 		if (!isBorderDown()) {
-			return Constants.POINT_DOWN;
+			return GameMainConstants.POINT_DOWN;
 		}
-		return Constants.POINT_ZERO;
+		return GameMainConstants.POINT_ZERO;
 	}
 
 	public boolean isBlocked() {
-		return getDirectionInDeadEnd().equals(Constants.POINT_ZERO);
+		return getDirectionInDeadEnd().equals(GameMainConstants.POINT_ZERO);
 	}
 
 	public boolean isBorderDown() {
@@ -200,7 +200,7 @@ public class ScreenBlock implements Cloneable {
 	}
 
 	public void resetIdRefFruit() {
-		idRefFruit = Constants.NOFRUITID;
+		idRefFruit = GameMainConstants.NOFRUITID;
 	}
 
 	public void setIdRefFruit(int id) {

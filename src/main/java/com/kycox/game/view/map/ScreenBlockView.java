@@ -16,8 +16,8 @@
  */
 package com.kycox.game.view.map;
 
-import com.kycox.game.constant.Constants;
-import com.kycox.game.constant.GameImages;
+import com.kycox.game.constant.GameMainConstants;
+import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.level.LevelImages;
 import com.kycox.game.fruit.Fruits;
 import com.kycox.game.level.ScreenData;
@@ -31,7 +31,7 @@ import java.awt.*;
 public class ScreenBlockView {
 	private static final Color dotColor = new Color(192, 192, 0);
 	@Setter
-	private Color colorMaze = Constants.BLUE_LADYBUG;
+	private Color colorMaze = GameMainConstants.BLUE_LADYBUG;
 
 	private final Fruits fruits;
 	private final Color megaPointColor = new Color(255, 128, 0);
@@ -86,8 +86,6 @@ public class ScreenBlockView {
 		} else if (screenBlock.isNotAccessible()) {
 			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
 		}
-
-
 	}
 
 	private void displayBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
@@ -97,27 +95,27 @@ public class ScreenBlockView {
 		// affichage de la barre à gauche
 		if (screenBlock.isBorderLeft() && !screenBlock.isBorderUp() && !screenBlock.isBorderDown()
 		        || currentCoord.x == 0 && currentCoord.y != 0 && currentCoord.y != screenData.getNbrLines() - 1) {
-			g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x, y, x, y + GameMainConstants.BLOCK_SIZE);
 		}
 		// affichage de la barre en haut
 		if (screenBlock.isBorderUp() && !screenBlock.isBorderLeft() && !screenBlock.isBorderRight()
 		        || currentCoord.y == 0 && currentCoord.x != 0
 		                && currentCoord.x != screenData.getCurrentLevel().getNbrBlocksByLine() - 1) {
-			g2d.drawLine(x, y, x + Constants.BLOCK_SIZE, y);
+			g2d.drawLine(x, y, x + GameMainConstants.BLOCK_SIZE, y);
 		}
 		// affichage de la barre à droite
 		if (screenBlock.isBorderRight() && !screenBlock.isBorderUp() && !screenBlock.isBorderDown()
 		        || currentCoord.x == screenData.getCurrentLevel().getNbrBlocksByLine() - 1 && currentCoord.y != 0
 		                && currentCoord.y != screenData.getNbrLines() - 1) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE, y, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE, y, x + GameMainConstants.BLOCK_SIZE, y + GameMainConstants.BLOCK_SIZE);
 		}
 		// affichage de la barre en bas
 		if (screenBlock.isBorderDown() && !screenBlock.isBorderLeft() && !screenBlock.isBorderRight()
 		        || currentCoord.y == screenData.getNbrLines() - 1 && currentCoord.x != 0
 		                && currentCoord.x != screenData.getCurrentLevel().getNbrBlocksByLine() - 1) {
-			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x, y + GameMainConstants.BLOCK_SIZE, x + GameMainConstants.BLOCK_SIZE, y + GameMainConstants.BLOCK_SIZE);
 		}
-		var rayon = Constants.BLOCK_SIZE;
+		var rayon = GameMainConstants.BLOCK_SIZE;
 		// affichage de la courbe gauche vers haut
 		if (screenBlock.isBorderLeft() && screenBlock.isBorderUp()) {
 			g2d.drawArc(x, y, rayon, rayon, 90, 90);
@@ -137,79 +135,79 @@ public class ScreenBlockView {
 		if (screenBlock.isBorderLeft() && screenBlock.isBorderUp()
 		        && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y)).isBorderUp()) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y, x + Constants.BLOCK_SIZE, y);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE / 2, y, x + GameMainConstants.BLOCK_SIZE, y);
 		}
 		if (screenBlock.isBorderUp() && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && currentCoord.y > 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y - 1)).isBorderLeft()) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y, x + Constants.BLOCK_SIZE, y);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE / 2, y, x + GameMainConstants.BLOCK_SIZE, y);
 		}
 		if (screenBlock.isBorderLeft() && screenBlock.isBorderDown()
 		        && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y)).isBorderDown()) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE,
-			        y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE / 2, y + GameMainConstants.BLOCK_SIZE, x + GameMainConstants.BLOCK_SIZE,
+			        y + GameMainConstants.BLOCK_SIZE);
 		}
 		if (screenBlock.isBorderDown() && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && currentCoord.y < screenData.getNbrLines() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y + 1)).isBorderLeft()) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE,
-			        y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE / 2, y + GameMainConstants.BLOCK_SIZE, x + GameMainConstants.BLOCK_SIZE,
+			        y + GameMainConstants.BLOCK_SIZE);
 		}
 		if (screenBlock.isBorderRight() && screenBlock.isBorderUp() && currentCoord.x > 0
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y)).isBorderUp()) {
-			g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
+			g2d.drawLine(x, y, x + GameMainConstants.BLOCK_SIZE / 2, y);
 		}
 		if (screenBlock.isBorderUp() && currentCoord.x > 0 && currentCoord.y > 1
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isBorderRight()) {
-			g2d.drawLine(x, y, x + Constants.BLOCK_SIZE / 2, y);
+			g2d.drawLine(x, y, x + GameMainConstants.BLOCK_SIZE / 2, y);
 		}
 		var sbTmp = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y));
 		var sbTmp1 = screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1));
 		if (screenBlock.isBorderRight() && screenBlock.isBorderDown() && currentCoord.x > 0
 		        && (sbTmp.isBorderDown() || sbTmp.isBorderRight())) {
-			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x, y + GameMainConstants.BLOCK_SIZE, x + GameMainConstants.BLOCK_SIZE / 2, y + GameMainConstants.BLOCK_SIZE);
 		}
 		if (screenBlock.isBorderDown() && currentCoord.x > 0 && currentCoord.y < screenData.getNbrLines() - 1
 		        && (sbTmp.isBorderDown() || sbTmp1.isBorderRight())) {
-			g2d.drawLine(x, y + Constants.BLOCK_SIZE, x + Constants.BLOCK_SIZE / 2, y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x, y + GameMainConstants.BLOCK_SIZE, x + GameMainConstants.BLOCK_SIZE / 2, y + GameMainConstants.BLOCK_SIZE);
 		}
 		// ********************//
 		if (screenBlock.isBorderRight() && screenBlock.isBorderUp() && currentCoord.y < screenData.getNbrLines() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y + 1)).isBorderRight()) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2, x + Constants.BLOCK_SIZE,
-			        y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE, y + GameMainConstants.BLOCK_SIZE / 2, x + GameMainConstants.BLOCK_SIZE,
+			        y + GameMainConstants.BLOCK_SIZE);
 		}
 		if (screenBlock.isBorderRight() && currentCoord.y < screenData.getNbrLines() - 1
 		        && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y + 1)).isBorderUp()) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2, x + Constants.BLOCK_SIZE,
-			        y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE, y + GameMainConstants.BLOCK_SIZE / 2, x + GameMainConstants.BLOCK_SIZE,
+			        y + GameMainConstants.BLOCK_SIZE);
 		}
 		if (screenBlock.isBorderLeft() && screenBlock.isBorderUp() && currentCoord.y < screenData.getNbrLines() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y + 1)).isBorderLeft()) {
-			g2d.drawLine(x, y + Constants.BLOCK_SIZE / 2, x, y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x, y + GameMainConstants.BLOCK_SIZE / 2, x, y + GameMainConstants.BLOCK_SIZE);
 		}
 		if (screenBlock.isBorderLeft() && currentCoord.y < screenData.getNbrLines() - 1 && currentCoord.x > 0
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y + 1)).isBorderUp()) {
-			g2d.drawLine(x, y + Constants.BLOCK_SIZE / 2, x, y + Constants.BLOCK_SIZE);
+			g2d.drawLine(x, y + GameMainConstants.BLOCK_SIZE / 2, x, y + GameMainConstants.BLOCK_SIZE);
 		}
 		if (screenBlock.isBorderRight() && screenBlock.isBorderDown() && currentCoord.y > 0
 		        && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y - 1)).isBorderRight()) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE, y, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE, y, x + GameMainConstants.BLOCK_SIZE, y + GameMainConstants.BLOCK_SIZE / 2);
 		}
 		if (screenBlock.isBorderRight() && currentCoord.y > 0
 		        && currentCoord.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && screenData.getViewBlock(new Point(currentCoord.x + 1, currentCoord.y - 1)).isBorderDown()) {
-			g2d.drawLine(x + Constants.BLOCK_SIZE, y, x + Constants.BLOCK_SIZE, y + Constants.BLOCK_SIZE / 2);
+			g2d.drawLine(x + GameMainConstants.BLOCK_SIZE, y, x + GameMainConstants.BLOCK_SIZE, y + GameMainConstants.BLOCK_SIZE / 2);
 		}
 		if (screenBlock.isBorderLeft() && screenBlock.isBorderDown() && currentCoord.y > 0
 		        && screenData.getViewBlock(new Point(currentCoord.x, currentCoord.y - 1)).isBorderLeft()) {
-			g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE / 2);
+			g2d.drawLine(x, y, x, y + GameMainConstants.BLOCK_SIZE / 2);
 		}
 		if (screenBlock.isBorderLeft() && currentCoord.y > 0 && currentCoord.x > 0
 		        && screenData.getViewBlock(new Point(currentCoord.x - 1, currentCoord.y - 1)).isBorderDown()) {
-			g2d.drawLine(x, y, x, y + Constants.BLOCK_SIZE / 2);
+			g2d.drawLine(x, y, x, y + GameMainConstants.BLOCK_SIZE / 2);
 		}
 	}
 
@@ -220,7 +218,7 @@ public class ScreenBlockView {
 		// affichage du point de survie des fantômes
 		if (screenBlock.isGhostReviver()) {
 			g2d.setColor(revivorPointColor);
-			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 7, y + Constants.BLOCK_SIZE / 2 - 7 , 14, 14);
+			g2d.fillOval(x + GameMainConstants.BLOCK_SIZE / 2 - 7, y + GameMainConstants.BLOCK_SIZE / 2 - 7 , 14, 14);
 		}
 		// affichage des points
 //		g2d.setColor(dotColor);
@@ -246,10 +244,10 @@ public class ScreenBlockView {
 
 		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
 			Image coin = LevelImages.MEGA_GOLD.getImage();
-			g2d.drawImage(coin, x + (Constants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (Constants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
+			g2d.drawImage(coin, x + (GameMainConstants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (GameMainConstants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
 		} else 	if (screenBlock.isPoint()) {
 			Image coin = LevelImages.COIN.getImage();
-			g2d.drawImage(coin, x + (Constants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (Constants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
+			g2d.drawImage(coin, x + (GameMainConstants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (GameMainConstants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
 		}
 
 
@@ -259,14 +257,14 @@ public class ScreenBlockView {
 		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
 		if (screenBlock.isTeleportation()) {
 			g2d.setColor(teleportationPointColor);
-			g2d.fillOval(x + Constants.BLOCK_SIZE / 2 - 4, y + Constants.BLOCK_SIZE / 2 - 4, 10, 10);
+			g2d.fillOval(x + GameMainConstants.BLOCK_SIZE / 2 - 4, y + GameMainConstants.BLOCK_SIZE / 2 - 4, 10, 10);
 			g2d.drawImage(GameImages.TELEPORTATION.getImage(), x, y, null);
 		}
 	}
 
 	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
 		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
-		if (screenBlock.getIdRefFruit() != Constants.NOFRUITID) {
+		if (screenBlock.getIdRefFruit() != GameMainConstants.NOFRUITID) {
 			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
 		}
 	}

@@ -17,12 +17,12 @@
 package com.kycox.game.view;
 
 import com.kycox.game.body.ghost.Ghost;
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
 import com.kycox.game.contract.GameModelForViews;
-import com.kycox.game.controller.key.KeyGameController;
-import com.kycox.game.font.GameFont;
+import com.kycox.game.controller.KeyboardController;
+import com.kycox.game.constant.font.GameFont;
 import com.kycox.game.score.Message;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
@@ -54,14 +54,14 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	private long durationLadybugNewLife;
 	private transient GameModelForViews gameModelForViews;
 	private final transient GhostView ghostView;
-	private final transient KeyGameController keyGameController;
+	private final transient KeyboardController keyboardController;
 	private final transient LadybugDyingView ladybugDyingView;
 	private final transient LadybugView ladybugView;
 	private final transient ScreenBlockView screenBlockView;
 
-	public CentralView(GhostView ghostView, KeyGameController keyGameController, LadybugDyingView ladybugDyingView, LadybugView ladybugView, ScreenBlockView screenBlockView)  {
+	public CentralView(GhostView ghostView, KeyboardController keyboardController, LadybugDyingView ladybugDyingView, LadybugView ladybugView, ScreenBlockView screenBlockView)  {
 		this.ghostView = ghostView;
-		this.keyGameController = keyGameController;
+		this.keyboardController = keyboardController;
 		this.ladybugDyingView = ladybugDyingView;
 		this.ladybugView = ladybugView;
 		this.screenBlockView = screenBlockView;
@@ -70,7 +70,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
 		switch (nbrAction) {
-			case 0 -> screenBlockView.setColorMaze(Constants.BLUE_LADYBUG);
+			case 0 -> screenBlockView.setColorMaze(GameMainConstants.BLUE_LADYBUG);
 			default -> logger.debug("no number " + nbrAction + " action");
 		}
 	}
@@ -83,7 +83,7 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		var g2d = (Graphics2D) g;
 		drawMaze(g2d);
 		if (gameModelForViews.getLadybug().isNewLife()) {
-			screenBlockView.setColorMaze(Constants.COLOR_EXTRA_PAC_LADYBUG);
+			screenBlockView.setColorMaze(GameMainConstants.COLOR_EXTRA_PAC_LADYBUG);
 			var newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
@@ -153,14 +153,14 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - (int) (6.5 * Constants.BLOCK_SIZE));
-		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 - (int) (4.65 * Constants.BLOCK_SIZE));
-		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 - (int) (2.78 * Constants.BLOCK_SIZE));
-		g2d.drawString(line4, (x - metr.stringWidth(line4)) / 2, y / 2 - (int) (0.93 * Constants.BLOCK_SIZE));
-		g2d.drawString(line5, (x - metr.stringWidth(line5)) / 2, y / 2 + (int) (0.93 * Constants.BLOCK_SIZE));
-		g2d.drawString(line6, (x - metr.stringWidth(line6)) / 2, y / 2 + (int) (2.78 * Constants.BLOCK_SIZE));
-		g2d.drawString(line7, (x - metr.stringWidth(line7)) / 2, y / 2 + (int) (4.65 * Constants.BLOCK_SIZE));
-		g2d.drawString(line8, (x - metr.stringWidth(line8)) / 2, y / 2 + (int) (6.5 * Constants.BLOCK_SIZE));
+		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - (int) (6.5 * GameMainConstants.BLOCK_SIZE));
+		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 - (int) (4.65 * GameMainConstants.BLOCK_SIZE));
+		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 - (int) (2.78 * GameMainConstants.BLOCK_SIZE));
+		g2d.drawString(line4, (x - metr.stringWidth(line4)) / 2, y / 2 - (int) (0.93 * GameMainConstants.BLOCK_SIZE));
+		g2d.drawString(line5, (x - metr.stringWidth(line5)) / 2, y / 2 + (int) (0.93 * GameMainConstants.BLOCK_SIZE));
+		g2d.drawString(line6, (x - metr.stringWidth(line6)) / 2, y / 2 + (int) (2.78 * GameMainConstants.BLOCK_SIZE));
+		g2d.drawString(line7, (x - metr.stringWidth(line7)) / 2, y / 2 + (int) (4.65 * GameMainConstants.BLOCK_SIZE));
+		g2d.drawString(line8, (x - metr.stringWidth(line8)) / 2, y / 2 + (int) (6.5 * GameMainConstants.BLOCK_SIZE));
 	}
 
 	private void drawGhosts(Graphics2D g2d) {
@@ -168,8 +168,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		gameModelForViews.getGroupGhosts()
 				.getGhosts()
 				.stream()
-		        .filter(ghost -> ghost.getPosition().distance(ladybugPosition) <= 4 * Constants.BLOCK_SIZE || !ghost.isComputed()
-		                || gameModelForViews.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed() && ghost.getPosition().distance(gc.getPosition()) <= 4 * Constants.BLOCK_SIZE)
+		        .filter(ghost -> ghost.getPosition().distance(ladybugPosition) <= 4 * GameMainConstants.BLOCK_SIZE || !ghost.isComputed()
+		                || gameModelForViews.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed() && ghost.getPosition().distance(gc.getPosition()) <= 4 * GameMainConstants.BLOCK_SIZE)
 		                || !gameModelForViews.getCurrentProgramStatus().isInGame()
 		                || !gameModelForViews.getScreenData().isLitLampMode())
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
@@ -180,8 +180,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 					.getGhosts()
 					.stream()
 					.filter(ghost -> ghost.getMaximumAttackDist() > 0)
-					.forEach(ghost -> g2d.drawOval(ghost.getPosition().x + 1 - ghost.getMaximumAttackDist() + Constants.BLOCK_SIZE / 2
-							, ghost.getPosition().y + 1 - ghost.getMaximumAttackDist() + Constants.BLOCK_SIZE / 2
+					.forEach(ghost -> g2d.drawOval(ghost.getPosition().x + 1 - ghost.getMaximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
+							, ghost.getPosition().y + 1 - ghost.getMaximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
 							, ghost.getMaximumAttackDist() * 2
 							, ghost.getMaximumAttackDist() * 2));
 		}
@@ -196,14 +196,14 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 
 	private void drawMaze(Graphics2D g2d) {
 		var ladybugPosition = gameModelForViews.getLadybug().getPosition();
-		for (var y = 0; y < gameModelForViews.getScreenData().getScreenHeight(); y += Constants.BLOCK_SIZE) {
+		for (var y = 0; y < gameModelForViews.getScreenData().getScreenHeight(); y += GameMainConstants.BLOCK_SIZE) {
 			for (var x = 0; x < gameModelForViews.getScreenData().getCurrentLevel().getNbrBlocksByLine()
-			        * Constants.BLOCK_SIZE; x += Constants.BLOCK_SIZE) {
+			        * GameMainConstants.BLOCK_SIZE; x += GameMainConstants.BLOCK_SIZE) {
 				var positionScreenBlock = new Point(x, y);
 
-				if ((ladybugPosition.distance(positionScreenBlock) <= 3.5 * Constants.BLOCK_SIZE)
+				if ((ladybugPosition.distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
 				        || gameModelForViews.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).anyMatch(
-				                g -> g.getPosition().distance(positionScreenBlock) <= 3.5 * Constants.BLOCK_SIZE)
+				                g -> g.getPosition().distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
 				        || !gameModelForViews.getCurrentProgramStatus().isInGame()
 				        || !gameModelForViews.getScreenData().isLitLampMode()) {
 					screenBlockView.display(g2d, gameModelForViews.getScreenData(), x, y);
@@ -219,19 +219,19 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(text, (x - metr.stringWidth(text)) / 2, y / 2 - Constants.BLOCK_SIZE);
+		g2d.drawString(text, (x - metr.stringWidth(text)) / 2, y / 2 - GameMainConstants.BLOCK_SIZE);
 	}
 
 	/*
 	 * FIXME : utiliser les streams comme dans drawGhosts(Graphics2D g2d)
 	 */
 	private void drawPresentationGhosts(Graphics2D g2d) {
-		var x = gameModelForViews.getScreenData().getScreenWidth() / 2 - (7 * Constants.BLOCK_SIZE) / 2;
+		var x = gameModelForViews.getScreenData().getScreenWidth() / 2 - (7 * GameMainConstants.BLOCK_SIZE) / 2;
 		var y = gameModelForViews.getScreenData().getScreenHeight() / 2;
 		var ghosts = gameModelForViews.getGroupGhosts().getGhosts().stream().toList();
 		for (Ghost ghost : ghosts) {
 			g2d.drawImage(ghostView.getImage(ghost), x, y, this);
-			x += 2 * Constants.BLOCK_SIZE;
+			x += 2 * GameMainConstants.BLOCK_SIZE;
 		}
 	}
 
@@ -241,8 +241,8 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		var metr = getFontMetrics(scoreFont);
 		// Affichage des scores incréments
 		for (Message message : gameModelForViews.getGroupMessages().getMessages()) {
-			var x = message.getPosition().x + Constants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
-			var y = message.getPosition().y + Constants.BLOCK_SIZE / 2;
+			var x = message.getPosition().x + GameMainConstants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
+			var y = message.getPosition().y + GameMainConstants.BLOCK_SIZE / 2;
 			g2d.drawString(message.getValue() + message.getMessageType().getEndMessage(), x, y);
 		}
 	}
@@ -254,13 +254,13 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - 6 * Constants.BLOCK_SIZE);
-		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 - 4 * Constants.BLOCK_SIZE);
-		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 - 2 * Constants.BLOCK_SIZE);
+		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - 6 * GameMainConstants.BLOCK_SIZE);
+		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 - 4 * GameMainConstants.BLOCK_SIZE);
+		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 - 2 * GameMainConstants.BLOCK_SIZE);
 		g2d.drawString(line4, (x - metr.stringWidth(line4)) / 2, y / 2);
-		g2d.drawString(line5, (x - metr.stringWidth(line5)) / 2, y / 2 + 2 * Constants.BLOCK_SIZE);
-		g2d.drawString(line6, (x - metr.stringWidth(line6)) / 2, y / 2 + 4 * Constants.BLOCK_SIZE);
-		g2d.drawString(line7, (x - metr.stringWidth(line7)) / 2, y / 2 + 6 * Constants.BLOCK_SIZE);
+		g2d.drawString(line5, (x - metr.stringWidth(line5)) / 2, y / 2 + 2 * GameMainConstants.BLOCK_SIZE);
+		g2d.drawString(line6, (x - metr.stringWidth(line6)) / 2, y / 2 + 4 * GameMainConstants.BLOCK_SIZE);
+		g2d.drawString(line7, (x - metr.stringWidth(line7)) / 2, y / 2 + 6 * GameMainConstants.BLOCK_SIZE);
 	}
 
 	private void drawThreeCenterTextLines(Graphics2D g2d, String line1, String line2, String line3) {
@@ -269,9 +269,9 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - 2 * Constants.BLOCK_SIZE);
+		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - 2 * GameMainConstants.BLOCK_SIZE);
 		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2);
-		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 + 2 * Constants.BLOCK_SIZE);
+		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 + 2 * GameMainConstants.BLOCK_SIZE);
 	}
 
 	private void drawTwoCenterTextLines(Graphics2D g2d, String line1, String line2) {
@@ -280,15 +280,15 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - Constants.BLOCK_SIZE);
-		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 + Constants.BLOCK_SIZE);
+		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - GameMainConstants.BLOCK_SIZE);
+		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 + GameMainConstants.BLOCK_SIZE);
 	}
 
 	@PostConstruct
 	public void init() {
 		setFocusable(true);
 		setBackground(Color.black);
-		addKeyListener(keyGameController); // key listener pour les touches
+		addKeyListener(keyboardController); // key listener pour les touches
 	}
 
 	@Override

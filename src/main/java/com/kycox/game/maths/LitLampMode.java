@@ -1,10 +1,10 @@
 package com.kycox.game.maths;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 
 public final class LitLampMode {
-	private static double a = 40.0 / (Constants.NBR_LEVELS - 1.0);
-	private static double b = (50.0 * Constants.NBR_LEVELS - 90.0) / (Constants.NBR_LEVELS - 1.0);
+	private static double a = 40.0 / (GameMainConstants.NBR_LEVELS - 1.0);
+	private static double b = (50.0 * GameMainConstants.NBR_LEVELS - 90.0) / (GameMainConstants.NBR_LEVELS - 1.0);
 
 	public static boolean isLitLampMode(int currentLevel) {
 		var min = a * currentLevel + b;

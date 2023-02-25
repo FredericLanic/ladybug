@@ -18,9 +18,9 @@ package com.kycox.game.body.ladybug;
 
 import java.awt.Point;
 
-import com.kycox.game.action.ladybug.LadybugActions;
+import com.kycox.game.bodyaction.ladybug.LadybugActions;
 import com.kycox.game.body.UserBody;
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.LadybugForController;
 import com.kycox.game.contract.LadybugForGameView;
@@ -36,14 +36,14 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 	@Getter
 	private LadybugStatus status = LadybugStatus.NORMAL;
 	@Getter
-	private Point viewDirection = Constants.POINT_UP;
+	private Point viewDirection = GameMainConstants.POINT_UP;
 
 	public int getEatenAIdRefFruit() {
 		return ladybugActions.getEatenAIdRefFruit();
 	}
 
 	public boolean hasEatenAFruit() {
-		return getEatenAIdRefFruit() != Constants.NOFRUITID;
+		return getEatenAIdRefFruit() != GameMainConstants.NOFRUITID;
 	}
 
 	@Override
@@ -101,9 +101,9 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 
 	public void settingsForNewLevel(int numLevel, Point startPosition) {
 		setPosition(startPosition);
-		setDirection(Constants.POINT_ZERO);
-		viewDirection = Constants.POINT_ZERO;
-		setUserRequest(Constants.POINT_ZERO);
+		setDirection(GameMainConstants.POINT_ZERO);
+		viewDirection = GameMainConstants.POINT_ZERO;
+		setUserRequest(GameMainConstants.POINT_ZERO);
 		setStatus(LadybugStatus.NORMAL);
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
@@ -114,11 +114,5 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		sb.append("Ladybug ");
 		sb.append("position: " + getPosition());
 		return sb.toString();
-	}
-
-	// FIXME: hmmm, utilisé uniquement en debug
-	@Override
-	public int getSpeedIndex() {
-		return super.getSpeedIndex();
 	}
 }
