@@ -18,7 +18,7 @@ package com.kycox.game.view.map;
 
 import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
-import com.kycox.game.constant.level.LevelImages;
+import com.kycox.game.constant.level.LevelImages492;
 import com.kycox.game.fruit.Fruits;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
@@ -64,10 +64,10 @@ public class ScreenBlockView {
 
 		// affichage du mégapoint
 		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
-			Image coin = LevelImages.MEGA_GOLD.getImage();
+			Image coin = LevelImages492.MEGA_GOLD.getImage();
 			g2d.drawImage(coin, x + (GameMainConstants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (GameMainConstants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
 		} else if (screenBlock.isPoint()) {
-			Image coin = LevelImages.GOLD.getImage();
+			Image coin = LevelImages492.GOLD.getImage();
 			g2d.drawImage(coin, x + (GameMainConstants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (GameMainConstants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
 		}
 	}

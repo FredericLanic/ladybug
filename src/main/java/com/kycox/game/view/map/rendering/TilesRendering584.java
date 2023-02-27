@@ -1,6 +1,6 @@
 package com.kycox.game.view.map.rendering;
 
-import com.kycox.game.constant.level.LevelImages;
+import com.kycox.game.constant.level.LevelImages584;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
 import com.kycox.game.tools.Utils;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.awt.*;
 
 @Component
-public class TilesRendering1 implements Rendering {
+public class TilesRendering584 implements Rendering {
 
 	@Override
 	public void displayScreenBlockBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
@@ -19,37 +19,37 @@ public class TilesRendering1 implements Rendering {
 
 	private void displayScreenBlock(Graphics2D g2d, ScreenBlock screenBlock, int x, int y) {
 		if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.NO_RIGHT_LEFT_UP_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.NO_RIGHT_LEFT_UP_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.RIGHT_NO_LEFT_UP_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.RIGHT_NO_LEFT_UP_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.RIGHT_LEFT_UP_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.RIGHT_LEFT_UP_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.RIGHT_LEFT_UP_NO_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.RIGHT_LEFT_UP_NO_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.RIGHT_LEFT_NO_UP_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.RIGHT_LEFT_NO_UP_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.RIGHT_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.RIGHT_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
 		} else if (!screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_UP_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.NO_RIGHT_NO_LEFT_UP_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.RIGHT_NO_LEFT_UP_NO_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.RIGHT_NO_LEFT_UP_NO_DOWN.getImage(), x, y, null);
 		} else if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.NO_RIGHT_LEFT_UP_NO_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.NO_RIGHT_LEFT_UP_NO_DOWN.getImage(), x, y, null);
 		} else if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.NO_RIGHT_LEFT_NO_UP_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.NO_RIGHT_LEFT_NO_UP_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.RIGHT_NO_LEFT_NO_UP_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.RIGHT_NO_LEFT_NO_UP_DOWN.getImage(), x, y, null);
 		} else if (!screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_UP_NO_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.NO_RIGHT_NO_LEFT_UP_NO_DOWN.getImage(), x, y, null);
 		} else if (!screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_NO_UP_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.NO_RIGHT_NO_LEFT_NO_UP_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.RIGHT_NO_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.RIGHT_NO_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
 		} else if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && !screenBlock.isBorderUp()  && !screenBlock.isBorderDown()) {
-			g2d.drawImage(LevelImages.NO_RIGHT_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.NO_RIGHT_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isNotAccessible()) {
-			g2d.drawImage(LevelImages.NO_RIGHT_NO_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
+			g2d.drawImage(LevelImages584.NO_RIGHT_NO_LEFT_NO_UP_NO_DOWN.getImage(), x, y, null);
 		}
 	}
 }

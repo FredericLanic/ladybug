@@ -161,8 +161,7 @@ public final class ScreenData {
 	}
 
 	public void setLevelMap(int numLevel, boolean isInGame) {
-
-		// récupération du level associé au numLevel
+   		// récupération du level associé au numLevel
 		currentLevel = manageLevel.getLevel(numLevel);
 		// Création des blocks
 		dataScreenBlocks = currentLevel.getLstBlocks();
@@ -171,14 +170,14 @@ public final class ScreenData {
 		checkScreenBlockBorders.checkDataBlockBorder();
 		dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
 		        .forEach(ScreenBlock::addGhostReviver);
-		// ajout des mega points aléatoires
 		if (isInGame) {
+			// ajout des mega points aléatoires
 			for (var i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
 				var randomPoint = getRandomPosOnAPoint();
 				dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
 				        .forEach(ScreenBlock::addMegaPoint);
 			}
-
+			// ajoute des points de téléportation s'il existe dans la level
 			var teleportPoints = currentLevel.getTeleportPoints();
 			for (Map.Entry<Point, Point> m : teleportPoints.entrySet()) {
 				dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(m.getKey()))
