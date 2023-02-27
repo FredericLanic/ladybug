@@ -39,8 +39,8 @@ public class SecondGenerationLevel6 extends SecondGenerationLevel {
 		        B, N, B, N, N, B, N, N, N, B, N, N, B, N, B, // 4
 		        B, B, B, N, B, B, B, B, B, B, B, N, B, B, B, // 5
 		        B, N, B, B, B, N, N, B, N, N, B, B, B, N, B, // 6
-		        B, N, B, N, B, N, N, B, N, N, B, N, B, N, B, // 7
-		        B, N, B, N, B, N, N, N, N, N, B, N, B, N, B, // 8
+		        B, N, B, N, B, N, B, B, B, N, B, N, B, N, B, // 7
+		        B, N, B, N, B, N, N, B, N, N, B, N, B, N, B, // 8
 		        B, N, B, N, B, N, B, B, B, N, B, N, B, N, B, // 9
 		        B, N, B, B, B, N, N, B, N, N, B, B, B, N, B, // 10
 		        B, B, B, N, B, B, B, B, B, B, B, N, B, B, B, // 11

@@ -14,8 +14,8 @@ public class DisplayRendering {
 
 	public DisplayRendering(LinesRendering linesRendering, TilesRendering492 tilesRendering492, TilesRendering584 tilesRendering584) {
 		renderings.put(LevelRendering.LINES_RENDERING, linesRendering);
-		// renderings.put(LevelRendering.TILES_RENDERING_492, tilesRendering492);
-		//renderings.put(LevelRendering.TILES_RENDERING_584, tilesRendering584);
+		renderings.put(LevelRendering.TILES_RENDERING_492, tilesRendering492);
+		renderings.put(LevelRendering.TILES_RENDERING_584, tilesRendering584);
 	}
 
 	public void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
