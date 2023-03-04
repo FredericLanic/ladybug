@@ -13,30 +13,32 @@ public class LevelRepository {
 
     public void saveNumLevel(int numLevel) {
         try {
-            Path pathToFile = getLevelNumTmpFile();
-            Files.delete(pathToFile);
-            try (BufferedWriter writer = Files.newBufferedWriter(pathToFile)) {
-                writer.write(Integer.toString(numLevel));
-                writer.flush();
-            }
+            Path numLevelPath = getLevelNumTmpFile();
+            writeNumLevelInToPath(numLevel, numLevelPath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
 
+    private void writeNumLevelInToPath(int numLevel, Path numLevelPath) throws IOException {
+        try (BufferedWriter writer = Files.newBufferedWriter(numLevelPath)) {
+            writer.write(Integer.toString(numLevel));
+            writer.flush();
+        }
+    }
+
     public int getNumLevel() {
         try {
-            Path pathToFile = getLevelNumTmpFile();
-            String read = Files.readAllLines(pathToFile).get(0);
+            Path numLevelPath = getLevelNumTmpFile();
+            String read = Files.readAllLines(numLevelPath).get(0);
             return Integer.parseInt(read);
         } catch (IOException | NumberFormatException e) {
-            saveNumLevel(0);
             return 0;
         }
     }
 
-    private Path getLevelNumTmpFile() throws IOException {
+    private Path getLevelNumTmpFile() {
         Path tmpDir = Paths.get(System.getProperty("java.io.tmpdir"));
         Path ladybugTmpDir = tmpDir.resolve("labybug");
         if (!ladybugTmpDir.toFile().exists()) {
