@@ -3,7 +3,7 @@ package com.kycox.game.constant.level;
 import java.util.Random;
 
 public enum LevelRendering {
-	LINES_RENDERING, TILES_RENDERING_492, TILES_RENDERING_584;
+	LINES_RENDERING, TILES_RENDERING_492, TILES_RENDERING_584, TILES_RENDERING_REDLINES;
 
 	private static final RandomEnum<LevelRendering> randomEnum = new RandomEnum<>(LevelRendering.class);
 

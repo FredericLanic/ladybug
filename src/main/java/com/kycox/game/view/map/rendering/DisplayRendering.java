@@ -12,10 +12,11 @@ public class DisplayRendering {
 
 	private final EnumMap<LevelRendering, Rendering> renderings = new EnumMap<>(LevelRendering.class);
 
-	public DisplayRendering(LinesRendering linesRendering, TilesRendering492 tilesRendering492, TilesRendering584 tilesRendering584) {
+	public DisplayRendering(LinesRendering linesRendering, TilesRendering492 tilesRendering492, TilesRendering584 tilesRendering584, TilesRenderingRedLines tilesRenderingRedLines) {
 		renderings.put(LevelRendering.LINES_RENDERING, linesRendering);
 		renderings.put(LevelRendering.TILES_RENDERING_492, tilesRendering492);
 		renderings.put(LevelRendering.TILES_RENDERING_584, tilesRendering584);
+		renderings.put(LevelRendering.TILES_RENDERING_REDLINES, tilesRenderingRedLines);
 	}
 
 	public void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
