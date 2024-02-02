@@ -1,13 +1,16 @@
 package com.kycox.game.controller.xboxone;
 
 import com.kycox.game.constant.XboxOneConstants;
+import com.kycox.game.os.WindowsHost;
 import com.studiohartman.jamepad.ControllerState;
 import lombok.Getter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Conditional(WindowsHost.class)
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class XboxRequest {
 	@Getter

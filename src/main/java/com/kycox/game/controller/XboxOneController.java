@@ -8,13 +8,17 @@ import com.kycox.game.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.controller.xboxone.XboxRequest;
 import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
+import com.kycox.game.os.WindowsHost;
 import com.kycox.game.properties.GameProperties;
+
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import java.util.Observable;
 import java.util.Observer;
 
 @Component
+@Conditional(WindowsHost.class)
 public class XboxOneController extends XBoxOneControllerManager implements Observer {
 
 	private final GameMessaging gameMessaging;
