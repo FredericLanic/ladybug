@@ -21,24 +21,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 //@SpringBootApplication
+@Component
 public class MainLadybug {
 	private static final String cruxLine = "******************************";
 	private static final Log logger = LogFactory.getLog(MainLadybug.class);
 
-	/** Lancement du jeu */
-	public static void main(String[] args) {
-		new MainLadybug().launchTheGame();
+	private final MainFrame mainFrame;
+
+	public MainLadybug(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
 	}
-
-//	public static void main(String[] args) {
-//		SpringApplication.run(MainLadybug.class, args);
-//	}
-
-	/** lecture du contexte Spring de l'application */
-	private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
-	private final MainFrame mainFrame = applicationContext.getBean("MainFrame", MainFrame.class);
 
 	public void launchTheGame() {
 		var javaVersion = Runtime.version();
@@ -51,6 +46,7 @@ public class MainLadybug {
 		} else {
 			logger.info("*   Please Check your JVM    *");
 			logger.info(cruxLine);
+			System.exit(2);
 		}
 	}
 }
