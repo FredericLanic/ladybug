@@ -57,10 +57,10 @@ public class Engine {
 		gameModel.addObserver(pageLeftView);
 		if(xboxOneController != null) gameModel.addObserver(xboxOneController);
 		// on récupère la longueur du son de la mort de ladybug et on l'affecte
-		gameModel.getLadybugDying().setMillisecondLenght(gameSounds.getMillisecondLadybugDeath());
-		gameModel.setBeginningMilliseconds(gameSounds.getMillisecondsBeginning());
+		gameModel.getLadybugDying().setAgonyDuration(gameSounds.getLadybugAgonyDuration());
+		gameModel.setBeginningDuration(gameSounds.getBeginningDuration());
 		gameModel.setTimeEndingMilliseconds(1500);
-		gameModel.setEndingLevelMilliseconds(gameSounds.getMillisecondsIntermission());
-		centralView.setDurationLadybugNewLife(gameSounds.getMillisecondNewLife());
+		gameModel.setEndingLevelMilliseconds(gameSounds.getIntermissionDuration());
+		centralView.setDurationLadybugNewLife(gameSounds.getNewLifePocDuration());
 	}
 }

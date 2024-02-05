@@ -27,9 +27,9 @@ import lombok.Setter;
 import java.awt.*;
 import java.util.List;
 
+@Setter
+@Getter
 public class GhostsGroup implements GroupGhostForGameView {
-	@Getter
-	@Setter
 	private List<Ghost> ghosts;
 
 	public boolean eatLadybug() {

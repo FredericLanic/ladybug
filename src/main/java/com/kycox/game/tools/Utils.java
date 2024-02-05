@@ -22,13 +22,11 @@ import java.security.SecureRandom;
 import com.kycox.game.constant.GameMainConstants;
 
 public final class Utils {
-	private static SecureRandom secureRandom = new SecureRandom();
+	private static final SecureRandom secureRandom = new SecureRandom();
 
 	/**
 	 * Converti un point du graphique en un block
 	 *
-	 * @param graphicPoint
-	 * @return
 	 */
 	public static Point convertGraphicPointToBlockPoint(Point graphicPoint) {
 		return new Point(graphicPoint.x / GameMainConstants.BLOCK_SIZE, graphicPoint.y / GameMainConstants.BLOCK_SIZE);
@@ -36,9 +34,7 @@ public final class Utils {
 
 	/**
 	 * Converti un block en un point du graphique
-	 *
-	 * @param blockPoint
-	 * @return
+	 *n
 	 */
 	public static Point convertBlockPointToGraphicPoint(Point blockPoint) {
 		return new Point(blockPoint.x * GameMainConstants.BLOCK_SIZE, blockPoint.y * GameMainConstants.BLOCK_SIZE);

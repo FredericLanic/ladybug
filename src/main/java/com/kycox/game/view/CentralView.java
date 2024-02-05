@@ -18,11 +18,11 @@ package com.kycox.game.view;
 
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.GameMainConstants;
+import com.kycox.game.constant.font.GameFont;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.controller.KeyboardController;
-import com.kycox.game.constant.font.GameFont;
 import com.kycox.game.score.Message;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
@@ -293,15 +293,17 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 
 	@Override
 	public void paintComponent(Graphics g) {
-		if (gameModelForViews != null) {
+//		if (gameModelForViews != null) {
 			super.paintComponent(g);
 			draw(g);
-		}
+//		}
 	}
 
 	@Override
 	public void update(Observable gameModel, Object used) {
-		gameModelForViews = (GameModelForViews) gameModel;
-		repaint();
+		if (gameModel instanceof GameModelForViews gameModelForViews) {
+			this.gameModelForViews = gameModelForViews;
+			repaint();
+		}
 	}
 }

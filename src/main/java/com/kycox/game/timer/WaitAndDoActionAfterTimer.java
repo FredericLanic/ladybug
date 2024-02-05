@@ -28,7 +28,7 @@ import com.kycox.game.contract.DoActionAfterTimer;
 public class WaitAndDoActionAfterTimer {
 
 	private class WaitTimer extends TimerTask {
-		private int nbrAction;
+		private final int nbrAction;
 
 		public WaitTimer(int nbrAction) {
 			this.nbrAction = nbrAction;

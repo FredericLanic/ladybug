@@ -5,7 +5,9 @@ import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
+@Getter
 public enum LevelImagesRedLines {
 	NO_RIGHT_LEFT_UP_DOWN("no_right_left_up_down.png"), RIGHT_NO_LEFT_UP_DOWN("right_no_left_up_down.png"),
 	RIGHT_LEFT_UP_DOWN("right_left_up_down.png"), RIGHT_LEFT_UP_NO_DOWN("right_left_up_no_down.png"),
@@ -23,11 +25,10 @@ public enum LevelImagesRedLines {
 
 	GOLD("gold.png"), MEGA_GOLD("megaGold.png");
 
-	@Getter
 	private Image image;
 
 	LevelImagesRedLines(String fileName) {
 		var pathName = "images/level/redLines/" + fileName;
-		image = new ImageIcon(FruitsImages.class.getClassLoader().getResource(pathName)).getImage();
+		image = new ImageIcon(Objects.requireNonNull(FruitsImages.class.getClassLoader().getResource(pathName))).getImage();
 	}
 }

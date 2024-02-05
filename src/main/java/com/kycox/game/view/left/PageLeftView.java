@@ -106,12 +106,10 @@ public class PageLeftView extends JPanel implements Observer, MainGraphicStructu
 	}
 
 	@Override
-	public void update(Observable gameModelForViews, Object arg) {
-		if (gameModelForViews != null) {
-			this.gameModelForViews = (GameModelForViews) gameModelForViews;
+	public void update(Observable gameModel, Object arg) {
+		if (gameModel instanceof GameModelForViews gameModelForViews) {
+			this.gameModelForViews = gameModelForViews;
 			repaint();
-		} else {
-			logger.info("gameModelForViews is null in " + PageLeftView.class);
 		}
 	}
 }

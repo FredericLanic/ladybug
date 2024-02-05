@@ -29,6 +29,7 @@ import lombok.Getter;
  * Enumération des sons à écouter dans le jeu
  *
  */
+@Getter
 public enum Sounds {
 	COMMON_TELEPORT("common_teleport.wav"), GAME_BEGIN_LEVEL("game_begin_level.wav"), GAME_SIREN_0("game_siren_0.wav"),
 	GAME_SIREN_1("game_siren_1.wav"), GAME_SIREN_2("game_siren_2.wav"), GAME_SIREN_3("game_siren_3.wav"),
@@ -37,7 +38,6 @@ public enum Sounds {
 	LADYBUG_EAT_GHOST("ladybug_eatghost.wav"), LADYBUG_EXTRA_PAC("ladybug_extralife.wav"),
 	LADYBUG_INTERMISSION("ladybug_intermission.wav"), LADYBUG_IS_DYING("ladybug_death.wav");
 
-	@Getter
 	private Clip clip;
 
 	Sounds(String fileName) {

@@ -17,6 +17,7 @@
 package com.kycox.game.constant.ghost;
 
 import java.awt.Image;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
 
@@ -30,6 +31,6 @@ public enum GhostHatImages {
 
 	GhostHatImages(String fileName) {
 		var pathName = "images/ghosts/hat/" + fileName;
-		image = new ImageIcon(GhostHatImages.class.getClassLoader().getResource(pathName)).getImage();
+		image = new ImageIcon(Objects.requireNonNull(GhostHatImages.class.getClassLoader().getResource(pathName))).getImage();
 	}
 }

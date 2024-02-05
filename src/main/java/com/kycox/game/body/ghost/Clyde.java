@@ -18,7 +18,7 @@ package com.kycox.game.body.ghost;
 
 import com.kycox.game.constant.ghost.GhostStatus;
 
-public class Clyde extends Ghost {
+public final class Clyde extends Ghost {
 	@Override
 	public void setInitSpeed(int numLevel) {
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));

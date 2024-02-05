@@ -19,18 +19,15 @@ package com.kycox.game.view.body;
 import java.awt.Image;
 
 import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public class BodyImg {
-	@Getter
-	private Image image;
-	@Getter
+	private final Image image;
+	@Setter
 	private BodyImg next;
 
 	public BodyImg(Image img) {
 		image = img;
-	}
-
-	public void setNext(BodyImg next) {
-		this.next = next;
 	}
 }

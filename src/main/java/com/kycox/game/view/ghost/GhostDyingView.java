@@ -25,24 +25,24 @@ import com.kycox.game.timer.TimerView;
 import com.kycox.game.view.body.BodyImg;
 
 public class GhostDyingView implements TimerView {
-	private static GhostDyingView ghostEatenlView = new GhostDyingView();
+	private static final GhostDyingView ghostEatenlView = new GhostDyingView();
 
 	public static GhostDyingView getInstance() {
 		return ghostEatenlView;
 	}
 
 	private BodyImg currentImg;
-	private BodyImg downEyes = new BodyImg(GhostEyesImages.GHOST_DOWN_EYES.getImage());
-	private BodyImg leftEyes = new BodyImg(GhostEyesImages.GHOST_LEFT_EYES.getImage());
-	private BodyImg rightEyes = new BodyImg(GhostEyesImages.GHOST_RIGHT_EYES.getImage());
-	private Timer timer;
-	private BodyImg upEyes = new BodyImg(GhostEyesImages.GHOST_UP_EYES.getImage());
+    private Timer timer;
 
-	private GhostDyingView() {
-		currentImg = leftEyes;
-		leftEyes.setNext(upEyes);
-		upEyes.setNext(rightEyes);
-		rightEyes.setNext(downEyes);
+    private GhostDyingView() {
+        BodyImg leftEyes = new BodyImg(GhostEyesImages.GHOST_LEFT_EYES.getImage());
+        currentImg = leftEyes;
+        BodyImg upEyes = new BodyImg(GhostEyesImages.GHOST_UP_EYES.getImage());
+        leftEyes.setNext(upEyes);
+        BodyImg rightEyes = new BodyImg(GhostEyesImages.GHOST_RIGHT_EYES.getImage());
+        upEyes.setNext(rightEyes);
+        BodyImg downEyes = new BodyImg(GhostEyesImages.GHOST_DOWN_EYES.getImage());
+        rightEyes.setNext(downEyes);
 		downEyes.setNext(leftEyes);
 		timer = createTimer();
 		timer.start();

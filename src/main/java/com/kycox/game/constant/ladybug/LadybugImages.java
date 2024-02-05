@@ -21,17 +21,18 @@ import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
+@Getter
 public enum LadybugImages {
     LADYBUG_UP_1("up1.png"), LADYBUG_UP_2("up2.png"), LADYBUG_UP_3("up3.png"), LADYBUG_UP_4("up4.png"),
 	LADYBUG_UP_5("up5.png"), LADYBUG_UP_6("up6.png"), LADYBUG_UP_7("up7.png"), LADYBUG_UP_8("up8.png"),
 	LADYBUG_UP_9("up9.png"), LADYBUG_UP_FULL("upFull.png");
 
-	@Getter
 	private Image image;
 
 	LadybugImages(String fileName) {
 		var pathName = "images/ladybug/color/blue/" + fileName;
-		image = new ImageIcon(GameImages.class.getClassLoader().getResource(pathName)).getImage();
+		image = new ImageIcon(Objects.requireNonNull(GameImages.class.getClassLoader().getResource(pathName))).getImage();
 	}
 }

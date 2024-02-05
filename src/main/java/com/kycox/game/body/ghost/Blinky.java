@@ -21,8 +21,8 @@ import com.kycox.game.maths.BlinkySpeedIndex;
 
 import lombok.Setter;
 
-public class Blinky extends Ghost {
-	@Setter
+@Setter
+public final class Blinky extends Ghost {
 	private BlinkySpeedIndex blinkySpeedIndex;
 
 	@Override

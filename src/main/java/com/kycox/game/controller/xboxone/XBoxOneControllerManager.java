@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 
+@Getter
 @Component
 @Conditional(WindowsHost.class)
 public class XBoxOneControllerManager {
 
-	@Getter
 	private ControllerManager controllerManager;
 
 	@PostConstruct

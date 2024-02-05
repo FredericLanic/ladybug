@@ -23,17 +23,11 @@ import com.kycox.game.bodyaction.BodyActions;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 public class GhostActions extends BodyActions {
-	@Setter
-	@Getter
 	private boolean eatenByLadybug = false;
-	@Setter
-	@Getter
 	private boolean eatLadybug = false;
-	@Setter
-	@Getter
 	private Point position;
-	@Setter
-	@Getter
 	private boolean regenerated = false;
 }

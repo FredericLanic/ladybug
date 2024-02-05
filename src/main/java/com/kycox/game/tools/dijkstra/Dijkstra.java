@@ -62,8 +62,6 @@ public class Dijkstra {
 	 * INDIVIDUELLEMENT
 	 *
 	 * @param screenData      : jeu en cours
-	 * @param startCoordinate : coordonnées de départ (unité : le block du
-	 *                        screenData)
 	 */
 	private Dijkstra(ScreenData screenData) {
 		// Création de la list des unités Dijkstra

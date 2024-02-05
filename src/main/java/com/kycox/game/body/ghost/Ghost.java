@@ -38,7 +38,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Ghost extends UserBody implements GhostForController, GhostForView {
+public abstract sealed class Ghost extends UserBody implements GhostForController, GhostForView permits Blinky, Clyde, Inky, Pinky {
 	private static final Log logger = LogFactory.getLog(Ghost.class);
 	@Getter
 	@Setter

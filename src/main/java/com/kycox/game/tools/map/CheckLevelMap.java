@@ -29,11 +29,6 @@ public class CheckLevelMap {
 	private int nbrBlocksByLines;
 	private int nbrLines;
 
-	/**
-	 * Vérifie le ScreenData
-	 *
-	 * @param data
-	 */
 	public void check(ScreenData screenData) {
 		nbrBlocksByLines = screenData.getCurrentLevel().getNbrBlocksByLine();
 		nbrLines = screenData.getNbrLines();
@@ -46,13 +41,6 @@ public class CheckLevelMap {
 		}
 	}
 
-	/**
-	 *
-	 * Vérifie le block
-	 *
-	 * @param block
-	 * @return
-	 */
 	private boolean checkScreenBlock(ScreenBlock block, ScreenData screenData) {
 		var hasChanged = false;
 		Point checkedPoint;

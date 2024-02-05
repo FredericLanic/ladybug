@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.awt.*;
 
+@Setter
 @Component
 public class GameModelPresentation extends AbstratGameModel implements IGameModelAction {
-	@Setter
 	private Point ghostRequest = GameMainConstants.POINT_ZERO;
 
 	private void moveBodies() {

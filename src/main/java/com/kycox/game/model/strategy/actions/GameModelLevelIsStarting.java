@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class GameModelLevelIsStarting extends AbstratGameModel implements IGameModelAction {
 	private static final Log logger = LogFactory.getLog(GameModelLevelIsStarting.class);
 	@Setter
-	private long beginningMilliseconds;
+	private long beginningDuration;
 	private final Fruits fruits;
 	private final GameMessaging gameMessaging;
 
@@ -59,7 +59,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		initLevel();
 		currentGameStatus.setLevelStarting();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-		waitAndDoActionAfterTimer.launch(beginningMilliseconds, currentGameStatus, CurrentProgramStatus.TO_INGAME);
+		waitAndDoActionAfterTimer.launch(beginningDuration, currentGameStatus, CurrentProgramStatus.TO_INGAME);
 		setSoundRequests();
 	}
 

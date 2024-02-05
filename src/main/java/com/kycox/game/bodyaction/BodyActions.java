@@ -19,8 +19,8 @@ package com.kycox.game.bodyaction;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 public abstract class BodyActions {
-	@Setter
-	@Getter
 	private boolean toBeTeleported = false;
 }

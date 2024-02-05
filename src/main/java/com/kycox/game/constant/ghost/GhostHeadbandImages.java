@@ -17,20 +17,21 @@
 package com.kycox.game.constant.ghost;
 
 import java.awt.Image;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
 
 import lombok.Getter;
 
+@Getter
 public enum GhostHeadbandImages {
 	HEADBAND_DOWN("HeadbandDown.png"), HEADBAND_LEFT("HeadbandLeft.png"), HEADBAND_RIGHT("HeadbandRight.png"),
 	HEADBAND_UP("HeadbandUp.png");
 
-	@Getter
-	private Image image;
+	private final Image image;
 
 	GhostHeadbandImages(String fileName) {
 		var pathName = "images/ghosts/headband/" + fileName;
-		image = new ImageIcon(GhostHeadbandImages.class.getClassLoader().getResource(pathName)).getImage();
+		image = new ImageIcon(Objects.requireNonNull(GhostHeadbandImages.class.getClassLoader().getResource(pathName))).getImage();
 	}
 }

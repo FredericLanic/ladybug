@@ -29,21 +29,15 @@ import lombok.Setter;
  * Valeur unitaire lors du parcours de l'algorithme Dijkstra
  *
  */
+@Setter
+@Getter
 public class UnitDijkstra {
-	@Getter
-	@Setter
 	private Point coordinate;
 	/**
 	 * Valeurs des poids : 999_999_999 : jamais calculé à : initialisation
 	 */
-	@Getter
-	@Setter
 	private int distance;
-	@Getter
-	@Setter
 	UnitDijkstra previousUnitDijkstra;
-	@Getter
-	@Setter
 	ScreenBlock screenBlock;
 
 	/**
@@ -58,7 +52,7 @@ public class UnitDijkstra {
 	}
 
 	/**
-	 * D�tricote le résultat obtenu
+	 * Détricote le résultat obtenu
 	 *
 	 * @return une liste de point à suivre pour aller du point A au point B (unités
 	 *         GRAPHIQUE)

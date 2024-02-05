@@ -16,6 +16,7 @@
  */
 package com.kycox.game.view.down;
 
+import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.message.GameMessaging;
@@ -106,13 +107,11 @@ public class PageEndView extends JPanel implements Observer, MainGraphicStructur
 	}
 
 	@Override
-	public void update(Observable gameModelForViews, Object arg) {
-		if (gameModelForViews != null) {
-			this.gameModelForViews = (GameModelForViews) gameModelForViews;
+	public void update(Observable gameModel, Object arg) {
+		if (gameModel instanceof GameModelForViews gameModelForViews) {
+			this.gameModelForViews = gameModelForViews;
 			setVariableToScoreView();
 			repaint();
-		} else {
-			logger.info("gameModelForViews is null in " + PageEndView.class);
 		}
 	}
 }

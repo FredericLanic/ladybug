@@ -23,9 +23,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Component
 public class GroupMessages {
-	@Getter
 	private final List<Message> messages = new ArrayList<>();
 
 	public void add(Point position, String value, MessageType messageType) {

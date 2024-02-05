@@ -26,14 +26,13 @@ import javax.swing.*;
 
 @Component
 public class LadybugView extends LadybugCommun implements TimerView {
-	private BodyImg ladybugFull01 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
-	private BodyImg ladybugFull02 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
-	private BodyImg ladybugUp1 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
-	private BodyImg ladybugUp2 = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
-	private BodyImg ladybugUp3 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
-	private Timer timer;
+	private final BodyImg ladybugFull01 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
+	private final BodyImg ladybugFull02 = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
+	private final BodyImg ladybugUp1 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
+	private final BodyImg ladybugUp2 = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
+	private final BodyImg ladybugUp3 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
 
-	@Override
+    @Override
 	public void doAction() {
 		setNextImage();
 	}
@@ -41,7 +40,7 @@ public class LadybugView extends LadybugCommun implements TimerView {
 	@PostConstruct
 	private void init() {
 		initUpImages();
-		timer = createTimer();
+        Timer timer = createTimer();
 		timer.start();
 	}
 

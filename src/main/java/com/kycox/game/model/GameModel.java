@@ -207,8 +207,8 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		return currentProgramStatus.isGameAskForceEndGame();
 	}
 
-	public void setBeginningMilliseconds(long beginningMilliseconds) {
-		manageActionContext.setBeginningMilliseconds(beginningMilliseconds);
+	public void setBeginningDuration(long beginningDuration) {
+		manageActionContext.setBeginningDuration(beginningDuration);
 	}
 
 	public void setTimeEndingMilliseconds(long timeEndingMilliseconds) {

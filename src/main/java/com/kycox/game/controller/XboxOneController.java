@@ -200,9 +200,11 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 	}
 
 	@Override
-	public void update(Observable gameModelForController, Object arg) {
-		this.gameModelForController = (GameModelForController) gameModelForController;
-		manageXboxesOneInGame();
+	public void update(Observable gameModel, Object arg) {
+		if (gameModel instanceof GameModelForController gameModelForController) {
+			this.gameModelForController = gameModelForController;
+			manageXboxesOneInGame();
+		}
 	}
 
 }

@@ -30,6 +30,7 @@ import lombok.Setter;
  * Class ScreenBlock correspond à une case dans le ScreenData
  *
  */
+@Getter
 public class ScreenBlock implements Cloneable {
 	private static final int DOWN = 8;
 	private static final int EATEN_POINT = 512;
@@ -42,15 +43,11 @@ public class ScreenBlock implements Cloneable {
 	private static final int RIGHT = 4;
 	private static final int TELEPORTATION = 256;
 	private static final int UP = 2;
-	@Getter
 	@Setter
 	private int content;
-	@Getter
 	@Setter
 	private Point coordinate = GameMainConstants.POINT_ZERO;
-	@Getter
 	private Point destinationPoint;
-	@Getter
 	private int idRefFruit;
 
 	public ScreenBlock(int content) {

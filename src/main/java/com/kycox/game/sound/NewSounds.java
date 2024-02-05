@@ -27,7 +27,7 @@ import java.util.List;
 @Component
 public class NewSounds implements NewSoundsForGameSounds {
 	@Getter
-	private List<Sounds> sounds = new ArrayList<>();
+	private final List<Sounds> sounds = new ArrayList<>();
 
 	public void addDyingGhost(boolean mustBeAdded) {
 		addSounds(Sounds.GHOST_EATEN, mustBeAdded);

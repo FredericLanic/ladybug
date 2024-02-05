@@ -21,14 +21,13 @@ import java.awt.Image;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 public enum GhostsBodyImages {
 	CYAN(GhostsColorImages.GHOST_CYAN_COLOR, true), ORANGE(GhostsColorImages.GHOST_ORANGE_COLOR, true),
 	PINK(GhostsColorImages.GHOST_PINK_COLOR, true), RED(GhostsColorImages.GHOST_RED_COLOR, true);
 
-	@Getter
 	private final GhostsColorImages ghostColorBody;
 
-	@Getter
 	@Setter // ici je triche
 	private boolean isComputed;
 

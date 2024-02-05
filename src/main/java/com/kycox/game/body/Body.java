@@ -25,26 +25,20 @@ import lombok.Setter;
 
 import java.awt.*;
 
+@Getter
 public abstract class Body {
-	@Getter
 	@Setter
 	private Point direction = GameMainConstants.POINT_ZERO;
-	@Getter
 	@Setter
 	private int leftLifes = 0;
-	@Getter
 	@Setter
 	private boolean newLife = false;
-	@Getter
 	@Setter
 	private Point position = GameMainConstants.POINT_ZERO;
 	@Setter
-	@Getter
 	private SpeedFunction speedFunction;
-	@Getter
 	@Setter
 	private int speedIndex = 0;
-	@Getter
 	private int startSpeedIndex = 0;
 
 	public Point getFrontPositionBlock(ScreenData screenData) {

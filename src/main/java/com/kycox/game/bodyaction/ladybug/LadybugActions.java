@@ -23,18 +23,12 @@ import com.kycox.game.level.ScreenBlock;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 public class LadybugActions extends BodyActions {
-	@Setter
-	@Getter
 	private ScreenBlock currentScreenBlock;
-	@Setter
-	@Getter
 	private int eatenAIdRefFruit;
-	@Setter
-	@Getter
 	private boolean eatenAMegaPoint;
-	@Setter
-	@Getter
 	private boolean eatenAPoint;
 	public LadybugActions() {
 		eatenAIdRefFruit = GameMainConstants.NOFRUITID;

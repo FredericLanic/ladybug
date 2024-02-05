@@ -38,22 +38,22 @@ public class GameSounds implements Observer {
 	 *
 	 * @return
 	 */
-	public long getMillisecondLadybugDeath() {
+	public long getLadybugAgonyDuration() {
 		var clipLadybugDying = Sounds.LADYBUG_IS_DYING.getClip();
 		return clipLadybugDying.getMicrosecondLength() / 1000;
 	}
 
-	public long getMillisecondNewLife() {
+	public long getNewLifePocDuration() {
 		var clipNewLife = Sounds.LADYBUG_EXTRA_PAC.getClip();
 		return clipNewLife.getMicrosecondLength() / 1000;
 	}
 
-	public long getMillisecondsBeginning() {
+	public long getBeginningDuration() {
 		var clipBeginning = Sounds.GAME_BEGIN_LEVEL.getClip();
 		return clipBeginning.getMicrosecondLength() / 1000;
 	}
 
-	public long getMillisecondsIntermission() {
+	public long getIntermissionDuration() {
 		var clipBeginning = Sounds.LADYBUG_INTERMISSION.getClip();
 		return clipBeginning.getMicrosecondLength() / 1000;
 	}
@@ -97,13 +97,14 @@ public class GameSounds implements Observer {
 	}
 
 	@Override
-	public void update(Observable gameModelForSound, Object arg) {
-		var gameModel = (GameModelForSounds) gameModelForSound;
-		newSounds = gameModel.getNewSounds();
-		if (gameModel.isSoundActive()) {
-			playSounds();
-		} else {
-			stopAllSounds();
+	public void update(Observable gameModel, Object arg) {
+		if (gameModel instanceof GameModelForSounds gameModelForSounds) {
+			newSounds = gameModelForSounds.getNewSounds();
+			if (gameModelForSounds.isSoundActive()) {
+				playSounds();
+			} else {
+				stopAllSounds();
+			}
 		}
 	}
 }

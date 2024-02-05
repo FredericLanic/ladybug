@@ -12,12 +12,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class SimpleTimer {
-	private class WaiterTimer extends TimerTask {
+	private static class WaiterTimer extends TimerTask {
 		private static final Log logger = LogFactory.getLog(WaiterTimer.class);
-		private long duration;
+		private final long duration;
 
 		@Getter
-		private Timer timer;
+		private final Timer timer;
 
 		@Setter
 		private TimerStatus timerStatus;

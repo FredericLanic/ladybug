@@ -29,13 +29,11 @@ import com.kycox.game.level.ScreenData;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
-	@Getter
+@Getter
+public final class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
 	private LadybugActions ladybugActions;
 	@Setter
-	@Getter
 	private LadybugStatus status = LadybugStatus.NORMAL;
-	@Getter
 	private Point viewDirection = GameMainConstants.POINT_UP;
 
 	public int getEatenAIdRefFruit() {

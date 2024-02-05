@@ -5,18 +5,14 @@ import com.kycox.game.constant.FruitsImages;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 class Fruit {
-	@Getter
 	@Setter
 	private int activationPercent;
-	@Getter
 	private final FruitsImages fruitImage;
-	@Getter
 	private final int idFruit;
-	@Getter
 	@Setter
 	private Fruit next;
-	@Getter
 	private final int score;
 
 	public Fruit(int idFruit, FruitsImages fruitImage, int score, int activationPercent) {

@@ -59,8 +59,8 @@ public class ManageActionContext {
 		return mapGameContext.get(GameStatus.NO_STATUS);
 	}
 
-	public void setBeginningMilliseconds(long beginningMilliseconds) {
-		gameModelLevelIsStarting.setBeginningMilliseconds(beginningMilliseconds);
+	public void setBeginningDuration(long beginningMilliseconds) {
+		gameModelLevelIsStarting.setBeginningDuration(beginningMilliseconds);
 	}
 
 	public void setTimeEndingMilliseconds(long timeEndingMilliseconds) {

@@ -35,6 +35,7 @@ public class MainLadybug {
 //	public static void main(String[] args) {
 //		SpringApplication.run(MainLadybug.class, args);
 //	}
+
 	/** lecture du contexte Spring de l'application */
 	private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
 	private final MainFrame mainFrame = applicationContext.getBean("MainFrame", MainFrame.class);

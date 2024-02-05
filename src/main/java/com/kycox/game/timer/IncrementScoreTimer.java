@@ -45,9 +45,7 @@ public class IncrementScoreTimer {
 	/**
 	 * Constructeur
 	 *
-	 * @param scoreIncremenet : modèle du jeu
-	 * @param numThread       : numéro du thread (1: principal, autrement
-	 *                        clignottement)
+	 * @param scoreIncremenet : modèle du jeu)
 	 */
 	public IncrementScoreTimer(Message scoreIncremenet) {
 		scoreIncrement = scoreIncremenet;

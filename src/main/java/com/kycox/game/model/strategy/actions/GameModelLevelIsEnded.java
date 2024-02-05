@@ -7,9 +7,9 @@ import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+@Setter
 @Component
 public class GameModelLevelIsEnded extends AbstratGameModel implements IGameModelAction {
-	@Setter
 	private long endingLevelMilliseconds;
 
 	@Override

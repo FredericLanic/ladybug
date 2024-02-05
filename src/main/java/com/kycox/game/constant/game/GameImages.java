@@ -17,6 +17,7 @@
 package com.kycox.game.constant.game;
 
 import java.awt.Image;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
 
@@ -28,6 +29,7 @@ import lombok.Getter;
  * @author kycox
  *
  */
+@Getter
 public enum GameImages {
 	EMPTY("images/empty.png"),
     // ladybug plugins
@@ -35,10 +37,9 @@ public enum GameImages {
     // teleportation
 	TELEPORTATION("images/Teleportation.png");
 
-	@Getter
 	private Image image;
 
 	GameImages(String fileName) {
-		image = new ImageIcon(GameImages.class.getClassLoader().getResource(fileName)).getImage();
+		image = new ImageIcon(Objects.requireNonNull(GameImages.class.getClassLoader().getResource(fileName))).getImage();
 	}
 }

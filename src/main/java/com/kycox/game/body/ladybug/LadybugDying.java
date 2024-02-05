@@ -26,7 +26,7 @@ public class LadybugDying {
 	private int bip;
 	@Setter
 	@Getter
-	private long millisecondLenght = 0;
+	private long agonyDuration = 0;
 
 	public void initBip() {
 		bip = 0;
@@ -37,7 +37,7 @@ public class LadybugDying {
 	}
 
 	public boolean isEnd() {
-		return bip * GameMainConstants.PACE >= millisecondLenght;
+		return (long) bip * GameMainConstants.PACE >= agonyDuration;
 	}
 
 	public boolean isInProgress() {

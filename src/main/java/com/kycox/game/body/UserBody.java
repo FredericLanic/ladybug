@@ -16,6 +16,7 @@
  */
 package com.kycox.game.body;
 
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.level.ScreenBlock;
 import com.kycox.game.level.ScreenData;
@@ -24,8 +25,8 @@ import lombok.Setter;
 
 import java.awt.*;
 
+@Setter
 public abstract class UserBody extends Body {
-	@Setter
 	protected Point userRequest = GameMainConstants.POINT_ZERO;
 
 	protected boolean canMove(Point direction, ScreenBlock screenBlock) {

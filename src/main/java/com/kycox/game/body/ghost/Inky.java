@@ -18,7 +18,7 @@ package com.kycox.game.body.ghost;
 
 import com.kycox.game.constant.ghost.GhostStatus;
 
-public class Inky extends Ghost {
+public final class Inky extends Ghost {
 	@Override
 	public void setInitSpeed(int numLevel) {
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel));

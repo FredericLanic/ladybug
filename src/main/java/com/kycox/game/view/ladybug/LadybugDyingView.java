@@ -53,7 +53,7 @@ public class LadybugDyingView extends LadybugCommun {
 	@Override
 	public Image getImage(Point direction) {
 		var displayImage = super.getImage(direction);
-		if (mustNextImage()) {
+		if (mustShowNextImage()) {
 			deltaBips = 0;
 			setNextImage();
 		}
@@ -86,8 +86,8 @@ public class LadybugDyingView extends LadybugCommun {
 		deltaBips++;
 	}
 
-	private boolean mustNextImage() {
-		var nbrBips = ladybugDying.getMillisecondLenght() / GameMainConstants.PACE;
+	private boolean mustShowNextImage() {
+		var nbrBips = ladybugDying.getAgonyDuration() / GameMainConstants.PACE;
 		int nbrImages = 19;
 		var nbrBitPerImage = nbrBips / nbrImages;
 		return deltaBips > nbrBitPerImage;
