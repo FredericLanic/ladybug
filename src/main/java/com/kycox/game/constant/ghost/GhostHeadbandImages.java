@@ -29,9 +29,10 @@ public enum GhostHeadbandImages {
 	HEADBAND_UP("HeadbandUp.png");
 
 	private final Image image;
+	private final ClassLoader classLoader = getClass().getClassLoader();
 
 	GhostHeadbandImages(String fileName) {
 		var pathName = "images/ghosts/headband/" + fileName;
-		image = new ImageIcon(Objects.requireNonNull(GhostHeadbandImages.class.getClassLoader().getResource(pathName))).getImage();
+		image = new ImageIcon(Objects.requireNonNull(classLoader.getResource(pathName))).getImage();
 	}
 }

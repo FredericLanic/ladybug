@@ -30,7 +30,7 @@ import java.awt.*;
  * Frame principale du jeu.
  * FIXME : peut-être utiliser une autre techno que swing
  */
-@Component("MainFrame")
+@Component
 public class MainFrame extends JFrame implements MainGraphicStructure {
 	private final CentralView gameView;
 	private final PageEndView pageEndView;

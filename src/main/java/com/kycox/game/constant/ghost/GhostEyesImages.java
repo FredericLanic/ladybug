@@ -28,9 +28,10 @@ public enum GhostEyesImages {
 	GHOST_UP_EYES("UpEyes.png");
 
 	private final Image image;
+	private final ClassLoader classLoader = getClass().getClassLoader();
 
 	GhostEyesImages(String fileName) {
 		var pathName = "images/ghosts/eyes/" + fileName;
-		image = new ImageIcon(Objects.requireNonNull(GhostEyesImages.class.getClassLoader().getResource(pathName))).getImage();
+		image = new ImageIcon(Objects.requireNonNull(classLoader.getResource(pathName))).getImage();
 	}
 }

@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import javax.swing.ImageIcon;
 
+import com.kycox.game.constant.FruitsImages;
 import lombok.Getter;
 
 /**
@@ -37,9 +38,10 @@ public enum GameImages {
     // teleportation
 	TELEPORTATION("images/Teleportation.png");
 
-	private Image image;
+	private final Image image;
+	private final ClassLoader classLoader = getClass().getClassLoader();
 
 	GameImages(String fileName) {
-		image = new ImageIcon(Objects.requireNonNull(GameImages.class.getClassLoader().getResource(fileName))).getImage();
+		image = new ImageIcon(Objects.requireNonNull(classLoader.getResource(fileName))).getImage();
 	}
 }

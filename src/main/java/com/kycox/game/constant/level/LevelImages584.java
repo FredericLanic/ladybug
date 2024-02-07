@@ -1,6 +1,5 @@
 package com.kycox.game.constant.level;
 
-import com.kycox.game.constant.FruitsImages;
 import lombok.Getter;
 
 import javax.swing.*;
@@ -25,10 +24,11 @@ public enum LevelImages584 {
 
 	GOLD("gold.png"), MEGA_GOLD("megaGold.png");
 
-	private Image image;
+	private final Image image;
+	private final ClassLoader classLoader = getClass().getClassLoader();
 
 	LevelImages584(String fileName) {
 		var pathName = "images/level/584/" + fileName;
-		image = new ImageIcon(Objects.requireNonNull(FruitsImages.class.getClassLoader().getResource(pathName))).getImage();
+		image = new ImageIcon(Objects.requireNonNull(classLoader.getResource(pathName))).getImage();
 	}
 }

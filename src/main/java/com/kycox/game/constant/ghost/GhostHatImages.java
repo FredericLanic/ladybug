@@ -28,9 +28,10 @@ public enum GhostHatImages {
 
 	@Getter
 	private final Image image;
+	private final ClassLoader classLoader = getClass().getClassLoader();
 
 	GhostHatImages(String fileName) {
 		var pathName = "images/ghosts/hat/" + fileName;
-		image = new ImageIcon(Objects.requireNonNull(GhostHatImages.class.getClassLoader().getResource(pathName))).getImage();
+		image = new ImageIcon(Objects.requireNonNull(classLoader.getResource(pathName))).getImage();
 	}
 }

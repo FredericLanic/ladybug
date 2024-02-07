@@ -16,7 +16,6 @@
  */
 package com.kycox.game.constant.ladybug;
 
-import com.kycox.game.constant.game.GameImages;
 import lombok.Getter;
 
 import javax.swing.*;
@@ -29,10 +28,11 @@ public enum LadybugImages {
 	LADYBUG_UP_5("up5.png"), LADYBUG_UP_6("up6.png"), LADYBUG_UP_7("up7.png"), LADYBUG_UP_8("up8.png"),
 	LADYBUG_UP_9("up9.png"), LADYBUG_UP_FULL("upFull.png");
 
-	private Image image;
+	private final Image image;
+	private final ClassLoader classLoader = getClass().getClassLoader();
 
 	LadybugImages(String fileName) {
 		var pathName = "images/ladybug/color/blue/" + fileName;
-		image = new ImageIcon(Objects.requireNonNull(GameImages.class.getClassLoader().getResource(pathName))).getImage();
+		image = new ImageIcon(Objects.requireNonNull(classLoader.getResource(pathName))).getImage();
 	}
 }

@@ -32,9 +32,10 @@ public enum GhostsColorImages {
 	GHOST_PINK_COLOR("pink.png"), GHOST_RED_COLOR("red.png"), GHOST_CAMOUFLAGE_COLOR("camouflage.png"), GHOST_GRAY_CAMOUFLAGE_COLOR("greyCamouflage.png");
 
 	private final Image image;
+	private final ClassLoader classLoader = getClass().getClassLoader();
 
 	GhostsColorImages(String fileName) {
 		var pathName = "images/ghosts/color/" + fileName;
-		image = new ImageIcon(Objects.requireNonNull(GhostsColorImages.class.getClassLoader().getResource(pathName))).getImage();
+		image = new ImageIcon(Objects.requireNonNull(classLoader.getResource(pathName))).getImage();
 	}
 }
