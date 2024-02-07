@@ -21,8 +21,10 @@ import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.font.GameFont;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
+import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.controller.KeyboardController;
+import com.kycox.game.model.EventGameModel;
 import com.kycox.game.score.Message;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
@@ -35,6 +37,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -44,7 +47,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 @Component
-public class CentralView extends JPanel implements Observer, DoActionAfterTimer {
+public class CentralView extends JPanel implements ApplicationListener<EventGameModel>, DoActionAfterTimer {
 	private static final Log logger = LogFactory.getLog(CentralView.class);
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -300,9 +303,10 @@ public class CentralView extends JPanel implements Observer, DoActionAfterTimer 
 	}
 
 	@Override
-	public void update(Observable gameModel, Object used) {
-		if (gameModel instanceof GameModelForViews gameModelForViews) {
-			this.gameModelForViews = gameModelForViews;
+	public void onApplicationEvent(EventGameModel event) {
+		Object obj = event.getGameModel();
+		if (obj instanceof GameModelForViews eventGameModelForViews) {
+			gameModelForViews = eventGameModelForViews;
 			repaint();
 		}
 	}

@@ -38,6 +38,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -53,9 +55,8 @@ import static com.kycox.game.constant.GameMainConstants.PACE;
 /**
  * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du jeu)
  */
-@SuppressWarnings("deprecation")
 @Component
-public class GameModel extends Observable implements GameModelForViews, GameModelForSounds, GameModelForController {
+public class GameModel implements GameModelForViews, GameModelForSounds, GameModelForController {
 	private static final Log logger = LogFactory.getLog(GameModel.class);
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
@@ -91,6 +92,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	private boolean atLeastOneXboxOneConnected;
 	@Getter
 	boolean debugMode = false;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
 	public GameModel(CurrentProgramStatus currentProgramStatus,
 					 GameMessaging gameMessaging,
@@ -102,7 +104,8 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 					 LadybugDying ladybugDying,
 					 NewSounds newSounds,
 					 ScreenData screenData,
-					 ManageActionContext manageActionContext) {
+					 ManageActionContext manageActionContext,
+					 ApplicationEventPublisher applicationEventPublisher) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
 		this.gameModelManageAction = gameModelManageAction;
@@ -114,6 +117,8 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 		this.ladybugDying = ladybugDying;
 		this.newSounds = newSounds;
 		this.screenData = screenData;
+		// pour envoyer aux autres vues l'état courant du jeu
+		this.applicationEventPublisher = applicationEventPublisher;
 	}
 
 	@PostConstruct
@@ -126,8 +131,7 @@ public class GameModel extends Observable implements GameModelForViews, GameMode
 	private void actionsByTimerBip() {
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
-		setChanged();
-		notifyObservers();
+		applicationEventPublisher.publishEvent(new EventGameModel(this, this));
 	}
 
 	@Override

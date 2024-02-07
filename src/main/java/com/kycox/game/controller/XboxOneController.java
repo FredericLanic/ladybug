@@ -2,15 +2,18 @@ package com.kycox.game.controller;
 
 import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.contract.GameModelForController;
+import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.GhostForController;
 import com.kycox.game.constant.XboxOneConstants;
 import com.kycox.game.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.controller.xboxone.XboxRequest;
 import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
+import com.kycox.game.model.EventGameModel;
 import com.kycox.game.os.WindowsHost;
 import com.kycox.game.properties.GameProperties;
 
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +22,7 @@ import java.util.Observer;
 
 @Component
 @Conditional(WindowsHost.class)
-public class XboxOneController extends XBoxOneControllerManager implements Observer {
+public class XboxOneController extends XBoxOneControllerManager implements ApplicationListener<EventGameModel> {
 
 	private final GameMessaging gameMessaging;
 	private GameModelForController gameModelForController;
@@ -200,11 +203,11 @@ public class XboxOneController extends XBoxOneControllerManager implements Obser
 	}
 
 	@Override
-	public void update(Observable gameModel, Object arg) {
-		if (gameModel instanceof GameModelForController gameModelForController) {
-			this.gameModelForController = gameModelForController;
+	public void onApplicationEvent(EventGameModel event) {
+		Object obj = event.getGameModel();
+		if (obj instanceof GameModelForController eventGameModelForController) {
+			gameModelForController = eventGameModelForController;
 			manageXboxesOneInGame();
 		}
 	}
-
 }

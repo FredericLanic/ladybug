@@ -21,8 +21,10 @@ import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.GroupGhostForGameView;
 import com.kycox.game.contract.LadybugForGameView;
 import com.kycox.game.contract.MainGraphicStructure;
+import com.kycox.game.model.EventGameModel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -32,7 +34,7 @@ import java.util.Observer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-public class PageLeftView extends JPanel implements Observer, MainGraphicStructure {
+public class PageLeftView extends JPanel implements ApplicationListener<EventGameModel>, MainGraphicStructure {
 	private static final Log logger = LogFactory.getLog(PageLeftView.class);
 	private transient GameModelForViews gameModelForViews;
 
@@ -106,9 +108,10 @@ public class PageLeftView extends JPanel implements Observer, MainGraphicStructu
 	}
 
 	@Override
-	public void update(Observable gameModel, Object arg) {
-		if (gameModel instanceof GameModelForViews gameModelForViews) {
-			this.gameModelForViews = gameModelForViews;
+	public void onApplicationEvent(EventGameModel event) {
+		Object obj = event.getGameModel();
+		if (obj instanceof GameModelForViews eventGameModelForViews) {
+			gameModelForViews = eventGameModelForViews;
 			repaint();
 		}
 	}

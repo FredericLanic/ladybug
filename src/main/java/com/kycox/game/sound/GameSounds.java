@@ -19,6 +19,8 @@ package com.kycox.game.sound;
 import com.kycox.game.constant.Sounds;
 import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.NewSoundsForGameSounds;
+import com.kycox.game.model.EventGameModel;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.util.Observable;
@@ -29,7 +31,8 @@ import java.util.Observer;
  *
  */
 @Component
-public class GameSounds implements Observer {
+public class GameSounds implements ApplicationListener<EventGameModel> {
+//public class GameSounds implements ApplicationListener<EventGameModel> {
 	private NewSoundsForGameSounds newSounds;
 
 	/**
@@ -97,14 +100,13 @@ public class GameSounds implements Observer {
 	}
 
 	@Override
-	public void update(Observable gameModel, Object arg) {
-		if (gameModel instanceof GameModelForSounds gameModelForSounds) {
-			newSounds = gameModelForSounds.getNewSounds();
-			if (gameModelForSounds.isSoundActive()) {
-				playSounds();
-			} else {
-				stopAllSounds();
-			}
+	public void onApplicationEvent(EventGameModel event) {
+		GameModelForSounds gameModelForSounds = event.getGameModel();
+		newSounds = gameModelForSounds.getNewSounds();
+		if (gameModelForSounds.isSoundActive()) {
+			playSounds();
+		} else {
+			stopAllSounds();
 		}
 	}
 }

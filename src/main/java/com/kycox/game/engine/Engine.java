@@ -16,15 +16,10 @@
  */
 package com.kycox.game.engine;
 
-import com.kycox.game.controller.XboxOneController;
 import com.kycox.game.model.GameModel;
 import com.kycox.game.sound.GameSounds;
 import com.kycox.game.view.CentralView;
-import com.kycox.game.view.down.PageEndView;
-import com.kycox.game.view.left.PageLeftView;
 import jakarta.annotation.PostConstruct;
-
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -32,30 +27,15 @@ public class Engine {
 	private final CentralView centralView;
 	private final GameModel gameModel;
 	private final GameSounds gameSounds;
-	private final PageEndView pageEndView;
-	private final PageLeftView pageLeftView;
-	private final XboxOneController xboxOneController;
 
-	public Engine(GameModel gameModel, GameSounds gameSounds, CentralView centralView, PageEndView pageEndView, PageLeftView pageLeftView, @Nullable XboxOneController xboxOneController) {
+	public Engine(GameModel gameModel, GameSounds gameSounds, CentralView centralView) {
 		this.gameModel = gameModel;
 		this.gameSounds = gameSounds;
 		this.centralView = centralView;
-		this.pageEndView = pageEndView;
-		this.pageLeftView = pageLeftView;
-		this.xboxOneController = xboxOneController;
 	}
 
-	/**
-	 * note : use PAD CONTROLLER PadController padController = new
-	 * PadController(gameModel) for joystick
-	 */
 	@PostConstruct
 	public void init() {
-		gameModel.addObserver(centralView);
-		gameModel.addObserver(gameSounds);
-		gameModel.addObserver(pageEndView);
-		gameModel.addObserver(pageLeftView);
-		if(xboxOneController != null) gameModel.addObserver(xboxOneController);
 		// on récupère la longueur du son de la mort de ladybug et on l'affecte
 		gameModel.getLadybugDying().setAgonyDuration(gameSounds.getLadybugAgonyDuration());
 		gameModel.setBeginningDuration(gameSounds.getBeginningDuration());
