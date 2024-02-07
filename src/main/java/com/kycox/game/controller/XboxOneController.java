@@ -204,7 +204,7 @@ public class XboxOneController extends XBoxOneControllerManager implements Appli
 
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
-		Object obj = event.getGameModel();
+		Object obj = event.getSource();
 		if (obj instanceof GameModelForController eventGameModelForController) {
 			gameModelForController = eventGameModelForController;
 			manageXboxesOneInGame();

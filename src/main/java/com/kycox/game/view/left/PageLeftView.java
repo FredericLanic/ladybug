@@ -109,7 +109,7 @@ public class PageLeftView extends JPanel implements ApplicationListener<EventGam
 
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
-		Object obj = event.getGameModel();
+		Object obj = event.getSource();
 		if (obj instanceof GameModelForViews eventGameModelForViews) {
 			gameModelForViews = eventGameModelForViews;
 			repaint();

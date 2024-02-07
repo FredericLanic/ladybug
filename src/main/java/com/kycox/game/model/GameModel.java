@@ -131,7 +131,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	private void actionsByTimerBip() {
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
-		applicationEventPublisher.publishEvent(new EventGameModel(this, this));
+		applicationEventPublisher.publishEvent(new EventGameModel(this));
 	}
 
 	@Override

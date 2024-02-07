@@ -101,12 +101,14 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
-		GameModelForSounds gameModelForSounds = event.getGameModel();
-		newSounds = gameModelForSounds.getNewSounds();
-		if (gameModelForSounds.isSoundActive()) {
-			playSounds();
-		} else {
-			stopAllSounds();
+		Object obj = event.getSource();
+		if (obj instanceof GameModelForSounds gameModelForSounds) {
+			newSounds = gameModelForSounds.getNewSounds();
+			if (gameModelForSounds.isSoundActive()) {
+				playSounds();
+			} else {
+				stopAllSounds();
+			}
 		}
 	}
 }

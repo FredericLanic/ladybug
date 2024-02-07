@@ -296,15 +296,13 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 
 	@Override
 	public void paintComponent(Graphics g) {
-//		if (gameModelForViews != null) {
-			super.paintComponent(g);
-			draw(g);
-//		}
+		super.paintComponent(g);
+		draw(g);
 	}
 
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
-		Object obj = event.getGameModel();
+		Object obj = event.getSource();
 		if (obj instanceof GameModelForViews eventGameModelForViews) {
 			gameModelForViews = eventGameModelForViews;
 			repaint();
