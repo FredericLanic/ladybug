@@ -21,30 +21,16 @@ import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.Clip;
 
-/**
- * Processus pour écouter le clip
- *
- * @see Thread
- */
 public class ListenSound extends Thread {
 	private static final Logger logger = LoggerFactory.getLogger(ListenSound.class);
-	// clip partagé par les Threads
-	private Clip clip;
+	private final Clip clip;
 	private long microsecondLength = 0;
 
-	/**
-	 * Constructeur
-	 *
-	 * @param clip
-	 */
 	public ListenSound(Clip clip) {
 		this.clip = clip;
 		microsecondLength = clip.getMicrosecondLength();
 	}
 
-	/**
-	 * The sound is load and play in a thread no slow down the engine.
-	 */
 	@Override
 	public void run() {
 		var end = false;

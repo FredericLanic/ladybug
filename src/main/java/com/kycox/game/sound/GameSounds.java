@@ -23,8 +23,7 @@ import com.kycox.game.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import java.util.Observable;
-import java.util.Observer;
+import java.util.Arrays;
 
 /**
  * Gestion du son dans le jeu
@@ -32,21 +31,14 @@ import java.util.Observer;
  */
 @Component
 public class GameSounds implements ApplicationListener<EventGameModel> {
-//public class GameSounds implements ApplicationListener<EventGameModel> {
 	private NewSoundsForGameSounds newSounds;
 
-	/**
-	 * Retourne le temps en millisecondes de la musique de la mort de ladybug
-	 * Utilisé dans la cinématique KinematicLadybugDeath
-	 *
-	 * @return
-	 */
 	public long getLadybugAgonyDuration() {
 		var clipLadybugDying = Sounds.LADYBUG_IS_DYING.getClip();
 		return clipLadybugDying.getMicrosecondLength() / 1000;
 	}
 
-	public long getNewLifePocDuration() {
+	public long getNewLifeFunDuration() {
 		var clipNewLife = Sounds.LADYBUG_EXTRA_PAC.getClip();
 		return clipNewLife.getMicrosecondLength() / 1000;
 	}
@@ -61,9 +53,6 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 		return clipBeginning.getMicrosecondLength() / 1000;
 	}
 
-	/**
-	 * Lancement des sons sélectionnés par le modèle
-	 */
 	public void playSounds() {
 		if (newSounds.hasSound(Sounds.LADYBUG_IS_DYING)) {
 			stopAllSounds();
@@ -75,28 +64,19 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 		if (newSounds.hasSound(Sounds.LADYBUG_INTERMISSION)) {
 			stopAllSoundsExcept(Sounds.LADYBUG_INTERMISSION);
 		}
-		var soundsEnums = Sounds.values();
-		for (Sounds soundsEnum : soundsEnums) {
-			if (newSounds.hasSound(soundsEnum)) {
-				new ListenSound(soundsEnum.getClip()).start();
-			}
-		}
+
+		Arrays.stream(Sounds.values()).filter(soundsEnum -> newSounds.hasSound(soundsEnum))
+				.forEach(sounds -> new ListenSound(sounds.getClip()).start());
 	}
 
 	private void stopAllSounds() {
-		var soundsEnums = Sounds.values();
-		for (Sounds soundsEnum : soundsEnums) {
-			soundsEnum.stopSound();
-		}
+		Arrays.stream(Sounds.values()).forEach(Sounds::stopSound);
 	}
 
-	private void stopAllSoundsExcept(Sounds sound) {
-		var soundsEnums = Sounds.values();
-		for (Sounds soundsEnum : soundsEnums) {
-			if (!soundsEnum.equals(sound)) {
-				soundsEnum.stopSound();
-			}
-		}
+	private void stopAllSoundsExcept(Sounds exceptSound) {
+		Arrays.stream(Sounds.values())
+				.filter(sound -> !sound.equals(exceptSound))
+				.forEach(Sounds::stopSound);
 	}
 
 	@Override

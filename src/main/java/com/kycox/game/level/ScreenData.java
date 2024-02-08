@@ -31,6 +31,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 /**
  * La map du jeu en cours
@@ -66,10 +68,7 @@ public final class ScreenData {
 
 	public List<UnitDijkstra> convertToDjistraList() {
 		List<UnitDijkstra> lstUnitDijkstra = new ArrayList<>();
-		// java8 : faire un stream
-		for (ScreenBlock block : dataScreenBlocks) {
-			lstUnitDijkstra.add(new UnitDijkstra(block));
-		}
+		dataScreenBlocks.forEach(dataScreenBlock -> lstUnitDijkstra.add(new UnitDijkstra(dataScreenBlock)));
 		return lstUnitDijkstra;
 	}
 
@@ -94,31 +93,17 @@ public final class ScreenData {
 	}
 
 	private int getPosNumEatenPoint(int numPoint) {
-		var nbrPoint = 0;
-		var pos = 0;
-		for (var i = 0; i < dataScreenBlocks.size(); i++) {
-			if (dataScreenBlocks.get(i).isEatenPoint()) {
-				nbrPoint++;
-				if (nbrPoint == numPoint) {
-					pos = i;
-				}
-			}
-		}
-		return pos;
+		return IntStream.range(0, dataScreenBlocks.size()).filter(i -> dataScreenBlocks.get(i).isEatenPoint())
+				.limit(numPoint)
+				.max()
+				.orElse(0);
 	}
 
 	private int getPosNumPoint(int numPoint) {
-		var nbrPoint = 0;
-		var pos = 0;
-		for (var i = 0; i < dataScreenBlocks.size(); i++) {
-			if (dataScreenBlocks.get(i).isPoint()) {
-				nbrPoint++;
-				if (nbrPoint == numPoint) {
-					pos = i;
-				}
-			}
-		}
-		return pos;
+		return IntStream.range(0, dataScreenBlocks.size()).filter(i -> dataScreenBlocks.get(i).isPoint())
+				.limit(numPoint)
+				.max()
+				.orElse(0);
 	}
 
 	private int getRandomPosNumEatenPoint() {
@@ -168,19 +153,22 @@ public final class ScreenData {
 		// vérification des bordures des blocks
 		var checkScreenBlockBorders = new CheckScreenBlockBorders(this);
 		checkScreenBlockBorders.checkDataBlockBorder();
-		dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
+		dataScreenBlocks.stream()
+				.filter(b -> b.getCoordinate().equals(currentLevel.getGhostRegenerateBlockPoint()))
 		        .forEach(ScreenBlock::addGhostReviver);
 		if (isInGame) {
 			// ajout des mega points aléatoires
 			for (var i = 0; i < currentLevel.getNbrMegaPoints(); i++) {
 				var randomPoint = getRandomPosOnAPoint();
-				dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(randomPoint))
+				dataScreenBlocks.stream()
+						.filter(b -> b.getCoordinate().equals(randomPoint))
 				        .forEach(ScreenBlock::addMegaPoint);
 			}
-			// ajoute des points de téléportation s'il existe dans la level
+			// ajoute des points de téléportation s'il existe dans le level
 			var teleportPoints = currentLevel.getTeleportPoints();
 			for (Map.Entry<Point, Point> m : teleportPoints.entrySet()) {
-				dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(m.getKey()))
+				dataScreenBlocks.stream()
+						.filter(b -> b.getCoordinate().equals(m.getKey()))
 				        .forEach(sb -> sb.addTeleportation(m.getValue()));
 			}
 

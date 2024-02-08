@@ -41,6 +41,6 @@ public class Engine {
 		gameModel.setBeginningDuration(gameSounds.getBeginningDuration());
 		gameModel.setTimeEndingMilliseconds(1500);
 		gameModel.setEndingLevelMilliseconds(gameSounds.getIntermissionDuration());
-		centralView.setDurationLadybugNewLife(gameSounds.getNewLifePocDuration());
+		centralView.setDurationLadybugNewLife(gameSounds.getNewLifeFunDuration());
 	}
 }
