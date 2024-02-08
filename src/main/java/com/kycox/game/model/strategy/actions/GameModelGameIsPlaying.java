@@ -3,7 +3,7 @@ package com.kycox.game.model.strategy.actions;
 import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.fruit.Fruits;
-import com.kycox.game.message.GameAutomaticFunMessages;
+import com.kycox.game.message.GameFunMessages;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import com.kycox.game.tools.Utils;
@@ -67,7 +67,9 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	private void addNewFunProgramMessage() {
 		var addFunMessages = new SecureRandom().nextInt(1000) > 996;
 		if (addFunMessages) {
-			gameMessaging.put(Utils.randomEnum(GameAutomaticFunMessages.class).getMessage());
+			gameMessaging.addMessage(
+					Utils.randomEnum(GameFunMessages.class).getKey()
+			);
 		}
 
 	}

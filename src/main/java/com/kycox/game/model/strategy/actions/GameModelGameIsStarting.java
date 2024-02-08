@@ -10,15 +10,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GameModelGameIsStarting extends AbstratGameModel implements IGameModelAction {
-	private final GameMessaging gameMessaging;
-
 	public GameModelGameIsStarting(GameMessaging gameMessaging) {
 		this.gameMessaging = gameMessaging;
 	}
 
 	@Override
 	public void programBeat() {
-		gameMessaging.init();
 		currentGameStatus.setGameStarting();
 		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
 		waitAndDoActionAfterTimer.launch(2500, currentGameStatus, CurrentProgramStatus.TO_LEVEL_START);

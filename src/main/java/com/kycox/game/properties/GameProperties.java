@@ -17,6 +17,7 @@
 package com.kycox.game.properties;
 
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,7 @@ public class GameProperties {
 	private String ghostHat;
 	@Value( "${ghosts.headband}" )
 	private String ghostsHeadband;
+	@Getter
 	@Value( "${ladybug.color}" )
 	private String ladybugColor;
 	@Value( "${ladybug.skin}" )
@@ -69,10 +71,6 @@ public class GameProperties {
 		logger.info("Ladybug skin: " + hasLadybugSkin());
 		logger.info("Ghost headband: " + hasGhostHeadBand());
 		logger.info("Ghost hat: " + hasGhostHat());
-	}
-
-	public String getLadybugColor() {
-		return ladybugColor;
 	}
 
 	public boolean hasGhostHeadBand() {

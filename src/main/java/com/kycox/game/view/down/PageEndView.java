@@ -33,7 +33,7 @@ import java.awt.*;
 
 @Component
 public class PageEndView extends JPanel implements ApplicationListener<EventGameModel>, MainGraphicStructure {
-	private static final long DURATION_MESSAGE_SHOWING = 500;
+	private static final long DURATION_MESSAGE_SHOWING = 800;
 	private final transient GameMessaging gameMessaging;
 	private final transient GhostView ghostView;
 	private final transient LadybugView ladybugView;

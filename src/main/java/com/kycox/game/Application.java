@@ -15,6 +15,11 @@ public class Application {
     }
 
 //    public static void main(String[] args) {
-//        SpringApplication.run(MainLadybug.class, args);
+//        SpringApplication.run(Application.class, args);
+//    }
+//
+//    public void run(String... args) {
+//        MainLadybug mainLadybug = applicationContext.getBean("mainLadybug", MainLadybug.class);
+//        mainLadybug.launchTheGame();
 //    }
 }

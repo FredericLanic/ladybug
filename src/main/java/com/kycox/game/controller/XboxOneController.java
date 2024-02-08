@@ -1,24 +1,18 @@
 package com.kycox.game.controller;
 
 import com.kycox.game.constant.GameMainConstants;
-import com.kycox.game.contract.GameModelForController;
-import com.kycox.game.contract.GameModelForViews;
-import com.kycox.game.contract.GhostForController;
 import com.kycox.game.constant.XboxOneConstants;
+import com.kycox.game.contract.GameModelForController;
+import com.kycox.game.contract.GhostForController;
 import com.kycox.game.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.controller.xboxone.XboxRequest;
-import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.EventGameModel;
 import com.kycox.game.os.WindowsHost;
 import com.kycox.game.properties.GameProperties;
-
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
-
-import java.util.Observable;
-import java.util.Observer;
 
 @Component
 @Conditional(WindowsHost.class)
@@ -76,10 +70,10 @@ public class XboxOneController extends XBoxOneControllerManager implements Appli
 			gameProperties.changeGhostHat();
 		}
 		if (xboxOneLadybug.isRightStick()) {
-			gameMessaging.put(GameMessages.I_AM_LADYBUG.getMessage());
+			gameMessaging.addIamLadybug();
 		}
 		if (xboxOneUnComputedGhost.isRightStick()) {
-			gameMessaging.put(GameMessages.I_AM_GHOST.getMessage());
+			gameMessaging.addIamGhost();
 		}
 	}
 
@@ -189,16 +183,16 @@ public class XboxOneController extends XBoxOneControllerManager implements Appli
 
 	private void setProgramMessagesAccordingXboxOneConnectionOrDisconnection() {
 		if (xboxOneLadybug.isHasBeenConnected()) {
-			gameMessaging.put(GameMessages.XBOX_LADYBUG_CONNECTION.getMessage());
+			gameMessaging.addXboxLadybugConnected();
 		}
 		if (xboxOneLadybug.isHasBeenDisConnected()) {
-			gameMessaging.put(GameMessages.XBOX_LADYBUG_DISCONNECTION.getMessage());
+			gameMessaging.addXboxLadybugDisconnected();
 		}
 		if (xboxOneUnComputedGhost.isHasBeenConnected()) {
-			gameMessaging.put(GameMessages.XBOX_GHOST_CONNECTION.getMessage());
+			gameMessaging.addXboxGhostConnected();
 		}
 		if (xboxOneUnComputedGhost.isHasBeenDisConnected()) {
-			gameMessaging.put(GameMessages.XBOX_GHOST_DISCONNECTION.getMessage());
+			gameMessaging.addXboxGhostDisconnected();
 		}
 	}
 

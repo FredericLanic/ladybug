@@ -19,7 +19,6 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 	@Setter
 	private long beginningDuration;
 	private final Fruits fruits;
-	private final GameMessaging gameMessaging;
 
 	public GameModelLevelIsStarting(Fruits fruits, GameMessaging gameMessaging) {
 		this.fruits = fruits;
@@ -49,7 +48,6 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		fruits.init();
 		// init litLampMode
 		screenData.setLitLampMode(LitLampMode.isLitLampMode(currentGameStatus.getNumLevel()));
-		gameMessaging.init();
 		// on continue le level
 		continueLevel();
 	}

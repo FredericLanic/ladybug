@@ -25,7 +25,6 @@ import com.kycox.game.contract.GameModelForController;
 import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.level.ScreenData;
-import com.kycox.game.message.GameMessages;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.strategy.GameModelManageAction;
 import com.kycox.game.model.strategy.ManageActionContext;
@@ -103,7 +102,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 					 NewSounds newSounds,
 					 ScreenData screenData,
 					 ManageActionContext manageActionContext,
-					 ApplicationEventPublisher applicationEventPublisher) {
+					 ApplicationEventPublisher applicationEventPublisher
+	) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
 		this.gameModelManageAction = gameModelManageAction;
@@ -224,8 +224,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	@Override
 	public void setGameInPause() {
 		currentProgramStatus.setGameInPause(!currentProgramStatus.isGameInPause());
-		gameMessaging.put(currentProgramStatus.isGameInPause() ? GameMessages.GAME_IN_PAUSE.getMessage()
-		        : GameMessages.HEY_WE_GO.getMessage());
+		gameMessaging.addGameInPause(currentProgramStatus.isGameInPause());
 	}
 
 	@Override
@@ -245,10 +244,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 
 		if (isMuliPlayers) {
 			Utils.randomEnum(GhostsBodyImages.class).setComputed(false);
-			gameMessaging.put(GameMessages.TWO_PLAYERS_MODE.getMessage());
-		} else {
-			gameMessaging.put(GameMessages.ONE_PLAYER_MODE.getMessage());
 		}
+		gameMessaging.addPlayerMode(isMuliPlayers);
 	}
 
 	@Override
@@ -261,13 +258,12 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	public void startStopSoundActive() {
 		logger.info("startStopSoundActive : " + soundActive);
 		soundActive = !soundActive;
-		gameMessaging.put(soundActive ? GameMessages.SOUND_ACTIVE.getMessage() : GameMessages.SOUND_OFF.getMessage());
+		gameMessaging.addSoundMode(soundActive);
 	}
 
 	@Override
 	public void initNumLevel() {
 		currentProgramStatus.initNumLevel();
-		gameMessaging.put(GameMessages.INITIALIZE_LEVEL_NUMBER.getMessage());
 	}
 
 	@Override
@@ -281,12 +277,10 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 
 	public void changeDebugMode() {
 		debugMode = !debugMode;
-		gameMessaging.put("Debug mode " + (debugMode? "on":"off" ));
 	}
 
 	public void manageGhostCamouflage() {
 		groupGhosts.changeGhostCamouflage();
-		groupGhosts.getGhosts().stream().forEach(ghost -> gameMessaging.put(ghost.getName() + " camouflage is " + (ghost.isCamouflage()? "on":"off" )));
 	}
 
 }

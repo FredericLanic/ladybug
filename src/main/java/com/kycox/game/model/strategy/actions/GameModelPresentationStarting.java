@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GameModelPresentationStarting extends AbstratGameModel implements IGameModelAction {
-	private final GameMessaging gameMessaging;
-
 	public GameModelPresentationStarting(GameMessaging gameMessaging) {
 		this.gameMessaging = gameMessaging;
 	}
@@ -16,7 +14,6 @@ public class GameModelPresentationStarting extends AbstratGameModel implements I
 	@Override
 	public void programBeat() {
 		initGame();
-		gameMessaging.init();
 		currentGameStatus.setProgramPresentation();
 	}
 }

@@ -23,6 +23,7 @@ import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.contract.DoActionAfterTimer;
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.controller.KeyboardController;
+import com.kycox.game.message.LadybugMessagesBundle;
 import com.kycox.game.model.EventGameModel;
 import com.kycox.game.score.Message;
 import com.kycox.game.timer.WaitAndDoActionAfterTimer;
@@ -58,13 +59,20 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	private final transient LadybugDyingView ladybugDyingView;
 	private final transient LadybugView ladybugView;
 	private final transient ScreenBlockView screenBlockView;
+	private final transient LadybugMessagesBundle ladybugMessagesBundle;
 
-	public CentralView(GhostView ghostView, KeyboardController keyboardController, LadybugDyingView ladybugDyingView, LadybugView ladybugView, ScreenBlockView screenBlockView)  {
+	public CentralView(GhostView ghostView,
+					   KeyboardController keyboardController,
+					   LadybugDyingView ladybugDyingView,
+					   LadybugView ladybugView,
+					   ScreenBlockView screenBlockView,
+					   LadybugMessagesBundle ladybugMessagesBundle)  {
 		this.ghostView = ghostView;
 		this.keyboardController = keyboardController;
 		this.ladybugDyingView = ladybugDyingView;
 		this.ladybugView = ladybugView;
 		this.screenBlockView = screenBlockView;
+		this.ladybugMessagesBundle = ladybugMessagesBundle;
 	}
 
 	@Override
@@ -89,21 +97,21 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		}
 
 		if (gameModelForViews.getCurrentProgramStatus().isProgramStarting()) {
-			drawOneCenterTextLine(g2d, "wELCOME TO lADYBUG");
+			drawOneCenterTextLine(g2d, ladybugMessagesBundle.getMessage("welcome"));
 			drawPresentationGhosts(g2d);
 		} else if (gameModelForViews.getCurrentProgramStatus().isGameAskForceEndGame()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
-			drawTwoCenterTextLines(g2d, "eXIT gAME", "yES - nO");
+			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("exitGame"), ladybugMessagesBundle.getMessage("yesNo"));
 		} else if (gameModelForViews.getCurrentProgramStatus().isProgramAskKeepPreviousGameLevel()) {
 			drawGhosts(g2d);
-			drawThreeCenterTextLines(g2d, "cONTINUE", "pREVIOUS GAME", "yES - nO");
+			drawThreeCenterTextLines(g2d, ladybugMessagesBundle.getMessage("continue"), ladybugMessagesBundle.getMessage("previousGame"), ladybugMessagesBundle.getMessage("yesNo"));
 		} else if (gameModelForViews.getCurrentProgramStatus().isGameStarting()) {
-			drawOneCenterTextLine(g2d, "gET READY");
+			drawOneCenterTextLine(g2d, ladybugMessagesBundle.getMessage("getReady"));
 		} else if (gameModelForViews.getCurrentProgramStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
-			var text = "lEVEL "
+			var text = ladybugMessagesBundle.getMessage("level") + " "
 			        + Utils.integerToRoman(gameModelForViews.getCurrentProgramStatus().getNumLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
 		} else if (gameModelForViews.getCurrentProgramStatus().isProgramPresentation()) {
@@ -116,19 +124,19 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 				        "x RIGHT: gHOST h'BAND", "x LEFT: gHOST hAT", "STICK i: lADYBUG mOVE", "STICK ii: gHOST mOVE",
 				        "x OR y: pLAYERS");
 			} else if (gameModelForViews.isAtLeastOneXboxOneConnected()) {
-				drawTwoCenterTextLines(g2d, "PRESS s OR a TO sTART", "fI OR vIEW FOR hELP");
+				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sOrAToStart"), ladybugMessagesBundle.getMessage("f1OrViewForHelp"));
 			} else {
-				drawTwoCenterTextLines(g2d, "PRESS s TO sTART", "fI FOR hELP");
+				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sToStart"), ladybugMessagesBundle.getMessage("f1ForHelp"));
 			}
 		} else if (gameModelForViews.getCurrentProgramStatus().isGameEnding()
 		        || gameModelForViews.getCurrentProgramStatus().isGameEnd()) {
 			drawGhosts(g2d);
-			var levelText = "eND lEVEL "
+			var levelText = ladybugMessagesBundle.getMessage("endLevel") + " "
 			        + Utils.integerToRoman(gameModelForViews.getCurrentProgramStatus().getNumLevel()).toLowerCase();
 
-			drawTwoCenterTextLines(g2d, "gAME oVER", levelText);
+			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("gameOver"), levelText);
 		} else if (gameModelForViews.getCurrentProgramStatus().isLevelEnding()) {
-			drawTwoCenterTextLines(g2d, "nEXT LEVEL", "gET READY");
+			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("nextLevel"), ladybugMessagesBundle.getMessage("getReady"));
 		} else if (gameModelForViews.getLadybug().getStatus() == LadybugStatus.DYING) {
 			ladybugDyingView.inProgress();
 			drawGhosts(g2d);
@@ -305,4 +313,6 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 			repaint();
 		}
 	}
+
+
 }

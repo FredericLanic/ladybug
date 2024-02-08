@@ -90,7 +90,6 @@ public class AbstratGameModel {
 		groupGhosts.setStatus(GhostStatus.NORMAL);
 		// initialise les vies de fantômes
 		groupGhosts.setLeftLifes(GameMainConstants.NBR_INIT_LIFE);
-		gameMessaging.init();
 	}
 
 	/**

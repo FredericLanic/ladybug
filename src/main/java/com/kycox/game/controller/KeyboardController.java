@@ -51,23 +51,23 @@ public class KeyboardController extends KeyAdapter {
 
 	private void manageKeysInAskEndGame(int keyCode) {
 		switch (keyCode) {
-			case KeyEvent.VK_Y -> gameModelForController.forceStopGame();
+			case KeyEvent.VK_Y, KeyEvent.VK_O -> gameModelForController.forceStopGame();
 			case KeyEvent.VK_N -> gameModelForController.setInGame();
 		}
 	}
 
 	private void manageKeysInAskKeepPreviousGameLevel(int keyCode) {
 		switch (keyCode) {
-			case KeyEvent.VK_Y -> gameModelForController.initializeLevelNumAndStartGame(false);
+			case KeyEvent.VK_Y, KeyEvent.VK_O -> gameModelForController.initializeLevelNumAndStartGame(false);
 			case KeyEvent.VK_N -> gameModelForController.initializeLevelNumAndStartGame(true);
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_F1 -> gameModelForController.setShowHelpForKeys(false);
-		}
+        if (e.getKeyCode() == KeyEvent.VK_F1) {
+            gameModelForController.setShowHelpForKeys(false);
+        }
 	}
 
 	private void manageCommonKeys(int keyCode) {

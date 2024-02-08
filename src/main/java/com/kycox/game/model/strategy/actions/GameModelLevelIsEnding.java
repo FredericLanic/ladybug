@@ -9,7 +9,6 @@ public class GameModelLevelIsEnding extends AbstratGameModel implements IGameMod
 
 	@Override
 	public void programBeat() {
-		gameMessaging.init();
 		setSoundRequests();
 	}
 }
