@@ -17,8 +17,8 @@
 package com.kycox.game.sound;
 
 import com.kycox.game.constant.Sounds;
-import com.kycox.game.contract.GameModelForSounds;
-import com.kycox.game.contract.NewSoundsForGameSounds;
+import com.kycox.game.constant.contract.GameModelForSounds;
+import com.kycox.game.constant.contract.NewSoundsForGameSounds;
 import com.kycox.game.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

@@ -16,7 +16,7 @@
  */
 package com.kycox.game.view;
 
-import com.kycox.game.contract.MainGraphicStructure;
+import com.kycox.game.constant.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.down.PageEndView;
 import com.kycox.game.view.left.PageLeftView;

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.kycox.game.contract.LevelStructure;
+import com.kycox.game.constant.contract.LevelStructure;
 
 import com.kycox.game.level.ScreenBlock;
 import lombok.Getter;

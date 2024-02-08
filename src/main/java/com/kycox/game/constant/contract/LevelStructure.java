@@ -14,8 +14,26 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.contract;
+package com.kycox.game.constant.contract;
 
-public interface GameCommon {
-	boolean isInGame();
+import java.awt.Point;
+import java.util.List;
+import java.util.Map;
+
+import com.kycox.game.level.ScreenBlock;
+
+public interface LevelStructure {
+	Point getGhostRegenerateBlockPoint();
+
+	Point getInitLadybugBlockPos();
+
+	List<ScreenBlock> getLstBlocks();
+
+	int getNbrBlocksByLine();
+
+	int getNbrLines();
+
+	int getNbrMegaPoints();
+
+	Map<Point, Point> getTeleportPoints();
 }

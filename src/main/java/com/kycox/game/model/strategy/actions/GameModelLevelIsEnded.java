@@ -3,7 +3,7 @@ package com.kycox.game.model.strategy.actions;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
-import com.kycox.game.timer.WaitAndDoActionAfterTimer;
+import com.kycox.game.tools.timer.WaitAndDoActionAfterTimer;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 

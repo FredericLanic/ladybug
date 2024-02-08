@@ -14,12 +14,12 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.timer;
+package com.kycox.game.tools.timer;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.kycox.game.contract.DoActionAfterTimer;
+import com.kycox.game.constant.contract.DoActionAfterTimer;
 
 /**
  * Timer qui permet de faire une action un certain temps à l'écran

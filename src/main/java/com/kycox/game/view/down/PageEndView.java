@@ -16,11 +16,11 @@
  */
 package com.kycox.game.view.down;
 
-import com.kycox.game.contract.GameModelForViews;
-import com.kycox.game.contract.MainGraphicStructure;
+import com.kycox.game.constant.contract.GameModelForViews;
+import com.kycox.game.constant.contract.MainGraphicStructure;
 import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.EventGameModel;
-import com.kycox.game.timer.SimpleTimer;
+import com.kycox.game.tools.timer.SimpleTimer;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugView;

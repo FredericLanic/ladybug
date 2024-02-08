@@ -14,14 +14,8 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.contract;
+package com.kycox.game.constant.contract;
 
-import java.awt.Point;
-
-public interface LadybugForController {
-	boolean isEatenAMegaPoint();
-
-	boolean isToBeTeleported();
-
-	void setUserRequest(Point userRequest);
+public interface GameCommon {
+	boolean isInGame();
 }

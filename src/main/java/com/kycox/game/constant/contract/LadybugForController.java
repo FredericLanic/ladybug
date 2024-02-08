@@ -14,20 +14,14 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.contract;
+package com.kycox.game.constant.contract;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.Point;
 
-import javax.swing.JPanel;
+public interface LadybugForController {
+	boolean isEatenAMegaPoint();
 
-public interface MainGraphicStructure {
-	void add(Component comp, Object constraints);
+	boolean isToBeTeleported();
 
-	default void addPanel(JPanel jPanel, Dimension dimension, String borderLayout) {
-		jPanel.setBackground(Color.BLACK);
-		jPanel.setPreferredSize(dimension);
-		add(jPanel, borderLayout);
-	}
+	void setUserRequest(Point userRequest);
 }

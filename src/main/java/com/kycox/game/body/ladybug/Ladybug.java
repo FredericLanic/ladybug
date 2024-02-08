@@ -22,8 +22,8 @@ import com.kycox.game.bodyaction.ladybug.LadybugActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.contract.LadybugForController;
-import com.kycox.game.contract.LadybugForGameView;
+import com.kycox.game.constant.contract.LadybugForController;
+import com.kycox.game.constant.contract.LadybugForGameView;
 import com.kycox.game.level.ScreenData;
 
 import lombok.Getter;

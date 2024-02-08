@@ -19,7 +19,7 @@ package com.kycox.game.body;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.contract.GroupGhostForGameView;
+import com.kycox.game.constant.contract.GroupGhostForGameView;
 import com.kycox.game.level.ScreenData;
 import lombok.Getter;
 import lombok.Setter;

@@ -21,7 +21,7 @@ import java.awt.Image;
 import javax.swing.Timer;
 
 import com.kycox.game.constant.ghost.GhostEyesImages;
-import com.kycox.game.timer.TimerView;
+import com.kycox.game.tools.timer.TimerView;
 import com.kycox.game.view.body.BodyImg;
 
 public class GhostDyingView implements TimerView {

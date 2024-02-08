@@ -17,10 +17,10 @@
 package com.kycox.game.view.left;
 
 import com.kycox.game.body.ghost.Ghost;
-import com.kycox.game.contract.GameModelForViews;
-import com.kycox.game.contract.GroupGhostForGameView;
-import com.kycox.game.contract.LadybugForGameView;
-import com.kycox.game.contract.MainGraphicStructure;
+import com.kycox.game.constant.contract.GameModelForViews;
+import com.kycox.game.constant.contract.GroupGhostForGameView;
+import com.kycox.game.constant.contract.LadybugForGameView;
+import com.kycox.game.constant.contract.MainGraphicStructure;
 import com.kycox.game.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

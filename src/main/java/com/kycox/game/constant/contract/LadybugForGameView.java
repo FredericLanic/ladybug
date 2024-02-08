@@ -14,11 +14,24 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.contract;
+package com.kycox.game.constant.contract;
 
-public interface GhostForController {
+import java.awt.Point;
 
-	boolean isDying();
+import com.kycox.game.constant.ladybug.LadybugStatus;
 
-	boolean isToBeTeleported();
+public interface LadybugForGameView {
+	int getLeftLifes();
+
+	Point getPosition();
+
+	LadybugStatus getStatus();
+
+	Point getViewDirection();
+
+	boolean isNewLife();
+
+	int getSpeedIndex();
+
+	String getName();
 }

@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kycox.game.constant.level.LevelConstruct;
-import com.kycox.game.contract.LevelStructure;
+import com.kycox.game.constant.contract.LevelStructure;
 import com.kycox.game.level.ScreenBlock;
 
 public abstract class SecondGenerationLevel implements LevelStructure {

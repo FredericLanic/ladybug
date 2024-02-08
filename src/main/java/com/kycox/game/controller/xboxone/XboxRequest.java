@@ -1,7 +1,7 @@
 package com.kycox.game.controller.xboxone;
 
 import com.kycox.game.constant.XboxOneConstants;
-import com.kycox.game.os.WindowsHost;
+import com.kycox.game.tools.os.WindowsHost;
 import com.studiohartman.jamepad.ControllerState;
 import lombok.Getter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

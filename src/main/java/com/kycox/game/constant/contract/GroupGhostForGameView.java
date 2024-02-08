@@ -14,26 +14,12 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.contract;
+package com.kycox.game.constant.contract;
 
-public interface GameStatusForGameView extends GameCommon {
-	int getNumLevel();
+import com.kycox.game.body.ghost.Ghost;
 
-	boolean isGameEnd();
+import java.util.List;
 
-	boolean isGameEnding();
-
-	boolean isGameStarting();
-
-	boolean isLevelEnding();
-
-	boolean isLevelStarting();
-
-	boolean isProgramPresentation();
-
-	boolean isProgramStarting();
-
-	boolean isProgramAskKeepPreviousGameLevel();
-
-	boolean isGameAskForceEndGame();
+public interface GroupGhostForGameView {
+	List<Ghost> getGhosts();
 }

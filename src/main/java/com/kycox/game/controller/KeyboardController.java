@@ -17,7 +17,7 @@
 package com.kycox.game.controller;
 
 import com.kycox.game.constant.GameMainConstants;
-import com.kycox.game.contract.GameModelForController;
+import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.properties.GameProperties;
 import org.springframework.stereotype.Component;
 

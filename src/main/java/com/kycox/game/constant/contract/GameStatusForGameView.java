@@ -14,19 +14,26 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.utils.aop;
+package com.kycox.game.constant.contract;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.aop.AfterReturningAdvice;
+public interface GameStatusForGameView extends GameCommon {
+	int getNumLevel();
 
-import java.lang.reflect.Method;
+	boolean isGameEnd();
 
-public class TraceurAdvice implements AfterReturningAdvice {
-	private static final Logger logger = LoggerFactory.getLogger(TraceurAdvice.class);
+	boolean isGameEnding();
 
-	@Override
-	public void afterReturning(Object returnValue, Method method, Object[] args, Object target) throws Throwable {
-		logger.info(target + "." + method.getName() + "->" + returnValue);
-	}
+	boolean isGameStarting();
+
+	boolean isLevelEnding();
+
+	boolean isLevelStarting();
+
+	boolean isProgramPresentation();
+
+	boolean isProgramStarting();
+
+	boolean isProgramAskKeepPreviousGameLevel();
+
+	boolean isGameAskForceEndGame();
 }

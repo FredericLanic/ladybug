@@ -20,8 +20,8 @@ import java.awt.Image;
 
 import javax.swing.Timer;
 
-import com.kycox.game.contract.GhostForView;
-import com.kycox.game.timer.TimerView;
+import com.kycox.game.constant.contract.GhostForView;
+import com.kycox.game.tools.timer.TimerView;
 
 public class GhostFlashView implements TimerView {
 	private static final GhostFlashView ghostFlashView = new GhostFlashView();

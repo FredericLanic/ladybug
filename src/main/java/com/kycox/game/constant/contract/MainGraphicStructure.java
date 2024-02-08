@@ -14,10 +14,20 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.contract;
+package com.kycox.game.constant.contract;
 
-public interface GameModelForSounds {
-	NewSoundsForGameSounds getNewSounds();
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 
-	boolean isSoundActive();
+import javax.swing.JPanel;
+
+public interface MainGraphicStructure {
+	void add(Component comp, Object constraints);
+
+	default void addPanel(JPanel jPanel, Dimension dimension, String borderLayout) {
+		jPanel.setBackground(Color.BLACK);
+		jPanel.setPreferredSize(dimension);
+		add(jPanel, borderLayout);
+	}
 }

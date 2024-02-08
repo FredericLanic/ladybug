@@ -1,4 +1,4 @@
-package com.kycox.game.timer;
+package com.kycox.game.tools.timer;
 
 import com.kycox.game.constant.TimerStatus;
 import lombok.Getter;

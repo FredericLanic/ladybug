@@ -1,6 +1,6 @@
 package com.kycox.game.controller.xboxone;
 
-import com.kycox.game.os.WindowsHost;
+import com.kycox.game.tools.os.WindowsHost;
 import com.studiohartman.jamepad.ControllerManager;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;

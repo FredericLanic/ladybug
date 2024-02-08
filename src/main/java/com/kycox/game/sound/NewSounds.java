@@ -17,7 +17,7 @@
 package com.kycox.game.sound;
 
 import com.kycox.game.constant.Sounds;
-import com.kycox.game.contract.NewSoundsForGameSounds;
+import com.kycox.game.constant.contract.NewSoundsForGameSounds;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 

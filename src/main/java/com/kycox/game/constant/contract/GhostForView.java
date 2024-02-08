@@ -1,4 +1,4 @@
-package com.kycox.game.contract;
+package com.kycox.game.constant.contract;
 
 import java.awt.Point;
 

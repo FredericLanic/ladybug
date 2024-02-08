@@ -18,7 +18,7 @@ package com.kycox.game.score;
 
 import java.awt.Point;
 
-import com.kycox.game.timer.IncrementScoreTimer;
+import com.kycox.game.tools.timer.IncrementScoreTimer;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -16,7 +16,7 @@
  */
 package com.kycox.game.level;
 
-import com.kycox.game.contract.LevelStructure;
+import com.kycox.game.constant.contract.LevelStructure;
 import com.kycox.game.tools.Utils;
 import org.springframework.stereotype.Component;
 

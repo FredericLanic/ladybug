@@ -1,4 +1,4 @@
-package com.kycox.game.os;
+package com.kycox.game.tools.os;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;

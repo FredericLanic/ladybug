@@ -14,12 +14,39 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.contract;
+package com.kycox.game.constant.contract;
 
 import com.kycox.game.body.ghost.Ghost;
+import com.kycox.game.level.ScreenData;
+import com.kycox.game.score.GroupMessages;
+import com.kycox.game.score.Score;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface GroupGhostForGameView {
-	List<Ghost> getGhosts();
+public interface GameModelForViews extends GameCommon {
+	GameStatusForGameView getCurrentProgramStatus();
+
+	Score getGameScore();
+
+	int getGhostLeftLives();
+
+	GroupGhostForGameView getGroupGhosts();
+
+	GroupMessages getGroupMessages();
+
+	LadybugForGameView getLadybug();
+
+	int getNbrPlayers();
+
+	ScreenData getScreenData();
+
+	Optional<Ghost> getUnComputedGhost();
+
+	boolean isAtLeastOneXboxOneConnected();
+
+	boolean isShowHelpForKeys();
+
+	boolean isShowHelpForXboxes();
+
+	boolean isDebugMode();
 }

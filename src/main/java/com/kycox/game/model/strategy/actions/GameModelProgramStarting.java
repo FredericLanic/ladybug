@@ -4,7 +4,7 @@ import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
-import com.kycox.game.timer.WaitAndDoActionAfterTimer;
+import com.kycox.game.tools.timer.WaitAndDoActionAfterTimer;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -17,8 +17,8 @@
 package com.kycox.game.model;
 
 import com.kycox.game.constant.game.GameStatus;
-import com.kycox.game.contract.DoActionAfterTimer;
-import com.kycox.game.contract.GameStatusForGameView;
+import com.kycox.game.constant.contract.DoActionAfterTimer;
+import com.kycox.game.constant.contract.GameStatusForGameView;
 import com.kycox.game.level.repo.LevelRepository;
 import lombok.Getter;
 import lombok.Setter;

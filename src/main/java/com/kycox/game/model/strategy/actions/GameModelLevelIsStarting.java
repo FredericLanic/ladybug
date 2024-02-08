@@ -7,7 +7,7 @@ import com.kycox.game.message.GameMessaging;
 import com.kycox.game.model.CurrentProgramStatus;
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
-import com.kycox.game.timer.WaitAndDoActionAfterTimer;
+import com.kycox.game.tools.timer.WaitAndDoActionAfterTimer;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

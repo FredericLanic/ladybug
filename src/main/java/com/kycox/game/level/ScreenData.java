@@ -19,7 +19,7 @@ package com.kycox.game.level;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.level.LevelRendering;
-import com.kycox.game.contract.LevelStructure;
+import com.kycox.game.constant.contract.LevelStructure;
 import com.kycox.game.level.utils.CheckScreenBlockBorders;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
@@ -31,7 +31,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 /**
