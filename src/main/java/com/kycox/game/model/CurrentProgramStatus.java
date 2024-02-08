@@ -22,13 +22,13 @@ import com.kycox.game.contract.GameStatusForGameView;
 import com.kycox.game.level.repo.LevelRepository;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfterTimer {
-	private static final Log logger = LogFactory.getLog(CurrentProgramStatus.class);
+	private static final Logger logger = LoggerFactory.getLogger(CurrentProgramStatus.class);
 	public static final int TO_INGAME = 0;
 	public static final int TO_LEVEL_START = 3;
 	public static final int TO_PROGRAM_PRESENTATION_START = 2;

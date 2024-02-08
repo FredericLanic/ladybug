@@ -16,9 +16,9 @@
  */
 package com.kycox.game.body.ghost;
 
-import com.kycox.game.bodyaction.ghost.GhostActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.body.ladybug.Ladybug;
+import com.kycox.game.bodyaction.ghost.GhostActions;
 import com.kycox.game.constant.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostBehaviour;
 import com.kycox.game.constant.ghost.GhostStatus;
@@ -31,15 +31,15 @@ import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.Dijkstra;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract sealed class Ghost extends UserBody implements GhostForController, GhostForView permits Blinky, Clyde, Inky, Pinky {
-	private static final Log logger = LogFactory.getLog(Ghost.class);
+	private static final Logger logger = LoggerFactory.getLogger(Ghost.class);
 	@Getter
 	@Setter
 	private GhostBehaviour behaviour;

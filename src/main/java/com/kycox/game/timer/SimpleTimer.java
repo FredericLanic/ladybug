@@ -1,19 +1,17 @@
 package com.kycox.game.timer;
 
+import com.kycox.game.constant.TimerStatus;
+import lombok.Getter;
+import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.kycox.game.constant.TimerStatus;
-
-import lombok.Getter;
-import lombok.Setter;
-
 public class SimpleTimer {
 	private static class WaiterTimer extends TimerTask {
-		private static final Log logger = LogFactory.getLog(WaiterTimer.class);
+		private static final Logger logger = LoggerFactory.getLogger(WaiterTimer.class);
 		private final long duration;
 
 		@Getter
@@ -44,7 +42,7 @@ public class SimpleTimer {
 			try {
 				Thread.sleep(duration);
 			} catch (InterruptedException interruptedException) {
-				logger.error(interruptedException);
+				logger.error(String.valueOf(interruptedException));
 			} finally {
 				timer.cancel();
 				timer.purge();

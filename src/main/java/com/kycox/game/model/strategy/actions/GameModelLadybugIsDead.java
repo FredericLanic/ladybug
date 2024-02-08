@@ -2,13 +2,13 @@ package com.kycox.game.model.strategy.actions;
 
 import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameModelLadybugIsDead extends AbstratGameModel implements IGameModelAction {
-	private static final Log logger = LogFactory.getLog(GameModelLadybugIsDead.class);
+	private static final Logger logger = LoggerFactory.getLogger(GameModelLadybugIsDead.class);
 
 	@Override
 	public void programBeat() {

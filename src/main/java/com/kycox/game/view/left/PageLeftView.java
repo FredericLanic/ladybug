@@ -22,20 +22,15 @@ import com.kycox.game.contract.GroupGhostForGameView;
 import com.kycox.game.contract.LadybugForGameView;
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.model.EventGameModel;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class PageLeftView extends JPanel implements ApplicationListener<EventGameModel>, MainGraphicStructure {
-	private static final Log logger = LogFactory.getLog(PageLeftView.class);
 	private transient GameModelForViews gameModelForViews;
 
 	@Override

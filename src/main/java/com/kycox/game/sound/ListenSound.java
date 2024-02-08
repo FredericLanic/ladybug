@@ -16,10 +16,10 @@
  */
 package com.kycox.game.sound;
 
-import javax.sound.sampled.Clip;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import javax.sound.sampled.Clip;
 
 /**
  * Processus pour écouter le clip
@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
  * @see Thread
  */
 public class ListenSound extends Thread {
-	private static final Log logger = LogFactory.getLog(ListenSound.class);
+	private static final Logger logger = LoggerFactory.getLogger(ListenSound.class);
 	// clip partagé par les Threads
 	private Clip clip;
 	private long microsecondLength = 0;

@@ -8,8 +8,8 @@ import com.kycox.game.model.strategy.AbstratGameModel;
 import com.kycox.game.model.strategy.IGameModelAction;
 import com.kycox.game.tools.Utils;
 import lombok.Setter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -17,7 +17,7 @@ import java.security.SecureRandom;
 
 @Component
 public class GameModelGameIsPlaying extends AbstratGameModel implements IGameModelAction {
-	private static final Log logger = LogFactory.getLog(GameModelGameIsPlaying.class);
+	private static final Logger logger = LoggerFactory.getLogger(GameModelGameIsPlaying.class);
 	private final Fruits fruits;
 	@Setter
 	private Point ghostRequest = GameMainConstants.POINT_ZERO;

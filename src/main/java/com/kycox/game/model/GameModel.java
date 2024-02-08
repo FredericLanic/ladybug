@@ -16,8 +16,8 @@
  */
 package com.kycox.game.model;
 
-import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.GhostsGroup;
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.ghost.GhostsBodyImages;
@@ -36,9 +36,8 @@ import com.kycox.game.tools.Utils;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +46,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observable;
 import java.util.Optional;
 
 import static com.kycox.game.constant.GameMainConstants.PACE;
@@ -57,7 +55,7 @@ import static com.kycox.game.constant.GameMainConstants.PACE;
  */
 @Component
 public class GameModel implements GameModelForViews, GameModelForSounds, GameModelForController {
-	private static final Log logger = LogFactory.getLog(GameModel.class);
+	private static final Logger logger = LoggerFactory.getLogger(GameModel.class);
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
 	@Getter

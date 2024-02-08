@@ -62,7 +62,7 @@ public class StatusGameView extends JPanel {
 		if (inGame) {
 			displayCentralMessage(g, "Score: " + score);
 		}
-		// displayMessageToRight(g, currentProgramMessage);
+		 displayMessageToRight(g, currentProgramMessage);
 	}
 
 	private void displayCentralMessage(Graphics g, String gameMessage) {

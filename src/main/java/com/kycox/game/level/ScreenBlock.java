@@ -16,15 +16,13 @@
  */
 package com.kycox.game.level;
 
-import java.awt.Point;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.kycox.game.constant.GameMainConstants;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.*;
 
 /**
  * Class ScreenBlock correspond à une case dans le ScreenData
@@ -36,7 +34,7 @@ public class ScreenBlock implements Cloneable {
 	private static final int EATEN_POINT = 512;
 	private static final int GHOST_REVIVER = 64;
 	private static final int LEFT = 1;
-	private static final Log logger = LogFactory.getLog(ScreenBlock.class);
+	private static final Logger logger = LoggerFactory.getLogger(ScreenBlock.class);
 	private static final int MEGA_POINT = 32;
 	private static final int NOT_ACCESSIBLE = 128;
 	private static final int POINT = 16;

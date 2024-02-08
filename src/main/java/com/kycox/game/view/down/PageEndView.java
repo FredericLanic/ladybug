@@ -16,7 +16,6 @@
  */
 package com.kycox.game.view.down;
 
-import com.kycox.game.contract.GameModelForSounds;
 import com.kycox.game.contract.GameModelForViews;
 import com.kycox.game.contract.MainGraphicStructure;
 import com.kycox.game.message.GameMessaging;
@@ -26,20 +25,15 @@ import com.kycox.game.tools.Screen;
 import com.kycox.game.view.ghost.GhostView;
 import com.kycox.game.view.ladybug.LadybugView;
 import jakarta.annotation.PostConstruct;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Observable;
-import java.util.Observer;
 
 @Component
 public class PageEndView extends JPanel implements ApplicationListener<EventGameModel>, MainGraphicStructure {
 	private static final long DURATION_MESSAGE_SHOWING = 500;
-	private static final Log logger = LogFactory.getLog(PageEndView.class);
 	private final transient GameMessaging gameMessaging;
 	private final transient GhostView ghostView;
 	private final transient LadybugView ladybugView;

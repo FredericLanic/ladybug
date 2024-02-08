@@ -17,17 +17,15 @@
 package com.kycox.game;
 
 import com.kycox.game.view.MainFrame;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 //@SpringBootApplication
 @Component
 public class MainLadybug {
 	private static final String cruxLine = "******************************";
-	private static final Log logger = LogFactory.getLog(MainLadybug.class);
+	private static final Logger logger = LoggerFactory.getLogger(MainLadybug.class);
 
 	private final MainFrame mainFrame;
 
