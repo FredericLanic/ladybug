@@ -16,9 +16,9 @@
  */
 package com.kycox.game.engine;
 
-import com.kycox.game.model.GameModel;
-import com.kycox.game.sound.GameSounds;
-import com.kycox.game.view.CentralView;
+import com.kycox.game.engine.model.GameModel;
+import com.kycox.game.engine.sound.GameSounds;
+import com.kycox.game.engine.view.CentralView;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 

@@ -16,7 +16,7 @@
  */
 package com.kycox.game;
 
-import com.kycox.game.view.MainFrame;
+import com.kycox.game.engine.view.MainFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

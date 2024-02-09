@@ -16,10 +16,10 @@
  */
 package com.kycox.game.constant.contract;
 
-import com.kycox.game.body.ghost.Ghost;
-import com.kycox.game.level.ScreenData;
-import com.kycox.game.score.GroupMessages;
-import com.kycox.game.score.Score;
+import com.kycox.game.dynamic.body.ghost.Ghost;
+import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.score.GroupMessages;
+import com.kycox.game.engine.score.Score;
 
 import java.util.Optional;
 

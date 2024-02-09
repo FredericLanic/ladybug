@@ -20,7 +20,7 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 
-import com.kycox.game.level.ScreenBlock;
+import com.kycox.game.engine.screendata.ScreenBlock;
 
 public interface LevelStructure {
 	Point getGhostRegenerateBlockPoint();

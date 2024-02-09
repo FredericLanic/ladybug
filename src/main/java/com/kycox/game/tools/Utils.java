@@ -19,7 +19,7 @@ package com.kycox.game.tools;
 import java.awt.Point;
 import java.security.SecureRandom;
 
-import com.kycox.game.constant.GameMainConstants;
+import com.kycox.game.constant.game.GameMainConstants;
 
 public final class Utils {
 	private static final SecureRandom secureRandom = new SecureRandom();

@@ -20,7 +20,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kycox.game.level.ScreenBlock;
+import com.kycox.game.engine.screendata.ScreenBlock;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -11,18 +11,18 @@
 	<context:component-scan base-package="com.kycox" />
 
 	<bean id="SpeedFunctionGhost"
-		class="com.kycox.game.maths.SpeedFunction" scope="prototype"
-		init-method="init">
+          class="com.kycox.game.tools.maths.SpeedFunction" scope="prototype"
+          init-method="init">
 		<property name="lowLimit" value="2" />
 	</bean>
 
 	<bean id="GhostSensitiveBehaviour"
-		class="com.kycox.game.maths.GhostSensitiveBehaviour"
+		class="com.kycox.game.tools.maths.GhostSensitiveBehaviour"
 		scope="prototype" />
 
-	<!-- Clyde in GroupGhost -->
-	<bean id="Clyde" class="com.kycox.game.body.ghost.Clyde"
-		scope="prototype">
+	<bean id="Clyde"
+		  class="com.kycox.game.dynamic.body.ghost.Clyde"
+		  scope="prototype">
 		<property name="color" value="ORANGE" />
 		<property name="behaviour" value="CALM" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
@@ -30,9 +30,9 @@
 		<property name="maximumAttackDist" value="96"/>
 	</bean>
 
-	<!-- Blinky in GroupGhost -->
-	<bean id="Blinky" class="com.kycox.game.body.ghost.Blinky"
-		scope="prototype">
+	<bean id="Blinky"
+		  class="com.kycox.game.dynamic.body.ghost.Blinky"
+		  scope="prototype">
 		<property name="color" value="RED" />
 		<property name="behaviour" value="AGGRESSIVE" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
@@ -40,9 +40,9 @@
 		<property name="blinkySpeedIndex" ref="BlinkySpeedIndex" />
 	</bean>
 
-	<!-- Inky in GroupGhost -->
-	<bean id="Inky" class="com.kycox.game.body.ghost.Inky"
-		scope="prototype">
+	<bean id="Inky"
+		  class="com.kycox.game.dynamic.body.ghost.Inky"
+		  scope="prototype">
 		<property name="color" value="CYAN" />
 		<property name="behaviour" value="CALM" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
@@ -50,18 +50,17 @@
 		<property name="maximumAttackDist" value="120"/>
 	</bean>
 
-	<!-- Pinky in GroupGhost -->
-	<bean id="Pinky" class="com.kycox.game.body.ghost.Pinky"
-		scope="prototype">
+	<bean id="Pinky"
+		  class="com.kycox.game.dynamic.body.ghost.Pinky"
+		  scope="prototype">
 		<property name="color" value="PINK" />
 		<property name="behaviour" value="SMART" />
 		<property name="speedFunction" ref="SpeedFunctionGhost" />
 		<property name="sensitiveBehaviour" ref="GhostSensitiveBehaviour" />
 	</bean>
 
-	<!-- GroupGhost list in GameModel -->
 	<bean id="GroupGhost"
-		class="com.kycox.game.body.GhostsGroup">
+		class="com.kycox.game.dynamic.body.GhostsGroup">
 		<property name="ghosts">
 			<list>
 				<ref bean="Clyde" />
@@ -72,10 +71,11 @@
 		</property>
 	</bean>
 
-	<bean id="Ladybug" class="com.kycox.game.body.ladybug.Ladybug"
-		scope="singleton">
+	<bean id="Ladybug"
+		  class="com.kycox.game.dynamic.body.ladybug.Ladybug"
+		  scope="singleton">
 		<property name="speedFunction">
-			<bean class="com.kycox.game.maths.SpeedFunction" init-method="init">
+			<bean class="com.kycox.game.tools.maths.SpeedFunction" init-method="init">
 				<property name="lowLimit" value="4" />
 			</bean>
 		</property>

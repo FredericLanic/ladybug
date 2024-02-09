@@ -21,7 +21,6 @@ import java.util.Objects;
 
 import javax.swing.ImageIcon;
 
-import com.kycox.game.constant.FruitsImages;
 import lombok.Getter;
 
 /**

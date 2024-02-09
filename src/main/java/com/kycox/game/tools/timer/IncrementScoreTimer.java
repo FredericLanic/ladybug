@@ -19,7 +19,7 @@ package com.kycox.game.tools.timer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.kycox.game.score.Message;
+import com.kycox.game.engine.score.Message;
 
 /**
  * Timer qui permet d'afficher le score un certain temps à l'écran

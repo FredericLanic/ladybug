@@ -24,7 +24,7 @@ import javax.swing.ImageIcon;
 import lombok.Getter;
 
 /**
- * Is a subpart of GhostsBodyImage; please, don't use it in your program directly
+ * Is a subpart of GhostsBodyImage; please, don't use it in directly
   */
 @Getter
 public enum GhostsColorImages {

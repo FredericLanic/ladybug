@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import com.kycox.game.constant.GameMainConstants;
+import com.kycox.game.constant.game.GameMainConstants;
 
 public interface TimerView {
 	int PERIOD = 3 * GameMainConstants.PACE;

@@ -16,7 +16,7 @@
  */
 package com.kycox.game.tools;
 
-import com.kycox.game.constant.GameMainConstants;
+import com.kycox.game.constant.game.GameMainConstants;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;

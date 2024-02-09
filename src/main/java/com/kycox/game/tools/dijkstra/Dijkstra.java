@@ -19,7 +19,7 @@ package com.kycox.game.tools.dijkstra;
 import java.awt.Point;
 import java.util.List;
 
-import com.kycox.game.level.ScreenData;
+import com.kycox.game.engine.screendata.ScreenData;
 
 import lombok.Getter;
 

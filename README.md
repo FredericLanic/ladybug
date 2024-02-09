@@ -129,18 +129,18 @@ Pour rentrer dans le code de Ladybug, je vais vous donner mon point de vue.
 
 Le modèle MVC que j'ai essayé d'appliquer regroupe les classes suivantes :
 
-1. Le modèle : com.kycox.game.model.GameModel 
+1. Le modèle : com.kycox.game.engine.model.GameModel 
 
   C'est le cœur du jeu, son battement est défini par un timer.
   
-4. Le contrôleur : com.kycox.game.controller.KeyboardController 
+4. Le contrôleur : com.kycox.game.engine.controller.KeyboardController 
 
   C'est les commandes du clavier du joueur.
   
 4. Les views : 
-  * com.kycox.game.sound.GameSounds (les sons du jeu)
-  * com.kycox.game.view.GameView (l'affichage du niveau du jeu)
-  * com.kycox.game.view.down.PageEndView (l'affichage du statut du jeu)
+  * com.kycox.game.engine.sound.GameSounds (les sons du jeu)
+  * com.kycox.game.engine.view.GameView (l'affichage du niveau du jeu)
+  * com.kycox.game.engine.view.down.PageEndView (l'affichage du statut du jeu)
 
 La classe com.kycox.game.engine.Engine les relie ensemble par le design pattern Observer.
 
