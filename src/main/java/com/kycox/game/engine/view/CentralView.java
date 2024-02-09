@@ -102,41 +102,59 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		} else if (gameModelForViews.getCurrentProgramStatus().isGameAskForceEndGame()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
-			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("exitGame"), ladybugMessagesBundle.getMessage("yesNo"));
+			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("exitGame")
+					, ladybugMessagesBundle.getMessage("yesNo"));
 		} else if (gameModelForViews.getCurrentProgramStatus().isProgramAskKeepPreviousGameLevel()) {
 			drawGhosts(g2d);
-			drawThreeCenterTextLines(g2d, ladybugMessagesBundle.getMessage("continue"), ladybugMessagesBundle.getMessage("previousGame"), ladybugMessagesBundle.getMessage("yesNo"));
+			drawThreeCenterTextLines(g2d, ladybugMessagesBundle.getMessage("continue")
+					, ladybugMessagesBundle.getMessage("previousGame")
+					, ladybugMessagesBundle.getMessage("yesNo"));
 		} else if (gameModelForViews.getCurrentProgramStatus().isGameStarting()) {
 			drawOneCenterTextLine(g2d, ladybugMessagesBundle.getMessage("getReady"));
 		} else if (gameModelForViews.getCurrentProgramStatus().isLevelStarting()) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
-			var text = ladybugMessagesBundle.getMessage("level") + " "
-			        + Utils.integerToRoman(gameModelForViews.getCurrentProgramStatus().getNumLevel()).toLowerCase();
+			var text = ladybugMessagesBundle.getMessage("level")
+					+ " "
+					+ Utils.integerToRoman(gameModelForViews.getCurrentProgramStatus().getNumLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
 		} else if (gameModelForViews.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
 			if (gameModelForViews.isShowHelpForKeys()) {
-				drawEightCenterTextLines(g2d, "hELP", "FII: sOUND ON OFF", "FIII: lADYBUG sKIN", "FIV: gHOST hEADBAND",
-				        "FV: gHOST hAT", "ARROWS: lADYBUG mOVE", "ZQSD: gHOST mOVE", "i OR ii: pLAYERS");
+				drawEightCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.keyboard.title")
+						, ladybugMessagesBundle.getMessage("help.keyboard.sound")
+						, ladybugMessagesBundle.getMessage("help.keyboard.ladybug.skin")
+						, ladybugMessagesBundle.getMessage("help.keyboard.ghost.headband")
+						, ladybugMessagesBundle.getMessage("help.keyboard.ghost.hat")
+						, ladybugMessagesBundle.getMessage("help.keyboard.ladybug.move")
+						, ladybugMessagesBundle.getMessage("help.keyboard.ghost.move")
+						, ladybugMessagesBundle.getMessage("help.keyboard.multi.player"));
 			} else if (gameModelForViews.isShowHelpForXboxes()) {
-				drawEightCenterTextLines(g2d, "hELP", "x UP: sOUND ON OFF", "x DOWN: lADYBUG sKIN",
-				        "x RIGHT: gHOST h'BAND", "x LEFT: gHOST hAT", "STICK i: lADYBUG mOVE", "STICK ii: gHOST mOVE",
-				        "x OR y: pLAYERS");
+				drawEightCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.xbox.title")
+						, ladybugMessagesBundle.getMessage("help.xbox.sound")
+						, ladybugMessagesBundle.getMessage("help.xbox.ladybug.skin")
+						, ladybugMessagesBundle.getMessage("help.xbox.ghost.headband")
+						, ladybugMessagesBundle.getMessage("help.xbox.ghost.hat")
+						, ladybugMessagesBundle.getMessage("help.xbox.ladybug.move")
+						, ladybugMessagesBundle.getMessage("help.xbox.ghost.move")
+						, ladybugMessagesBundle.getMessage("help.xbox.multi.player"));
 			} else if (gameModelForViews.isAtLeastOneXboxOneConnected()) {
-				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sOrAToStart"), ladybugMessagesBundle.getMessage("f1OrViewForHelp"));
+				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sOrAToStart")
+						, ladybugMessagesBundle.getMessage("f1OrViewForHelp"));
 			} else {
-				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sToStart"), ladybugMessagesBundle.getMessage("f1ForHelp"));
+				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sToStart")
+						, ladybugMessagesBundle.getMessage("f1ForHelp"));
 			}
 		} else if (gameModelForViews.getCurrentProgramStatus().isGameEnding()
 		        || gameModelForViews.getCurrentProgramStatus().isGameEnd()) {
 			drawGhosts(g2d);
-			var levelText = ladybugMessagesBundle.getMessage("endLevel") + " "
+			var levelText = ladybugMessagesBundle.getMessage("endLevel")
+					+ " "
 			        + Utils.integerToRoman(gameModelForViews.getCurrentProgramStatus().getNumLevel()).toLowerCase();
-
 			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("gameOver"), levelText);
 		} else if (gameModelForViews.getCurrentProgramStatus().isLevelEnding()) {
-			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("nextLevel"), ladybugMessagesBundle.getMessage("getReady"));
+			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("nextLevel")
+					, ladybugMessagesBundle.getMessage("getReady"));
 		} else if (gameModelForViews.getLadybug().getStatus() == LadybugStatus.DYING) {
 			ladybugDyingView.inProgress();
 			drawGhosts(g2d);

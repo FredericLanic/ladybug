@@ -16,10 +16,10 @@
     </parent>
 
 	<properties>
-		<java.version>16</java.version>
+		<java.version>19</java.version>
 		<application.name>Ladybug by Kykox</application.name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>com.kycox.game.MainLadybug</start-class>
+		<start-class>com.kycox.game.Application</start-class>
 	</properties>
 
 	<dependencies>
