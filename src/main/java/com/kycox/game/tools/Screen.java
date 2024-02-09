@@ -38,7 +38,7 @@ public class Screen {
 	}
 
 	public double getScreenHeight() {
-		return defaultToolKit.getScreenSize().getHeight();
+		return defaultToolKit.getScreenSize().getHeight() ;
 	}
 
 	public double getScreenWidth() {
