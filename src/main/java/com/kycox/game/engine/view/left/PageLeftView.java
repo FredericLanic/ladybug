@@ -16,7 +16,7 @@
  */
 package com.kycox.game.engine.view.left;
 
-import com.kycox.game.dynamic.body.ghost.Ghost;
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.contract.GameModelForViews;
 import com.kycox.game.constant.contract.GroupGhostForGameView;
 import com.kycox.game.constant.contract.LadybugForGameView;

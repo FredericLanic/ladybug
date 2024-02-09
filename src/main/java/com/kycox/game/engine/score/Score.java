@@ -16,10 +16,10 @@
  */
 package com.kycox.game.engine.score;
 
-import com.kycox.game.dynamic.body.GhostsGroup;
-import com.kycox.game.dynamic.body.ladybug.Ladybug;
+import com.kycox.game.body.GhostsGroup;
+import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.game.GameMainConstants;
-import com.kycox.game.dynamic.fruit.Fruits;
+import com.kycox.game.constant.fruits.Fruits;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;

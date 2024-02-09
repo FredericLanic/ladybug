@@ -14,14 +14,14 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.dynamic.body.ghost;
+package com.kycox.game.body.ghost;
 
 import com.kycox.game.constant.ghost.GhostStatus;
 
-public final class Clyde extends Ghost {
+public final class Inky extends Ghost {
 	@Override
 	public void setInitSpeed(int numLevel) {
-		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
+		initSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel));
 	}
 
 	@Override

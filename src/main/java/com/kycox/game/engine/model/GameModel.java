@@ -16,10 +16,10 @@
  */
 package com.kycox.game.engine.model;
 
-import com.kycox.game.dynamic.body.GhostsGroup;
-import com.kycox.game.dynamic.body.ghost.Ghost;
-import com.kycox.game.dynamic.body.ladybug.Ladybug;
-import com.kycox.game.dynamic.body.ladybug.LadybugDying;
+import com.kycox.game.body.GhostsGroup;
+import com.kycox.game.body.ghost.Ghost;
+import com.kycox.game.body.ladybug.Ladybug;
+import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.ghost.GhostsBodyImages;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.contract.GameModelForSounds;

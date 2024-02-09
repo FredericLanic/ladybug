@@ -16,8 +16,8 @@
  */
 package com.kycox.game.constant.contract;
 
-import com.kycox.game.dynamic.body.ghost.Ghost;
-import com.kycox.game.dynamic.body.ladybug.Ladybug;
+import com.kycox.game.body.ghost.Ghost;
+import com.kycox.game.body.ladybug.Ladybug;
 
 import java.awt.*;
 import java.util.Optional;

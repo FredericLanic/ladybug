@@ -2,7 +2,7 @@ package com.kycox.game.engine.model.strategy.actions;
 
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.dynamic.fruit.Fruits;
+import com.kycox.game.constant.fruits.Fruits;
 import com.kycox.game.engine.message.GameFunMessages;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.IGameModelAction;

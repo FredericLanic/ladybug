@@ -21,7 +21,7 @@
 		scope="prototype" />
 
 	<bean id="Clyde"
-		  class="com.kycox.game.dynamic.body.ghost.Clyde"
+		  class="com.kycox.game.body.ghost.Clyde"
 		  scope="prototype">
 		<property name="color" value="ORANGE" />
 		<property name="behaviour" value="CALM" />
@@ -31,7 +31,7 @@
 	</bean>
 
 	<bean id="Blinky"
-		  class="com.kycox.game.dynamic.body.ghost.Blinky"
+		  class="com.kycox.game.body.ghost.Blinky"
 		  scope="prototype">
 		<property name="color" value="RED" />
 		<property name="behaviour" value="AGGRESSIVE" />
@@ -41,7 +41,7 @@
 	</bean>
 
 	<bean id="Inky"
-		  class="com.kycox.game.dynamic.body.ghost.Inky"
+		  class="com.kycox.game.body.ghost.Inky"
 		  scope="prototype">
 		<property name="color" value="CYAN" />
 		<property name="behaviour" value="CALM" />
@@ -51,7 +51,7 @@
 	</bean>
 
 	<bean id="Pinky"
-		  class="com.kycox.game.dynamic.body.ghost.Pinky"
+		  class="com.kycox.game.body.ghost.Pinky"
 		  scope="prototype">
 		<property name="color" value="PINK" />
 		<property name="behaviour" value="SMART" />
@@ -60,7 +60,7 @@
 	</bean>
 
 	<bean id="GroupGhost"
-		class="com.kycox.game.dynamic.body.GhostsGroup">
+		class="com.kycox.game.body.GhostsGroup">
 		<property name="ghosts">
 			<list>
 				<ref bean="Clyde" />
@@ -72,7 +72,7 @@
 	</bean>
 
 	<bean id="Ladybug"
-		  class="com.kycox.game.dynamic.body.ladybug.Ladybug"
+		  class="com.kycox.game.body.ladybug.Ladybug"
 		  scope="singleton">
 		<property name="speedFunction">
 			<bean class="com.kycox.game.tools.maths.SpeedFunction" init-method="init">

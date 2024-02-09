@@ -16,7 +16,7 @@
  */
 package com.kycox.game.engine.screendata;
 
-import com.kycox.game.dynamic.body.ladybug.Ladybug;
+import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.constant.contract.LevelStructure;

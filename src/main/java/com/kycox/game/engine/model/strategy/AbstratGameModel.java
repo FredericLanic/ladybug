@@ -1,8 +1,8 @@
 package com.kycox.game.engine.model.strategy;
 
-import com.kycox.game.dynamic.body.GhostsGroup;
-import com.kycox.game.dynamic.body.ladybug.Ladybug;
-import com.kycox.game.dynamic.body.ladybug.LadybugDying;
+import com.kycox.game.body.GhostsGroup;
+import com.kycox.game.body.ladybug.Ladybug;
+import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;

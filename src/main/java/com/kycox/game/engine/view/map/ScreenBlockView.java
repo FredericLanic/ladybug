@@ -19,7 +19,7 @@ package com.kycox.game.engine.view.map;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.level.LevelImages492;
-import com.kycox.game.dynamic.fruit.Fruits;
+import com.kycox.game.constant.fruits.Fruits;
 import com.kycox.game.engine.screendata.ScreenData;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.engine.view.map.rendering.DisplayRendering;

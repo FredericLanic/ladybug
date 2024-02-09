@@ -1,7 +1,5 @@
-package com.kycox.game.dynamic.fruit;
+package com.kycox.game.constant.fruits;
 
-import com.kycox.game.constant.fruits.FruitsImages;
-import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 

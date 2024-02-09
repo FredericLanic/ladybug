@@ -1,6 +1,4 @@
-package com.kycox.game.dynamic.fruit;
-
-import com.kycox.game.constant.fruits.FruitsImages;
+package com.kycox.game.constant.fruits;
 
 import lombok.Getter;
 import lombok.Setter;

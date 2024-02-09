@@ -16,7 +16,7 @@
  */
 package com.kycox.game.constant.contract;
 
-import com.kycox.game.dynamic.body.ghost.Ghost;
+import com.kycox.game.body.ghost.Ghost;
 
 import java.util.List;
 

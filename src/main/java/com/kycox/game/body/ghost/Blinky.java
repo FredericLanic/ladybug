@@ -14,14 +14,26 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.dynamic.body.ghost;
+package com.kycox.game.body.ghost;
 
 import com.kycox.game.constant.ghost.GhostStatus;
+import com.kycox.game.tools.maths.BlinkySpeedIndex;
 
-public final class Pinky extends Ghost {
+import lombok.Setter;
+
+@Setter
+public final class Blinky extends Ghost {
+	private BlinkySpeedIndex blinkySpeedIndex;
+
 	@Override
 	public void setInitSpeed(int numLevel) {
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeedMinus(numLevel));
+	}
+
+	@Override
+	public void setNumLevel(int numLevel) {
+		super.setNumLevel(numLevel);
+		blinkySpeedIndex.setNumLevel();
 	}
 
 	@Override
@@ -31,9 +43,12 @@ public final class Pinky extends Ghost {
 		}
 		if (getStatus() == GhostStatus.SCARED) {
 			setSpeedIndex(getStartSpeedIndex() - 1);
-		} else {
-			// isComputed or !isComputed
+		} else if (!isComputed()) {
 			setSpeedIndex(getStartSpeedIndex());
+		} else {
+			// Calcul de la vitesse de Blinky en fonction du nombre de point restant dans la
+			// map
+			setSpeedIndex(getStartSpeedIndex() + blinkySpeedIndex.getIncrementSpeedIndex(perCent));
 		}
 	}
 }

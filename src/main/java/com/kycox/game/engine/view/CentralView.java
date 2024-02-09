@@ -16,7 +16,7 @@
  */
 package com.kycox.game.engine.view;
 
-import com.kycox.game.dynamic.body.ghost.Ghost;
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.font.GameFont;
 import com.kycox.game.constant.ladybug.LadybugStatus;

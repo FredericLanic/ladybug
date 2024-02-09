@@ -16,7 +16,7 @@
  */
 package com.kycox.game.engine.view.ladybug;
 
-import com.kycox.game.dynamic.body.ladybug.LadybugDying;
+import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;

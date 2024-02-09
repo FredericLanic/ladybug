@@ -14,10 +14,10 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.dynamic.body.ghost;
+package com.kycox.game.body.ghost;
 
-import com.kycox.game.dynamic.body.UserBody;
-import com.kycox.game.dynamic.body.ladybug.Ladybug;
+import com.kycox.game.body.ladybug.Ladybug;
+import com.kycox.game.body.UserBody;
 import com.kycox.game.engine.bodyaction.ghost.GhostActions;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostBehaviour;

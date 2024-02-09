@@ -5,8 +5,6 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.xbox.XboxOneConstants;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.contract.GhostForController;
-import com.kycox.game.dynamic.body.ghost.Ghost;
-import com.kycox.game.dynamic.body.ladybug.Ladybug;
 import com.kycox.game.engine.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
