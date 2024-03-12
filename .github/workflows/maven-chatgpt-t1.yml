@@ -1,0 +1,58 @@
+name: Build and Release Java Spring Project
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version souhaitée'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '17' # Utilise Java 17
+        java-package: 'jdk'
+
+    - name: Set project version
+      run: |
+        echo "version=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+
+    - name: Build with Maven
+      run: |
+        ./mvnw versions:set -DnewVersion=${{ env.version }} -DgenerateBackupPoms=false
+        ./mvnw clean install -B -DskipTests
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Extract project version from pom.xml
+      id: extract_version
+      run: echo ::set-output name=version::$(xmlstarlet sel -N ns="http://maven.apache.org/POM/4.0.0" -t -v "//ns:project/ns:version" pom.xml)
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: v${{ steps.extract_version.outputs.version }} # Utilise la version extraite
+        release_name: Release ${{ github.event_name }} ${{ github.sha }}
+        body: |
+          Changes in this Release:
+          - Add your release notes here
+
+    - name: Upload JAR file
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./target/mon_projet.jar # chemin vers votre fichier JAR
+        asset_name: mon_projet.jar
+        asset_content_type: application/java-archive
