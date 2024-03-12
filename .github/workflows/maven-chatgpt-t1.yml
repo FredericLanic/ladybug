@@ -28,8 +28,8 @@ jobs:
 
     - name: Build with Maven
       run: |
-        ./mvn versions:set -DnewVersion=${{ env.version }} -DgenerateBackupPoms=false
-        ./mvn clean install -B -DskipTests
+        mvn versions:set -DnewVersion=${{ env.version }} -DgenerateBackupPoms=false
+        mvn clean install -B -DskipTests
 
   release:
     runs-on: ubuntu-latest
