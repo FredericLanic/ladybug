@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./target/mon_projet.jar # chemin vers votre fichier JAR
+        asset_path: ./target/*.jar # chemin vers votre fichier JAR
         asset_name: mon_projet.jar
         asset_content_type: application/java-archive
 
