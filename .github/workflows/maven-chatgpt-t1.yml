@@ -59,7 +59,7 @@ jobs:
           - Add your release notes here
 
     - name: Download release artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4.1.7
       with:
         name: mon_projet # le nom de l'artefact
         path: ./downloaded-artifact
