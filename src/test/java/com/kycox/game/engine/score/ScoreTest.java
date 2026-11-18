@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -95,7 +94,6 @@ class ScoreTest {
 	}
 
 	@Test
-	@Disabled("Bug : points du fantôme comptés deux fois (setScore et setMessages), 30 au lieu de 15. Corrigé au commit suivant.")
 	@DisplayName("Un fantôme mangé rapporte 15 points, comme l'affiche le message")
 	void eatenGhost() {
 		when(ghostsGroup.getNbrEatenGhosts()).thenReturn(1);
