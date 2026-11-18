@@ -201,6 +201,10 @@ public class XboxOneController extends XBoxOneControllerManager implements Appli
 
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
+		// Manette indisponible (échec du chargement de Jamepad) : rien à lire
+		if (!isAvailable()) {
+			return;
+		}
 		Object obj = event.getSource();
 		if (obj instanceof GameModelForController eventGameModelForController) {
 			gameModelForController = eventGameModelForController;
