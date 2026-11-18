@@ -239,3 +239,22 @@ Ajoutez une entrée à chaque nouvelle discussion importante. Le skill le demand
 - Deux autres parties (19 h 11 – 19 h 12 et 19 h 14 – 19 h 16) : 4 morts puis « Ladybug lost the game », méga-gomme, Échap → O. Les 4 « New life » de la première partie étaient bien des vies gagnées (aucune mort ce jour-là). Frédéric : « tout est ok » pour 2.5, 2.10, 3.1 à 3.3 et 4.2.
 - **T10 ✅**. La checklist « avant » est complète : tout est OK, sauf 5.6 (Pause), KO sur Mac.
 - Restent T14 (cohérence des documents), T15 (revue du diff et commit) et T16 (étape 0 « Terminée »).
+
+### 18/11/2026 (soir) : étape 0 terminée (T15, T16)
+- Choix de Frédéric : commiter les captures, `.idea/` dans le `.gitignore`, 3 commits.
+- Commits : `feb4a99 [Tech] Outillage : Context7`, `1ac73d4 [Tech] Photo « avant » : checklist, robot et captures`, `bdd0842 [Tech] Plan et skill mis à jour pour develop`. Rien n'est poussé (SSH bloqué sur le réseau habituel ; à faire en HTTPS avec `gh` ou depuis un autre réseau).
+- Dashboard : étape 0 « Terminée », entrée j23.
+- **Prochaine étape : 1, le socle.** Questions à trancher avant : Java 21 ou 25 (Spring Boot 3.5 accepte les deux), Nexus ou Maven Central, stratégie de fusion vers `develop`, façon de pousser.
+- **Branche poussée sur GitHub** (18/11, dans le train) : aucune des deux clés SSH n'était enregistrée sur le compte GitHub. Frédéric a ajouté `id_ed25519` (SHA256:XLVzbPb2…) dans les réglages GitHub, puis `git push -u origin modernisation` : la branche suit maintenant `origin/modernisation`. `develop` et `master` n'ont pas été touchées.
+- GitHub (Dependabot) signale 83 vulnérabilités sur la branche par défaut (9 critiques, 38 élevées, 26 moyennes, 10 faibles) : à examiner à l'étape 1 (montée de Spring Boot et des dépendances).
+
+### 18/11/2026 (soir) : une branche par étape
+- Frédéric demande s'il vaut mieux continuer sur `modernisation` ou créer une branche par étape. Claude recommande une branche par étape (diff lisible par pattern, retour arrière facile, point stable pour le robot et Graphify).
+- **Décision (C16)** :
+  - une branche `etape-N-sujet` par étape, créée depuis `develop` à jour (pas `modernisation/…`, que git refuse tant que la branche `modernisation` existe) ;
+  - une PR par étape vers `develop`, fusionnée en merge commit, sans squash ;
+  - robot, checklist et Graphify avant chaque fusion, résumés dans la PR ;
+  - la branche `modernisation` fait la première PR.
+- C17 : on pousse en SSH (clé enregistrée sur GitHub). Q10 est tranchée ; Q09 se réduit à « develop → master ».
+- Mis à jour : règles de travail du plan, PDF (12 pages), skill (principe 2, section « Base de travail », note réseau), dashboard (p03, C16, C17, Q09, j25).
+- Les PR demandent `gh` (`brew install gh` puis `gh auth login`), ou se créent sur le site de GitHub.

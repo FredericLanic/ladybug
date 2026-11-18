@@ -19,7 +19,7 @@ Le plan détaillé est dans `references/plan.md`. Lisez-le avant de proposer ou 
 ## Règles de travail (importantes)
 
 1. **Discuter avant d'agir.** Ne lancez aucune action (branche, build, modification de code, commit) sans un feu vert explicite du type « vas-y » ou « on commence ». La validation d'un plan ne vaut pas feu vert. Frédéric a déjà interrompu une exécution lancée trop tôt. L'exploration en lecture seule reste permise.
-2. **Avancer à petits pas.** Une branche dédiée, un commit par sous-étape, et le diff montré avant chaque commit. Le jeu doit rester jouable après chaque étape.
+2. **Avancer à petits pas.** Une branche par étape (`etape-N-sujet`, créée depuis `develop` à jour), un commit par sous-étape, le diff montré avant chaque commit, puis une PR vers `develop` fusionnée en merge commit (pas de squash). Le jeu doit rester jouable après chaque étape.
 3. **Ne pas toucher à `~/.m2/settings.xml`.** Il pointe vers un Nexus local (`localhost:8081`) éteint. Le choix entre relancer le Nexus et passer par Maven Central est encore ouvert : demandez-le.
 4. **Langue** : le **code en anglais** (classes, méthodes, variables), les **commentaires et la Javadoc en français**. Appliquez la règle progressivement, dans les fichiers que vous touchez.
 5. **Répondre en français**, avec un vocabulaire accessible. Si vous employez un terme comme « couplage » ou « responsabilité unique », traduisez-le en une phrase concrète appliquée à Ladybug.
@@ -87,7 +87,7 @@ Limite : le XML Spring n'est pas analysé. Le câblage des fantômes ne figure d
 
 ## Context7 (documentation à jour des bibliothèques)
 
-Context7 ([upstash/context7](https://github.com/upstash/context7)) a été suggéré par Halim et est prévu à l'étape 0.B. Il s'installe en mode MCP avec `npx ctx7 setup --claude`. Frédéric doit faire lui-même la connexion OAuth chez Upstash.
+Context7 ([upstash/context7](https://github.com/upstash/context7)) a été suggéré par Halim. Il est installé depuis le 18/11/2026 (étape 0.B) : mode MCP, portée projet (`.mcp.json`), connexion OAuth faite par Frédéric avec `/mcp`. Test T4 réussi sur `/spring-projects/spring-boot/v3.5.16`.
 
 Une fois installé, **consultez-le avant toute montée de version ou toute utilisation d'une API de bibliothèque** : Spring Boot, Lombok, JUnit, AssertJ, Mockito, SLF4J, Jamepad, Java 21… Précisez la version visée. Il fournit deux outils : `resolve-library-id`, puis `query-docs`. La raison : la mémoire de Claude peut dater, et une migration ratée fait perdre du temps et la confiance de Frédéric.
 
@@ -147,9 +147,9 @@ Le plan a d'abord été écrit en lisant `master`. Or `origin/develop` a **34 co
 
 Il garde en revanche les sous-classes de fantômes et le XML, n'a toujours aucun test, reste en Spring Boot 3.0.2 avec Lombok 1.18.22, et est en version `0.6.0-SNAPSHOT` (contre `0.8.0-SNAPSHOT` sur `master`).
 
-**Travaillez sur la branche `modernisation` créée depuis `origin/develop`.** Tant que l'étape 0.C.5 n'a pas revu les constats et la dette, considérez ceux qui sont écrits ici comme issus de `master`, et vérifiez-les sur la branche avant de vous y fier.
+**Une branche par étape**, créée depuis `develop` à jour et nommée `etape-N-sujet` (par exemple `etape-1-socle` ; jamais `modernisation/…`, en conflit avec la branche `modernisation`). Chaque étape est fusionnée par une PR vers `develop`, en merge commit, après le robot, la checklist et Graphify (résultats résumés dans la PR). L'étape 0 a été faite sur la branche `modernisation`, créée depuis `origin/develop`, poussée le 18/11/2026 ; sa PR vers `develop` est la première. Les constats et la dette ont été revus sur `develop` le 18/11/2026 (étape 0.C.5). **L'étape 0 est terminée** (commits `feb4a99`, `1ac73d4`, `bdd0842`) ; la référence « avant » est dans `doc/checklist-jeu.md` et `doc/reference-avant/2026-11-18/`, et le robot `doc/reference-avant/robot/LadybugRobot.java` se relance après chaque grande étape (Terminal.app doit avoir les autorisations Accessibilité et Enregistrement de l'écran).
 
-Réseau : SSH vers GitHub est bloqué sur le réseau actuel (port 22, et port 443 coupé), mais HTTPS passe. Pour pousser, utilisez HTTPS avec `gh` (authentification faite par Frédéric). Les clés `~/.ssh` existent, sans passphrase : ne les lisez jamais.
+Réseau et accès GitHub : la clé `id_ed25519` est enregistrée sur GitHub depuis le 18/11/2026, donc on pousse en SSH. Sur certains réseaux (bureau), le port 22 est bloqué : il faut alors passer par HTTPS avec `gh`, qui n'est pas encore installé (`brew install gh`, puis `gh auth login` fait par Frédéric). Les clés n'ont pas de passphrase : ne lisez jamais les clés privées.
 
 ## Pièges connus
 

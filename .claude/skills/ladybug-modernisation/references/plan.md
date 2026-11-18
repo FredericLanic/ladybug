@@ -92,7 +92,8 @@ Un développeur Java expérimenté (Jeff) n'a pas osé se plonger dans le progra
 
 ## Règles de travail
 - **Aucune action (branche, build, modification) sans feu vert explicite.** On discute d'abord.
-- Une branche dédiée, `modernisation`, créée depuis **`origin/develop`** (et non `master`). **Un commit par sous-étape**, le diff montré avant chaque commit, et la convention de message `[TECH] …`.
+- **Une branche par étape**, créée depuis `develop` à jour et nommée `etape-N-sujet` (par exemple `etape-1-socle`). On évite `modernisation/…`, que git refuse tant que la branche `modernisation` existe. L'étape 0 a été faite sur `modernisation`, créée depuis **`origin/develop`** (et non `master`). **Un commit par sous-étape**, le diff montré avant chaque commit, et la convention de message `[Tech] …`.
+- **Fusion par pull request vers `develop`**, une PR par étape, en *merge commit* (pas de squash, pour garder les commits de sous-étape). Avant la fusion, on passe le robot, la checklist et Graphify, et on résume le résultat dans la description de la PR. Décidé le 18/11/2026.
 - Les constats ci-dessus ont été faits sur `master`, puis revus sur `develop` le 18/11/2026 (étape 0.C.5).
 - Le jeu reste jouable après chaque étape.
 - `~/.m2/settings.xml` n'est pas modifié. Choix à faire : relancer le Nexus, ou utiliser un fichier de réglages temporaire pointant vers Maven Central.
@@ -111,7 +112,7 @@ Objectif : avant de toucher au code, se doter de deux outils et figer une réfé
 - `git switch -c modernisation origin/develop`. Les fichiers non suivis (`.claude/`, le PDF) passent tels quels sur la branche.
 - Premier commit : le skill `ladybug-modernisation` et le PDF du plan, avec la convention de message de Frédéric (`[TECH] …`).
 - Ainsi, le `.gitignore` et `.claude/skills/graphify/` de l'étape 0.A seront commités sur `modernisation`, pas sur `master`.
-- Pousser se fera plus tard, en HTTPS avec `gh` : SSH est bloqué par le réseau actuel.
+- Branche poussée le 18/11/2026 par SSH (clé `id_ed25519` ajoutée sur GitHub) ; elle suit `origin/modernisation`. Elle sera fusionnée dans `develop` par une PR, la première du chantier.
 
 ### 0.A Graphify : la carte du code
 [Graphify](https://github.com/Graphify-Labs/graphify) (open source, Apache-2.0/MIT) transforme le code en **graphe de connaissances** interrogeable depuis Claude Code. Le code Java est analysé **localement** avec tree-sitter : sans IA, et rien ne quitte la machine.

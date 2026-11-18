@@ -124,7 +124,8 @@
 <div class="box warn">
 <ul>
   <li><b>Aucune action (branche, build, modification) sans feu vert explicite.</b> On discute d'abord.</li>
-  <li>Une branche dédiée, <code>modernisation</code>, créée depuis <b><code>origin/develop</code></b> (et non <code>master</code>). <b>Un commit par sous-étape</b>, le diff montré avant chaque commit, et la convention de message <code>[TECH] …</code>.</li>
+  <li><b>Une branche par étape</b>, créée depuis <code>develop</code> à jour et nommée <code>etape-N-sujet</code> (par exemple <code>etape-1-socle</code>). On évite <code>modernisation/…</code>, que git refuse tant que la branche <code>modernisation</code> existe. L'étape 0 a été faite sur <code>modernisation</code>, créée depuis <b><code>origin/develop</code></b> (et non <code>master</code>). <b>Un commit par sous-étape</b>, le diff montré avant chaque commit, et la convention de message <code>[Tech] …</code>.</li>
+  <li><b>Fusion par pull request vers <code>develop</code></b>, une PR par étape, en <i>merge commit</i> (pas de squash, pour garder les commits de sous-étape). Avant la fusion, on passe le robot, la checklist et Graphify, et on résume le résultat dans la description de la PR. Décidé le 18/11/2026.</li>
   <li>Les constats ci-dessus ont été faits sur <code>master</code>, puis revus sur <code>develop</code> le 18/11/2026 (étape 0.C.5).</li>
   <li>Le jeu reste jouable après chaque étape.</li>
   <li><code>~/.m2/settings.xml</code> n'est pas modifié. Choix à faire : relancer le Nexus, ou utiliser un fichier de réglages temporaire pointant vers Maven Central.</li>
@@ -146,7 +147,7 @@
   <li><code>git switch -c modernisation origin/develop</code>. Les fichiers non suivis (<code>.claude/</code>, le PDF) passent tels quels sur la branche.</li>
   <li>Premier commit : le skill <code>ladybug-modernisation</code> et le PDF du plan, avec la convention de message de Frédéric (<code>[TECH] …</code>).</li>
   <li>Ainsi, le <code>.gitignore</code> et <code>.claude/skills/graphify/</code> de l'étape 0.A seront commités sur <code>modernisation</code>, pas sur <code>master</code>.</li>
-  <li>Pousser se fera plus tard, en HTTPS avec <code>gh</code> : SSH est bloqué par le réseau actuel.</li>
+  <li>Branche poussée le 18/11/2026 par SSH (clé <code>id_ed25519</code> ajoutée sur GitHub) ; elle suit <code>origin/modernisation</code>. Elle sera fusionnée dans <code>develop</code> par une PR, la première du chantier.</li>
 </ul>
 <h3>0.A Graphify : la carte du code</h3>
 <p>Graphify (github.com/Graphify-Labs/graphify, open source, Apache-2.0/MIT) transforme le code en <b>graphe de connaissances</b> interrogeable depuis Claude Code. Le code Java est analysé <b>localement</b> avec tree-sitter : sans IA, et rien ne quitte la machine.</p>
