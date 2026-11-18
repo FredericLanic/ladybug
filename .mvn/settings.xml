@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Réglages Maven propres au projet Ladybug (chargés par .mvn/maven.config).
+
+  Ils remplacent ~/.m2/settings.xml pour ce projet uniquement : pas de miroir,
+  donc les dépendances viennent de Maven Central et des dépôts déclarés dans
+  le pom (jitpack pour Jamepad). Le fichier de l'utilisateur n'est pas modifié.
+-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
+</settings>

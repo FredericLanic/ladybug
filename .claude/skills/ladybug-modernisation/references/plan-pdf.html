@@ -46,8 +46,8 @@
   <tr><th>#</th><th>Étape</th><th>Pourquoi</th><th>Patterns ou outils</th></tr>
   <tr><td>0</td><td>Outillage et état de référence</td><td>Créer la branche depuis <code>develop</code>, voir le code avant d'y toucher, figer le comportement « avant », travailler avec la documentation à jour</td><td>Graphify, Context7, checklist et captures</td></tr>
   <tr><td>1</td><td>Socle</td><td>Faire compiler et démarrer, aligner les versions</td><td>–</td></tr>
-  <tr><td>2</td><td>Lanceur et XML externe</td><td>Un démarrage clair, une configuration modifiable sans recompiler</td><td>Factory</td></tr>
-  <tr><td>3</td><td>Tests</td><td>Un filet de sécurité avant de refactoriser</td><td>JUnit 5</td></tr>
+  <tr><td>2</td><td>Lanceur et XML externe <i>(après 3.1 et 3.2)</i></td><td>Un démarrage clair, une configuration modifiable sans recompiler</td><td>Factory</td></tr>
+  <tr><td>3</td><td>Tests <i>(3.1 et 3.2 avant l'étape 2, 3.3 après)</i></td><td>Un filet de sécurité avant de refactoriser</td><td>JUnit 5</td></tr>
   <tr><td>4</td><td>Découplage du modèle</td><td>Un modèle indépendant de Swing, base du réseau</td><td>Observer, State, Snapshot</td></tr>
   <tr><td>5</td><td><code>PlayerInput</code></td><td>Un contrôleur par personnage, plusieurs fantômes joueurs</td><td>Strategy</td></tr>
   <tr><td>6</td><td>Fantômes configurables</td><td>Un fantôme = assemblage de capacités, perception</td><td>Composition, Strategy</td></tr>
@@ -128,7 +128,7 @@
   <li><b>Fusion par pull request vers <code>develop</code></b>, une PR par étape, en <i>merge commit</i> (pas de squash, pour garder les commits de sous-étape). Avant la fusion, on passe le robot, la checklist et Graphify, et on résume le résultat dans la description de la PR. Décidé le 18/11/2026.</li>
   <li>Les constats ci-dessus ont été faits sur <code>master</code>, puis revus sur <code>develop</code> le 18/11/2026 (étape 0.C.5).</li>
   <li>Le jeu reste jouable après chaque étape.</li>
-  <li><code>~/.m2/settings.xml</code> n'est pas modifié. Choix à faire : relancer le Nexus, ou utiliser un fichier de réglages temporaire pointant vers Maven Central.</li>
+  <li><code>~/.m2/settings.xml</code> n'est pas modifié. Décidé le 18/11/2026 : build via <b>Maven Central</b>, avec un réglage propre au projet ; le Nexus local n'est pas relancé.</li>
 </ul>
 </div>
 
@@ -227,18 +227,19 @@
 <p class="sub"><b class="id">0.C.4</b> <b>Captures d'écran datées</b> de chaque niveau et de chaque rendu, rangées dans <code>doc/reference-avant/</code>. Elles serviront de comparaison après les étapes 1, 4 et 7.</p>
 <p class="sub"><b class="id">0.C.5</b> <b>Mettre à jour le plan, le PDF, le skill et le dashboard</b> avec l'état réel de <code>develop</code> (mesures relancées sur la branche, dette technique revue). Le plan actuel avait été écrit à partir de <code>master</code>.</p>
 
+<div class="box"><b>Ordre de réalisation (décidé le 18/11/2026)</b> : étape 1 → <b>3.1 et 3.2</b> (tests unitaires) → étape 2 → <b>3.3</b> (test du contexte Spring). La numérotation est conservée. Raisons : les tests ont besoin d'un build sain et des versions de test fixées par Spring Boot 3.5 (étape 1) ; les tests unitaires de logique pure protègent ensuite le premier vrai changement de code (étape 2) ; le test du contexte Spring, lui, n'est faisable proprement qu'après l'étape 2, car le <code>component-scan</code> de <code>com.kycox</code> crée aujourd'hui les 14 vues Swing (<code>MainFrame</code>…), ce qui échouerait en mode headless.</div>
 <h2><span class="num">1</span>Remettre le socle d'aplomb</h2>
-<p class="sub"><b class="id">1.1</b> Faire passer le build (<code>mvn compile</code>).</p>
+<p class="sub"><b class="id">1.1</b> Faire passer le build (<code>mvn compile</code>) <b>via Maven Central</b>, avec un réglage propre au projet, sans toucher à <code>~/.m2/settings.xml</code> (décidé le 18/11/2026 ; le Nexus local n'est pas relancé).</p>
 <p class="sub"><b class="id">1.2</b> Mettre à jour <code>pom.xml</code> :</p>
 <ul>
-  <li>Java 21 (LTS) ;</li>
+  <li>Java 21 (LTS), décidé le 18/11/2026 (Java 25 éventuellement à l'étape 8) ;</li>
   <li>Spring Boot 3.5.x ;</li>
   <li>Lombok récent ;</li>
   <li><code>spring-boot-starter-web</code> remplacé par <code>spring-boot-starter</code> ;</li>
   <li>suppression du dépôt jcenter.</li>
 </ul>
 <p class="sub"><b class="id">1.3</b> Rendre la manette optionnelle : <code>XBoxOneControllerManager</code> attrape l'échec du chargement natif, écrit un avertissement dans les logs et désactive la manette. Le jeu démarre au clavier.</p>
-<p class="sub"><b class="id">1.4</b> CI : JDK 21, actions GitHub en v4.</p>
+<p class="sub"><b class="id">1.4</b> CI : JDK 21, actions GitHub en v4, <code>::set-output</code> remplacé par <code>$GITHUB_OUTPUT</code>. <b>Nouvelle CI <code>build.yml</code></b> (décidée le 18/11/2026) : <code>mvn verify</code> à chaque PR et à chaque push sur <code>develop</code>.</p>
 
 <h2><span class="num">2</span>Nouveau démarrage (lanceur et XML externe)</h2>
 <p class="sub"><b class="id">2.1</b> <code>MainLadybug</code> devient un petit <b>lanceur</b> : lecture de la configuration, choix du mode, construction du contexte Spring, affichage de la fenêtre via <code>SwingUtilities.invokeLater</code>.</p>
@@ -253,17 +254,28 @@
 <p class="sub"><b class="id">2.4</b> Même mécanisme pour <code>ladybug.properties</code> (<code>@PropertySource</code> classpath puis <code>file:</code>, avec <code>ignoreResourceNotFound</code>).</p>
 <p class="sub"><b class="id">2.5</b> Modes prévus dans le lanceur dès maintenant : <b>solo</b> et <b>2 joueurs local</b>. La structure est prête pour accueillir plus tard « héberger » et « rejoindre ».</p>
 <p class="sub"><b class="id">2.6</b> README : section « Personnaliser le jeu ».</p>
+<p class="sub"><b class="id">2.7</b> Une fois le lanceur en place : test 3.3 (chargement du contexte Spring en mode headless), avec un cas pour le XML externe prioritaire.</p>
+<p class="sub"><b class="id">2.8</b> <b>Écran du jeu selon la souris</b> (demandé par Frédéric le 18/11/2026) :</p>
+<ul>
+  <li>la fenêtre s'ouvre sur l'écran où se trouve la souris au lancement (<code>MouseInfo.getPointerInfo().getDevice()</code>) ;</li>
+  <li>les dimensions viennent de la place réellement disponible sur cet écran (bornes moins barre de menus et Dock, via <code>Toolkit.getScreenInsets</code>), et non plus de <code>Toolkit.getScreenSize()</code> ;</li>
+  <li>corrige au passage le bas du labyrinthe coupé sur Mac (118 px réservés en haut et en bas, 687 px restants pour 720).</li>
+  <li>la hauteur de la zone du haut est divisée par deux (<code>topDimension</code> = <code>getBorderHeight() / 2</code>), comme l'a demandé Frédéric. Ce correctif, d'abord proposé en commit séparé à l'étape 1, est reporté ici (choix de Frédéric, 18/11/2026).</li>
+</ul>
 
 <h2><span class="num">3</span>Filet de sécurité (tests)</h2>
+<p><i>3.1 et 3.2 se font <b>juste après l'étape 1</b>, avant l'étape 2 ; 3.3 se fait <b>après l'étape 2</b> (voir 2.7).</i></p>
 <p class="sub"><b class="id">3.1</b> Ajout de <code>spring-boot-starter-test</code> (JUnit 5, AssertJ, Mockito).</p>
 <p class="sub"><b class="id">3.2</b> Tests unitaires :</p>
 <ul>
   <li><code>Dijkstra</code> ;</li>
   <li><code>SpeedFunction</code>, <code>BlinkySpeedIndex</code> et <code>GhostSensitiveBehaviour</code> ;</li>
   <li><code>Score</code> ;</li>
+  <li>stratégies des fantômes : case visée par Blinky, Pinky, Inky et Clyde pour une position de Ladybug donnée ;</li>
   <li>cohérence des niveaux : dimensions, téléportations symétriques, positions de départ praticables.</li>
 </ul>
-<p class="sub"><b class="id">3.3</b> Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés.</p>
+<p class="sub"><b class="id">3.4</b> <b>Sondes de log</b> (décidé le 18/11/2026, C22), faites avec 3.1 et 3.2 : un message <code>INFO</code> pour chaque événement de jeu que la checklist vérifie à la main et que les logs ne montrent pas encore : gomme mangée (avec le score), fantôme mangé et retour au point de régénération, fruit apparu et mangé, téléportation, Ladybug mangée par le fantôme joueur. Le robot et Claude vérifient alors ces points en lisant les logs. Restent à l'œil humain, en 5 minutes par étape : le son et l'affichage (animations, clignotement, labyrinthe entier). Le comportement des fantômes (checklist 3.1 à 3.3) se vérifie par des tests unitaires de leurs stratégies, ajoutés en 3.2.</p>
+<p class="sub"><b class="id">3.3</b> Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés. <b>Après l'étape 2</b>, qui sépare la construction du contexte de l'affichage de la fenêtre.</p>
 
 <h2><span class="num">4</span>Découpler le modèle de l'affichage</h2>
 <p class="sub"><b class="id">4.1</b> Remplacer <code>Observable</code>/<code>Observer</code> par une interface typée <code>GameModelListener</code>. Sept classes sont concernées : <code>GameModel</code>, <code>Engine</code>, <code>CentralView</code>, <code>PageLeftView</code>, <code>PageEndView</code>, <code>GameSounds</code>, <code>XboxOneController</code>.</p>
@@ -376,8 +388,7 @@ Architecture : <b>un hôte qui fait autorité</b>. L'hôte fait tourner le seul 
   <li><b>Réseau local seulement, ou Internet aussi</b> (découverte des parties, NAT, sécurité) ?</li>
   <li><b>Classement des options</b> : lesquelles relèvent de l'état partagé et lesquelles des préférences locales ?</li>
   <li><b>Rayons de lumière</b> : l'écart entre 3,5 et 4 cases dans <code>CentralView</code> est-il voulu ?</li>
-  <li><b>Nexus local</b> : à relancer, ou build via Maven Central ?</li>
-  <li><b>Graphify et documents</b> : inclure plus tard README, backlog et <code>.txt</code> dans le graphe (analyse par le modèle), ou rester en mode code seul ?</li>
+    <li><b>Graphify et documents</b> : inclure plus tard README, backlog et <code>.txt</code> dans le graphe (analyse par le modèle), ou rester en mode code seul ?</li>
   <li><b>Q11, labyrinthe dynamique</b> : prévenir le joueur avant un changement ? Labyrinthe généré symétrique ou libre ? Mur qui se ferme sur un personnage : attendre ou pousser ?</li>
   <li><b>Graphify en mode « toujours actif »</b> (<code>graphify claude install</code>, avec des hooks qui consultent le graphe automatiquement) : à activer ou non ?</li>
 </ul>
@@ -394,9 +405,9 @@ Architecture : <b>un hôte qui fait autorité</b>. L'hôte fait tourner le seul 
 <h2>Vérification (à chaque étape)</h2>
 <ol start="0">
   <li>Étape 0 : <code>graphify-out/graph.html</code> s'ouvre et montre les packages de <code>com.kycox.game</code> ; <code>graphify-out/</code> est ignoré par git ; Context7 répond à une question test, par exemple « notes de migration Spring Boot 3.0 → 3.5 » ; la branche <code>modernisation</code> existe depuis <code>origin/develop</code>, avec un premier commit (skill et PDF) ; <code>doc/checklist-jeu.md</code> et <code>doc/reference-avant/</code> existent, et l'état de compilation de <code>develop</code> est noté.</li>
-  <li><code>mvn clean verify</code> : compilation et tests au vert.</li>
+  <li><code>mvn clean verify</code> : compilation et tests au vert (des tests existent à partir de 3.1 et 3.2, réalisés juste après l'étape 1).</li>
   <li><code>java -jar target/ladybug-*.jar</code> : le jeu démarre (même sans manette) et une partie se joue.</li>
-  <li>Étape 2 : un XML modifié à côté du jar est pris en compte, le log l'indique, et un XML cassé produit un message clair.</li>
+  <li>Étape 2 : un XML modifié à côté du jar est pris en compte, le log l'indique, et un XML cassé produit un message clair. Avec deux écrans, le jeu s'ouvre sur celui de la souris, et le labyrinthe est entier.</li>
   <li>Étape 5 : deux fantômes joués en local, au clavier et à la manette.</li>
   <li>Étape 6 : ajouter un 5ᵉ fantôme dans le XML externe, sans recompiler.</li>
   <li>Étape 6 : en mode lampe, la visibilité respecte la <code>Perception</code> de chaque personnage.</li>
