@@ -258,3 +258,24 @@ Ajoutez une entrée à chaque nouvelle discussion importante. Le skill le demand
 - C17 : on pousse en SSH (clé enregistrée sur GitHub). Q10 est tranchée ; Q09 se réduit à « develop → master ».
 - Mis à jour : règles de travail du plan, PDF (12 pages), skill (principe 2, section « Base de travail », note réseau), dashboard (p03, C16, C17, Q09, j25).
 - Les PR demandent `gh` (`brew install gh` puis `gh auth login`), ou se créent sur le site de GitHub.
+- Commit `d49ca5e [Tech] Clôture de l'étape 0 : une branche par étape` poussé sur `origin/modernisation`. Prochaine action : PR `modernisation` → `develop` (site de GitHub, ou `gh` une fois installé).
+- `gh` 2.105.0 installé par Homebrew, connecté par Frédéric (compte FredericLanic, protocole SSH).
+- **PR #14 créée** : `modernisation` → `develop`, « [Tech] Étape 0 : outillage et état de référence », 6 commits, https://github.com/FredericLanic/ladybug/pull/14. À fusionner par Frédéric en merge commit.
+- **PR #14 fusionnée** à la demande de Frédéric (« La PR me convient, fusionne-la ») par `gh pr merge 14 --merge` : merge commit `69b2710` sur `develop`. La branche `develop` locale est créée et suit `origin/develop`. L'étape 1 partira de là (`etape-1-socle`).
+- Choix de Frédéric : la ligne de journal en attente partira avec le premier commit de l'étape 1. La branche `modernisation` (entièrement fusionnée) est **supprimée** en local et sur GitHub ; son contenu reste dans `develop` (merge `69b2710`).
+
+### 18/11/2026 (soir) : tests unitaires d'abord, ou l'étape prévue ?
+- Question de Frédéric. Première réponse de Claude : faire l'étape 1, puis l'étape 3, puis l'étape 2. Frédéric : « tu trouves mieux ? ». En vérifiant, Claude affine sa réponse : `application-context.xml` fait un `component-scan` sur `com.kycox`, qui crée 14 vues Swing, donc le test 3.3 du contexte en mode headless échouerait avant l'étape 2.
+- **Décision (C18)** : ordre de réalisation 1 → 3.1 et 3.2 (tests unitaires de logique pure) → 2 → 3.3 (test du contexte Spring, nouvelle sous-étape 2.7). La numérotation est conservée.
+- Mis à jour : plan (encadré « Ordre de réalisation », 2.7, notes en 3 et 3.3, vérification n° 1), PDF (12 pages), skill (« Ordre des étapes »), dashboard (p04, p06, p07, p18, s02, s03, C18, j28).
+
+### 18/11/2026 (soir, à la maison) : lancement de l'étape 1
+- Choix de Frédéric : **Java 21** (C19), **Maven Central** avec un réglage propre au projet (C20).
+- Constats pour l'étape 1 :
+  - Spring Boot 3.5.16 et Lombok 1.18.48 sont les dernières versions sur Maven Central ;
+  - Jamepad (`com.github.WilliamAHartman`) n'est pas sur Central : il faut garder jitpack ;
+  - jcenter est déclaré avec l'identifiant `central`, ce qui masque le vrai Central ;
+  - le `maven-compiler-plugin` force `source/target 17`, contre `java.version` 19 ;
+  - la CI `maven-release.yml` (déclenchée à la main) utilise JDK 16, les actions v2 et `::set-output`.
+- Plan de l'étape 1 validé, **avec une nouvelle CI `build.yml`** (`mvn verify` sur les PR et sur `develop`).
+- Branche `etape-1-socle` créée depuis `develop` (`69b2710`).

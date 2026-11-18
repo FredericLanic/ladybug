@@ -96,7 +96,7 @@ Un développeur Java expérimenté (Jeff) n'a pas osé se plonger dans le progra
 - **Fusion par pull request vers `develop`**, une PR par étape, en *merge commit* (pas de squash, pour garder les commits de sous-étape). Avant la fusion, on passe le robot, la checklist et Graphify, et on résume le résultat dans la description de la PR. Décidé le 18/11/2026.
 - Les constats ci-dessus ont été faits sur `master`, puis revus sur `develop` le 18/11/2026 (étape 0.C.5).
 - Le jeu reste jouable après chaque étape.
-- `~/.m2/settings.xml` n'est pas modifié. Choix à faire : relancer le Nexus, ou utiliser un fichier de réglages temporaire pointant vers Maven Central.
+- `~/.m2/settings.xml` n'est pas modifié. Décidé le 18/11/2026 : build via **Maven Central**, avec un réglage propre au projet ; le Nexus local n'est pas relancé.
 
 ---
 
@@ -193,17 +193,19 @@ Le projet n'a aucun test. Il faut donc une référence du **comportement** avant
 
 0.C.5 **Mettre à jour le plan, le PDF, le skill et le dashboard** avec l'état réel de `develop` (mesures relancées sur la branche, dette technique revue). Le plan actuel avait été écrit à partir de `master`.
 
+> **Ordre de réalisation (décidé le 18/11/2026)** : étape 1 → **3.1 et 3.2** (tests unitaires) → étape 2 → **3.3** (test du contexte Spring). La numérotation est conservée. Raisons : les tests ont besoin d'un build sain et des versions de test fixées par Spring Boot 3.5 (étape 1) ; les tests unitaires de logique pure protègent ensuite le premier vrai changement de code (étape 2) ; le test du contexte Spring, lui, n'est faisable proprement qu'après l'étape 2, car le `component-scan` de `com.kycox` crée aujourd'hui les 14 vues Swing (`MainFrame`…), ce qui échouerait en mode headless.
+
 ## Étape 1 : remettre le socle d'aplomb
-1.1 Faire passer le build (`mvn compile`).
+1.1 Faire passer le build (`mvn compile`) **via Maven Central**, avec un réglage propre au projet, sans toucher à `~/.m2/settings.xml` (décidé le 18/11/2026 ; le Nexus local n'est pas relancé).
 1.2 Mettre à jour `pom.xml` :
-- Java 21 (LTS) ;
+- Java 21 (LTS), décidé le 18/11/2026 (Java 25 éventuellement à l'étape 8) ;
 - Spring Boot 3.5.x ;
 - Lombok récent ;
 - `spring-boot-starter-web` remplacé par `spring-boot-starter` ;
 - suppression du dépôt jcenter.
 
 1.3 Rendre la manette optionnelle : `XBoxOneControllerManager` attrape l'échec du chargement natif, écrit un avertissement dans les logs et désactive la manette. Le jeu démarre au clavier.
-1.4 CI : JDK 21, actions GitHub en v4.
+1.4 CI : JDK 21, actions GitHub en v4, `::set-output` remplacé par `$GITHUB_OUTPUT`. **Nouvelle CI `build.yml`** (décidée le 18/11/2026) : `mvn verify` à chaque PR et à chaque push sur `develop`.
 
 ## Étape 2 : nouveau démarrage (lanceur et XML externe)
 2.1 `MainLadybug` devient un petit **lanceur** :
@@ -222,8 +224,11 @@ Le projet n'a aucun test. Il faut donc une référence du **comportement** avant
 2.4 Même mécanisme pour `ladybug.properties` (`@PropertySource` classpath puis `file:`, avec `ignoreResourceNotFound`).
 2.5 Modes prévus dans le lanceur dès maintenant : **solo** et **2 joueurs local**. La structure est prête pour accueillir plus tard « héberger » et « rejoindre ».
 2.6 README : section « Personnaliser le jeu ».
+2.7 Une fois le lanceur en place : test 3.3 (chargement du contexte Spring en mode headless), avec un cas pour le XML externe prioritaire.
 
 ## Étape 3 : filet de sécurité (tests)
+*3.1 et 3.2 se font **juste après l'étape 1**, avant l'étape 2 ; 3.3 se fait **après l'étape 2** (voir 2.7).*
+
 3.1 Ajout de `spring-boot-starter-test` (JUnit 5, AssertJ, Mockito).
 3.2 Tests unitaires :
 - `Dijkstra` ;
@@ -231,7 +236,7 @@ Le projet n'a aucun test. Il faut donc une référence du **comportement** avant
 - `Score` ;
 - cohérence des niveaux : dimensions, téléportations symétriques, positions de départ praticables.
 
-3.3 Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés.
+3.3 Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés. **Après l'étape 2**, qui sépare la construction du contexte de l'affichage de la fenêtre.
 
 ## Étape 4 : découpler le modèle de l'affichage
 4.1 Remplacer `Observable`/`Observer` par une interface typée `GameModelListener`. Sept classes sont concernées : `GameModel`, `Engine`, `CentralView`, `PageLeftView`, `PageEndView`, `GameSounds`, `XboxOneController`.
@@ -350,7 +355,6 @@ Architecture : **un hôte qui fait autorité**.
 - **Réseau local seulement, ou Internet aussi** (découverte des parties, NAT, sécurité) ?
 - **Classement des options** : lesquelles relèvent de l'état partagé et lesquelles des préférences locales ?
 - **Rayons de lumière** : l'écart entre 3,5 et 4 cases dans `CentralView` est-il voulu ?
-- **Nexus local** : à relancer, ou build via Maven Central ?
 - **Graphify et documents** : inclure plus tard README, backlog et `.txt` dans le graphe (analyse par le modèle), ou rester en mode code seul ?
 - **Q11, labyrinthe dynamique** : prévenir le joueur avant un changement (clignotement du mur) ? Labyrinthe généré symétrique comme les niveaux actuels, ou libre ? Règle quand un mur se ferme sur un personnage (attendre, pousser) ?
 - **Graphify en mode « toujours actif »** (`graphify claude install`, avec des hooks qui consultent le graphe automatiquement) : à activer ou non ?
@@ -368,7 +372,7 @@ Architecture : **un hôte qui fait autorité**.
    - Context7 répond à une question test, par exemple « notes de migration Spring Boot 3.0 → 3.5 » ;
    - la branche `modernisation` existe depuis `origin/develop`, avec un premier commit (skill et PDF) ;
    - `doc/checklist-jeu.md` et `doc/reference-avant/` existent, et l'état de compilation de `develop` est noté.
-1. `mvn clean verify` : compilation et tests au vert.
+1. `mvn clean verify` : compilation et tests au vert (des tests existent à partir de 3.1 et 3.2, réalisés juste après l'étape 1).
 2. `java -jar target/ladybug-*.jar` : le jeu démarre (même sans manette) et une partie se joue.
 3. Étape 2 : un XML modifié à côté du jar est pris en compte, le log l'indique, et un XML cassé produit un message clair.
 4. Étape 5 : deux fantômes joués en local, au clavier et à la manette.

@@ -60,6 +60,9 @@ Points forts existants à reconnaître, sans les dénigrer :
 1. Socle (build, versions, manette optionnelle, CI)
 2. Lanceur et XML externe
 3. Tests
+
+**Ordre de réalisation (décidé le 18/11/2026)** : 1 → 3.1 et 3.2 (tests unitaires de logique pure) → 2 → 3.3 (test du contexte Spring, possible seulement une fois le lanceur en place, car le `component-scan` crée aujourd'hui les vues Swing). La numérotation est conservée.
+
 4. Découplage du modèle
 5. `PlayerInput`
 6. Fantômes configurables et perception
@@ -130,7 +133,6 @@ Ces questions sont à reprendre plus tard. Ne les tranchez pas seul, et ne les l
 - Réseau local seulement, ou Internet aussi ?
 - Quelles options relèvent de l'état partagé, et lesquelles des préférences locales ?
 - L'écart de rayon de lumière (3,5 cases contre 4) dans `CentralView` est-il voulu ?
-- Nexus local ou Maven Central ?
 - Q11, labyrinthe dynamique : prévenir le joueur avant un changement ? Labyrinthe généré symétrique ou libre ? Mur qui se ferme sur un personnage : attendre ou pousser ?
 - Graphify : inclure plus tard les documents (README, backlog) ? Activer le mode « toujours actif » ?
 
