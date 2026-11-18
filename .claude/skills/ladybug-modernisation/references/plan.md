@@ -225,6 +225,11 @@ Le projet n'a aucun test. Il faut donc une référence du **comportement** avant
 2.5 Modes prévus dans le lanceur dès maintenant : **solo** et **2 joueurs local**. La structure est prête pour accueillir plus tard « héberger » et « rejoindre ».
 2.6 README : section « Personnaliser le jeu ».
 2.7 Une fois le lanceur en place : test 3.3 (chargement du contexte Spring en mode headless), avec un cas pour le XML externe prioritaire.
+2.8 **Écran du jeu selon la souris** (demandé par Frédéric le 18/11/2026) :
+- la fenêtre s'ouvre sur l'écran où se trouve la souris au lancement (`MouseInfo.getPointerInfo().getDevice()`) ;
+- les dimensions viennent de la place réellement disponible sur cet écran (bornes de l'écran moins barre de menus et Dock, via `Toolkit.getScreenInsets`), et non plus de `Toolkit.getScreenSize()`, qui donne l'écran principal barre de menus comprise ;
+- corrige au passage le bas du labyrinthe coupé sur Mac : 118 px réservés en haut et en bas, il reste 687 px pour un labyrinthe de 720.
+- la hauteur de la zone du haut est divisée par deux (`topDimension` = `getBorderHeight() / 2`), comme l'a demandé Frédéric. Ce correctif, d'abord proposé en commit séparé à l'étape 1, est reporté ici (choix de Frédéric, 18/11/2026).
 
 ## Étape 3 : filet de sécurité (tests)
 *3.1 et 3.2 se font **juste après l'étape 1**, avant l'étape 2 ; 3.3 se fait **après l'étape 2** (voir 2.7).*
@@ -234,7 +239,10 @@ Le projet n'a aucun test. Il faut donc une référence du **comportement** avant
 - `Dijkstra` ;
 - `SpeedFunction`, `BlinkySpeedIndex` et `GhostSensitiveBehaviour` ;
 - `Score` ;
+- stratégies des fantômes : case visée par Blinky, Pinky, Inky et Clyde pour une position de Ladybug donnée ;
 - cohérence des niveaux : dimensions, téléportations symétriques, positions de départ praticables.
+
+3.4 **Sondes de log** (décidé le 18/11/2026, C22), faites avec 3.1 et 3.2 : un message `INFO` pour chaque événement de jeu que la checklist vérifie à la main et que les logs ne montrent pas encore : gomme mangée (avec le score), fantôme mangé et retour au point de régénération, fruit apparu et mangé, téléportation, Ladybug mangée par le fantôme joueur. Le robot et Claude vérifient alors ces points en lisant les logs. Restent à l'œil humain, en 5 minutes par étape : le son et l'affichage (animations, clignotement, labyrinthe entier). Le comportement des fantômes (checklist 3.1 à 3.3) se vérifie par des tests unitaires de leurs stratégies, ajoutés en 3.2.
 
 3.3 Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés. **Après l'étape 2**, qui sépare la construction du contexte de l'affichage de la fenêtre.
 
@@ -374,7 +382,7 @@ Architecture : **un hôte qui fait autorité**.
    - `doc/checklist-jeu.md` et `doc/reference-avant/` existent, et l'état de compilation de `develop` est noté.
 1. `mvn clean verify` : compilation et tests au vert (des tests existent à partir de 3.1 et 3.2, réalisés juste après l'étape 1).
 2. `java -jar target/ladybug-*.jar` : le jeu démarre (même sans manette) et une partie se joue.
-3. Étape 2 : un XML modifié à côté du jar est pris en compte, le log l'indique, et un XML cassé produit un message clair.
+3. Étape 2 : un XML modifié à côté du jar est pris en compte, le log l'indique, et un XML cassé produit un message clair. Avec deux écrans, le jeu s'ouvre sur celui de la souris, et le labyrinthe est entier.
 4. Étape 5 : deux fantômes joués en local, au clavier et à la manette.
 5. Étape 6 : ajouter un 5ᵉ fantôme dans le XML externe, sans recompiler.
 6. Étape 6 : en mode lampe, la visibilité respecte la `Perception` de chaque personnage.

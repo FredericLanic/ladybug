@@ -279,3 +279,36 @@ Ajoutez une entrée à chaque nouvelle discussion importante. Le skill le demand
   - la CI `maven-release.yml` (déclenchée à la main) utilise JDK 16, les actions v2 et `::set-output`.
 - Plan de l'étape 1 validé, **avec une nouvelle CI `build.yml`** (`mvn verify` sur les PR et sur `develop`).
 - Branche `etape-1-socle` créée depuis `develop` (`69b2710`).
+- Commits de l'étape 1 :
+  - `245993d` : plan ;
+  - `4d047c3`, 1.1 : `.mvn/maven.config` et `.mvn/settings.xml` (Maven Central sans miroir), jcenter retiré ;
+  - `14bada8`, 1.2 : Spring Boot 3.5.16, Java 21, Lombok géré par Spring Boot (1.18.46), `source/target 17` retiré ; le migrateur de propriétés n'a rien signalé ;
+  - `8454093`, 1.4 : nouvelle CI `build.yml`, et `maven-release.yml` passé en JDK 21, checkout v7, setup-java v6, `$GITHUB_OUTPUT`. Context7 a donné des versions d'actions plus récentes que le « v4 » du plan. Vérifié : le `-s` passé en ligne de commande l'emporte sur `.mvn/maven.config`.
+- `mvn clean verify` passe en JDK 21 **sans aucune bidouille**.
+- **Robot après l'étape 1** (`doc/reference-apres/etape-1/`, 45 captures) :
+  - séquence de statuts **strictement identique** à la référence, 0 erreur ;
+  - touches F1 à F7, Entrée, 2 joueurs, Échap et sortie OK ; la pause toujours KO sur Mac ;
+  - 3 rendus sur 4 tirés (Lignes non sorti, simple hasard).
+  - Le format des logs passe de « - » à « -- » (Spring Boot 3.5) : sans effet sur le robot.
+- Checklist : colonne « Après étape 1 » remplie pour ce que couvre le robot. Défaut corrigé au passage : les lignes 2.2 à 2.10, 3.x et 4.2 avaient perdu leur cellule « Après étape 1 » lors du remplissage du 18/11.
+- IntelliJ : seule la version Community (IDEA CE 2025.2) était installée. À la demande de Frédéric, **IntelliJ IDEA Ultimate 2026.3** a été installé par Homebrew (`brew install --cask intellij-idea`), avec le plugin **Claude Code [Beta]** (`com.anthropic.code.plugin`, ajouté par `idea installPlugins`). Ladybug est ouvert dans l'Ultimate. Restent à faire par Frédéric : activer la licence avec son compte JetBrains, régler la touche Échap du terminal, et mettre le SDK du projet sur Corretto 21.
+- Retour à **IntelliJ Community** (pas d'activation de licence Ultimate) : plugin Claude Code [Beta] installé dans IDEA CE 2025.2 (`idea installPlugins`), Ladybug rouvert dans la Community. L'Ultimate reste installé, à fermer par Frédéric ; désinstallation possible avec `brew uninstall --cask intellij-idea`.
+- **1.3, manette optionnelle** (choix (a) de Frédéric, plutôt que de considérer 1.3 couvert par `@Conditional(WindowsHost.class)`) : `XBoxOneControllerManager.initialize()` attrape `LinkageError | RuntimeException`, écrit un avertissement et passe `available` à faux ; `XboxOneController.onApplicationEvent` ne fait rien si la manette est indisponible.
+  - Test sur Mac en simulant Windows (`-Dos.name="Windows 11"`, Jamepad tente alors de charger `jamepad.dll`) : **avant**, `UnsatisfiedLinkError` puis « cancelling refresh attempt », le contexte Spring tombe ; **après**, deux avertissements « Manette Xbox désactivée » et le jeu atteint `PROGRAM_PRESENTATION`.
+  - Deux avertissements, car `XboxOneController` hérite de `XBoxOneControllerManager` : Spring crée deux beans et initialise Jamepad deux fois. Défaut préexistant, à traiter plus tard (composition plutôt qu'héritage).
+- **Graphify après l'étape 1** (`GRAPHIFY_BACKEND=none graphify update .`) : 1 483 → 1 509 nœuds, 3 744 → 3 767 liens. Les ajouts sont la CI `build.yml` et des méthodes du robot ; les autres écarts viennent de la ré-extraction des fichiers Xbox modifiés (identifiants renommés), sans changement de structure.
+
+### 18/11/2026 (nuit) : écran du jeu et labyrinthe coupé
+- Partie manuelle lancée pour la checklist, fermée par Frédéric dès l'écran de présentation (code 0, aucune erreur) : remarque de Frédéric, le jeu s'ouvre toujours sur l'écran du Mac (écran principal), pas sur son HP 27w.
+- Cause : `MainFrame` ouvre une fenêtre maximisée sans bordure sur l'écran principal, et `Screen` prend `Toolkit.getScreenSize()` (écran principal, barre de menus comprise).
+- Constat de Claude sur `01-presentation.png` : **le bas du labyrinthe est coupé** sur Mac. 956 px d'écran, 923 px de fenêtre, 118 px réservés en haut et en bas, il reste 687 px pour 720. La ligne 1.1 de la checklist (« pas de zone coupée ») était donc OK à tort, dès la référence « avant ».
+- Demande de Frédéric : diviser par deux la hauteur de la zone du haut. Claude propose de le faire dans un commit à part sur `etape-1-socle` (`topDimension` = `getBorderHeight() / 2`) : **en attente du feu vert**.
+- **Décision (C21)** : nouveau point **2.8** du plan, « écran du jeu selon la souris » : la fenêtre s'ouvre sur l'écran de la souris, avec les dimensions de la place réellement disponible (`getScreenInsets`). Plan, copie `~/.claude/plans`, PDF et dashboard mis à jour.
+
+### 18/11/2026 (nuit) : partie « après étape 1 » et sondes de log
+- Jeu relancé à la demande de Frédéric (jar à jour, 23 h 32 – 23 h 36, code 0, aucune erreur ni aucun avertissement). Logs : 4 méga-gommes, 7 morts, 4 vies gagnées, niveau 1 → niveau 2, « Ladybug lost the game ». Séquence de statuts identique à la référence.
+- Question de Frédéric : « si tu rajoutes des logs, je n'aurai plus à faire les tests ? ». Réponse de Claude : en partie. Les logs prouvent les événements (gomme, fantôme mangé, fruit, téléportation, fantôme joueur qui mange Ladybug), pas le son ni l'affichage (le labyrinthe coupé, passé « OK » en 1.1, l'a montré). Le comportement des fantômes se vérifie mieux par des tests unitaires de leurs stratégies. Autre limite : le robot joue sans viser, donc certains événements n'arrivent pas.
+- **Décision (C22)** : les sondes de log se font **à l'étape 3**, avec 3.1 et 3.2 (nouveau point **3.4**), plus des tests des stratégies des fantômes en 3.2. Ensuite, le passage humain par étape se réduit à environ 5 minutes (son et affichage).
+- Frédéric : « tout est ok » pour 2.2 à 2.10, 3.1 à 3.3 et 4.2. **La checklist « Après étape 1 » est complète** : tout est OK, sauf 5.6 (pause), KO sur Mac comme avant.
+- Choix de Frédéric : le correctif du labyrinthe coupé (`topDimension` divisé par deux) est **reporté au point 2.8**, avec l'écran choisi selon la souris (plan et PDF mis à jour).
+- Feu vert de Frédéric (« vas-y, commite les deux ») : commit 1.3 (manette optionnelle), puis commit de la photo « après étape 1 » (checklist, captures, plan, PDF, journal).

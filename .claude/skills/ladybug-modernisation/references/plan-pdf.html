@@ -255,6 +255,13 @@
 <p class="sub"><b class="id">2.5</b> Modes prévus dans le lanceur dès maintenant : <b>solo</b> et <b>2 joueurs local</b>. La structure est prête pour accueillir plus tard « héberger » et « rejoindre ».</p>
 <p class="sub"><b class="id">2.6</b> README : section « Personnaliser le jeu ».</p>
 <p class="sub"><b class="id">2.7</b> Une fois le lanceur en place : test 3.3 (chargement du contexte Spring en mode headless), avec un cas pour le XML externe prioritaire.</p>
+<p class="sub"><b class="id">2.8</b> <b>Écran du jeu selon la souris</b> (demandé par Frédéric le 18/11/2026) :</p>
+<ul>
+  <li>la fenêtre s'ouvre sur l'écran où se trouve la souris au lancement (<code>MouseInfo.getPointerInfo().getDevice()</code>) ;</li>
+  <li>les dimensions viennent de la place réellement disponible sur cet écran (bornes moins barre de menus et Dock, via <code>Toolkit.getScreenInsets</code>), et non plus de <code>Toolkit.getScreenSize()</code> ;</li>
+  <li>corrige au passage le bas du labyrinthe coupé sur Mac (118 px réservés en haut et en bas, 687 px restants pour 720).</li>
+  <li>la hauteur de la zone du haut est divisée par deux (<code>topDimension</code> = <code>getBorderHeight() / 2</code>), comme l'a demandé Frédéric. Ce correctif, d'abord proposé en commit séparé à l'étape 1, est reporté ici (choix de Frédéric, 18/11/2026).</li>
+</ul>
 
 <h2><span class="num">3</span>Filet de sécurité (tests)</h2>
 <p><i>3.1 et 3.2 se font <b>juste après l'étape 1</b>, avant l'étape 2 ; 3.3 se fait <b>après l'étape 2</b> (voir 2.7).</i></p>
@@ -264,8 +271,10 @@
   <li><code>Dijkstra</code> ;</li>
   <li><code>SpeedFunction</code>, <code>BlinkySpeedIndex</code> et <code>GhostSensitiveBehaviour</code> ;</li>
   <li><code>Score</code> ;</li>
+  <li>stratégies des fantômes : case visée par Blinky, Pinky, Inky et Clyde pour une position de Ladybug donnée ;</li>
   <li>cohérence des niveaux : dimensions, téléportations symétriques, positions de départ praticables.</li>
 </ul>
+<p class="sub"><b class="id">3.4</b> <b>Sondes de log</b> (décidé le 18/11/2026, C22), faites avec 3.1 et 3.2 : un message <code>INFO</code> pour chaque événement de jeu que la checklist vérifie à la main et que les logs ne montrent pas encore : gomme mangée (avec le score), fantôme mangé et retour au point de régénération, fruit apparu et mangé, téléportation, Ladybug mangée par le fantôme joueur. Le robot et Claude vérifient alors ces points en lisant les logs. Restent à l'œil humain, en 5 minutes par étape : le son et l'affichage (animations, clignotement, labyrinthe entier). Le comportement des fantômes (checklist 3.1 à 3.3) se vérifie par des tests unitaires de leurs stratégies, ajoutés en 3.2.</p>
 <p class="sub"><b class="id">3.3</b> Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés. <b>Après l'étape 2</b>, qui sépare la construction du contexte de l'affichage de la fenêtre.</p>
 
 <h2><span class="num">4</span>Découpler le modèle de l'affichage</h2>
@@ -398,7 +407,7 @@ Architecture : <b>un hôte qui fait autorité</b>. L'hôte fait tourner le seul 
   <li>Étape 0 : <code>graphify-out/graph.html</code> s'ouvre et montre les packages de <code>com.kycox.game</code> ; <code>graphify-out/</code> est ignoré par git ; Context7 répond à une question test, par exemple « notes de migration Spring Boot 3.0 → 3.5 » ; la branche <code>modernisation</code> existe depuis <code>origin/develop</code>, avec un premier commit (skill et PDF) ; <code>doc/checklist-jeu.md</code> et <code>doc/reference-avant/</code> existent, et l'état de compilation de <code>develop</code> est noté.</li>
   <li><code>mvn clean verify</code> : compilation et tests au vert (des tests existent à partir de 3.1 et 3.2, réalisés juste après l'étape 1).</li>
   <li><code>java -jar target/ladybug-*.jar</code> : le jeu démarre (même sans manette) et une partie se joue.</li>
-  <li>Étape 2 : un XML modifié à côté du jar est pris en compte, le log l'indique, et un XML cassé produit un message clair.</li>
+  <li>Étape 2 : un XML modifié à côté du jar est pris en compte, le log l'indique, et un XML cassé produit un message clair. Avec deux écrans, le jeu s'ouvre sur celui de la souris, et le labyrinthe est entier.</li>
   <li>Étape 5 : deux fantômes joués en local, au clavier et à la manette.</li>
   <li>Étape 6 : ajouter un 5ᵉ fantôme dans le XML externe, sans recompiler.</li>
   <li>Étape 6 : en mode lampe, la visibilité respecte la <code>Perception</code> de chaque personnage.</li>
