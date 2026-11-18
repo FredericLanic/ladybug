@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Ladybug — Plan de modernisation</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+  :root { --accent:#1f3fbf; --accent2:#e8a400; --ink:#1d2330; --muted:#5b6475; --line:#d9deea; --soft:#f3f5fb; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; color: var(--ink); font-size: 10.2pt; line-height: 1.45; margin: 0; }
+  h1 { font-size: 24pt; margin: 0 0 4pt; color: var(--accent); letter-spacing: -0.5px; }
+  .subtitle { color: var(--muted); font-size: 11pt; margin-bottom: 14pt; }
+  .cover { border-left: 6px solid var(--accent2); padding: 6pt 0 6pt 14pt; margin-bottom: 18pt; }
+  h2 { font-size: 14.5pt; color: var(--accent); border-bottom: 2px solid var(--line); padding-bottom: 3pt; margin: 20pt 0 8pt; page-break-after: avoid; }
+  h2 .num { display:inline-block; background: var(--accent); color:#fff; border-radius: 4px; padding: 0 7px; margin-right: 6px; font-size: 12pt; }
+  h3 { font-size: 11.5pt; margin: 14pt 0 5pt; color: var(--ink); page-break-after: avoid; }
+  p { margin: 4pt 0 6pt; }
+  ul, ol { margin: 3pt 0 7pt; padding-left: 18pt; }
+  li { margin: 1.5pt 0; }
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8.8pt; background: var(--soft); border: 1px solid var(--line); border-radius: 3px; padding: 0 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 6pt 0 10pt; font-size: 9.4pt; page-break-inside: avoid; }
+  th { background: var(--accent); color: #fff; text-align: left; padding: 5px 7px; font-weight: 600; }
+  td { border-bottom: 1px solid var(--line); padding: 4px 7px; vertical-align: top; }
+  tr:nth-child(even) td { background: var(--soft); }
+  .sub { margin: 6pt 0 2pt; }
+  .sub b.id { color: var(--accent); margin-right: 4px; }
+  .box { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 8pt 11pt; margin: 8pt 0; page-break-inside: avoid; }
+  .box.warn { border-left: 4px solid var(--accent2); }
+  .box.net { border-left: 4px solid var(--accent); }
+  .tag { display:inline-block; font-size: 8pt; padding: 1px 6px; border-radius: 10px; background: #fff3cc; color: #7a5600; border: 1px solid #f0d58a; margin-left: 6px; vertical-align: middle; }
+  .levels li b { color: var(--accent); }
+  .step { page-break-inside: auto; }
+  .footer-note { color: var(--muted); font-size: 8.5pt; margin-top: 18pt; border-top: 1px solid var(--line); padding-top: 6pt; }
+  .pb { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Ladybug — Plan de modernisation</h1>
+  <div class="subtitle">Factoriser, rendre générique, moderniser, puis passer au jeu en réseau · version du 18 novembre 2026</div>
+</div>
+
+<h2>Vue d'ensemble</h2>
+<table>
+  <tr><th>#</th><th>Étape</th><th>Pourquoi</th><th>Patterns ou outils</th></tr>
+  <tr><td>0</td><td>Outillage et état de référence</td><td>Créer la branche depuis <code>develop</code>, voir le code avant d'y toucher, figer le comportement « avant », travailler avec la documentation à jour</td><td>Graphify, Context7, checklist et captures</td></tr>
+  <tr><td>1</td><td>Socle</td><td>Faire compiler et démarrer, aligner les versions</td><td>–</td></tr>
+  <tr><td>2</td><td>Lanceur et XML externe</td><td>Un démarrage clair, une configuration modifiable sans recompiler</td><td>Factory</td></tr>
+  <tr><td>3</td><td>Tests</td><td>Un filet de sécurité avant de refactoriser</td><td>JUnit 5</td></tr>
+  <tr><td>4</td><td>Découplage du modèle</td><td>Un modèle indépendant de Swing, base du réseau</td><td>Observer, State, Snapshot</td></tr>
+  <tr><td>5</td><td><code>PlayerInput</code></td><td>Un contrôleur par personnage, plusieurs fantômes joueurs</td><td>Strategy</td></tr>
+  <tr><td>6</td><td>Fantômes configurables</td><td>Un fantôme = assemblage de capacités, perception</td><td>Composition, Strategy</td></tr>
+  <tr><td>7</td><td>Niveaux et rendu du labyrinthe</td><td>Niveaux en fichiers, rendu lisible et thématisable</td><td>Builder, autotiling, Flyweight</td></tr>
+  <tr><td>8</td><td>Langage moderne, ménage, documentation</td><td>Lisibilité, <code>ARCHITECTURE.md</code>, test « Jeff »</td><td>records, <code>switch</code> moderne</td></tr>
+  <tr><td>9</td><td><b>Réseau</b></td><td>Un poste Ladybug, un ou plusieurs postes fantômes</td><td>Strategy (<code>NetworkInput</code>)</td></tr>
+  <tr><td>10</td><td>Optionnel</td><td><code>jpackage</code>, JavaFX ou libGDX</td><td>–</td></tr>
+</table>
+
+<h2>Contexte</h2>
+<p>Ladybug est un projet personnel (≈140 classes, 9 100 lignes) écrit pour se perfectionner en Java (MVC, Spring, patterns), à l'époque d'OXiane BZH.</p>
+<p>Objectifs, dans l'ordre :</p>
+<ol>
+  <li><b>Factoriser, améliorer, moderniser</b> le code.</li>
+  <li><b>Rendre le jeu plus générique</b>, en conservant et renforçant la configuration XML (ajouter, retirer ou régler des fantômes sans recompiler).</li>
+  <li><b>Ensuite seulement</b>, mettre en place progressivement un <b>mode réseau</b> : un poste joue Ladybug, un ou plusieurs autres postes jouent des fantômes.</li>
+</ol>
+<p>Le réseau est une étape à part, en fin de parcours. Les étapes précédentes sont toutefois conçues pour le préparer, afin de ne pas refactoriser deux fois.</p>
+
+<h3>Fil rouge : rendre le code accessible et compréhensible</h3>
+<p>Un développeur Java expérimenté (Jeff) n'a pas osé se plonger dans le programme, faute de temps. Le but est qu'un développeur extérieur puisse comprendre et contribuer rapidement, et que <b>chaque pattern introduit soit compris</b>.</p>
+<ul>
+  <li><b>Pédagogie à chaque étape</b> : chaque refactoring nomme le design pattern utilisé, explique pourquoi il a été choisi et montre un avant / après.</li>
+  <li><b>Classes courtes, une seule responsabilité, méthodes au nom explicite.</b> Les grosses méthodes à conditions imbriquées sont découpées.</li>
+  <li><b>Javadoc</b> sur les interfaces et les points d'extension, ainsi qu'un <code>package-info.java</code> par package (rôle du package).</li>
+  <li><b>Cohérence de nommage (décidé)</b> : le <b>code en anglais</b> (classes, méthodes, variables), les <b>commentaires et la Javadoc en français</b>. La règle s'applique progressivement, dans les fichiers touchés à chaque étape.</li>
+  <li><b>Document <code>ARCHITECTURE.md</code></b> : vue d'ensemble, diagramme des couches, cycle d'un tick, liste des patterns utilisés et emplacement de chacun dans le code, guide « ajouter un fantôme / un niveau / un thème ».</li>
+</ul>
+
+<div class="box">
+  <b>Guide des patterns (<code>doc/patterns/</code>)</b> : une fiche par design pattern, rédigée au moment où il est introduit dans le code et lisible à trois niveaux :
+  <ol class="levels">
+    <li><b>Junior, l'idée en une image</b> : une analogie du quotidien en 2 ou 3 phrases, sans jargon.</li>
+    <li><b>Confirmé, le pattern dans Ladybug</b> : le problème concret dans notre code, le code avant / après, un schéma simple (Mermaid) et où le trouver dans le code (liens <code>fichier:ligne</code>).</li>
+    <li><b>Senior / vétéran, le recul</b> : les compromis, quand <b>ne pas</b> l'utiliser, les alternatives en Java moderne, les pièges classiques et le lien avec les principes SOLID.</li>
+  </ol>
+  Chaque fiche se termine par un <b>petit exercice</b> facultatif. Un <code>doc/patterns/README.md</code> sert de sommaire, avec un parcours de lecture conseillé. La Javadoc des classes concernées renvoie vers la fiche correspondante.
+</div>
+
+<table>
+  <tr><th>Pattern</th><th>Où dans le plan</th></tr>
+  <tr><td>Observer (listener typé)</td><td>Étape 4 : <code>GameModelListener</code></td></tr>
+  <tr><td>Strategy</td><td>Étapes 5 et 6 : <code>PlayerInput</code>, <code>GhostMoveStrategy</code>, <code>GhostSpeedPolicy</code> ; existant dans <code>model/strategy</code></td></tr>
+  <tr><td>State</td><td>Étape 4 : statuts de jeu et de fantôme (amélioration de l'existant)</td></tr>
+  <tr><td>Composition plutôt qu'héritage</td><td>Étape 6 : fantôme = assemblage de capacités</td></tr>
+  <tr><td>Snapshot / objet valeur immuable (records)</td><td>Étape 4 : <code>GameSnapshot</code></td></tr>
+  <tr><td>Factory / Builder</td><td>Étapes 2 et 7 : lanceur, <code>LevelLoader</code></td></tr>
+  <tr><td>Table de correspondance (autotiling)</td><td>Étape 7 : rendu du labyrinthe</td></tr>
+  <tr><td>Template / Flyweight (image pré-rendue)</td><td>Étape 7 : rendu du labyrinthe</td></tr>
+</table>
+
+<h3>Constats vérifiés</h3>
+<ul>
+  <li><b>Build cassé</b> : <code>~/.m2/settings.xml</code> pointe vers un Nexus <code>localhost:8081</code> qui ne tourne pas.</li>
+  <li><b>Pas de XML externe prioritaire</b> : un XML posé à côté du jar est ignoré (testé sur <code>releases/ladybug-0.5.0.jar</code>), car <code>JarLauncher</code> et <code>ClassPathXmlApplicationContext</code> ne lisent que l'intérieur du jar.</li>
+  <li><b>Plantage au démarrage sur Mac</b> : <code>UnsatisfiedLinkError</code> de Jamepad dans <code>XBoxOneControllerManager.initialize()</code>, qui fait échouer tout le contexte Spring.</li>
+  <li><b>Incohérences</b> :
+    <ul>
+      <li>versions : pom <code>java.version=16</code>, <code>MainLadybug</code> exige Java 19+, bannière en <code>v0.6.0</code>, CI en JDK 17 ;</li>
+      <li>dépendances : <code>spring-boot-starter-web</code> inutile, dépôt jcenter mort ;</li>
+      <li>aucun test ;</li>
+      <li><code>java.util.Observable</code> est déprécié.</li>
+    </ul>
+  </li>
+  <li><b>Sous-classes de fantômes quasi identiques</b> : <code>Clyde</code>, <code>Inky</code> et <code>Pinky</code> ne diffèrent que par la vitesse initiale ; <code>Blinky</code> ajoute <code>BlinkySpeedIndex</code> ; le comportement est un <code>switch</code> sur <code>GhostBehaviour</code> dans <code>Ghost.moveByBehaviour()</code>.</li>
+  <li><b>Fantôme joueur limité</b> : le flag « joué par un humain » est stocké dans l'enum <code>GhostsBodyImages</code> (<code>GameModel.java:242-245</code>), un état global sur une enum d'images (backlog CTEC1). <code>GhostsGroup</code> envoie une seule <code>ghostRequest</code> à tous les fantômes non calculés.</li>
+  <li><b>Modèle couplé à Swing</b> : <code>GameModel</code> contient un <code>javax.swing.Timer</code> et notifie ses observateurs via <code>Observable</code>.</li>
+  <li><b>Mode lampe pensé pour un écran unique</b> : les règles sont codées en dur dans <code>CentralView.drawMaze</code> (3,5 cases) et <code>drawGhosts</code> (4 cases), la zone éclairée entoure tous les joueurs locaux et Ladybug est toujours visible.</li>
+</ul>
+
+<h3>Règles de travail</h3>
+<div class="box warn">
+<ul>
+  <li><b>Aucune action (branche, build, modification) sans feu vert explicite.</b> On discute d'abord.</li>
+  <li>Une branche dédiée, <code>modernisation</code>, créée depuis <b><code>origin/develop</code></b> (et non <code>master</code>). <b>Un commit par sous-étape</b>, le diff montré avant chaque commit, et la convention de message <code>[TECH] …</code>.</li>
+  <li>Les constats ci-dessus ont été faits sur <code>master</code>. Ils seront revus sur <code>develop</code> à l'étape 0.C.5.</li>
+  <li>Le jeu reste jouable après chaque étape.</li>
+  <li><code>~/.m2/settings.xml</code> n'est pas modifié. Choix à faire : relancer le Nexus, ou utiliser un fichier de réglages temporaire pointant vers Maven Central.</li>
+</ul>
+</div>
+
+<h2 class="pb"><span class="num">0</span>Outillage et état de référence</h2>
+<p>Objectif : avant de toucher au code, se doter de deux outils et figer une référence :</p>
+<ul>
+  <li><b>Graphify</b>, une carte du code, refaite après chaque grande étape pour voir l'effet concret des refactorings ;</li>
+  <li><b>Context7</b>, la documentation à jour des bibliothèques, pour que les montées de version ne se fassent pas « de mémoire » ;</li>
+  <li><b>une photo « avant »</b> du comportement du jeu (build, lancement, checklist, captures d'écran).</li>
+</ul>
+<div class="box net">
+<b>Base de travail : <code>develop</code>, pas <code>master</code>.</b> <code>origin/develop</code> a 34 commits d'avance sur <code>master</code> (Observer remplacé par des événements, SLF4J, internationalisation, rendu des niveaux par Strategy, réorganisation des packages…). Vérifié le 18/11/2026 par HTTPS : les branches GitHub sont identiques aux références locales.
+</div>
+<h3>0.0 Création de la branche (juste avant l'outillage)</h3>
+<ul>
+  <li><code>git switch -c modernisation origin/develop</code>. Les fichiers non suivis (<code>.claude/</code>, le PDF) passent tels quels sur la branche.</li>
+  <li>Premier commit : le skill <code>ladybug-modernisation</code> et le PDF du plan, avec la convention de message de Frédéric (<code>[TECH] …</code>).</li>
+  <li>Ainsi, le <code>.gitignore</code> et <code>.claude/skills/graphify/</code> de l'étape 0.A seront commités sur <code>modernisation</code>, pas sur <code>master</code>.</li>
+  <li>Pousser se fera plus tard, en HTTPS avec <code>gh</code> : SSH est bloqué par le réseau actuel.</li>
+</ul>
+<h3>0.A Graphify : la carte du code</h3>
+<p>Graphify (github.com/Graphify-Labs/graphify, open source, Apache-2.0/MIT) transforme le code en <b>graphe de connaissances</b> interrogeable depuis Claude Code. Le code Java est analysé <b>localement</b> avec tree-sitter : sans IA, et rien ne quitte la machine.</p>
+<p class="sub"><b class="id">0.1</b> <b>Installation</b> (machine actuelle : Python 3.9, Graphify demande Python 3.11 ou plus) :</p>
+<ul>
+  <li><code>brew install uv</code> : gestionnaire Python qui installe sa propre version sans toucher à celle du système ;</li>
+  <li><code>uv tool install graphifyy</code> : paquet officiel, avec <b>deux « y »</b> (les autres paquets <code>graphify*</code> n'ont rien à voir) ;</li>
+  <li><code>graphify install --project</code> dans <code>ladybug/</code> : crée <code>.claude/skills/graphify/</code>, à côté de <code>ladybug-modernisation</code> ;</li>
+  <li>ajouter <code>graphify-out/</code> au <code>.gitignore</code>.</li>
+</ul>
+<p class="sub"><b class="id">0.2</b> <b>Premier graphe, état « avant »</b>, lancé <b>sur la branche <code>modernisation</code></b> (c'est-à-dire sur le code de <code>develop</code>) : <code>/graphify . --code-only</code>. Le mode code seul est 100 % hors ligne. Les fichiers produits dans <code>graphify-out/</code> sont :</p>
+<ul>
+  <li><code>graph.html</code> : la carte interactive ;</li>
+  <li><code>GRAPH_REPORT.md</code> : concepts clés et connexions surprenantes ;</li>
+  <li><code>graph.json</code> : le graphe complet.</li>
+</ul>
+<p class="sub"><b class="id">0.3</b> <b>Lecture commentée ensemble</b> de la structure de <code>develop</code> : le package <code>engine/</code> (70 classes), le système d'événements qui remplace Observer, le rendu des niveaux par Strategy, les classes les plus connectées, les dépendances inattendues. On garde une copie datée du rapport comme référence.</p>
+<p class="sub"><b class="id">0.4</b> <b>Usage pendant le chantier</b> :</p>
+<ul>
+  <li>avant une étape : <code>/graphify query</code>, <code>/graphify path "A" "B"</code> et <code>/graphify explain "X"</code> pour mesurer l'impact d'un changement ;</li>
+  <li>après les étapes 4, 5, 6, 7 et 8 : <code>/graphify . --update</code>, puis comparaison avec le graphe précédent.</li>
+</ul>
+<p class="sub"><b class="id">0.5</b> Mise à jour du skill <code>ladybug-modernisation</code> pour qu'il sache utiliser le graphe.</p>
+<div class="box warn">
+<b>Limites connues</b>
+<ul>
+  <li>le XML Spring (<code>application-context.xml</code>) n'est pas analysé : le câblage des fantômes est à documenter à la main dans <code>ARCHITECTURE.md</code> ;</li>
+  <li><code>.properties</code> et <code>.odt</code> ne sont pas pris en charge ;</li>
+  <li>les <code>.md</code> et <code>.txt</code> (README, backlog) passeraient par le modèle de la session : on ne les inclut que plus tard, et sur décision explicite.</li>
+</ul>
+<b>Désinstallation</b> : <code>graphify uninstall --purge</code>, puis <code>uv tool uninstall graphifyy</code>.
+</div>
+
+<h3>0.B Context7 : la documentation à jour des bibliothèques</h3>
+<p>Suggéré par Halim. Context7 (github.com/upstash/context7, éditeur Upstash, licence MIT) fournit à Claude la <b>documentation propre à chaque version</b> des bibliothèques au moment où il code. Sans lui, Claude travaille de mémoire, qui peut dater. Context7 ne modifie pas le code : il informe.</p>
+<p class="sub"><b class="id">0.B.1</b> <b>Installation</b> :</p>
+<ul>
+  <li>prérequis : Node.js, déjà présent (v22.14.0 via nvm) ;</li>
+  <li>commande : <code>npx ctx7 setup --claude</code>, en <b>mode MCP</b> (serveur distant <code>https://mcp.context7.com/mcp</code>) ;</li>
+  <li><b>Frédéric doit faire lui-même</b> la connexion OAuth chez Upstash : création d'un compte gratuit et génération d'une clé API, dans le navigateur.</li>
+</ul>
+<p class="sub"><b class="id">0.B.2</b> <b>Outils fournis</b> : <code>resolve-library-id</code> (trouver la bibliothèque) et <code>query-docs</code> (interroger sa documentation, en précisant la version).</p>
+<p class="sub"><b class="id">0.B.3</b> <b>Règle d'usage</b>, ajoutée au skill <code>ladybug-modernisation</code> : consulter Context7 avant toute montée de version ou toute utilisation d'une API de bibliothèque, en précisant la version visée (par exemple « Spring Boot 3.5 »).</p>
+<p class="sub"><b class="id">0.B.4</b> <b>Où il sert</b> :</p>
+<ul>
+  <li>étape 1, les vraies questions sur <code>develop</code> : Spring Boot 3.0.2 → 3.5.x (notes de migration) ; Java <b>21 ou 25</b> (les deux sont des LTS) ; <b>Lombok 1.18.22</b>, trop ancien pour un JDK récent (version minimale pour 21 et pour 25) ; Jamepad, qui n'est chargé que sous Windows sur <code>develop</code> ;</li>
+  <li>étape 3 : JUnit 5, AssertJ, Mockito ;</li>
+  <li>étape 8 : SLF4J, records, pattern matching ;</li>
+  <li>étape 9 : les API réseau.</li>
+</ul>
+<div class="box warn">
+<b>Points d'attention</b>
+<ul>
+  <li><b>Confidentialité</b> : les questions (nom de la bibliothèque et texte de la question) partent chez Upstash. Le code n'est pas censé être envoyé, mais la documentation publique ne précise pas ce qui est conservé, et le serveur n'est pas open source. Ne jamais mettre de code ni d'information personnelle dans les questions.</li>
+  <li><b>Limites d'usage</b> : la clé gratuite suffit pour Ladybug ; les quotas exacts ne sont pas publiés.</li>
+</ul>
+<b>Désinstallation</b> : <code>npx ctx7 remove</code>.
+</div>
+
+<h3>0.C Photographier l'état « avant »</h3>
+<p>Le projet n'a aucun test. Il faut donc une référence du <b>comportement</b> avant de toucher au code ; le graphe, lui, fixe la <b>structure</b>.</p>
+<p class="sub"><b class="id">0.C.1</b> <b>Compiler <code>develop</code> tel quel</b>, avec un JDK explicite (<code>JAVA_HOME</code> = Corretto 21). On essaie d'abord le mode hors ligne (<code>mvn -o</code>) : le cache <code>~/.m2</code> contient déjà Spring Boot 3.0.2 et Jamepad 1.3.2, et le Nexus local est éteint. Il faut noter si ça compile, avec quel JDK, et les erreurs éventuelles (Lombok 1.18.22 notamment).</p>
+<p class="sub"><b class="id">0.C.2</b> <b>Lancer le jeu sur le Mac</b> et vérifier :</p>
+<ul>
+  <li>qu'il démarre sans manette (Jamepad n'est chargé que sous Windows sur <code>develop</code>) ;</li>
+  <li>qu'il s'affiche correctement (sinon, regarder le correctif <code>MainFrame</code> de la branche <code>macos</code>).</li>
+</ul>
+<p class="sub"><b class="id">0.C.3</b> <b>Checklist de jeu manuelle</b>, déroulée par Frédéric et notée dans <code>doc/checklist-jeu.md</code> :</p>
+<ul>
+  <li>démarrage et écran de présentation ;</li>
+  <li>une partie en solo : gommes, méga-gommes, fantômes effrayés, mort, vie gagnée, fruits, téléportation ;</li>
+  <li>le mode 2 joueurs (ZQSD) ;</li>
+  <li>les touches F1 à F6, Pause, Échap et Entrée (mode debug) ;</li>
+  <li>chaque rendu de niveau disponible sur <code>develop</code>.</li>
+</ul>
+<p class="sub"><b class="id">0.C.4</b> <b>Captures d'écran datées</b> de chaque niveau et de chaque rendu, rangées dans <code>doc/reference-avant/</code>. Elles serviront de comparaison après les étapes 1, 4 et 7.</p>
+<p class="sub"><b class="id">0.C.5</b> <b>Mettre à jour le plan, le PDF, le skill et le dashboard</b> avec l'état réel de <code>develop</code> (mesures relancées sur la branche, dette technique revue). Le plan actuel avait été écrit à partir de <code>master</code>.</p>
+
+<h2><span class="num">1</span>Remettre le socle d'aplomb</h2>
+<p class="sub"><b class="id">1.1</b> Faire passer le build (<code>mvn compile</code>).</p>
+<p class="sub"><b class="id">1.2</b> Mettre à jour <code>pom.xml</code> :</p>
+<ul>
+  <li>Java 21 (LTS) ;</li>
+  <li>Spring Boot 3.5.x ;</li>
+  <li>Lombok récent ;</li>
+  <li><code>spring-boot-starter-web</code> remplacé par <code>spring-boot-starter</code> ;</li>
+  <li>suppression du dépôt jcenter.</li>
+</ul>
+<p class="sub"><b class="id">1.3</b> Rendre la manette optionnelle : <code>XBoxOneControllerManager</code> attrape l'échec du chargement natif, écrit un avertissement dans les logs et désactive la manette. Le jeu démarre au clavier.</p>
+<p class="sub"><b class="id">1.4</b> CI : JDK 21, actions GitHub en v4.</p>
+
+<h2><span class="num">2</span>Nouveau démarrage (lanceur et XML externe)</h2>
+<p class="sub"><b class="id">2.1</b> <code>MainLadybug</code> devient un petit <b>lanceur</b> : lecture de la configuration, choix du mode, construction du contexte Spring, affichage de la fenêtre via <code>SwingUtilities.invokeLater</code>.</p>
+<p class="sub"><b class="id">2.2</b> Version lue depuis le manifest (fin de la chaîne en dur), contrôle de version de Java aligné sur le pom.</p>
+<p class="sub"><b class="id">2.3</b> <b>XML externe prioritaire</b> :</p>
+<ul>
+  <li>si <code>&lt;dossier du jar&gt;/application-context.xml</code> existe, il est chargé par <code>FileSystemXmlApplicationContext</code> ;</li>
+  <li>sinon, celui du classpath est utilisé ;</li>
+  <li>l'option <code>-Dladybug.config=...</code> permet de forcer un fichier ;</li>
+  <li>les logs indiquent quel fichier est utilisé.</li>
+</ul>
+<p class="sub"><b class="id">2.4</b> Même mécanisme pour <code>ladybug.properties</code> (<code>@PropertySource</code> classpath puis <code>file:</code>, avec <code>ignoreResourceNotFound</code>).</p>
+<p class="sub"><b class="id">2.5</b> Modes prévus dans le lanceur dès maintenant : <b>solo</b> et <b>2 joueurs local</b>. La structure est prête pour accueillir plus tard « héberger » et « rejoindre ».</p>
+<p class="sub"><b class="id">2.6</b> README : section « Personnaliser le jeu ».</p>
+
+<h2><span class="num">3</span>Filet de sécurité (tests)</h2>
+<p class="sub"><b class="id">3.1</b> Ajout de <code>spring-boot-starter-test</code> (JUnit 5, AssertJ, Mockito).</p>
+<p class="sub"><b class="id">3.2</b> Tests unitaires :</p>
+<ul>
+  <li><code>Dijkstra</code> ;</li>
+  <li><code>SpeedFunction</code>, <code>BlinkySpeedIndex</code> et <code>GhostSensitiveBehaviour</code> ;</li>
+  <li><code>Score</code> ;</li>
+  <li>cohérence des niveaux : dimensions, téléportations symétriques, positions de départ praticables.</li>
+</ul>
+<p class="sub"><b class="id">3.3</b> Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés.</p>
+
+<h2><span class="num">4</span>Découpler le modèle de l'affichage</h2>
+<p class="sub"><b class="id">4.1</b> Remplacer <code>Observable</code>/<code>Observer</code> par une interface typée <code>GameModelListener</code>. Sept classes sont concernées : <code>GameModel</code>, <code>Engine</code>, <code>CentralView</code>, <code>PageLeftView</code>, <code>PageEndView</code>, <code>GameSounds</code>, <code>XboxOneController</code>.</p>
+<p class="sub"><b class="id">4.2</b> Sortir la boucle de jeu de <code>GameModel</code> dans une classe <code>GameLoop</code> dédiée. Le modèle ne dépend plus de Swing.</p>
+<p class="sub"><b class="id">4.3</b> Introduire un <b><code>GameSnapshot</code></b> (records) produit à chaque tick : positions, statuts, score, gommes, mode lampe. Les vues lisent le snapshot. C'est la base du futur réseau.</p>
+<p class="sub"><b class="id">4.4</b> Séparer clairement :</p>
+<ul>
+  <li><b>l'état de jeu</b>, décidé par le modèle (mode lampe tiré par niveau, etc.) ;</li>
+  <li><b>les préférences d'affichage locales</b> (chapeau, bandeau, logo, son).</li>
+</ul>
+
+<h2><span class="num">5</span>Un contrôleur par personnage (<code>PlayerInput</code>)</h2>
+<p class="sub"><b class="id">5.1</b> Interface <code>PlayerInput</code> (« quelle direction veut prendre ce personnage »), avec trois implémentations :</p>
+<ul>
+  <li><code>KeyboardInput</code> (flèches ou ZQSD) ;</li>
+  <li><code>XboxInput</code> ;</li>
+  <li><code>AiInput</code> (les déplacements IA actuels).</li>
+</ul>
+<p class="sub"><b class="id">5.2</b> Chaque <code>Ladybug</code>/<code>Ghost</code> porte son <code>PlayerInput</code>. Ce changement <b>supprime</b> le flag <code>computed</code> stocké sur l'enum <code>GhostsBodyImages</code> (CTEC1), ainsi que la <code>ghostRequest</code> unique de <code>GhostsGroup</code>.</p>
+<p class="sub"><b class="id">5.3</b> Possibilité d'avoir <b>plusieurs fantômes joués par des humains</b> en local (préparation du réseau).</p>
+<p class="sub"><b class="id">5.4</b> Un joueur est associé à <b>un fantôme précis</b>, pas à un type.</p>
+
+<h2><span class="num">6</span>Fantômes 100 % configurables (assemblage de capacités)</h2>
+<p class="sub"><b class="id">6.1</b> <code>GhostMoveStrategy</code> : <code>ChaseStrategy</code> (ex-AGGRESSIVE), <code>AmbushStrategy</code> (ex-SMART), <code>WanderStrategy</code> (ex-CALM). Le code est repris de <code>Ghost</code>.</p>
+<p class="sub"><b class="id">6.2</b> <code>GhostSpeedPolicy</code> : <code>StandardSpeed</code> (modes NORMAL et MINUS) et <code>RageSpeed</code> (logique de Blinky).</p>
+<p class="sub"><b class="id">6.3</b> <b><code>Perception</code></b>, valable pour les fantômes <b>et</b> pour Ladybug :</p>
+<ul>
+  <li><code>lightRadius</code> : rayon éclairé ;</li>
+  <li><code>detectRadius</code> : ex-<code>maximumAttackDist</code>, utilisé à la fois par l'IA et pour la vue du joueur humain ;</li>
+  <li><code>seesOpponentAlways</code> : voir l'adversaire même dans le noir ;</li>
+  <li>même paramètre pour l'IA et pour l'humain, ce qui garantit l'équité.</li>
+</ul>
+<p class="sub"><b class="id">6.4</b> <b>Notion d'observateur dans la vue</b> :</p>
+<ul>
+  <li>une classe <code>VisibilityRule</code> testable répond à « pour cet observateur, qu'est-ce qui est visible ? » ;</li>
+  <li><code>CentralView</code> ne contient plus aucune règle en dur ;</li>
+  <li>en écran partagé, l'observateur regroupe tous les joueurs locaux (comportement actuel conservé).</li>
+</ul>
+<p class="sub"><b class="id">6.5</b> <code>Ghost</code> devient une classe concrète. <code>Blinky</code>, <code>Pinky</code>, <code>Inky</code> et <code>Clyde</code> sont supprimées et remplacées par des <code>&lt;bean&gt;</code> XML. L'ancienne propriété <code>behaviour="AGGRESSIVE"</code> reste acceptée comme raccourci.</p>
+<p class="sub"><b class="id">6.6</b> La vue gère un nombre quelconque de fantômes et les couleurs inconnues (image par défaut en repli).</p>
+
+<h2><span class="num">7</span>Niveaux en fichiers et rendu du labyrinthe</h2>
+<p class="sub"><b class="id">7.1</b> Un fichier texte par niveau dans <code>resources/levels/</code>, avec la grille et un en-tête : départ, régénération, méga-gommes, téléportations.</p>
+<p class="sub"><b class="id">7.2</b> <code>LevelLoader</code>, avec la même priorité dossier du jar &gt; classpath.</p>
+<p class="sub"><b class="id">7.3</b> Conversion de <code>Level1NG</code> à <code>Level8NG</code>, puis suppression de ces classes et des anciennes <code>Level1</code>, <code>Level3</code> et <code>Level</code>.</p>
+<p class="sub"><b class="id">7.4</b> <b>Rendu du labyrinthe</b> (<code>view/map/ScreenBlockView</code>, <code>level/LevelNG</code>, <code>level/CheckScreenBlockBorders</code>). Le style actuel est conservé à l'identique (contours fins, coins arrondis, pointillés de gommes) ; c'est l'implémentation qui change.</p>
+<ul>
+  <li><b>Bordures typées</b> : le masque de bits <code>int</code> (<code>LEFT=1</code>, <code>UP=2</code>…) devient un <code>EnumSet&lt;Border&gt;</code>.</li>
+  <li><b>Autotiling</b> : les vingt-cinq conditions de <code>displayBorders()</code> sont remplacées par un calcul de configuration des voisins et une <b>table</b> qui associe chaque configuration aux segments et arcs à dessiner. Chaque cas est testable unitairement.</li>
+  <li><b>Fusion du calcul des bordures</b> : <code>screenBlockValue()</code> et <code>CheckScreenBlockBorders</code> deviennent une seule classe dédiée, par exemple <code>MazeBorderCalculator</code>. Une seule source de vérité au lieu de la double liste <code>screenBlocks</code>/<code>viewBlocks</code>.</li>
+  <li><b>Image pré-rendue</b> : les murs sont dessinés une seule fois par niveau dans une <code>BufferedImage</code>. À chaque tick, on ne dessine plus que les gommes, les fruits, les téléporteurs et les personnages. Le mode lampe devient un masque circulaire (<code>clip</code>) appliqué à cette image.</li>
+  <li><b>Thème</b> : couleurs (murs, gommes, méga-gommes, régénération, téléportation) et épaisseur du trait sont sorties dans un objet <code>MazeTheme</code> configurable en XML. C'est la base des skins (CTEC27). Plusieurs styles de labyrinthe deviennent possibles plus tard.</li>
+  <li><b>Vérification</b> : capture du rendu avant/après sur chaque niveau. Les images doivent être identiques.</li>
+</ul>
+
+<h2><span class="num">8</span>Modernisation du langage et ménage</h2>
+<p class="sub"><b class="id">8.1</b> <code>record</code>, <code>switch</code> avec pattern matching, <code>var</code> lorsqu'il clarifie le code.</p>
+<p class="sub"><b class="id">8.2</b> Logs : passage de <code>commons-logging</code> à SLF4J ; suppression de <code>log4j.properties</code> et de <code>src/main/java/log4j2-test.xml</code>.</p>
+<p class="sub"><b class="id">8.3</b> Ménage :</p>
+<ul>
+  <li><code>view/tests/*</code> ;</li>
+  <li><code>TraceurAdvice</code> s'il n'est pas utilisé ;</li>
+  <li><code>images/_inWork</code> déplacé hors de <code>src</code>.</li>
+</ul>
+<p class="sub"><b class="id">8.4</b> <b>Documentation finale</b> : <code>ARCHITECTURE.md</code> complet, <code>package-info.java</code>, README technique (« pour les contributeurs »). Relecture du point de vue d'un développeur qui découvre le projet (le test « Jeff »). Le graphe Graphify final, comparé à celui de l'étape 0, illustre le chemin parcouru.</p>
+
+<h2><span class="num">9</span>Mode réseau <span class="tag">plus tard, progressivement</span></h2>
+<div class="box net">
+Architecture : <b>un hôte qui fait autorité</b>. L'hôte fait tourner le seul <code>GameModel</code>, les clients envoient uniquement leurs entrées, et l'hôte renvoie un <code>GameSnapshot</code> à chaque tick.
+</div>
+<p class="sub"><b class="id">9.1</b> Protocole simple : sockets TCP et records sérialisés, sans framework lourd.</p>
+<p class="sub"><b class="id">9.2</b> <code>NetworkInput</code>, une nouvelle implémentation de <code>PlayerInput</code> (étape 5).</p>
+<p class="sub"><b class="id">9.3</b> Lanceur : modes <b>héberger</b> (<code>--host</code>) et <b>rejoindre</b> (<code>--join host:port</code>). Le client n'assemble que la vue et l'envoi des entrées.</p>
+<p class="sub"><b class="id">9.4</b> Chaque client a sa propre vue, avec son personnage comme observateur. L'hôte peut n'envoyer à chaque client que ce que son personnage perçoit (anti-triche).</p>
+<p class="sub"><b class="id">9.5</b> Les éléments décidés par l'hôte (mode lampe, tirages aléatoires) sont transmis. Les préférences restent locales.</p>
+
+<h2><span class="num">10</span>Optionnel</h2>
+<ul>
+  <li>Packaging natif avec <code>jpackage</code>.</li>
+  <li>Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4.</li>
+</ul>
+
+<h2>Questions ouvertes <span class="tag">à reprendre plus tard, sans blocage</span></h2>
+<ul>
+  <li><b>Pouvoirs</b> : fixes par type de fantôme (XML), ou évolutifs en cours de partie (bonus, niveau) ? <i>L'architecture permet les deux (capacités = objets remplaçables).</i></li>
+  <li><b>Attribution des fantômes en réseau</b> : plusieurs joueurs sur le même type, ou un fantôme différent par joueur ? <i>L'association joueur ↔ fantôme précis permet les deux.</i></li>
+  <li><b>Réseau local seulement, ou Internet aussi</b> (découverte des parties, NAT, sécurité) ?</li>
+  <li><b>Classement des options</b> : lesquelles relèvent de l'état partagé et lesquelles des préférences locales ?</li>
+  <li><b>Rayons de lumière</b> : l'écart entre 3,5 et 4 cases dans <code>CentralView</code> est-il voulu ?</li>
+  <li><b>Nexus local</b> : à relancer, ou build via Maven Central ?</li>
+  <li><b>Graphify et documents</b> : inclure plus tard README, backlog et <code>.txt</code> dans le graphe (analyse par le modèle), ou rester en mode code seul ?</li>
+  <li><b>Graphify en mode « toujours actif »</b> (<code>graphify claude install</code>, avec des hooks qui consultent le graphe automatiquement) : à activer ou non ?</li>
+</ul>
+
+<h2>Fichiers critiques</h2>
+<ul>
+  <li><code>pom.xml</code>, <code>MainLadybug.java</code>, <code>application-context.xml</code>, <code>properties/GameProperties.java</code></li>
+  <li><code>controller/xboxone/*</code>, <code>controller/key/KeyGameController.java</code></li>
+  <li><code>model/GameModel.java</code>, <code>engine/Engine.java</code></li>
+  <li><code>body/ghost/*</code> (dont <code>GhostsGroup</code>), <code>constant/ghost/image/GhostsBodyImages.java</code></li>
+  <li><code>view/CentralView.java</code>, <code>level/*</code>, <code>.github/workflows/*.yml</code></li>
+</ul>
+
+<h2>Vérification (à chaque étape)</h2>
+<ol start="0">
+  <li>Étape 0 : <code>graphify-out/graph.html</code> s'ouvre et montre les packages de <code>com.kycox.game</code> ; <code>graphify-out/</code> est ignoré par git ; Context7 répond à une question test, par exemple « notes de migration Spring Boot 3.0 → 3.5 » ; la branche <code>modernisation</code> existe depuis <code>origin/develop</code>, avec un premier commit (skill et PDF) ; <code>doc/checklist-jeu.md</code> et <code>doc/reference-avant/</code> existent, et l'état de compilation de <code>develop</code> est noté.</li>
+  <li><code>mvn clean verify</code> : compilation et tests au vert.</li>
+  <li><code>java -jar target/ladybug-*.jar</code> : le jeu démarre (même sans manette) et une partie se joue.</li>
+  <li>Étape 2 : un XML modifié à côté du jar est pris en compte, le log l'indique, et un XML cassé produit un message clair.</li>
+  <li>Étape 5 : deux fantômes joués en local, au clavier et à la manette.</li>
+  <li>Étape 6 : ajouter un 5ᵉ fantôme dans le XML externe, sans recompiler.</li>
+  <li>Étape 6 : en mode lampe, la visibilité respecte la <code>Perception</code> de chaque personnage.</li>
+  <li>Étape 7 : un <code>level9.txt</code> ajouté à côté du jar est jouable.</li>
+  <li>Étape 9 : deux postes sur le même réseau, l'un Ladybug, l'autre fantôme.</li>
+</ol>
+
+<div class="footer-note">Ladybug by Kykox · plan de modernisation · document de travail, 18 novembre 2026</div>
+</body>
+</html>
