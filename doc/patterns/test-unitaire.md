@@ -57,6 +57,10 @@ void indexGrowsWithLevel(int numLevel, int expectedIndex) {
 Où les trouver :
 - `src/test/java/com/kycox/game/engine/score/ScoreTest.java` ;
 - `src/test/java/com/kycox/game/tools/maths/` : `SpeedFunctionTest`, `BlinkySpeedIndexTest`, `GhostSensitiveBehaviourTest`.
+- `src/test/java/com/kycox/game/tools/dijkstra/DijkstraTest.java` : le plus court chemin, vérifié sur les 8 niveaux ;
+- `src/test/java/com/kycox/game/constant/level/LevelConsistencyTest.java` : cohérence de chaque niveau ;
+- `src/test/java/com/kycox/game/body/ghost/GhostMovementTest.java` : poursuite, fuite et retour au point de régénération ;
+- `src/test/java/com/kycox/game/testutil/LevelFixtures.java` : outils partagés (labyrinthe sans Spring, parcours en largeur).
 
 On les lance avec `mvn test`, ou avec le bouton ▶ d'IntelliJ à côté de la classe. La CI GitHub les lance sur chaque PR.
 
@@ -64,6 +68,8 @@ On les lance avec `mvn test`, ou avec le bouton ▶ d'IntelliJ à côté de la c
 
 - *Ce que le test révèle sur la conception* : une classe difficile à tester est souvent une classe qui fait trop de choses. `Score` calcule le score **et** fabrique les messages affichés (le `FIXME` de l'auteur le disait déjà) ; le bug est né de ce mélange. Les tests de `Dijkstra` (étape 3.2b) montrent l'inverse : comme `ScreenData` se construit sans Spring, le test est simple.
 - *Quand ne pas mocker* : on mocke ce qui est lourd ou hors sujet (Ladybug, Swing, réseau). On garde les vrais objets simples : `ScoreTest` utilise un vrai `Fruits`, parce que la table des scores des fruits fait partie de ce qu'on veut vérifier. Trop de mocks, et le test ne vérifie plus que ses propres réglages.
+- *Une référence indépendante* : pour vérifier `Dijkstra`, on ne recopie pas son code dans le test (il reproduirait les mêmes erreurs). `LevelFixtures.distancesFrom` calcule les distances autrement, par un parcours en largeur très simple. Si les deux calculs sont d'accord pour plus de 1 100 trajets, on peut leur faire confiance.
+- *Tester le test* : un test qui ne peut pas échouer ne protège rien. Pour le vérifier, on casse volontairement le code (ici : inverser la direction de poursuite dans `Ghost.moveTo`), on constate que le test passe au rouge, puis on annule. Cette technique s'appelle le « test de mutation ».
 - *L'aléatoire* : `GhostSensitiveBehaviour` tire au sort avec une méthode statique (`Utils.generateRandomInt`), qu'on ne peut pas remplacer dans un test. On le vérifie donc sur 20 000 tirages, avec une marge de plus de dix écarts-types. La vraie solution, plus tard : injecter une source d'aléa (`RandomGenerator` de Java 17), pour qu'un test puisse fixer le tirage.
 - *Documenter l'existant* : un test peut aussi décrire un comportement curieux sans le juger. `SpeedFunctionTest.lastLevelIndexIsOutOfValidSpeeds` montre qu'au niveau 30 l'index sort de la liste des vitesses, et que `Body.getSpeed()` le rattrape. Si quelqu'un change ce comportement, le test le signale.
 - *Pièges* : tester l'implémentation plutôt que le résultat (« la méthode privée X a été appelée ») ; écrire un test qui passe toujours ; laisser un test `@Disabled` sans raison ni date.
