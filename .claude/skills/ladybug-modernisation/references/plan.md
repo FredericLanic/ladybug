@@ -11,6 +11,7 @@
 | 5 | `PlayerInput` | Un contrôleur par personnage, plusieurs fantômes joueurs | Strategy |
 | 6 | Fantômes configurables | Un fantôme = assemblage de capacités, perception | Composition, Strategy |
 | 7 | Niveaux et rendu du labyrinthe | Niveaux en fichiers, rendu lisible et thématisable | Builder, autotiling, Flyweight |
+| 7 bis | **Labyrinthe dynamique** (idée de Hammed) | Portes, murs mobiles, niveaux générés ; murs déclenchés par les joueurs avec les pouvoirs (6.7, 9.6) | Observer, Command, Strategy, Builder |
 | 8 | Langage moderne, ménage, documentation | Lisibilité, `ARCHITECTURE.md`, test « Jeff » | records, `switch` moderne |
 | 9 | **Réseau** | Un poste Ladybug, un ou plusieurs postes fantômes | Strategy (`NetworkInput`) |
 | 10 | Optionnel | `jpackage`, JavaFX ou libGDX | – |
@@ -63,24 +64,27 @@ Un développeur Java expérimenté (Jeff) n'a pas osé se plonger dans le progra
 | Factory / Builder | Étapes 2 et 7 : lanceur, `LevelLoader` |
 | Table de correspondance (autotiling) | Étape 7 : rendu du labyrinthe |
 | Template / Flyweight (image pré-rendue) | Étape 7 : rendu du labyrinthe |
+| Command (changement de mur daté) | Étape 7 bis : `MazeChange` |
 
-### Constats vérifiés
-- **Build cassé** : `~/.m2/settings.xml` pointe vers un Nexus `localhost:8081` qui ne tourne pas.
-- **Pas de XML externe prioritaire** : un XML posé à côté du jar est ignoré (testé sur `releases/ladybug-0.5.0.jar`), car `JarLauncher` et `ClassPathXmlApplicationContext` ne lisent que l'intérieur du jar.
-- **Plantage au démarrage sur Mac** : `UnsatisfiedLinkError` de Jamepad dans `XBoxOneControllerManager.initialize()`, qui fait échouer tout le contexte Spring.
+### Constats vérifiés (sur `develop`, revus le 18/11/2026 à l'étape 0.C.5)
+- **Build cassé en l'état** :
+  - `~/.m2/settings.xml` pointe vers un Nexus `localhost:8081` qui ne tourne pas. Contournement de l'étape 0 : un fichier de réglages temporaire vers Maven Central ;
+  - **Lombok 1.18.22 ne compile pas en JDK 21** (`NoSuchFieldError JCImport.qualid`). Avec 1.18.36, mis temporairement, la compilation passe.
+- **Pas de XML externe prioritaire** : `Application` charge `application-context.xml` avec `ClassPathXmlApplicationContext`, donc uniquement depuis l'intérieur du jar. Testé sur `releases/ladybug-0.5.0.jar` ; le code de chargement de `develop` est le même.
+- **Plus de plantage au démarrage sur Mac** : sur `develop`, Jamepad n'est chargé que sous Windows (`@Conditional(WindowsHost.class)` sur `XboxRequest`). Le jeu démarre en JDK 21 sur le Mac, sans manette. (Sur `master`, `UnsatisfiedLinkError` dans `XBoxOneControllerManager.initialize()`.)
 - **Incohérences** :
-  - versions : pom `java.version=16`, `MainLadybug` exige Java 19+, bannière en `v0.6.0`, CI en JDK 17 ;
-  - dépendances : `spring-boot-starter-web` inutile, dépôt jcenter mort ;
+  - versions : pom `java.version=19`, bannière « v0.6.0-SNAPSHOT for Java 19+ », CI (`maven-release.yml`) en **JDK 16** ;
+  - dépendances : `spring-boot-starter-web` déjà retiré, mais le dépôt jcenter (mort) est toujours dans le pom ;
   - aucun test ;
-  - `java.util.Observable` est déprécié.
+  - `java.util.Observable` a disparu : il est remplacé par des événements dont la source est `GameModel` (0 classe concernée).
 - **Sous-classes de fantômes quasi identiques** :
-  - `Clyde`, `Inky` et `Pinky` ne diffèrent que par la vitesse initiale ;
+  - `Clyde`, `Inky` et `Pinky` (39 lignes chacune) ne diffèrent que par la vitesse initiale (`getRealIndexSpeed` ou `getRealIndexSpeedMinus`) ;
   - `Blinky` ajoute `BlinkySpeedIndex` ;
-  - le comportement est un `switch` sur `GhostBehaviour` dans `Ghost.moveByBehaviour()`.
+  - le comportement est un `switch` sur `behaviour` dans `Ghost.moveByBehaviour()`.
 - **Fantôme joueur limité** :
-  - le flag « joué par un humain » est stocké dans l'enum `GhostsBodyImages` (`GameModel.java:242-245`), un état global sur une enum d'images (backlog CTEC1) ;
-  - `GhostsGroup` envoie une seule `ghostRequest` à tous les fantômes non calculés.
-- **Modèle couplé à Swing** : `GameModel` contient un `javax.swing.Timer` et notifie ses observateurs via `Observable`.
+  - le flag « joué par un humain » est stocké dans l'enum `GhostsBodyImages` (`Ghost.isComputed()` lit `color.isComputed()`, tirage dans `GameModel.java:242-246`), un état global sur une enum d'images (backlog CTEC1) ;
+  - `GhostsGroup.move` envoie une seule `ghostRequest` à tous les fantômes non calculés.
+- **Modèle couplé à Swing** : `GameModel` importe `javax.swing.*` et contient un `javax.swing.Timer` (`programTimer`).
 - **Mode lampe pensé pour un écran unique** :
   - les règles sont codées en dur dans `CentralView.drawMaze` (3,5 cases) et `drawGhosts` (4 cases) ;
   - la zone éclairée entoure tous les joueurs locaux ;
@@ -89,7 +93,7 @@ Un développeur Java expérimenté (Jeff) n'a pas osé se plonger dans le progra
 ## Règles de travail
 - **Aucune action (branche, build, modification) sans feu vert explicite.** On discute d'abord.
 - Une branche dédiée, `modernisation`, créée depuis **`origin/develop`** (et non `master`). **Un commit par sous-étape**, le diff montré avant chaque commit, et la convention de message `[TECH] …`.
-- Les constats ci-dessus ont été faits sur `master`. Ils seront revus sur `develop` à l'étape 0.C.5.
+- Les constats ci-dessus ont été faits sur `master`, puis revus sur `develop` le 18/11/2026 (étape 0.C.5).
 - Le jeu reste jouable après chaque étape.
 - `~/.m2/settings.xml` n'est pas modifié. Choix à faire : relancer le Nexus, ou utiliser un fichier de réglages temporaire pointant vers Maven Central.
 
@@ -128,6 +132,8 @@ Objectif : avant de toucher au code, se doter de deux outils et figer une réfé
 0.4 **Usage pendant le chantier** :
 - avant une étape : `/graphify query`, `/graphify path "A" "B"` et `/graphify explain "X"` pour mesurer l'impact d'un changement ;
 - après les étapes 4, 5, 6, 7 et 8 : `/graphify . --update`, puis comparaison avec le graphe précédent.
+
+**Règle : toujours lancer Graphify avec `GRAPHIFY_BACKEND=none`** (par exemple `GRAPHIFY_BACKEND=none graphify update .`). Sans cette variable, et faute de clé d'API, Graphify se sert du CLI Claude Code pour nommer les communautés, ce qui envoie des noms de classes à Anthropic (incident du 18/11/2026). Test T3 du 18/11 : sans IA, le graphe du jeu est strictement identique (mêmes nœuds, mêmes liens). Seuls les noms des communautés restent génériques, ou sont tirés de leur classe centrale.
 
 0.5 Mise à jour du skill `ladybug-modernisation` pour qu'il sache utiliser le graphe.
 
@@ -263,6 +269,7 @@ Le projet n'a aucun test. Il faut donc une référence du **comportement** avant
 
 6.5 `Ghost` devient une classe concrète. `Blinky`, `Pinky`, `Inky` et `Clyde` sont supprimées et remplacées par des `<bean>` XML. L'ancienne propriété `behaviour="AGGRESSIVE"` reste acceptée comme raccourci.
 6.6 La vue gère un nombre quelconque de fantômes et les couleurs inconnues (image par défaut en repli).
+6.7 **Pouvoir « agir sur les murs »** (variante C du labyrinthe dynamique, réalisée après l'étape 7 bis) : une capacité configurable en XML, par exemple « ce fantôme peut ouvrir un mur », « Ladybug peut poser un mur ». Elle passe par le socle de l'étape 7 bis (`MazeChange`, `ReachabilityChecker`). C'est une réponse possible à la question des pouvoirs.
 
 ## Étape 7 : niveaux en fichiers
 7.1 Un fichier texte par niveau dans `resources/levels/`, avec la grille et un en-tête : départ, régénération, méga-gommes, téléportations.
@@ -283,6 +290,29 @@ Principe : **le style actuel est conservé à l'identique** (contours fins, coin
   - le mode lampe devient un masque circulaire (`clip`) appliqué à cette image.
 - **Thème** : couleurs (murs, gommes, méga-gommes, régénération, téléportation) et épaisseur du trait sont sorties dans un objet `MazeTheme` configurable en XML. C'est la base des skins (CTEC27). Plusieurs styles de labyrinthe deviennent possibles plus tard.
 - **Vérification** : capture du rendu avant/après sur chaque niveau. Les images doivent être identiques.
+
+## Étape 7 bis : labyrinthe dynamique (idée de Hammed, 18/11/2026)
+Idée proposée par Hammed après une démo : le labyrinthe change pendant la partie. Frédéric retient **les quatre variantes** : A. portes, B. murs mobiles, C. murs déclenchés par les joueurs, D. labyrinthe généré.
+
+**Constats dans le code (`develop`)** :
+- les fantômes s'adapteraient d'eux-mêmes : `Dijkstra.getShorterWay` reconstruit son graphe depuis `ScreenData` à chaque appel ;
+- l'affichage est figé : les bordures sont calculées une seule fois par niveau (`checkViewBlockBorder`), avec la double liste `dataScreenBlocks` / `viewScreenBlocks`. L'étape 7 (`MazeBorderCalculator`, source de vérité unique, image pré-rendue) est donc un **prérequis**.
+
+**7 bis.0 Socle commun** (construit une seule fois) :
+- `MutableMaze` : seul point d'entrée pour changer un mur (`setWall(case, bool)`) ;
+- `MazeChangeEvent` (**Observer**) : prévient la vue (redessiner seulement la zone touchée de l'image pré-rendue), les fantômes et, plus tard, le réseau ;
+- `MazeChange` (**Command**) : un changement décrit comme un objet daté, par exemple « fermer (12,5) à t+30 s » ;
+- `ReachabilityChecker` : refuse tout changement qui rendrait une gomme inaccessible (parcours en largeur, testé unitairement) ;
+- `OccupancyRule` (**Strategy**) : que faire si un mur se ferme sur un personnage. Par défaut, attendre que la case soit libre (à confirmer).
+
+Les variantes ne diffèrent que par **qui décide** du changement, sur le même principe que `PlayerInput` (étape 5).
+
+7 bis.1 **A. Portes** : décrites dans le fichier du niveau (`door: 12,5 period=20s`). Premier palier : il installe et montre le socle.
+7 bis.2 **B. Murs mobiles** : une `MazeMutationStrategy` (planifiée ou aléatoire), réglable en XML.
+7 bis.3 **D. Labyrinthe généré** : un `MazeGenerator` (**Builder**) produit un niveau, validé par le même `ReachabilityChecker` et chargé comme les fichiers de l'étape 7.
+**C. Murs déclenchés par les joueurs** : traitée en 6.7 (pouvoir configurable) puis en 9.6 (réseau), une fois les capacités et les entrées par personnage en place.
+
+**Vérification** : une porte s'ouvre et se ferme, les fantômes changent de chemin, aucune gomme ne devient inaccessible ; capture avant/après.
 
 ## Étape 8 : modernisation du langage et ménage
 8.1 `record`, `switch` avec pattern matching, `var` lorsqu'il clarifie le code.
@@ -305,6 +335,7 @@ Architecture : **un hôte qui fait autorité**.
 9.3 Lanceur : modes **héberger** (`--host`) et **rejoindre** (`--join host:port`). Le client n'assemble que la vue et l'envoi des entrées.
 9.4 Chaque client a sa propre vue, avec son personnage comme observateur. L'hôte peut n'envoyer à chaque client que ce que son personnage perçoit (anti-triche).
 9.5 Les éléments décidés par l'hôte (mode lampe, tirages aléatoires) sont transmis. Les préférences restent locales.
+9.6 **Labyrinthe dynamique en réseau** : l'hôte seul décide des changements de murs (étape 7 bis), qui voyagent dans le `GameSnapshot`. Un client qui utilise le pouvoir « agir sur les murs » (6.7) envoie une demande, et l'hôte la valide.
 
 ## Étape 10 : optionnel
 - Packaging natif avec `jpackage`.
@@ -320,6 +351,7 @@ Architecture : **un hôte qui fait autorité**.
 - **Rayons de lumière** : l'écart entre 3,5 et 4 cases dans `CentralView` est-il voulu ?
 - **Nexus local** : à relancer, ou build via Maven Central ?
 - **Graphify et documents** : inclure plus tard README, backlog et `.txt` dans le graphe (analyse par le modèle), ou rester en mode code seul ?
+- **Q11, labyrinthe dynamique** : prévenir le joueur avant un changement (clignotement du mur) ? Labyrinthe généré symétrique comme les niveaux actuels, ou libre ? Règle quand un mur se ferme sur un personnage (attendre, pousser) ?
 - **Graphify en mode « toujours actif »** (`graphify claude install`, avec des hooks qui consultent le graphe automatiquement) : à activer ou non ?
 
 ## Fichiers critiques

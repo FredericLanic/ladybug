@@ -135,7 +135,107 @@ Ajoutez une entrée à chaque nouvelle discussion importante. Le skill le demand
   2. connexion OAuth Context7 (0.B) ;
   3. validation des diffs avant commit.
 - Point d'entrée sur `develop` : `Application.main` charge `application-context.xml`, puis `MainLadybug.launchTheGame()`.
+- Frédéric a répondu « ok » aux trois points :
+  - **commits faits** : `3ab1f8c [Tech] Ajout du skill de modernisation et du plan` et `8df14e1 [Tech] Outillage : Graphify` ;
+  - **build via Maven Central** avec un fichier de réglages temporaire (dans le scratchpad, sans miroir). `~/.m2/settings.xml` n'a pas été touché. Avec Lombok 1.18.36 mis temporairement puis pom restauré : `target/ladybug-0.6.0-SNAPSHOT.jar` (22 Mo) ;
+  - **le jeu démarre sur le Mac en JDK 21**, sans erreur et sans plantage lié à la manette. La bannière affiche encore « for Java 19+ ».
+- `doc/checklist-jeu.md` a été créée (6 sections, avec une colonne « avant » et une colonne « après étape 1 »). Elle attend que Frédéric joue et fasse les captures. Context7 attend toujours sa connexion OAuth.
 
 ### Divers
 - Le message « Update installed · Restart to update » vient de l'application Claude : une mise à jour à appliquer en redémarrant, sans effet sur le projet.
 - Le message « API Error: Connection lost mid-response » était une coupure réseau : la réponse en cours a été tronquée et le travail a repris ensuite.
+
+### 18/11/2026 (après-midi) : partie de Frédéric et idée de Hammed
+- Frédéric a joué une partie (logs) : fin du niveau 1 puis passage au niveau 2 (2.9 ✅), Échap → N reprend, Échap → O arrête, Échap en présentation ferme le jeu (5.7 ✅). Aucune erreur.
+- Script `doc/reference-avant/robot/LadybugRobot.java` écrit et compilé, **pas encore lancé** (attend les autorisations macOS). En lisant `KeyboardController` : F7 (camouflage) absente de la checklist ; la touche Pause n'existe pas sur un clavier Mac ; le rendu tiré au hasard n'est pas loggé.
+- **Idée de Hammed : un labyrinthe dynamique.** Discussion ouverte (question Q11), rien de décidé.
+  - Constat favorable : `Dijkstra.getShorterWay` reconstruit son graphe depuis `ScreenData` à chaque appel, donc les fantômes s'adapteraient d'eux-mêmes à un mur qui bouge.
+  - Constat défavorable aujourd'hui : les bordures sont calculées une seule fois par niveau (`checkViewBlockBorder`), avec la double liste `dataScreenBlocks`/`viewScreenBlocks`. C'est exactement ce que l'étape 7 (`MazeBorderCalculator`, une seule source de vérité, image pré-rendue) doit assainir.
+  - Proposition de Claude : en faire une étape 7 bis, après l'étape 7, avec un premier palier simple (portes qui s'ouvrent et se ferment) avant des murs mobiles ou des niveaux générés.
+- Réponse de Frédéric à « quelle variante ? » : **les 4** (portes, murs mobiles, murs déclenchés par les joueurs, labyrinthe généré). Claude propose un socle commun puis un ordre par paliers (A → B → D, et C relié aux pouvoirs des fantômes et au réseau). En attente de validation avant de toucher au plan.
+- Frédéric valide l'organisation proposée (« oui, mets à jour le plan partout ») :
+  - **plan** : nouvelle **étape 7 bis** (socle commun 7 bis.0, puis 7 bis.1 portes, 7 bis.2 murs mobiles, 7 bis.3 labyrinthe généré), **6.7** pouvoir « agir sur les murs », **9.6** labyrinthe dynamique en réseau, pattern **Command** ajouté au tableau, question **Q11** ;
+  - **skill**, **PDF** (12 pages), **dashboard** (étape `s07b` avec num 7.5, décision C15, question Q11, journal j16 et j17) et **sauvegarde** mis à jour.
+- Frédéric demande que **toutes les idées et tout le plan** soient lisibles sur la page web du dashboard. Ajouts :
+  - section **« Le plan en détail »** : le plan complet, une section dépliable par titre « ## » (18 sections), avec « Tout déplier / Tout replier ». Données dans `data/ladybug/plan`, produites par le nouveau script `scripts/plan_dashboard.py`. Le rendu Markdown de la page est construit en DOM (pas d'`innerHTML`) ;
+  - section **« Idées »** : 10 idées (Hammed, Halim, Frédéric, Claude) avec statut et place dans le plan (`data/ladybug/ideas`). Le compte apparaît dans la phrase d'en-tête ;
+  - l'étape 7 bis s'affiche enfin « 7 bis » (champ `label`) au lieu de 7,5 ;
+  - procédure de mise à jour du skill complétée (idées et plan à resynchroniser à chaque changement).
+- **0.B Context7 installé** à la demande de Frédéric (« execute npx ctx7 setup --claude ») :
+  - la commande est interactive ; Claude l'a relancée en non interactif avec les choix du plan : `npx ctx7 setup --claude --mcp --oauth --project -y` ;
+  - **portée projet** (et non globale), pour ne pas l'activer dans les projets professionnels de Frédéric ;
+  - fichiers créés : `.mcp.json` (serveur `https://mcp.context7.com/mcp/oauth`, sans clé ni secret), `.claude/rules/context7.md` (règle « consulter Context7 pour toute question de bibliothèque ») et `.claude/skills/context7-mcp/SKILL.md` ;
+  - reste à faire par Frédéric : redémarrer Claude Code, `/mcp` → context7 → connexion OAuth chez Upstash dans le navigateur. Puis test T4 (notes de migration Spring Boot 3.0 → 3.5).
+
+### 18/11/2026 (soir) : test T3, Graphify sans IA
+- Référence copiée dans `~/Documents/Claude/ladybug/graphify-out-2026-11-18/`.
+- Relance avec `GRAPHIFY_BACKEND=none graphify update .`, en retirant `~/.local/bin` du `PATH`, ce qui masque le CLI `claude` : aucun appel possible à une IA. Message de Graphify : « no LLM needed ». Graphify a aussi fait sa propre sauvegarde dans `graphify-out/2026-11-18/`.
+- Résultat : 1 483 nœuds et 3 744 liens, contre 1 429 et 3 596 dans la référence. **Aucun nœud ni lien supprimé, et les 3 596 liens entre nœuds communs sont strictement identiques.** Les 54 nœuds ajoutés viennent tous de fichiers nés après la référence : `LadybugRobot.java` (33, plus 15 classes Java qu'il importe), `plan_dashboard.py` (4) et `.mcp.json` (2). Le code du jeu donne donc exactement le même graphe sans IA. **T3 ✅**
+- Communautés : 85 au lieu de 75, à cause des nœuds ajoutés. Graphify en a renommé 21 d'après leur classe centrale, sans IA.
+- Piste : exclure `doc/reference-avant/` et `.claude/` du graphe, pour qu'il ne décrive que le jeu.
+- Décision de Frédéric (« 1 ») : la règle `GRAPHIFY_BACKEND=none` devient permanente. Elle est ajoutée au plan (0.4), au PDF et au skill. L'exclusion de `doc/reference-avant/` et `.claude/` du graphe reste en suspens.
+
+### 18/11/2026 (soir) : tests T11, T13 et T7
+- **T11 ✅** : 2.9 et 5.7 reportés « OK » dans `doc/checklist-jeu.md`, d'après la partie de Frédéric.
+- **T13 ✅** : `metrics.py` relancé sur la branche (149 classes, 9 495 lignes, 0 test, 4 sous-classes de fantômes, 0 Observable, Java 19, Spring Boot 3.0.2). Les « constats vérifiés » du plan ont été revus sur `develop` :
+  - **ce qui a changé** : plus de plantage Jamepad sur Mac, `spring-boot-starter-web` retiré, Observable remplacé par des événements, pom en Java 19 ;
+  - **nouveau** : Lombok 1.18.22 bloque la compilation en JDK 21, et la CI est en **JDK 16** (et non 17 comme sur `master`) ;
+  - **toujours vrai** : Nexus éteint, jcenter, aucun test, sous-classes de fantômes, flag humain dans `GhostsBodyImages` (désormais `GameModel.java:242-246`), `javax.swing.Timer` dans `GameModel`, mode lampe codé en dur, XML chargé depuis le classpath.
+  - Plan et PDF mis à jour.
+- **T7 ✅** : rebuild avec `clean package` (Central, Lombok 1.18.36 temporaire, pom restauré). Les 463 fichiers du nouveau jar sont identiques, au CRC près, à ceux du jar du 18/11 à 14 h 16. Ce jar-là contenait en plus 5 restes d'une ancienne compilation (`log4j.properties`, `images/ghosts/color/blue.png`, les dossiers `model/` et `contract/`), parce qu'il avait été construit sans `clean`. Leçon : **toujours `clean`**. La commande est corrigée dans la checklist.
+- Dashboard : packages remesurés sur develop (6 packages de premier niveau au lieu des 20 de master), indicateurs de santé et descriptions mis à jour. Dette revue : **D02 résolue** ; D01 (Lombok), D03, D04, D05, D07, D08, D12, D13, D14 et D15 reformulées selon l'état de `develop`.
+
+### 18/11/2026 (soir) : test T4, Context7
+- Frédéric s'est connecté avec `/mcp` (« Signed in and connected to context7 »).
+- `resolve-library-id` « Spring Boot » : retenu `/spring-projects/spring-boot`, qui propose des versions précises (v3.5.16, v3.5.9, v4.0.3…). Il existe aussi `/websites/spring_io_spring-boot` (versions 3.4, 3.5 et 4.0).
+- `query-docs` sur `/spring-projects/spring-boot/v3.5.16` : vraie documentation, sources citées. **T4 ✅**
+  - Spring Boot 3.5 demande **au moins Java 17 et fonctionne jusqu'à Java 25** : Java 21 et Java 25 sont donc tous les deux possibles pour l'étape 1 (question encore ouverte) ;
+  - pour la migration, il faut ajouter temporairement `spring-boot-properties-migrator` (scope runtime), qui signale les propriétés renommées ou supprimées, puis le retirer.
+- Limite : le détail des changements cassants version par version est dans les « release notes » du wiki GitHub, et pas dans cette documentation. À consulter version par version à l'étape 1.
+
+### 18/11/2026 (soir) : premier essai du robot (T9), échoué
+- Lancé sur demande de Frédéric (« fait T9 pour moi »), avant qu'il ait donné les autorisations macOS.
+- Résultat : le jeu démarre, mais les captures sont grises et unies (pas d'Enregistrement de l'écran), la fenêtre n'est pas localisée, et les touches n'arrivent pas : le jeu reste en `PROGRAM_PRESENTATION` et le robot s'arrête au bout de 20 s, comme prévu.
+- Vérification : `System Events` → `UI elements enabled` = **false**, donc Accessibilité non accordée à Terminal.app (l'app qui héberge Claude Code).
+- Le dossier de sortie, inutilisable, a été supprimé. Le robot est à relancer une fois les autorisations données.
+
+### 18/11/2026 (soir) : robot relancé (T9), résultat partiel ; pause, Frédéric rentre chez lui
+- Autorisations accordées à Terminal.app (Accessibilité `true`, captures avec du vrai contenu).
+- Le robot a fait 35 captures et son `rapport.md` dans `doc/reference-avant/2026-11-18/` :
+  - démarrage, F1, choix 1 ou 2 joueurs ✅, déplacements ✅, F2 à F7 et Entrée (de 0,7 à 3,2 % des pixels changent) ;
+  - **Pause** : pas concluant (0,90 % de différence entre deux captures en pause, alors qu'on attendait environ 0). Il n'y a pas de touche Pause sur un clavier Mac, à revoir ;
+  - Échap → N : retour en partie ✅ ;
+  - rendus : 7 parties sur 10, puis arrêt sur un problème de timing (`ASK_FORCE_END_GAME` atteint, puis retour à `IN_GAME` 0,24 s après : un Échap ou un O a sans doute été reçu en double).
+- Rendus vus sur les captures : Lignes bleues (partie 5), Lignes rouges et blocs colorés (parties 2 et 4), tuiles « pierre » orange (parties 1, 6 et 7). Il reste à savoir si ces tuiles sont le rendu 492 ou le 584 (vignettes à comparer dans le scratchpad), et le 4e rendu n'a pas été vu.
+- Les parties 1, 3 et 7 s'affichent en mode lampe (seule la zone autour de Ladybug est visible), probablement parce que F6 était resté actif. À vérifier.
+- **À reprendre** : identifier 492 ou 584 ; rendre plus robuste la séquence Échap → O du robot et la touche Pause ; relancer la section 6 ; remplir la checklist (sections 1, 5 et 6) ; mettre à jour le dashboard (journal, outillage « reference ») ; T12.
+
+### 18/11/2026 (soir, reprise après « continue ») : T9 et T12 terminés
+- Tuiles orange = rendu **584** ; tuiles grises au dessus rouge = rendu **492**.
+- Corrections du robot :
+  - `stopCurrentGame` et `checkEscape` relèvent la position dans les statuts **avant** d'envoyer la touche (nouvelle méthode `waitForStatusSince`), pour ne plus rater un statut qui change très vite ;
+  - la fin de partie est réessayée jusqu'à 3 fois si le jeu ne demande pas confirmation ;
+  - un avertissement est ajouté sur la touche Pause, absente des claviers Mac ;
+  - 12 parties au lieu de 10 pour les rendus.
+- Second passage complet, sans erreur : 45 captures, `rapport.md` et `ladybug.log` dans `doc/reference-avant/2026-11-18/` (environ 3 Mo). Le dossier du premier passage partiel a été remplacé.
+- **Les 4 rendus sont vus** : 492 (8 parties sur 12), lignes rouges (2, plus la partie solo), lignes (2), 584 (partie à 2 joueurs).
+- Vérifié sur les captures : F1, F2, F3, F4 (cache-œil), F5 (bandana), F6, F7 (camouflage), Entrée (cercles de debug), déplacements, 2 joueurs (le fantôme suit ZQSD), sortie par Échap (code 0).
+- **Constats** :
+  - **Pause KO sur Mac** : `VK_PAUSE` n'arrive pas au jeu, les fantômes bougent pendant la « pause », et il n'existe pas d'autre touche ;
+  - **mode lampe tiré au hasard** (`LitLampMode`), avec une probabilité qui augmente avec le niveau ;
+  - **aide F1 incomplète** (ni F6, ni F7, ni Pause, ni Entrée) ;
+  - le retour inexpliqué en `IN_GAME` du premier passage n'est pas reproduit.
+- Checklist remplie : sections 1, 2.1, 4.1, 5 (avec une nouvelle ligne 5.9 pour F7) et 6, plus les remarques.
+- **T9 ✅ et T12 ✅** (rapport Graphify, captures et rapport du robot). Dette D16 (pause sur Mac) et D17 (aide incomplète) ajoutées au dashboard, étape à confirmer avec Frédéric.
+- Restent pour l'étape 0 : T10 (partie de Frédéric : sections 2.2 à 2.10, 3 et 4.2), puis T14, T15 et T16.
+
+### 18/11/2026 (soir, dans le train) : partie T10 et /doctor
+- Partie de Frédéric (18 h 52 – 18 h 57, logs dans le scratchpad) : niveaux 1 et 2 terminés, arrêt au niveau 3 avec Échap → O, 4 méga-gommes et « super power », 4 « New life for Ladybug » (vie gagnée ou renaissance : à préciser), aucune erreur. Il attend encore le retour de Frédéric pour remplir 2.2 à 2.10, la section 3 et 4.2.
+- `/doctor` : installation native saine, version 2.1.327 à jour (mises à jour automatiques en arrière-plan désactivées), aucun hook, contexte léger. Validé par Frédéric :
+  - `.claude/rules/context7.md` **supprimé** : il doublonnait les instructions du serveur Context7 (environ 440 tokens par session, est.). Copie gardée dans `~/Documents/Claude/ladybug/doctor/` ;
+  - `"permissions": {"defaultMode": "auto"}` ajouté dans `~/.claude/settings.json` (s'applique à tous les projets). Copie de l'ancien fichier gardée dans le même dossier.
+- Conseils de `/usage` : faire `/clear` entre deux sujets (par exemple avant l'étape 1), car le journal du skill garde le contexte.
+- Retour de Frédéric sur T10 : gommes, fantôme mangé, vie gagnée, fruits et téléporteurs OK (2.2, 2.4, 2.6, 2.7, 2.8). 2.3 OK d'après les logs. Le comportement des fantômes est difficile à voir : astuce Entrée (panneau debug à gauche) ajoutée en section 3. Restent 2.5, 2.10, 3.1 à 3.3 et 4.2.
+- Deux autres parties (19 h 11 – 19 h 12 et 19 h 14 – 19 h 16) : 4 morts puis « Ladybug lost the game », méga-gomme, Échap → O. Les 4 « New life » de la première partie étaient bien des vies gagnées (aucune mort ce jour-là). Frédéric : « tout est ok » pour 2.5, 2.10, 3.1 à 3.3 et 4.2.
+- **T10 ✅**. La checklist « avant » est complète : tout est OK, sauf 5.6 (Pause), KO sur Mac.
+- Restent T14 (cohérence des documents), T15 (revue du diff et commit) et T16 (étape 0 « Terminée »).

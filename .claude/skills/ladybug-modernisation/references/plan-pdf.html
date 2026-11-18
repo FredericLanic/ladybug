@@ -52,6 +52,7 @@
   <tr><td>5</td><td><code>PlayerInput</code></td><td>Un contrôleur par personnage, plusieurs fantômes joueurs</td><td>Strategy</td></tr>
   <tr><td>6</td><td>Fantômes configurables</td><td>Un fantôme = assemblage de capacités, perception</td><td>Composition, Strategy</td></tr>
   <tr><td>7</td><td>Niveaux et rendu du labyrinthe</td><td>Niveaux en fichiers, rendu lisible et thématisable</td><td>Builder, autotiling, Flyweight</td></tr>
+  <tr><td>7 bis</td><td><b>Labyrinthe dynamique</b> (idée de Hammed)</td><td>Portes, murs mobiles, niveaux générés ; murs déclenchés par les joueurs avec les pouvoirs (6.7, 9.6)</td><td>Observer, Command, Strategy, Builder</td></tr>
   <tr><td>8</td><td>Langage moderne, ménage, documentation</td><td>Lisibilité, <code>ARCHITECTURE.md</code>, test « Jeff »</td><td>records, <code>switch</code> moderne</td></tr>
   <tr><td>9</td><td><b>Réseau</b></td><td>Un poste Ladybug, un ou plusieurs postes fantômes</td><td>Strategy (<code>NetworkInput</code>)</td></tr>
   <tr><td>10</td><td>Optionnel</td><td><code>jpackage</code>, JavaFX ou libGDX</td><td>–</td></tr>
@@ -97,24 +98,25 @@
   <tr><td>Factory / Builder</td><td>Étapes 2 et 7 : lanceur, <code>LevelLoader</code></td></tr>
   <tr><td>Table de correspondance (autotiling)</td><td>Étape 7 : rendu du labyrinthe</td></tr>
   <tr><td>Template / Flyweight (image pré-rendue)</td><td>Étape 7 : rendu du labyrinthe</td></tr>
+  <tr><td>Command (changement de mur daté)</td><td>Étape 7 bis : <code>MazeChange</code></td></tr>
 </table>
 
-<h3>Constats vérifiés</h3>
+<h3>Constats vérifiés (sur <code>develop</code>, revus le 18/11/2026 à l'étape 0.C.5)</h3>
 <ul>
-  <li><b>Build cassé</b> : <code>~/.m2/settings.xml</code> pointe vers un Nexus <code>localhost:8081</code> qui ne tourne pas.</li>
-  <li><b>Pas de XML externe prioritaire</b> : un XML posé à côté du jar est ignoré (testé sur <code>releases/ladybug-0.5.0.jar</code>), car <code>JarLauncher</code> et <code>ClassPathXmlApplicationContext</code> ne lisent que l'intérieur du jar.</li>
-  <li><b>Plantage au démarrage sur Mac</b> : <code>UnsatisfiedLinkError</code> de Jamepad dans <code>XBoxOneControllerManager.initialize()</code>, qui fait échouer tout le contexte Spring.</li>
+  <li><b>Build cassé en l'état</b> : <code>~/.m2/settings.xml</code> pointe vers un Nexus <code>localhost:8081</code> qui ne tourne pas (contournement de l'étape 0 : un fichier de réglages temporaire vers Maven Central) ; <b>Lombok 1.18.22 ne compile pas en JDK 21</b> (<code>NoSuchFieldError JCImport.qualid</code>). Avec 1.18.36, mis temporairement, la compilation passe.</li>
+  <li><b>Pas de XML externe prioritaire</b> : <code>Application</code> charge <code>application-context.xml</code> avec <code>ClassPathXmlApplicationContext</code>, donc uniquement depuis l'intérieur du jar. Testé sur <code>releases/ladybug-0.5.0.jar</code> ; le code de chargement de <code>develop</code> est le même.</li>
+  <li><b>Plus de plantage au démarrage sur Mac</b> : sur <code>develop</code>, Jamepad n'est chargé que sous Windows (<code>@Conditional(WindowsHost.class)</code> sur <code>XboxRequest</code>). Le jeu démarre en JDK 21 sur le Mac, sans manette. (Sur <code>master</code>, <code>UnsatisfiedLinkError</code> dans <code>XBoxOneControllerManager.initialize()</code>.)</li>
   <li><b>Incohérences</b> :
     <ul>
-      <li>versions : pom <code>java.version=16</code>, <code>MainLadybug</code> exige Java 19+, bannière en <code>v0.6.0</code>, CI en JDK 17 ;</li>
-      <li>dépendances : <code>spring-boot-starter-web</code> inutile, dépôt jcenter mort ;</li>
+      <li>versions : pom <code>java.version=19</code>, bannière « v0.6.0-SNAPSHOT for Java 19+ », CI (<code>maven-release.yml</code>) en <b>JDK 16</b> ;</li>
+      <li>dépendances : <code>spring-boot-starter-web</code> déjà retiré, mais le dépôt jcenter (mort) est toujours dans le pom ;</li>
       <li>aucun test ;</li>
-      <li><code>java.util.Observable</code> est déprécié.</li>
+      <li><code>java.util.Observable</code> a disparu : il est remplacé par des événements dont la source est <code>GameModel</code> (0 classe concernée).</li>
     </ul>
   </li>
-  <li><b>Sous-classes de fantômes quasi identiques</b> : <code>Clyde</code>, <code>Inky</code> et <code>Pinky</code> ne diffèrent que par la vitesse initiale ; <code>Blinky</code> ajoute <code>BlinkySpeedIndex</code> ; le comportement est un <code>switch</code> sur <code>GhostBehaviour</code> dans <code>Ghost.moveByBehaviour()</code>.</li>
-  <li><b>Fantôme joueur limité</b> : le flag « joué par un humain » est stocké dans l'enum <code>GhostsBodyImages</code> (<code>GameModel.java:242-245</code>), un état global sur une enum d'images (backlog CTEC1). <code>GhostsGroup</code> envoie une seule <code>ghostRequest</code> à tous les fantômes non calculés.</li>
-  <li><b>Modèle couplé à Swing</b> : <code>GameModel</code> contient un <code>javax.swing.Timer</code> et notifie ses observateurs via <code>Observable</code>.</li>
+  <li><b>Sous-classes de fantômes quasi identiques</b> : <code>Clyde</code>, <code>Inky</code> et <code>Pinky</code> (39 lignes chacune) ne diffèrent que par la vitesse initiale (<code>getRealIndexSpeed</code> ou <code>getRealIndexSpeedMinus</code>) ; <code>Blinky</code> ajoute <code>BlinkySpeedIndex</code> ; le comportement est un <code>switch</code> sur <code>behaviour</code> dans <code>Ghost.moveByBehaviour()</code>.</li>
+  <li><b>Fantôme joueur limité</b> : le flag « joué par un humain » est stocké dans l'enum <code>GhostsBodyImages</code> (<code>Ghost.isComputed()</code> lit <code>color.isComputed()</code>, tirage dans <code>GameModel.java:242-246</code>), un état global sur une enum d'images (backlog CTEC1). <code>GhostsGroup.move</code> envoie une seule <code>ghostRequest</code> à tous les fantômes non calculés.</li>
+  <li><b>Modèle couplé à Swing</b> : <code>GameModel</code> importe <code>javax.swing.*</code> et contient un <code>javax.swing.Timer</code> (<code>programTimer</code>).</li>
   <li><b>Mode lampe pensé pour un écran unique</b> : les règles sont codées en dur dans <code>CentralView.drawMaze</code> (3,5 cases) et <code>drawGhosts</code> (4 cases), la zone éclairée entoure tous les joueurs locaux et Ladybug est toujours visible.</li>
 </ul>
 
@@ -123,7 +125,7 @@
 <ul>
   <li><b>Aucune action (branche, build, modification) sans feu vert explicite.</b> On discute d'abord.</li>
   <li>Une branche dédiée, <code>modernisation</code>, créée depuis <b><code>origin/develop</code></b> (et non <code>master</code>). <b>Un commit par sous-étape</b>, le diff montré avant chaque commit, et la convention de message <code>[TECH] …</code>.</li>
-  <li>Les constats ci-dessus ont été faits sur <code>master</code>. Ils seront revus sur <code>develop</code> à l'étape 0.C.5.</li>
+  <li>Les constats ci-dessus ont été faits sur <code>master</code>, puis revus sur <code>develop</code> le 18/11/2026 (étape 0.C.5).</li>
   <li>Le jeu reste jouable après chaque étape.</li>
   <li><code>~/.m2/settings.xml</code> n'est pas modifié. Choix à faire : relancer le Nexus, ou utiliser un fichier de réglages temporaire pointant vers Maven Central.</li>
 </ul>
@@ -167,6 +169,7 @@
   <li>avant une étape : <code>/graphify query</code>, <code>/graphify path "A" "B"</code> et <code>/graphify explain "X"</code> pour mesurer l'impact d'un changement ;</li>
   <li>après les étapes 4, 5, 6, 7 et 8 : <code>/graphify . --update</code>, puis comparaison avec le graphe précédent.</li>
 </ul>
+<p class="sub"><b>Règle : toujours lancer Graphify avec <code>GRAPHIFY_BACKEND=none</code></b> (par exemple <code>GRAPHIFY_BACKEND=none graphify update .</code>). Sans cette variable, et faute de clé d'API, Graphify se sert du CLI Claude Code pour nommer les communautés, ce qui envoie des noms de classes à Anthropic (incident du 18/11/2026). Test T3 du 18/11 : sans IA, le graphe du jeu est strictement identique (mêmes nœuds, mêmes liens). Seuls les noms des communautés restent génériques, ou sont tirés de leur classe centrale.</p>
 <p class="sub"><b class="id">0.5</b> Mise à jour du skill <code>ladybug-modernisation</code> pour qu'il sache utiliser le graphe.</p>
 <div class="box warn">
 <b>Limites connues</b>
@@ -300,6 +303,7 @@
 </ul>
 <p class="sub"><b class="id">6.5</b> <code>Ghost</code> devient une classe concrète. <code>Blinky</code>, <code>Pinky</code>, <code>Inky</code> et <code>Clyde</code> sont supprimées et remplacées par des <code>&lt;bean&gt;</code> XML. L'ancienne propriété <code>behaviour="AGGRESSIVE"</code> reste acceptée comme raccourci.</p>
 <p class="sub"><b class="id">6.6</b> La vue gère un nombre quelconque de fantômes et les couleurs inconnues (image par défaut en repli).</p>
+<p class="sub"><b class="id">6.7</b> <b>Pouvoir « agir sur les murs »</b> (variante C du labyrinthe dynamique, réalisée après l'étape 7 bis) : une capacité configurable en XML, par exemple « ce fantôme peut ouvrir un mur », « Ladybug peut poser un mur ». Elle passe par le socle de l'étape 7 bis.</p>
 
 <h2><span class="num">7</span>Niveaux en fichiers et rendu du labyrinthe</h2>
 <p class="sub"><b class="id">7.1</b> Un fichier texte par niveau dans <code>resources/levels/</code>, avec la grille et un en-tête : départ, régénération, méga-gommes, téléportations.</p>
@@ -314,6 +318,27 @@
   <li><b>Thème</b> : couleurs (murs, gommes, méga-gommes, régénération, téléportation) et épaisseur du trait sont sorties dans un objet <code>MazeTheme</code> configurable en XML. C'est la base des skins (CTEC27). Plusieurs styles de labyrinthe deviennent possibles plus tard.</li>
   <li><b>Vérification</b> : capture du rendu avant/après sur chaque niveau. Les images doivent être identiques.</li>
 </ul>
+
+<h2><span class="num">7 bis</span>Labyrinthe dynamique <span class="tag">idée de Hammed, 18/11/2026</span></h2>
+<p>Le labyrinthe change pendant la partie. Frédéric retient <b>les quatre variantes</b> : A. portes, B. murs mobiles, C. murs déclenchés par les joueurs, D. labyrinthe généré.</p>
+<p><b>Constats dans le code</b> :</p>
+<ul>
+  <li>les fantômes s'adapteraient d'eux-mêmes : <code>Dijkstra.getShorterWay</code> reconstruit son graphe depuis <code>ScreenData</code> à chaque appel ;</li>
+  <li>l'affichage est figé : les bordures sont calculées une seule fois par niveau (<code>checkViewBlockBorder</code>), avec une double liste de cases. L'étape 7 est donc un <b>prérequis</b>.</li>
+</ul>
+<p class="sub"><b class="id">7 bis.0</b> <b>Socle commun</b>, construit une seule fois :</p>
+<ul>
+  <li><code>MutableMaze</code> : seul point d'entrée pour changer un mur ;</li>
+  <li><code>MazeChangeEvent</code> (<b>Observer</b>) : prévient la vue (redessiner la zone touchée), les fantômes et, plus tard, le réseau ;</li>
+  <li><code>MazeChange</code> (<b>Command</b>) : un changement décrit comme un objet daté (« fermer (12,5) à t+30 s ») ;</li>
+  <li><code>ReachabilityChecker</code> : refuse tout changement qui rendrait une gomme inaccessible (testé unitairement) ;</li>
+  <li><code>OccupancyRule</code> (<b>Strategy</b>) : un mur qui se ferme sur un personnage attend que la case soit libre (par défaut, à confirmer).</li>
+</ul>
+<p>Les variantes ne diffèrent que par <b>qui décide</b> du changement, sur le même principe que <code>PlayerInput</code>.</p>
+<p class="sub"><b class="id">7 bis.1</b> <b>A. Portes</b>, décrites dans le fichier du niveau (<code>door: 12,5 period=20s</code>). Premier palier : il installe et montre le socle.</p>
+<p class="sub"><b class="id">7 bis.2</b> <b>B. Murs mobiles</b> : une <code>MazeMutationStrategy</code> (planifiée ou aléatoire), réglable en XML.</p>
+<p class="sub"><b class="id">7 bis.3</b> <b>D. Labyrinthe généré</b> : un <code>MazeGenerator</code> (<b>Builder</b>), validé par le même <code>ReachabilityChecker</code>.</p>
+<p class="sub"><b>C. Murs déclenchés par les joueurs</b> : en 6.7 (pouvoir configurable) puis 9.6 (réseau).</p>
 
 <h2><span class="num">8</span>Modernisation du langage et ménage</h2>
 <p class="sub"><b class="id">8.1</b> <code>record</code>, <code>switch</code> avec pattern matching, <code>var</code> lorsqu'il clarifie le code.</p>
@@ -335,6 +360,7 @@ Architecture : <b>un hôte qui fait autorité</b>. L'hôte fait tourner le seul 
 <p class="sub"><b class="id">9.3</b> Lanceur : modes <b>héberger</b> (<code>--host</code>) et <b>rejoindre</b> (<code>--join host:port</code>). Le client n'assemble que la vue et l'envoi des entrées.</p>
 <p class="sub"><b class="id">9.4</b> Chaque client a sa propre vue, avec son personnage comme observateur. L'hôte peut n'envoyer à chaque client que ce que son personnage perçoit (anti-triche).</p>
 <p class="sub"><b class="id">9.5</b> Les éléments décidés par l'hôte (mode lampe, tirages aléatoires) sont transmis. Les préférences restent locales.</p>
+<p class="sub"><b class="id">9.6</b> <b>Labyrinthe dynamique en réseau</b> : l'hôte seul décide des changements de murs, transmis dans le <code>GameSnapshot</code>. Un client qui utilise le pouvoir « agir sur les murs » envoie une demande, que l'hôte valide.</p>
 
 <h2><span class="num">10</span>Optionnel</h2>
 <ul>
@@ -351,6 +377,7 @@ Architecture : <b>un hôte qui fait autorité</b>. L'hôte fait tourner le seul 
   <li><b>Rayons de lumière</b> : l'écart entre 3,5 et 4 cases dans <code>CentralView</code> est-il voulu ?</li>
   <li><b>Nexus local</b> : à relancer, ou build via Maven Central ?</li>
   <li><b>Graphify et documents</b> : inclure plus tard README, backlog et <code>.txt</code> dans le graphe (analyse par le modèle), ou rester en mode code seul ?</li>
+  <li><b>Q11, labyrinthe dynamique</b> : prévenir le joueur avant un changement ? Labyrinthe généré symétrique ou libre ? Mur qui se ferme sur un personnage : attendre ou pousser ?</li>
   <li><b>Graphify en mode « toujours actif »</b> (<code>graphify claude install</code>, avec des hooks qui consultent le graphe automatiquement) : à activer ou non ?</li>
 </ul>
 

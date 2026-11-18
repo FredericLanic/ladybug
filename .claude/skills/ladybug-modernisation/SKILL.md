@@ -47,6 +47,7 @@ Points forts existants à reconnaître, sans les dénigrer :
 - **Fantômes = assemblage de capacités** (composition) plutôt que des sous-classes : stratégie de déplacement, politique de vitesse, `Perception`. `Clyde`, `Inky` et `Pinky` ne diffèrent aujourd'hui que par leur vitesse initiale.
 - **La visibilité dépend du personnage.** Elle concerne le mode lampe, c'est-à-dire le cercle de lumière autour d'un joueur (touche F6, ou tirage aléatoire par niveau). Ce qu'un joueur voit dans le noir dépend « du type de fantôme et de ses pouvoirs ». Le même paramètre de perception sert à l'IA et à l'humain. La vue gagne une notion d'**observateur**.
 - **Rendu du labyrinthe : garder le style à l'identique** (contours bleus fins, coins arrondis, pointillés de gommes) et refaire l'implémentation : autotiling par table, image pré-rendue, `MazeTheme`.
+- **Labyrinthe dynamique** (idée de Hammed, 18/11/2026) : les **quatre variantes** sont retenues (A. portes, B. murs mobiles, C. murs déclenchés par les joueurs, D. labyrinthe généré). Un socle commun (`MutableMaze`, `MazeChangeEvent`, `MazeChange`, `ReachabilityChecker`, `OccupancyRule`) est construit une fois, et les variantes ne diffèrent que par **qui décide** du changement. Prérequis : l'étape 7. La variante C devient un pouvoir configurable (6.7), puis passe par l'hôte en réseau (9.6).
 - **Le mode réseau vient en dernier** (étape 9). Il suit une architecture d'**hôte qui fait autorité** : les clients n'envoient que leurs entrées, l'hôte renvoie un `GameSnapshot`. Les étapes précédentes le préparent : listener typé, snapshot, `PlayerInput` par personnage.
 
 ## Ordre des étapes
@@ -63,6 +64,7 @@ Points forts existants à reconnaître, sans les dénigrer :
 5. `PlayerInput`
 6. Fantômes configurables et perception
 7. Niveaux en fichiers et rendu du labyrinthe
+7 bis. Labyrinthe dynamique : socle commun, puis A (portes), B (murs mobiles), D (labyrinthe généré). C (murs déclenchés par les joueurs) est traité en 6.7 et 9.6
 8. Langage moderne, ménage et documentation (test « Jeff »)
 9. Réseau
 10. Optionnel
@@ -71,12 +73,15 @@ Le détail de chaque étape, les constats vérifiés et les critères de vérifi
 
 ## Graphify (cartographie du code)
 
-Graphify ([Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) est prévu à l'étape 0. Le paquet s'appelle `graphifyy`, avec deux « y ». Il s'installe via `uv`, car la machine a Python 3.9 et Graphify demande 3.11 ou plus. Rien n'est installé tant que Frédéric n'a pas donné son feu vert.
+Graphify ([Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify)) est prévu à l'étape 0. Le paquet s'appelle `graphifyy`, avec deux « y ». Il s'installe via `uv`, car la machine a Python 3.9 et Graphify demande 3.11 ou plus.
 
-Une fois installé :
-- **Construire le graphe** : `/graphify . --code-only`. Le mode code seul est hors ligne et n'envoie aucun document.
+Installé le 18/11/2026 (étape 0.A).
+
+**Règle absolue : toujours préfixer par `GRAPHIFY_BACKEND=none`** (par exemple `GRAPHIFY_BACKEND=none graphify update .`). Sinon, faute de clé d'API, Graphify appelle le CLI Claude Code pour nommer les communautés et envoie des noms de classes à Anthropic. Validé par le test T3 du 18/11 : sans IA, le graphe est identique, seuls les noms des communautés sont moins parlants.
+
+- **Construire le graphe** : `GRAPHIFY_BACKEND=none graphify update .` (ou `/graphify . --code-only` avec la même variable).
 - **Avant une modification**, mesurer l'impact : `/graphify path "A" "B"`, `/graphify explain "X"`, `/graphify query "…"`.
-- **Après une grande étape** : `/graphify . --update`, puis montrer la différence avec le graphe précédent.
+- **Après une grande étape** : `GRAPHIFY_BACKEND=none graphify update .`, puis montrer la différence avec le graphe précédent (copier d'abord `graphify-out/` comme référence).
 
 Limite : le XML Spring n'est pas analysé. Le câblage des fantômes ne figure donc pas dans le graphe.
 
@@ -94,9 +99,11 @@ Un dashboard privé sur claude.ai, demandé par Frédéric sur le modèle de cel
 
 Il affiche, dans l'ordre :
 - l'avancement des étapes ;
+- **le plan en détail** (une section dépliable par titre « ## » de `references/plan.md`) ;
 - la santé du code (tuiles et graphique par package) ;
 - la dette technique ;
 - les décisions et questions ouvertes ;
+- **les idées** (qui les a proposées, statut, où elles atterrissent dans le plan) ;
 - l'outillage ;
 - le journal.
 
@@ -107,7 +114,11 @@ Les noms (Jeff, Halim, OXiane) y figurent, à la demande de Frédéric.
 - `data/ladybug/packages/<package>` et `data/ladybug/health/<key>` : relancez `python3 .claude/skills/ladybug-modernisation/scripts/metrics.py .` et recopiez les valeurs. Mettez aussi à jour la date et le commit dans la `description` des datasets `packages` et `health` ;
 - `data/ladybug/debt/Dnn` : `status` passe à « Résolu » ;
 - `data/ladybug/decisions/Cnn|Qnn` : une question tranchée devient une décision ;
-- `data/ladybug/tooling/<id>` et `data/ladybug/journal/jNN` (nouvelle entrée, `order` croissant).
+- `data/ladybug/tooling/<id>` et `data/ladybug/journal/jNN` (nouvelle entrée, `order` croissant) ;
+- `data/ladybug/ideas/Inn` : **chaque nouvelle idée** (de Frédéric, d'un collègue ou de Claude), avec `title`, `author`, `status` (« À discuter », « Retenue », « Réalisée », « Écartée »), `step` et `text` ;
+- `data/ladybug/plan/pNN` : **à chaque modification du plan**, lancez `python3 .claude/skills/ladybug-modernisation/scripts/plan_dashboard.py .claude/skills/ladybug-modernisation/references/plan.md <dossier>` puis envoyez les fichiers produits en `batch` (`set`). Si le nombre de sections diminue, supprimez les documents en trop.
+
+Une étape « bis » garde un `num` décimal pour le tri (7 bis → 7.5) et un `label` affiché (« 7 bis »).
 
 Ne touchez au code de la page (`files/index.html`) que si Frédéric demande une modification de la mise en page.
 
@@ -120,6 +131,7 @@ Ces questions sont à reprendre plus tard. Ne les tranchez pas seul, et ne les l
 - Quelles options relèvent de l'état partagé, et lesquelles des préférences locales ?
 - L'écart de rayon de lumière (3,5 cases contre 4) dans `CentralView` est-il voulu ?
 - Nexus local ou Maven Central ?
+- Q11, labyrinthe dynamique : prévenir le joueur avant un changement ? Labyrinthe généré symétrique ou libre ? Mur qui se ferme sur un personnage : attendre ou pousser ?
 - Graphify : inclure plus tard les documents (README, backlog) ? Activer le mode « toujours actif » ?
 
 Concevez de façon à laisser les deux options possibles : les capacités sont des objets remplaçables, et un joueur est associé à un fantôme précis, pas à un type.
@@ -153,7 +165,7 @@ Frédéric a demandé que **tout ce qu'on se dit soit retenu**. Après chaque di
 1. Ajoutez une entrée datée dans `references/journal.md` : ce qui a été dit, le raisonnement, ce qui a été décidé ou reporté.
 2. Si une décision change ou qu'une question ouverte est tranchée, mettez à jour ce fichier et `references/plan.md`. Gardez `~/.claude/plans/linked-cooking-valley.md` synchronisé.
 3. Régénérez le PDF : modifiez `references/plan-pdf.html`, puis lancez Chrome headless avec `--print-to-pdf=doc/plan-modernisation-ladybug.pdf`.
-4. Mettez à jour le dashboard (voir la section « Dashboard ») : statuts, mesures et nouvelle entrée de journal.
+4. Mettez à jour le dashboard (voir la section « Dashboard ») : statuts, mesures, idées, plan en détail et nouvelle entrée de journal. Frédéric veut que **toutes les idées et tout le plan** y soient lisibles.
 5. **Sauvegardez tout dans `~/Documents/Claude/ladybug`**, à la demande de Frédéric :
    - lancez `sh .claude/skills/ladybug-modernisation/scripts/sauvegarde.sh` depuis la racine du dépôt (copie du plan, du PDF, du skill, de la mémoire et des conversations en `.jsonl` et `.md`) ;
    - exportez les données du dashboard avec `read_db` (`list`, `out_dir` = `~/Documents/Claude/ladybug/dashboard/donnees`) pour `datasets` et chaque collection `data/ladybug/*` ;
