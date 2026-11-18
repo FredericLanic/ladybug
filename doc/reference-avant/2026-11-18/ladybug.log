@@ -1,0 +1,541 @@
+18:42:58.248 [main] DEBUG org.springframework.context.support.ClassPathXmlApplicationContext - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@2437c6dc
+18:42:58.422 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/tools/timer/SuperPowerTimer.class]
+18:42:58.423 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/tools/Screen.class]
+18:42:58.423 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/tools/maths/BlinkySpeedIndex.class]
+18:42:58.424 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/body/ladybug/LadybugDying.class]
+18:42:58.429 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel8.class]
+18:42:58.430 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel2.class]
+18:42:58.430 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel6.class]
+18:42:58.430 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel4.class]
+18:42:58.430 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel3.class]
+18:42:58.430 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel1.class]
+18:42:58.431 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel5.class]
+18:42:58.431 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel7.class]
+18:42:58.431 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/fruits/Fruits.class]
+18:42:58.432 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/MainLadybug.class]
+18:42:58.438 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/properties/GameProperties.class]
+18:42:58.449 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/Application.class]
+18:42:58.450 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/screendata/ScreenData.class]
+18:42:58.450 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/screendata/ManageLevel.class]
+18:42:58.450 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/screendata/repo/LevelRepository.class]
+18:42:58.450 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/Engine.class]
+18:42:58.451 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/message/GameMessaging.class]
+18:42:58.451 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/message/LadybugMessagesBundle.class]
+18:42:58.451 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/controller/KeyboardController.class]
+18:42:58.458 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/score/Score.class]
+18:42:58.458 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/score/GroupMessages.class]
+18:42:58.458 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/CurrentProgramStatus.class]
+18:42:58.458 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/GameModel.class]
+18:42:58.459 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelProgramStarting.class]
+18:42:58.459 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLadybugIsDead.class]
+18:42:58.459 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameIsEnding.class]
+18:42:58.459 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelPresentation.class]
+18:42:58.459 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameAskForceEndGame.class]
+18:42:58.459 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameIsStarting.class]
+18:42:58.459 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameIsInGame.class]
+18:42:58.459 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelAskKeepPreviousGameLevel.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLevelIsStarting.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLadybugIsDying.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameIsPlaying.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLevelIsEnding.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelNoAction.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelPresentationStarting.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLevelIsEnded.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGhostIsDead.class]
+18:42:58.460 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/ManageActionContext.class]
+18:42:58.461 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/GameModelManageAction.class]
+18:42:58.461 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/ladybug/LadybugView.class]
+18:42:58.461 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/ladybug/LadybugDyingView.class]
+18:42:58.461 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/left/PageLeftView.class]
+18:42:58.462 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/CentralView.class]
+18:42:58.462 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/MainFrame.class]
+18:42:58.462 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/ghost/GhostView.class]
+18:42:58.462 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/DisplayRendering.class]
+18:42:58.463 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/TilesRendering492.class]
+18:42:58.463 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/TilesRendering584.class]
+18:42:58.463 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/TilesRenderingRedLines.class]
+18:42:58.463 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/LinesRendering.class]
+18:42:58.463 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/ScreenBlockView.class]
+18:42:58.463 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/down/StatusGameView.class]
+18:42:58.463 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/down/PageEndView.class]
+18:42:58.463 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/sound/GameSounds.class]
+18:42:58.464 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/sound/NewSounds.class]
+18:42:58.475 [main] DEBUG org.springframework.beans.factory.xml.XmlBeanDefinitionReader - Loaded 74 bean definitions from class path resource [application-context.xml]
+18:42:58.500 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor'
+18:42:58.527 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/tools/timer/SuperPowerTimer.class]
+18:42:58.527 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/tools/Screen.class]
+18:42:58.527 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/tools/maths/BlinkySpeedIndex.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/body/ladybug/LadybugDying.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel8.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel2.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel6.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel4.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel3.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel1.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel5.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/level/data/SecondGenerationLevel7.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/constant/fruits/Fruits.class]
+18:42:58.528 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/MainLadybug.class]
+18:42:58.530 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/properties/GameProperties.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/screendata/ScreenData.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/screendata/ManageLevel.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/screendata/repo/LevelRepository.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/Engine.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/message/GameMessaging.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/message/LadybugMessagesBundle.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/controller/KeyboardController.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/score/Score.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/score/GroupMessages.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/CurrentProgramStatus.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/GameModel.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelProgramStarting.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLadybugIsDead.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameIsEnding.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelPresentation.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameAskForceEndGame.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameIsStarting.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameIsInGame.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelAskKeepPreviousGameLevel.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLevelIsStarting.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLadybugIsDying.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGameIsPlaying.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLevelIsEnding.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelNoAction.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelPresentationStarting.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelLevelIsEnded.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/actions/GameModelGhostIsDead.class]
+18:42:58.531 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/ManageActionContext.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/model/strategy/GameModelManageAction.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/ladybug/LadybugView.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/ladybug/LadybugDyingView.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/left/PageLeftView.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/CentralView.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/MainFrame.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/ghost/GhostView.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/DisplayRendering.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/TilesRendering492.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/TilesRendering584.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/TilesRenderingRedLines.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/rendering/LinesRendering.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/map/ScreenBlockView.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/down/StatusGameView.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/view/down/PageEndView.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/sound/GameSounds.class]
+18:42:58.532 [main] DEBUG org.springframework.context.annotation.ClassPathBeanDefinitionScanner - Identified candidate component class: URL [jar:file:/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar!/BOOT-INF/classes!/com/kycox/game/engine/sound/NewSounds.class]
+18:42:58.737 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'propertySourcesPlaceholderConfigurer'
+18:42:58.740 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.sql.init.dependency.DatabaseInitializationDependencyConfigurer$DependsOnDatabaseInitializationPostProcessor'
+18:42:58.744 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerProcessor'
+18:42:58.745 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'forceAutoProxyCreatorToUseClassProxying'
+18:42:58.745 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerFactory'
+18:42:58.748 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor'
+18:42:58.749 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalCommonAnnotationProcessor'
+18:42:58.751 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor'
+18:42:58.752 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.context.internalConfigurationPropertiesBinder'
+18:42:58.752 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.aop.config.internalAutoProxyCreator'
+18:42:58.768 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'messageSource'
+18:42:58.768 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration'
+18:42:58.771 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'messageSourceProperties'
+18:42:58.773 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.context.properties.BoundConfigurationProperties'
+18:42:58.783 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'messageSource' via factory method to bean named 'messageSourceProperties'
+18:42:58.787 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'superPowerTimer'
+18:42:58.788 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'screen'
+18:42:58.978 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'BlinkySpeedIndex'
+18:42:58.979 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'ladybugDying'
+18:42:58.979 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'secondGenerationLevel8'
+18:42:58.981 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'secondGenerationLevel2'
+18:42:58.982 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'secondGenerationLevel6'
+18:42:58.982 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'secondGenerationLevel4'
+18:42:58.983 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'secondGenerationLevel3'
+18:42:58.983 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'secondGenerationLevel1'
+18:42:58.983 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'secondGenerationLevel5'
+18:42:58.984 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'secondGenerationLevel7'
+18:42:58.984 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'fruits'
+18:42:59.026 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'mainLadybug'
+18:42:59.028 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'mainFrame'
+18:42:59.039 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'centralView'
+18:42:59.043 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'ghostView'
+18:42:59.043 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameProperties'
+18:42:59.047 [main] DEBUG org.springframework.core.env.PropertySourcesPropertyResolver - Found key 'ghosts.hat' in PropertySource 'class path resource [ladybug.properties]' with value of type String
+18:42:59.047 [main] DEBUG org.springframework.core.env.PropertySourcesPropertyResolver - Found key 'ghosts.hat' in PropertySource 'environmentProperties' with value of type String
+18:42:59.047 [main] DEBUG org.springframework.core.env.PropertySourcesPropertyResolver - Found key 'ghosts.headband' in PropertySource 'class path resource [ladybug.properties]' with value of type String
+18:42:59.047 [main] DEBUG org.springframework.core.env.PropertySourcesPropertyResolver - Found key 'ghosts.headband' in PropertySource 'environmentProperties' with value of type String
+18:42:59.047 [main] DEBUG org.springframework.core.env.PropertySourcesPropertyResolver - Found key 'ladybug.color' in PropertySource 'class path resource [ladybug.properties]' with value of type String
+18:42:59.047 [main] DEBUG org.springframework.core.env.PropertySourcesPropertyResolver - Found key 'ladybug.color' in PropertySource 'environmentProperties' with value of type String
+18:42:59.048 [main] DEBUG org.springframework.core.env.PropertySourcesPropertyResolver - Found key 'ladybug.skin' in PropertySource 'class path resource [ladybug.properties]' with value of type String
+18:42:59.048 [main] DEBUG org.springframework.core.env.PropertySourcesPropertyResolver - Found key 'ladybug.skin' in PropertySource 'environmentProperties' with value of type String
+18:42:59.049 [main] INFO com.kycox.game.properties.GameProperties - Game Properties
+18:42:59.049 [main] INFO com.kycox.game.properties.GameProperties - Ladybug color (unused): blue
+18:42:59.049 [main] INFO com.kycox.game.properties.GameProperties - Ladybug skin: true
+18:42:59.049 [main] INFO com.kycox.game.properties.GameProperties - Ghost headband: false
+18:42:59.049 [main] INFO com.kycox.game.properties.GameProperties - Ghost hat: true
+18:42:59.049 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'ghostView' via constructor to bean named 'gameProperties'
+18:42:59.050 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'keyboardController'
+18:42:59.050 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModel'
+18:42:59.051 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'currentProgramStatus'
+18:42:59.051 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'levelRepository'
+18:42:59.052 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'currentProgramStatus' via constructor to bean named 'levelRepository'
+18:42:59.052 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameMessaging'
+18:42:59.052 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'ladybugMessagesBundle'
+18:42:59.052 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'ladybugMessagesBundle' via constructor to bean named 'messageSource'
+18:42:59.053 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameMessaging' via constructor to bean named 'ladybugMessagesBundle'
+18:42:59.053 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelManageAction'
+18:42:59.054 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'score'
+18:42:59.054 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'score' via constructor to bean named 'fruits'
+18:42:59.054 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'GroupGhost'
+18:42:59.078 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'groupMessages'
+18:42:59.078 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'Ladybug'
+18:42:59.080 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'newSounds'
+18:42:59.081 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'screenData'
+18:42:59.081 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'manageLevel'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageLevel' via constructor to bean named 'secondGenerationLevel8'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageLevel' via constructor to bean named 'secondGenerationLevel2'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageLevel' via constructor to bean named 'secondGenerationLevel6'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageLevel' via constructor to bean named 'secondGenerationLevel4'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageLevel' via constructor to bean named 'secondGenerationLevel3'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageLevel' via constructor to bean named 'secondGenerationLevel1'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageLevel' via constructor to bean named 'secondGenerationLevel5'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageLevel' via constructor to bean named 'secondGenerationLevel7'
+18:42:59.083 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'screenData' via constructor to bean named 'manageLevel'
+18:42:59.084 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'manageActionContext'
+18:42:59.084 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelProgramStarting'
+18:42:59.087 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelPresentationStarting'
+18:42:59.087 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelPresentationStarting' via constructor to bean named 'gameMessaging'
+18:42:59.088 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelPresentation'
+18:42:59.089 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelGameIsStarting'
+18:42:59.089 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelGameIsStarting' via constructor to bean named 'gameMessaging'
+18:42:59.090 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelLevelIsStarting'
+18:42:59.090 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelLevelIsStarting' via constructor to bean named 'fruits'
+18:42:59.090 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelLevelIsStarting' via constructor to bean named 'gameMessaging'
+18:42:59.091 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelGameIsInGame'
+18:42:59.091 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelGameIsPlaying'
+18:42:59.092 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelGameIsPlaying' via constructor to bean named 'fruits'
+18:42:59.093 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelGhostIsDead'
+18:42:59.093 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelLadybugIsDead'
+18:42:59.094 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelLadybugIsDying'
+18:42:59.095 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelGameIsInGame' via constructor to bean named 'gameModelGameIsPlaying'
+18:42:59.095 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelGameIsInGame' via constructor to bean named 'gameModelGhostIsDead'
+18:42:59.095 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelGameIsInGame' via constructor to bean named 'gameModelLadybugIsDead'
+18:42:59.095 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelGameIsInGame' via constructor to bean named 'gameModelLadybugIsDying'
+18:42:59.095 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelGameIsInGame' via constructor to bean named 'gameModelManageAction'
+18:42:59.097 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelGameAskForceEndGame'
+18:42:59.098 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelLevelIsEnded'
+18:42:59.098 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelLevelIsEnding'
+18:42:59.099 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelGameIsEnding'
+18:42:59.100 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelNoAction'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameModelAskKeepPreviousGameLevel'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModelAskKeepPreviousGameLevel' via constructor to bean named 'levelRepository'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelProgramStarting'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelPresentationStarting'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelPresentation'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelGameIsStarting'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelLevelIsStarting'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelGameIsInGame'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelGameAskForceEndGame'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelLevelIsEnded'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelLevelIsEnding'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelGameIsEnding'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelNoAction'
+18:42:59.101 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'manageActionContext' via constructor to bean named 'gameModelAskKeepPreviousGameLevel'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'currentProgramStatus'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'gameMessaging'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'gameModelManageAction'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'score'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'GroupGhost'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'groupMessages'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'Ladybug'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'ladybugDying'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'newSounds'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'screenData'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'manageActionContext'
+18:42:59.106 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'gameModel' via constructor to bean named 'org.springframework.context.support.ClassPathXmlApplicationContext@2437c6dc'
+18:42:59.109 [main] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_START
+18:42:59.111 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'keyboardController' via constructor to bean named 'gameModel'
+18:42:59.111 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'keyboardController' via constructor to bean named 'gameProperties'
+18:42:59.112 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'ladybugDyingView'
+18:42:59.112 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'ladybugDyingView' via constructor to bean named 'ladybugDying'
+18:42:59.127 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'ladybugView'
+18:42:59.128 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'screenBlockView'
+18:42:59.129 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'displayRendering'
+18:42:59.129 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'linesRendering'
+18:42:59.129 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'tilesRendering492'
+18:42:59.130 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'tilesRendering584'
+18:42:59.130 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'tilesRenderingRedLines'
+18:42:59.130 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'displayRendering' via constructor to bean named 'linesRendering'
+18:42:59.130 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'displayRendering' via constructor to bean named 'tilesRendering492'
+18:42:59.130 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'displayRendering' via constructor to bean named 'tilesRendering584'
+18:42:59.134 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'displayRendering' via constructor to bean named 'tilesRenderingRedLines'
+18:42:59.136 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'screenBlockView' via constructor to bean named 'fruits'
+18:42:59.136 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'screenBlockView' via constructor to bean named 'displayRendering'
+18:42:59.136 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'centralView' via constructor to bean named 'ghostView'
+18:42:59.136 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'centralView' via constructor to bean named 'keyboardController'
+18:42:59.136 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'centralView' via constructor to bean named 'ladybugDyingView'
+18:42:59.136 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'centralView' via constructor to bean named 'ladybugView'
+18:42:59.136 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'centralView' via constructor to bean named 'screenBlockView'
+18:42:59.136 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'centralView' via constructor to bean named 'ladybugMessagesBundle'
+18:42:59.190 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_STARTING
+18:42:59.213 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'pageEndView'
+18:42:59.214 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'statusGameView'
+18:42:59.216 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'pageEndView' via constructor to bean named 'gameMessaging'
+18:42:59.216 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'pageEndView' via constructor to bean named 'ghostView'
+18:42:59.216 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'pageEndView' via constructor to bean named 'ladybugView'
+18:42:59.216 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'pageEndView' via constructor to bean named 'screen'
+18:42:59.216 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'pageEndView' via constructor to bean named 'statusGameView'
+18:42:59.219 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'pageLeftView'
+18:42:59.220 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'mainFrame' via constructor to bean named 'centralView'
+18:42:59.220 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'mainFrame' via constructor to bean named 'pageEndView'
+18:42:59.220 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'mainFrame' via constructor to bean named 'pageLeftView'
+18:42:59.220 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'mainFrame' via constructor to bean named 'screen'
+18:42:59.233 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'mainLadybug' via constructor to bean named 'mainFrame'
+18:42:59.233 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'application'
+18:42:59.234 [AWT-EventQueue-0] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'gameSounds'
+18:42:59.234 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'engine'
+18:42:59.235 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'engine' via constructor to bean named 'gameModel'
+18:42:59.235 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'engine' via constructor to bean named 'gameSounds'
+18:42:59.235 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'engine' via constructor to bean named 'centralView'
+18:42:59.363 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.AutoConfigurationPackages'
+18:42:59.364 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.context.properties.EnableConfigurationPropertiesRegistrar.methodValidationExcludeFilter'
+18:42:59.366 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration'
+18:42:59.366 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.aop.AopAutoConfiguration$ClassProxyingConfiguration'
+18:42:59.367 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.aop.AopAutoConfiguration'
+18:42:59.367 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration'
+18:42:59.368 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'applicationAvailability'
+18:42:59.368 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration'
+18:42:59.369 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration'
+18:42:59.369 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'lifecycleProcessor'
+18:42:59.369 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'spring.lifecycle-org.springframework.boot.autoconfigure.context.LifecycleProperties'
+18:42:59.370 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'lifecycleProcessor' via factory method to bean named 'spring.lifecycle-org.springframework.boot.autoconfigure.context.LifecycleProperties'
+18:42:59.371 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration'
+18:42:59.372 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'spring.info-org.springframework.boot.autoconfigure.info.ProjectInfoProperties'
+18:42:59.373 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration' via constructor to bean named 'spring.info-org.springframework.boot.autoconfigure.info.ProjectInfoProperties'
+18:42:59.373 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration'
+18:42:59.373 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'spring.sql.init-org.springframework.boot.autoconfigure.sql.init.SqlInitializationProperties'
+18:42:59.375 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration'
+18:42:59.376 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'taskExecutorBuilder'
+18:42:59.377 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'spring.task.execution-org.springframework.boot.autoconfigure.task.TaskExecutionProperties'
+18:42:59.378 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'taskExecutorBuilder' via factory method to bean named 'spring.task.execution-org.springframework.boot.autoconfigure.task.TaskExecutionProperties'
+18:42:59.380 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration'
+18:42:59.381 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'taskSchedulerBuilder'
+18:42:59.382 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'spring.task.scheduling-org.springframework.boot.autoconfigure.task.TaskSchedulingProperties'
+18:42:59.383 [main] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Autowiring by type from bean name 'taskSchedulerBuilder' via factory method to bean named 'spring.task.scheduling-org.springframework.boot.autoconfigure.task.TaskSchedulingProperties'
+18:42:59.394 [main] INFO com.kycox.game.MainLadybug - ******************************
+18:42:59.394 [main] INFO com.kycox.game.MainLadybug - *  LadyBug v0.6.0-SNAPSHOT   *
+18:42:59.394 [main] INFO com.kycox.game.MainLadybug - *  for Java 19+ by Kycox     *
+18:42:59.394 [main] INFO com.kycox.game.MainLadybug - ******************************
+18:43:01.696 [Timer-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:43:01.700 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:43:09.244 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:43:09.244 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:43:09.272 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:43:09.316 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:43:11.820 [Timer-8] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:43:11.831 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:43:11.832 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:43:11.842 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:43:16.064 [Timer-10] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:43:17.988 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying - Ladybug has just eaten a mega point
+18:43:17.988 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying - Super power is up
+18:43:27.394 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - startStopSoundActive : true
+18:43:29.368 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - startStopSoundActive : false
+18:43:58.746 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:43:59.971 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:44:00.827 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:44:01.729 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:44:01.729 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:44:01.731 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:44:03.237 [Timer-45] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:44:03.254 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:44:04.321 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:44:04.321 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:44:04.348 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:04.388 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:44:06.898 [Timer-48] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:44:06.910 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:44:06.910 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:06.915 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:44:11.136 [Timer-50] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:44:12.420 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:44:13.287 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:44:13.288 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:44:13.304 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:44:14.809 [Timer-55] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:44:14.830 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:44:15.851 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:44:15.851 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:44:15.870 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:15.911 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:44:18.416 [Timer-58] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:44:18.439 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:44:18.440 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:18.444 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:44:22.665 [Timer-60] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:44:23.927 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:44:24.780 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:44:24.781 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:44:24.819 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:44:26.325 [Timer-65] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:44:26.345 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:44:27.379 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:44:27.379 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:44:27.389 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:27.432 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:44:29.935 [Timer-68] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:44:29.952 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:44:29.952 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:29.958 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:44:34.178 [Timer-70] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:44:35.426 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:44:36.277 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:44:36.277 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:44:36.290 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:44:37.796 [Timer-75] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:44:37.813 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:44:38.860 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:44:38.860 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:44:38.888 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:38.930 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:44:41.436 [Timer-78] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:44:41.457 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:44:41.457 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:41.462 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:44:45.680 [Timer-80] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:44:46.895 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:44:47.748 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:44:47.748 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:44:47.758 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:44:49.263 [Timer-85] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:44:49.270 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:44:50.343 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:44:50.343 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:44:50.345 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:50.390 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:44:52.894 [Timer-88] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:44:52.924 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:44:52.924 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:44:52.927 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:44:57.144 [Timer-90] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:44:58.421 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:44:59.278 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:44:59.278 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:44:59.310 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:45:00.815 [Timer-95] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:45:00.859 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:45:01.912 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:45:01.912 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:45:01.933 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:01.973 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:45:04.476 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:45:04.476 [Timer-98] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:45:04.476 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:04.481 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:45:08.702 [Timer-100] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:45:09.994 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:45:10.831 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:45:10.831 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:45:10.864 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:45:12.369 [Timer-105] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:45:12.409 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:45:13.470 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:45:13.470 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:45:13.479 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:13.520 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:45:16.025 [Timer-108] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:45:16.045 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:45:16.046 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:16.051 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:45:20.272 [Timer-110] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:45:21.529 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:45:22.392 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:45:22.392 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:45:22.433 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:45:23.939 [Timer-115] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:45:23.972 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:45:25.003 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:45:25.003 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:45:25.005 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:25.050 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:45:27.555 [Timer-118] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:45:27.558 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:45:27.558 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:27.563 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:45:31.783 [Timer-121] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:45:33.049 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:45:33.908 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:45:33.908 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:45:33.935 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:45:35.440 [Timer-125] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:45:35.484 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:45:36.525 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:45:36.525 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:45:36.560 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:36.602 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:45:39.107 [Timer-128] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:45:39.140 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:45:39.140 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:39.144 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:45:43.361 [Timer-131] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:45:44.735 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:45:45.577 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:45:45.577 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:45:45.605 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:45:47.110 [Timer-136] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:45:47.152 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:45:48.203 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:45:48.203 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:45:48.221 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:48.261 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:45:50.766 [Timer-138] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:45:50.789 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:45:50.790 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:50.794 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:45:55.014 [Timer-141] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:45:56.224 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:45:57.078 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:45:57.078 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:45:57.096 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:45:58.602 [Timer-146] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:45:58.641 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:45:59.696 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:45:59.696 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:45:59.720 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:45:59.763 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:46:02.269 [Timer-148] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:46:02.301 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:46:02.301 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:46:02.306 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:46:06.526 [Timer-151] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:46:07.762 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:46:08.611 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:46:08.612 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:46:08.619 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:46:10.124 [Timer-156] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:46:10.157 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:46:11.194 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:46:11.194 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:46:11.227 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:46:11.272 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:46:13.777 [Timer-158] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:46:13.780 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:46:13.780 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:46:13.786 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:46:18.004 [Timer-161] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:46:19.285 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:46:20.146 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:46:20.147 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:46:20.153 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:46:21.658 [Timer-166] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:46:21.670 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
+18:46:23.545 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Initialize a new game
+18:46:23.545 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+18:46:23.552 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:46:23.596 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_STARTING
+18:46:26.101 [Timer-169] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_START
+18:46:26.116 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting - Initialize level
+18:46:26.116 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_START
+18:46:26.120 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en LEVEL_STARTING
+18:46:30.341 [Timer-172] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en IN_GAME
+18:46:41.429 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en ASK_FORCE_END_GAME
+18:46:42.297 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel - Force Stop Game
+18:46:42.297 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_END
+18:46:42.303 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en GAME_ENDING
+18:46:43.808 [Timer-183] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION_START
+18:46:43.849 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus - Passage du status en PROGRAM_PRESENTATION
