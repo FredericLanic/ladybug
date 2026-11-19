@@ -96,7 +96,8 @@ public class KeyboardController extends KeyAdapter {
 			case KeyEvent.VK_Q -> gameModelForController.setGhostRequest(GameMainConstants.POINT_LEFT);
 			case KeyEvent.VK_D -> gameModelForController.setGhostRequest(GameMainConstants.POINT_RIGHT);
 			// Partie en pause
-			case KeyEvent.VK_PAUSE -> gameModelForController.setGameInPause();
+			// P en plus de Pause : la touche Pause n'existe pas sur un clavier Mac (C33)
+			case KeyEvent.VK_PAUSE, KeyEvent.VK_P -> gameModelForController.setGameInPause();
 			// Arret de la partie
 			case KeyEvent.VK_ESCAPE -> gameModelForController.askForceEndGame();
 			// Mode lampe allumée

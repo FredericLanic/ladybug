@@ -206,13 +206,15 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	}
 
 	@Override
+	/**
+	 * Arrête la partie en cours (Échap puis O). Ne dépend plus du timer Swing
+	 * (3.5.3c) : la règle reste la même en jeu, et devient testable sans écran.
+	 */
 	public void forceStopGame() {
-		if (programTimer.isRunning()) {
-			logger.info("Force Stop Game");
-			gameScore.setOldScore(-1);
-			currentProgramStatus.setGameEnd();
-			initSounds();
-		}
+		logger.info("Force Stop Game");
+		gameScore.setOldScore(-1);
+		currentProgramStatus.setGameEnd();
+		initSounds();
 	}
 
 	@Override

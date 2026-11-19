@@ -65,6 +65,11 @@ public final class GameDriver implements AutoCloseable {
 		return gameModel;
 	}
 
+	/** Un composant du jeu (par exemple {@code GameProperties}). */
+	public <T> T bean(Class<T> type) {
+		return context.getBean(type);
+	}
+
 	public GameModel model() {
 		return gameModel;
 	}
