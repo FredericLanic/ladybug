@@ -37,10 +37,12 @@ public final class GameDriver implements AutoCloseable {
 
 	private final ConfigurableApplicationContext context;
 	private final GameModel gameModel;
+	private final GameJournal journal;
 	private int beatCount;
 
-	private GameDriver(ConfigurableApplicationContext context) {
+	private GameDriver(ConfigurableApplicationContext context, long seed) {
 		this.context = context;
+		this.journal = new GameJournal(seed);
 		this.gameModel = context.getBean(GameModel.class);
 		applySoundDurations(gameModel);
 	}
@@ -55,7 +57,7 @@ public final class GameDriver implements AutoCloseable {
 		        .logStartupInfo(false)
 		        .properties("ladybug.save.dir=" + saveDirectory.toAbsolutePath())
 		        .run();
-		return new GameDriver(context);
+		return new GameDriver(context, seed);
 	}
 
 	/**
@@ -99,10 +101,16 @@ public final class GameDriver implements AutoCloseable {
 		return beatCount;
 	}
 
-	/** Joue un battement. */
+	/** Journal de la partie (3.5.2b), mis à jour après chaque battement. */
+	public GameJournal journal() {
+		return journal;
+	}
+
+	/** Joue un battement, puis le note dans le journal. */
 	public GameDriver beat() {
 		gameModel.beat();
 		beatCount++;
+		journal.record(beatCount, gameModel);
 		return this;
 	}
 
