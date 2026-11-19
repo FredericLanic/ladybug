@@ -38,7 +38,9 @@ public final class GoldenMaster {
 			throw new AssertionError("No reference for golden master '" + name + "'. Candidate written to "
 			        + candidate.toAbsolutePath() + " : check it, then run with -Dgolden.update=true.");
 		}
-		var expected = read(reference);
+		// fins de ligne ignorées (\r\n sous Windows, \n ailleurs) : seul le contenu compte
+		var expected = withUnixLineEnds(read(reference));
+		actual = withUnixLineEnds(actual);
 		if (!expected.equals(actual)) {
 			var actualFile = write(OUTPUT_DIRECTORY.resolve(name + ".actual.txt"), actual);
 			throw new AssertionError("Golden master '" + name + "' differs from its reference.\n"
@@ -62,6 +64,10 @@ public final class GoldenMaster {
 		report.append("  + actual:   ").append(index < actual.size() ? actual.get(index) : "(end of journal)")
 		        .append('\n');
 		return report.toString();
+	}
+
+	static String withUnixLineEnds(String text) {
+		return text.replace("\r\n", "\n");
 	}
 
 	private static String read(Path file) {
