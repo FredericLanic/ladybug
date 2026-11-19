@@ -25,8 +25,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Enumération des sons à écouter dans le jeu.
  *
- * <p>Chaque son n'est chargé qu'à sa première écoute ({@link #getClip()}), et
- * plus dans le constructeur (étape 3.5.2). Le modèle du jeu utilise ces valeurs
+ * <p>Chaque son est chargé à la première demande ({@link #getClip()}), et non
+ * plus dans le constructeur (étape 3.5.2) ; le jeu les précharge tous au démarrage
+ * ({@code GameSounds.preloadSounds()}) pour éviter toute saccade. Le modèle du jeu utilise ces valeurs
  * comme de simples noms de sons ({@code NewSounds}) et ne charge donc jamais
  * rien. Sans carte son (serveur de CI, poste sans sortie audio), le chargement
  * échoue proprement : le jeu reste muet au lieu de planter.

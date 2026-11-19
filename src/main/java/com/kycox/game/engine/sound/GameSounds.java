@@ -23,6 +23,9 @@ import com.kycox.game.engine.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
 
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -32,7 +35,20 @@ import java.util.Objects;
  */
 @GuiComponent
 public class GameSounds implements ApplicationListener<EventGameModel> {
+	private static final Logger logger = LoggerFactory.getLogger(GameSounds.class);
 	private NewSoundsForGameSounds newSounds;
+
+	/**
+	 * Précharge tous les sons au démarrage du jeu, pour qu'aucun chargement ne
+	 * provoque de saccade pendant la partie (choix d'origine de Frédéric). Fait ici,
+	 * dans l'interface (profil « gui »), et non dans {@link Sounds} : le modèle et
+	 * les tests n'ont ainsi jamais besoin de carte son.
+	 */
+	@PostConstruct
+	void preloadSounds() {
+		var loaded = Arrays.stream(Sounds.values()).map(Sounds::getClip).filter(Objects::nonNull).count();
+		logger.info("Sounds preloaded: {}/{}", loaded, Sounds.values().length);
+	}
 
 	/** Durée d'un son en millisecondes ; 0 si le son n'a pas pu être chargé. */
 	private static long durationOf(Sounds sound) {
