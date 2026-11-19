@@ -483,3 +483,4 @@ Ajoutez une entrée à chaque nouvelle discussion importante. Le skill le demand
 ### 19/11/2026 : 3.5.4 (CI sur trois systèmes)
 - Branches `etape-3-touches-son` et `etape-3-golden-master` supprimées (« oui pour les deux »). Branche `etape-3-ci-multi` créée depuis `develop` (`f0d4fd1`).
 - `build.yml` : matrice `ubuntu-latest`, `windows-latest`, `macos-latest`, `fail-fast: false`. Piège anticipé : Git récupère les fichiers texte en CRLF sous Windows → références du golden master protégées par `.gitattributes` (`eol=lf`) et `GoldenMaster` qui ignore `\r\n` (+ 1 test). 160 tests en local.
+- CI de la PR #21 : **vert du premier coup sur les trois systèmes** (Windows 74 s, macOS 72 s, Ubuntu 178 s), 160 tests chacun dont golden master, bot, déterminisme et contexte Spring : les références produites sur Mac sont identiques sous Linux, Windows et macOS. Code du jeu inchangé : ni robot ni Graphify. Plan, PDF mis à jour.
