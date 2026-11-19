@@ -256,9 +256,16 @@ Cinq couches, toutes sans fenêtre et lancées par `mvn verify`, sur une horloge
 5. tests unitaires, ajoutés au fil des corrections.
 
 Sous-étapes :
-- 3.5.1 **Rendre le jeu testable**, **avant l'étape 2** (C24) : une horloge unique — `SuperPowerTimer`, `WaitAndDoActionAfterTimer`, `IncrementScoreTimer`, `SimpleTimer` **comptent en tics** (conversion durée ÷ `PACE`, C25 ; pas d'horloge pilotable) ; une source aléatoire unique à graine ; durées des sons derrière une interface ; boucle `actionsByTimerBip` appelable par un test, timer Swing désactivable. Fin : même séquence de statuts au robot, et une partie à graine fixe rejouée deux fois à l'identique. Devrait aussi faire disparaître la concurrence `GAME_START`/`LEVEL_START` vue au robot le 19/11 (D22).
-- 3.5.2 Golden master solo puis 2 joueurs : enregistreur de parties, journal d'événements, images clés. **Une partie de référence atteint le niveau 2** (C26), une fois le bot capable de viser. Fin : référence validée par Frédéric ; un changement volontaire de règle fait échouer le test avec un rapport lisible.
-- 3.5.3 Touches spéciales (F1 à F7, pause, Échap, Entrée), manette Xbox derrière une interface (corrige aussi D19, double initialisation de Jamepad), faux lecteur de sons. Fin : chaque touche et chaque son a au moins un scénario.
+- 3.5.1 **Rendre le jeu testable**, **avant l'étape 2** (C24). **Fait le 19/11/2026** (branche `etape-3-horloge`, 5 commits) :
+    - 3.5.1a `GameRandom` : une seule source de hasard, graine dans les logs, `-Dladybug.seed=…` pour rejouer ;
+    - 3.5.1b `TickScheduler` (attentes du modèle en battements, sur le fil Swing : **D22 corrigée**) et `BeatPacer` (boucle à pas fixe, 25 battements/s réels ; sans lui, la boucle battait à ~43 ms et la musique du début de niveau était jouée deux fois) ;
+    - 3.5.1c `SuperPowerTimer` en battements (375, dont 125 de clignotement), sondes « flashing » et « over » ;
+    - 3.5.1d messages affichés en battements, `IncrementScoreTimer` supprimé : le modèle n'utilise plus aucun `java.util.Timer` ;
+    - 3.5.1e `GameModel.beat()` public, `-Dladybug.loop.autostart=false`, fiche `doc/patterns/game-loop.md`, robot : 174 statuts identiques à la référence.
+    - Choix faits (C25 et 19/11) : minuteries en battements, pas d'horloge pilotable ; le décompte continue pendant la pause, comme avant ; durées des sons et correction de la musique redemandée à chaque battement reportées en 3.5.3 ; minuteries de l'affichage (`SimpleTimer`, `WaitAndDoActionAfterTimer` de `CentralView`, `TimerView`) laissées à l'étape 4.
+    - Critère « une partie à graine fixe rejouée deux fois à l'identique » **reporté à 3.5.2** : il faut l'enregistreur de parties, et un contexte Spring sans fenêtres (étape 2).
+- 3.5.2 Golden master solo puis 2 joueurs : enregistreur de parties, journal d'événements, images clés ; preuve qu'une partie à graine fixe se rejoue deux fois à l'identique (reportée de 3.5.1). **Une partie de référence atteint le niveau 2** (C26), une fois le bot capable de viser. Fin : référence validée par Frédéric ; un changement volontaire de règle fait échouer le test avec un rapport lisible.
+- 3.5.3 Touches spéciales (F1 à F7, pause, Échap, Entrée), manette Xbox derrière une interface (corrige aussi D19, double initialisation de Jamepad), faux lecteur de sons, durées des sons derrière une interface ; le son du début de niveau ne doit plus être redemandé à chaque battement de `LEVEL_STARTING` (risque résiduel de musique rejouée, vu en 3.5.1b). Fin : chaque touche et chaque son a au moins un scénario.
 - 3.5.4 CI sur trois systèmes (matrice Ubuntu, Windows, macOS dans `build.yml`). Fin : vert, ou écarts expliqués (pause sur Mac, marquée « bug connu »).
 - 3.5.5 Confiance mesurée : PIT dans Maven, tests ajoutés là où des mutants survivent. Fin : ≥ 60 %, seuil inscrit dans la CI.
 
