@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * battement, sur le fil Swing : plus de concurrence.
  *
  * <p>Pattern <b>Game Loop / Update Method</b> : {@code GameModel} appelle
- * {@link #tick()} à chaque battement.
+ * {@link #tick()} à chaque battement. Fiche : {@code doc/patterns/game-loop.md}.
  *
  * <pre>
  * // avant : un fil caché change le statut quand il veut

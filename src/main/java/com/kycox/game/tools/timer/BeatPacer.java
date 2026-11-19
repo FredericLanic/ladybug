@@ -2,7 +2,7 @@ package com.kycox.game.tools.timer;
 
 /**
  * Cadence de la boucle du jeu « à pas fixe » (étape 3.5.1b, pattern <b>Game
- * Loop</b>).
+ * Loop</b>, fiche {@code doc/patterns/game-loop.md}).
  *
  * <p>Le {@code javax.swing.Timer} ne réveille pas le jeu exactement toutes les
  * 40 ms : sur le Mac de Frédéric, un battement durait en réalité environ 43 ms.

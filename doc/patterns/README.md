@@ -10,3 +10,4 @@ Chaque fiche se termine par un petit exercice facultatif.
 | Fiche | En une phrase | Étape |
 |---|---|---|
 | [Test unitaire](test-unitaire.md) | Vérifier automatiquement une petite partie du jeu, sans le lancer. | 3 |
+| [Game Loop / Update Method](game-loop.md) | Une seule horloge, la boucle du jeu, fait avancer tout ce qui dépend du temps, battement par battement. | 3 (3.5.1) |

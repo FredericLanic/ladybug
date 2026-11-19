@@ -58,6 +58,12 @@ import static com.kycox.game.constant.game.GameMainConstants.PACE;
 @Component
 public class GameModel implements GameModelForViews, GameModelForSounds, GameModelForController {
 	private static final Logger logger = LoggerFactory.getLogger(GameModel.class);
+	/**
+	 * Propriété système : {@code -Dladybug.loop.autostart=false} empêche le timer
+	 * Swing de démarrer ; un test fait alors avancer le jeu lui-même avec
+	 * {@link #beat()} (étape 3.5.1e).
+	 */
+	public static final String LOOP_AUTOSTART_PROPERTY = "ladybug.loop.autostart";
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
 	@Getter
@@ -134,16 +140,25 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	private void init() {
 		currentProgramStatus.setProgramStart();
 		gameModelManageAction.changeStrategy(manageActionContext.getNoAction());
-		programTimer.start();
+		if (Boolean.parseBoolean(System.getProperty(LOOP_AUTOSTART_PROPERTY, "true"))) {
+			programTimer.start();
+		} else {
+			logger.info("Game loop not started ({}=false): beats are driven by the caller", LOOP_AUTOSTART_PROPERTY);
+		}
 	}
 
 	/**
-	 * Un battement de la boucle du jeu (toutes les {@code PACE} ms). Les actions
-	 * différées arrivées à échéance passent en premier, sur ce même fil (3.5.1b),
-	 * puis le super-pouvoir (3.5.1c) et les messages affichés (3.5.1d) avancent
-	 * d'un battement.
+	 * Un battement de la boucle du jeu (toutes les {@code PACE} ms), pattern
+	 * <b>Game Loop / Update Method</b> (fiche {@code doc/patterns/game-loop.md}).
+	 *
+	 * <p>Ordre : les actions différées arrivées à échéance (3.5.1b), le
+	 * super-pouvoir (3.5.1c) et les messages affichés (3.5.1d) avancent d'un
+	 * battement ; puis l'état courant du jeu joue son battement ; enfin les vues
+	 * et les sons sont prévenus.
+	 *
+	 * <p>Appelé par le timer Swing en jeu, ou directement par un test (3.5.1e).
 	 */
-	private void actionsByTimerBip() {
+	public void beat() {
 		tickScheduler.tick();
 		superPowerTimer.tick();
 		groupMessages.tick();
@@ -166,7 +181,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		ActionListener action = event -> {
 			var beats = beatPacer.beatsDue(System.nanoTime());
 			for (var i = 0; i < beats; i++) {
-				actionsByTimerBip();
+				beat();
 			}
 		};
 		return new Timer(PACE / 2, action);

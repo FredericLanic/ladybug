@@ -409,3 +409,9 @@ Ajoutez une entrée à chaque nouvelle discussion importante. Le skill le demand
 ### 19/11/2026 : 3.5.1d (messages en battements)
 - Partie de Frédéric avec 3.5.1c + sondes : « Super power is up » 15:19:38,002 → « flashing » 15:19:48,002 (10,000 s) → « over » 15:19:53,001 (5,0 s). 3 fantômes mangés, fruit 2, 4 téléportations, aucune erreur.
 - 3.5.1d : `Message` décompte lui-même ses 25 battements (`TickCountdown`), `GroupMessages.tick()` appelé par `GameModel` à chaque battement ; `IncrementScoreTimer` supprimé, ainsi que le setter public de `dying`. 3 tests (111 au total). Le modèle n'utilise plus aucun `java.util.Timer` ; restent `SimpleTimer` et `WaitAndDoActionAfterTimer` côté affichage (étape 4). Frédéric : messages « +… » toujours affichés ~1 s, « oui c'est bon ».
+
+### 19/11/2026 : 3.5.1e, fin de 3.5.1
+- `GameModel.actionsByTimerBip()` devient `beat()` (public), Javadoc de l'ordre d'un battement. Propriété `-Dladybug.loop.autostart=false` : le timer Swing ne démarre pas, un test pilote les battements. `GameModelBeatTest` (2 tests, Mockito) : ordre planificateur → super-pouvoir → messages → état du jeu → événement ; N battements à la demande. 113 tests.
+- Fiche `doc/patterns/game-loop.md` (Game Loop / Update Method) au format validé, avec le piège de la boucle à 43 ms ; sommaire `doc/patterns/README.md` ; Javadoc de `TickCountdown`, `TickScheduler`, `BeatPacer`, `SuperPowerTimer` vers la fiche.
+- Robot de fin de 3.5.1 (`doc/reference-apres/etape-3-horloge/`, 47 captures, code 0, aucune erreur) : 174 statuts identiques à la référence « avant », 173 sur le fil Swing ; début de niveau 4,22–4,25 s, début de partie 2,50–2,54 s, fin de partie 1,50–1,53 s.
+- Le test « partie complète rejouée deux fois » reste impossible tant que Spring crée les fenêtres (component-scan) : reporté à 3.5.2 (décision du 19/11).

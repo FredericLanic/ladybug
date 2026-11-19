@@ -11,6 +11,8 @@ import com.kycox.game.constant.game.GameMainConstants;
  * décompte, en appelant {@link #tick()} à chaque battement. C'est le pattern
  * <b>Game Loop / Update Method</b> : une seule horloge fait avancer tout le monde.
  *
+ * <p>Fiche : {@code doc/patterns/game-loop.md}.
+ *
  * <p>Même idée que {@code LadybugDying}, qui compte déjà l'agonie de Ladybug en
  * battements.
  */

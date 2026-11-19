@@ -31,7 +31,8 @@ import com.kycox.game.constant.game.GameMainConstants;
  * ({@link TickCountdown}), et non plus avec deux {@code java.util.Timer} en
  * chaîne dans d'autres fils d'exécution. {@code GameModel} appelle
  * {@link #tick()} à chaque battement (pattern <b>Game Loop / Update Method</b>).
- * Pour 15 s : 375 battements, dont 125 de clignotement.
+ * Pour 15 s : 375 battements, dont 125 de clignotement. Fiche :
+ * {@code doc/patterns/game-loop.md}.
  *
  * <pre>
  *   RUN (peur)            STOPPING (clignotement)    STOP
