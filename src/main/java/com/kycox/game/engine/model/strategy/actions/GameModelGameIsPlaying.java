@@ -1,6 +1,8 @@
 package com.kycox.game.engine.model.strategy.actions;
 
+import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.game.GameMainConstants;
+import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.constant.fruits.Fruits;
 import com.kycox.game.engine.message.GameFunMessages;
@@ -47,6 +49,8 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 			// ***
 			updateScreenBlock();
 			// ***
+			logGameEvents();
+			// ***
 			setSoundRequests();
 			// ***
 			moveBodies();
@@ -59,6 +63,7 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 
 	private void addNewFruit() {
 		if (fruits.getActivationPercent() < screenData.getPercentageEatenPoint()) {
+			logger.info("Fruit {} appears", fruits.getCurrentIdFruit());
 			screenData.addNewFruit(fruits.getCurrentIdFruit());
 			fruits.next();
 		}
@@ -76,6 +81,9 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 
 	private void caseOfGhostEatLadybug() {
 		if (groupGhosts.eatLadybug()) {
+			groupGhosts.getGhosts().stream().filter(g -> g.getGhostActions().isEatLadybug())
+			        .forEach(g -> logger.info("Ladybug is eaten by {} ({})", g.getName(),
+			                g.isComputed() ? "computer" : "human player"));
 			ladybug.setStatus(LadybugStatus.DYING);
 			ladybugDying.initBip();
 			// TODO : when user ghost has new life ?
@@ -105,6 +113,41 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 
 	private boolean hasEnoughtPointForANewLife() {
 		return gameScore.getIncrementScore() >= gameScore.getNbrPointsForNewLife();
+	}
+
+	/**
+	 * Sondes de log (étape 3.4) : un message INFO par événement de jeu que la
+	 * checklist vérifiait à l'œil. Le robot de test et Claude les retrouvent dans
+	 * les logs. Appelée après {@link #manageScores()}, le score affiché est donc à
+	 * jour.
+	 */
+	private void logGameEvents() {
+		if (ladybug.isEatenAPoint()) {
+			logger.info("Ladybug eats a point at {}, score {}", blockOf(ladybug.getPositionBlock()),
+			        gameScore.getScore());
+		}
+		if (ladybug.hasEatenAFruit()) {
+			logger.info("Ladybug eats fruit {}, score {}", ladybug.getEatenAIdRefFruit(), gameScore.getScore());
+		}
+		if (ladybug.isToBeTeleported()) {
+			logger.info("Ladybug is teleported from {}", blockOf(ladybug.getPositionBlock()));
+		}
+		for (Ghost ghost : groupGhosts.getGhosts()) {
+			if (ghost.getGhostActions().isEatenByLadybug()) {
+				logger.info("{} is eaten by Ladybug, score {}", ghost.getName(), gameScore.getScore());
+			}
+			if (ghost.getGhostActions().isToBeTeleported()) {
+				logger.info("{} is teleported", ghost.getName());
+			}
+			// REGENERATED ne dure qu'un battement : le message n'apparaît qu'une fois
+			if (ghost.getStatus() == GhostStatus.REGENERATED) {
+				logger.info("{} is regenerated at {}", ghost.getName(), blockOf(ghost.getPositionBlock()));
+			}
+		}
+	}
+
+	private static String blockOf(Point block) {
+		return "(" + block.x + "," + block.y + ")";
 	}
 
 	private void manageScores() {

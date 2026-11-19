@@ -77,7 +77,6 @@ public class Score {
 			groupMessages.add(ladybug.getPosition(),
 			        Integer.toString(fruits.getScoreFruitById(ladybug.getEatenAIdRefFruit())), MessageType.POINT);
 		}
-		addScore(ghostsGroup.getNbrEatenGhosts() * GameMainConstants.SCORE_EATEN_GHOST);
 		ghostsGroup.getGhosts().stream().filter(g -> g.getGhostActions().isEatenByLadybug())
 		        .forEach(g -> groupMessages.add(g.getPosition(), Integer.toString(GameMainConstants.SCORE_EATEN_GHOST),
 		                MessageType.POINT));
