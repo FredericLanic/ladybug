@@ -37,6 +37,19 @@ public final class GameScript {
 		        .at(START_BEAT + 1, keys -> keys.initializeLevelNumAndStartGame(true));
 	}
 
+	public static final Consumer<GameModelForController> GHOST_LEFT = keys -> keys.setGhostRequest(GameMainConstants.POINT_LEFT);
+	public static final Consumer<GameModelForController> GHOST_RIGHT = keys -> keys.setGhostRequest(GameMainConstants.POINT_RIGHT);
+	public static final Consumer<GameModelForController> GHOST_UP = keys -> keys.setGhostRequest(GameMainConstants.POINT_UP);
+	public static final Consumer<GameModelForController> GHOST_DOWN = keys -> keys.setGhostRequest(GameMainConstants.POINT_DOWN);
+
+	/** Partie à 2 joueurs au niveau 1 : touche 2, puis S et N. */
+	public static GameScript twoPlayersLevelOne() {
+		return new GameScript()
+		        .at(START_BEAT - 2, keys -> keys.setMultiPlayers(true))
+		        .at(START_BEAT, GameModelForController::startGame)
+		        .at(START_BEAT + 1, keys -> keys.initializeLevelNumAndStartGame(true));
+	}
+
 	/** Ajoute une « touche » au battement donné. */
 	public GameScript at(int beat, Consumer<GameModelForController> key) {
 		keysByBeat.computeIfAbsent(beat, b -> new ArrayList<>()).add(key);

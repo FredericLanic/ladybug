@@ -20,6 +20,7 @@ import com.kycox.game.engine.model.GameModel;
  * b0233 SCORE 1 (+1)
  * b0250 STATE ladybug=(6,11) NORMAL | Clyde=(7,7) NORMAL | Blinky=(7,6) NORMAL | …
  * b0412 GHOST Pinky SCARED
+ * b0070 GHOST Inky NORMAL (human)      ← mode 2 joueurs
  * b0530 LIVES 2
  * </pre>
  * Une ligne {@code STATE} toutes les {@value #STATE_PERIOD} battements (1 s) donne
@@ -86,7 +87,8 @@ public final class GameJournal {
 			var ghostStatus = new LinkedHashMap<String, String>();
 			var ghostBlock = new LinkedHashMap<String, Point>();
 			model.getGroupGhosts().getGhosts().forEach(ghost -> {
-				ghostStatus.put(ghost.getName(), String.valueOf(ghost.getStatus()));
+				// un fantôme joué par un humain (mode 2 joueurs) est marqué « (human) »
+				ghostStatus.put(ghost.getName(), ghost.getStatus() + (ghost.isComputed() ? "" : " (human)"));
 				ghostBlock.put(ghost.getName(), new Point(ghost.getPositionBlock()));
 			});
 			var ladybug = model.getLadybug();
