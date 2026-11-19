@@ -23,6 +23,11 @@ class GoldenMasterTest {
 	}
 
 	@Test
+	void windowsLineEndsAreIgnored() {
+		assertThat(GoldenMaster.withUnixLineEnds("SEED 42\r\nb0001 STATUS X\r\n")).isEqualTo("SEED 42\nb0001 STATUS X\n");
+	}
+
+	@Test
 	void reportHandlesAShorterJournal() {
 		var report = GoldenMaster.firstDifference(List.of("SEED 42", "b0001 STATUS X"), List.of("SEED 42"));
 

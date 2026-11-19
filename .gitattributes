@@ -1,0 +1,4 @@
+# Références du golden master (étape 3.5.4) : toujours en fin de ligne LF, sur
+# tous les systèmes. Sans cela, Git les récupère en CRLF sous Windows, et la
+# comparaison avec le journal d'une partie échouerait sans raison.
+src/test/resources/golden/*.txt text eol=lf
