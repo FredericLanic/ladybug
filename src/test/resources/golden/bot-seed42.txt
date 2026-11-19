@@ -1,0 +1,394 @@
+SEED 42
+b0001 STATUS PROGRAM_STARTING
+b0001 LEVEL 1
+b0001 LIVES 3
+b0001 LADYBUG DEAD
+b0001 GHOST Clyde NORMAL
+b0001 GHOST Blinky NORMAL
+b0001 GHOST Inky NORMAL
+b0001 GHOST Pinky NORMAL
+b0025 STATE ladybug=(0,0) DEAD | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0050 STATE ladybug=(0,0) DEAD | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0064 STATUS PROGRAM_PRESENTATION
+b0071 STATUS GAME_START
+b0072 STATUS GAME_STARTING
+b0072 LEVEL 0
+b0075 STATE ladybug=(0,0) DEAD | Clyde=(6,2) NORMAL | Blinky=(6,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0100 STATE ladybug=(0,0) DEAD | Clyde=(6,2) NORMAL | Blinky=(6,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0125 STATE ladybug=(0,0) DEAD | Clyde=(6,2) NORMAL | Blinky=(6,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0135 STATUS LEVEL_STARTING
+b0135 LEVEL 1
+b0135 LADYBUG NORMAL
+b0150 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0175 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0200 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0225 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0241 STATUS IN_GAME
+b0241 SCORE 1 (+1)
+b0250 SCORE 2 (+1)
+b0250 STATE ladybug=(7,9) NORMAL | Clyde=(6,2) NORMAL | Blinky=(6,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b0258 SCORE 3 (+1)
+b0266 SCORE 4 (+1)
+b0274 SCORE 5 (+1)
+b0275 STATE ladybug=(5,8) NORMAL | Clyde=(6,3) NORMAL | Blinky=(6,1) NORMAL | Inky=(8,1) NORMAL | Pinky=(8,2) NORMAL
+b0282 SCORE 6 (+1)
+b0290 SCORE 7 (+1)
+b0300 STATE ladybug=(5,6) NORMAL | Clyde=(6,4) NORMAL | Blinky=(6,1) NORMAL | Inky=(8,1) NORMAL | Pinky=(8,3) NORMAL
+b0325 STATE ladybug=(5,7) NORMAL | Clyde=(7,5) NORMAL | Blinky=(6,2) NORMAL | Inky=(9,1) NORMAL | Pinky=(8,4) NORMAL
+b0344 SCORE 8 (+1)
+b0350 STATE ladybug=(5,5) NORMAL | Clyde=(8,5) NORMAL | Blinky=(6,3) NORMAL | Inky=(10,1) NORMAL | Pinky=(8,5) NORMAL
+b0375 STATE ladybug=(5,7) NORMAL | Clyde=(10,4) NORMAL | Blinky=(6,4) NORMAL | Inky=(11,1) NORMAL | Pinky=(9,5) NORMAL
+b0400 STATE ladybug=(5,8) NORMAL | Clyde=(10,3) NORMAL | Blinky=(5,5) NORMAL | Inky=(11,2) NORMAL | Pinky=(9,6) NORMAL
+b0410 SCORE 9 (+1)
+b0418 SCORE 10 (+1)
+b0425 STATE ladybug=(5,12) NORMAL | Clyde=(11,2) NORMAL | Blinky=(4,5) NORMAL | Inky=(12,2) NORMAL | Pinky=(9,7) NORMAL
+b0426 SCORE 11 (+1)
+b0434 SCORE 12 (+1)
+b0442 SCORE 13 (+1)
+b0450 SCORE 14 (+1)
+b0450 STATE ladybug=(3,12) NORMAL | Clyde=(12,2) NORMAL | Blinky=(3,5) NORMAL | Inky=(13,2) NORMAL | Pinky=(9,8) NORMAL
+b0458 SCORE 15 (+1)
+b0466 SCORE 16 (+1)
+b0474 SCORE 17 (+1)
+b0475 STATE ladybug=(0,12) NORMAL | Clyde=(13,2) NORMAL | Blinky=(2,5) NORMAL | Inky=(14,2) NORMAL | Pinky=(9,9) NORMAL
+b0482 SCORE 18 (+1)
+b0490 SCORE 19 (+1)
+b0498 SCORE 20 (+1)
+b0500 STATE ladybug=(0,9) NORMAL | Clyde=(14,3) NORMAL | Blinky=(1,5) NORMAL | Inky=(14,3) NORMAL | Pinky=(10,9) NORMAL
+b0506 SCORE 21 (+1)
+b0514 SCORE 22 (+1)
+b0522 SCORE 23 (+1)
+b0525 STATE ladybug=(1,8) NORMAL | Clyde=(14,4) NORMAL | Blinky=(0,5) NORMAL | Inky=(14,4) NORMAL | Pinky=(11,9) NORMAL
+b0538 SCORE 24 (+1)
+b0550 STATE ladybug=(1,6) NORMAL | Clyde=(12,5) NORMAL | Blinky=(0,4) NORMAL | Inky=(13,5) NORMAL | Pinky=(11,9) NORMAL
+b0575 STATE ladybug=(1,7) NORMAL | Clyde=(11,5) NORMAL | Blinky=(0,4) NORMAL | Inky=(12,5) NORMAL | Pinky=(10,9) NORMAL
+b0600 STATE ladybug=(1,7) NORMAL | Clyde=(10,4) NORMAL | Blinky=(1,5) NORMAL | Inky=(11,5) NORMAL | Pinky=(9,9) NORMAL
+b0618 SCORE 25 (+1)
+b0625 STATE ladybug=(3,9) NORMAL | Clyde=(10,3) NORMAL | Blinky=(1,6) NORMAL | Inky=(9,5) NORMAL | Pinky=(7,9) NORMAL
+b0626 SCORE 26 (+1)
+b0634 SCORE 27 (+1)
+b0642 SCORE 28 (+1)
+b0650 SCORE 29 (+1)
+b0650 STATE ladybug=(3,5) NORMAL | Clyde=(11,2) NORMAL | Blinky=(1,7) NORMAL | Inky=(9,5) NORMAL | Pinky=(6,9) NORMAL
+b0658 SCORE 30 (+1)
+b0666 SCORE 31 (+1)
+b0675 STATE ladybug=(3,5) NORMAL | Clyde=(10,1) NORMAL | Blinky=(1,8) NORMAL | Inky=(9,6) NORMAL | Pinky=(5,9) NORMAL
+b0682 SCORE 32 (+1)
+b0690 SCORE 33 (+1)
+b0698 SCORE 34 (+1)
+b0700 STATE ladybug=(3,3) NORMAL | Clyde=(9,1) NORMAL | Blinky=(1,9) NORMAL | Inky=(9,7) NORMAL | Pinky=(5,8) NORMAL
+b0706 SCORE 35 (+1)
+b0714 SCORE 36 (+1)
+b0722 SCORE 47 (+11)
+b0722 GHOST Clyde SCARED
+b0722 GHOST Blinky SCARED
+b0722 GHOST Inky SCARED
+b0722 GHOST Pinky SCARED
+b0725 STATE ladybug=(3,1) NORMAL | Clyde=(8,0) SCARED | Blinky=(2,9) SCARED | Inky=(9,8) SCARED | Pinky=(5,7) SCARED
+b0732 SCORE 48 (+1)
+b0740 SCORE 49 (+1)
+b0748 SCORE 50 (+1)
+b0750 STATE ladybug=(6,0) NORMAL | Clyde=(7,0) SCARED | Blinky=(3,9) SCARED | Inky=(9,9) SCARED | Pinky=(5,6) SCARED
+b0756 SCORE 51 (+1)
+b0761 SCORE 66 (+15)
+b0761 GHOST Clyde DYING
+b0764 SCORE 67 (+1)
+b0775 STATE ladybug=(6,0) NORMAL | Clyde=(6,0) DYING | Blinky=(3,9) SCARED | Inky=(9,9) SCARED | Pinky=(5,6) SCARED
+b0788 SCORE 68 (+1)
+b0796 SCORE 69 (+1)
+b0800 STATE ladybug=(6,3) NORMAL | Clyde=(6,1) DYING | Blinky=(4,9) SCARED | Inky=(10,9) SCARED | Pinky=(5,6) SCARED
+b0804 SCORE 70 (+1)
+b0812 SCORE 71 (+1)
+b0820 SCORE 72 (+1)
+b0825 GHOST Clyde AUTOGENERATED
+b0825 STATE ladybug=(5,5) NORMAL | Clyde=(7,2) AUTOGENERATED | Blinky=(4,9) SCARED | Inky=(10,9) SCARED | Pinky=(5,6) SCARED
+b0826 GHOST Clyde REGENERATED
+b0827 GHOST Clyde NORMAL
+b0831 SCORE 87 (+15)
+b0831 GHOST Pinky DYING
+b0850 SCORE 102 (+15)
+b0850 GHOST Blinky DYING
+b0850 STATE ladybug=(5,8) NORMAL | Clyde=(8,2) NORMAL | Blinky=(5,8) DYING | Inky=(11,8) SCARED | Pinky=(5,5) DYING
+b0875 STATE ladybug=(8,9) NORMAL | Clyde=(8,4) NORMAL | Blinky=(5,7) DYING | Inky=(11,8) SCARED | Pinky=(5,5) DYING
+b0876 SCORE 103 (+1)
+b0884 SCORE 104 (+1)
+b0892 SCORE 105 (+1)
+b0900 SCORE 106 (+1)
+b0900 STATE ladybug=(11,8) NORMAL | Clyde=(8,5) NORMAL | Blinky=(5,6) DYING | Inky=(11,7) SCARED | Pinky=(6,4) DYING
+b0908 SCORE 122 (+16)
+b0908 GHOST Inky DYING
+b0916 SCORE 123 (+1)
+b0925 STATE ladybug=(11,6) NORMAL | Clyde=(9,6) NORMAL | Blinky=(5,5) DYING | Inky=(11,6) DYING | Pinky=(6,3) DYING
+b0930 SCORE 124 (+1)
+b0946 SCORE 125 (+1)
+b0950 STATE ladybug=(10,5) NORMAL | Clyde=(9,7) NORMAL | Blinky=(5,5) DYING | Inky=(11,5) DYING | Pinky=(6,2) DYING
+b0954 SCORE 126 (+1)
+b0962 SCORE 127 (+1)
+b0970 SCORE 128 (+1)
+b0975 GHOST Pinky AUTOGENERATED
+b0975 STATE ladybug=(10,3) NORMAL | Clyde=(9,9) NORMAL | Blinky=(6,4) DYING | Inky=(10,5) DYING | Pinky=(7,2) AUTOGENERATED
+b0976 GHOST Pinky REGENERATED
+b0977 GHOST Pinky NORMAL
+b0978 SCORE 129 (+1)
+b0986 SCORE 130 (+1)
+b0994 SCORE 131 (+1)
+b1000 STATE ladybug=(11,0) NORMAL | Clyde=(10,9) NORMAL | Blinky=(6,3) DYING | Inky=(9,5) DYING | Pinky=(8,1) NORMAL
+b1002 SCORE 132 (+1)
+b1010 SCORE 133 (+1)
+b1018 SCORE 134 (+1)
+b1025 STATE ladybug=(14,0) NORMAL | Clyde=(12,9) NORMAL | Blinky=(6,2) DYING | Inky=(8,5) DYING | Pinky=(8,0) NORMAL
+b1026 SCORE 135 (+1)
+b1034 SCORE 136 (+1)
+b1042 SCORE 137 (+1)
+b1050 SCORE 138 (+1)
+b1050 STATE ladybug=(14,3) NORMAL | Clyde=(14,9) NORMAL | Blinky=(6,2) DYING | Inky=(8,4) DYING | Pinky=(8,0) NORMAL
+b1058 SCORE 139 (+1)
+b1066 SCORE 140 (+1)
+b1066 GHOST Blinky AUTOGENERATED
+b1067 GHOST Blinky REGENERATED
+b1068 GHOST Blinky NORMAL
+b1074 SCORE 141 (+1)
+b1075 STATE ladybug=(13,5) NORMAL | Clyde=(14,10) NORMAL | Blinky=(7,2) NORMAL | Inky=(8,3) DYING | Pinky=(8,1) NORMAL
+b1082 SCORE 152 (+11)
+b1082 GHOST Clyde SCARED
+b1082 GHOST Blinky SCARED
+b1082 GHOST Pinky SCARED
+b1090 SCORE 153 (+1)
+b1098 SCORE 154 (+1)
+b1100 STATE ladybug=(13,8) NORMAL | Clyde=(14,12) SCARED | Blinky=(8,1) SCARED | Inky=(7,2) DYING | Pinky=(9,1) SCARED
+b1106 SCORE 155 (+1)
+b1114 SCORE 156 (+1)
+b1122 SCORE 157 (+1)
+b1124 GHOST Inky AUTOGENERATED
+b1125 GHOST Inky REGENERATED
+b1125 STATE ladybug=(14,10) NORMAL | Clyde=(14,13) SCARED | Blinky=(8,1) SCARED | Inky=(6,2) REGENERATED | Pinky=(9,1) SCARED
+b1126 GHOST Inky NORMAL
+b1130 SCORE 158 (+1)
+b1138 SCORE 159 (+1)
+b1146 SCORE 160 (+1)
+b1150 STATE ladybug=(14,13) NORMAL | Clyde=(13,14) SCARED | Blinky=(8,0) SCARED | Inky=(6,1) NORMAL | Pinky=(10,1) SCARED
+b1151 SCORE 175 (+15)
+b1151 GHOST Clyde DYING
+b1154 SCORE 176 (+1)
+b1162 SCORE 177 (+1)
+b1170 SCORE 178 (+1)
+b1175 STATE ladybug=(11,14) NORMAL | Clyde=(11,14) DYING | Blinky=(8,0) SCARED | Inky=(5,1) NORMAL | Pinky=(10,1) SCARED
+b1178 SCORE 179 (+1)
+b1186 SCORE 180 (+1)
+b1194 SCORE 181 (+1)
+b1200 STATE ladybug=(11,12) NORMAL | Clyde=(10,13) DYING | Blinky=(7,0) SCARED | Inky=(4,1) NORMAL | Pinky=(11,1) SCARED
+b1202 SCORE 182 (+1)
+b1210 SCORE 183 (+1)
+b1225 STATE ladybug=(11,12) NORMAL | Clyde=(9,13) DYING | Blinky=(7,0) SCARED | Inky=(3,1) NORMAL | Pinky=(11,1) SCARED
+b1242 SCORE 184 (+1)
+b1250 SCORE 185 (+1)
+b1250 STATE ladybug=(9,12) NORMAL | Clyde=(9,11) DYING | Blinky=(6,0) SCARED | Inky=(3,0) NORMAL | Pinky=(11,2) SCARED
+b1258 SCORE 186 (+1)
+b1266 SCORE 187 (+1)
+b1274 SCORE 188 (+1)
+b1275 STATE ladybug=(9,9) NORMAL | Clyde=(9,10) DYING | Blinky=(6,0) SCARED | Inky=(2,0) NORMAL | Pinky=(11,2) SCARED
+b1282 SCORE 193 (+5)
+b1290 SCORE 194 (+1)
+b1298 SCORE 195 (+1)
+b1300 STATE ladybug=(9,6) NORMAL | Clyde=(9,8) DYING | Blinky=(6,0) SCARED | Inky=(1,0) NORMAL | Pinky=(10,3) SCARED
+b1306 SCORE 196 (+1)
+b1314 SCORE 197 (+1)
+b1325 STATE ladybug=(10,4) NORMAL | Clyde=(9,7) DYING | Blinky=(6,0) SCARED | Inky=(0,0) NORMAL | Pinky=(10,3) SCARED
+b1332 GHOST Blinky FLASH
+b1332 GHOST Pinky FLASH
+b1335 SCORE 212 (+15)
+b1335 GHOST Pinky DYING
+b1336 LIVES 4
+b1350 STATE ladybug=(11,2) NORMAL | Clyde=(9,5) DYING | Blinky=(6,1) FLASH | Inky=(0,0) NORMAL | Pinky=(10,3) DYING
+b1370 SCORE 213 (+1)
+b1375 STATE ladybug=(9,1) NORMAL | Clyde=(8,4) DYING | Blinky=(6,1) FLASH | Inky=(0,1) NORMAL | Pinky=(11,2) DYING
+b1378 SCORE 214 (+1)
+b1386 SCORE 215 (+1)
+b1394 SCORE 216 (+1)
+b1400 STATE ladybug=(7,2) NORMAL | Clyde=(8,3) DYING | Blinky=(6,2) FLASH | Inky=(0,2) NORMAL | Pinky=(11,1) DYING
+b1402 SCORE 217 (+1)
+b1420 SCORE 232 (+15)
+b1420 GHOST Blinky DYING
+b1425 STATE ladybug=(6,4) NORMAL | Clyde=(7,2) DYING | Blinky=(6,2) DYING | Inky=(1,2) NORMAL | Pinky=(10,1) DYING
+b1439 GHOST Clyde AUTOGENERATED
+b1440 GHOST Clyde REGENERATED
+b1441 GHOST Clyde NORMAL
+b1442 SCORE 233 (+1)
+b1450 SCORE 234 (+1)
+b1450 STATE ladybug=(8,4) NORMAL | Clyde=(6,2) NORMAL | Blinky=(6,2) DYING | Inky=(2,2) NORMAL | Pinky=(9,1) DYING
+b1458 SCORE 235 (+1)
+b1468 GHOST Blinky AUTOGENERATED
+b1469 GHOST Blinky NORMAL
+b1475 STATE ladybug=(8,4) NORMAL | Clyde=(6,3) NORMAL | Blinky=(7,2) NORMAL | Inky=(3,2) NORMAL | Pinky=(8,1) DYING
+b1500 STATE ladybug=(8,5) NORMAL | Clyde=(6,4) NORMAL | Blinky=(8,2) NORMAL | Inky=(2,3) NORMAL | Pinky=(8,1) DYING
+b1525 STATE ladybug=(9,6) NORMAL | Clyde=(7,5) NORMAL | Blinky=(8,3) NORMAL | Inky=(2,2) NORMAL | Pinky=(7,2) DYING
+b1527 GHOST Pinky AUTOGENERATED
+b1528 GHOST Pinky NORMAL
+b1550 STATE ladybug=(9,8) NORMAL | Clyde=(8,5) NORMAL | Blinky=(8,4) NORMAL | Inky=(2,2) NORMAL | Pinky=(6,2) NORMAL
+b1575 STATE ladybug=(8,11) NORMAL | Clyde=(9,6) NORMAL | Blinky=(7,5) NORMAL | Inky=(3,1) NORMAL | Pinky=(6,2) NORMAL
+b1576 SCORE 236 (+1)
+b1592 SCORE 237 (+1)
+b1600 STATE ladybug=(5,10) NORMAL | Clyde=(9,8) NORMAL | Blinky=(6,5) NORMAL | Inky=(3,1) NORMAL | Pinky=(6,1) NORMAL
+b1624 SCORE 238 (+1)
+b1625 STATE ladybug=(3,9) NORMAL | Clyde=(8,9) NORMAL | Blinky=(5,5) NORMAL | Inky=(4,1) NORMAL | Pinky=(6,0) NORMAL
+b1650 STATE ladybug=(1,8) NORMAL | Clyde=(7,9) NORMAL | Blinky=(4,5) NORMAL | Inky=(5,1) NORMAL | Pinky=(6,0) NORMAL
+b1675 STATE ladybug=(1,7) NORMAL | Clyde=(7,10) NORMAL | Blinky=(3,5) NORMAL | Inky=(6,0) NORMAL | Pinky=(7,0) NORMAL
+b1700 STATE ladybug=(1,6) NORMAL | Clyde=(5,11) NORMAL | Blinky=(3,5) NORMAL | Inky=(7,0) NORMAL | Pinky=(8,0) NORMAL
+b1716 SCORE 239 (+1)
+b1725 STATE ladybug=(1,6) NORMAL | Clyde=(5,10) NORMAL | Blinky=(3,6) NORMAL | Inky=(8,0) NORMAL | Pinky=(8,1) NORMAL
+b1750 STATE ladybug=(1,5) NORMAL | Clyde=(5,9) NORMAL | Blinky=(3,6) NORMAL | Inky=(8,1) NORMAL | Pinky=(9,1) NORMAL
+b1774 SCORE 255 (+16)
+b1775 STATE ladybug=(13,7) NORMAL | Clyde=(7,9) NORMAL | Blinky=(3,5) NORMAL | Inky=(8,2) NORMAL | Pinky=(10,1) NORMAL
+b1790 SCORE 271 (+16)
+b1800 STATE ladybug=(1,7) NORMAL | Clyde=(7,10) NORMAL | Blinky=(2,5) NORMAL | Inky=(8,3) NORMAL | Pinky=(11,0) NORMAL
+b1825 STATE ladybug=(1,9) NORMAL | Clyde=(8,11) NORMAL | Blinky=(1,5) NORMAL | Inky=(8,4) NORMAL | Pinky=(11,0) NORMAL
+b1850 STATE ladybug=(1,8) NORMAL | Clyde=(9,11) NORMAL | Blinky=(1,5) NORMAL | Inky=(8,5) NORMAL | Pinky=(12,0) NORMAL
+b1875 STATE ladybug=(0,11) NORMAL | Clyde=(9,13) NORMAL | Blinky=(1,7) NORMAL | Inky=(9,5) NORMAL | Pinky=(12,0) NORMAL
+b1892 SCORE 272 (+1)
+b1900 SCORE 273 (+1)
+b1900 STATE ladybug=(0,14) NORMAL | Clyde=(10,13) NORMAL | Blinky=(13,7) NORMAL | Inky=(9,6) NORMAL | Pinky=(11,0) NORMAL
+b1908 SCORE 274 (+1)
+b1916 SCORE 275 (+1)
+b1924 SCORE 276 (+1)
+b1925 STATE ladybug=(3,13) NORMAL | Clyde=(11,12) NORMAL | Blinky=(13,7) NORMAL | Inky=(9,7) NORMAL | Pinky=(11,0) NORMAL
+b1950 STATE ladybug=(5,13) NORMAL | Clyde=(12,12) NORMAL | Blinky=(12,9) NORMAL | Inky=(9,8) NORMAL | Pinky=(10,1) NORMAL
+b1956 SCORE 277 (+1)
+b1964 SCORE 278 (+1)
+b1972 SCORE 279 (+1)
+b1975 STATE ladybug=(7,14) NORMAL | Clyde=(14,11) NORMAL | Blinky=(11,9) NORMAL | Inky=(9,9) NORMAL | Pinky=(9,1) NORMAL
+b1980 SCORE 280 (+1)
+b1988 SCORE 281 (+1)
+b2000 STATE ladybug=(8,13) NORMAL | Clyde=(14,9) NORMAL | Blinky=(11,7) NORMAL | Inky=(9,10) NORMAL | Pinky=(8,1) NORMAL
+b2025 STATE ladybug=(8,13) NORMAL | Clyde=(13,9) NORMAL | Blinky=(11,6) NORMAL | Inky=(9,11) NORMAL | Pinky=(8,1) NORMAL
+b2050 STATE ladybug=(7,14) NORMAL | Clyde=(11,9) NORMAL | Blinky=(10,5) NORMAL | Inky=(9,12) NORMAL | Pinky=(7,2) NORMAL
+b2075 STATE ladybug=(6,14) NORMAL | Clyde=(11,8) NORMAL | Blinky=(8,5) NORMAL | Inky=(8,13) NORMAL | Pinky=(6,2) NORMAL
+b2100 STATE ladybug=(6,13) NORMAL | Clyde=(11,6) NORMAL | Blinky=(7,5) NORMAL | Inky=(8,13) NORMAL | Pinky=(6,2) NORMAL
+b2125 STATE ladybug=(5,12) NORMAL | Clyde=(11,5) NORMAL | Blinky=(6,4) NORMAL | Inky=(7,14) NORMAL | Pinky=(6,3) NORMAL
+b2150 STATE ladybug=(5,9) NORMAL | Clyde=(12,5) NORMAL | Blinky=(6,4) NORMAL | Inky=(6,14) NORMAL | Pinky=(6,5) NORMAL
+b2175 STATE ladybug=(7,9) NORMAL | Clyde=(14,5) NORMAL | Blinky=(7,5) NORMAL | Inky=(6,13) NORMAL | Pinky=(5,5) NORMAL
+b2200 STATE ladybug=(10,9) NORMAL | Clyde=(14,3) NORMAL | Blinky=(8,5) NORMAL | Inky=(5,13) NORMAL | Pinky=(5,6) NORMAL
+b2212 SCORE 282 (+1)
+b2225 STATE ladybug=(11,8) NORMAL | Clyde=(14,1) NORMAL | Blinky=(10,4) NORMAL | Inky=(5,12) NORMAL | Pinky=(5,7) NORMAL
+b2250 STATE ladybug=(11,5) NORMAL | Clyde=(14,0) NORMAL | Blinky=(10,3) NORMAL | Inky=(5,11) NORMAL | Pinky=(5,8) NORMAL
+b2275 STATE ladybug=(11,7) NORMAL | Clyde=(12,0) NORMAL | Blinky=(10,4) NORMAL | Inky=(5,11) NORMAL | Pinky=(5,9) NORMAL
+b2300 STATE ladybug=(11,6) NORMAL | Clyde=(11,0) NORMAL | Blinky=(9,5) NORMAL | Inky=(7,11) NORMAL | Pinky=(6,9) NORMAL
+b2325 STATE ladybug=(11,6) NORMAL | Clyde=(10,1) NORMAL | Blinky=(9,6) NORMAL | Inky=(8,11) NORMAL | Pinky=(7,9) NORMAL
+b2346 SCORE 283 (+1)
+b2350 STATE ladybug=(11,5) NORMAL | Clyde=(9,1) NORMAL | Blinky=(9,7) NORMAL | Inky=(9,11) NORMAL | Pinky=(8,9) NORMAL
+b2375 STATE ladybug=(10,3) NORMAL | Clyde=(8,1) NORMAL | Blinky=(9,6) NORMAL | Inky=(9,12) NORMAL | Pinky=(9,8) NORMAL
+b2400 STATE ladybug=(11,2) NORMAL | Clyde=(8,3) NORMAL | Blinky=(9,5) NORMAL | Inky=(8,13) NORMAL | Pinky=(9,7) NORMAL
+b2402 SCORE 284 (+1)
+b2410 SCORE 285 (+1)
+b2425 STATE ladybug=(11,2) NORMAL | Clyde=(8,4) NORMAL | Blinky=(10,4) NORMAL | Inky=(8,13) NORMAL | Pinky=(9,6) NORMAL
+b2450 STATE ladybug=(11,0) NORMAL | Clyde=(6,5) NORMAL | Blinky=(10,3) NORMAL | Inky=(7,14) NORMAL | Pinky=(9,5) NORMAL
+b2475 STATE ladybug=(12,0) NORMAL | Clyde=(6,4) NORMAL | Blinky=(11,1) NORMAL | Inky=(6,14) NORMAL | Pinky=(9,5) NORMAL
+b2490 SCORE 295 (+10)
+b2500 STATE ladybug=(13,0) NORMAL | Clyde=(6,2) NORMAL | Blinky=(11,0) NORMAL | Inky=(6,13) NORMAL | Pinky=(10,5) NORMAL
+b2525 STATE ladybug=(14,1) NORMAL | Clyde=(6,2) NORMAL | Blinky=(12,0) NORMAL | Inky=(5,13) NORMAL | Pinky=(11,5) NORMAL
+b2550 STATE ladybug=(11,2) NORMAL | Clyde=(8,2) NORMAL | Blinky=(13,0) NORMAL | Inky=(4,13) NORMAL | Pinky=(11,6) NORMAL
+b2575 STATE ladybug=(9,1) NORMAL | Clyde=(8,4) NORMAL | Blinky=(14,1) NORMAL | Inky=(3,13) NORMAL | Pinky=(11,7) NORMAL
+b2600 STATE ladybug=(8,0) NORMAL | Clyde=(8,5) NORMAL | Blinky=(14,2) NORMAL | Inky=(3,12) NORMAL | Pinky=(11,8) NORMAL
+b2625 STATE ladybug=(8,1) NORMAL | Clyde=(10,4) NORMAL | Blinky=(14,3) NORMAL | Inky=(2,12) NORMAL | Pinky=(11,9) NORMAL
+b2650 STATE ladybug=(8,0) NORMAL | Clyde=(10,3) NORMAL | Blinky=(14,2) NORMAL | Inky=(1,12) NORMAL | Pinky=(12,9) NORMAL
+b2675 STATE ladybug=(8,1) NORMAL | Clyde=(11,2) NORMAL | Blinky=(12,2) NORMAL | Inky=(0,12) NORMAL | Pinky=(13,8) NORMAL
+b2700 STATE ladybug=(8,0) NORMAL | Clyde=(11,2) NORMAL | Blinky=(11,1) NORMAL | Inky=(0,12) NORMAL | Pinky=(13,7) NORMAL
+b2724 SCORE 296 (+1)
+b2725 STATE ladybug=(7,0) NORMAL | Clyde=(13,2) NORMAL | Blinky=(10,1) NORMAL | Inky=(0,13) NORMAL | Pinky=(13,7) NORMAL
+b2750 STATE ladybug=(6,1) NORMAL | Clyde=(14,1) NORMAL | Blinky=(8,1) NORMAL | Inky=(0,14) NORMAL | Pinky=(1,6) NORMAL
+b2775 STATE ladybug=(6,2) NORMAL | Clyde=(13,0) NORMAL | Blinky=(8,1) NORMAL | Inky=(1,14) NORMAL | Pinky=(1,5) NORMAL
+b2800 STATE ladybug=(6,1) NORMAL | Clyde=(11,0) NORMAL | Blinky=(8,3) NORMAL | Inky=(2,14) NORMAL | Pinky=(1,5) NORMAL
+b2825 STATE ladybug=(6,2) NORMAL | Clyde=(11,0) NORMAL | Blinky=(8,4) NORMAL | Inky=(3,13) NORMAL | Pinky=(2,5) NORMAL
+b2850 STATE ladybug=(8,2) NORMAL | Clyde=(11,2) NORMAL | Blinky=(6,5) NORMAL | Inky=(3,13) NORMAL | Pinky=(3,5) NORMAL
+b2852 SCORE 297 (+1)
+b2875 STATE ladybug=(8,2) NORMAL | Clyde=(12,2) NORMAL | Blinky=(6,3) NORMAL | Inky=(4,13) NORMAL | Pinky=(4,4) NORMAL
+b2900 STATE ladybug=(7,0) NORMAL | Clyde=(14,2) NORMAL | Blinky=(6,2) NORMAL | Inky=(6,13) NORMAL | Pinky=(4,3) NORMAL
+b2925 STATE ladybug=(8,0) NORMAL | Clyde=(14,3) NORMAL | Blinky=(5,1) NORMAL | Inky=(6,14) NORMAL | Pinky=(3,3) NORMAL
+b2950 STATE ladybug=(7,0) NORMAL | Clyde=(13,5) NORMAL | Blinky=(5,1) NORMAL | Inky=(7,14) NORMAL | Pinky=(2,3) NORMAL
+b2975 STATE ladybug=(8,0) NORMAL | Clyde=(13,6) NORMAL | Blinky=(6,2) NORMAL | Inky=(8,13) NORMAL | Pinky=(2,2) NORMAL
+b3000 STATE ladybug=(6,0) NORMAL | Clyde=(13,7) NORMAL | Blinky=(7,2) NORMAL | Inky=(8,13) NORMAL | Pinky=(2,2) NORMAL
+b3025 STATE ladybug=(6,1) NORMAL | Clyde=(1,7) NORMAL | Blinky=(8,0) NORMAL | Inky=(9,13) NORMAL | Pinky=(3,2) NORMAL
+b3050 STATE ladybug=(6,2) NORMAL | Clyde=(1,8) NORMAL | Blinky=(7,0) NORMAL | Inky=(10,13) NORMAL | Pinky=(3,2) NORMAL
+b3075 STATE ladybug=(5,5) NORMAL | Clyde=(0,9) NORMAL | Blinky=(6,0) NORMAL | Inky=(11,12) NORMAL | Pinky=(3,1) NORMAL
+b3100 STATE ladybug=(1,5) NORMAL | Clyde=(0,10) NORMAL | Blinky=(6,2) NORMAL | Inky=(11,12) NORMAL | Pinky=(3,1) NORMAL
+b3108 SCORE 298 (+1)
+b3116 SCORE 299 (+1)
+b3124 SCORE 300 (+1)
+b3125 STATE ladybug=(0,4) NORMAL | Clyde=(0,12) NORMAL | Blinky=(6,3) NORMAL | Inky=(12,12) NORMAL | Pinky=(2,2) NORMAL
+b3150 STATE ladybug=(0,3) NORMAL | Clyde=(0,14) NORMAL | Blinky=(7,5) NORMAL | Inky=(13,12) NORMAL | Pinky=(2,2) NORMAL
+b3166 SCORE 301 (+1)
+b3174 SCORE 302 (+1)
+b3175 STATE ladybug=(0,1) NORMAL | Clyde=(1,14) NORMAL | Blinky=(4,5) NORMAL | Inky=(14,11) NORMAL | Pinky=(2,3) NORMAL
+b3182 SCORE 303 (+1)
+b3190 SCORE 304 (+1)
+b3198 SCORE 305 (+1)
+b3200 STATE ladybug=(1,0) NORMAL | Clyde=(3,13) NORMAL | Blinky=(4,3) NORMAL | Inky=(14,10) NORMAL | Pinky=(3,2) NORMAL
+b3206 SCORE 306 (+1)
+b3225 STATE ladybug=(0,0) NORMAL | Clyde=(3,12) NORMAL | Blinky=(3,2) NORMAL | Inky=(14,9) NORMAL | Pinky=(3,1) NORMAL
+b3250 STATE ladybug=(0,0) NORMAL | Clyde=(1,12) NORMAL | Blinky=(2,2) NORMAL | Inky=(13,9) NORMAL | Pinky=(3,0) NORMAL
+b3275 STATE ladybug=(0,3) NORMAL | Clyde=(0,12) NORMAL | Blinky=(3,3) NORMAL | Inky=(12,9) NORMAL | Pinky=(2,0) NORMAL
+b3300 STATE ladybug=(0,2) NORMAL | Clyde=(0,10) NORMAL | Blinky=(4,4) NORMAL | Inky=(11,9) NORMAL | Pinky=(1,0) NORMAL
+b3325 STATE ladybug=(0,4) NORMAL | Clyde=(0,9) NORMAL | Blinky=(2,5) NORMAL | Inky=(10,9) NORMAL | Pinky=(0,0) NORMAL
+b3350 STATE ladybug=(0,2) NORMAL | Clyde=(1,8) NORMAL | Blinky=(0,5) NORMAL | Inky=(9,9) NORMAL | Pinky=(0,1) NORMAL
+b3364 LADYBUG DYING
+b3375 STATE ladybug=(0,2) DYING | Clyde=(1,7) NORMAL | Blinky=(0,4) NORMAL | Inky=(8,9) NORMAL | Pinky=(0,1) NORMAL
+b3400 STATE ladybug=(0,2) DYING | Clyde=(1,7) NORMAL | Blinky=(0,4) NORMAL | Inky=(8,9) NORMAL | Pinky=(0,1) NORMAL
+b3403 LADYBUG DEAD
+b3404 LIVES 3
+b3404 LADYBUG NORMAL
+b3425 STATE ladybug=(6,9) NORMAL | Clyde=(6,2) NORMAL | Blinky=(6,1) NORMAL | Inky=(6,2) NORMAL | Pinky=(6,2) NORMAL
+b3450 STATE ladybug=(5,7) NORMAL | Clyde=(6,3) NORMAL | Blinky=(4,1) NORMAL | Inky=(6,2) NORMAL | Pinky=(6,2) NORMAL
+b3475 STATE ladybug=(5,7) NORMAL | Clyde=(6,5) NORMAL | Blinky=(3,0) NORMAL | Inky=(6,3) NORMAL | Pinky=(6,3) NORMAL
+b3500 STATE ladybug=(5,7) NORMAL | Clyde=(8,5) NORMAL | Blinky=(3,2) NORMAL | Inky=(6,5) NORMAL | Pinky=(6,5) NORMAL
+b3525 STATE ladybug=(5,8) NORMAL | Clyde=(9,5) NORMAL | Blinky=(2,3) NORMAL | Inky=(5,5) NORMAL | Pinky=(5,5) NORMAL
+b3550 STATE ladybug=(5,9) NORMAL | Clyde=(11,5) NORMAL | Blinky=(4,3) NORMAL | Inky=(5,6) NORMAL | Pinky=(5,6) NORMAL
+b3575 STATE ladybug=(5,10) NORMAL | Clyde=(12,5) NORMAL | Blinky=(4,5) NORMAL | Inky=(5,7) NORMAL | Pinky=(5,7) NORMAL
+b3600 STATE ladybug=(5,11) NORMAL | Clyde=(14,4) NORMAL | Blinky=(6,4) NORMAL | Inky=(5,8) NORMAL | Pinky=(5,8) NORMAL
+b3625 STATE ladybug=(5,12) NORMAL | Clyde=(14,3) NORMAL | Blinky=(5,5) NORMAL | Inky=(5,9) NORMAL | Pinky=(4,9) NORMAL
+b3650 STATE ladybug=(4,13) NORMAL | Clyde=(13,2) NORMAL | Blinky=(5,6) NORMAL | Inky=(5,10) NORMAL | Pinky=(3,9) NORMAL
+b3675 STATE ladybug=(3,13) NORMAL | Clyde=(12,2) NORMAL | Blinky=(5,8) NORMAL | Inky=(5,11) NORMAL | Pinky=(2,9) NORMAL
+b3700 STATE ladybug=(3,13) NORMAL | Clyde=(11,1) NORMAL | Blinky=(6,9) NORMAL | Inky=(5,12) NORMAL | Pinky=(1,9) NORMAL
+b3725 STATE ladybug=(2,12) NORMAL | Clyde=(9,1) NORMAL | Blinky=(7,10) NORMAL | Inky=(4,13) NORMAL | Pinky=(1,8) NORMAL
+b3750 STATE ladybug=(0,11) NORMAL | Clyde=(8,1) NORMAL | Blinky=(5,11) NORMAL | Inky=(3,13) NORMAL | Pinky=(1,7) NORMAL
+b3775 STATE ladybug=(0,9) NORMAL | Clyde=(7,2) NORMAL | Blinky=(5,12) NORMAL | Inky=(3,12) NORMAL | Pinky=(0,7) NORMAL
+b3800 STATE ladybug=(1,8) NORMAL | Clyde=(6,2) NORMAL | Blinky=(3,13) NORMAL | Inky=(2,12) NORMAL | Pinky=(13,7) NORMAL
+b3825 STATE ladybug=(1,5) NORMAL | Clyde=(6,3) NORMAL | Blinky=(1,14) NORMAL | Inky=(1,12) NORMAL | Pinky=(13,6) NORMAL
+b3850 STATE ladybug=(0,3) NORMAL | Clyde=(6,4) NORMAL | Blinky=(0,13) NORMAL | Inky=(0,12) NORMAL | Pinky=(13,5) NORMAL
+b3869 SCORE 307 (+1)
+b3875 STATE ladybug=(1,2) NORMAL | Clyde=(7,5) NORMAL | Blinky=(0,11) NORMAL | Inky=(0,11) NORMAL | Pinky=(12,5) NORMAL
+b3877 SCORE 308 (+1)
+b3885 SCORE 309 (+1)
+b3900 STATE ladybug=(3,2) NORMAL | Clyde=(8,4) NORMAL | Blinky=(0,9) NORMAL | Inky=(0,10) NORMAL | Pinky=(11,5) NORMAL
+b3917 STATUS LEVEL_END
+b3917 SCORE 360 (+51)
+b3918 STATUS LEVEL_ENDING
+b3925 STATE ladybug=(3,0) NORMAL | Clyde=(8,2) NORMAL | Blinky=(0,9) NORMAL | Inky=(0,9) NORMAL | Pinky=(10,5) NORMAL
+b3950 STATE ladybug=(3,0) NORMAL | Clyde=(8,2) NORMAL | Blinky=(0,9) NORMAL | Inky=(0,9) NORMAL | Pinky=(10,5) NORMAL
+b3975 STATE ladybug=(3,0) NORMAL | Clyde=(8,2) NORMAL | Blinky=(0,9) NORMAL | Inky=(0,9) NORMAL | Pinky=(10,5) NORMAL
+b4000 STATE ladybug=(3,0) NORMAL | Clyde=(8,2) NORMAL | Blinky=(0,9) NORMAL | Inky=(0,9) NORMAL | Pinky=(10,5) NORMAL
+b4025 STATE ladybug=(3,0) NORMAL | Clyde=(8,2) NORMAL | Blinky=(0,9) NORMAL | Inky=(0,9) NORMAL | Pinky=(10,5) NORMAL
+b4049 STATUS LEVEL_STARTING
+b4049 LEVEL 2
+b4050 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b4075 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b4100 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b4125 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b4150 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL
+b4155 STATUS IN_GAME
+b4155 SCORE 361 (+1)
+b4164 SCORE 362 (+1)
+b4172 SCORE 363 (+1)
+b4175 STATE ladybug=(6,9) NORMAL | Clyde=(8,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(6,2) NORMAL
+b4180 SCORE 364 (+1)
+b4188 SCORE 365 (+1)
+b4196 SCORE 366 (+1)
+b4200 STATE ladybug=(5,7) NORMAL | Clyde=(8,3) NORMAL | Blinky=(8,2) NORMAL | Inky=(8,2) NORMAL | Pinky=(6,2) NORMAL
+b4204 SCORE 367 (+1)
+b4212 SCORE 368 (+1)
+b4225 STATE ladybug=(5,6) NORMAL | Clyde=(7,5) NORMAL | Blinky=(8,3) NORMAL | Inky=(8,3) NORMAL | Pinky=(6,3) NORMAL
+b4250 STATE ladybug=(5,8) NORMAL | Clyde=(6,5) NORMAL | Blinky=(8,5) NORMAL | Inky=(8,5) NORMAL | Pinky=(6,5) NORMAL
+b4260 SCORE 369 (+1)
+b4268 SCORE 370 (+1)
+b4275 STATE ladybug=(5,12) NORMAL | Clyde=(6,3) NORMAL | Blinky=(9,5) NORMAL | Inky=(6,5) NORMAL | Pinky=(5,5) NORMAL
+b4276 SCORE 371 (+1)
+b4284 SCORE 372 (+1)
+b4292 SCORE 373 (+1)

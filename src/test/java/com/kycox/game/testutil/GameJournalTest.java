@@ -34,7 +34,6 @@ class GameJournalTest {
 			var beats = game.beatCount();
 			assertThat(lines.stream().filter(line -> line.contains(" STATE ")).count())
 			        .isEqualTo(beats / GameJournal.STATE_PERIOD);
-			System.out.println(game.journal().text());
 		}
 	}
 }
