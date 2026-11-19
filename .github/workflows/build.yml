@@ -31,3 +31,30 @@ jobs:
     # .mvn/maven.config est pris en compte automatiquement (Maven Central, sans miroir)
     - name: Build with Maven
       run: mvn -B clean verify
+
+  # Tests de mutation (étape 3.5.5, C36) : PIT glisse de petites erreurs dans le
+  # code et vérifie que les tests les détectent. Un seul passage, sur Ubuntu, en
+  # parallèle des tests ; la construction échoue sous 60 % (seuil dans le pom).
+  mutation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v6
+      with:
+        distribution: temurin
+        java-version: '21'
+        cache: maven
+        cache-dependency-path: '**/pom.xml'
+
+    - name: Mutation testing with PIT
+      run: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage
+
+    - name: Keep the PIT report
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: pit-report
+        path: target/pit-reports/

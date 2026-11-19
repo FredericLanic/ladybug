@@ -84,6 +84,50 @@
 					<argLine>-Xshare:off -javaagent:${org.mockito:mockito-core:jar}</argLine>
 				</configuration>
 			</plugin>
+			<!-- PIT, tests de mutation (étape 3.5.5) : glisse de petites erreurs dans le code
+			     (« mutants ») et vérifie que les tests les détectent. Lent : lancé à la demande,
+			     mvn test-compile org.pitest:pitest-maven:mutationCoverage
+			     Rapport : target/pit-reports/index.html -->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.19.1</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.2.2</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<targetClasses>
+						<param>com.kycox.game.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>com.kycox.game.*</param>
+					</targetTests>
+					<!-- hors périmètre jusqu'aux images clés (C30, C34) : le dessin Swing et le
+					     démarrage, vérifiés par le robot et les parties de Frédéric -->
+					<excludedClasses>
+						<param>com.kycox.game.engine.view.*</param>
+						<param>com.kycox.game.Application</param>
+						<param>com.kycox.game.MainLadybug</param>
+						<param>com.kycox.game.engine.Engine</param>
+					</excludedClasses>
+					<!-- seuil (C35) : la construction échoue si moins de 60 % des mutants sont détectés -->
+					<mutationThreshold>60</mutationThreshold>
+					<jvmArgs>
+						<jvmArg>-Xshare:off</jvmArg>
+						<jvmArg>-javaagent:${org.mockito:mockito-core:jar}</jvmArg>
+					</jvmArgs>
+					<threads>4</threads>
+					<timestampedReports>false</timestampedReports>
+					<outputFormats>
+						<format>HTML</format>
+						<format>XML</format>
+					</outputFormats>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
