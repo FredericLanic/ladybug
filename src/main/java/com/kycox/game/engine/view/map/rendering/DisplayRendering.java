@@ -2,12 +2,12 @@ package com.kycox.game.engine.view.map.rendering;
 
 import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.engine.screendata.ScreenData;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import java.awt.*;
 import java.util.EnumMap;
 
-@Component
+@GuiComponent
 public class DisplayRendering {
 
 	private final EnumMap<LevelRendering, Rendering> renderings = new EnumMap<>(LevelRendering.class);

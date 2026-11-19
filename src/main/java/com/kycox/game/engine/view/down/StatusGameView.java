@@ -19,13 +19,13 @@ package com.kycox.game.engine.view.down;
 import com.kycox.game.tools.ImageUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serial;
 
-@Component
+@GuiComponent
 public class StatusGameView extends JPanel {
 	@Serial
 	private static final long serialVersionUID = 4546077700634533519L;

@@ -19,12 +19,12 @@ package com.kycox.game.engine.controller;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.properties.GameProperties;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-@Component
+@GuiComponent
 public class KeyboardController extends KeyAdapter {
 	private final GameModelForController gameModelForController;
 	private final GameProperties gameProperties;

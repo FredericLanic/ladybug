@@ -7,6 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ImportResource;
 
 import com.kycox.game.launcher.ConfigLocations;
+import com.kycox.game.launcher.GuiComponent;
 import com.kycox.game.launcher.StartupFailure;
 
 /**
@@ -26,6 +27,10 @@ import com.kycox.game.launcher.StartupFailure;
  * {@code config/} remplace celui du jar ; {@code --ladybug.config=…} en impose
  * un autre. Si ce XML est invalide, le jeu le dit et s'arrête (C27).
  *
+ * <p>Le lanceur active le profil {@code gui} ({@link GuiComponent}) : fenêtre,
+ * vues, clavier, manette et son. Sans lui, le contexte ne contient que le
+ * modèle du jeu (test 3.3).
+ *
  * <p>La fenêtre est ouverte une fois le contexte prêt, par {@link MainLadybug}.
  */
 @SpringBootApplication
@@ -37,6 +42,7 @@ public class Application {
 		try {
 			new SpringApplicationBuilder(Application.class)
 			        .headless(false)
+			        .profiles(GuiComponent.PROFILE) // fenêtre, vues, clavier, son (2.7)
 			        .properties(ConfigLocations.SPRING_XML_PROPERTY + "=" + springXml)
 			        .run(args);
 		} catch (RuntimeException failure) {

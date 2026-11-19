@@ -21,7 +21,7 @@ import com.kycox.game.constant.contract.GameModelForSounds;
 import com.kycox.game.constant.contract.NewSoundsForGameSounds;
 import com.kycox.game.engine.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import java.util.Arrays;
 
@@ -29,7 +29,7 @@ import java.util.Arrays;
  * Gestion du son dans le jeu
  *
  */
-@Component
+@GuiComponent
 public class GameSounds implements ApplicationListener<EventGameModel> {
 	private NewSoundsForGameSounds newSounds;
 

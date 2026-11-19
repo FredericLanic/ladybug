@@ -20,7 +20,7 @@ import com.kycox.game.constant.contract.MainGraphicStructure;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.engine.view.down.PageEndView;
 import com.kycox.game.engine.view.left.PageLeftView;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 import jakarta.annotation.PostConstruct;
 
 import javax.swing.*;
@@ -30,7 +30,7 @@ import java.awt.*;
  * Frame principale du jeu.
  * FIXME : peut-être utiliser une autre techno que swing
  */
-@Component
+@GuiComponent
 public class MainFrame extends JFrame implements MainGraphicStructure {
 	private final CentralView gameView;
 	private final PageEndView pageEndView;

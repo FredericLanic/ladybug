@@ -38,13 +38,13 @@ import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serial;
 
-@Component
+@GuiComponent
 public class CentralView extends JPanel implements ApplicationListener<EventGameModel>, DoActionAfterTimer {
 	private static final Logger logger = LoggerFactory.getLogger(CentralView.class);
 	@Serial

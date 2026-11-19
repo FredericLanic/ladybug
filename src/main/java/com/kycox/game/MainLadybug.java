@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import javax.swing.SwingUtilities;
 
@@ -32,7 +32,7 @@ import javax.swing.SwingUtilities;
  * démarrage. La fenêtre est affichée sur le fil Swing (EDT) par
  * {@link SwingUtilities#invokeLater(Runnable)}, comme le veut Swing.
  */
-@Component
+@GuiComponent
 public class MainLadybug implements ApplicationRunner {
 	/** Version affichée quand le jeu est lancé hors du jar (depuis l'IDE). */
 	static final String DEVELOPMENT_VERSION = "development";

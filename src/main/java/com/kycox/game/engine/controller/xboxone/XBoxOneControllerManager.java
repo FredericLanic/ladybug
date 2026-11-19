@@ -8,7 +8,7 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 /**
  * Accès aux manettes Xbox One via la bibliothèque Jamepad (code natif SDL).
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * c'est une « dégradation gracieuse ».
  */
 @Getter
-@Component
+@GuiComponent
 @Conditional(WindowsHost.class)
 public class XBoxOneControllerManager {
 

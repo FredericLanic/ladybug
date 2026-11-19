@@ -4,11 +4,11 @@ import com.kycox.game.constant.level.LevelImages584;
 import com.kycox.game.engine.screendata.ScreenBlock;
 import com.kycox.game.engine.screendata.ScreenData;
 import com.kycox.game.tools.Utils;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import java.awt.*;
 
-@Component
+@GuiComponent
 public class TilesRendering584 implements Rendering {
 
 	@Override
