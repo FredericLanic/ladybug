@@ -140,11 +140,13 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	/**
 	 * Un battement de la boucle du jeu (toutes les {@code PACE} ms). Les actions
 	 * différées arrivées à échéance passent en premier, sur ce même fil (3.5.1b),
-	 * puis le super-pouvoir avance d'un battement (3.5.1c).
+	 * puis le super-pouvoir (3.5.1c) et les messages affichés (3.5.1d) avancent
+	 * d'un battement.
 	 */
 	private void actionsByTimerBip() {
 		tickScheduler.tick();
 		superPowerTimer.tick();
+		groupMessages.tick();
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
 		applicationEventPublisher.publishEvent(new EventGameModel(this));

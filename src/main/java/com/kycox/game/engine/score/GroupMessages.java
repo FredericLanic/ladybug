@@ -32,6 +32,11 @@ public class GroupMessages {
 		messages.add(new Message((Point) position.clone(), value, messageType));
 	}
 
+	/** Avance tous les messages d'un battement (appelé par la boucle du jeu, 3.5.1d). */
+	public void tick() {
+		messages.forEach(Message::tick);
+	}
+
 	public void removeIfDying() {
 		messages.removeIf(Message::isDying);
 	}
