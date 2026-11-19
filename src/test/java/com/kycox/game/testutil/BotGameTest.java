@@ -3,11 +3,13 @@ package com.kycox.game.testutil;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import com.kycox.game.constant.game.GameStatus;
+import com.kycox.game.constant.sounds.Sounds;
 
 /**
  * Partie jouée par le bot qui vise (étape 3.5.2e) : les règles du jeu sont
@@ -48,6 +50,11 @@ class BotGameTest {
 				}
 			}
 			assertThat(levelTwoBeat).as("beat where level 2 is reached").isPositive();
+			// chaque son du jeu est demandé au moins une fois (3.5.3a), sauf GHOST_SURVIVOR,
+			// déclaré mais jamais utilisé dans le code (dette D24)
+			var journal = game.journal().text();
+			assertThat(Arrays.stream(Sounds.values()).filter(sound -> sound != Sounds.GHOST_SURVIVOR))
+			        .allSatisfy(sound -> assertThat(journal).as("sound " + sound).contains(" SOUND " + sound + "\n"));
 			GoldenMaster.assertMatches("bot-seed42", game.journal().text());
 		}
 	}

@@ -157,8 +157,14 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	 * et les sons sont prévenus.
 	 *
 	 * <p>Appelé par le timer Swing en jeu, ou directement par un test (3.5.1e).
+	 *
+	 * <p>Les sons demandés repartent de zéro à chaque battement (3.5.3a) : un son
+	 * n'est demandé qu'au battement où son événement se produit. Avant, certains
+	 * états ne vidaient pas la liste, et la musique du début de niveau restait
+	 * demandée pendant tout {@code LEVEL_STARTING} (elle pouvait repartir).
 	 */
 	public void beat() {
+		newSounds.initSounds();
 		tickScheduler.tick();
 		superPowerTimer.tick();
 		groupMessages.tick();
