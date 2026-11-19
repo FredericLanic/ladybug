@@ -9,28 +9,36 @@ import com.kycox.game.engine.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.EventGameModel;
-import com.kycox.game.tools.os.WindowsHost;
 import com.kycox.game.properties.GameProperties;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Conditional;
 import com.kycox.game.launcher.GuiComponent;
 
 import java.util.Optional;
 
+/**
+ * La manette Xbox pilote le jeu (comme le clavier, mais avec les boutons).
+ *
+ * <p>Étape 3.5.3d : active sur tous les systèmes (avant : Windows seulement) ; le
+ * gestionnaire Jamepad est <b>utilisé</b> au lieu d'être hérité (composition, dette
+ * D19). La traduction « boutons → actions » ({@link #handleRequests}) se teste
+ * avec une fausse manette ({@code PadState}).
+ */
 @GuiComponent
-@Conditional(WindowsHost.class)
-public class XboxOneController extends XBoxOneControllerManager implements ApplicationListener<EventGameModel> {
+public class XboxOneController implements ApplicationListener<EventGameModel> {
 
+	private final XBoxOneControllerManager padManager;
 	private final GameMessaging gameMessaging;
 	private GameModelForController gameModelForController;
 	private final GameProperties gameProperties;
 	private final XboxRequest xboxOneLadybug;
 	private final XboxRequest xboxOneUnComputedGhost;
 
-	public XboxOneController(GameMessaging gameMessaging,
+	public XboxOneController(XBoxOneControllerManager padManager,
+							 GameMessaging gameMessaging,
 							 GameProperties gameProperties,
 							 XboxRequest xboxOneLadybug,
 							 XboxRequest xboxOneUnComputedGhost) {
+		this.padManager = padManager;
 		this.gameMessaging = gameMessaging;
 		this.gameProperties = gameProperties;
 		this.xboxOneLadybug = xboxOneLadybug;
@@ -40,19 +48,19 @@ public class XboxOneController extends XBoxOneControllerManager implements Appli
 	private void doVibrationsInGame() {
 		Optional.of(gameModelForController.getLadybug())
 				.filter(LadybugForController::isEatenAMegaPoint)
-				.ifPresent(ladybug -> getControllerManager().doVibration(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 100));
+				.ifPresent(ladybug -> padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 100));
 
 		Optional.of(gameModelForController.getLadybug())
 				.filter(LadybugForController::isToBeTeleported)
-				.ifPresent(ladybug -> getControllerManager().doVibration(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 50));
+				.ifPresent(ladybug -> padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 50));
 
 		gameModelForController.getUnComputedGhost()
 				.filter(GhostForController::isToBeTeleported)
-				.ifPresent(ghost -> getControllerManager().doVibration(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 50));
+				.ifPresent(ghost -> padManager.vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 50));
 
 		gameModelForController.getUnComputedGhost()
 				.filter(GhostForController::isDying)
-				.ifPresent(ghost -> getControllerManager().doVibration(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 100));
+				.ifPresent(ghost -> padManager.vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 100));
 	}
 
 	private boolean isOneXboxOneConnected() {
@@ -151,10 +159,14 @@ public class XboxOneController extends XBoxOneControllerManager implements Appli
 		}
 	}
 
-	private void manageXboxesOneInGame() {
+	/**
+	 * Traduit l'état des deux manettes (déjà lu) en actions sur le jeu. Séparé de
+	 * la lecture du matériel pour être testé avec une fausse manette.
+	 */
+	void handleRequests(GameModelForController model) {
+		gameModelForController = model;
 		gameModelForController.setAtLeastOneXboxOneConnected(isOneXboxOneConnected());
 		setProgramMessagesAccordingXboxOneConnectionOrDisconnection();
-		readXboxOneStates();
 		manageBothXboxesOneCommon();
 		if (gameModelForController.isProgramPresentation()) {
 			manageBothXboxesOneInPresentation();
@@ -180,8 +192,9 @@ public class XboxOneController extends XBoxOneControllerManager implements Appli
 	}
 
 	private void readXboxOneStates() {
-		xboxOneLadybug.readCurrentState(getControllerManager().getState(XboxOneConstants.LADYBUG_XBOXONE_INDEX));
-		xboxOneUnComputedGhost.readCurrentState(getControllerManager().getState(XboxOneConstants.GHOST_XBOXONE_INDEX));
+		padManager.update();
+		xboxOneLadybug.readCurrentState(padManager.state(XboxOneConstants.LADYBUG_XBOXONE_INDEX));
+		xboxOneUnComputedGhost.readCurrentState(padManager.state(XboxOneConstants.GHOST_XBOXONE_INDEX));
 	}
 
 	private void setProgramMessagesAccordingXboxOneConnectionOrDisconnection() {
@@ -202,13 +215,13 @@ public class XboxOneController extends XBoxOneControllerManager implements Appli
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
 		// Manette indisponible (échec du chargement de Jamepad) : rien à lire
-		if (!isAvailable()) {
+		if (!padManager.isAvailable()) {
 			return;
 		}
 		Object obj = event.getSource();
 		if (obj instanceof GameModelForController eventGameModelForController) {
-			gameModelForController = eventGameModelForController;
-			manageXboxesOneInGame();
+			readXboxOneStates();
+			handleRequests(eventGameModelForController);
 		}
 	}
 }

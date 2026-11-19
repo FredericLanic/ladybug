@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.kycox.game.constant.sounds.Sounds;
 import com.kycox.game.engine.model.GameModel;
 
 /**
@@ -22,6 +23,7 @@ import com.kycox.game.engine.model.GameModel;
  * b0412 GHOST Pinky SCARED
  * b0070 GHOST Inky NORMAL (human)      ← mode 2 joueurs
  * b0530 LIVES 2
+ * b0722 SOUND GHOST_SCARED              ← son demandé (seulement quand il commence)
  * </pre>
  * Une ligne {@code STATE} toutes les {@value #STATE_PERIOD} battements (1 s) donne
  * les positions de tous les personnages.
@@ -63,6 +65,8 @@ public final class GameJournal {
 				lines.add(prefix + "GHOST " + name + " " + status);
 			}
 		});
+		current.sounds.stream().filter(sound -> !before.sounds.contains(sound))
+		        .forEach(sound -> lines.add(prefix + "SOUND " + sound));
 		if (beat % STATE_PERIOD == 0) {
 			lines.add(prefix + "STATE " + current.state());
 		}
@@ -79,9 +83,9 @@ public final class GameJournal {
 
 	/** Ce que le journal regarde dans le modèle, à un battement donné. */
 	private record Snapshot(String status, int level, int score, int lives, String ladybugStatus,
-	        Point ladybugBlock, Map<String, String> ghostStatus, Map<String, Point> ghostBlock) {
+	        Point ladybugBlock, Map<String, String> ghostStatus, Map<String, Point> ghostBlock, List<Sounds> sounds) {
 
-		static final Snapshot EMPTY = new Snapshot(null, -1, 0, -1, null, null, Map.of(), Map.of());
+		static final Snapshot EMPTY = new Snapshot(null, -1, 0, -1, null, null, Map.of(), Map.of(), List.of());
 
 		static Snapshot of(GameModel model) {
 			var ghostStatus = new LinkedHashMap<String, String>();
@@ -91,11 +95,13 @@ public final class GameJournal {
 				ghostStatus.put(ghost.getName(), ghost.getStatus() + (ghost.isComputed() ? "" : " (human)"));
 				ghostBlock.put(ghost.getName(), new Point(ghost.getPositionBlock()));
 			});
+			// sons demandés à ce battement (3.5.3a), dans l'ordre de l'énumération
+			var sounds = java.util.Arrays.stream(Sounds.values()).filter(model.getNewSounds()::hasSound).toList();
 			var ladybug = model.getLadybug();
 			return new Snapshot(String.valueOf(model.getCurrentProgramStatus().getGameStatus()),
 			        model.getCurrentProgramStatus().getNumLevel(), model.getGameScore().getScore(),
 			        ladybug.getLeftLifes(), String.valueOf(ladybug.getStatus()), new Point(ladybug.getPositionBlock()),
-			        ghostStatus, ghostBlock);
+			        ghostStatus, ghostBlock, sounds);
 		}
 
 		String state() {

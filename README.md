@@ -68,13 +68,15 @@ Voici les commandes du clavier que vous utiliserez
 | Les flèches        | Permet à Ladybug de changer de direction                         |
 | Z Q S D            | Permet au fantôme de changer de direction (en mode deux joueurs) |
 | 1 ou 2             | Définition du mode du jeu : 1 ou 2 joueurs - avant la partie     |
+| S                  | Lancer la partie (écran de présentation)                         |
 | F1                 | Affichage de l'aide                                              |
 | F2                 | Gestion du son (modes on/off)                                    |
 | F3                 | Retirer/ afficher le logo du TShirt de Ladybug                   |
 | F4                 | Porter / enlever le bandeau des fantômes                         |
 | F5                 | Porter / enlever le chapeau des fantômes                         |
 | F6                 | Gestion du mode "lampe allumée" (modes on/off) lors du jeu       |
-| Pause              | Mise en pause / Reprise du niveau                                |
+| F7                 | Camouflage des fantômes (modes on/off)                           |
+| P ou Pause         | Mise en pause / Reprise du niveau (P : pour les claviers Mac)    |
 | ESC                | Fin du niveau ou Sortie du jeu                                   |
 | Enter              | Passage du jeu en mode "debug"                                    |
 

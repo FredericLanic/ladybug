@@ -1,16 +1,12 @@
 package com.kycox.game.engine.controller.xboxone;
 
 import com.kycox.game.constant.xbox.XboxOneConstants;
-import com.kycox.game.tools.os.WindowsHost;
-import com.studiohartman.jamepad.ControllerState;
 import lombok.Getter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Scope;
 import com.kycox.game.launcher.GuiComponent;
 
 @GuiComponent
-@Conditional(WindowsHost.class)
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class XboxRequest {
 	@Getter
@@ -19,7 +15,7 @@ public class XboxRequest {
 	private boolean backButton;
 	@Getter
 	private boolean bButton;
-	private ControllerState controllerState;
+	private PadState controllerState;
 	@Getter
 	private boolean dpadDown;
 	@Getter
@@ -54,7 +50,7 @@ public class XboxRequest {
 	}
 
 	public boolean isConnected() {
-		return controllerState != null && controllerState.isConnected;
+		return controllerState != null && controllerState.connected();
 	}
 
 	public boolean isDownLeftStick() {
@@ -105,25 +101,25 @@ public class XboxRequest {
 		return (yRightStick >= XboxOneConstants.SENSITIVE || yRightStick <= -XboxOneConstants.SENSITIVE);
 	}
 
-	public void readCurrentState(ControllerState controllerState) {
-		setEventOnConnection();
+	public void readCurrentState(PadState controllerState) {
 		this.controllerState = controllerState; // to check isConnected
-		xRightStick = controllerState.rightStickX;
-		yRightStick = controllerState.rightStickY;
-		xLeftStick = controllerState.leftStickX;
-		yLeftStick = controllerState.leftStickY;
-		aButton = controllerState.a;
-		bButton = controllerState.b;
-		xButton = controllerState.xJustPressed;
-		yButton = controllerState.yJustPressed;
-		backButton = controllerState.back;
-		dpadDown = controllerState.dpadDownJustPressed;
-		dpadUp = controllerState.dpadUpJustPressed;
-		dpadLeft = controllerState.dpadLeftJustPressed;
-		dpadRight = controllerState.dpadRightJustPressed;
-		start = controllerState.startJustPressed;
-		rightStick = controllerState.rightStickJustClicked;
-		leftStick = controllerState.leftStickJustClicked;
+		setEventOnConnection();
+		xRightStick = controllerState.rightStickX();
+		yRightStick = controllerState.rightStickY();
+		xLeftStick = controllerState.leftStickX();
+		yLeftStick = controllerState.leftStickY();
+		aButton = controllerState.a();
+		bButton = controllerState.b();
+		xButton = controllerState.xJustPressed();
+		yButton = controllerState.yJustPressed();
+		backButton = controllerState.back();
+		dpadDown = controllerState.dpadDownJustPressed();
+		dpadUp = controllerState.dpadUpJustPressed();
+		dpadLeft = controllerState.dpadLeftJustPressed();
+		dpadRight = controllerState.dpadRightJustPressed();
+		start = controllerState.startJustPressed();
+		rightStick = controllerState.rightStickJustClicked();
+		leftStick = controllerState.leftStickJustClicked();
 	}
 
 	private void setEventOnConnection() {

@@ -281,7 +281,7 @@
 <ul>
   <li><b>3.5.1 Rendre le jeu testable, avant l'étape 2</b> (C24) — <b>fait le 19/11/2026</b> : <code>GameRandom</code> (hasard à graine), <code>TickScheduler</code> (attentes en battements sur le fil Swing, <b>D22 corrigée</b>), <code>BeatPacer</code> (boucle à pas fixe, 25 battements/s réels ; sans lui la musique du début de niveau était jouée deux fois), <code>SuperPowerTimer</code> et messages en battements (plus aucun <code>java.util.Timer</code> dans le modèle), <code>GameModel.beat()</code> public, fiche <code>doc/patterns/game-loop.md</code>. Robot : 174 statuts identiques à la référence. Partie rejouée à l'identique : reportée à 3.5.2 ;</li>
   <li><b>3.5.2 Golden master — fait le 19/11/2026</b> : <code>GameDriver</code> (jeu sans écran), <code>GameJournal</code>, preuve du déterminisme, trois références validées par Frédéric (solo, 2 joueurs, bot jusqu'au niveau 2), <code>AimingBot</code> et règles vérifiées à chaque battement ; fiche <code>doc/patterns/golden-master.md</code> ;</li>
-  <li>3.5.3 Touches spéciales, manette derrière une interface (corrige D19), faux lecteur de sons, durées des sons derrière une interface ;</li>
+  <li><b>3.5.3 Touches, manette et son — fait le 19/11/2026</b> : sons dans le journal, durées lues dans les fichiers, touche P pour la pause, aide F1 complète, un test par touche ; manette par composition (D19) avec Jamepad 2.30 : <b>la manette Xbox marche sur Mac Apple Silicon</b>, Linux et Windows ; checklist d'essai sous Windows ;</li>
   <li>3.5.4 CI sur Ubuntu, Windows et macOS ;</li>
   <li>3.5.5 PIT dans Maven, seuil de 60 % dans la CI.</li>
 </ul>

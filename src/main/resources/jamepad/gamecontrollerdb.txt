@@ -1,0 +1,2 @@
+# Correspondances supplémentaires de manettes pour SDL (format gamecontrollerdb).
+# Vide : SDL connaît déjà les manettes Xbox. Ce fichier évite un avertissement de Jamepad.

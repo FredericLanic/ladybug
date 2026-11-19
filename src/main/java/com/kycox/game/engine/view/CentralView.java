@@ -121,16 +121,20 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		} else if (gameModelForViews.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
 			if (gameModelForViews.isShowHelpForKeys()) {
-				drawEightCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.keyboard.title")
+				drawCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.keyboard.title")
 						, ladybugMessagesBundle.getMessage("help.keyboard.sound")
 						, ladybugMessagesBundle.getMessage("help.keyboard.ladybug.skin")
 						, ladybugMessagesBundle.getMessage("help.keyboard.ghost.headband")
 						, ladybugMessagesBundle.getMessage("help.keyboard.ghost.hat")
+						, ladybugMessagesBundle.getMessage("help.keyboard.lamp")
+						, ladybugMessagesBundle.getMessage("help.keyboard.camouflage")
 						, ladybugMessagesBundle.getMessage("help.keyboard.ladybug.move")
 						, ladybugMessagesBundle.getMessage("help.keyboard.ghost.move")
-						, ladybugMessagesBundle.getMessage("help.keyboard.multi.player"));
+						, ladybugMessagesBundle.getMessage("help.keyboard.multi.player")
+						, ladybugMessagesBundle.getMessage("help.keyboard.pause")
+						, ladybugMessagesBundle.getMessage("help.keyboard.escape"));
 			} else if (gameModelForViews.isShowHelpForXboxes()) {
-				drawEightCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.xbox.title")
+				drawCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.xbox.title")
 						, ladybugMessagesBundle.getMessage("help.xbox.sound")
 						, ladybugMessagesBundle.getMessage("help.xbox.ladybug.skin")
 						, ladybugMessagesBundle.getMessage("help.xbox.ghost.headband")
@@ -172,21 +176,23 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		}
 	}
 
-	private void drawEightCenterTextLines(Graphics2D g2d, String line1, String line2, String line3, String line4,
-	        String line5, String line6, String line7, String line8) {
+	/**
+	 * Lignes centrées, réparties sur 13 cases de haut quel que soit leur nombre
+	 * (3.5.3c). Remplace {@code drawEightCenterTextLines}, qui plaçait à la main
+	 * exactement 8 lignes : l'aide du clavier en compte maintenant 12 (P, F6, F7
+	 * et Échap ajoutés).
+	 */
+	private void drawCenterTextLines(Graphics2D g2d, String... lines) {
 		var x = gameModelForViews.getScreenData().getScreenWidth();
 		var y = gameModelForViews.getScreenData().getScreenHeight();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - (int) (6.5 * GameMainConstants.BLOCK_SIZE));
-		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 - (int) (4.65 * GameMainConstants.BLOCK_SIZE));
-		g2d.drawString(line3, (x - metr.stringWidth(line3)) / 2, y / 2 - (int) (2.78 * GameMainConstants.BLOCK_SIZE));
-		g2d.drawString(line4, (x - metr.stringWidth(line4)) / 2, y / 2 - (int) (0.93 * GameMainConstants.BLOCK_SIZE));
-		g2d.drawString(line5, (x - metr.stringWidth(line5)) / 2, y / 2 + (int) (0.93 * GameMainConstants.BLOCK_SIZE));
-		g2d.drawString(line6, (x - metr.stringWidth(line6)) / 2, y / 2 + (int) (2.78 * GameMainConstants.BLOCK_SIZE));
-		g2d.drawString(line7, (x - metr.stringWidth(line7)) / 2, y / 2 + (int) (4.65 * GameMainConstants.BLOCK_SIZE));
-		g2d.drawString(line8, (x - metr.stringWidth(line8)) / 2, y / 2 + (int) (6.5 * GameMainConstants.BLOCK_SIZE));
+		var top = y / 2.0 - 6.5 * GameMainConstants.BLOCK_SIZE;
+		var gap = lines.length > 1 ? 13.0 * GameMainConstants.BLOCK_SIZE / (lines.length - 1) : 0;
+		for (var i = 0; i < lines.length; i++) {
+			g2d.drawString(lines[i], (x - metr.stringWidth(lines[i])) / 2, (int) (top + i * gap));
+		}
 	}
 
 	private void drawGhosts(Graphics2D g2d) {

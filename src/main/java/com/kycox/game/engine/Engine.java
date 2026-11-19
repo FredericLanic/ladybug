@@ -16,31 +16,31 @@
  */
 package com.kycox.game.engine;
 
-import com.kycox.game.engine.model.GameModel;
-import com.kycox.game.engine.sound.GameSounds;
+import com.kycox.game.constant.sounds.Sounds;
+import com.kycox.game.engine.sound.SoundDurations;
 import com.kycox.game.engine.view.CentralView;
 import jakarta.annotation.PostConstruct;
 import com.kycox.game.launcher.GuiComponent;
 
+/**
+ * Réglages de l'interface liés à la durée des sons.
+ *
+ * <p>Depuis l'étape 3.5.3b, le modèle règle lui-même ses attentes (début de
+ * niveau, intermède, agonie) avec {@link SoundDurations} ; il ne reste ici que la
+ * couleur du labyrinthe après une vie gagnée, qui dure le temps de son son.
+ */
 @GuiComponent
 public class Engine {
 	private final CentralView centralView;
-	private final GameModel gameModel;
-	private final GameSounds gameSounds;
+	private final SoundDurations soundDurations;
 
-	public Engine(GameModel gameModel, GameSounds gameSounds, CentralView centralView) {
-		this.gameModel = gameModel;
-		this.gameSounds = gameSounds;
+	public Engine(SoundDurations soundDurations, CentralView centralView) {
+		this.soundDurations = soundDurations;
 		this.centralView = centralView;
 	}
 
 	@PostConstruct
 	public void init() {
-		// on récupère la longueur du son de la mort de ladybug et on l'affecte
-		gameModel.getLadybugDying().setAgonyDuration(gameSounds.getLadybugAgonyDuration());
-		gameModel.setBeginningDuration(gameSounds.getBeginningDuration());
-		gameModel.setTimeEndingMilliseconds(1500);
-		gameModel.setEndingLevelMilliseconds(gameSounds.getIntermissionDuration());
-		centralView.setDurationLadybugNewLife(gameSounds.getNewLifeFunDuration());
+		centralView.setDurationLadybugNewLife(soundDurations.of(Sounds.LADYBUG_EXTRA_PAC));
 	}
 }

@@ -20,33 +20,46 @@ b0125 STATE ladybug=(0,0) DEAD | Clyde=(6,2) NORMAL | Blinky=(6,2) NORMAL | Inky
 b0135 STATUS LEVEL_STARTING
 b0135 LEVEL 1
 b0135 LADYBUG NORMAL
+b0135 SOUND GAME_BEGIN_LEVEL
 b0150 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL (human)
 b0175 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL (human)
 b0200 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL (human)
 b0225 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL (human)
 b0241 STATUS IN_GAME
 b0241 SCORE 1 (+1)
+b0241 SOUND GAME_SIREN_0
+b0241 SOUND LADYBUG_CHOMP
 b0249 SCORE 2 (+1)
+b0249 SOUND LADYBUG_CHOMP
 b0250 STATE ladybug=(5,11) NORMAL | Clyde=(6,2) NORMAL | Blinky=(6,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(8,2) NORMAL (human)
 b0257 SCORE 3 (+1)
+b0257 SOUND LADYBUG_CHOMP
 b0275 STATE ladybug=(5,11) NORMAL | Clyde=(5,1) NORMAL | Blinky=(6,1) NORMAL | Inky=(8,1) NORMAL | Pinky=(8,5) NORMAL (human)
 b0300 STATE ladybug=(5,11) NORMAL | Clyde=(4,1) NORMAL | Blinky=(5,1) NORMAL | Inky=(8,0) NORMAL | Pinky=(8,5) NORMAL (human)
 b0325 STATE ladybug=(5,11) NORMAL | Clyde=(3,1) NORMAL | Blinky=(4,1) NORMAL | Inky=(7,0) NORMAL | Pinky=(8,5) NORMAL (human)
 b0339 SCORE 4 (+1)
+b0339 SOUND LADYBUG_CHOMP
 b0347 SCORE 5 (+1)
+b0347 SOUND LADYBUG_CHOMP
 b0350 STATE ladybug=(5,8) NORMAL | Clyde=(3,2) NORMAL | Blinky=(3,1) NORMAL | Inky=(6,0) NORMAL | Pinky=(8,5) NORMAL (human)
 b0355 SCORE 6 (+1)
+b0355 SOUND LADYBUG_CHOMP
 b0363 SCORE 7 (+1)
+b0363 SOUND LADYBUG_CHOMP
 b0371 SCORE 8 (+1)
+b0371 SOUND LADYBUG_CHOMP
 b0375 STATE ladybug=(5,5) NORMAL | Clyde=(4,3) NORMAL | Blinky=(3,1) NORMAL | Inky=(6,0) NORMAL | Pinky=(8,5) NORMAL (human)
 b0379 SCORE 9 (+1)
+b0379 SOUND LADYBUG_CHOMP
 b0400 STATE ladybug=(5,5) NORMAL | Clyde=(4,5) NORMAL | Blinky=(2,2) NORMAL | Inky=(6,1) NORMAL | Pinky=(8,5) NORMAL (human)
 b0410 LADYBUG DYING
+b0410 SOUND LADYBUG_IS_DYING
 b0425 STATE ladybug=(5,5) DYING | Clyde=(4,5) NORMAL | Blinky=(2,2) NORMAL | Inky=(6,2) NORMAL | Pinky=(6,5) NORMAL (human)
 b0449 LADYBUG DEAD
 b0450 LIVES 2
 b0450 LADYBUG NORMAL
 b0450 STATE ladybug=(7,11) NORMAL | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(7,2) NORMAL (human)
+b0451 SOUND GAME_SIREN_0
 b0475 STATE ladybug=(7,11) NORMAL | Clyde=(8,2) NORMAL | Blinky=(6,2) NORMAL | Inky=(8,1) NORMAL | Pinky=(6,2) NORMAL (human)
 b0500 STATE ladybug=(7,11) NORMAL | Clyde=(8,4) NORMAL | Blinky=(6,3) NORMAL | Inky=(8,0) NORMAL | Pinky=(6,2) NORMAL (human)
 b0525 STATE ladybug=(7,11) NORMAL | Clyde=(8,5) NORMAL | Blinky=(6,4) NORMAL | Inky=(7,0) NORMAL | Pinky=(6,2) NORMAL (human)
@@ -60,27 +73,38 @@ b0700 STATE ladybug=(5,11) NORMAL | Clyde=(13,6) NORMAL | Blinky=(6,9) NORMAL | 
 b0725 STATE ladybug=(5,7) NORMAL | Clyde=(13,5) NORMAL | Blinky=(7,9) NORMAL | Inky=(4,5) NORMAL | Pinky=(6,5) NORMAL (human)
 b0750 STATE ladybug=(5,5) NORMAL | Clyde=(14,4) NORMAL | Blinky=(7,10) NORMAL | Inky=(4,5) NORMAL | Pinky=(9,5) NORMAL (human)
 b0752 LADYBUG DYING
+b0752 SOUND LADYBUG_IS_DYING
 b0775 STATE ladybug=(5,5) DYING | Clyde=(14,4) NORMAL | Blinky=(7,10) NORMAL | Inky=(4,5) NORMAL | Pinky=(10,5) NORMAL (human)
 b0791 LADYBUG DEAD
 b0792 LIVES 1
 b0792 LADYBUG NORMAL
+b0793 SOUND GAME_SIREN_0
 b0800 STATE ladybug=(7,11) NORMAL | Clyde=(6,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(7,2) NORMAL | Pinky=(8,2) NORMAL (human)
 b0825 STATE ladybug=(7,11) NORMAL | Clyde=(6,3) NORMAL | Blinky=(8,1) NORMAL | Inky=(8,2) NORMAL | Pinky=(8,2) NORMAL (human)
 b0829 SCORE 10 (+1)
+b0829 SOUND LADYBUG_CHOMP
 b0837 SCORE 11 (+1)
+b0837 SOUND LADYBUG_CHOMP
 b0850 STATE ladybug=(9,11) NORMAL | Clyde=(6,4) NORMAL | Blinky=(8,1) NORMAL | Inky=(8,3) NORMAL | Pinky=(8,2) NORMAL (human)
 b0875 STATE ladybug=(9,11) NORMAL | Clyde=(4,5) NORMAL | Blinky=(8,1) NORMAL | Inky=(8,4) NORMAL | Pinky=(8,2) NORMAL (human)
 b0900 STATE ladybug=(9,11) NORMAL | Clyde=(4,4) NORMAL | Blinky=(8,1) NORMAL | Inky=(7,5) NORMAL | Pinky=(8,0) NORMAL (human)
 b0909 SCORE 12 (+1)
+b0909 SOUND LADYBUG_CHOMP
 b0917 SCORE 13 (+1)
+b0917 SOUND LADYBUG_CHOMP
 b0925 SCORE 14 (+1)
+b0925 SOUND LADYBUG_CHOMP
 b0925 STATE ladybug=(9,7) NORMAL | Clyde=(3,3) NORMAL | Blinky=(8,2) NORMAL | Inky=(6,5) NORMAL | Pinky=(8,0) NORMAL (human)
 b0933 SCORE 15 (+1)
+b0933 SOUND LADYBUG_CHOMP
 b0941 SCORE 16 (+1)
+b0941 SOUND LADYBUG_CHOMP
 b0949 SCORE 17 (+1)
+b0949 SOUND LADYBUG_CHOMP
 b0950 STATE ladybug=(9,5) NORMAL | Clyde=(2,3) NORMAL | Blinky=(8,3) NORMAL | Inky=(6,4) NORMAL | Pinky=(8,0) NORMAL (human)
 b0975 STATE ladybug=(9,5) NORMAL | Clyde=(1,2) NORMAL | Blinky=(8,4) NORMAL | Inky=(6,3) NORMAL | Pinky=(8,0) NORMAL (human)
 b0998 LADYBUG DYING
+b0998 SOUND LADYBUG_IS_DYING
 b1000 STATE ladybug=(9,5) DYING | Clyde=(0,2) NORMAL | Blinky=(8,5) NORMAL | Inky=(6,2) NORMAL | Pinky=(8,0) NORMAL (human)
 b1025 STATE ladybug=(9,5) DYING | Clyde=(0,2) NORMAL | Blinky=(8,5) NORMAL | Inky=(6,2) NORMAL | Pinky=(8,0) NORMAL (human)
 b1037 LADYBUG DEAD
@@ -109,6 +133,7 @@ b1425 STATE ladybug=(14,5) DEAD | Clyde=(6,3) NORMAL | Blinky=(11,2) NORMAL | In
 b1450 STATE ladybug=(14,5) DEAD | Clyde=(6,2) NORMAL | Blinky=(10,3) NORMAL | Inky=(1,5) NORMAL | Pinky=(7,2) NORMAL (human)
 b1475 STATE ladybug=(14,1) DEAD | Clyde=(7,2) NORMAL | Blinky=(10,3) NORMAL | Inky=(2,5) NORMAL | Pinky=(7,2) NORMAL (human)
 b1500 STATE ladybug=(14,0) DEAD | Clyde=(8,1) NORMAL | Blinky=(10,4) NORMAL | Inky=(3,5) NORMAL | Pinky=(7,2) NORMAL (human)
+b1521 SOUND LADYBUG_INTERMISSION
 b1525 STATE ladybug=(14,0) DEAD | Clyde=(10,1) NORMAL | Blinky=(9,5) NORMAL | Inky=(3,6) NORMAL | Pinky=(7,2) NORMAL (human)
 b1550 STATE ladybug=(14,0) DEAD | Clyde=(11,1) NORMAL | Blinky=(8,5) NORMAL | Inky=(3,7) NORMAL | Pinky=(7,2) NORMAL (human)
 b1575 STATE ladybug=(14,0) DEAD | Clyde=(12,2) NORMAL | Blinky=(8,4) NORMAL | Inky=(3,8) NORMAL | Pinky=(7,2) NORMAL (human)
@@ -122,6 +147,7 @@ b1750 STATE ladybug=(11,0) DEAD | Clyde=(11,8) NORMAL | Blinky=(5,5) NORMAL | In
 b1775 STATE ladybug=(11,3) DEAD | Clyde=(11,9) NORMAL | Blinky=(4,5) NORMAL | Inky=(9,11) NORMAL | Pinky=(7,2) NORMAL (human)
 b1800 STATE ladybug=(11,3) DEAD | Clyde=(13,9) NORMAL | Blinky=(4,4) NORMAL | Inky=(9,12) NORMAL | Pinky=(7,2) NORMAL (human)
 b1825 STATE ladybug=(11,3) DEAD | Clyde=(14,9) NORMAL | Blinky=(4,3) NORMAL | Inky=(9,13) NORMAL | Pinky=(7,2) NORMAL (human)
+b1846 SOUND LADYBUG_INTERMISSION
 b1850 STATE ladybug=(11,3) DEAD | Clyde=(14,11) NORMAL | Blinky=(3,3) NORMAL | Inky=(10,13) NORMAL | Pinky=(7,2) NORMAL (human)
 b1875 STATE ladybug=(11,3) DEAD | Clyde=(13,12) NORMAL | Blinky=(3,2) NORMAL | Inky=(11,13) NORMAL | Pinky=(7,2) NORMAL (human)
 b1900 STATE ladybug=(11,3) DEAD | Clyde=(11,12) NORMAL | Blinky=(2,2) NORMAL | Inky=(11,14) NORMAL | Pinky=(7,2) NORMAL (human)
@@ -147,11 +173,14 @@ b2375 STATE ladybug=(11,0) DEAD | Clyde=(8,1) NORMAL | Blinky=(6,0) NORMAL | Ink
 b2400 STATE ladybug=(11,0) DEAD | Clyde=(8,0) NORMAL | Blinky=(6,0) NORMAL | Inky=(11,5) NORMAL | Pinky=(7,2) NORMAL (human)
 b2425 STATE ladybug=(11,3) DEAD | Clyde=(6,0) NORMAL | Blinky=(7,0) NORMAL | Inky=(12,5) NORMAL | Pinky=(7,2) NORMAL (human)
 b2450 STATE ladybug=(11,3) DEAD | Clyde=(6,0) NORMAL | Blinky=(8,0) NORMAL | Inky=(13,5) NORMAL | Pinky=(7,2) NORMAL (human)
+b2456 SOUND LADYBUG_INTERMISSION
 b2475 STATE ladybug=(11,3) DEAD | Clyde=(6,2) NORMAL | Blinky=(8,1) NORMAL | Inky=(13,6) NORMAL | Pinky=(7,2) NORMAL (human)
 b2500 STATE ladybug=(11,3) DEAD | Clyde=(7,2) NORMAL | Blinky=(7,2) NORMAL | Inky=(13,7) NORMAL | Pinky=(7,2) NORMAL (human)
 b2525 STATE ladybug=(11,3) DEAD | Clyde=(8,1) NORMAL | Blinky=(6,2) NORMAL | Inky=(13,8) NORMAL | Pinky=(7,2) NORMAL (human)
+b2534 SOUND LADYBUG_INTERMISSION
 b2550 STATE ladybug=(11,3) DEAD | Clyde=(10,1) NORMAL | Blinky=(6,2) NORMAL | Inky=(13,9) NORMAL | Pinky=(7,2) NORMAL (human)
 b2575 STATE ladybug=(11,3) DEAD | Clyde=(11,0) NORMAL | Blinky=(6,3) NORMAL | Inky=(14,9) NORMAL | Pinky=(7,2) NORMAL (human)
+b2582 SOUND LADYBUG_INTERMISSION
 b2600 STATE ladybug=(11,3) DEAD | Clyde=(12,0) NORMAL | Blinky=(6,4) NORMAL | Inky=(14,10) NORMAL | Pinky=(7,2) NORMAL (human)
 b2625 STATE ladybug=(11,3) DEAD | Clyde=(13,0) NORMAL | Blinky=(6,5) NORMAL | Inky=(14,11) NORMAL | Pinky=(7,2) NORMAL (human)
 b2650 STATE ladybug=(11,3) DEAD | Clyde=(14,1) NORMAL | Blinky=(7,5) NORMAL | Inky=(13,12) NORMAL | Pinky=(7,2) NORMAL (human)
@@ -162,10 +191,12 @@ b2750 STATE ladybug=(11,3) DEAD | Clyde=(11,0) NORMAL | Blinky=(9,7) NORMAL | In
 b2775 STATE ladybug=(11,3) DEAD | Clyde=(13,0) NORMAL | Blinky=(9,8) NORMAL | Inky=(11,14) NORMAL | Pinky=(7,2) NORMAL (human)
 b2800 STATE ladybug=(11,3) DEAD | Clyde=(14,0) NORMAL | Blinky=(9,9) NORMAL | Inky=(12,14) NORMAL | Pinky=(7,2) NORMAL (human)
 b2825 STATE ladybug=(11,0) DEAD | Clyde=(14,2) NORMAL | Blinky=(10,9) NORMAL | Inky=(13,14) NORMAL | Pinky=(7,2) NORMAL (human)
+b2844 SOUND LADYBUG_INTERMISSION
 b2850 STATE ladybug=(11,0) DEAD | Clyde=(14,3) NORMAL | Blinky=(11,9) NORMAL | Inky=(14,13) NORMAL | Pinky=(7,2) NORMAL (human)
 b2875 STATE ladybug=(11,0) DEAD | Clyde=(13,5) NORMAL | Blinky=(12,9) NORMAL | Inky=(14,12) NORMAL | Pinky=(7,2) NORMAL (human)
 b2900 STATE ladybug=(11,0) DEAD | Clyde=(13,5) NORMAL | Blinky=(13,8) NORMAL | Inky=(14,11) NORMAL | Pinky=(7,2) NORMAL (human)
 b2925 STATE ladybug=(11,0) DEAD | Clyde=(13,7) NORMAL | Blinky=(13,7) NORMAL | Inky=(14,10) NORMAL | Pinky=(7,2) NORMAL (human)
 b2950 STATE ladybug=(11,0) DEAD | Clyde=(13,9) NORMAL | Blinky=(13,7) NORMAL | Inky=(13,9) NORMAL | Pinky=(7,2) NORMAL (human)
+b2955 SOUND LADYBUG_INTERMISSION
 b2975 STATE ladybug=(11,0) DEAD | Clyde=(14,9) NORMAL | Blinky=(13,6) NORMAL | Inky=(12,9) NORMAL | Pinky=(7,2) NORMAL (human)
 b3000 STATE ladybug=(11,0) DEAD | Clyde=(14,11) NORMAL | Blinky=(13,5) NORMAL | Inky=(11,9) NORMAL | Pinky=(7,2) NORMAL (human)

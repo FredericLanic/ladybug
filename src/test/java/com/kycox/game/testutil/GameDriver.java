@@ -2,8 +2,6 @@ package com.kycox.game.testutil;
 
 import java.nio.file.Path;
 
-import javax.sound.sampled.AudioSystem;
-
 import org.springframework.boot.Banner;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -33,9 +31,6 @@ import com.kycox.game.tools.GameRandom;
  * aucun état. À fermer après usage ({@code try-with-resources}).
  */
 public final class GameDriver implements AutoCloseable {
-	/** Durée de la fin de partie, comme dans {@code Engine}. */
-	private static final long TIME_ENDING_MILLISECONDS = 1500;
-
 	private final ConfigurableApplicationContext context;
 	private final GameModel gameModel;
 	private final GameJournal journal;
@@ -45,7 +40,6 @@ public final class GameDriver implements AutoCloseable {
 		this.context = context;
 		this.journal = new GameJournal(seed);
 		this.gameModel = context.getBean(GameModel.class);
-		applySoundDurations(gameModel);
 	}
 
 	/** Démarre une partie avec cette graine ; la sauvegarde va dans {@code saveDirectory}. */
@@ -66,32 +60,14 @@ public final class GameDriver implements AutoCloseable {
 		return new GameDriver(context, seed);
 	}
 
-	/**
-	 * Mêmes durées qu'en jeu ({@code Engine.init}), lues dans les fichiers son
-	 * eux-mêmes : pas besoin de carte son.
-	 */
-	private static void applySoundDurations(GameModel gameModel) {
-		gameModel.getLadybugDying().setAgonyDuration(wavMilliseconds("ladybug_death.wav"));
-		gameModel.setBeginningDuration(wavMilliseconds("game_begin_level.wav"));
-		gameModel.setTimeEndingMilliseconds(TIME_ENDING_MILLISECONDS);
-		gameModel.setEndingLevelMilliseconds(wavMilliseconds("ladybug_intermission.wav"));
-	}
-
-	/** Durée d'un fichier son, arrondie comme {@code Clip.getMicrosecondLength() / 1000}. */
-	static long wavMilliseconds(String fileName) {
-		var url = GameDriver.class.getClassLoader().getResource("sound/wav/" + fileName);
-		try {
-			var format = AudioSystem.getAudioFileFormat(url);
-			var microseconds = (long) (format.getFrameLength() * 1_000_000L / format.getFormat().getFrameRate());
-			return microseconds / 1000;
-		} catch (Exception e) {
-			throw new IllegalStateException("Cannot read sound " + fileName, e);
-		}
-	}
-
 	/** Les « touches » du jeu, comme les utilise le clavier. */
 	public GameModelForController keys() {
 		return gameModel;
+	}
+
+	/** Un composant du jeu (par exemple {@code GameProperties}). */
+	public <T> T bean(Class<T> type) {
+		return context.getBean(type);
 	}
 
 	public GameModel model() {

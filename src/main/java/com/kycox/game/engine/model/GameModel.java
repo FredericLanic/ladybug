@@ -30,7 +30,9 @@ import com.kycox.game.engine.model.strategy.GameModelManageAction;
 import com.kycox.game.engine.model.strategy.ManageActionContext;
 import com.kycox.game.engine.score.GroupMessages;
 import com.kycox.game.engine.score.Score;
+import com.kycox.game.constant.sounds.Sounds;
 import com.kycox.game.engine.sound.NewSounds;
+import com.kycox.game.engine.sound.SoundDurations;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.timer.BeatPacer;
 import com.kycox.game.tools.timer.SuperPowerTimer;
@@ -103,6 +105,9 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	private final ApplicationEventPublisher applicationEventPublisher;
 	private final TickScheduler tickScheduler;
 	private final SuperPowerTimer superPowerTimer;
+	private final SoundDurations soundDurations;
+	/** Durée de la fin de partie, avant le retour à l'écran de présentation. */
+	private static final long TIME_ENDING_MILLISECONDS = 1500;
 
 	public GameModel(CurrentProgramStatus currentProgramStatus,
 					 GameMessaging gameMessaging,
@@ -117,7 +122,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 					 ManageActionContext manageActionContext,
 					 ApplicationEventPublisher applicationEventPublisher,
 					 TickScheduler tickScheduler,
-					 SuperPowerTimer superPowerTimer
+					 SuperPowerTimer superPowerTimer,
+					 SoundDurations soundDurations
 	) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
@@ -134,12 +140,18 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		this.applicationEventPublisher = applicationEventPublisher;
 		this.tickScheduler = tickScheduler;
 		this.superPowerTimer = superPowerTimer;
+		this.soundDurations = soundDurations;
 	}
 
 	@PostConstruct
 	private void init() {
 		currentProgramStatus.setProgramStart();
 		gameModelManageAction.changeStrategy(manageActionContext.getNoAction());
+		// attentes réglées sur la durée des sons (3.5.3b : lues dans les fichiers, sans carte son)
+		ladybugDying.setAgonyDuration(soundDurations.of(Sounds.LADYBUG_IS_DYING));
+		setBeginningDuration(soundDurations.of(Sounds.GAME_BEGIN_LEVEL));
+		setTimeEndingMilliseconds(TIME_ENDING_MILLISECONDS);
+		setEndingLevelMilliseconds(soundDurations.of(Sounds.LADYBUG_INTERMISSION));
 		if (Boolean.parseBoolean(System.getProperty(LOOP_AUTOSTART_PROPERTY, "true"))) {
 			programTimer.start();
 		} else {
@@ -157,8 +169,14 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	 * et les sons sont prévenus.
 	 *
 	 * <p>Appelé par le timer Swing en jeu, ou directement par un test (3.5.1e).
+	 *
+	 * <p>Les sons demandés repartent de zéro à chaque battement (3.5.3a) : un son
+	 * n'est demandé qu'au battement où son événement se produit. Avant, certains
+	 * états ne vidaient pas la liste, et la musique du début de niveau restait
+	 * demandée pendant tout {@code LEVEL_STARTING} (elle pouvait repartir).
 	 */
 	public void beat() {
+		newSounds.initSounds();
 		tickScheduler.tick();
 		superPowerTimer.tick();
 		groupMessages.tick();
@@ -188,13 +206,15 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	}
 
 	@Override
+	/**
+	 * Arrête la partie en cours (Échap puis O). Ne dépend plus du timer Swing
+	 * (3.5.3c) : la règle reste la même en jeu, et devient testable sans écran.
+	 */
 	public void forceStopGame() {
-		if (programTimer.isRunning()) {
-			logger.info("Force Stop Game");
-			gameScore.setOldScore(-1);
-			currentProgramStatus.setGameEnd();
-			initSounds();
-		}
+		logger.info("Force Stop Game");
+		gameScore.setOldScore(-1);
+		currentProgramStatus.setGameEnd();
+		initSounds();
 	}
 
 	@Override

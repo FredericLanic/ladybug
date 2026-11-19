@@ -19,11 +19,6 @@ class GameDriverTest {
 	Path saveDirectory;
 
 	@Test
-	void soundDurationsAreReadFromTheWavFiles() {
-		assertThat(GameDriver.wavMilliseconds("game_begin_level.wav")).isEqualTo(4216);
-	}
-
-	@Test
 	void theGameGoesFromPresentationToInGameLikeWithTheKeyboard() {
 		try (var game = GameDriver.start(42, saveDirectory)) {
 			var presentation = game.beatsUntil(GameStatus.PROGRAM_PRESENTATION, 200);

@@ -50,28 +50,6 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 		logger.info("Sounds preloaded: {}/{}", loaded, Sounds.values().length);
 	}
 
-	/** Durée d'un son en millisecondes ; 0 si le son n'a pas pu être chargé. */
-	private static long durationOf(Sounds sound) {
-		var clip = sound.getClip();
-		return clip == null ? 0 : clip.getMicrosecondLength() / 1000;
-	}
-
-	public long getLadybugAgonyDuration() {
-		return durationOf(Sounds.LADYBUG_IS_DYING);
-	}
-
-	public long getNewLifeFunDuration() {
-		return durationOf(Sounds.LADYBUG_EXTRA_PAC);
-	}
-
-	public long getBeginningDuration() {
-		return durationOf(Sounds.GAME_BEGIN_LEVEL);
-	}
-
-	public long getIntermissionDuration() {
-		return durationOf(Sounds.LADYBUG_INTERMISSION);
-	}
-
 	public void playSounds() {
 		if (newSounds.hasSound(Sounds.LADYBUG_IS_DYING)) {
 			stopAllSounds();
