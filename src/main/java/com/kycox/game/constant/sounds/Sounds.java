@@ -71,6 +71,11 @@ public enum Sounds {
 		return clip;
 	}
 
+	/** Nom du fichier {@code .wav}, dans {@code sound/wav/}. */
+	public String getFileName() {
+		return fileName;
+	}
+
 	public synchronized void stopSound() {
 		if (clip != null) {
 			clip.stop();

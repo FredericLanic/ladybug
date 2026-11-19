@@ -59,7 +59,7 @@ class GameModelBeatTest {
 		gameModel = new GameModel(currentProgramStatus, mock(GameMessaging.class), gameModelManageAction,
 		        mock(Score.class), mock(GhostsGroup.class), groupMessages, mock(Ladybug.class),
 		        mock(LadybugDying.class), mock(NewSounds.class), mock(ScreenData.class), manageActionContext,
-		        publisher, tickScheduler, superPowerTimer);
+		        publisher, tickScheduler, superPowerTimer, mock(com.kycox.game.engine.sound.SoundDurations.class));
 	}
 
 	@Test
