@@ -42,8 +42,8 @@ Points forts existants à reconnaître, sans les dénigrer :
 ## Décisions prises
 
 - **Garder la configuration XML Spring** (`application-context.xml`). Elle permet d'ajouter, retirer ou régler des fantômes sans recompiler, et c'est un choix voulu par Frédéric. Ne proposez pas de la remplacer par `@Configuration` Java.
-- **Rendre le XML externe prioritaire.** Un `application-context.xml` posé à côté du jar doit l'emporter sur celui du jar. Ce n'est **pas** le cas aujourd'hui : c'est vérifié, `JarLauncher` + `ClassPathXmlApplicationContext` ne lisent que l'intérieur du jar.
-- **Revoir le `main`.** `MainLadybug` doit devenir un lanceur : lecture de la configuration, choix du mode (solo, 2 joueurs local, puis héberger et rejoindre), construction du contexte, puis la fenêtre affichée via `invokeLater`.
+- **XML externe prioritaire** : fait à l'étape 2 (19/11/2026), selon la convention Spring Boot (C29) : un `application-context.xml` ou un `ladybug.properties` posé dans le dossier courant ou dans `config/` l'emporte sur celui du jar ; `--ladybug.config=file:…` en impose un. Un XML invalide arrête le jeu avec un message clair (C27).
+- **Démarrage par Spring Boot** (exigé par Frédéric le 19/11/2026) : `SpringApplicationBuilder` + `headless(false)` + `@ImportResource` du XML ; profil « gui » (`@GuiComponent`) pour l'interface, absent des tests ; `LaunchMode.LOCAL` seulement, le choix 1 ou 2 joueurs reste dans le jeu (C28). Fait à l'étape 2.
 - **Fantômes = assemblage de capacités** (composition) plutôt que des sous-classes : stratégie de déplacement, politique de vitesse, `Perception`. `Clyde`, `Inky` et `Pinky` ne diffèrent aujourd'hui que par leur vitesse initiale.
 - **La visibilité dépend du personnage.** Elle concerne le mode lampe, c'est-à-dire le cercle de lumière autour d'un joueur (touche F6, ou tirage aléatoire par niveau). Ce qu'un joueur voit dans le noir dépend « du type de fantôme et de ses pouvoirs ». Le même paramètre de perception sert à l'IA et à l'humain. La vue gagne une notion d'**observateur**.
 - **Rendu du labyrinthe : garder le style à l'identique** (contours bleus fins, coins arrondis, pointillés de gommes) et refaire l'implémentation : autotiling par table, image pré-rendue, `MazeTheme`.
@@ -61,7 +61,7 @@ Points forts existants à reconnaître, sans les dénigrer :
 2. Lanceur et XML externe
 3. Tests. Le point 3.5, « tests autonomes » (golden master, scénarios, bot qui vise, son, PIT ≥ 60 %), vient du doc de Frédéric https://claude.ai/artifact/4mXUqpsGiwLczZzegYUyUP (C23 à C26)
 
-**Ordre de réalisation (décidé le 18/11/2026, complété le 19/11/2026)** : 1 → 3.1, 3.2 et 3.4 (tests unitaires, sondes de log ; faits) → 3.5.1 (horloge unique en battements ; fait le 19/11) → 2 → 3.3 (test du contexte Spring, possible seulement une fois le lanceur en place, car le `component-scan` crée aujourd'hui les vues Swing). La numérotation est conservée.
+**Ordre de réalisation (décidé le 18/11/2026, complété le 19/11/2026)** : 1 → 3.1, 3.2 et 3.4 (tests unitaires, sondes de log ; faits) → 3.5.1 (horloge unique en battements) → 2 (avec Spring Boot) → 3.3 (fait avec 2.7) ; tout cela est fait au 19/11/2026 (test du contexte Spring, possible seulement une fois le lanceur en place, car le `component-scan` crée aujourd'hui les vues Swing). La numérotation est conservée.
 
 4. Découplage du modèle
 5. `PlayerInput`

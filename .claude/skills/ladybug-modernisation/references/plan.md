@@ -193,7 +193,7 @@ Le projet n'a aucun test. Il faut donc une référence du **comportement** avant
 
 0.C.5 **Mettre à jour le plan, le PDF, le skill et le dashboard** avec l'état réel de `develop` (mesures relancées sur la branche, dette technique revue). Le plan actuel avait été écrit à partir de `master`.
 
-> **Ordre de réalisation (décidé le 18/11/2026, complété le 19/11/2026)** : étape 1 → **3.1, 3.2 et 3.4** (tests unitaires, sondes de log) → **3.5.1** (horloge unique en tics, C24) → étape 2 → **3.3** (test du contexte Spring). La numérotation est conservée. Raisons : les tests ont besoin d'un build sain et des versions de test fixées par Spring Boot 3.5 (étape 1) ; les tests unitaires de logique pure protègent ensuite le premier vrai changement de code (étape 2) ; le test du contexte Spring, lui, n'est faisable proprement qu'après l'étape 2, car le `component-scan` de `com.kycox` crée aujourd'hui les 14 vues Swing (`MainFrame`…), ce qui échouerait en mode headless.
+> **Ordre de réalisation (décidé le 18/11/2026, complété le 19/11/2026)** : étape 1 → **3.1, 3.2 et 3.4** (tests unitaires, sondes de log) → **3.5.1** (horloge unique en tics, C24) → étape 2 → **3.3** (test du contexte Spring, fait avec 2.7). **Tout cela est fait au 19/11/2026.** Reste à décider : 3.5.2 à 3.5.5 avant l'étape 4, ou en parallèle. La numérotation est conservée. Raisons : les tests ont besoin d'un build sain et des versions de test fixées par Spring Boot 3.5 (étape 1) ; les tests unitaires de logique pure protègent ensuite le premier vrai changement de code (étape 2) ; le test du contexte Spring, lui, n'est faisable proprement qu'après l'étape 2, car le `component-scan` de `com.kycox` crée aujourd'hui les 14 vues Swing (`MainFrame`…), ce qui échouerait en mode headless.
 
 ## Étape 1 : remettre le socle d'aplomb
 1.1 Faire passer le build (`mvn compile`) **via Maven Central**, avec un réglage propre au projet, sans toucher à `~/.m2/settings.xml` (décidé le 18/11/2026 ; le Nexus local n'est pas relancé).
@@ -208,6 +208,16 @@ Le projet n'a aucun test. Il faut donc une référence du **comportement** avant
 1.4 CI : JDK 21, actions GitHub en v4, `::set-output` remplacé par `$GITHUB_OUTPUT`. **Nouvelle CI `build.yml`** (décidée le 18/11/2026) : `mvn verify` à chaque PR et à chaque push sur `develop`.
 
 ## Étape 2 : nouveau démarrage (lanceur et XML externe)
+> **Fait le 19/11/2026** (branche `etape-2-lanceur`), **avec Spring Boot** à la demande de Frédéric (« JE VEUX QUE CE SOIT SPRINGBOOT ») :
+> - 2.1 `SpringApplicationBuilder` + `headless(false)` (Spring Boot passe sinon la JVM en mode sans écran, d'où l'échec de l'ancien essai commenté) + `@ImportResource` du XML ; `MainLadybug` est un `ApplicationRunner` qui ouvre la fenêtre par `invokeLater` ; ancien format de log conservé ;
+> - 2.2 version lue dans le manifest (bannière Spring Boot et log) ; le contrôle « Java 19+ » était du code mort (une JVM plus ancienne refuse de charger les classes compilées pour Java 21) : retiré. **D03 corrigée** ;
+> - 2.3 et 2.4 fichiers externes selon la convention Spring Boot (**C29** : dossier courant et `config/`, et non « à côté du jar ») : `application-context.xml` (`--ladybug.config=file:…` pour en imposer un) et `ladybug.properties` (`spring.config.import`) ; `StartupReport` écrit les fichiers utilisés ; XML invalide → message clair et arrêt (**C27**) ;
+> - 2.5 `LaunchMode.LOCAL` seulement ; le choix 1 ou 2 joueurs reste dans le jeu (**C28**) ;
+> - 2.7 et 3.3 profil « gui » par la méta-annotation `@GuiComponent` (21 classes d'interface) ; `SpringContextTest` et `ExternalSpringXmlTest` chargent le vrai contexte sans écran ;
+> - 2.8 écran de la souris, place réellement disponible (**D18 corrigée**) ; à la demande de Frédéric : bloc centré, zone du bas collée au labyrinthe, entre 2 et 3 cases de haut, dessin de Ladybug sur toute sa bande, plafonné à une case ;
+> - 2.6 README « Personnaliser le jeu », fiche `doc/patterns/configuration-externalisee.md`.
+> 128 tests ; robot de fin d'étape dans `doc/reference-apres/etape-2/`.
+
 2.1 `MainLadybug` devient un petit **lanceur** :
 - lecture de la configuration ;
 - choix du mode ;
