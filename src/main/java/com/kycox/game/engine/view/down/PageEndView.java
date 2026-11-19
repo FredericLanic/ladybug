@@ -26,12 +26,12 @@ import com.kycox.game.engine.view.ghost.GhostView;
 import com.kycox.game.engine.view.ladybug.LadybugView;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import javax.swing.*;
 import java.awt.*;
 
-@Component
+@GuiComponent
 public class PageEndView extends JPanel implements ApplicationListener<EventGameModel>, MainGraphicStructure {
 	private static final long DURATION_MESSAGE_SHOWING = 800;
 	private final transient GameMessaging gameMessaging;

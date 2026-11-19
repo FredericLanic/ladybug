@@ -23,13 +23,13 @@ import com.kycox.game.constant.contract.LadybugForGameView;
 import com.kycox.game.constant.contract.MainGraphicStructure;
 import com.kycox.game.engine.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component
+@GuiComponent
 public class PageLeftView extends JPanel implements ApplicationListener<EventGameModel>, MainGraphicStructure {
 	private transient GameModelForViews gameModelForViews;
 

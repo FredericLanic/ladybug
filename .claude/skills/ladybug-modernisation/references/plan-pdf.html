@@ -46,7 +46,7 @@
   <tr><th>#</th><th>Étape</th><th>Pourquoi</th><th>Patterns ou outils</th></tr>
   <tr><td>0</td><td>Outillage et état de référence</td><td>Créer la branche depuis <code>develop</code>, voir le code avant d'y toucher, figer le comportement « avant », travailler avec la documentation à jour</td><td>Graphify, Context7, checklist et captures</td></tr>
   <tr><td>1</td><td>Socle</td><td>Faire compiler et démarrer, aligner les versions</td><td>–</td></tr>
-  <tr><td>2</td><td>Lanceur et XML externe <i>(après 3.1 et 3.2)</i></td><td>Un démarrage clair, une configuration modifiable sans recompiler</td><td>Factory</td></tr>
+  <tr><td>2</td><td>Lanceur et XML externe <i>(fait le 19/11/2026)</i></td><td>Un démarrage clair, une configuration modifiable sans recompiler</td><td>Spring Boot, configuration externalisée</td></tr>
   <tr><td>3</td><td>Tests <i>(3.1, 3.2, 3.4 et 3.5.1 avant l'étape 2, 3.3 après)</i></td><td>Un filet de sécurité avant de refactoriser</td><td>JUnit 5</td></tr>
   <tr><td>4</td><td>Découplage du modèle</td><td>Un modèle indépendant de Swing, base du réseau</td><td>Observer, State, Snapshot</td></tr>
   <tr><td>5</td><td><code>PlayerInput</code></td><td>Un contrôleur par personnage, plusieurs fantômes joueurs</td><td>Strategy</td></tr>
@@ -242,6 +242,7 @@
 <p class="sub"><b class="id">1.4</b> CI : JDK 21, actions GitHub en v4, <code>::set-output</code> remplacé par <code>$GITHUB_OUTPUT</code>. <b>Nouvelle CI <code>build.yml</code></b> (décidée le 18/11/2026) : <code>mvn verify</code> à chaque PR et à chaque push sur <code>develop</code>.</p>
 
 <h2><span class="num">2</span>Nouveau démarrage (lanceur et XML externe)</h2>
+<div class="box"><b>Fait le 19/11/2026, avec Spring Boot</b> (demande de Frédéric) : <code>SpringApplicationBuilder</code> + <code>headless(false)</code> + <code>@ImportResource</code> ; version lue dans le manifest (<b>D03</b>) ; fichiers externes selon la convention Spring Boot, dossier courant et <code>config/</code> (C29), avec <code>--ladybug.config</code> ; XML invalide → message clair et arrêt (C27) ; <code>LaunchMode.LOCAL</code> (C28) ; profil « gui » (<code>@GuiComponent</code>) et test du contexte sans écran (3.3) ; écran de la souris, bloc centré, zone du bas adaptée (<b>D18</b>) ; README « Personnaliser le jeu » et fiche Configuration externalisée.</div>
 <p class="sub"><b class="id">2.1</b> <code>MainLadybug</code> devient un petit <b>lanceur</b> : lecture de la configuration, choix du mode, construction du contexte Spring, affichage de la fenêtre via <code>SwingUtilities.invokeLater</code>.</p>
 <p class="sub"><b class="id">2.2</b> Version lue depuis le manifest (fin de la chaîne en dur), contrôle de version de Java aligné sur le pom.</p>
 <p class="sub"><b class="id">2.3</b> <b>XML externe prioritaire</b> :</p>

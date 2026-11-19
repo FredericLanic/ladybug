@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copie de application-context.xml sans Clyde dans le groupe : sert au test 3.3
+     « un XML imposé par ladybug.config remplace celui du jar ». -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	   default-lazy-init="false">
+	<context:annotation-config />
+	<context:component-scan base-package="com.kycox" />
+
+	<bean id="SpeedFunctionGhost"
+          class="com.kycox.game.tools.maths.SpeedFunction" scope="prototype"
+          init-method="init">
+		<property name="lowLimit" value="2" />
+	</bean>
+
+	<bean id="GhostSensitiveBehaviour"
+		class="com.kycox.game.tools.maths.GhostSensitiveBehaviour"
+		scope="prototype" />
+
+	<bean id="Clyde"
+		  class="com.kycox.game.body.ghost.Clyde"
+		  scope="prototype">
+		<property name="color" value="ORANGE" />
+		<property name="behaviour" value="CALM" />
+		<property name="speedFunction" ref="SpeedFunctionGhost" />
+		<property name="sensitiveBehaviour"	ref="GhostSensitiveBehaviour" />
+		<property name="maximumAttackDist" value="96"/>
+	</bean>
+
+	<bean id="Blinky"
+		  class="com.kycox.game.body.ghost.Blinky"
+		  scope="prototype">
+		<property name="color" value="RED" />
+		<property name="behaviour" value="AGGRESSIVE" />
+		<property name="speedFunction" ref="SpeedFunctionGhost" />
+		<property name="sensitiveBehaviour" ref="GhostSensitiveBehaviour" />
+		<property name="blinkySpeedIndex" ref="BlinkySpeedIndex" />
+	</bean>
+
+	<bean id="Inky"
+		  class="com.kycox.game.body.ghost.Inky"
+		  scope="prototype">
+		<property name="color" value="CYAN" />
+		<property name="behaviour" value="CALM" />
+		<property name="speedFunction" ref="SpeedFunctionGhost" />
+		<property name="sensitiveBehaviour" ref="GhostSensitiveBehaviour" />
+		<property name="maximumAttackDist" value="120"/>
+	</bean>
+
+	<bean id="Pinky"
+		  class="com.kycox.game.body.ghost.Pinky"
+		  scope="prototype">
+		<property name="color" value="PINK" />
+		<property name="behaviour" value="SMART" />
+		<property name="speedFunction" ref="SpeedFunctionGhost" />
+		<property name="sensitiveBehaviour" ref="GhostSensitiveBehaviour" />
+	</bean>
+
+	<bean id="GroupGhost"
+		class="com.kycox.game.body.GhostsGroup">
+		<property name="ghosts">
+			<list>
+				<ref bean="Blinky" />
+				<ref bean="Inky" />
+				<ref bean="Pinky" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="Ladybug"
+		  class="com.kycox.game.body.ladybug.Ladybug"
+		  scope="singleton">
+		<property name="speedFunction">
+			<bean class="com.kycox.game.tools.maths.SpeedFunction" init-method="init">
+				<property name="lowLimit" value="4" />
+			</bean>
+		</property>
+	</bean>
+
+</beans>

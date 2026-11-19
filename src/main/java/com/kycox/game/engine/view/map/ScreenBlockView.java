@@ -24,11 +24,11 @@ import com.kycox.game.engine.screendata.ScreenData;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.engine.view.map.rendering.DisplayRendering;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import java.awt.*;
 
-@Component
+@GuiComponent
 public class ScreenBlockView {
 
 	@Setter

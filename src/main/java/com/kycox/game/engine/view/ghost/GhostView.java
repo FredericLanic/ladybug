@@ -24,11 +24,11 @@ import com.kycox.game.constant.ghost.GhostHeadbandImages;
 import com.kycox.game.constant.contract.GhostForView;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import java.awt.*;
 
-@Component
+@GuiComponent
 public class GhostView {
 	private final GameProperties gameProperties;
 

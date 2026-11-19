@@ -20,9 +20,9 @@ import com.kycox.game.engine.model.GameModel;
 import com.kycox.game.engine.sound.GameSounds;
 import com.kycox.game.engine.view.CentralView;
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
-@Component
+@GuiComponent
 public class Engine {
 	private final CentralView centralView;
 	private final GameModel gameModel;

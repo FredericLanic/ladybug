@@ -13,11 +13,11 @@ import com.kycox.game.tools.os.WindowsHost;
 import com.kycox.game.properties.GameProperties;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import java.util.Optional;
 
-@Component
+@GuiComponent
 @Conditional(WindowsHost.class)
 public class XboxOneController extends XBoxOneControllerManager implements ApplicationListener<EventGameModel> {
 

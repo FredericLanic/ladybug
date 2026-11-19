@@ -22,7 +22,7 @@ import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
 import com.kycox.game.engine.view.body.BodyImg;
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
 import java.awt.*;
 
@@ -30,7 +30,7 @@ import java.awt.*;
  * Cinématique pour afficher / entendre lors de la mort de Ladybug
  *
  */
-@Component
+@GuiComponent
 public class LadybugDyingView extends LadybugCommun {
 	private int deltaBips;
 	private final BodyImg empty = new BodyImg(GameImages.EMPTY.getImage());
