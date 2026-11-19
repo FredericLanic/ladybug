@@ -4,10 +4,8 @@ import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.constant.fruits.Fruits;
 import com.kycox.game.tools.maths.LitLampMode;
 import com.kycox.game.engine.message.GameMessaging;
-import com.kycox.game.engine.model.CurrentProgramStatus;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.IGameModelAction;
-import com.kycox.game.tools.timer.WaitAndDoActionAfterTimer;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,8 +54,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 	public void programBeat() {
 		initLevel();
 		currentGameStatus.setLevelStarting();
-		waitAndDoActionAfterTimer = new WaitAndDoActionAfterTimer();
-		waitAndDoActionAfterTimer.launch(beginningDuration, currentGameStatus, CurrentProgramStatus.TO_INGAME);
+		tickScheduler.schedule(beginningDuration, currentGameStatus::setInGame);
 		setSoundRequests();
 	}
 

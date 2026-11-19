@@ -14,7 +14,7 @@ import com.kycox.game.engine.score.Score;
 import com.kycox.game.engine.sound.NewSounds;
 import com.kycox.game.tools.GameRandom;
 import com.kycox.game.tools.timer.SuperPowerTimer;
-import com.kycox.game.tools.timer.WaitAndDoActionAfterTimer;
+import com.kycox.game.tools.timer.TickScheduler;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,9 @@ public class AbstratGameModel {
 	protected boolean soundActive = true;
 	@Autowired
 	protected SuperPowerTimer superPowerTimer;
-	protected WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;
+	/** Actions différées, décomptées en battements par la boucle du jeu (3.5.1b). */
+	@Autowired
+	protected TickScheduler tickScheduler;
 
 	/**
 	 * Paramêtrage des fantômes dans le niveau actuel
