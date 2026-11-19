@@ -32,6 +32,9 @@ import com.kycox.game.engine.score.GroupMessages;
 import com.kycox.game.engine.score.Score;
 import com.kycox.game.engine.sound.NewSounds;
 import com.kycox.game.tools.Utils;
+import com.kycox.game.tools.timer.BeatPacer;
+import com.kycox.game.tools.timer.SuperPowerTimer;
+import com.kycox.game.tools.timer.TickScheduler;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
@@ -55,6 +58,12 @@ import static com.kycox.game.constant.game.GameMainConstants.PACE;
 @Component
 public class GameModel implements GameModelForViews, GameModelForSounds, GameModelForController {
 	private static final Logger logger = LoggerFactory.getLogger(GameModel.class);
+	/**
+	 * Propriété système : {@code -Dladybug.loop.autostart=false} empêche le timer
+	 * Swing de démarrer ; un test fait alors avancer le jeu lui-même avec
+	 * {@link #beat()} (étape 3.5.1e).
+	 */
+	public static final String LOOP_AUTOSTART_PROPERTY = "ladybug.loop.autostart";
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
 	@Getter
@@ -83,6 +92,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	private boolean showHelpForXboxes = false;
 	@Getter
 	private boolean soundActive = true;
+	/** Cadence à pas fixe : 25 battements par seconde, retards rattrapés (3.5.1b). */
+	private final BeatPacer beatPacer = new BeatPacer(PACE, 5);
 	private final Timer programTimer = createProgramTimer();
 	@Setter
 	@Getter
@@ -90,6 +101,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	@Getter
 	boolean debugMode = false;
 	private final ApplicationEventPublisher applicationEventPublisher;
+	private final TickScheduler tickScheduler;
+	private final SuperPowerTimer superPowerTimer;
 
 	public GameModel(CurrentProgramStatus currentProgramStatus,
 					 GameMessaging gameMessaging,
@@ -102,7 +115,9 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 					 NewSounds newSounds,
 					 ScreenData screenData,
 					 ManageActionContext manageActionContext,
-					 ApplicationEventPublisher applicationEventPublisher
+					 ApplicationEventPublisher applicationEventPublisher,
+					 TickScheduler tickScheduler,
+					 SuperPowerTimer superPowerTimer
 	) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
@@ -117,16 +132,36 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		this.screenData = screenData;
 		// pour envoyer aux autres vues l'état courant du jeu
 		this.applicationEventPublisher = applicationEventPublisher;
+		this.tickScheduler = tickScheduler;
+		this.superPowerTimer = superPowerTimer;
 	}
 
 	@PostConstruct
 	private void init() {
 		currentProgramStatus.setProgramStart();
 		gameModelManageAction.changeStrategy(manageActionContext.getNoAction());
-		programTimer.start();
+		if (Boolean.parseBoolean(System.getProperty(LOOP_AUTOSTART_PROPERTY, "true"))) {
+			programTimer.start();
+		} else {
+			logger.info("Game loop not started ({}=false): beats are driven by the caller", LOOP_AUTOSTART_PROPERTY);
+		}
 	}
 
-	private void actionsByTimerBip() {
+	/**
+	 * Un battement de la boucle du jeu (toutes les {@code PACE} ms), pattern
+	 * <b>Game Loop / Update Method</b> (fiche {@code doc/patterns/game-loop.md}).
+	 *
+	 * <p>Ordre : les actions différées arrivées à échéance (3.5.1b), le
+	 * super-pouvoir (3.5.1c) et les messages affichés (3.5.1d) avancent d'un
+	 * battement ; puis l'état courant du jeu joue son battement ; enfin les vues
+	 * et les sons sont prévenus.
+	 *
+	 * <p>Appelé par le timer Swing en jeu, ou directement par un test (3.5.1e).
+	 */
+	public void beat() {
+		tickScheduler.tick();
+		superPowerTimer.tick();
+		groupMessages.tick();
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
 		applicationEventPublisher.publishEvent(new EventGameModel(this));
@@ -137,9 +172,19 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		screenData.setLitLampMode(!screenData.isLitLampMode());
 	}
 
+	/**
+	 * Le timer Swing se réveille deux fois par battement ; le {@link BeatPacer}
+	 * décide combien de battements jouer (0, 1, parfois 2 pour rattraper un
+	 * retard). Pattern Game Loop à pas fixe.
+	 */
 	private Timer createProgramTimer() {
-		ActionListener action = event -> actionsByTimerBip();
-		return new Timer(PACE, action);
+		ActionListener action = event -> {
+			var beats = beatPacer.beatsDue(System.nanoTime());
+			for (var i = 0; i < beats; i++) {
+				beat();
+			}
+		};
+		return new Timer(PACE / 2, action);
 	}
 
 	@Override

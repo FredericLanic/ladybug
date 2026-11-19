@@ -17,7 +17,6 @@
 package com.kycox.game.engine.model;
 
 import com.kycox.game.constant.game.GameStatus;
-import com.kycox.game.constant.contract.DoActionAfterTimer;
 import com.kycox.game.constant.contract.GameStatusForGameView;
 import com.kycox.game.engine.screendata.repo.LevelRepository;
 import lombok.Getter;
@@ -27,13 +26,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfterTimer {
+public class CurrentProgramStatus implements GameStatusForGameView {
 	private static final Logger logger = LoggerFactory.getLogger(CurrentProgramStatus.class);
-	public static final int TO_INGAME = 0;
-	public static final int TO_LEVEL_START = 3;
-	public static final int TO_PROGRAM_PRESENTATION_START = 2;
-	public static final int TO_PROGRAM_START = 1;
-	public static final int TO_PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL = 4;
 
 	@Setter
 	@Getter
@@ -48,18 +42,6 @@ public class CurrentProgramStatus implements GameStatusForGameView, DoActionAfte
 
 	public CurrentProgramStatus(LevelRepository levelRepository) {
 		this.levelRepository = levelRepository;
-	}
-
-	@Override
-	public void doActionAfterTimer(int nbrAction) {
-		switch (nbrAction) {
-			case TO_INGAME -> setInGame();
-			case TO_PROGRAM_START -> setProgramStart();
-			case TO_PROGRAM_PRESENTATION_START -> setProgramPresentationStart();
-			case TO_LEVEL_START -> setLevelStart();
-			case TO_PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL -> setProgramAskKeepPreviousGameLevel();
-			default -> logger.debug("no number " + nbrAction + " action");
-		}
 	}
 
 	// KYLIAN C'EST ICI

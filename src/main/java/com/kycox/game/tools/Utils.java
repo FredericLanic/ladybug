@@ -17,13 +17,10 @@
 package com.kycox.game.tools;
 
 import java.awt.Point;
-import java.security.SecureRandom;
 
 import com.kycox.game.constant.game.GameMainConstants;
 
 public final class Utils {
-	private static final SecureRandom secureRandom = new SecureRandom();
-
 	/**
 	 * Converti un point du graphique en un block
 	 *
@@ -40,8 +37,9 @@ public final class Utils {
 		return new Point(blockPoint.x * GameMainConstants.BLOCK_SIZE, blockPoint.y * GameMainConstants.BLOCK_SIZE);
 	}
 
+	/** Entier tiré entre 0 et {@code max} (exclu), via la source unique {@link GameRandom}. */
 	public static int generateRandomInt(int max) {
-		return secureRandom.nextInt(max);
+		return GameRandom.nextInt(max);
 	}
 
 	// origin : https://algorithms.tutorialhorizon.com/convert-integer-to-roman/
@@ -58,9 +56,9 @@ public final class Utils {
 		return roman.toString();
 	}
 
+	/** Valeur d'énumération tirée via la source unique {@link GameRandom}. */
 	public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
-		var x = secureRandom.nextInt(clazz.getEnumConstants().length);
-		return clazz.getEnumConstants()[x];
+		return GameRandom.randomEnum(clazz);
 	}
 
 	private Utils() {

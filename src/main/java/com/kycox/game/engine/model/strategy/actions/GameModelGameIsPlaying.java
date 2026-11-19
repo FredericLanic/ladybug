@@ -8,6 +8,7 @@ import com.kycox.game.constant.fruits.Fruits;
 import com.kycox.game.engine.message.GameFunMessages;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.IGameModelAction;
+import com.kycox.game.tools.GameRandom;
 import com.kycox.game.tools.Utils;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -15,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
-import java.security.SecureRandom;
 
 @Component
 public class GameModelGameIsPlaying extends AbstratGameModel implements IGameModelAction {
@@ -70,7 +70,7 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	}
 
 	private void addNewFunProgramMessage() {
-		var addFunMessages = new SecureRandom().nextInt(1000) > 996;
+		var addFunMessages = GameRandom.nextInt(1000) > 996;
 		if (addFunMessages) {
 			gameMessaging.addMessage(
 					Utils.randomEnum(GameFunMessages.class).getKey()

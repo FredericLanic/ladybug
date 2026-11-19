@@ -12,13 +12,12 @@ import com.kycox.game.engine.model.CurrentProgramStatus;
 import com.kycox.game.engine.score.GroupMessages;
 import com.kycox.game.engine.score.Score;
 import com.kycox.game.engine.sound.NewSounds;
+import com.kycox.game.tools.GameRandom;
 import com.kycox.game.tools.timer.SuperPowerTimer;
-import com.kycox.game.tools.timer.WaitAndDoActionAfterTimer;
+import com.kycox.game.tools.timer.TickScheduler;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.security.SecureRandom;
 
 public class AbstratGameModel {
 	@Getter
@@ -52,7 +51,9 @@ public class AbstratGameModel {
 	protected boolean soundActive = true;
 	@Autowired
 	protected SuperPowerTimer superPowerTimer;
-	protected WaitAndDoActionAfterTimer waitAndDoActionAfterTimer;
+	/** Actions différées, décomptées en battements par la boucle du jeu (3.5.1b). */
+	@Autowired
+	protected TickScheduler tickScheduler;
 
 	/**
 	 * Paramêtrage des fantômes dans le niveau actuel
@@ -96,7 +97,7 @@ public class AbstratGameModel {
 	 * Ajoute des sons en fonction de l'état des fantômes et de ladybug
 	 */
 	protected void setSoundRequests() {
-		var musicOn = new SecureRandom().nextInt(1000) > 997;
+		var musicOn = GameRandom.nextInt(1000) > 997;
 		newSounds.initSounds();
 
 		newSounds.addGameBeginLevel(currentGameStatus.isLevelStarting());

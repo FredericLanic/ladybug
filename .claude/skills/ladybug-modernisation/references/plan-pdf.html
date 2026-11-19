@@ -278,9 +278,9 @@
 <p class="sub"><b class="id">3.5</b> <b>Tests autonomes</b> (décidé le 19/11/2026, C23 ; doc « Ladybug — Stratégie de tests autonomes » écrit par Frédéric). Chaque PR prouve, sans passage humain, que Ladybug se comporte comme avant ; le passage humain se réduit au son et au plaisir de jeu. S'ajoute à 3.1, 3.2 et 3.4. Bot de test dans <code>src/test/</code> seulement. Objectif : score de mutation PIT ≥ 60 %.</p>
 <p class="sub">Cinq couches sans fenêtre, lancées par <code>mvn verify</code>, sur une horloge en tics et une graine fixées par le test : golden master (journal d'événements et images clés) ; scénarios pas à pas ; bot joueur qui vise, avec règles vérifiées en continu ; son (faux lecteur) ; tests unitaires.</p>
 <ul>
-  <li><b>3.5.1 Rendre le jeu testable, avant l'étape 2</b> (C24) : minuteries qui <b>comptent en tics</b> (durée ÷ <code>PACE</code>, C25), source aléatoire unique à graine, durées des sons derrière une interface, boucle appelable par un test. Devrait faire disparaître D22 ;</li>
-  <li>3.5.2 Golden master solo puis 2 joueurs ; une partie de référence atteint le niveau 2 (C26) ;</li>
-  <li>3.5.3 Touches spéciales, manette derrière une interface (corrige D19), faux lecteur de sons ;</li>
+  <li><b>3.5.1 Rendre le jeu testable, avant l'étape 2</b> (C24) — <b>fait le 19/11/2026</b> : <code>GameRandom</code> (hasard à graine), <code>TickScheduler</code> (attentes en battements sur le fil Swing, <b>D22 corrigée</b>), <code>BeatPacer</code> (boucle à pas fixe, 25 battements/s réels ; sans lui la musique du début de niveau était jouée deux fois), <code>SuperPowerTimer</code> et messages en battements (plus aucun <code>java.util.Timer</code> dans le modèle), <code>GameModel.beat()</code> public, fiche <code>doc/patterns/game-loop.md</code>. Robot : 174 statuts identiques à la référence. Partie rejouée à l'identique : reportée à 3.5.2 ;</li>
+  <li>3.5.2 Golden master solo puis 2 joueurs ; une partie de référence atteint le niveau 2 (C26) ; partie à graine fixe rejouée à l'identique ;</li>
+  <li>3.5.3 Touches spéciales, manette derrière une interface (corrige D19), faux lecteur de sons, durées des sons derrière une interface ;</li>
   <li>3.5.4 CI sur Ubuntu, Windows et macOS ;</li>
   <li>3.5.5 PIT dans Maven, seuil de 60 % dans la CI.</li>
 </ul>

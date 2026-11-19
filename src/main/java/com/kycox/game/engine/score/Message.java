@@ -18,22 +18,31 @@ package com.kycox.game.engine.score;
 
 import java.awt.Point;
 
-import com.kycox.game.tools.timer.IncrementScoreTimer;
+import com.kycox.game.tools.timer.TickCountdown;
 
 import lombok.Getter;
-import lombok.Setter;
 
+/**
+ * Message affiché un court instant dans le labyrinthe (points gagnés, etc.).
+ *
+ * <p>Étape 3.5.1d : le message compte lui-même ses battements d'affichage
+ * ({@link TickCountdown}, 1 s = 25 battements), avancé par la boucle du jeu via
+ * {@link GroupMessages#tick()}, au lieu de lancer sa propre minuterie dans un
+ * autre fil d'exécution.
+ */
 public class Message {
+	/** Durée d'affichage d'un message, en millisecondes. */
+	static final long DISPLAY_MILLISECONDS = 1000;
+
 	@Getter
-	@Setter
 	private boolean dying;
 	@Getter
 	private final MessageType messageType;
 	/** Position dans la fenêtre où le score est affiché */
 	@Getter
 	private final Point position;
-	/** Timer d'affichage du score dans la fenêtre */
-	private final IncrementScoreTimer scoreTimer;
+	/** Battements d'affichage restants */
+	private final TickCountdown displayCountdown = new TickCountdown();
 	/** Valeur à afficher */
 	@Getter
 	private final String value;
@@ -42,8 +51,14 @@ public class Message {
 		this.position = position;
 		this.value = value;
 		this.messageType = messageType;
-		setDying(false);
-		scoreTimer = new IncrementScoreTimer(this);
-		scoreTimer.launch(1000);
+		dying = false;
+		displayCountdown.start(DISPLAY_MILLISECONDS);
+	}
+
+	/** Avance d'un battement ; le message meurt à la fin de son affichage. */
+	public void tick() {
+		if (displayCountdown.tick()) {
+			dying = true;
+		}
 	}
 }
