@@ -169,8 +169,8 @@ Frédéric a demandé que **tout ce qu'on se dit soit retenu**. Après chaque di
 3. Régénérez le PDF : modifiez `references/plan-pdf.html`, puis lancez Chrome headless avec `--print-to-pdf=doc/plan-modernisation-ladybug.pdf`.
 4. Mettez à jour le dashboard (voir la section « Dashboard ») : statuts, mesures, idées, plan en détail et nouvelle entrée de journal. Frédéric veut que **toutes les idées et tout le plan** y soient lisibles.
 5. **Sauvegardez tout dans `~/Documents/Claude/ladybug`**, à la demande de Frédéric :
-   - lancez `sh .claude/skills/ladybug-modernisation/scripts/sauvegarde.sh` depuis la racine du dépôt (copie du plan, du PDF, du skill, de la mémoire et des conversations en `.jsonl` et `.md`) ;
-   - exportez les données du dashboard avec `read_db` (`list`, `out_dir` = `~/Documents/Claude/ladybug/dashboard/donnees`) pour `datasets` et chaque collection `data/ladybug/*` ;
+   - lancez `sh .claude/skills/ladybug-modernisation/scripts/sauvegarde.sh <dossier_export>` depuis la racine du dépôt, après l'export ci-dessous (copie du plan, du PDF, du skill, de la mémoire et des conversations en `.jsonl` et `.md`) ;
+   - exportez les données du dashboard avec `read_db` (`list`) pour `datasets` et chaque collection `data/ladybug/*`, avec un `out_dir` **vide dans le scratchpad** (l'export refuse d'écraser un fichier existant), puis passez ce dossier à `sauvegarde.sh` : il le fusionne dans `~/Documents/Claude/ladybug/dashboard/donnees` sans rien supprimer, et régénère le **dashboard local**, la carte Ladybug et la page d'accueil `~/Documents/Claude/accueil/index.html` (skill utilisateur `dashboard-local`) ;
    - si la page a changé, copiez aussi `files/index.html` dans `dashboard/page-index.html`.
 
 Lisez `references/journal.md` quand vous avez besoin du contexte d'une décision : pourquoi le XML est conservé, comment on a vérifié que le XML externe n'était pas lu, d'où vient l'idée de la perception, etc.

@@ -362,3 +362,15 @@ Ajoutez une entrée à chaque nouvelle discussion importante. Le skill le demand
 - Le plan 3.2 est corrigé : « case visée par fantôme » remplacé par le comportement commun (décision du 19/11).
 - Partie à la main de Frédéric (10 h 29 – 10 h 30, code 0, aucune erreur) : **toutes les sondes vues en vrai**. 85 gommes, 4 fantômes mangés puis 4 régénérés en (7,2), 3 téléportations (Ladybug et Clyde), fruit 1 apparu puis mangé (score 181), Ladybug mangée par Clyde (computer). Reste non vu : Ladybug mangée par un fantôme humain (partie en solo). Deux fantômes mangés au même battement affichent le même score (celui de fin de battement) : comportement accepté.
 - Feu vert de Frédéric : plan, journal, skill et PDF commités tout de suite, sans attendre 3.5.1.
+
+### 19/11/2026 : dashboards locaux
+- Demande de Frédéric : un dashboard local pour Ladybug, puis un par sujet professionnel, avec une page d'accueil où chaque projet a sa carte (image ou résumé). Les sujets pro restent **entièrement en local**, et la mémoire de chaque projet doit être **étanche** vis-à-vis des autres. « Je ne veux rien perdre des actions que j'ai réalisées. »
+- Réponse de Claude sur l'étanchéité : Claude Code range déjà mémoire et conversations par dossier de travail ; règle : un dossier par projet, Claude lancé depuis ce dossier. À éviter pour les données pro : `~/.claude/CLAUDE.md`, `~/.claude/skills`, `~/.claude/plans` (partagés). Les conversations passent toujours par Anthropic : à vérifier avec la politique de Clever Age.
+- Pas de serveur : pages HTML statiques, hors ligne, données et image intégrées, ouvertes d'un double-clic.
+- Réalisé (feu vert « ok vas-y, capture en partie ») :
+  - skill utilisateur générique **`dashboard-local`** (`~/.claude/skills/dashboard-local/` : `scripts/generer.py`, `references/format.md`), sans aucune donnée de projet. Le générateur n'écrit que les `index.html` et la carte, ne supprime rien ;
+  - dashboard local Ladybug : `~/Documents/Claude/ladybug/dashboard/index.html` (projet.json, carte.png = capture en partie de l'étape 3) ;
+  - page d'accueil `~/Documents/Claude/accueil/index.html`, cartes dans `accueil/cartes/` (titre, résumé, image, lien ; résumé calculé : étape en cours, dettes, décisions, dernière entrée) ;
+  - `sauvegarde.sh` accepte un dossier d'export, le fusionne sans suppression, puis régénère dashboard, carte et accueil ;
+  - j34 complété dans le dashboard en ligne avec la partie à la main.
+- Piège noté : l'export `read_db` avec `out_dir` refuse d'écraser des fichiers déjà présents ; l'ancien export a été conservé dans `dashboard/donnees-avant-2026-11-19`.
