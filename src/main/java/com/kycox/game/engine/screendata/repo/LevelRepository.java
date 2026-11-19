@@ -1,5 +1,6 @@
 package com.kycox.game.engine.screendata.repo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -8,8 +9,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Sauvegarde du dernier niveau atteint, pour proposer de reprendre la partie.
+ *
+ * <p>Par défaut dans {@code <dossier temporaire>/labybug/numLevel.txt} (nom
+ * historique conservé pour ne pas perdre les sauvegardes existantes). La
+ * propriété {@code ladybug.save.dir} choisit un autre dossier : les tests s'en
+ * servent pour ne jamais écraser la sauvegarde du joueur (étape 3.5.2a).
+ */
 @Component
 public class LevelRepository {
+    private final String saveDirectory;
+
+    public LevelRepository(@Value("${ladybug.save.dir:}") String saveDirectory) {
+        this.saveDirectory = saveDirectory;
+    }
 
     public void saveNumLevel(int numLevel) {
         try {
@@ -39,8 +53,9 @@ public class LevelRepository {
     }
 
     private Path getLevelNumTmpFile() {
-        Path tmpDir = Paths.get(System.getProperty("java.io.tmpdir"));
-        Path ladybugTmpDir = tmpDir.resolve("labybug");
+        Path ladybugTmpDir = saveDirectory.isBlank()
+                ? Paths.get(System.getProperty("java.io.tmpdir")).resolve("labybug")
+                : Paths.get(saveDirectory);
         if (!ladybugTmpDir.toFile().exists()) {
             ladybugTmpDir.toFile().mkdirs();
         }
