@@ -23,7 +23,11 @@ import com.kycox.game.engine.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
 
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Gestion du son dans le jeu
@@ -31,26 +35,41 @@ import java.util.Arrays;
  */
 @GuiComponent
 public class GameSounds implements ApplicationListener<EventGameModel> {
+	private static final Logger logger = LoggerFactory.getLogger(GameSounds.class);
 	private NewSoundsForGameSounds newSounds;
 
+	/**
+	 * Précharge tous les sons au démarrage du jeu, pour qu'aucun chargement ne
+	 * provoque de saccade pendant la partie (choix d'origine de Frédéric). Fait ici,
+	 * dans l'interface (profil « gui »), et non dans {@link Sounds} : le modèle et
+	 * les tests n'ont ainsi jamais besoin de carte son.
+	 */
+	@PostConstruct
+	void preloadSounds() {
+		var loaded = Arrays.stream(Sounds.values()).map(Sounds::getClip).filter(Objects::nonNull).count();
+		logger.info("Sounds preloaded: {}/{}", loaded, Sounds.values().length);
+	}
+
+	/** Durée d'un son en millisecondes ; 0 si le son n'a pas pu être chargé. */
+	private static long durationOf(Sounds sound) {
+		var clip = sound.getClip();
+		return clip == null ? 0 : clip.getMicrosecondLength() / 1000;
+	}
+
 	public long getLadybugAgonyDuration() {
-		var clipLadybugDying = Sounds.LADYBUG_IS_DYING.getClip();
-		return clipLadybugDying.getMicrosecondLength() / 1000;
+		return durationOf(Sounds.LADYBUG_IS_DYING);
 	}
 
 	public long getNewLifeFunDuration() {
-		var clipNewLife = Sounds.LADYBUG_EXTRA_PAC.getClip();
-		return clipNewLife.getMicrosecondLength() / 1000;
+		return durationOf(Sounds.LADYBUG_EXTRA_PAC);
 	}
 
 	public long getBeginningDuration() {
-		var clipBeginning = Sounds.GAME_BEGIN_LEVEL.getClip();
-		return clipBeginning.getMicrosecondLength() / 1000;
+		return durationOf(Sounds.GAME_BEGIN_LEVEL);
 	}
 
 	public long getIntermissionDuration() {
-		var clipBeginning = Sounds.LADYBUG_INTERMISSION.getClip();
-		return clipBeginning.getMicrosecondLength() / 1000;
+		return durationOf(Sounds.LADYBUG_INTERMISSION);
 	}
 
 	public void playSounds() {
@@ -66,7 +85,9 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 		}
 
 		Arrays.stream(Sounds.values()).filter(soundsEnum -> newSounds.hasSound(soundsEnum))
-				.forEach(sounds -> new ListenSound(sounds.getClip()).start());
+				.map(Sounds::getClip)
+				.filter(Objects::nonNull) // pas de sortie audio : on reste muet
+				.forEach(clip -> new ListenSound(clip).start());
 	}
 
 	private void stopAllSounds() {

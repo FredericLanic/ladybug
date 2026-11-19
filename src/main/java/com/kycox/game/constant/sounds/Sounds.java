@@ -16,20 +16,22 @@
  */
 package com.kycox.game.constant.sounds;
 
-import java.io.IOException;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
-import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Enumération des sons à écouter dans le jeu
+ * Enumération des sons à écouter dans le jeu.
  *
+ * <p>Chaque son est chargé à la première demande ({@link #getClip()}), et non
+ * plus dans le constructeur (étape 3.5.2) ; le jeu les précharge tous au démarrage
+ * ({@code GameSounds.preloadSounds()}) pour éviter toute saccade. Le modèle du jeu utilise ces valeurs
+ * comme de simples noms de sons ({@code NewSounds}) et ne charge donc jamais
+ * rien. Sans carte son (serveur de CI, poste sans sortie audio), le chargement
+ * échoue proprement : le jeu reste muet au lieu de planter.
  */
-@Getter
 public enum Sounds {
 	COMMON_TELEPORT("common_teleport.wav"), GAME_BEGIN_LEVEL("game_begin_level.wav"), GAME_SIREN_0("game_siren_0.wav"),
 	GAME_SIREN_1("game_siren_1.wav"), GAME_SIREN_2("game_siren_2.wav"), GAME_SIREN_3("game_siren_3.wav"),
@@ -38,23 +40,41 @@ public enum Sounds {
 	LADYBUG_EAT_GHOST("ladybug_eatghost.wav"), LADYBUG_EXTRA_PAC("ladybug_extralife.wav"),
 	LADYBUG_INTERMISSION("ladybug_intermission.wav"), LADYBUG_IS_DYING("ladybug_death.wav");
 
+	private static final Logger logger = LoggerFactory.getLogger(Sounds.class);
+
+	private final String fileName;
 	private Clip clip;
+	private boolean loadFailed;
 
 	Sounds(String fileName) {
-		try {
-			var url = Sounds.class.getClassLoader().getResource("sound/wav/" + fileName);
-			var audioInputStream = AudioSystem.getAudioInputStream(url);
-			// Get a sound clip resource.
-			clip = AudioSystem.getClip();
-			// Open audio clip and load samples from the audio input stream.
-			clip.open(audioInputStream);
-		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-			e.getStackTrace();
-		}
+		this.fileName = fileName;
 	}
 
-	public void stopSound() {
-		clip.stop();
-		clip.setFramePosition(0);
+	/**
+	 * Le son, chargé à la première demande ; {@code null} si aucune sortie audio
+	 * n'est disponible.
+	 */
+	public synchronized Clip getClip() {
+		if (clip == null && !loadFailed) {
+			try {
+				var url = Sounds.class.getClassLoader().getResource("sound/wav/" + fileName);
+				var audioInputStream = AudioSystem.getAudioInputStream(url);
+				var newClip = AudioSystem.getClip();
+				newClip.open(audioInputStream);
+				clip = newClip;
+			} catch (Exception e) {
+				// IllegalArgumentException sans carte son, LineUnavailableException, IOException…
+				loadFailed = true;
+				logger.warn("Sound {} unavailable, the game stays silent for it: {}", fileName, e.toString());
+			}
+		}
+		return clip;
+	}
+
+	public synchronized void stopSound() {
+		if (clip != null) {
+			clip.stop();
+			clip.setFramePosition(0);
+		}
 	}
 }

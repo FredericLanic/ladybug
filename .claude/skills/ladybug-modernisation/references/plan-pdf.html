@@ -280,7 +280,7 @@
 <p class="sub">Cinq couches sans fenêtre, lancées par <code>mvn verify</code>, sur une horloge en tics et une graine fixées par le test : golden master (journal d'événements et images clés) ; scénarios pas à pas ; bot joueur qui vise, avec règles vérifiées en continu ; son (faux lecteur) ; tests unitaires.</p>
 <ul>
   <li><b>3.5.1 Rendre le jeu testable, avant l'étape 2</b> (C24) — <b>fait le 19/11/2026</b> : <code>GameRandom</code> (hasard à graine), <code>TickScheduler</code> (attentes en battements sur le fil Swing, <b>D22 corrigée</b>), <code>BeatPacer</code> (boucle à pas fixe, 25 battements/s réels ; sans lui la musique du début de niveau était jouée deux fois), <code>SuperPowerTimer</code> et messages en battements (plus aucun <code>java.util.Timer</code> dans le modèle), <code>GameModel.beat()</code> public, fiche <code>doc/patterns/game-loop.md</code>. Robot : 174 statuts identiques à la référence. Partie rejouée à l'identique : reportée à 3.5.2 ;</li>
-  <li>3.5.2 Golden master solo puis 2 joueurs ; une partie de référence atteint le niveau 2 (C26) ; partie à graine fixe rejouée à l'identique ;</li>
+  <li><b>3.5.2 Golden master — fait le 19/11/2026</b> : <code>GameDriver</code> (jeu sans écran), <code>GameJournal</code>, preuve du déterminisme, trois références validées par Frédéric (solo, 2 joueurs, bot jusqu'au niveau 2), <code>AimingBot</code> et règles vérifiées à chaque battement ; fiche <code>doc/patterns/golden-master.md</code> ;</li>
   <li>3.5.3 Touches spéciales, manette derrière une interface (corrige D19), faux lecteur de sons, durées des sons derrière une interface ;</li>
   <li>3.5.4 CI sur Ubuntu, Windows et macOS ;</li>
   <li>3.5.5 PIT dans Maven, seuil de 60 % dans la CI.</li>
