@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.view.down;
 
+import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.tools.ImageUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.Setter;
@@ -47,9 +48,24 @@ public class StatusGameView extends JPanel {
 	private int score;
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
 
+	/**
+	 * Taille maximale du dessin de Ladybug (et du fantôme joueur) à côté des vies :
+	 * celle d'une case, comme dans le labyrinthe (étape 2.8, demande de Frédéric).
+	 */
+	static final int MAX_IMAGE_SIZE = GameMainConstants.BLOCK_SIZE;
+
+	/**
+	 * Taille du dessin : toute la hauteur de la bande, au lieu de la moitié
+	 * (avant 2.8 : 18 px dans une zone de 96), sans dépasser
+	 * {@link #MAX_IMAGE_SIZE}.
+	 */
+	static int imageSize(int bandHeight, int delta) {
+		return Math.max(1, Math.min(bandHeight - 2 * delta, MAX_IMAGE_SIZE));
+	}
+
 	private void display(Graphics g) {
 		var delta = 2;
-		var imageBorderSize = (getHeight() - 6 * delta) / 2;
+		var imageBorderSize = imageSize(getHeight(), delta);
 		// number ladybug lifes
 		displayNbrLifes(g, ImageUtils.resizeImage(imageLadybugPlayer, imageBorderSize, imageBorderSize),
 		        ladybugNbrLifes, delta, 0);

@@ -39,6 +39,9 @@ public class MainFrame extends JFrame implements MainGraphicStructure {
 	private final transient Screen screen;
 	private final Dimension lineDimension = new Dimension();
 	private final Dimension pageDimension = new Dimension();
+	private final Dimension topDimension = new Dimension();
+	private final Dimension bottomAreaDimension = new Dimension();
+	private final Dimension bottomGapDimension = new Dimension();
 	private final Dimension gameDimension = new Dimension();
 
 	public MainFrame(CentralView gameView, PageEndView pageEndView, PageLeftView pageLeftView, Screen screen) {
@@ -49,17 +52,38 @@ public class MainFrame extends JFrame implements MainGraphicStructure {
 	}
 
 	private void addPanels() {
-		addPanel(new JPanel(), pageDimension, BorderLayout.PAGE_START);
+		addPanel(new JPanel(), topDimension, BorderLayout.PAGE_START);
 		addPanel(pageLeftView, lineDimension, BorderLayout.LINE_START);
 		addPanel(gameView, gameDimension, BorderLayout.CENTER);
 		addPanel(new JPanel(), lineDimension, BorderLayout.LINE_END);
-		addPanel(pageEndView, pageDimension, BorderLayout.PAGE_END);
+		addPanel(bottomArea(), bottomAreaDimension, BorderLayout.PAGE_END);
+	}
+
+	/**
+	 * Zone du bas collée au labyrinthe (2.8, demande de Frédéric) : le score et
+	 * l'animation de Ladybug juste sous le labyrinthe, sur deux cases de haut,
+	 * puis une bande vide. Le bloc « labyrinthe + zone du bas » est ainsi centré
+	 * dans l'écran, et le labyrinthe garde exactement sa taille.
+	 */
+	private JPanel bottomArea() {
+		var bottomArea = new JPanel(new BorderLayout());
+		bottomArea.setBackground(Color.BLACK);
+		pageEndView.setBackground(Color.BLACK);
+		pageEndView.setPreferredSize(pageDimension);
+		bottomArea.add(pageEndView, BorderLayout.PAGE_START);
+		var emptyBand = new JPanel();
+		emptyBand.setBackground(Color.BLACK);
+		emptyBand.setPreferredSize(bottomGapDimension);
+		bottomArea.add(emptyBand, BorderLayout.PAGE_END);
+		return bottomArea;
 	}
 
 	@PostConstruct
 	private void init() {
 		setTitle("Ladybug by Kycox");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		// sur l'écran de la souris, dans la place disponible (2.8)
+		setBounds(screen.getUsableBounds());
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setUndecorated(true);
 		var monIcone = new ImageIcon(getClass().getResource("/images/ghosts/color/oxiane.png"));
@@ -70,7 +94,10 @@ public class MainFrame extends JFrame implements MainGraphicStructure {
 
 	private void initScreenSize() {
 		gameDimension.setSize(screen.getEdgeGameSide(), screen.getEdgeGameSide());
-		pageDimension.setSize(screen.getScreenWidth(), screen.getBorderHeight());
+		pageDimension.setSize(screen.getScreenWidth(), screen.getBottomZoneHeight());
+		topDimension.setSize(screen.getScreenWidth(), screen.getTopHeight());
+		bottomGapDimension.setSize(screen.getScreenWidth(), screen.getBottomGapHeight());
+		bottomAreaDimension.setSize(screen.getScreenWidth(), screen.getBottomZoneHeight() + screen.getBottomGapHeight());
 		lineDimension.setSize(screen.getBorderWidth(), screen.getEdgeGameSide());
 	}
 }
