@@ -19,11 +19,21 @@ package com.kycox.game;
 import com.kycox.game.engine.view.MainFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-//@SpringBootApplication
+import javax.swing.SwingUtilities;
+
+/**
+ * Ouvre la fenêtre du jeu une fois le contexte Spring prêt (étape 2.1).
+ *
+ * <p>Spring Boot appelle {@link #run(ApplicationArguments)} à la fin du
+ * démarrage. La fenêtre est affichée sur le fil Swing (EDT) par
+ * {@link SwingUtilities#invokeLater(Runnable)}, comme le veut Swing.
+ */
 @Component
-public class MainLadybug {
+public class MainLadybug implements ApplicationRunner {
 	private static final String cruxLine = "******************************";
 	private static final Logger logger = LoggerFactory.getLogger(MainLadybug.class);
 
@@ -31,6 +41,11 @@ public class MainLadybug {
 
 	public MainLadybug(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
+	}
+
+	@Override
+	public void run(ApplicationArguments args) {
+		SwingUtilities.invokeLater(this::launchTheGame);
 	}
 
 	public void launchTheGame() {
