@@ -41,6 +41,16 @@ class ConfigLocationsTest {
 	}
 
 	@Test
+	void commandLineOptionIsReportedAsTheXmlInUse() {
+		String[] args = { "--other=1", "--ladybug.config=file:/tmp/mine.xml" };
+
+		assertThat(ConfigLocations.effectiveSpringXml(args, "classpath:application-context.xml"))
+		        .isEqualTo("file:/tmp/mine.xml");
+		assertThat(ConfigLocations.effectiveSpringXml(new String[0], "classpath:application-context.xml"))
+		        .isEqualTo("classpath:application-context.xml");
+	}
+
+	@Test
 	void aDirectoryWithTheSameNameIsIgnored() throws IOException {
 		Files.createDirectory(workingDirectory.resolve("application-context.xml"));
 

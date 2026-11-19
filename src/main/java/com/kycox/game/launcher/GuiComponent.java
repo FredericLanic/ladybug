@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
  *
  * <p>C'est une <b>méta-annotation</b> : elle regroupe {@code @Component} et
  * {@code @Profile("gui")} sous un nom qui dit à quoi sert la classe.
+ * Fiche : {@code doc/patterns/configuration-externalisee.md}.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

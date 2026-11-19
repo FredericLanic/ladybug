@@ -13,6 +13,7 @@ import java.util.Optional;
  * {@code config/} passe avant le dossier courant. C'est le principe de la
  * <b>configuration externalisée</b> : chaque réglage peut être remplacé par un
  * réglage plus proche de l'utilisateur, sans recompiler.
+ * Fiche : {@code doc/patterns/configuration-externalisee.md}.
  *
  * <pre>
  *   ligne de commande (--ladybug.config=…)      ← gagne toujours
@@ -52,6 +53,26 @@ public final class ConfigLocations {
 		return findExternal(workingDirectory, SPRING_XML)
 		        .map(path -> path.toUri().toString())
 		        .orElse(DEFAULT_SPRING_XML);
+	}
+
+	/**
+	 * XML réellement utilisé : celui de la ligne de commande
+	 * ({@code --ladybug.config=…}) ou d'une propriété système
+	 * ({@code -Dladybug.config=…}) s'il y en a un, sinon {@code defaultLocation}.
+	 * Sert au message d'erreur de démarrage.
+	 */
+	public static String effectiveSpringXml(String[] args, String defaultLocation) {
+		var prefix = "--" + SPRING_XML_PROPERTY + "=";
+		String fromArgs = null;
+		for (var arg : args) {
+			if (arg.startsWith(prefix)) {
+				fromArgs = arg.substring(prefix.length());
+			}
+		}
+		if (fromArgs != null) {
+			return fromArgs;
+		}
+		return System.getProperty(SPRING_XML_PROPERTY, defaultLocation);
 	}
 
 	private ConfigLocations() {

@@ -46,7 +46,7 @@ public class Application {
 			        .properties(ConfigLocations.SPRING_XML_PROPERTY + "=" + springXml)
 			        .run(args);
 		} catch (RuntimeException failure) {
-			StartupFailure.reportAndExit(failure, springXml);
+			StartupFailure.reportAndExit(failure, ConfigLocations.effectiveSpringXml(args, springXml));
 		}
 	}
 }

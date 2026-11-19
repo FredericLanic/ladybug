@@ -92,17 +92,63 @@ La branche **master** est en théorie la branche qui contient les versions (rele
 La branche **develop** est la branche en développement ; en bref, elle contient la prochaine version en mode draft : le développement en cours, et potentiellement aussi, quelques nouveaux bugs restant à corriger.
 
 ## Builder et exécuter Ladybug
-Le build de ladybug est réalisé par "maven" par la commande "mvn clean package".
+Le build de ladybug est réalisé par "maven" par la commande "mvn clean package" (ou "mvn clean verify" pour lancer aussi les tests).
 
-En résumé, le build génère un fat jar : un jar qui contient toutes les dépendances décrites dans le fichier "pom.xml".
+En résumé, le build génère un fat jar Spring Boot : un jar qui contient toutes les dépendances décrites dans le fichier "pom.xml".
 
-À ce jour (12 Février 2023), j'utilise la version **maven 3.8.7** et la version **jdk 19**.
+À ce jour (19 novembre 2026), le projet utilise **Java 21**, **Spring Boot 3.5** et Maven 3.9 (les dépendances viennent de Maven Central, réglage dans `.mvn/`).
 
 La commande pour lancer le jeu est :
 
-**java -jar ladybug-0.5.0.jar**
+**java -jar target/ladybug-0.6.0-SNAPSHOT.jar**
 
-Pour le jeu en lui-même, je vous laisse trouver la gestion des propriétés et l'application-context pour gérer la configuration du jeu, l'affichage des plugins, la couleur de Ladybug ...
+Le jeu s'ouvre sur l'écran où se trouve la souris.
+
+## Personnaliser le jeu
+
+Tout se règle **sans recompiler**, en posant des fichiers à côté du jeu. Ladybug suit la convention de Spring Boot : un fichier posé dans le **dossier d'où l'on lance le jeu**, ou dans son sous-dossier `config/`, remplace celui du jar (`config/` passe en premier). Au démarrage, les logs indiquent les fichiers réellement utilisés :
+
+```
+Launch mode: LOCAL
+Spring XML configuration: file:/Users/moi/ladybug/application-context.xml
+Game properties: /Users/moi/ladybug/ladybug.properties (external, overrides the jar)
+```
+
+### Les fantômes : `application-context.xml`
+
+Ce fichier Spring décrit les fantômes : leur classe, leur couleur, leur comportement (`CALM`, `AGGRESSIVE`, `SMART`), leur vitesse et la liste du groupe (`GroupGhost`). Pour le modifier, récupérez celui du jar, puis lancez le jeu depuis le même dossier :
+
+```
+unzip -p target/ladybug-0.6.0-SNAPSHOT.jar BOOT-INF/classes/application-context.xml > application-context.xml
+java -jar target/ladybug-0.6.0-SNAPSHOT.jar
+```
+
+Exemple : retirer `<ref bean="Clyde" />` de la liste `GroupGhost` pour jouer contre trois fantômes. Pour utiliser un fichier placé ailleurs : `--ladybug.config=file:/chemin/vers/mon-context.xml`.
+
+Si le fichier contient une erreur (classe mal écrite, fantôme mal câblé), le jeu l'explique dans une fenêtre et dans les logs, puis s'arrête : il ne revient pas en silence à la configuration du jar.
+
+### L'apparence : `ladybug.properties`
+
+| Propriété | Valeurs | Effet |
+|---|---|---|
+| `ghosts.hat` | `1` / `0` | chapeau des fantômes |
+| `ghosts.headband` | `1` / `0` | bandeau des fantômes |
+| `ladybug.skin` | `1` / `0` | peau de Ladybug |
+
+Seules les propriétés à changer sont nécessaires, par exemple un fichier qui ne contient que `ghosts.hat=0`.
+
+### Le reste : `application.properties` et options de lancement
+
+Un `application.properties` posé à côté du jeu accepte tous les réglages de Spring Boot (par exemple le format des logs : `logging.pattern.console`).
+
+| Option | Rôle |
+|---|---|
+| `--ladybug.config=file:…` | impose un fichier `application-context.xml` |
+| `--ladybug.mode=LOCAL` | mode de lancement (seul mode pour l'instant ; héberger et rejoindre une partie viendront plus tard) |
+| `-Dladybug.seed=123` (avant `-jar`) | rejoue le même hasard : la graine est écrite dans les logs à chaque partie |
+| `-Dladybug.loop.autostart=false` (avant `-jar`) | pour les tests : la boucle du jeu ne démarre pas seule |
+
+Pour en savoir plus : [doc/patterns/configuration-externalisee.md](doc/patterns/configuration-externalisee.md).
 
 ## Pour développer Ladybug
 Je l'ai développé sous Eclipse ; actuellement, j'utilise la version 2022-03. Je ne pense pas que la version soit très importante en fait.
