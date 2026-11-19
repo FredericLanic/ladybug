@@ -16,96 +16,54 @@
  */
 package com.kycox.game.tools.timer;
 
-import com.kycox.game.constant.TimerStatus;
-import lombok.Getter;
-import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.kycox.game.constant.TimerStatus;
+import com.kycox.game.constant.game.GameMainConstants;
 
 /**
- * Double timer utilisé pour afficher les fantômes qui ont peur et qui
- * clignottent ensuite. 5 Secondes avant la fin, les fantômes vont clignoter
+ * Durée du super-pouvoir de Ladybug, après une méga-gomme : les fantômes ont
+ * peur, puis clignotent pendant les {@value #FLASH_DELAY} dernières secondes.
  *
+ * <p>Étape 3.5.1c : le décompte se fait en battements de la boucle du jeu
+ * ({@link TickCountdown}), et non plus avec deux {@code java.util.Timer} en
+ * chaîne dans d'autres fils d'exécution. {@code GameModel} appelle
+ * {@link #tick()} à chaque battement (pattern <b>Game Loop / Update Method</b>).
+ * Pour 15 s : 375 battements, dont 125 de clignotement.
+ *
+ * <pre>
+ *   RUN (peur)            STOPPING (clignotement)    STOP
+ *   |---- 250 battements ----|---- 125 battements ----|
+ * </pre>
  */
 @Component
 public class SuperPowerTimer {
-	/**
-	 * Class TimerTask
-	 */
-	private class PowerTimer extends TimerTask {
-		@Override
-		public void run() {
-			timer.cancel();
-			timer.purge();
-			if (numTimer == 1) {
-				// Fin du premier timer
-				superPowerTimer = new SuperPowerTimer(numTimer + 1);
-				superPowerTimer.launch(FLASH_DELAY);
-			} else {
-				// Fin du second timer
-				timerStatus = TimerStatus.STOP;
-				superPowerTimer = null;
-			}
-		}
-	}
-
-	// délai en second de clignottements
+	private static final Logger logger = LoggerFactory.getLogger(SuperPowerTimer.class);
+	/** Délai de clignotement, en secondes, à la fin du super-pouvoir. */
 	private static final int FLASH_DELAY = 5;
-	// num�ro du timer
-	@Setter
-	@Getter
-	private int numTimer;
-	// objet powerFlashTimer utilisé pour le 2i�me timer
-	private SuperPowerTimer superPowerTimer = null;
-	// etat du superPower courant (1ier ou 2ieme selon le cas)
-	private TimerStatus timerStatus = TimerStatus.STOP;
-	// Timer du power
-	private Timer timer;
+	private static final int FLASH_TICKS = TickCountdown.ticksFor(FLASH_DELAY * 1000L);
 
-	public SuperPowerTimer() {
-		numTimer = 1;
-	}
+	private final TickCountdown countdown = new TickCountdown();
 
 	/**
-	 * Constructeur
-	 *
-	 * @param numTimer : numéro du thread (1: principal, autrement clignottement)
-	 */
-	public SuperPowerTimer(int numTimer) {
-		this.numTimer = numTimer;
-	}
-
-	/**
-	 * Arrete le super power : le niveau est termin�, ou bien un autre super power a
-	 * été pris
+	 * Arrête le super-pouvoir : le niveau est terminé, ou bien un autre
+	 * super-pouvoir a été pris.
 	 */
 	public void forcedStop() {
-		// Arrêt forcé du premier timer
-		if (timer != null) {
-			timer.cancel();
-			timer.purge();
-		}
-		// Arrêt forcé du second timer s'il existe
-		if (superPowerTimer != null) {
-			superPowerTimer.forcedStop();
-			superPowerTimer = null;
-		}
-		timerStatus = TimerStatus.STOP;
+		countdown.stop();
 	}
 
 	/**
-	 * Return the status of the super power time : see SuperPowerEnum
-	 *
-	 * @return
+	 * Etat du super-pouvoir : {@code RUN} (peur), {@code STOPPING} (clignotement)
+	 * ou {@code STOP}.
 	 */
 	public TimerStatus getStatus() {
-		// Priorité au deuxième timer s'il existe
-		if (superPowerTimer != null) {
-			return superPowerTimer.getStatus();
+		if (!countdown.isRunning()) {
+			return TimerStatus.STOP;
 		}
-		return timerStatus;
+		return countdown.getRemainingTicks() > FLASH_TICKS ? TimerStatus.RUN : TimerStatus.STOPPING;
 	}
 
 	public boolean isStopped() {
@@ -117,20 +75,21 @@ public class SuperPowerTimer {
 	}
 
 	/**
-	 * launch the delay
+	 * Lance le super-pouvoir pour une durée en secondes (clignotement compris).
 	 */
 	public void launch(int seconds) {
-		if (numTimer == 1) {
-			// Début du premier timer
-			seconds = seconds - FLASH_DELAY;
-			timerStatus = TimerStatus.RUN;
-		} else {
-			// Début du second timer
-			timerStatus = TimerStatus.STOPPING;
+		countdown.start(seconds * 1000L);
+	}
+
+	/**
+	 * Avance d'un battement ({@value GameMainConstants#PACE} ms). Sondes de log
+	 * (comme en 3.4) au début du clignotement et à la fin du super-pouvoir.
+	 */
+	public void tick() {
+		if (countdown.tick()) {
+			logger.info("Super power is over");
+		} else if (countdown.getRemainingTicks() == FLASH_TICKS) {
+			logger.info("Super power is flashing");
 		}
-		// Création du timer
-		timer = new Timer(true);
-		// lancement du timer après n secondes
-		timer.schedule(new PowerTimer(), (long) (seconds) * 1000);
 	}
 }

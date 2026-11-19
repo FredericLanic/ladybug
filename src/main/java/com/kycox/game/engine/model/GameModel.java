@@ -33,6 +33,7 @@ import com.kycox.game.engine.score.Score;
 import com.kycox.game.engine.sound.NewSounds;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.timer.BeatPacer;
+import com.kycox.game.tools.timer.SuperPowerTimer;
 import com.kycox.game.tools.timer.TickScheduler;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
@@ -95,6 +96,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	boolean debugMode = false;
 	private final ApplicationEventPublisher applicationEventPublisher;
 	private final TickScheduler tickScheduler;
+	private final SuperPowerTimer superPowerTimer;
 
 	public GameModel(CurrentProgramStatus currentProgramStatus,
 					 GameMessaging gameMessaging,
@@ -108,7 +110,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 					 ScreenData screenData,
 					 ManageActionContext manageActionContext,
 					 ApplicationEventPublisher applicationEventPublisher,
-					 TickScheduler tickScheduler
+					 TickScheduler tickScheduler,
+					 SuperPowerTimer superPowerTimer
 	) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
@@ -124,6 +127,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		// pour envoyer aux autres vues l'état courant du jeu
 		this.applicationEventPublisher = applicationEventPublisher;
 		this.tickScheduler = tickScheduler;
+		this.superPowerTimer = superPowerTimer;
 	}
 
 	@PostConstruct
@@ -135,10 +139,12 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 
 	/**
 	 * Un battement de la boucle du jeu (toutes les {@code PACE} ms). Les actions
-	 * différées arrivées à échéance passent en premier, sur ce même fil (3.5.1b).
+	 * différées arrivées à échéance passent en premier, sur ce même fil (3.5.1b),
+	 * puis le super-pouvoir avance d'un battement (3.5.1c).
 	 */
 	private void actionsByTimerBip() {
 		tickScheduler.tick();
+		superPowerTimer.tick();
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
 		applicationEventPublisher.publishEvent(new EventGameModel(this));
