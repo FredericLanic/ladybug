@@ -374,3 +374,19 @@ Ajoutez une entrée à chaque nouvelle discussion importante. Le skill le demand
   - `sauvegarde.sh` accepte un dossier d'export, le fusionne sans suppression, puis régénère dashboard, carte et accueil ;
   - j34 complété dans le dashboard en ligne avec la partie à la main.
 - Piège noté : l'export `read_db` avec `out_dir` refuse d'écraser des fichiers déjà présents ; l'ancien export a été conservé dans `dashboard/donnees-avant-2026-11-19`.
+
+### 19/11/2026 : PR #16, premier lot de l'étape 3
+- Recommandation de Claude, acceptée (« oui ») : PR de 3.1 à 3.4 tout de suite, 3.5.1 sur une branche à part (premier vrai changement du cœur du jeu), même consigne qu'à l'étape 1 (« si la CI passe, fusionne »).
+- Graphify (`GRAPHIFY_BACKEND=none graphify update .`) : 1 509 → 1 597 nœuds, 3 767 → 4 069 liens ; 88 nœuds ajoutés (tests, `LevelFixtures`, 2 pour les sondes), aucun supprimé. Sauvegarde du graphe précédent : `graphify-out/2026-11-19/`.
+- PR #16 (https://github.com/FredericLanic/ladybug/pull/16) : CI verte (82 tests, 0 échec), fusionnée en merge commit `f4d8ebd` sur `develop`. Branche `etape-3-tests` conservée (suppression à demander à Frédéric).
+- Suite : branche `etape-3-horloge` depuis `develop`, analyse en lecture seule des minuteries pour 3.5.1.
+
+### 19/11/2026 : analyse de 3.5.1 (lecture seule)
+- Branche `etape-3-tests` supprimée (local et GitHub), branche `etape-3-horloge` créée depuis `develop` (`f4d8ebd`), feu vert « oui pour les deux ».
+- Minuteries du **modèle** (`java.util.Timer`, hors EDT) : `WaitAndDoActionAfterTimer` dans 4 états (`ProgramStarting` 2 500 ms, `GameIsStarting` 2 500 ms, `LevelIsStarting` = jingle, `LevelIsEnded` = intermède, `GameIsEnding` 1 500 ms) qui rappellent `CurrentProgramStatus.doActionAfterTimer(code)` ; `SuperPowerTimer` (bean, 15 s = 10 s de peur + 5 s de clignotement, deux `Timer` chaînés) ; `IncrementScoreTimer` (un `Timer` par `Message`, 1 000 ms avant `setDying`).
+- Minuteries de l'**affichage** : `SimpleTimer` (`PageEndView`, message toutes les 800 ms, `Thread.sleep` dans un `TimerTask`), `WaitAndDoActionAfterTimer` dans `CentralView` (couleur du labyrinthe après vie gagnée, relancé à chaque dessin tant que `isNewLife`), `TimerView` (`javax.swing.Timer`, sur l'EDT, animations). Sans effet sur les règles.
+- Modèle à suivre déjà présent : `LadybugDying` compte en battements (`bip * PACE >= agonyDuration`).
+- Hasard : `Utils.secureRandom`, `LitLampMode` (`Math.random`), `LevelRendering` (`new Random`), `AbstratGameModel` et `GameModelGameIsPlaying` (`new SecureRandom`).
+- Constat : la boucle (`javax.swing.Timer`) et le clavier tournent sur l'EDT ; seules les minuteries `java.util.Timer` modifient l'état depuis un autre fil, d'où D22. Les passer en battements supprime cette concurrence.
+- Écarts possibles à signaler : arrondi ms → battements (< 40 ms) ; durées qui suivent la boucle si elle ralentit ; comportement en pause (aujourd'hui, les minuteries continuent pendant la pause).
+- Plan proposé à Frédéric (en attente) : pattern « Game Loop / Update Method », 5 commits (hasard à graine, planificateur en battements, super-pouvoir, messages, boucle appelable), minuteries de l'affichage laissées à l'étape 4.

@@ -1,30 +1,16 @@
 package com.kycox.game.constant.level;
 
-import java.util.Random;
+import com.kycox.game.tools.GameRandom;
 
 public enum LevelRendering {
 	LINES_RENDERING, TILES_RENDERING_492, TILES_RENDERING_584, TILES_RENDERING_REDLINES;
-
-	private static final RandomEnum<LevelRendering> randomEnum = new RandomEnum<>(LevelRendering.class);
 
 	public static LevelRendering getDefaultLevelRendering() {
 		return LINES_RENDERING;
 	}
 
+	/** Rendu tiré au hasard, via la source unique {@link GameRandom}. */
 	public static LevelRendering getRandomizeLevelRendering() {
-		return randomEnum.random();
-	}
-
-	private static class RandomEnum<E extends Enum<E>> {
-		private static final Random RANDOM = new Random();
-		private final E[] values;
-
-		public RandomEnum(Class<E> token) {
-			values = token.getEnumConstants();
-		}
-
-		public E random() {
-			return values[RANDOM.nextInt(values.length)];
-		}
+		return GameRandom.randomEnum(LevelRendering.class);
 	}
 }
