@@ -17,6 +17,9 @@
 
 	<properties>
 		<java.version>21</java.version>
+		<!-- Faille connue de log4j-api 2.24.3 (version de Spring Boot 3.5.16), corrigée en 2.25.5
+		     (alerte Dependabot n° 82). À retirer quand Spring Boot fournira une version corrigée. -->
+		<log4j2.version>2.25.5</log4j2.version>
 		<!-- PIT (3.5.5) : réglables en ligne de commande, par exemple -Dpit.threads=2 pour la CI -->
 		<pit.threads>4</pit.threads>
 		<pit.timeoutFactor>1.25</pit.timeoutFactor>
