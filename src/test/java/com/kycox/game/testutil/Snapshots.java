@@ -46,6 +46,6 @@ public final class Snapshots {
 	/** Un fantôme joué par un humain, sauf pour la téléportation et la mort. */
 	public static GhostSnapshot humanGhost(boolean toBeTeleported, boolean dying) {
 		return new GhostSnapshot("Blinky", GhostColor.RED, ORIGIN, ORIGIN, ORIGIN, GhostStatus.NORMAL, false, false,
-		        dying, toBeTeleported, 0, MoveStyle.MOVE_DEFAULT, 0);
+		        dying, toBeTeleported, 0, MoveStyle.MOVE_DEFAULT, 0, null);
 	}
 }

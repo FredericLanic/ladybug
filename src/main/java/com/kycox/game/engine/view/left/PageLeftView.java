@@ -19,6 +19,7 @@ package com.kycox.game.engine.view.left;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.contract.MainGraphicStructure;
 import com.kycox.game.engine.model.EventGameModel;
+import com.kycox.game.engine.view.ghost.GhostPalette;
 import com.kycox.game.snapshot.GameSnapshot;
 import com.kycox.game.snapshot.GhostSnapshot;
 import com.kycox.game.snapshot.LadybugSnapshot;
@@ -64,12 +65,7 @@ public class PageLeftView extends JPanel implements ApplicationListener<EventGam
 
 		ghosts.forEach(
 			ghost -> {
-				switch (ghost.color()) {
-					case RED -> g2d.setColor(Color.RED);
-					case PINK -> g2d.setColor(Color.PINK);
-					case ORANGE -> g2d.setColor(Color.ORANGE);
-					case CYAN -> g2d.setColor(Color.CYAN);
-				}
+				g2d.setColor(GhostPalette.of(ghost.color()));
 
 				g2d.drawString(ghost.name(), 10  , y.getAndAdd(20));
 				g2d.setColor(Color.WHITE);

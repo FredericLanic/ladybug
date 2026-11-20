@@ -72,6 +72,15 @@ public abstract sealed class Ghost extends UserBody permits Blinky, Clyde, Inky,
 	@Getter
 	private MoveStyle moveStyle = MoveStyle.MOVE_DEFAULT;
 
+	/**
+	 * Case visée pendant ce battement : celle de Ladybug (attaque), celle devant
+	 * elle (comportement malin) ou le point de résurrection (fantôme mangé).
+	 * {@code null} quand le fantôme fuit, va au hasard ou est joué par un humain.
+	 * Ne sert qu'à l'affichage du mode debug : le déplacement ne la lit pas.
+	 */
+	@Getter
+	private Position target;
+
 	@Setter
 	private boolean camouflage;
 
@@ -153,6 +162,8 @@ public abstract sealed class Ghost extends UserBody permits Blinky, Clyde, Inky,
 	}
 
 	public void moveComputedGhost(Ladybug ladybug, Maze maze) {
+		// aucune destination tant qu'un déplacement ciblé ne la fixe pas
+		target = null;
 		// Déplacement en fonction du status du fantôme
 		switch (getStatus()) {
 			case DYING -> regeneratePointMoving(maze);
@@ -165,6 +176,7 @@ public abstract sealed class Ghost extends UserBody permits Blinky, Clyde, Inky,
 
 	public void moveGhostUser(Ladybug ladybug, Maze maze, Position ghostRequest) {
 		setUserRequest(ghostRequest);
+		target = null;
 
 		switch (getStatus()) {
 			case DYING -> moveComputedGhost(ladybug, maze);
@@ -201,6 +213,7 @@ public abstract sealed class Ghost extends UserBody permits Blinky, Clyde, Inky,
 	}
 
 	private void moveTo(Position ladybugPosBlock, Maze maze) {
+		target = ladybugPosBlock;
 		if (isPerfectOnABlock()) {
 			var ptCurrentBlockGhost = getPositionBlock();
 			var shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, maze);
@@ -227,6 +240,7 @@ public abstract sealed class Ghost extends UserBody permits Blinky, Clyde, Inky,
 	}
 
 	private void regeneratePointMoving(Maze maze) {
+		target = Utils.convertGraphicPointToBlockPoint(maze.getRevivorGhostPos());
 		// Le fantôme est arrivé au limite du block
 		if (isPerfectOnABlock()) {
 			// calcul du chemin le plus court :

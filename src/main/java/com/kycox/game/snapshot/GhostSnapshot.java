@@ -21,6 +21,8 @@ import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.tools.Position;
 
+import java.util.Optional;
+
 /**
  * Un fantôme à un battement donné (étape 4.6).
  *
@@ -37,8 +39,15 @@ import com.kycox.game.tools.Position;
  * @param speedIndex        indice de vitesse (debug)
  * @param moveStyle         façon de se déplacer (debug)
  * @param maximumAttackDist distance d'attaque en pixels (debug)
+ * @param target            case visée (debug), ou {@code null} quand le fantôme
+ *                          fuit, va au hasard ou est joué par un humain
  */
 public record GhostSnapshot(String name, GhostColor color, Position position, Position block, Position direction,
         GhostStatus status, boolean computed, boolean camouflage, boolean dying, boolean toBeTeleported,
-        int speedIndex, MoveStyle moveStyle, int maximumAttackDist) {
+        int speedIndex, MoveStyle moveStyle, int maximumAttackDist, Position target) {
+
+	/** La case visée, s'il y en a une. */
+	public Optional<Position> targetBlock() {
+		return Optional.ofNullable(target);
+	}
 }

@@ -63,7 +63,8 @@ public final class GameSnapshotFactory {
 	static GhostSnapshot ghostOf(Ghost ghost) {
 		return new GhostSnapshot(ghost.getName(), ghost.getColor(), ghost.getPosition(), ghost.getPositionBlock(),
 		        ghost.getDirection(), ghost.getStatus(), ghost.isComputed(), ghost.isCamouflage(), ghost.isDying(),
-		        ghost.isToBeTeleported(), ghost.getSpeedIndex(), ghost.getMoveStyle(), ghost.getMaximumAttackDist());
+		        ghost.isToBeTeleported(), ghost.getSpeedIndex(), ghost.getMoveStyle(), ghost.getMaximumAttackDist(),
+		        ghost.getTarget());
 	}
 
 	/** La photo du labyrinthe seul (sert aussi aux tests du contour des murs). */
