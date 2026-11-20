@@ -3,11 +3,11 @@ package com.kycox.game.constant.contract;
 import java.awt.Point;
 
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.constant.ghost.GhostsBodyImages;
+import com.kycox.game.body.ghost.GhostColor;
 
 public interface GhostForView {
 
-	GhostsBodyImages getColor();
+	GhostColor getColor();
 
 	Point getDirection();
 

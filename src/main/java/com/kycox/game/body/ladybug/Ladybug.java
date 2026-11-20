@@ -31,7 +31,11 @@ import lombok.Setter;
 
 @Getter
 public final class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
-	private LadybugActions ladybugActions;
+	/**
+	 * Actions du dernier battement. Jamais nulles depuis l'étape 4.2 (D23) : avant,
+	 * elles n'existaient qu'après le premier battement de l'écran de présentation.
+	 */
+	private LadybugActions ladybugActions = new LadybugActions();
 	@Setter
 	private LadybugStatus status = LadybugStatus.NORMAL;
 	private Point viewDirection = GameMainConstants.POINT_UP;

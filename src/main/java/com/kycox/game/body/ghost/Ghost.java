@@ -22,7 +22,6 @@ import com.kycox.game.engine.bodyaction.ghost.GhostActions;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostBehaviour;
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.constant.ghost.GhostsBodyImages;
 import com.kycox.game.constant.contract.GhostForController;
 import com.kycox.game.constant.contract.GhostForView;
 import com.kycox.game.engine.screendata.ScreenData;
@@ -45,9 +44,22 @@ public abstract sealed class Ghost extends UserBody implements GhostForControlle
 	private GhostBehaviour behaviour;
 	@Getter
 	@Setter
-	private GhostsBodyImages color;
+	private GhostColor color;
+	/**
+	 * Joué par l'ordinateur (vrai) ou par le deuxième joueur (faux). Porté par le
+	 * fantôme depuis l'étape 4.2 ; avant, il vivait dans l'énumération des images,
+	 * partagée par tout le programme.
+	 */
 	@Getter
-	private GhostActions ghostActions;
+	@Setter
+	private boolean computed = true;
+	/**
+	 * Actions du dernier battement. Jamais nulles depuis l'étape 4.2 (D23) : avant,
+	 * elles n'existaient qu'après le premier battement de l'écran de présentation,
+	 * et une touche pressée plus tôt faisait planter le jeu.
+	 */
+	@Getter
+	private GhostActions ghostActions = new GhostActions();
 	@Setter
 	@Getter
 	private GhostSensitiveBehaviour sensitiveBehaviour;
@@ -112,10 +124,6 @@ public abstract sealed class Ghost extends UserBody implements GhostForControlle
 	@Override
 	protected boolean isAllowedToDoActions() {
 		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATED;
-	}
-
-	public boolean isComputed() {
-		return color.isComputed();
 	}
 
 	@Override

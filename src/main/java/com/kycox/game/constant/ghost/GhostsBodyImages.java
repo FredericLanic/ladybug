@@ -18,22 +18,28 @@ package com.kycox.game.constant.ghost;
 
 import java.awt.Image;
 
+import com.kycox.game.body.ghost.GhostColor;
+
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum GhostsBodyImages {
-	CYAN(GhostsColorImages.GHOST_CYAN_COLOR, true), ORANGE(GhostsColorImages.GHOST_ORANGE_COLOR, true),
-	PINK(GhostsColorImages.GHOST_PINK_COLOR, true), RED(GhostsColorImages.GHOST_RED_COLOR, true);
+	CYAN(GhostsColorImages.GHOST_CYAN_COLOR), ORANGE(GhostsColorImages.GHOST_ORANGE_COLOR),
+	PINK(GhostsColorImages.GHOST_PINK_COLOR), RED(GhostsColorImages.GHOST_RED_COLOR);
 
 	private final GhostsColorImages ghostColorBody;
 
-	@Setter // ici je triche
-	private boolean isComputed;
-
-	GhostsBodyImages(GhostsColorImages colorImage, boolean isComputed) {
+	GhostsBodyImages(GhostsColorImages colorImage) {
 		this.ghostColorBody = colorImage;
-		this.isComputed = isComputed;
+	}
+
+	/**
+	 * Image du corps pour une couleur du modèle (étape 4.2). Le drapeau « joué par
+	 * un humain », rangé ici jusqu'alors (« ici je triche »), est maintenant porté
+	 * par le fantôme lui-même.
+	 */
+	public static GhostsBodyImages of(GhostColor color) {
+		return valueOf(color.name());
 	}
 
 	public Image getImage() {

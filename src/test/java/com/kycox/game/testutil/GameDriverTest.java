@@ -25,8 +25,6 @@ class GameDriverTest {
 			// 2,5 s d'écran d'accueil = 63 battements
 			assertThat(presentation).isBetween(63, 66);
 
-			// un battement de présentation : c'est lui qui crée les actions des fantômes
-			// (appuyer plus tôt plante le jeu, dette D23 ; impossible pour un humain)
 			game.beat();
 			game.keys().startGame(); // touche S
 			game.beatsUntil(GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL, 10);
@@ -36,6 +34,21 @@ class GameDriverTest {
 
 			// 2,5 s de début de partie + 4,2 s de musique ≈ 169 battements
 			assertThat(inGame - startBeat).isBetween(165, 175);
+		}
+	}
+
+	@Test
+	void pressingStartBeforeThePresentationHasBeatenDoesNotCrash() {
+		// dette D23 (corrigée en 4.2) : les actions des fantômes n'existaient qu'après le
+		// premier battement de l'écran de présentation ; « S » pressé plus tôt plantait
+		// (le clavier et la manette n'envoient « S » que pendant la présentation)
+		try (var game = GameDriver.start(42, saveDirectory)) {
+			game.beatsUntil(GameStatus.PROGRAM_PRESENTATION, 200);
+			game.keys().startGame(); // touche S, avant le premier battement de présentation
+			game.beatsUntil(GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL, 10);
+			game.keys().initializeLevelNumAndStartGame(true);
+
+			assertThat(game.beatsUntil(GameStatus.IN_GAME, 500)).isPositive();
 		}
 	}
 

@@ -20,7 +20,7 @@ import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
-import com.kycox.game.constant.ghost.GhostsBodyImages;
+import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.contract.GameModelForSounds;
 import com.kycox.game.constant.contract.GameModelForViews;
@@ -45,8 +45,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.awt.Point;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -277,11 +275,11 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 
 	@Override
 	public void setMultiPlayers(boolean isMuliPlayers) {
-		List<GhostsBodyImages> ghostBodyImages = Arrays.asList(GhostsBodyImages.values());
-		ghostBodyImages.forEach(ghostBodyImage -> ghostBodyImage.setComputed(true));
-
+		groupGhosts.setAllComputed();
 		if (isMuliPlayers) {
-			Utils.randomEnum(GhostsBodyImages.class).setComputed(false);
+			// même tirage qu'avant 4.2 (une couleur parmi quatre, dans le même ordre) :
+			// les parties rejouées avec une même graine restent identiques
+			groupGhosts.setHumanPlayer(Utils.randomEnum(GhostColor.class));
 		}
 		gameMessaging.addPlayerMode(isMuliPlayers);
 	}
