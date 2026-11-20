@@ -256,11 +256,6 @@ public class GameModel implements GameModelForController {
 	}
 
 	@Override
-	public void setLadybugRequest(Position point) {
-		ladybug.setUserRequest(point);
-	}
-
-	@Override
 	public void setMultiPlayers(boolean isMuliPlayers) {
 		groupGhosts.setAllComputed();
 		if (isMuliPlayers) {

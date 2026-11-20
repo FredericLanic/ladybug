@@ -21,12 +21,27 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.engine.maze.ScreenBlock;
 import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.tools.Utils;
-import lombok.Setter;
+import com.kycox.game.input.PlayerInput;
+import lombok.Getter;
 
 
-@Setter
 public abstract class UserBody extends Body {
-	protected Position userRequest = GameMainConstants.POINT_ZERO;
+	/**
+	 * Les ordres du joueur qui pilote ce personnage (étape 5.1) : la dernière
+	 * direction demandée au clavier, à la manette ou, plus tard, par le réseau.
+	 */
+	@Getter
+	protected final PlayerInput playerInput = new PlayerInput(this::getName);
+
+	/** La dernière direction demandée par le joueur. */
+	protected Position userRequest() {
+		return playerInput.requested();
+	}
+
+	/** Transmet une direction au joueur de ce personnage. */
+	public void setUserRequest(Position direction) {
+		playerInput.request(direction);
+	}
 
 	protected boolean canMove(Position direction, ScreenBlock screenBlock) {
 		return ((!direction.equals(GameMainConstants.POINT_LEFT) || !screenBlock.isBorderLeft())
@@ -37,8 +52,8 @@ public abstract class UserBody extends Body {
 
 	protected void move(ScreenBlock screenBlock) {
 		if (isPerfectOnABlock()) {
-			if (userRequestHasChanged() && canMove(userRequest, screenBlock)) {
-				setDirection(userRequest);
+			if (playerInput.hasRequest() && canMove(userRequest(), screenBlock)) {
+				setDirection(userRequest());
 			}
 			// Quand le body est coincé : au début ou quand il butte sur un mur.
 			if (!canMove(getDirection(), screenBlock)) {
@@ -54,10 +69,6 @@ public abstract class UserBody extends Body {
 			setPosition(destinationPoint);
 			setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 		}
-	}
-
-	private boolean userRequestHasChanged() {
-		return userRequest.x() != 0 || userRequest.y() != 0;
 	}
 
 	public String getName() {

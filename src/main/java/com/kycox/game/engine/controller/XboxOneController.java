@@ -8,6 +8,8 @@ import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.EventGameModel;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.input.InputSource;
+import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.snapshot.GameSnapshot;
 import com.kycox.game.snapshot.GhostSnapshot;
@@ -34,13 +36,17 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	private final XboxRequest xboxOneUnComputedGhost;
 	/** Réglages de ce poste (aide, son, manette branchée), écrits sans passer par le modèle (4.5). */
 	private final LocalPreferences localPreferences;
+	/** Les ordres de déplacement vont directement au joueur concerné (5.1). */
+	private final PlayerInputs playerInputs;
 
 	public XboxOneController(XBoxOneControllerManager padManager,
 							 GameMessaging gameMessaging,
 							 GameProperties gameProperties,
 							 LocalPreferences localPreferences,
+							 PlayerInputs playerInputs,
 							 XboxRequest xboxOneLadybug,
 							 XboxRequest xboxOneUnComputedGhost) {
+		this.playerInputs = playerInputs;
 		this.padManager = padManager;
 		this.gameMessaging = gameMessaging;
 		this.gameProperties = gameProperties;
@@ -130,16 +136,16 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 			return;
 		}
 		if (xboxOneLadybug.isRightLeftStick() || xboxOneLadybug.isRightRightStick()) {
-			gameModelForController.setLadybugRequest(GameMainConstants.POINT_RIGHT);
+			playerInputs.ladybug().request(GameMainConstants.POINT_RIGHT, InputSource.XBOX_PAD_1);
 		}
 		if (xboxOneLadybug.isLeftLeftStick() || xboxOneLadybug.isLeftRightStick()	) {
-			gameModelForController.setLadybugRequest(GameMainConstants.POINT_LEFT);
+			playerInputs.ladybug().request(GameMainConstants.POINT_LEFT, InputSource.XBOX_PAD_1);
 		}
 		if (xboxOneLadybug.isUpLeftStick() || xboxOneLadybug.isUpRightStick()) {
-			gameModelForController.setLadybugRequest(GameMainConstants.POINT_UP);
+			playerInputs.ladybug().request(GameMainConstants.POINT_UP, InputSource.XBOX_PAD_1);
 		}
 		if (xboxOneLadybug.isDownLeftStick() || xboxOneLadybug.isDownRightStick()) {
-			gameModelForController.setLadybugRequest(GameMainConstants.POINT_DOWN);
+			playerInputs.ladybug().request(GameMainConstants.POINT_DOWN, InputSource.XBOX_PAD_1);
 		}
 	}
 

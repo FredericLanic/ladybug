@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 
-import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.game.GameMainConstants;
 
 /**
@@ -20,38 +19,38 @@ import com.kycox.game.constant.game.GameMainConstants;
  * Rejoué avec la même graine, un scénario donne toujours la même partie.
  */
 public final class GameScript {
-	public static final Consumer<GameModelForController> LEFT = keys -> keys.setLadybugRequest(GameMainConstants.POINT_LEFT);
-	public static final Consumer<GameModelForController> RIGHT = keys -> keys.setLadybugRequest(GameMainConstants.POINT_RIGHT);
-	public static final Consumer<GameModelForController> UP = keys -> keys.setLadybugRequest(GameMainConstants.POINT_UP);
-	public static final Consumer<GameModelForController> DOWN = keys -> keys.setLadybugRequest(GameMainConstants.POINT_DOWN);
+	public static final Consumer<GameDriver> LEFT = game -> game.inputs().ladybug().request(GameMainConstants.POINT_LEFT);
+	public static final Consumer<GameDriver> RIGHT = game -> game.inputs().ladybug().request(GameMainConstants.POINT_RIGHT);
+	public static final Consumer<GameDriver> UP = game -> game.inputs().ladybug().request(GameMainConstants.POINT_UP);
+	public static final Consumer<GameDriver> DOWN = game -> game.inputs().ladybug().request(GameMainConstants.POINT_DOWN);
 
 	/** Battement où l'on appuie sur S (l'écran de présentation est apparu au 64e). */
 	static final int START_BEAT = 70;
 
-	private final TreeMap<Integer, List<Consumer<GameModelForController>>> keysByBeat = new TreeMap<>();
+	private final TreeMap<Integer, List<Consumer<GameDriver>>> keysByBeat = new TreeMap<>();
 
 	/** Partie solo au niveau 1 : S puis N sur l'écran de présentation. */
 	public static GameScript soloLevelOne() {
 		return new GameScript()
-		        .at(START_BEAT, GameModelForController::startGame)
-		        .at(START_BEAT + 1, keys -> keys.initializeLevelNumAndStartGame(true));
+		        .at(START_BEAT, game -> game.keys().startGame())
+		        .at(START_BEAT + 1, game -> game.keys().initializeLevelNumAndStartGame(true));
 	}
 
-	public static final Consumer<GameModelForController> GHOST_LEFT = keys -> keys.setGhostRequest(GameMainConstants.POINT_LEFT);
-	public static final Consumer<GameModelForController> GHOST_RIGHT = keys -> keys.setGhostRequest(GameMainConstants.POINT_RIGHT);
-	public static final Consumer<GameModelForController> GHOST_UP = keys -> keys.setGhostRequest(GameMainConstants.POINT_UP);
-	public static final Consumer<GameModelForController> GHOST_DOWN = keys -> keys.setGhostRequest(GameMainConstants.POINT_DOWN);
+	public static final Consumer<GameDriver> GHOST_LEFT = game -> game.keys().setGhostRequest(GameMainConstants.POINT_LEFT);
+	public static final Consumer<GameDriver> GHOST_RIGHT = game -> game.keys().setGhostRequest(GameMainConstants.POINT_RIGHT);
+	public static final Consumer<GameDriver> GHOST_UP = game -> game.keys().setGhostRequest(GameMainConstants.POINT_UP);
+	public static final Consumer<GameDriver> GHOST_DOWN = game -> game.keys().setGhostRequest(GameMainConstants.POINT_DOWN);
 
 	/** Partie à 2 joueurs au niveau 1 : touche 2, puis S et N. */
 	public static GameScript twoPlayersLevelOne() {
 		return new GameScript()
-		        .at(START_BEAT - 2, keys -> keys.setMultiPlayers(true))
-		        .at(START_BEAT, GameModelForController::startGame)
-		        .at(START_BEAT + 1, keys -> keys.initializeLevelNumAndStartGame(true));
+		        .at(START_BEAT - 2, game -> game.keys().setMultiPlayers(true))
+		        .at(START_BEAT, game -> game.keys().startGame())
+		        .at(START_BEAT + 1, game -> game.keys().initializeLevelNumAndStartGame(true));
 	}
 
 	/** Ajoute une « touche » au battement donné. */
-	public GameScript at(int beat, Consumer<GameModelForController> key) {
+	public GameScript at(int beat, Consumer<GameDriver> key) {
 		keysByBeat.computeIfAbsent(beat, b -> new ArrayList<>()).add(key);
 		return this;
 	}
@@ -59,7 +58,7 @@ public final class GameScript {
 	/** Joue la partie jusqu'au battement {@code totalBeats}, touches comprises. */
 	public void play(GameDriver game, int totalBeats) {
 		while (game.beatCount() < totalBeats) {
-			keysByBeat.getOrDefault(game.beatCount(), List.of()).forEach(key -> key.accept(game.keys()));
+			keysByBeat.getOrDefault(game.beatCount(), List.of()).forEach(key -> key.accept(game));
 			game.beat();
 		}
 	}
