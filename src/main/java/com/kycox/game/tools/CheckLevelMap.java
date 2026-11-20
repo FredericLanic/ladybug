@@ -17,8 +17,8 @@
 package com.kycox.game.tools;
 
 
-import com.kycox.game.engine.screendata.ScreenBlock;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.ScreenBlock;
+import com.kycox.game.engine.maze.Maze;
 
 /**
  * Vérification et ajustement du niveau pour éviter les erreurs humaines
@@ -28,19 +28,19 @@ public class CheckLevelMap {
 	private int nbrBlocksByLines;
 	private int nbrLines;
 
-	public void check(ScreenData screenData) {
-		nbrBlocksByLines = screenData.getCurrentLevel().getNbrBlocksByLine();
-		nbrLines = screenData.getNbrLines();
+	public void check(Maze maze) {
+		nbrBlocksByLines = maze.getCurrentLevel().getNbrBlocksByLine();
+		nbrLines = maze.getNbrLines();
 		for (var x = 0; x < nbrBlocksByLines; x++) {
 			for (var y = 0; y < nbrLines; y++) {
 				var currentPoint = new Position(x, y);
-				var block = screenData.getScreenBlock(currentPoint);
-				checkScreenBlock(block, screenData);
+				var block = maze.getScreenBlock(currentPoint);
+				checkScreenBlock(block, maze);
 			}
 		}
 	}
 
-	private boolean checkScreenBlock(ScreenBlock block, ScreenData screenData) {
+	private boolean checkScreenBlock(ScreenBlock block, Maze maze) {
 		var hasChanged = false;
 		Position checkedPoint;
 		ScreenBlock previousScreenBlock;
@@ -68,7 +68,7 @@ public class CheckLevelMap {
 		// vérification de la bordure en haut
 		if (isUp && block.getCoordinate().y() > 0) {
 			checkedPoint = new Position(block.getCoordinate().x(), block.getCoordinate().y() - 1);
-			previousScreenBlock = screenData.getScreenBlock(checkedPoint);
+			previousScreenBlock = maze.getScreenBlock(checkedPoint);
 			if (!previousScreenBlock.isBorderDown()) {
 				hasChanged = true;
 				previousScreenBlock.addBorderDown();
@@ -77,7 +77,7 @@ public class CheckLevelMap {
 		// vérification de la bordure en bas
 		if (isDown && block.getCoordinate().y() < nbrLines - 1) {
 			checkedPoint = new Position(block.getCoordinate().x(), block.getCoordinate().y() + 1);
-			previousScreenBlock = screenData.getScreenBlock(checkedPoint);
+			previousScreenBlock = maze.getScreenBlock(checkedPoint);
 			if (!previousScreenBlock.isBorderUp()) {
 				hasChanged = true;
 				previousScreenBlock.addBorderUp();
@@ -86,7 +86,7 @@ public class CheckLevelMap {
 		// vérification de la bordure à droite
 		if (isRight && block.getCoordinate().x() < nbrBlocksByLines - 1) {
 			checkedPoint = new Position(block.getCoordinate().x() + 1, block.getCoordinate().y());
-			previousScreenBlock = screenData.getScreenBlock(checkedPoint);
+			previousScreenBlock = maze.getScreenBlock(checkedPoint);
 			if (!previousScreenBlock.isBorderLeft()) {
 				hasChanged = true;
 				previousScreenBlock.addBorderLeft();
@@ -95,7 +95,7 @@ public class CheckLevelMap {
 		// vérification de la bordure à gauche
 		if (isLeft && block.getCoordinate().x() > 0) {
 			checkedPoint = new Position(block.getCoordinate().x() - 1, block.getCoordinate().y());
-			previousScreenBlock = screenData.getScreenBlock(checkedPoint);
+			previousScreenBlock = maze.getScreenBlock(checkedPoint);
 			if (!previousScreenBlock.isBorderRight()) {
 				hasChanged = true;
 				previousScreenBlock.addBorderRight();

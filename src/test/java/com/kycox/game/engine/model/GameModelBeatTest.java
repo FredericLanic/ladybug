@@ -21,7 +21,7 @@ import com.kycox.game.engine.model.strategy.IGameModelAction;
 import com.kycox.game.engine.model.strategy.ManageActionContext;
 import com.kycox.game.engine.score.GroupMessages;
 import com.kycox.game.engine.score.Score;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.sound.NewSounds;
 import com.kycox.game.tools.timer.SuperPowerTimer;
 import com.kycox.game.tools.timer.TickScheduler;
@@ -58,7 +58,7 @@ class GameModelBeatTest {
 
 		gameModel = new GameModel(currentProgramStatus, mock(GameMessaging.class), gameModelManageAction,
 		        mock(Score.class), mock(GhostsGroup.class), groupMessages, mock(Ladybug.class),
-		        mock(LadybugDying.class), mock(NewSounds.class), mock(ScreenData.class), manageActionContext,
+		        mock(LadybugDying.class), mock(NewSounds.class), mock(Maze.class), manageActionContext,
 		        publisher, tickScheduler, superPowerTimer, mock(com.kycox.game.engine.sound.SoundDurations.class));
 	}
 

@@ -184,8 +184,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	 * et Échap ajoutés).
 	 */
 	private void drawCenterTextLines(Graphics2D g2d, String... lines) {
-		var x = gameModelForViews.getScreenData().getScreenWidth();
-		var y = gameModelForViews.getScreenData().getScreenHeight();
+		var x = widthInPixels();
+		var y = heightInPixels();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -196,6 +196,16 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		}
 	}
 
+	/** Largeur du labyrinthe en pixels (étape 4.4 : calculée par la vue). */
+	private int widthInPixels() {
+		return gameModelForViews.getMaze().getCurrentLevel().getNbrBlocksByLine() * GameMainConstants.BLOCK_SIZE;
+	}
+
+	/** Hauteur du labyrinthe en pixels (étape 4.4 : calculée par la vue). */
+	private int heightInPixels() {
+		return gameModelForViews.getMaze().getNbrLines() * GameMainConstants.BLOCK_SIZE;
+	}
+
 	private void drawGhosts(Graphics2D g2d) {
 		var ladybugPosition = gameModelForViews.getLadybug().getPosition();
 		gameModelForViews.getGroupGhosts()
@@ -204,7 +214,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		        .filter(ghost -> ghost.getPosition().distance(ladybugPosition) <= 4 * GameMainConstants.BLOCK_SIZE || !ghost.isComputed()
 		                || gameModelForViews.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed() && ghost.getPosition().distance(gc.getPosition()) <= 4 * GameMainConstants.BLOCK_SIZE)
 		                || !gameModelForViews.getCurrentProgramStatus().isInGame()
-		                || !gameModelForViews.getScreenData().isLitLampMode())
+		                || !gameModelForViews.getMaze().isLitLampMode())
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x() + 1, g.getPosition().y() + 1, this));
 
 		if (gameModelForViews.isDebugMode()) {
@@ -229,8 +239,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 
 	private void drawMaze(Graphics2D g2d) {
 		var ladybugPosition = gameModelForViews.getLadybug().getPosition();
-		for (var y = 0; y < gameModelForViews.getScreenData().getScreenHeight(); y += GameMainConstants.BLOCK_SIZE) {
-			for (var x = 0; x < gameModelForViews.getScreenData().getCurrentLevel().getNbrBlocksByLine()
+		for (var y = 0; y < heightInPixels(); y += GameMainConstants.BLOCK_SIZE) {
+			for (var x = 0; x < gameModelForViews.getMaze().getCurrentLevel().getNbrBlocksByLine()
 			        * GameMainConstants.BLOCK_SIZE; x += GameMainConstants.BLOCK_SIZE) {
 				var positionScreenBlock = new Position(x, y);
 
@@ -238,8 +248,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 				        || gameModelForViews.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).anyMatch(
 				                g -> g.getPosition().distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
 				        || !gameModelForViews.getCurrentProgramStatus().isInGame()
-				        || !gameModelForViews.getScreenData().isLitLampMode()) {
-					screenBlockView.display(g2d, gameModelForViews.getScreenData(), x, y);
+				        || !gameModelForViews.getMaze().isLitLampMode()) {
+					screenBlockView.display(g2d, gameModelForViews.getMaze(), x, y);
 				}
 
 			}
@@ -247,8 +257,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	}
 
 	private void drawOneCenterTextLine(Graphics2D g2d, String text) {
-		var x = gameModelForViews.getScreenData().getScreenWidth();
-		var y = gameModelForViews.getScreenData().getScreenHeight();
+		var x = widthInPixels();
+		var y = heightInPixels();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -259,8 +269,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	 * FIXME : utiliser les streams comme dans drawGhosts(Graphics2D g2d)
 	 */
 	private void drawPresentationGhosts(Graphics2D g2d) {
-		var x = gameModelForViews.getScreenData().getScreenWidth() / 2 - (7 * GameMainConstants.BLOCK_SIZE) / 2;
-		var y = gameModelForViews.getScreenData().getScreenHeight() / 2;
+		var x = widthInPixels() / 2 - (7 * GameMainConstants.BLOCK_SIZE) / 2;
+		var y = heightInPixels() / 2;
 		var ghosts = gameModelForViews.getGroupGhosts().getGhosts().stream().toList();
 		for (Ghost ghost : ghosts) {
 			g2d.drawImage(ghostView.getImage(ghost), x, y, this);
@@ -282,8 +292,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 
 	private void drawSevenCenterTextLines(Graphics2D g2d, String line1, String line2, String line3, String line4,
 	        String line5, String line6, String line7) {
-		var x = gameModelForViews.getScreenData().getScreenWidth();
-		var y = gameModelForViews.getScreenData().getScreenHeight();
+		var x = widthInPixels();
+		var y = heightInPixels();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -297,8 +307,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	}
 
 	private void drawThreeCenterTextLines(Graphics2D g2d, String line1, String line2, String line3) {
-		var x = gameModelForViews.getScreenData().getScreenWidth();
-		var y = gameModelForViews.getScreenData().getScreenHeight();
+		var x = widthInPixels();
+		var y = heightInPixels();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
@@ -308,8 +318,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	}
 
 	private void drawTwoCenterTextLines(Graphics2D g2d, String line1, String line2) {
-		var x = gameModelForViews.getScreenData().getScreenWidth();
-		var y = gameModelForViews.getScreenData().getScreenHeight();
+		var x = widthInPixels();
+		var y = heightInPixels();
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);

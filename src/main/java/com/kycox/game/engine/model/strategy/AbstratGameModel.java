@@ -6,7 +6,7 @@ import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.CurrentProgramStatus;
 import com.kycox.game.engine.score.GroupMessages;
@@ -45,7 +45,7 @@ public class AbstratGameModel {
 	protected NewSounds newSounds;
 	@Getter
 	@Autowired
-	protected ScreenData screenData;
+	protected Maze maze;
 	@Getter
 	@Setter
 	protected boolean soundActive = true;
@@ -61,8 +61,8 @@ public class AbstratGameModel {
 	 * suite de l'initialisation du niveau ou quand ladybug meurt
 	 */
 	protected void continueLevel() {
-		ladybug.settingsForNewLevel(currentGameStatus.getNumLevel(), screenData.getInitLadybugPos());
-		groupGhosts.setStartLevel(currentGameStatus.getNumLevel(), screenData);
+		ladybug.settingsForNewLevel(currentGameStatus.getNumLevel(), maze.getInitLadybugPos());
+		groupGhosts.setStartLevel(currentGameStatus.getNumLevel(), maze);
 		groupGhosts.getGhosts().stream().filter(g -> !g.isComputed())
 		        .forEach(gu -> gu.initSpeedIndex(ladybug.getSpeedIndex()));
 	}
@@ -74,7 +74,7 @@ public class AbstratGameModel {
 		// initialisation du numéro du niveau; incrémenté dans initLevel
 		currentGameStatus.setNumLevel(1);
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
+		maze.setLevelMap(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
 		// 3 vies par défaut
 		ladybug.setLeftLifes(GameMainConstants.NBR_INIT_LIFE);
 		// ladybug n'est pas en vie lors de l'initialisation du jeu
@@ -86,7 +86,7 @@ public class AbstratGameModel {
 		// mise de la vitesse du niveau PRESENTATION_LEVEL
 		groupGhosts.setInitSpeedsForPresentation(GameMainConstants.PRESENTATION_LEVEL);
 		// initialise les positions des fantômes
-		groupGhosts.setPositionToRevivorGhostPoint(screenData);
+		groupGhosts.setPositionToRevivorGhostPoint(maze);
 		// initialise les fantômes pour la présentation
 		groupGhosts.setStatus(GhostStatus.NORMAL);
 		// initialise les vies de fantômes
@@ -112,7 +112,7 @@ public class AbstratGameModel {
 		newSounds.addTeleport(
 		        (ladybug.isToBeTeleported() || groupGhosts.hasTeleportedGhosts() && currentGameStatus.isInGame()));
 		newSounds.addSirenSound(ladybug.getStatus() == LadybugStatus.NORMAL && currentGameStatus.isInGame(),
-		        screenData.getPercentageEatenPoint());
+		        maze.getPercentageEatenPoint());
 		newSounds.addLadybugIsDying(ladybug.getStatus() == LadybugStatus.DYING, !ladybugDying.isInProgress());
 		newSounds.addLaybugEatenFruit(ladybug.hasEatenAFruit() && currentGameStatus.isInGame());
 	}

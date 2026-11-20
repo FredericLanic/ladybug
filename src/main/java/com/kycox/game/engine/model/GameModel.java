@@ -25,7 +25,7 @@ import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.contract.GameModelForSounds;
 import com.kycox.game.constant.contract.GameModelForViews;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.strategy.GameModelManageAction;
 import com.kycox.game.engine.model.strategy.ManageActionContext;
@@ -78,7 +78,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	@Getter
 	private final NewSounds newSounds;
 	@Getter
-	private final ScreenData screenData;
+	private final Maze maze;
 	@Getter
 	@Setter
 	private boolean showHelpForKeys = false;
@@ -108,7 +108,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 					 Ladybug ladybug,
 					 LadybugDying ladybugDying,
 					 NewSounds newSounds,
-					 ScreenData screenData,
+					 Maze maze,
 					 ManageActionContext manageActionContext,
 					 ApplicationEventPublisher applicationEventPublisher,
 					 TickScheduler tickScheduler,
@@ -125,7 +125,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		this.ladybug = ladybug;
 		this.ladybugDying = ladybugDying;
 		this.newSounds = newSounds;
-		this.screenData = screenData;
+		this.maze = maze;
 		// pour envoyer aux autres vues l'état courant du jeu
 		this.applicationEventPublisher = applicationEventPublisher;
 		this.tickScheduler = tickScheduler;
@@ -173,7 +173,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 
 	@Override
 	public void changeLitLampMode() {
-		screenData.setLitLampMode(!screenData.isLitLampMode());
+		maze.setLitLampMode(!maze.isLitLampMode());
 	}
 
 	@Override

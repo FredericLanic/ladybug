@@ -14,14 +14,13 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.engine.screendata;
+package com.kycox.game.engine.maze;
 
 import com.kycox.game.tools.Position;
 import com.kycox.game.body.ladybug.Ladybug;
-import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.constant.contract.LevelStructure;
-import com.kycox.game.engine.screendata.utils.CheckScreenBlockBorders;
+import com.kycox.game.engine.maze.utils.CheckScreenBlockBorders;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
 import lombok.Getter;
@@ -29,16 +28,22 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
- * La map du jeu en cours
+ * Le labyrinthe du niveau en cours, vu par les règles du jeu : les cases, les
+ * gommes, les fruits, les téléportations et les positions de départ.
  *
+ * <p>Étape 4.4 : ancien {@code ScreenData}, découpé par un « Extract Class ».
+ * Il ne connaît plus ni les pixels ni la copie des cases servant au dessin des
+ * murs : c'est {@code MazeOutline}, côté vue, qui la construit. Voir
+ * {@code doc/patterns/extract-class.md}.</p>
  */
 @Component
-public final class ScreenData {
+public final class Maze {
 	@Getter
 	private LevelStructure currentLevel;
 	private List<ScreenBlock> dataScreenBlocks = new ArrayList<>();
@@ -48,27 +53,36 @@ public final class ScreenData {
 	private boolean litLampMode = false;
 	private final ManageLevel manageLevel;
 
+	/**
+	 * Numéro de « forme » du labyrinthe : il augmente à chaque niveau préparé. La
+	 * vue s'en sert pour savoir quand reconstruire le contour des murs.
+	 */
 	@Getter
-	private final List<ScreenBlock> viewScreenBlocks = new ArrayList<>();
+	private int layoutVersion = 0;
 
 	@Getter
 	private LevelRendering levelRendering;
 
-	public ScreenData(ManageLevel manageLevel) {
+	public Maze(ManageLevel manageLevel) {
 		this.manageLevel = manageLevel;
 	}
 
 	public void addNewFruit(int idRefFruit) {
 		var currentScreenBlock = dataScreenBlocks.get(getRandomPosNumEatenPoint());
 		currentScreenBlock.setIdRefFruit(idRefFruit);
-		viewScreenBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
-		        .orElseThrow().setIdRefFruit(idRefFruit);
 	}
 
 	public List<UnitDijkstra> convertToDjistraList() {
 		List<UnitDijkstra> lstUnitDijkstra = new ArrayList<>();
 		dataScreenBlocks.forEach(dataScreenBlock -> lstUnitDijkstra.add(new UnitDijkstra(dataScreenBlock)));
 		return lstUnitDijkstra;
+	}
+
+	/**
+	 * Les cases du niveau, en lecture seule (la vue en tire le contour des murs).
+	 */
+	public List<ScreenBlock> getScreenBlocks() {
+		return Collections.unmodifiableList(dataScreenBlocks);
 	}
 
 	public Position getInitLadybugPos() {
@@ -132,18 +146,6 @@ public final class ScreenData {
 		return dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
-	public int getScreenHeight() {
-		return getNbrLines() * GameMainConstants.BLOCK_SIZE;
-	}
-
-	public int getScreenWidth() {
-		return currentLevel.getNbrBlocksByLine() * GameMainConstants.BLOCK_SIZE;
-	}
-
-	public ScreenBlock getViewBlock(Position posPoint) {
-		return viewScreenBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
-	}
-
 	public void setLevelMap(int numLevel, boolean isInGame) {
    		// récupération du level associé au numLevel
 		currentLevel = manageLevel.getLevel(numLevel);
@@ -175,33 +177,19 @@ public final class ScreenData {
 		} else {
 			levelRendering = LevelRendering.getDefaultLevelRendering();
 		}
-		viewScreenBlocks.clear();
-		// on clone la liste
-		setViewScreenBlocks();
-
-		checkScreenBlockBorders.checkViewBlockBorder();
 		initNbrBlocksWithPoint = getNbrBlocksWithPoint();
-	}
-
-	private void setViewScreenBlocks() {
-		dataScreenBlocks.forEach(sb -> viewScreenBlocks.add(sb.clone()));
+		layoutVersion++;
 	}
 
 	public void updateScreenBlock(Ladybug ladybug) {
-		// Suppression du point dans le ScreenBlock de lstDataBlocks
+		// Suppression du point (ou du fruit) dans la case mangée
 		var currentScreenBlock = ladybug.getLadybugActions().getCurrentScreenBlock();
 		if (ladybug.isEatenAMegaPoint() || ladybug.isEatenAPoint()) {
 			currentScreenBlock.removePoint();
 			currentScreenBlock.addEatenPoint();
-			// Suppression du point dans de ScreenBlock de lstViewBlocks
-			viewScreenBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
-			        .orElseThrow().removePoint();
 		}
 		if (ladybug.hasEatenAFruit()) {
 			currentScreenBlock.resetIdRefFruit();
-			viewScreenBlocks.stream().filter(sb -> sb.getCoordinate().equals(currentScreenBlock.getCoordinate())).findFirst()
-			        .orElseThrow().resetIdRefFruit();
-
 		}
 	}
 }

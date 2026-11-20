@@ -33,7 +33,7 @@ final class GameRules {
 			if (score < lastScore) {
 				fail(beat, "score decreased from " + lastScore + " to " + score);
 			}
-			var block = model.getScreenData().getScreenBlock(ladybug);
+			var block = model.getMaze().getScreenBlock(ladybug);
 			if (block != null && block.isNotAccessible()) {
 				fail(beat, "Ladybug is inside a wall at " + ladybug);
 			}

@@ -24,7 +24,7 @@ import java.util.Map;
 
 import com.kycox.game.constant.contract.LevelStructure;
 
-import com.kycox.game.engine.screendata.ScreenBlock;
+import com.kycox.game.engine.maze.ScreenBlock;
 import lombok.Getter;
 
 public abstract class FirstGenerationLevel implements LevelStructure {

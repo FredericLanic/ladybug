@@ -155,9 +155,9 @@ class KeyboardControllerTest {
 	@Test
 	void f6SwitchesTheLampModeInGame() {
 		startLevelOne();
-		var before = game.model().getScreenData().isLitLampMode();
+		var before = game.model().getMaze().isLitLampMode();
 		press(KeyEvent.VK_F6);
-		assertThat(game.model().getScreenData().isLitLampMode()).isNotEqualTo(before);
+		assertThat(game.model().getMaze().isLitLampMode()).isNotEqualTo(before);
 	}
 
 	@Test

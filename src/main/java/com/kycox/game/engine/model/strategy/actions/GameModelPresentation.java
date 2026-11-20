@@ -14,12 +14,12 @@ public class GameModelPresentation extends AbstratGameModel implements IGameMode
 	private Position ghostRequest = GameMainConstants.POINT_ZERO;
 
 	private void moveBodies() {
-		ladybug.move(screenData);
+		ladybug.move(maze);
 		moveGhosts();
 	}
 
 	private void moveGhosts() {
-		groupGhosts.move(ladybug, screenData, ghostRequest);
+		groupGhosts.move(ladybug, maze, ghostRequest);
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class GameModelPresentation extends AbstratGameModel implements IGameMode
 	}
 
 	private void setBodiesActions() {
-		ladybug.setActions(screenData);
-		groupGhosts.setActions(ladybug, screenData);
+		ladybug.setActions(maze);
+		groupGhosts.setActions(ladybug, maze);
 	}
 }

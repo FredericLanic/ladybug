@@ -22,7 +22,7 @@ import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.contract.GroupGhostForGameView;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -72,9 +72,9 @@ public class GhostsGroup implements GroupGhostForGameView {
 		ghosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
-	public void move(Ladybug ladybug, ScreenData screenData, Position ghostRequest) {
-		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, screenData));
-		ghosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
+	public void move(Ladybug ladybug, Maze maze, Position ghostRequest) {
+		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, maze));
+		ghosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.moveGhostUser(ladybug, maze, ghostRequest));
 	}
 
 	/** Tous les fantômes sont joués par l'ordinateur (mode un joueur). */
@@ -87,8 +87,8 @@ public class GhostsGroup implements GroupGhostForGameView {
 		ghosts.stream().filter(ghost -> ghost.getColor() == color).forEach(ghost -> ghost.setComputed(false));
 	}
 
-	public void setActions(Ladybug ladybug, ScreenData screenData) {
-		ghosts.forEach(g -> g.setGhostActions(ladybug, screenData));
+	public void setActions(Ladybug ladybug, Maze maze) {
+		ghosts.forEach(g -> g.setGhostActions(ladybug, maze));
 	}
 
 	public void setFear(boolean fear) {
@@ -105,8 +105,8 @@ public class GhostsGroup implements GroupGhostForGameView {
 		ghosts.stream().filter(g -> g.getStatus() == GhostStatus.SCARED).forEach(g -> g.setStatus(GhostStatus.FLASH));
 	}
 
-	private void setGhostPositionAfterTeleportation(ScreenData screenData) {
-		ghosts.stream().filter(g -> g.getGhostActions().isToBeTeleported()).forEach(g -> g.teleport(screenData));
+	private void setGhostPositionAfterTeleportation(Maze maze) {
+		ghosts.stream().filter(g -> g.getGhostActions().isToBeTeleported()).forEach(g -> g.teleport(maze));
 	}
 
 	private void setGhostSettingAfterLadybugContact(int numLevel) {
@@ -142,34 +142,34 @@ public class GhostsGroup implements GroupGhostForGameView {
 		ghosts.forEach(g -> g.setNumLevel(numLevel));
 	}
 
-	public void setPositionToRevivorGhostPoint(ScreenData screenData) {
-		ghosts.forEach(g -> g.setPosition(screenData.getRevivorGhostPos()));
+	public void setPositionToRevivorGhostPoint(Maze maze) {
+		ghosts.forEach(g -> g.setPosition(maze.getRevivorGhostPos()));
 	}
 
 	private void setSpeed(int numLevel, int perCent) {
 		ghosts.forEach(g -> g.setSpeed(numLevel, perCent));
 	}
 
-	public void setStartLevel(int numLevel, ScreenData screenData) {
+	public void setStartLevel(int numLevel, Maze maze) {
 		setStatus(GhostStatus.NORMAL);
 		setInitSpeedsComputedGhost(numLevel);
-		setPositionToRevivorGhostPoint(screenData);
+		setPositionToRevivorGhostPoint(maze);
 	}
 
 	public void setStatus(GhostStatus status) {
 		ghosts.forEach(g -> g.setStatus(status));
 	}
 
-	public void updateSeetings(int numLevel, ScreenData screenData) {
+	public void updateSeetings(int numLevel, Maze maze) {
 		setGhostSettingAfterLadybugContact(numLevel);
 		// modifier la vitesse des fantôme en cours de partie
-		setSpeed(numLevel, screenData.getPercentageEatenPoint());
+		setSpeed(numLevel, maze.getPercentageEatenPoint());
 		// Etat des fantômes de REGENERATING à NORMAL
 		setGhostStatusAfterRegenerated();
 		// Passage de l'état TOBEREGENERATED to REGENERATED
 		setGhostStatusAfterToBeRegenerated();
 		// Téléportation du fantôme
-		setGhostPositionAfterTeleportation(screenData);
+		setGhostPositionAfterTeleportation(maze);
 	}
 
 	public boolean userGhostHasNoLife() {

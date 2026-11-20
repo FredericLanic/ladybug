@@ -18,7 +18,7 @@ package com.kycox.game.engine.bodyaction.ladybug;
 
 import com.kycox.game.engine.bodyaction.BodyActions;
 import com.kycox.game.constant.game.GameMainConstants;
-import com.kycox.game.engine.screendata.ScreenBlock;
+import com.kycox.game.engine.maze.ScreenBlock;
 
 import lombok.Getter;
 import lombok.Setter;

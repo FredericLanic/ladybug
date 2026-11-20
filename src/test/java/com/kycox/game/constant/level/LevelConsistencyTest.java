@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.kycox.game.constant.contract.LevelStructure;
-import com.kycox.game.engine.screendata.ScreenBlock;
+import com.kycox.game.engine.maze.ScreenBlock;
 import com.kycox.game.testutil.LevelFixtures;
 
 /**
@@ -36,10 +36,10 @@ class LevelConsistencyTest {
 	@MethodSource("levels")
 	@DisplayName("Ladybug et le point de régénération des fantômes sont sur des cases praticables")
 	void startPositionsAreAccessible(String name, LevelStructure level) {
-		var screenData = LevelFixtures.screenDataOf(level);
-		assertThat(screenData.getScreenBlock(level.getInitLadybugBlockPos()))
+		var maze = LevelFixtures.mazeOf(level);
+		assertThat(maze.getScreenBlock(level.getInitLadybugBlockPos()))
 		        .as("départ de Ladybug").isNotNull().matches(b -> !b.isNotAccessible() && !b.isBlocked());
-		assertThat(screenData.getScreenBlock(level.getGhostRegenerateBlockPoint()))
+		assertThat(maze.getScreenBlock(level.getGhostRegenerateBlockPoint()))
 		        .as("régénération des fantômes").isNotNull().matches(b -> !b.isNotAccessible() && !b.isBlocked());
 	}
 
@@ -47,8 +47,8 @@ class LevelConsistencyTest {
 	@MethodSource("levels")
 	@DisplayName("Les fantômes peuvent rejoindre Ladybug depuis leur point de régénération")
 	void ghostsCanReachLadybug(String name, LevelStructure level) {
-		var screenData = LevelFixtures.screenDataOf(level);
-		var distances = LevelFixtures.distancesFrom(level.getGhostRegenerateBlockPoint(), screenData);
+		var maze = LevelFixtures.mazeOf(level);
+		var distances = LevelFixtures.distancesFrom(level.getGhostRegenerateBlockPoint(), maze);
 		assertThat(distances).containsKey(level.getInitLadybugBlockPos());
 	}
 
@@ -56,10 +56,10 @@ class LevelConsistencyTest {
 	@MethodSource("levels")
 	@DisplayName("Toutes les gommes sont atteignables depuis le départ de Ladybug")
 	void allPointsAreReachable(String name, LevelStructure level) {
-		var screenData = LevelFixtures.screenDataOf(level);
-		var distances = LevelFixtures.distancesFrom(level.getInitLadybugBlockPos(), screenData);
+		var maze = LevelFixtures.mazeOf(level);
+		var distances = LevelFixtures.distancesFrom(level.getInitLadybugBlockPos(), maze);
 		var points = level.getLstBlocks().stream().map(ScreenBlock::getCoordinate)
-		        .filter(p -> screenData.getScreenBlock(p).isPoint()).toList();
+		        .filter(p -> maze.getScreenBlock(p).isPoint()).toList();
 		assertThat(points).as("un niveau sans gomme serait terminé avant d'avoir commencé").isNotEmpty();
 		var unreachablePoints = points.stream().filter(p -> !distances.containsKey(p)).toList();
 		assertThat(unreachablePoints).as("gommes inatteignables : le niveau ne pourrait jamais être terminé").isEmpty();
@@ -69,11 +69,11 @@ class LevelConsistencyTest {
 	@MethodSource("levels")
 	@DisplayName("Chaque téléporteur a son retour, au bord du labyrinthe, sur une case praticable")
 	void teleportsAreSymmetric(String name, LevelStructure level) {
-		var screenData = LevelFixtures.screenDataOf(level);
+		var maze = LevelFixtures.mazeOf(level);
 		level.getTeleportPoints().forEach((from, to) -> {
 			assertThat(level.getTeleportPoints()).as("retour de %s", from).containsEntry(to, from);
 			assertThat(isOnEdge(from, level)).as("%s au bord", from).isTrue();
-			assertThat(screenData.getScreenBlock(from).isNotAccessible()).as("%s praticable", from).isFalse();
+			assertThat(maze.getScreenBlock(from).isNotAccessible()).as("%s praticable", from).isFalse();
 		});
 	}
 

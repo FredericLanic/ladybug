@@ -2,7 +2,7 @@ package com.kycox.game.engine.model.strategy.actions;
 
 import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
-import com.kycox.game.engine.screendata.repo.LevelRepository;
+import com.kycox.game.engine.maze.repo.LevelRepository;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.IGameModelAction;
 import lombok.Setter;
@@ -21,12 +21,12 @@ public class GameModelAskKeepPreviousGameLevel extends AbstratGameModel implemen
 	}
 
 	private void moveBodies() {
-		ladybug.move(screenData);
+		ladybug.move(maze);
 		moveGhosts();
 	}
 
 	private void moveGhosts() {
-		groupGhosts.move(ladybug, screenData, ghostRequest);
+		groupGhosts.move(ladybug, maze, ghostRequest);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class GameModelAskKeepPreviousGameLevel extends AbstratGameModel implemen
 	}
 
 	private void setBodiesActions() {
-		ladybug.setActions(screenData);
-		groupGhosts.setActions(ladybug, screenData);
+		ladybug.setActions(maze);
+		groupGhosts.setActions(ladybug, maze);
 	}
 }

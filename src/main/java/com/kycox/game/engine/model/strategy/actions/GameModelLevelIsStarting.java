@@ -35,7 +35,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		currentGameStatus.getStoredNumLevel();;
 		currentGameStatus.updateNextLevel();
 		// recopie les paramètres du niveau dans les données flottantes du niveau
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), true);
+		maze.setLevelMap(currentGameStatus.getNumLevel(), true);
 		// initialisation du super power
 		groupGhosts.setFear(false);
 		// son activé
@@ -45,7 +45,7 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		// initialise les fruits
 		fruits.init();
 		// init litLampMode
-		screenData.setLitLampMode(LitLampMode.isLitLampMode(currentGameStatus.getNumLevel()));
+		maze.setLitLampMode(LitLampMode.isLitLampMode(currentGameStatus.getNumLevel()));
 		// on continue le level
 		continueLevel();
 	}

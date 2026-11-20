@@ -24,7 +24,7 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.constant.contract.LadybugForController;
 import com.kycox.game.constant.contract.LadybugForGameView;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -65,12 +65,12 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 		return ladybugActions.isToBeTeleported();
 	}
 
-	public void move(ScreenData screenData) {
+	public void move(Maze maze) {
 		if (ladybugActions.isToBeTeleported()) {
-			teleport(screenData);
+			teleport(maze);
 			return;
 		}
-		var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+		var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 		if (isPerfectOnABlock()) {
 			if (canMove(userRequest, currentScreenBlock)) {
 				viewDirection = userRequest;
@@ -80,7 +80,7 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 		setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 	}
 
-	public LadybugActions setActions(ScreenData screenData) {
+	public LadybugActions setActions(Maze maze) {
 		ladybugActions = new LadybugActions();
 		if (getStatus() == LadybugStatus.DEAD) {
 			return ladybugActions;
@@ -91,7 +91,7 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 		}
 		// calcule uniquement lorsque ladybug rempli le block
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
 			ladybugActions.setEatenAMegaPoint(currentScreenBlock.isMegaPoint());

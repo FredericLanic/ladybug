@@ -17,7 +17,7 @@
 package com.kycox.game.constant.contract;
 
 import com.kycox.game.body.ghost.Ghost;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.score.GroupMessages;
 import com.kycox.game.engine.score.Score;
 
@@ -38,7 +38,7 @@ public interface GameModelForViews extends GameCommon {
 
 	int getNbrPlayers();
 
-	ScreenData getScreenData();
+	Maze getMaze();
 
 	Optional<Ghost> getUnComputedGhost();
 

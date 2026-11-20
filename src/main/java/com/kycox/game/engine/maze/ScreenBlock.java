@@ -14,7 +14,7 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.kycox.game.engine.screendata;
+package com.kycox.game.engine.maze;
 
 import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Class ScreenBlock correspond à une case dans le ScreenData
+ * Class ScreenBlock correspond à une case dans le Maze
  *
  */
 @Getter
