@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 /**
  * Planificateur d'actions en battements (étape 3.5.1b).
  *
- * <p>Remplace {@link WaitAndDoActionAfterTimer} dans le modèle. L'ancienne
+ * <p>Remplace {@code WaitAndDoActionAfterTimer} dans le modèle (classe
+ * supprimée en D25, quand la vue a cessé de l'utiliser). L'ancienne
  * minuterie exécutait son action dans son propre fil d'exécution, à n'importe
  * quel moment, même au milieu d'un battement ou en même temps qu'une touche du
  * clavier (dette D22 : {@code GAME_START} et {@code LEVEL_START} dans le

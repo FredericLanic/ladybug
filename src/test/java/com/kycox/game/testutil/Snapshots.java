@@ -37,6 +37,12 @@ public final class Snapshots {
 		        eatenAMegaPoint, toBeTeleported, 0);
 	}
 
+	/** Une Ladybug ordinaire, au battement où elle gagne (ou non) une vie. */
+	public static LadybugSnapshot ladybugWithNewLife(boolean newLife) {
+		return new LadybugSnapshot("Ladybug", ORIGIN, ORIGIN, ORIGIN, LadybugStatus.NORMAL, 3, newLife, 0, false,
+		        false, 0);
+	}
+
 	/** Un fantôme joué par un humain, sauf pour la téléportation et la mort. */
 	public static GhostSnapshot humanGhost(boolean toBeTeleported, boolean dying) {
 		return new GhostSnapshot("Blinky", GhostColor.RED, ORIGIN, ORIGIN, ORIGIN, GhostStatus.NORMAL, false, false,

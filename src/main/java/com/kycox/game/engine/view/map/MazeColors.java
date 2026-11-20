@@ -26,8 +26,11 @@ import java.awt.Color;
 public final class MazeColors {
 	/** Bleu habituel des murs. */
 	public static final Color BLUE_LADYBUG = new Color(33, 33, 255);
-	/** Gris des murs pendant le clignotement d'une vie gagnée. */
-	public static final Color COLOR_EXTRA_PAC_LADYBUG = Color.LIGHT_GRAY;
+	/**
+	 * Or de l'effet « vie gagnée » (D25) : les murs clignotent dans cette teinte,
+	 * et le texte « +1 VIE » est écrit dans cette couleur.
+	 */
+	public static final Color NEW_LIFE_GOLD = new Color(255, 196, 36);
 
 	private MazeColors() {
 	}
