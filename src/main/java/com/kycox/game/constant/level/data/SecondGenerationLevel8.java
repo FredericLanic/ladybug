@@ -16,10 +16,10 @@
  */
 package com.kycox.game.constant.level.data;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.level.LevelConstruct;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 
 import static com.kycox.game.constant.level.LevelConstruct.B;
 import static com.kycox.game.constant.level.LevelConstruct.N;
@@ -51,13 +51,13 @@ public class SecondGenerationLevel8 extends SecondGenerationLevel {
 	}
 
 	@Override
-	public Point getGhostRegenerateBlockPoint() {
-		return new Point(7, 1);
+	public Position getGhostRegenerateBlockPoint() {
+		return new Position(7, 1);
 	}
 
 	@Override
-	public Point getInitLadybugBlockPos() {
-		return new Point(7, 14);
+	public Position getInitLadybugBlockPos() {
+		return new Position(7, 14);
 	}
 
 	@Override

@@ -16,10 +16,10 @@
  */
 package com.kycox.game.constant.level.data;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.level.LevelConstruct;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,13 +54,13 @@ public class SecondGenerationLevel2 extends SecondGenerationLevel {
 	}
 
 	@Override
-	public Point getGhostRegenerateBlockPoint() {
-		return new Point(7, 2);
+	public Position getGhostRegenerateBlockPoint() {
+		return new Position(7, 2);
 	}
 
 	@Override
-	public Point getInitLadybugBlockPos() {
-		return new Point(7, 11);
+	public Position getInitLadybugBlockPos() {
+		return new Position(7, 11);
 	}
 
 	@Override
@@ -69,10 +69,10 @@ public class SecondGenerationLevel2 extends SecondGenerationLevel {
 	}
 
 	@Override
-	public Map<Point, Point> getTeleportPoints() {
-		Map<Point, Point> teleportPoint = new HashMap<>();
-		teleportPoint.put(new Point(0, 7), new Point(14, 7));
-		teleportPoint.put(new Point(14, 7), new Point(0, 7));
+	public Map<Position, Position> getTeleportPoints() {
+		Map<Position, Position> teleportPoint = new HashMap<>();
+		teleportPoint.put(new Position(0, 7), new Position(14, 7));
+		teleportPoint.put(new Position(14, 7), new Position(0, 7));
 		return teleportPoint;
 	}
 }

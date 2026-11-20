@@ -9,7 +9,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import com.kycox.game.Application;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.game.GameStatus;
-import com.kycox.game.constant.ghost.GhostsBodyImages;
 import com.kycox.game.engine.model.GameModel;
 import com.kycox.game.tools.GameRandom;
 
@@ -19,8 +18,8 @@ import com.kycox.game.tools.GameRandom;
  *
  * <ul>
  * <li>la graine du hasard est fixée ({@link GameRandom#reseed(long)}) ;</li>
- * <li>la boucle Swing ne démarre pas : c'est le test qui appelle
- * {@link GameModel#beat()} ;</li>
+ * <li>pas de boucle Swing (elle n'existe qu'avec le profil « gui », étape
+ * 4.1) : c'est le test qui appelle {@link GameModel#beat()} ;</li>
  * <li>les « touches » passent par {@link GameModelForController}, exactement
  * comme le clavier ;</li>
  * <li>la sauvegarde du niveau va dans un dossier du test, jamais dans celle du
@@ -44,12 +43,6 @@ public final class GameDriver implements AutoCloseable {
 
 	/** Démarre une partie avec cette graine ; la sauvegarde va dans {@code saveDirectory}. */
 	public static GameDriver start(long seed, Path saveDirectory) {
-		System.setProperty(GameModel.LOOP_AUTOSTART_PROPERTY, "false");
-		// « fantôme joué par un humain » : état partagé dans une énumération (CTEC1),
-		// qui survivrait d'une partie à l'autre : on repart de « tous joués par l'ordinateur »
-		for (var ghostImage : GhostsBodyImages.values()) {
-			ghostImage.setComputed(true);
-		}
 		GameRandom.reseed(seed);
 		var context = new SpringApplicationBuilder(Application.class)
 		        .headless(true)

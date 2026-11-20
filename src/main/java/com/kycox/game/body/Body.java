@@ -16,6 +16,7 @@
  */
 package com.kycox.game.body;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.engine.screendata.ScreenData;
 import com.kycox.game.tools.maths.SpeedFunction;
@@ -23,40 +24,39 @@ import com.kycox.game.tools.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 
 @Getter
 public abstract class Body {
 	@Setter
-	private Point direction = GameMainConstants.POINT_ZERO;
+	private Position direction = GameMainConstants.POINT_ZERO;
 	@Setter
 	private int leftLifes = 0;
 	@Setter
 	private boolean newLife = false;
 	@Setter
-	private Point position = GameMainConstants.POINT_ZERO;
+	private Position position = GameMainConstants.POINT_ZERO;
 	@Setter
 	private SpeedFunction speedFunction;
 	@Setter
 	private int speedIndex = 0;
 	private int startSpeedIndex = 0;
 
-	public Point getFrontPositionBlock(ScreenData screenData) {
-		var positionBlock = (Point) getPositionBlock().clone();
+	public Position getFrontPositionBlock(ScreenData screenData) {
+		var positionBlock = getPositionBlock();
 		var screenBlock = screenData.getScreenBlock(positionBlock);
 		if (direction.equals(GameMainConstants.POINT_UP) && !screenBlock.isBorderUp()) {
-			positionBlock.y--;
+			return positionBlock.translate(0, -1);
 		} else if (direction.equals(GameMainConstants.POINT_DOWN) && !screenBlock.isBorderDown()) {
-			positionBlock.y++;
+			return positionBlock.translate(0, 1);
 		} else if (direction.equals(GameMainConstants.POINT_RIGHT) && !screenBlock.isBorderRight()) {
-			positionBlock.x++;
+			return positionBlock.translate(1, 0);
 		} else if (direction.equals(GameMainConstants.POINT_LEFT) && !screenBlock.isBorderLeft()) {
-			positionBlock.x--;
+			return positionBlock.translate(-1, 0);
 		}
 		return positionBlock;
 	}
 
-	public Point getPositionBlock() {
+	public Position getPositionBlock() {
 		return Utils.convertGraphicPointToBlockPoint(getPosition());
 	}
 
@@ -74,7 +74,7 @@ public abstract class Body {
 
 	public boolean isPerfectOnABlock() {
 		var pointPos = getPosition();
-		return pointPos.x % GameMainConstants.BLOCK_SIZE == 0 && pointPos.y % GameMainConstants.BLOCK_SIZE == 0;
+		return pointPos.x() % GameMainConstants.BLOCK_SIZE == 0 && pointPos.y() % GameMainConstants.BLOCK_SIZE == 0;
 	}
 
 	public void lostsALife() {

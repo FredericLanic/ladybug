@@ -16,7 +16,9 @@
  */
 package com.kycox.game.body;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.ghost.Ghost;
+import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.contract.GroupGhostForGameView;
@@ -24,7 +26,6 @@ import com.kycox.game.engine.screendata.ScreenData;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 import java.util.List;
 
 @Setter
@@ -71,9 +72,19 @@ public class GhostsGroup implements GroupGhostForGameView {
 		ghosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
-	public void move(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
+	public void move(Ladybug ladybug, ScreenData screenData, Position ghostRequest) {
 		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, screenData));
 		ghosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
+	}
+
+	/** Tous les fantômes sont joués par l'ordinateur (mode un joueur). */
+	public void setAllComputed() {
+		ghosts.forEach(ghost -> ghost.setComputed(true));
+	}
+
+	/** Le fantôme de cette couleur est joué par le deuxième joueur (étape 4.2). */
+	public void setHumanPlayer(GhostColor color) {
+		ghosts.stream().filter(ghost -> ghost.getColor() == color).forEach(ghost -> ghost.setComputed(false));
 	}
 
 	public void setActions(Ladybug ladybug, ScreenData screenData) {

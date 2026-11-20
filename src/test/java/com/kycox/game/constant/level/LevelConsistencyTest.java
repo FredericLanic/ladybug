@@ -1,8 +1,8 @@
 package com.kycox.game.constant.level;
 
+import com.kycox.game.tools.Position;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.awt.Point;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -77,7 +77,7 @@ class LevelConsistencyTest {
 		});
 	}
 
-	private static boolean isOnEdge(Point p, LevelStructure level) {
-		return p.x == 0 || p.y == 0 || p.x == level.getNbrBlocksByLine() - 1 || p.y == level.getNbrLines() - 1;
+	private static boolean isOnEdge(Position p, LevelStructure level) {
+		return p.x() == 0 || p.y() == 0 || p.x() == level.getNbrBlocksByLine() - 1 || p.y() == level.getNbrLines() - 1;
 	}
 }

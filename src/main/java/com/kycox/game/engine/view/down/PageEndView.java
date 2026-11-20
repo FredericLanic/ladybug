@@ -75,9 +75,8 @@ public class PageEndView extends JPanel implements ApplicationListener<EventGame
 
 	@Override
 	public void paintComponent(Graphics g) {
-		if (gameModelForViews != null) {
-			super.paintComponent(g);
-		}
+		// fond noir toujours peint, même avant le premier battement (4.1)
+		super.paintComponent(g);
 	}
 
 	@Override

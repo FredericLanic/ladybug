@@ -16,16 +16,16 @@
  */
 package com.kycox.game.constant.contract;
 
-import java.awt.Point;
+import com.kycox.game.tools.Position;
 import java.util.List;
 import java.util.Map;
 
 import com.kycox.game.engine.screendata.ScreenBlock;
 
 public interface LevelStructure {
-	Point getGhostRegenerateBlockPoint();
+	Position getGhostRegenerateBlockPoint();
 
-	Point getInitLadybugBlockPos();
+	Position getInitLadybugBlockPos();
 
 	List<ScreenBlock> getLstBlocks();
 
@@ -35,5 +35,5 @@ public interface LevelStructure {
 
 	int getNbrMegaPoints();
 
-	Map<Point, Point> getTeleportPoints();
+	Map<Position, Position> getTeleportPoints();
 }

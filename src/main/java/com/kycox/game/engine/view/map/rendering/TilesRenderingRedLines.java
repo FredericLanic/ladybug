@@ -1,5 +1,6 @@
 package com.kycox.game.engine.view.map.rendering;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.level.LevelImagesRedLines;
 import com.kycox.game.engine.screendata.ScreenBlock;
 import com.kycox.game.engine.screendata.ScreenData;
@@ -13,7 +14,7 @@ public class TilesRenderingRedLines implements Rendering {
 
 	@Override
 	public void displayScreenBlockBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
+		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
 		displayScreenBlock(g2d, screenBlock, x, y);
 	}
 

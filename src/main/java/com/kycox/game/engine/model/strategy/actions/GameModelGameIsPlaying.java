@@ -1,5 +1,6 @@
 package com.kycox.game.engine.model.strategy.actions;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
@@ -15,14 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 
 @Component
 public class GameModelGameIsPlaying extends AbstratGameModel implements IGameModelAction {
 	private static final Logger logger = LoggerFactory.getLogger(GameModelGameIsPlaying.class);
 	private final Fruits fruits;
 	@Setter
-	private Point ghostRequest = GameMainConstants.POINT_ZERO;
+	private Position ghostRequest = GameMainConstants.POINT_ZERO;
 
 	public GameModelGameIsPlaying(Fruits fruits) {
 		this.fruits = fruits;
@@ -146,8 +146,8 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 		}
 	}
 
-	private static String blockOf(Point block) {
-		return "(" + block.x + "," + block.y + ")";
+	private static String blockOf(Position block) {
+		return "(" + block.x() + "," + block.y() + ")";
 	}
 
 	private void manageScores() {

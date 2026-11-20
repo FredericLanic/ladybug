@@ -16,6 +16,7 @@
  */
 package com.kycox.game;
 
+import com.kycox.game.engine.loop.SwingGameLoop;
 import com.kycox.game.engine.view.MainFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +40,11 @@ public class MainLadybug implements ApplicationRunner {
 	private static final Logger logger = LoggerFactory.getLogger(MainLadybug.class);
 
 	private final MainFrame mainFrame;
+	private final SwingGameLoop gameLoop;
 
-	public MainLadybug(MainFrame mainFrame) {
+	public MainLadybug(MainFrame mainFrame, SwingGameLoop gameLoop) {
 		this.mainFrame = mainFrame;
+		this.gameLoop = gameLoop;
 	}
 
 	@Override
@@ -59,7 +62,13 @@ public class MainLadybug implements ApplicationRunner {
 	}
 
 	/**
-	 * Affiche la fenêtre du jeu.
+	 * Affiche la fenêtre du jeu, puis démarre la boucle du jeu.
+	 *
+	 * <p>Depuis l'étape 4.1, la boucle démarre ici, une fois tout le contexte
+	 * Spring construit et la fenêtre affichée. Avant, le timer du modèle partait
+	 * pendant la construction du contexte, et ses premiers battements créaient
+	 * des beans depuis le fil Swing (avertissement « Obtaining singleton bean …
+	 * while other thread holds singleton lock »).
 	 *
 	 * <p>L'ancien contrôle « Java 19+ » a été retiré (étape 2.2) : le jeu est
 	 * compilé pour Java 21 (pom), et une JVM plus ancienne refuse de charger ses
@@ -69,5 +78,6 @@ public class MainLadybug implements ApplicationRunner {
 	public void launchTheGame() {
 		logger.info("LadyBug {} by Kycox, running on Java {}", gameVersion(), Runtime.version());
 		mainFrame.setVisible(true);
+		gameLoop.start();
 	}
 }

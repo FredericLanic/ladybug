@@ -1,17 +1,17 @@
 package com.kycox.game.engine.model.strategy.actions;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.IGameModelAction;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 
 @Setter
 @Component
 public class GameModelPresentation extends AbstratGameModel implements IGameModelAction {
-	private Point ghostRequest = GameMainConstants.POINT_ZERO;
+	private Position ghostRequest = GameMainConstants.POINT_ZERO;
 
 	private void moveBodies() {
 		ladybug.move(screenData);

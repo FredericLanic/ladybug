@@ -1,10 +1,10 @@
 package com.kycox.game.body.ghost;
 
+import com.kycox.game.tools.Position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.awt.Point;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +37,7 @@ class GhostMovementTest {
 	private SecondGenerationLevel1 level;
 	private ScreenData screenData;
 	private Ladybug ladybug;
-	private Point ladybugBlock;
+	private Position ladybugBlock;
 
 	@BeforeEach
 	void setUp() {
@@ -47,7 +47,7 @@ class GhostMovementTest {
 		ladybug = ladybugAt(ladybugBlock);
 	}
 
-	private static Ladybug ladybugAt(Point block) {
+	private static Ladybug ladybugAt(Position block) {
 		var mockLadybug = mock(Ladybug.class);
 		when(mockLadybug.getPositionBlock()).thenReturn(block);
 		when(mockLadybug.getPosition()).thenReturn(Utils.convertBlockPointToGraphicPoint(block));
@@ -55,9 +55,9 @@ class GhostMovementTest {
 		return mockLadybug;
 	}
 
-	private static Ghost ghostAt(Point block, GhostStatus status) {
+	private static Ghost ghostAt(Position block, GhostStatus status) {
 		var ghost = new Pinky();
-		// toujours un nouveau Point : move() modifie la position sur place
+		// toujours un nouveau Position : move() modifie la position sur place
 		ghost.setPosition(Utils.convertBlockPointToGraphicPoint(block));
 		ghost.setStatus(status);
 		ghost.setSpeedIndex(SPEED_INDEX);
@@ -66,8 +66,8 @@ class GhostMovementTest {
 		return ghost;
 	}
 
-	private static Point neighbourInDirection(Point block, Point direction) {
-		return new Point(block.x + direction.x, block.y + direction.y);
+	private static Position neighbourInDirection(Position block, Position direction) {
+		return new Position(block.x() + direction.x(), block.y() + direction.y());
 	}
 
 	@Test
@@ -85,9 +85,9 @@ class GhostMovementTest {
 
 			var next = neighbourInDirection(start, ghost.getDirection());
 			assertThat(distancesToLadybug.get(next)).as("depuis %s", start).isEqualTo(distance - 1);
-			assertThat(ghost.getPosition()).as("déplacement depuis %s", start).isEqualTo(new Point(
-			        start.x * BLOCK + ghost.getDirection().x * ghost.getSpeed(),
-			        start.y * BLOCK + ghost.getDirection().y * ghost.getSpeed()));
+			assertThat(ghost.getPosition()).as("déplacement depuis %s", start).isEqualTo(new Position(
+			        start.x() * BLOCK + ghost.getDirection().x() * ghost.getSpeed(),
+			        start.y() * BLOCK + ghost.getDirection().y() * ghost.getSpeed()));
 		});
 	}
 
@@ -118,7 +118,7 @@ class GhostMovementTest {
 				continue;
 			}
 			var path = Dijkstra.getShorterWay(start, ladybugBlock, screenData);
-			var awayDirection = new Point(path.get(0).x - path.get(1).x, path.get(0).y - path.get(1).y);
+			var awayDirection = new Position(path.get(0).x() - path.get(1).x(), path.get(0).y() - path.get(1).y());
 			var awayBlock = neighbourInDirection(start, awayDirection);
 			if (!LevelFixtures.openNeighbours(start, screenData).contains(awayBlock)) {
 				// mur derrière le fantôme : il erre au hasard, rien à vérifier ici

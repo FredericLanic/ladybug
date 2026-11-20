@@ -16,10 +16,10 @@
  */
 package com.kycox.game.engine.screendata.utils;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.engine.screendata.ScreenBlock;
 import com.kycox.game.engine.screendata.ScreenData;
 
-import java.awt.Point;
 
 public class CheckScreenBlockBorders {
 	private final ScreenData screenData;
@@ -34,52 +34,52 @@ public class CheckScreenBlockBorders {
 	public void checkDataBlockBorder() {
 		for (var x = 0; x < screenData.getCurrentLevel().getNbrBlocksByLine(); x++) {
 			for (var y = 0; y < screenData.getCurrentLevel().getNbrLines(); y++) {
-				checkDataBlockBorder(new Point(x, y));
+				checkDataBlockBorder(new Position(x, y));
 			}
 		}
 	}
 
 	// FIXME : un peu de refacto ?
 	// TODO : mettre un optional
-	private void checkDataBlockBorder(Point point) {
+	private void checkDataBlockBorder(Position point) {
 		var screenBlock = screenData.getScreenBlock(point);
 		ScreenBlock otherScreenBlock;
 		if (screenBlock == null) {
 			return;
 		}
 		// vérification des bordures principales !!!
-		if (point.x == 0 && !screenBlock.isBorderLeft()) {
+		if (point.x() == 0 && !screenBlock.isBorderLeft()) {
 			screenBlock.addBorderLeft();
 		}
-		if (point.x == (screenData.getCurrentLevel().getNbrBlocksByLine() - 1) && !screenBlock.isBorderRight()) {
+		if (point.x() == (screenData.getCurrentLevel().getNbrBlocksByLine() - 1) && !screenBlock.isBorderRight()) {
 			screenBlock.addBorderRight();
 		}
-		if (point.y == 0 && !screenBlock.isBorderUp()) {
+		if (point.y() == 0 && !screenBlock.isBorderUp()) {
 			screenBlock.addBorderUp();
 		}
-		if (point.y == (screenData.getCurrentLevel().getNbrLines() - 1) && !screenBlock.isBorderDown()) {
+		if (point.y() == (screenData.getCurrentLevel().getNbrLines() - 1) && !screenBlock.isBorderDown()) {
 			screenBlock.addBorderDown();
 		}
 		// vérification de la bordure en haut
-		otherScreenBlock = screenData.getScreenBlock(new Point(point.x, point.y - 1));
-		if (screenBlock.isBorderUp() && point.y > 0 && otherScreenBlock != null && !otherScreenBlock.isBorderDown()) {
+		otherScreenBlock = screenData.getScreenBlock(new Position(point.x(), point.y() - 1));
+		if (screenBlock.isBorderUp() && point.y() > 0 && otherScreenBlock != null && !otherScreenBlock.isBorderDown()) {
 			otherScreenBlock.addBorderDown();
 		}
 		// vérification de la bordure en bas
-		otherScreenBlock = screenData.getScreenBlock(new Point(point.x, point.y + 1));
-		if (screenBlock.isBorderDown() && point.y < screenData.getCurrentLevel().getNbrLines() - 1
+		otherScreenBlock = screenData.getScreenBlock(new Position(point.x(), point.y() + 1));
+		if (screenBlock.isBorderDown() && point.y() < screenData.getCurrentLevel().getNbrLines() - 1
 		        && otherScreenBlock != null && !otherScreenBlock.isBorderUp()) {
 			otherScreenBlock.addBorderUp();
 		}
 		// vérification de la bordure à droite
-		otherScreenBlock = screenData.getScreenBlock(new Point(point.x + 1, point.y));
-		if (screenBlock.isBorderRight() && point.x < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
+		otherScreenBlock = screenData.getScreenBlock(new Position(point.x() + 1, point.y()));
+		if (screenBlock.isBorderRight() && point.x() < screenData.getCurrentLevel().getNbrBlocksByLine() - 1
 		        && otherScreenBlock != null && !otherScreenBlock.isBorderLeft()) {
 			otherScreenBlock.addBorderLeft();
 		}
 		// vérification de la bordure à gauche
-		otherScreenBlock = screenData.getScreenBlock(new Point(point.x - 1, point.y));
-		if (screenBlock.isBorderLeft() && point.x > 0 && otherScreenBlock != null
+		otherScreenBlock = screenData.getScreenBlock(new Position(point.x() - 1, point.y()));
+		if (screenBlock.isBorderLeft() && point.x() > 0 && otherScreenBlock != null
 		        && !otherScreenBlock.isBorderRight()) {
 			otherScreenBlock.addBorderRight();
 		}
@@ -91,47 +91,47 @@ public class CheckScreenBlockBorders {
 	public void checkViewBlockBorder() {
 		for (var x = 0; x < screenData.getCurrentLevel().getNbrBlocksByLine(); x++) {
 			for (var y = 0; y < screenData.getCurrentLevel().getNbrLines(); y++) {
-				Point coord = new Point(x, y);
+				Position coord = new Position(x, y);
 				checkViewBlockBorder(coord);
 				removeExtraLimitBlockBorder(coord);
 			}
 		}
 	}
 
-	private void removeExtraLimitBlockBorder(Point coord) {
+	private void removeExtraLimitBlockBorder(Position coord) {
 		var screenBlock = screenData.getViewBlock(coord);
-		if (coord.x == 0) {
+		if (coord.x() == 0) {
 			screenBlock.removeBorderLeft();
-		} else if (coord.x == screenData.getCurrentLevel().getNbrBlocksByLine() - 1) {
+		} else if (coord.x() == screenData.getCurrentLevel().getNbrBlocksByLine() - 1) {
 			screenBlock.removeBorderRight();
 		}
 
-		if (coord.y == 0) {
+		if (coord.y() == 0) {
 			screenBlock.removeBorderUp();
-		} else if (coord.y == screenData.getCurrentLevel().getNbrLines() - 1) {
+		} else if (coord.y() == screenData.getCurrentLevel().getNbrLines() - 1) {
 			screenBlock.removeBorderDown();
 		}
 	}
 
-	private void checkViewBlockBorder(Point point) {
+	private void checkViewBlockBorder(Position point) {
 		var screenBlock = screenData.getViewBlock(point);
 		ScreenBlock otherScreenBlock;
 		if (!screenBlock.isNotAccessible()) {
 			return;
 		}
-		otherScreenBlock = screenData.getViewBlock(new Point(point.x, point.y - 1));
+		otherScreenBlock = screenData.getViewBlock(new Position(point.x(), point.y() - 1));
 		if (otherScreenBlock != null && screenBlock.isBorderUp()) {
 			otherScreenBlock.removeBorderDown();
 		}
-		otherScreenBlock = screenData.getViewBlock(new Point(point.x, point.y + 1));
+		otherScreenBlock = screenData.getViewBlock(new Position(point.x(), point.y() + 1));
 		if (otherScreenBlock != null && screenBlock.isBorderDown()) {
 			otherScreenBlock.removeBorderUp();
 		}
-		otherScreenBlock = screenData.getViewBlock(new Point(point.x - 1, point.y));
+		otherScreenBlock = screenData.getViewBlock(new Position(point.x() - 1, point.y()));
 		if (otherScreenBlock != null && screenBlock.isBorderLeft()) {
 			otherScreenBlock.removeBorderRight();
 		}
-		otherScreenBlock = screenData.getViewBlock(new Point(point.x + 1, point.y));
+		otherScreenBlock = screenData.getViewBlock(new Position(point.x() + 1, point.y()));
 		if (otherScreenBlock != null && screenBlock.isBorderRight()) {
 			otherScreenBlock.removeBorderLeft();
 		}

@@ -48,7 +48,7 @@
   <tr><td>1</td><td>Socle</td><td>Faire compiler et démarrer, aligner les versions</td><td>–</td></tr>
   <tr><td>2</td><td>Lanceur et XML externe <i>(fait le 19/11/2026)</i></td><td>Un démarrage clair, une configuration modifiable sans recompiler</td><td>Spring Boot, configuration externalisée</td></tr>
   <tr><td>3</td><td>Tests <i>(terminée le 20/11/2026)</i></td><td>Un filet de sécurité avant de refactoriser</td><td>JUnit 5</td></tr>
-  <tr><td>4</td><td>Découplage du modèle</td><td>Un modèle indépendant de Swing, base du réseau</td><td>Observer, State, Snapshot</td></tr>
+  <tr><td>4</td><td>Découplage du modèle</td><td>Un modèle indépendant de Swing, base du réseau</td><td>Game Loop, Value Object, Snapshot</td></tr>
   <tr><td>5</td><td><code>PlayerInput</code></td><td>Un contrôleur par personnage, plusieurs fantômes joueurs</td><td>Strategy</td></tr>
   <tr><td>6</td><td>Fantômes configurables</td><td>Un fantôme = assemblage de capacités, perception</td><td>Composition, Strategy</td></tr>
   <tr><td>7</td><td>Niveaux et rendu du labyrinthe</td><td>Niveaux en fichiers, rendu lisible et thématisable</td><td>Builder, autotiling, Flyweight</td></tr>
@@ -90,7 +90,8 @@
 
 <table>
   <tr><th>Pattern</th><th>Où dans le plan</th></tr>
-  <tr><td>Observer (listener typé)</td><td>Étape 4 : <code>GameModelListener</code></td></tr>
+  <tr><td>Game Loop</td><td>Étape 3.5.1, puis 4.1 : <code>SwingGameLoop</code></td></tr>
+  <tr><td>Value Object (record)</td><td>Étape 4.3 : <code>Position</code></td></tr>
   <tr><td>Strategy</td><td>Étapes 5 et 6 : <code>PlayerInput</code>, <code>GhostMoveStrategy</code>, <code>GhostSpeedPolicy</code> ; existant dans <code>model/strategy</code></td></tr>
   <tr><td>State</td><td>Étape 4 : statuts de jeu et de fantôme (amélioration de l'existant)</td></tr>
   <tr><td>Composition plutôt qu'héritage</td><td>Étape 6 : fantôme = assemblage de capacités</td></tr>
@@ -290,14 +291,13 @@
 <p class="sub"><b class="id">3.3</b> Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés. <b>Après l'étape 2</b>, qui sépare la construction du contexte de l'affichage de la fenêtre.</p>
 
 <h2><span class="num">4</span>Découpler le modèle de l'affichage</h2>
-<p class="sub"><b class="id">4.1</b> Remplacer <code>Observable</code>/<code>Observer</code> par une interface typée <code>GameModelListener</code>. Sept classes sont concernées : <code>GameModel</code>, <code>Engine</code>, <code>CentralView</code>, <code>PageLeftView</code>, <code>PageEndView</code>, <code>GameSounds</code>, <code>XboxOneController</code>.</p>
-<p class="sub"><b class="id">4.2</b> Sortir la boucle de jeu de <code>GameModel</code> dans une classe <code>GameLoop</code> dédiée. Le modèle ne dépend plus de Swing.</p>
-<p class="sub"><b class="id">4.3</b> Introduire un <b><code>GameSnapshot</code></b> (records) produit à chaque tick : positions, statuts, score, gommes, mode lampe. Les vues lisent le snapshot. C'est la base du futur réseau.</p>
-<p class="sub"><b class="id">4.4</b> Séparer clairement :</p>
-<ul>
-  <li><b>l'état de jeu</b>, décidé par le modèle (mode lampe tiré par niveau, etc.) ;</li>
-  <li><b>les préférences d'affichage locales</b> (chapeau, bandeau, logo, son).</li>
-</ul>
+<div class="box"><b>Analyse du 20/11/2026</b> : le modèle n'utilise d'AWT que <code>java.awt.Point</code> ; <code>GameModel</code> portait le timer Swing ; le flag « humain » vit dans une énumération d'images ; <code>ScreenData</code> mêle jeu et affichage ; <code>Observable</code> avait déjà disparu (l'ancien « listener typé » est remplacé par le snapshot). Décisions : <code>record Position</code> à nous (C44), <code>GameSnapshot</code> dès l'étape 4 (C45), deux PR (C46). Critère : golden master identique à chaque sous-étape.</div>
+<p class="sub"><b class="id">4.1</b> Boucle du jeu sortie du modèle (<code>SwingGameLoop</code>). <b>Fait le 20/11/2026</b> : D07 corrigée ; fin des zones blanches au lancement.</p>
+<p class="sub"><b class="id">4.2</b> Couleur du fantôme sans image dans le modèle ; flag « humain » porté par le fantôme ; D23.</p>
+<p class="sub"><b class="id">4.3</b> <code>record Position</code> immuable à la place de <code>java.awt.Point</code> (D21).</p>
+<p class="sub"><b class="id">4.4</b> Couper <code>ScreenData</code> : terrain de jeu d'un côté, affichage de l'autre.</p>
+<p class="sub"><b class="id">4.5</b> État de jeu séparé des préférences d'affichage locales.</p>
+<p class="sub"><b class="id">4.6</b> <b><code>GameSnapshot</code></b> (records) lu par les vues, les sons et les tests : base du réseau.</p>
 
 <h2><span class="num">5</span>Un contrôleur par personnage (<code>PlayerInput</code>)</h2>
 <p class="sub"><b class="id">5.1</b> Interface <code>PlayerInput</code> (« quelle direction veut prendre ce personnage »), avec trois implémentations :</p>
@@ -375,6 +375,7 @@
   <li><code>images/_inWork</code> déplacé hors de <code>src</code>.</li>
 </ul>
 <p class="sub"><b class="id">8.4</b> <b>Documentation finale</b> : <code>ARCHITECTURE.md</code> complet, <code>package-info.java</code>, README technique (« pour les contributeurs »). Relecture du point de vue d'un développeur qui découvre le projet (le test « Jeff »). Le graphe Graphify final, comparé à celui de l'étape 0, illustre le chemin parcouru.</p>
+<p class="sub"><b class="id">8.5</b> <i>(idée I18, à décider)</i> Un cœur sans Spring, en modules Maven (<code>ladybug-core</code>, <code>ladybug-desktop</code>, plus tard <code>ladybug-android</code>) : 39 des 42 fichiers du modèle n'ont qu'un <code>@Component</code>.</p>
 
 <h2><span class="num">9</span>Mode réseau <span class="tag">plus tard, progressivement</span></h2>
 <div class="box net">
@@ -390,7 +391,8 @@ Architecture : <b>un hôte qui fait autorité</b>. L'hôte fait tourner le seul 
 <h2><span class="num">10</span>Optionnel</h2>
 <ul>
   <li>Packaging natif avec <code>jpackage</code>.</li>
-  <li>Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4.</li>
+  <li>Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4 (<b>I17</b>) : depuis 4.3, le modèle n'importe plus ni AWT ni Swing ; avec le <code>GameSnapshot</code>, une vue se résume à « dessiner un snapshot ».</li>
+  <li><b>Version Android</b> (<b>I18</b>) : libGDX sur le cœur sans Spring de 8.5 ; écran tactile ; configuration des fantômes à lire autrement que par le XML Spring (question pour l'étape 6).</li>
 </ul>
 
 <h2>Questions ouvertes <span class="tag">à reprendre plus tard, sans blocage</span></h2>

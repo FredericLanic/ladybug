@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.screendata;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.level.LevelRendering;
@@ -27,7 +28,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +71,7 @@ public final class ScreenData {
 		return lstUnitDijkstra;
 	}
 
-	public Point getInitLadybugPos() {
+	public Position getInitLadybugPos() {
 		return Utils.convertBlockPointToGraphicPoint(currentLevel.getInitLadybugBlockPos());
 	}
 
@@ -117,18 +117,18 @@ public final class ScreenData {
 		return getPosNumPoint(randomPoint);
 	}
 
-	public Point getRandomPosOnAPoint() {
+	public Position getRandomPosOnAPoint() {
 		var pos = getRandomPosNumPoint();
 		var yBlock = pos / currentLevel.getNbrBlocksByLine();
 		var xBlock = pos % currentLevel.getNbrBlocksByLine();
-		return new Point(xBlock, yBlock);
+		return new Position(xBlock, yBlock);
 	}
 
-	public Point getRevivorGhostPos() {
+	public Position getRevivorGhostPos() {
 		return Utils.convertBlockPointToGraphicPoint(currentLevel.getGhostRegenerateBlockPoint());
 	}
 
-	public ScreenBlock getScreenBlock(Point posPoint) {
+	public ScreenBlock getScreenBlock(Position posPoint) {
 		return dataScreenBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
@@ -140,7 +140,7 @@ public final class ScreenData {
 		return currentLevel.getNbrBlocksByLine() * GameMainConstants.BLOCK_SIZE;
 	}
 
-	public ScreenBlock getViewBlock(Point posPoint) {
+	public ScreenBlock getViewBlock(Position posPoint) {
 		return viewScreenBlocks.stream().filter(b -> b.getCoordinate().equals(posPoint)).findFirst().orElse(null);
 	}
 
@@ -165,7 +165,7 @@ public final class ScreenData {
 			}
 			// ajoute des points de téléportation s'il existe dans le level
 			var teleportPoints = currentLevel.getTeleportPoints();
-			for (Map.Entry<Point, Point> m : teleportPoints.entrySet()) {
+			for (Map.Entry<Position, Position> m : teleportPoints.entrySet()) {
 				dataScreenBlocks.stream()
 						.filter(b -> b.getCoordinate().equals(m.getKey()))
 				        .forEach(sb -> sb.addTeleportation(m.getValue()));

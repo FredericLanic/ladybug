@@ -1,12 +1,12 @@
 package com.kycox.game.engine.model.strategy.actions;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.GameModelManageAction;
 import com.kycox.game.engine.model.strategy.IGameModelAction;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 
 @Component
 public class GameModelGameIsInGame extends AbstratGameModel implements IGameModelAction {
@@ -42,7 +42,7 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 		gameModelManageAction.execute();
 	}
 
-	public void setGhostRequest(Point ghostRequest) {
+	public void setGhostRequest(Position ghostRequest) {
 		gameModeGameIsPlaying.setGhostRequest(ghostRequest);
 	}
 }

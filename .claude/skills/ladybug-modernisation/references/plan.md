@@ -7,7 +7,7 @@
 | 1 | Socle | Faire compiler et démarrer, aligner les versions | – |
 | 2 | Lanceur et XML externe | Un démarrage clair, une configuration modifiable sans recompiler | Factory |
 | 3 | Tests | Un filet de sécurité avant de refactoriser | JUnit 5 |
-| 4 | Découplage du modèle | Un modèle indépendant de Swing, base du réseau | Observer, State, Snapshot |
+| 4 | Découplage du modèle | Un modèle indépendant de Swing, base du réseau | Game Loop, Value Object, Snapshot |
 | 5 | `PlayerInput` | Un contrôleur par personnage, plusieurs fantômes joueurs | Strategy |
 | 6 | Fantômes configurables | Un fantôme = assemblage de capacités, perception | Composition, Strategy |
 | 7 | Niveaux et rendu du labyrinthe | Niveaux en fichiers, rendu lisible et thématisable | Builder, autotiling, Flyweight |
@@ -288,12 +288,15 @@ Risques : le passage aux tics change le rythme ressenti (conversion exacte, robo
 3.3 Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés. **Après l'étape 2**, qui sépare la construction du contexte de l'affichage de la fenêtre.
 
 ## Étape 4 : découpler le modèle de l'affichage
-4.1 Remplacer `Observable`/`Observer` par une interface typée `GameModelListener`. Sept classes sont concernées : `GameModel`, `Engine`, `CentralView`, `PageLeftView`, `PageEndView`, `GameSounds`, `XboxOneController`.
-4.2 Sortir la boucle de jeu de `GameModel` dans une classe `GameLoop` dédiée. Le modèle ne dépend plus de Swing.
-4.3 Introduire un **`GameSnapshot`** (records) produit à chaque tick : positions, statuts, score, gommes, mode lampe. Les vues lisent le snapshot. C'est la base du futur réseau.
-4.4 Séparer clairement :
-- **l'état de jeu**, décidé par le modèle (mode lampe tiré par niveau, etc.) ;
-- **les préférences d'affichage locales** (chapeau, bandeau, logo, son).
+> **Analyse du 20/11/2026** (lecture seule, sur `develop`) : le modèle n'utilise d'AWT que `java.awt.Point` (≈25 classes) ; `GameModel` portait le timer Swing (D07) ; le flag « fantôme joué par un humain » vit dans `GhostsBodyImages`, une énumération d'images ; `ScreenData` mêle le jeu (cases, gommes, téléportations, Dijkstra) et l'affichage (liste de cases « vue », style de rendu tiré au hasard, pixels) ; `Observable` avait déjà disparu de `develop` (événement Spring `EventGameModel(this)`, écouté par `CentralView`, `PageLeftView`, `PageEndView`, `GameSounds` et `XboxOneController`), donc l'ancien 4.1 « listener typé » est remplacé par le snapshot (4.6) ; des préférences locales (son, aide, debug) sont rangées dans le modèle. Le `Snapshot` du `GameJournal` des tests est un prototype du futur `GameSnapshot`.
+> Décisions de Frédéric : **C44** un `record Position` à nous ; **C45** le `GameSnapshot` dès l'étape 4 ; **C46** deux PR (4.1 à 4.3 sur `etape-4-decouplage-1`, puis 4.4 à 4.6). Critère de chaque sous-étape : refactoring pur, **golden master identique à la ligne près**.
+
+4.1 Sortir la boucle du jeu du modèle : `SwingGameLoop` (`@GuiComponent`, timer Swing + `BeatPacer`), démarrée par `MainLadybug` après l'affichage de la fenêtre ; `GameModel` n'expose plus que `beat()`. **Fait le 20/11/2026** (commit `c58babc`) : **D07 corrigée** ; drapeau de test `ladybug.loop.autostart` supprimé (la boucle n'existe pas sans profil « gui ») ; fin des avertissements « singleton lock » au démarrage. Effet de bord révélé et corrigé : la fenêtre était parfois dessinée avant le premier battement, une exception interrompait le dessin et **les bandes du haut et de droite restaient blanches** (vu par Frédéric) ; les vues peignent désormais toujours leur fond.
+4.2 Le fantôme et sa couleur : une couleur sans image dans le modèle, l'image choisie côté vue, le flag « humain » porté par le fantôme (fin de l'état global dans `GhostsBodyImages`, CTEC1) ; corriger D23 (actions des fantômes créées trop tard).
+4.3 Une position à nous : `record Position(int x, int y)`, immuable, à la place de `java.awt.Point` dans le modèle (**D21** : fin de la constante `POINT_ZERO` modifiée sur place). Le modèle n'importe plus rien d'AWT. Pattern Value Object.
+4.4 Couper `ScreenData` : le terrain de jeu (`Maze` : cases, gommes, téléportations, Dijkstra) d'un côté ; la liste de cases de la vue, le style de rendu et les tailles en pixels de l'autre.
+4.5 Séparer **l'état de jeu**, décidé par le modèle (mode lampe, niveau, style de rendu tiré par niveau), des **préférences d'affichage locales** (son, aide, mode debug, chapeau, bandeau, logo).
+4.6 **`GameSnapshot`** (records) produit à chaque battement : positions, statuts, score, gommes, mode lampe. Les vues, les sons et le journal des tests le lisent au lieu du modèle. C'est la base du futur réseau (étape 9). Pattern Snapshot.
 
 ## Étape 5 : un contrôleur par personnage (`PlayerInput`)
 5.1 Interface `PlayerInput` (« quelle direction veut prendre ce personnage »), avec trois implémentations :
@@ -378,6 +381,7 @@ Les variantes ne diffèrent que par **qui décide** du changement, sur le même 
 - `images/_inWork` déplacé hors de `src`.
 
 8.4 **Documentation finale** : `ARCHITECTURE.md` complet, `package-info.java`, README technique (« pour les contributeurs »). Relecture du point de vue d'un développeur qui découvre le projet (le test « Jeff »). Le graphe Graphify final, comparé à celui de l'étape 0, illustre le chemin parcouru.
+8.5 *(idée I18, 20/11/2026, à décider)* **Un cœur sans Spring, en modules Maven**, pour préparer une version Android : `ladybug-core` (Java pur : règles, modèle, `Position`, Dijkstra, `GameSnapshot`, tests et golden master), `ladybug-desktop` (Spring Boot, XML, Swing ou JavaFX), plus tard `ladybug-android` (libGDX). Le Spring du modèle est surtout cosmétique : 39 fichiers sur 42 n'ont qu'un `@Component` ; restent `ApplicationEventPublisher` (remplacé par le snapshot en 4.6), `MessageSource`, deux `@Value`, deux `@PostConstruct`.
 
 ## Étape 9 : mode réseau (plus tard, progressivement)
 Architecture : **un hôte qui fait autorité**.
@@ -394,7 +398,8 @@ Architecture : **un hôte qui fait autorité**.
 
 ## Étape 10 : optionnel
 - Packaging natif avec `jpackage`.
-- Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4.
+- Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4 (**idée I17**, Frédéric, 20/11/2026). Depuis 4.3, le modèle n'importe plus ni AWT ni Swing ; resteraient à refaire les vues (24 fichiers, ~2 000 lignes), les images et la police, le clavier, la boucle, l'écran et la fenêtre. Avec le `GameSnapshot` (4.6), une vue se résume à « dessiner un snapshot » ; le profil Spring permettrait de faire cohabiter deux interfaces pendant la migration.
+- **Version Android** (**idée I18**, Frédéric, 20/11/2026) : avec libGDX (même code d'affichage pour PC et Android), sur le cœur sans Spring de 8.5 ; écran tactile, sons Android, langage Java 17 côté Android (à vérifier le moment venu). Question pour l'étape 6 : lire la configuration des fantômes sur Android, le XML Spring restant le format PC (C01).
 
 ---
 

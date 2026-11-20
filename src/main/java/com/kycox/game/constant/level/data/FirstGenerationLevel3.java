@@ -16,7 +16,7 @@
  */
 package com.kycox.game.constant.level.data;
 
-import java.awt.*;
+import com.kycox.game.tools.Position;
 
 //@Component
 public class FirstGenerationLevel3 extends FirstGenerationLevel {
@@ -35,13 +35,13 @@ public class FirstGenerationLevel3 extends FirstGenerationLevel {
 	}
 
 	@Override
-	public Point getGhostRegenerateBlockPoint() {
-		return new Point(2, 3);
+	public Position getGhostRegenerateBlockPoint() {
+		return new Position(2, 3);
 	}
 
 	@Override
-	public Point getInitLadybugBlockPos() {
-		return new Point(2, 3);
+	public Position getInitLadybugBlockPos() {
+		return new Position(2, 3);
 	}
 
 	@Override

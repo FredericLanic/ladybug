@@ -11,6 +11,7 @@ import com.kycox.game.Application;
 import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.engine.model.GameModel;
+import com.kycox.game.engine.loop.SwingGameLoop;
 import com.kycox.game.engine.view.MainFrame;
 
 /**
@@ -20,11 +21,6 @@ import com.kycox.game.engine.view.MainFrame;
  */
 @SpringBootTest(classes = Application.class)
 class SpringContextTest {
-	static {
-		// la boucle du jeu ne démarre pas : le test reste maître du temps (3.5.1e)
-		System.setProperty(GameModel.LOOP_AUTOSTART_PROPERTY, "false");
-	}
-
 	@Autowired
 	private ApplicationContext context;
 	@Autowired
@@ -40,6 +36,8 @@ class SpringContextTest {
 	void theModelIsThereButNoWindow() {
 		assertThat(context.getBean(GameModel.class)).isNotNull();
 		assertThat(context.getBeansOfType(MainFrame.class)).isEmpty();
+		// pas de boucle du jeu non plus (4.1) : le test reste maître du temps
+		assertThat(context.getBeansOfType(SwingGameLoop.class)).isEmpty();
 		assertThat(context.getEnvironment().getActiveProfiles()).doesNotContain(GuiComponent.PROFILE);
 	}
 }

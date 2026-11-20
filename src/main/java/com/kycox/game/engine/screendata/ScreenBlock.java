@@ -16,13 +16,13 @@
  */
 package com.kycox.game.engine.screendata;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 
 /**
  * Class ScreenBlock correspond à une case dans le ScreenData
@@ -44,8 +44,8 @@ public class ScreenBlock implements Cloneable {
 	@Setter
 	private int content;
 	@Setter
-	private Point coordinate = GameMainConstants.POINT_ZERO;
-	private Point destinationPoint;
+	private Position coordinate = GameMainConstants.POINT_ZERO;
+	private Position destinationPoint;
 	private int idRefFruit;
 
 	public ScreenBlock(int content) {
@@ -81,7 +81,7 @@ public class ScreenBlock implements Cloneable {
 		content |= MEGA_POINT;
 	}
 
-	public void addTeleportation(Point destinationPoint) {
+	public void addTeleportation(Position destinationPoint) {
 		this.destinationPoint = destinationPoint;
 		content |= TELEPORTATION;
 	}
@@ -97,7 +97,7 @@ public class ScreenBlock implements Cloneable {
 		return o;
 	}
 
-	public Point getDirectionInDeadEnd() {
+	public Position getDirectionInDeadEnd() {
 		if (!isBorderLeft()) {
 			return GameMainConstants.POINT_LEFT;
 		}

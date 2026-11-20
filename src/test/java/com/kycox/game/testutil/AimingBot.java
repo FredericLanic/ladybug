@@ -1,6 +1,6 @@
 package com.kycox.game.testutil;
 
-import java.awt.Point;
+import com.kycox.game.tools.Position;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,14 +32,14 @@ public final class AimingBot {
 	static final int HUNT_DISTANCE = 8;
 
 	/** Direction à demander pour Ladybug à ce battement (ou {@code null} : rien à faire). */
-	public Point decide(GameModel model) {
+	public Position decide(GameModel model) {
 		var screen = model.getScreenData();
-		var ladybug = new Point(model.getLadybug().getPositionBlock());
+		var ladybug = model.getLadybug().getPositionBlock();
 		if (screen.getScreenBlock(ladybug) == null) {
 			return null;
 		}
 		var ghosts = model.getGroupGhosts().getGhosts();
-		var dangerous = ghosts.stream().filter(AimingBot::isDangerous).map(g -> new Point(g.getPositionBlock())).toList();
+		var dangerous = ghosts.stream().filter(AimingBot::isDangerous).map(g -> g.getPositionBlock()).toList();
 		var fromLadybug = paths(ladybug, screen);
 
 		var nearestDanger = dangerous.stream().mapToInt(g -> fromLadybug.distances.getOrDefault(g, Integer.MAX_VALUE))
@@ -47,7 +47,7 @@ public final class AimingBot {
 		if (nearestDanger <= DANGER_DISTANCE) {
 			return flee(ladybug, dangerous, screen);
 		}
-		var edible = ghosts.stream().filter(AimingBot::isEdible).map(g -> new Point(g.getPositionBlock()))
+		var edible = ghosts.stream().filter(AimingBot::isEdible).map(g -> g.getPositionBlock())
 		        .filter(p -> fromLadybug.distances.getOrDefault(p, Integer.MAX_VALUE) <= HUNT_DISTANCE).toList();
 		if (!edible.isEmpty()) {
 			return fromLadybug.firstStepTowards(edible::contains, ladybug);
@@ -68,9 +68,9 @@ public final class AimingBot {
 	}
 
 	/** Case voisine la plus éloignée du fantôme dangereux le plus proche. */
-	private static Point flee(Point ladybug, List<Point> dangerous, ScreenData screen) {
+	private static Position flee(Position ladybug, List<Position> dangerous, ScreenData screen) {
 		var fromGhosts = dangerous.stream().map(g -> paths(g, screen)).toList();
-		Point best = null;
+		Position best = null;
 		var bestDistance = -1;
 		for (var neighbour : openNeighbours(ladybug, screen)) {
 			var distance = fromGhosts.stream()
@@ -81,13 +81,13 @@ public final class AimingBot {
 				best = neighbour;
 			}
 		}
-		return best == null ? null : new Point(best.x - ladybug.x, best.y - ladybug.y);
+		return best == null ? null : new Position(best.x() - ladybug.x(), best.y() - ladybug.y());
 	}
 
 	/** Plus courts chemins depuis une case (parcours en largeur, ordre de voisins fixe). */
-	private static Paths paths(Point start, ScreenData screen) {
+	private static Paths paths(Position start, ScreenData screen) {
 		var paths = new Paths();
-		var queue = new ArrayDeque<Point>();
+		var queue = new ArrayDeque<Position>();
 		paths.distances.put(start, 0);
 		queue.add(start);
 		while (!queue.isEmpty()) {
@@ -105,43 +105,43 @@ public final class AimingBot {
 	}
 
 	/** Voisins accessibles, dans le labyrinthe (les sorties de téléporteur sont ignorées). */
-	private static List<Point> openNeighbours(Point point, ScreenData screen) {
+	private static List<Position> openNeighbours(Position point, ScreenData screen) {
 		var block = screen.getScreenBlock(point);
-		var neighbours = new ArrayList<Point>();
+		var neighbours = new ArrayList<Position>();
 		if (block == null) {
 			return neighbours;
 		}
 		if (!block.isBorderUp()) {
-			neighbours.add(new Point(point.x, point.y - 1));
+			neighbours.add(new Position(point.x(), point.y() - 1));
 		}
 		if (!block.isBorderDown()) {
-			neighbours.add(new Point(point.x, point.y + 1));
+			neighbours.add(new Position(point.x(), point.y() + 1));
 		}
 		if (!block.isBorderLeft()) {
-			neighbours.add(new Point(point.x - 1, point.y));
+			neighbours.add(new Position(point.x() - 1, point.y()));
 		}
 		if (!block.isBorderRight()) {
-			neighbours.add(new Point(point.x + 1, point.y));
+			neighbours.add(new Position(point.x() + 1, point.y()));
 		}
 		neighbours.removeIf(p -> screen.getScreenBlock(p) == null || screen.getScreenBlock(p).isNotAccessible());
 		return neighbours;
 	}
 
 	private static final class Paths {
-		final Map<Point, Integer> distances = new HashMap<>();
-		final Map<Point, Point> parents = new HashMap<>();
+		final Map<Position, Integer> distances = new HashMap<>();
+		final Map<Position, Position> parents = new HashMap<>();
 		/** Cases dans l'ordre de découverte (la plus proche d'abord). */
-		final List<Point> order = new ArrayList<>();
+		final List<Position> order = new ArrayList<>();
 
 		/** Premier pas vers la case la plus proche qui vérifie {@code target}. */
-		Point firstStepTowards(Predicate<Point> target, Point start) {
+		Position firstStepTowards(Predicate<Position> target, Position start) {
 			for (var candidate : order) {
 				if (target.test(candidate)) {
 					var step = candidate;
 					while (!parents.get(step).equals(start)) {
 						step = parents.get(step);
 					}
-					return new Point(step.x - start.x, step.y - start.y);
+					return new Position(step.x() - start.x(), step.y() - start.y());
 				}
 			}
 			return null;

@@ -16,11 +16,12 @@
  */
 package com.kycox.game.engine.model;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
-import com.kycox.game.constant.ghost.GhostsBodyImages;
+import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.contract.GameModelForSounds;
 import com.kycox.game.constant.contract.GameModelForViews;
@@ -34,7 +35,6 @@ import com.kycox.game.constant.sounds.Sounds;
 import com.kycox.game.engine.sound.NewSounds;
 import com.kycox.game.engine.sound.SoundDurations;
 import com.kycox.game.tools.Utils;
-import com.kycox.game.tools.timer.BeatPacer;
 import com.kycox.game.tools.timer.SuperPowerTimer;
 import com.kycox.game.tools.timer.TickScheduler;
 import jakarta.annotation.PostConstruct;
@@ -45,27 +45,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
-import static com.kycox.game.constant.game.GameMainConstants.PACE;
 
 /**
- * Modèle du jeu MVC : c'est le modèle qui contient le timer du jeu (coeur du jeu)
+ * Modèle du jeu MVC : l'état de la partie et ses règles, sans aucune horloge.
+ *
+ * <p>Depuis l'étape 4.1, le modèle ne cadence plus le jeu lui-même : il expose
+ * {@link #beat()}, appelé 25 fois par seconde par la boucle du jeu
+ * ({@code SwingGameLoop}, avec l'interface) ou directement par un test
+ * ({@code GameDriver}). Le modèle ne dépend donc plus de Swing.
  */
 @Component
 public class GameModel implements GameModelForViews, GameModelForSounds, GameModelForController {
 	private static final Logger logger = LoggerFactory.getLogger(GameModel.class);
-	/**
-	 * Propriété système : {@code -Dladybug.loop.autostart=false} empêche le timer
-	 * Swing de démarrer ; un test fait alors avancer le jeu lui-même avec
-	 * {@link #beat()} (étape 3.5.1e).
-	 */
-	public static final String LOOP_AUTOSTART_PROPERTY = "ladybug.loop.autostart";
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
 	@Getter
@@ -94,9 +87,6 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	private boolean showHelpForXboxes = false;
 	@Getter
 	private boolean soundActive = true;
-	/** Cadence à pas fixe : 25 battements par seconde, retards rattrapés (3.5.1b). */
-	private final BeatPacer beatPacer = new BeatPacer(PACE, 5);
-	private final Timer programTimer = createProgramTimer();
 	@Setter
 	@Getter
 	private boolean atLeastOneXboxOneConnected;
@@ -152,11 +142,6 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		setBeginningDuration(soundDurations.of(Sounds.GAME_BEGIN_LEVEL));
 		setTimeEndingMilliseconds(TIME_ENDING_MILLISECONDS);
 		setEndingLevelMilliseconds(soundDurations.of(Sounds.LADYBUG_INTERMISSION));
-		if (Boolean.parseBoolean(System.getProperty(LOOP_AUTOSTART_PROPERTY, "true"))) {
-			programTimer.start();
-		} else {
-			logger.info("Game loop not started ({}=false): beats are driven by the caller", LOOP_AUTOSTART_PROPERTY);
-		}
 	}
 
 	/**
@@ -168,7 +153,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	 * battement ; puis l'état courant du jeu joue son battement ; enfin les vues
 	 * et les sons sont prévenus.
 	 *
-	 * <p>Appelé par le timer Swing en jeu, ou directement par un test (3.5.1e).
+	 * <p>Appelé par la boucle du jeu ({@code SwingGameLoop}, étape 4.1), ou
+	 * directement par un test (3.5.1e).
 	 *
 	 * <p>Les sons demandés repartent de zéro à chaque battement (3.5.3a) : un son
 	 * n'est demandé qu'au battement où son événement se produit. Avant, certains
@@ -188,21 +174,6 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	@Override
 	public void changeLitLampMode() {
 		screenData.setLitLampMode(!screenData.isLitLampMode());
-	}
-
-	/**
-	 * Le timer Swing se réveille deux fois par battement ; le {@link BeatPacer}
-	 * décide combien de battements jouer (0, 1, parfois 2 pour rattraper un
-	 * retard). Pattern Game Loop à pas fixe.
-	 */
-	private Timer createProgramTimer() {
-		ActionListener action = event -> {
-			var beats = beatPacer.beatsDue(System.nanoTime());
-			for (var i = 0; i < beats; i++) {
-				beat();
-			}
-		};
-		return new Timer(PACE / 2, action);
 	}
 
 	@Override
@@ -293,22 +264,22 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	}
 
 	@Override
-	public void setGhostRequest(Point ghostRequest) {
+	public void setGhostRequest(Position ghostRequest) {
 		manageActionContext.setGhostRequest(ghostRequest);
 	}
 
 	@Override
-	public void setLadybugRequest(Point point) {
+	public void setLadybugRequest(Position point) {
 		ladybug.setUserRequest(point);
 	}
 
 	@Override
 	public void setMultiPlayers(boolean isMuliPlayers) {
-		List<GhostsBodyImages> ghostBodyImages = Arrays.asList(GhostsBodyImages.values());
-		ghostBodyImages.forEach(ghostBodyImage -> ghostBodyImage.setComputed(true));
-
+		groupGhosts.setAllComputed();
 		if (isMuliPlayers) {
-			Utils.randomEnum(GhostsBodyImages.class).setComputed(false);
+			// même tirage qu'avant 4.2 (une couleur parmi quatre, dans le même ordre) :
+			// les parties rejouées avec une même graine restent identiques
+			groupGhosts.setHumanPlayer(Utils.randomEnum(GhostColor.class));
 		}
 		gameMessaging.addPlayerMode(isMuliPlayers);
 	}

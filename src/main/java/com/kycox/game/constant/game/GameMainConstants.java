@@ -16,8 +16,8 @@
  */
 package com.kycox.game.constant.game;
 
+import com.kycox.game.tools.Position;
 import java.awt.Color;
-import java.awt.Point;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -44,16 +44,16 @@ public final class GameMainConstants {
 	public static final int NOFRUITID = -1;
 	// Période du timer du jeu
 	public static final int PACE = 40; // rythme en anglais :/
-	// Point en bas
-	public static final Point POINT_DOWN = new Point(0, 1);
-	// Point à gauche
-	public static final Point POINT_LEFT = new Point(-1, 0);
-	// Point à droite
-	public static final Point POINT_RIGHT = new Point(1, 0);
-	// Point en haut
-	public static final Point POINT_UP = new Point(0, -1);
-	// Point neutre
-	public static final Point POINT_ZERO = new Point(0, 0);
+	// Position en bas
+	public static final Position POINT_DOWN = new Position(0, 1);
+	// Position à gauche
+	public static final Position POINT_LEFT = new Position(-1, 0);
+	// Position à droite
+	public static final Position POINT_RIGHT = new Position(1, 0);
+	// Position en haut
+	public static final Position POINT_UP = new Position(0, -1);
+	// Position neutre
+	public static final Position POINT_ZERO = new Position(0, 0);
 	// niveau pour la fenêtre de présentation
 	public static final int PRESENTATION_LEVEL = 3;
 	// durée d'affichage du message de bienvenue

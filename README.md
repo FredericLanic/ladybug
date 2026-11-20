@@ -150,7 +150,6 @@ Un `application.properties` posé à côté du jeu accepte tous les réglages de
 | `--ladybug.config=file:…` | impose un fichier `application-context.xml` |
 | `--ladybug.mode=LOCAL` | mode de lancement (seul mode pour l'instant ; héberger et rejoindre une partie viendront plus tard) |
 | `-Dladybug.seed=123` (avant `-jar`) | rejoue le même hasard : la graine est écrite dans les logs à chaque partie |
-| `-Dladybug.loop.autostart=false` (avant `-jar`) | pour les tests : la boucle du jeu ne démarre pas seule |
 
 Pour en savoir plus : [doc/patterns/configuration-externalisee.md](doc/patterns/configuration-externalisee.md).
 

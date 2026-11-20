@@ -16,8 +16,8 @@
  */
 package com.kycox.game.engine.bodyaction.ghost;
 
-import java.awt.Point;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.engine.bodyaction.BodyActions;
 
 import lombok.Getter;
@@ -28,6 +28,6 @@ import lombok.Setter;
 public class GhostActions extends BodyActions {
 	private boolean eatenByLadybug = false;
 	private boolean eatLadybug = false;
-	private Point position;
+	private Position position;
 	private boolean regenerated = false;
 }
