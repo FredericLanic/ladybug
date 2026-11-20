@@ -307,7 +307,7 @@ Risques : le passage aux tics change le rythme ressenti (conversion exacte, robo
 - `XboxInput` ;
 - `AiInput` (les déplacements IA actuels).
 
-5.2 Chaque `Ladybug`/`Ghost` porte son `PlayerInput`. Ce changement :
+5.2 **Fait le 20/11/2026** (commit `d4974c5`) : chaque fantôme lit sa propre `PlayerInput` ; la demande unique qui traversait 4 classes de stratégie est supprimée (`setGhostRequest` retiré du contrat) ; `GhostsGroup.move` / `moveWithoutPlayerRequests` ; ZQSD et manette 2 écrivent dans la boîte du fantôme humain ; un fantôme qui devient humain repart sans ordre. Questions ouvertes pour 5.3 : fantôme humain sans vie (redevient IA ?) ; bandeau à plusieurs fantômes. Énoncé d'origine : chaque `Ladybug`/`Ghost` porte son `PlayerInput`. Ce changement :
 - **supprime** le flag `computed` stocké sur l'enum `GhostsBodyImages` (CTEC1) ;
 - supprime la `ghostRequest` unique de `GhostsGroup`.
 
