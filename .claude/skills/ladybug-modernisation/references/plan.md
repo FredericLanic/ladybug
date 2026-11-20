@@ -311,7 +311,7 @@ Risques : le passage aux tics change le rythme ressenti (conversion exacte, robo
 - **supprime** le flag `computed` stocké sur l'enum `GhostsBodyImages` (CTEC1) ;
 - supprime la `ghostRequest` unique de `GhostsGroup`.
 
-5.3 Possibilité d'avoir **plusieurs fantômes joués par des humains** en local (préparation du réseau).
+5.3 **Fait le 20/11/2026** : le modèle accepte plusieurs fantômes humains (`getNbrPlayers`, `PlayerInputs.ghost(nom)`) ; règle **C50** : un fantôme humain sans vie revient à l'ordinateur, la partie des fantômes s'arrête quand tous sont éliminés. Écran et touches inchangés jusqu'à I20. Énoncé d'origine : possibilité d'avoir **plusieurs fantômes joués par des humains** en local (préparation du réseau).
 5.4 Un joueur est associé à **un fantôme précis**, pas à un type.
 
 ## Étape 6 : fantômes 100 % configurables (assemblage de capacités)
