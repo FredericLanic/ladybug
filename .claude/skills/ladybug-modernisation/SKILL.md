@@ -152,6 +152,8 @@ Il garde en revanche les sous-classes de fantômes et le XML, n'a toujours aucun
 
 **Une branche par étape**, créée depuis `develop` à jour et nommée `etape-N-sujet` (par exemple `etape-1-socle` ; jamais `modernisation/…`, en conflit avec la branche `modernisation`). Chaque étape est fusionnée par une PR vers `develop`, en merge commit, après le robot, la checklist et Graphify (résultats résumés dans la PR). L'étape 0 a été faite sur la branche `modernisation`, créée depuis `origin/develop`, poussée le 18/11/2026 ; sa PR vers `develop` est la première. Les constats et la dette ont été revus sur `develop` le 18/11/2026 (étape 0.C.5). **L'étape 0 est terminée** (commits `feb4a99`, `1ac73d4`, `bdd0842`) ; la référence « avant » est dans `doc/checklist-jeu.md` et `doc/reference-avant/2026-11-18/`, et le robot `doc/reference-avant/robot/LadybugRobot.java` se relance après chaque grande étape (Terminal.app doit avoir les autorisations Accessibilité et Enregistrement de l'écran).
 
+**`develop` est protégée** depuis le 20/11/2026 (ruleset « Protection de develop ») : aucun push direct, tout passe par une PR, fusionnable seulement quand Build est vert sur Linux, Windows et macOS. Les branches fusionnées sont supprimées automatiquement ; seul le merge commit est autorisé. Les anciennes branches `SCS` et `macos` sont archivées en tags `archive/…`.
+
 Réseau et accès GitHub : la clé `id_ed25519` est enregistrée sur GitHub depuis le 18/11/2026, donc on pousse en SSH. Sur certains réseaux (bureau), le port 22 est bloqué : il faut alors passer par HTTPS avec `gh`, qui n'est pas encore installé (`brew install gh`, puis `gh auth login` fait par Frédéric). Les clés n'ont pas de passphrase : ne lisez jamais les clés privées.
 
 ## Pièges connus
