@@ -41,8 +41,4 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 		}
 		gameModelManageAction.execute();
 	}
-
-	public void setGhostRequest(Position ghostRequest) {
-		gameModeGameIsPlaying.setGhostRequest(ghostRequest);
-	}
 }

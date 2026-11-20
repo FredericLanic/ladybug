@@ -38,7 +38,6 @@ public interface GameModelForController extends GameCommon {
 
 	void setGameInPause();
 
-	void setGhostRequest(Position point);
 
 
 	void setMultiPlayers(boolean isMuliPlayers);

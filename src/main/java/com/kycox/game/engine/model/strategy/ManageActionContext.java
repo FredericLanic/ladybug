@@ -70,8 +70,4 @@ public class ManageActionContext {
 	public void setEndingLevelMilliseconds(long endingLevelMilliseconds) {
 		gameModelLevelIsEnded.setEndingLevelMilliseconds(endingLevelMilliseconds);
 	}
-
-	public void setGhostRequest(Position ghostRequest) {
-		gameModelGameIsInGame.setGhostRequest(ghostRequest);
-	}
 }

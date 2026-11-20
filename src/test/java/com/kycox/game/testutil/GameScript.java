@@ -36,10 +36,10 @@ public final class GameScript {
 		        .at(START_BEAT + 1, game -> game.keys().initializeLevelNumAndStartGame(true));
 	}
 
-	public static final Consumer<GameDriver> GHOST_LEFT = game -> game.keys().setGhostRequest(GameMainConstants.POINT_LEFT);
-	public static final Consumer<GameDriver> GHOST_RIGHT = game -> game.keys().setGhostRequest(GameMainConstants.POINT_RIGHT);
-	public static final Consumer<GameDriver> GHOST_UP = game -> game.keys().setGhostRequest(GameMainConstants.POINT_UP);
-	public static final Consumer<GameDriver> GHOST_DOWN = game -> game.keys().setGhostRequest(GameMainConstants.POINT_DOWN);
+	public static final Consumer<GameDriver> GHOST_LEFT = game -> game.inputs().humanGhost().orElseThrow().request(GameMainConstants.POINT_LEFT);
+	public static final Consumer<GameDriver> GHOST_RIGHT = game -> game.inputs().humanGhost().orElseThrow().request(GameMainConstants.POINT_RIGHT);
+	public static final Consumer<GameDriver> GHOST_UP = game -> game.inputs().humanGhost().orElseThrow().request(GameMainConstants.POINT_UP);
+	public static final Consumer<GameDriver> GHOST_DOWN = game -> game.inputs().humanGhost().orElseThrow().request(GameMainConstants.POINT_DOWN);
 
 	/** Partie à 2 joueurs au niveau 1 : touche 2, puis S et N. */
 	public static GameScript twoPlayersLevelOne() {

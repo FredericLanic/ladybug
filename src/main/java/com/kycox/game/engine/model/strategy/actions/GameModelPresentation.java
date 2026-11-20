@@ -1,7 +1,5 @@
 package com.kycox.game.engine.model.strategy.actions;
 
-import com.kycox.game.tools.Position;
-import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.IGameModelAction;
 import lombok.Setter;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 public class GameModelPresentation extends AbstratGameModel implements IGameModelAction {
-	private Position ghostRequest = GameMainConstants.POINT_ZERO;
 
 	private void moveBodies() {
 		ladybug.move(maze);
@@ -19,7 +16,7 @@ public class GameModelPresentation extends AbstratGameModel implements IGameMode
 	}
 
 	private void moveGhosts() {
-		groupGhosts.move(ladybug, maze, ghostRequest);
+		groupGhosts.moveWithoutPlayerRequests(ladybug, maze);
 	}
 
 	@Override

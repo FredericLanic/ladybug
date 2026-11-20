@@ -20,6 +20,7 @@ import com.kycox.game.tools.Position;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.body.ladybug.Ladybug;
+import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.engine.maze.Maze;
 import lombok.Getter;
@@ -71,9 +72,30 @@ public class GhostsGroup {
 		ghosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
-	public void move(Ladybug ladybug, Maze maze, Position ghostRequest) {
+	/**
+	 * En jeu : l'ordinateur déplace ses fantômes, chaque fantôme humain suit les
+	 * ordres de sa boîte aux lettres (étape 5.2).
+	 */
+	public void move(Ladybug ladybug, Maze maze) {
 		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, maze));
-		ghosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.moveGhostUser(ladybug, maze, ghostRequest));
+		ghosts.stream().filter(g -> !g.isComputed())
+		        .forEach(g -> g.moveGhostUser(ladybug, maze, g.getPlayerInput().requested()));
+	}
+
+	/**
+	 * Présentation et question « reprendre l'ancien niveau ? » : les fantômes
+	 * humains bougent sans suivre d'ordre, mais leurs ordres sont gardés pour la
+	 * partie.
+	 */
+	public void moveWithoutPlayerRequests(Ladybug ladybug, Maze maze) {
+		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, maze));
+		ghosts.stream().filter(g -> !g.isComputed())
+		        .forEach(g -> g.moveGhostUser(ladybug, maze, GameMainConstants.POINT_ZERO));
+	}
+
+	/** Les fantômes joués par des humains, dans l'ordre du groupe. */
+	public List<Ghost> getHumanGhosts() {
+		return ghosts.stream().filter(g -> !g.isComputed()).toList();
 	}
 
 	/** Tous les fantômes sont joués par l'ordinateur (mode un joueur). */
@@ -81,9 +103,16 @@ public class GhostsGroup {
 		ghosts.forEach(ghost -> ghost.setComputed(true));
 	}
 
-	/** Le fantôme de cette couleur est joué par le deuxième joueur (étape 4.2). */
+	/**
+	 * Le fantôme de cette couleur est joué par le deuxième joueur (étape 4.2). Sa
+	 * boîte aux lettres est vidée : il ne garde aucun ordre d'une ancienne partie
+	 * (étape 5.2).
+	 */
 	public void setHumanPlayer(GhostColor color) {
-		ghosts.stream().filter(ghost -> ghost.getColor() == color).forEach(ghost -> ghost.setComputed(false));
+		ghosts.stream().filter(ghost -> ghost.getColor() == color).forEach(ghost -> {
+			ghost.setComputed(false);
+			ghost.getPlayerInput().reset();
+		});
 	}
 
 	public void setActions(Ladybug ladybug, Maze maze) {

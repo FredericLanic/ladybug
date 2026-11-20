@@ -16,8 +16,11 @@
  */
 package com.kycox.game.input;
 
+import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * Où trouver la boîte aux lettres de chaque joueur (étape 5). Les contrôleurs
@@ -27,13 +30,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlayerInputs {
 	private final Ladybug ladybug;
+	private final GhostsGroup ghostsGroup;
 
-	public PlayerInputs(Ladybug ladybug) {
+	public PlayerInputs(Ladybug ladybug, GhostsGroup ghostsGroup) {
 		this.ladybug = ladybug;
+		this.ghostsGroup = ghostsGroup;
 	}
 
 	/** Les ordres donnés à Ladybug. */
 	public PlayerInput ladybug() {
 		return ladybug.getPlayerInput();
+	}
+
+	/**
+	 * Les ordres donnés au fantôme joué par le deuxième joueur, s'il y en a un
+	 * (étape 5.2). En solo, il n'y en a pas : les touches ZQSD ne font rien.
+	 */
+	public Optional<PlayerInput> humanGhost() {
+		return ghostsGroup.getHumanGhosts().stream().findFirst().map(ghost -> ghost.getPlayerInput());
 	}
 }

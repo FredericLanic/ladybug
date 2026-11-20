@@ -104,10 +104,10 @@ public class KeyboardController extends KeyAdapter {
 			case KeyEvent.VK_UP -> playerInputs.ladybug().request(GameMainConstants.POINT_UP, InputSource.KEYBOARD_ARROWS);
 			case KeyEvent.VK_DOWN -> playerInputs.ladybug().request(GameMainConstants.POINT_DOWN, InputSource.KEYBOARD_ARROWS);
 			// Mouvement du fantôme (joueur 2)
-			case KeyEvent.VK_Z -> gameModelForController.setGhostRequest(GameMainConstants.POINT_UP);
-			case KeyEvent.VK_S -> gameModelForController.setGhostRequest(GameMainConstants.POINT_DOWN);
-			case KeyEvent.VK_Q -> gameModelForController.setGhostRequest(GameMainConstants.POINT_LEFT);
-			case KeyEvent.VK_D -> gameModelForController.setGhostRequest(GameMainConstants.POINT_RIGHT);
+			case KeyEvent.VK_Z -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_UP, InputSource.KEYBOARD_ZQSD));
+			case KeyEvent.VK_S -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_DOWN, InputSource.KEYBOARD_ZQSD));
+			case KeyEvent.VK_Q -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_LEFT, InputSource.KEYBOARD_ZQSD));
+			case KeyEvent.VK_D -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_RIGHT, InputSource.KEYBOARD_ZQSD));
 			// Partie en pause
 			// P en plus de Pause : la touche Pause n'existe pas sur un clavier Mac (C33)
 			case KeyEvent.VK_PAUSE, KeyEvent.VK_P -> gameModelForController.setGameInPause();

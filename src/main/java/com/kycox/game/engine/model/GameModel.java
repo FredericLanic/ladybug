@@ -251,11 +251,6 @@ public class GameModel implements GameModelForController {
 	}
 
 	@Override
-	public void setGhostRequest(Position ghostRequest) {
-		manageActionContext.setGhostRequest(ghostRequest);
-	}
-
-	@Override
 	public void setMultiPlayers(boolean isMuliPlayers) {
 		groupGhosts.setAllComputed();
 		if (isMuliPlayers) {

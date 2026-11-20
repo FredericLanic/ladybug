@@ -154,16 +154,16 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 			return;
 		}
 		if (xboxOneUnComputedGhost.isRightRightStick() || xboxOneUnComputedGhost.isRightLeftStick()) {
-			gameModelForController.setGhostRequest(GameMainConstants.POINT_RIGHT);
+			playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_RIGHT, InputSource.XBOX_PAD_2));
 		}
 		if (xboxOneUnComputedGhost.isLeftRightStick() || xboxOneUnComputedGhost.isLeftLeftStick()) {
-			gameModelForController.setGhostRequest(GameMainConstants.POINT_LEFT);
+			playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_LEFT, InputSource.XBOX_PAD_2));
 		}
 		if (xboxOneUnComputedGhost.isUpRightStick() || xboxOneUnComputedGhost.isUpLeftStick()) {
-			gameModelForController.setGhostRequest(GameMainConstants.POINT_UP);
+			playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_UP, InputSource.XBOX_PAD_2));
 		}
 		if (xboxOneUnComputedGhost.isDownRightStick() || xboxOneUnComputedGhost.isDownLeftStick()) {
-			gameModelForController.setGhostRequest(GameMainConstants.POINT_DOWN);
+			playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_DOWN, InputSource.XBOX_PAD_2));
 		}
 	}
 

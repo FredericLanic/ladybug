@@ -51,9 +51,18 @@ public abstract class UserBody extends Body {
 	}
 
 	protected void move(ScreenBlock screenBlock) {
+		move(screenBlock, userRequest());
+	}
+
+	/**
+	 * Avance d'une case en suivant cette direction demandée, si le mur le permet ;
+	 * sinon, garde sa direction ou s'arrête contre le mur.
+	 */
+	protected void move(ScreenBlock screenBlock, Position request) {
 		if (isPerfectOnABlock()) {
-			if (playerInput.hasRequest() && canMove(userRequest(), screenBlock)) {
-				setDirection(userRequest());
+			var hasRequest = request.x() != 0 || request.y() != 0;
+			if (hasRequest && canMove(request, screenBlock)) {
+				setDirection(request);
 			}
 			// Quand le body est coincé : au début ou quand il butte sur un mur.
 			if (!canMove(getDirection(), screenBlock)) {
