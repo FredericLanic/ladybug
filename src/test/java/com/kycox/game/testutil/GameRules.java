@@ -1,7 +1,7 @@
 package com.kycox.game.testutil;
 
-import java.awt.Point;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameStatus;
 
 /**
@@ -27,7 +27,7 @@ final class GameRules {
 		var beat = game.beatCount();
 		var status = game.status();
 		var score = model.getGameScore().getScore();
-		var ladybug = new Point(model.getLadybug().getPositionBlock());
+		var ladybug = model.getLadybug().getPositionBlock();
 
 		if (status == GameStatus.IN_GAME) {
 			if (score < lastScore) {

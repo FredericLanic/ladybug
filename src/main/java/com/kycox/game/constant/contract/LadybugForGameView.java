@@ -16,18 +16,18 @@
  */
 package com.kycox.game.constant.contract;
 
-import java.awt.Point;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 
 public interface LadybugForGameView {
 	int getLeftLifes();
 
-	Point getPosition();
+	Position getPosition();
 
 	LadybugStatus getStatus();
 
-	Point getViewDirection();
+	Position getViewDirection();
 
 	boolean isNewLife();
 

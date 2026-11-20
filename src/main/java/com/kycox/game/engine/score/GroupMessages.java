@@ -16,10 +16,10 @@
  */
 package com.kycox.game.engine.score;
 
+import com.kycox.game.tools.Position;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +28,8 @@ import java.util.List;
 public class GroupMessages {
 	private final List<Message> messages = new ArrayList<>();
 
-	public void add(Point position, String value, MessageType messageType) {
-		messages.add(new Message((Point) position.clone(), value, messageType));
+	public void add(Position position, String value, MessageType messageType) {
+		messages.add(new Message(position, value, messageType));
 	}
 
 	/** Avance tous les messages d'un battement (appelé par la boucle du jeu, 3.5.1d). */

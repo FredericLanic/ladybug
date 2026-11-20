@@ -1,10 +1,10 @@
 package com.kycox.game.engine.model.strategy;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameStatus;
 import com.kycox.game.engine.model.strategy.actions.*;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 import java.util.EnumMap;
 
 @Component
@@ -71,7 +71,7 @@ public class ManageActionContext {
 		gameModelLevelIsEnded.setEndingLevelMilliseconds(endingLevelMilliseconds);
 	}
 
-	public void setGhostRequest(Point ghostRequest) {
+	public void setGhostRequest(Position ghostRequest) {
 		gameModelGameIsInGame.setGhostRequest(ghostRequest);
 	}
 }

@@ -1,5 +1,6 @@
 package com.kycox.game.engine.model.strategy.actions;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.engine.screendata.repo.LevelRepository;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
@@ -7,14 +8,13 @@ import com.kycox.game.engine.model.strategy.IGameModelAction;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 
 @Component
 public class GameModelAskKeepPreviousGameLevel extends AbstratGameModel implements IGameModelAction {
 	private final LevelRepository levelRepository;
 
 	@Setter
-	private Point ghostRequest = GameMainConstants.POINT_ZERO;
+	private Position ghostRequest = GameMainConstants.POINT_ZERO;
 
 	public GameModelAskKeepPreviousGameLevel(LevelRepository levelRepository) {
 		this.levelRepository = levelRepository;

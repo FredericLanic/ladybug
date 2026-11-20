@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.model;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ladybug.Ladybug;
@@ -44,7 +45,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import java.awt.Point;
 import java.util.Optional;
 
 
@@ -264,12 +264,12 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	}
 
 	@Override
-	public void setGhostRequest(Point ghostRequest) {
+	public void setGhostRequest(Position ghostRequest) {
 		manageActionContext.setGhostRequest(ghostRequest);
 	}
 
 	@Override
-	public void setLadybugRequest(Point point) {
+	public void setLadybugRequest(Position point) {
 		ladybug.setUserRequest(point);
 	}
 

@@ -16,6 +16,7 @@
  */
 package com.kycox.game.body;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.body.ladybug.Ladybug;
@@ -25,7 +26,6 @@ import com.kycox.game.engine.screendata.ScreenData;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 import java.util.List;
 
 @Setter
@@ -72,7 +72,7 @@ public class GhostsGroup implements GroupGhostForGameView {
 		ghosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
-	public void move(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
+	public void move(Ladybug ladybug, ScreenData screenData, Position ghostRequest) {
 		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, screenData));
 		ghosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.moveGhostUser(ladybug, screenData, ghostRequest));
 	}

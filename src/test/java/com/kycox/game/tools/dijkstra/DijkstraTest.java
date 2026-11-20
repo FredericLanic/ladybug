@@ -1,9 +1,9 @@
 package com.kycox.game.tools.dijkstra;
 
+import com.kycox.game.tools.Position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.awt.Point;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
@@ -68,8 +68,8 @@ class DijkstraTest {
 		// SecondGenerationLevel1 : téléporteurs en (0, 7) et (14, 7)
 		var level = new SecondGenerationLevel1();
 		var screenData = LevelFixtures.screenDataOf(level);
-		var left = new Point(0, 7);
-		var right = new Point(14, 7);
+		var left = new Position(0, 7);
+		var right = new Position(14, 7);
 
 		var path = Dijkstra.getShorterWay(left, right, screenData);
 

@@ -16,7 +16,6 @@
  */
 package com.kycox.game.tools;
 
-import java.awt.Point;
 
 import com.kycox.game.engine.screendata.ScreenBlock;
 import com.kycox.game.engine.screendata.ScreenData;
@@ -34,7 +33,7 @@ public class CheckLevelMap {
 		nbrLines = screenData.getNbrLines();
 		for (var x = 0; x < nbrBlocksByLines; x++) {
 			for (var y = 0; y < nbrLines; y++) {
-				var currentPoint = new Point(x, y);
+				var currentPoint = new Position(x, y);
 				var block = screenData.getScreenBlock(currentPoint);
 				checkScreenBlock(block, screenData);
 			}
@@ -43,32 +42,32 @@ public class CheckLevelMap {
 
 	private boolean checkScreenBlock(ScreenBlock block, ScreenData screenData) {
 		var hasChanged = false;
-		Point checkedPoint;
+		Position checkedPoint;
 		ScreenBlock previousScreenBlock;
 		var isLeft = block.isBorderLeft();
 		var isRight = block.isBorderRight();
 		var isUp = block.isBorderUp();
 		var isDown = block.isBorderDown();
 		// vérification des bordures !!!
-		if (block.getCoordinate().x == 0 && !isLeft) {
+		if (block.getCoordinate().x() == 0 && !isLeft) {
 			block.addBorderLeft();
 			hasChanged = true;
 		}
-		if (block.getCoordinate().x == (nbrBlocksByLines - 1) && !isRight) {
+		if (block.getCoordinate().x() == (nbrBlocksByLines - 1) && !isRight) {
 			block.addBorderRight();
 			hasChanged = true;
 		}
-		if (block.getCoordinate().y == 0 && !isUp) {
+		if (block.getCoordinate().y() == 0 && !isUp) {
 			block.addBorderUp();
 			hasChanged = true;
 		}
-		if (block.getCoordinate().y == (nbrLines - 1) && !isDown) {
+		if (block.getCoordinate().y() == (nbrLines - 1) && !isDown) {
 			block.addBorderDown();
 			hasChanged = true;
 		}
 		// vérification de la bordure en haut
-		if (isUp && block.getCoordinate().y > 0) {
-			checkedPoint = new Point(block.getCoordinate().x, block.getCoordinate().y - 1);
+		if (isUp && block.getCoordinate().y() > 0) {
+			checkedPoint = new Position(block.getCoordinate().x(), block.getCoordinate().y() - 1);
 			previousScreenBlock = screenData.getScreenBlock(checkedPoint);
 			if (!previousScreenBlock.isBorderDown()) {
 				hasChanged = true;
@@ -76,8 +75,8 @@ public class CheckLevelMap {
 			}
 		}
 		// vérification de la bordure en bas
-		if (isDown && block.getCoordinate().y < nbrLines - 1) {
-			checkedPoint = new Point(block.getCoordinate().x, block.getCoordinate().y + 1);
+		if (isDown && block.getCoordinate().y() < nbrLines - 1) {
+			checkedPoint = new Position(block.getCoordinate().x(), block.getCoordinate().y() + 1);
 			previousScreenBlock = screenData.getScreenBlock(checkedPoint);
 			if (!previousScreenBlock.isBorderUp()) {
 				hasChanged = true;
@@ -85,8 +84,8 @@ public class CheckLevelMap {
 			}
 		}
 		// vérification de la bordure à droite
-		if (isRight && block.getCoordinate().x < nbrBlocksByLines - 1) {
-			checkedPoint = new Point(block.getCoordinate().x + 1, block.getCoordinate().y);
+		if (isRight && block.getCoordinate().x() < nbrBlocksByLines - 1) {
+			checkedPoint = new Position(block.getCoordinate().x() + 1, block.getCoordinate().y());
 			previousScreenBlock = screenData.getScreenBlock(checkedPoint);
 			if (!previousScreenBlock.isBorderLeft()) {
 				hasChanged = true;
@@ -94,8 +93,8 @@ public class CheckLevelMap {
 			}
 		}
 		// vérification de la bordure à gauche
-		if (isLeft && block.getCoordinate().x > 0) {
-			checkedPoint = new Point(block.getCoordinate().x - 1, block.getCoordinate().y);
+		if (isLeft && block.getCoordinate().x() > 0) {
+			checkedPoint = new Position(block.getCoordinate().x() - 1, block.getCoordinate().y());
 			previousScreenBlock = screenData.getScreenBlock(checkedPoint);
 			if (!previousScreenBlock.isBorderRight()) {
 				hasChanged = true;

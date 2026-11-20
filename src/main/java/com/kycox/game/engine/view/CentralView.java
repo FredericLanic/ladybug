@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.view;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.font.GameFont;
@@ -204,7 +205,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		                || gameModelForViews.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed() && ghost.getPosition().distance(gc.getPosition()) <= 4 * GameMainConstants.BLOCK_SIZE)
 		                || !gameModelForViews.getCurrentProgramStatus().isInGame()
 		                || !gameModelForViews.getScreenData().isLitLampMode())
-		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x + 1, g.getPosition().y + 1, this));
+		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x() + 1, g.getPosition().y() + 1, this));
 
 		if (gameModelForViews.isDebugMode()) {
 			g2d.setColor(Color.RED);
@@ -212,8 +213,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 					.getGhosts()
 					.stream()
 					.filter(ghost -> ghost.getMaximumAttackDist() > 0)
-					.forEach(ghost -> g2d.drawOval(ghost.getPosition().x + 1 - ghost.getMaximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
-							, ghost.getPosition().y + 1 - ghost.getMaximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
+					.forEach(ghost -> g2d.drawOval(ghost.getPosition().x() + 1 - ghost.getMaximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
+							, ghost.getPosition().y() + 1 - ghost.getMaximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
 							, ghost.getMaximumAttackDist() * 2
 							, ghost.getMaximumAttackDist() * 2));
 		}
@@ -223,7 +224,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		var viewDirection = gameModelForViews.getLadybug().getViewDirection();
 		var getPosition = gameModelForViews.getLadybug().getPosition();
 		var image = ladybugCommon.getImage(viewDirection);
-		g2d.drawImage(image, getPosition.x + 1, getPosition.y + 1, this);
+		g2d.drawImage(image, getPosition.x() + 1, getPosition.y() + 1, this);
 	}
 
 	private void drawMaze(Graphics2D g2d) {
@@ -231,7 +232,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		for (var y = 0; y < gameModelForViews.getScreenData().getScreenHeight(); y += GameMainConstants.BLOCK_SIZE) {
 			for (var x = 0; x < gameModelForViews.getScreenData().getCurrentLevel().getNbrBlocksByLine()
 			        * GameMainConstants.BLOCK_SIZE; x += GameMainConstants.BLOCK_SIZE) {
-				var positionScreenBlock = new Point(x, y);
+				var positionScreenBlock = new Position(x, y);
 
 				if ((ladybugPosition.distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
 				        || gameModelForViews.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).anyMatch(
@@ -273,8 +274,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		var metr = getFontMetrics(scoreFont);
 		// Affichage des scores incréments
 		for (Message message : gameModelForViews.getGroupMessages().getMessages()) {
-			var x = message.getPosition().x + GameMainConstants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
-			var y = message.getPosition().y + GameMainConstants.BLOCK_SIZE / 2;
+			var x = message.getPosition().x() + GameMainConstants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
+			var y = message.getPosition().y() + GameMainConstants.BLOCK_SIZE / 2;
 			g2d.drawString(message.getValue() + message.getMessageType().getEndMessage(), x, y);
 		}
 	}

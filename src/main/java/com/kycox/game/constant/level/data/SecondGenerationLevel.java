@@ -16,10 +16,10 @@
  */
 package com.kycox.game.constant.level.data;
 
+import com.kycox.game.tools.Position;
 import static com.kycox.game.constant.level.LevelConstruct.B;
 import static com.kycox.game.constant.level.LevelConstruct.N;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +54,7 @@ public abstract class SecondGenerationLevel implements LevelStructure {
 			var x = i % nbrBlocksPerLine;
 			var y = i / nbrBlocksPerLine;
 			var block = new ScreenBlock(screenBlockValue(x, y));
-			block.setCoordinate(new Point(x, y));
+			block.setCoordinate(new Position(x, y));
 			lstBlocks.add(block);
 		}
 		return lstBlocks;
@@ -71,7 +71,7 @@ public abstract class SecondGenerationLevel implements LevelStructure {
 	}
 
 	@Override
-	public Map<Point, Point> getTeleportPoints() {
+	public Map<Position, Position> getTeleportPoints() {
 		return new HashMap<>();
 	}
 

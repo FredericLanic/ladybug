@@ -16,10 +16,10 @@
  */
 package com.kycox.game.constant.contract;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ladybug.Ladybug;
 
-import java.awt.*;
 import java.util.Optional;
 
 public interface GameModelForController extends GameCommon {
@@ -39,9 +39,9 @@ public interface GameModelForController extends GameCommon {
 
 	void setGameInPause();
 
-	void setGhostRequest(Point point);
+	void setGhostRequest(Position point);
 
-	void setLadybugRequest(Point point);
+	void setLadybugRequest(Position point);
 
 	void setMultiPlayers(boolean isMuliPlayers);
 

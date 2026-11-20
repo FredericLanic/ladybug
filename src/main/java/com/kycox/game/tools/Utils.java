@@ -16,7 +16,6 @@
  */
 package com.kycox.game.tools;
 
-import java.awt.Point;
 
 import com.kycox.game.constant.game.GameMainConstants;
 
@@ -25,16 +24,16 @@ public final class Utils {
 	 * Converti un point du graphique en un block
 	 *
 	 */
-	public static Point convertGraphicPointToBlockPoint(Point graphicPoint) {
-		return new Point(graphicPoint.x / GameMainConstants.BLOCK_SIZE, graphicPoint.y / GameMainConstants.BLOCK_SIZE);
+	public static Position convertGraphicPointToBlockPoint(Position graphicPoint) {
+		return new Position(graphicPoint.x() / GameMainConstants.BLOCK_SIZE, graphicPoint.y() / GameMainConstants.BLOCK_SIZE);
 	}
 
 	/**
 	 * Converti un block en un point du graphique
 	 *n
 	 */
-	public static Point convertBlockPointToGraphicPoint(Point blockPoint) {
-		return new Point(blockPoint.x * GameMainConstants.BLOCK_SIZE, blockPoint.y * GameMainConstants.BLOCK_SIZE);
+	public static Position convertBlockPointToGraphicPoint(Position blockPoint) {
+		return new Position(blockPoint.x() * GameMainConstants.BLOCK_SIZE, blockPoint.y() * GameMainConstants.BLOCK_SIZE);
 	}
 
 	/** Entier tiré entre 0 et {@code max} (exclu), via la source unique {@link GameRandom}. */

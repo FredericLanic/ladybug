@@ -16,12 +16,13 @@
  */
 package com.kycox.game.constant.contract;
 
-import java.awt.Point;
+import com.kycox.game.tools.Position;
+
 
 public interface LadybugForController {
 	boolean isEatenAMegaPoint();
 
 	boolean isToBeTeleported();
 
-	void setUserRequest(Point userRequest);
+	void setUserRequest(Position userRequest);
 }

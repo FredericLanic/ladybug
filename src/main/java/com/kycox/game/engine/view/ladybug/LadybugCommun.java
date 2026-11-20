@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.view.ladybug;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
@@ -35,16 +36,16 @@ public abstract class LadybugCommun {
 	@Getter
 	@Setter
 	private BodyImg bodyUpCurrent;
-	private final Map<Point, Integer> convertPointToDegrees = new HashMap<>();
+	private final Map<Position, Integer> convertPointToDegrees = new HashMap<>();
 
 	@Autowired
 	private GameProperties gameProperties;
 
-	protected void addConvertPointToDegrees(Point point, Integer integer) {
+	protected void addConvertPointToDegrees(Position point, Integer integer) {
 		convertPointToDegrees.put(point, integer);
 	}
 
-	private Image addSkin(Image image, Point direction) {
+	private Image addSkin(Image image, Position direction) {
 		if (gameProperties.hasLadybugSkin()) {
 			var imagePluginOX = ImageUtils.rotateImage(GameImages.LADYBUG_PLUGIN_OX_UP.getImage(),
 			        convertPointToDegrees.get(direction));
@@ -53,7 +54,7 @@ public abstract class LadybugCommun {
 		return image;
 	}
 
-	public Image getImage(Point direction) {
+	public Image getImage(Position direction) {
 		var ladybugImage = ImageUtils.rotateImage(bodyUpCurrent.getImage(), convertPointToDegrees.get(direction));
 		return addSkin(ladybugImage, direction);
 	}

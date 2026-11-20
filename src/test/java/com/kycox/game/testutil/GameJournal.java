@@ -1,6 +1,6 @@
 package com.kycox.game.testutil;
 
-import java.awt.Point;
+import com.kycox.game.tools.Position;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -83,24 +83,24 @@ public final class GameJournal {
 
 	/** Ce que le journal regarde dans le modèle, à un battement donné. */
 	private record Snapshot(String status, int level, int score, int lives, String ladybugStatus,
-	        Point ladybugBlock, Map<String, String> ghostStatus, Map<String, Point> ghostBlock, List<Sounds> sounds) {
+	        Position ladybugBlock, Map<String, String> ghostStatus, Map<String, Position> ghostBlock, List<Sounds> sounds) {
 
 		static final Snapshot EMPTY = new Snapshot(null, -1, 0, -1, null, null, Map.of(), Map.of(), List.of());
 
 		static Snapshot of(GameModel model) {
 			var ghostStatus = new LinkedHashMap<String, String>();
-			var ghostBlock = new LinkedHashMap<String, Point>();
+			var ghostBlock = new LinkedHashMap<String, Position>();
 			model.getGroupGhosts().getGhosts().forEach(ghost -> {
 				// un fantôme joué par un humain (mode 2 joueurs) est marqué « (human) »
 				ghostStatus.put(ghost.getName(), ghost.getStatus() + (ghost.isComputed() ? "" : " (human)"));
-				ghostBlock.put(ghost.getName(), new Point(ghost.getPositionBlock()));
+				ghostBlock.put(ghost.getName(), ghost.getPositionBlock());
 			});
 			// sons demandés à ce battement (3.5.3a), dans l'ordre de l'énumération
 			var sounds = java.util.Arrays.stream(Sounds.values()).filter(model.getNewSounds()::hasSound).toList();
 			var ladybug = model.getLadybug();
 			return new Snapshot(String.valueOf(model.getCurrentProgramStatus().getGameStatus()),
 			        model.getCurrentProgramStatus().getNumLevel(), model.getGameScore().getScore(),
-			        ladybug.getLeftLifes(), String.valueOf(ladybug.getStatus()), new Point(ladybug.getPositionBlock()),
+			        ladybug.getLeftLifes(), String.valueOf(ladybug.getStatus()), ladybug.getPositionBlock(),
 			        ghostStatus, ghostBlock, sounds);
 		}
 
@@ -111,8 +111,8 @@ public final class GameJournal {
 			return text.toString();
 		}
 
-		private static String block(Point point) {
-			return "(" + point.x + "," + point.y + ")";
+		private static String block(Position point) {
+			return "(" + point.x() + "," + point.y() + ")";
 		}
 	}
 }

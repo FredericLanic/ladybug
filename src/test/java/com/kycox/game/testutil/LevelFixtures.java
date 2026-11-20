@@ -1,6 +1,6 @@
 package com.kycox.game.testutil;
 
-import java.awt.Point;
+import com.kycox.game.tools.Position;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
@@ -48,9 +48,9 @@ public final class LevelFixtures {
 	 * largeur. Volontairement écrit sans rien reprendre de {@code Dijkstra} : il
 	 * sert de référence indépendante. Les téléporteurs ne sont pas suivis.
 	 */
-	public static Map<Point, Integer> distancesFrom(Point start, ScreenData screenData) {
-		Map<Point, Integer> distances = new HashMap<>();
-		var queue = new ArrayDeque<Point>();
+	public static Map<Position, Integer> distancesFrom(Position start, ScreenData screenData) {
+		Map<Position, Integer> distances = new HashMap<>();
+		var queue = new ArrayDeque<Position>();
 		distances.put(start, 0);
 		queue.add(start);
 		while (!queue.isEmpty()) {
@@ -66,20 +66,20 @@ public final class LevelFixtures {
 	}
 
 	/** Cases voisines atteignables en un pas (pas de mur entre les deux). */
-	public static List<Point> openNeighbours(Point point, ScreenData screenData) {
+	public static List<Position> openNeighbours(Position point, ScreenData screenData) {
 		ScreenBlock block = screenData.getScreenBlock(point);
-		var neighbours = new java.util.ArrayList<Point>();
+		var neighbours = new java.util.ArrayList<Position>();
 		if (!block.isBorderUp()) {
-			neighbours.add(new Point(point.x, point.y - 1));
+			neighbours.add(new Position(point.x(), point.y() - 1));
 		}
 		if (!block.isBorderDown()) {
-			neighbours.add(new Point(point.x, point.y + 1));
+			neighbours.add(new Position(point.x(), point.y() + 1));
 		}
 		if (!block.isBorderLeft()) {
-			neighbours.add(new Point(point.x - 1, point.y));
+			neighbours.add(new Position(point.x() - 1, point.y()));
 		}
 		if (!block.isBorderRight()) {
-			neighbours.add(new Point(point.x + 1, point.y));
+			neighbours.add(new Position(point.x() + 1, point.y()));
 		}
 		return neighbours;
 	}

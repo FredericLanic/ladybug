@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.view.ladybug;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
@@ -51,7 +52,7 @@ public class LadybugDyingView extends LadybugCommun {
 	}
 
 	@Override
-	public Image getImage(Point direction) {
+	public Image getImage(Position direction) {
 		var displayImage = super.getImage(direction);
 		if (mustShowNextImage()) {
 			deltaBips = 0;

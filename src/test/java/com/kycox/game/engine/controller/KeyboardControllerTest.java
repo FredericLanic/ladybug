@@ -1,8 +1,8 @@
 package com.kycox.game.engine.controller;
 
+import com.kycox.game.tools.Position;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.nio.file.Path;
 
@@ -77,10 +77,10 @@ class KeyboardControllerTest {
 	@Test
 	void arrowsMoveLadybug() {
 		startLevelOne();
-		var start = new Point(game.model().getLadybug().getPositionBlock());
+		var start = game.model().getLadybug().getPositionBlock();
 		press(KeyEvent.VK_LEFT);
 		game.beats(30);
-		assertThat(game.model().getLadybug().getPositionBlock().x).isLessThan(start.x);
+		assertThat(game.model().getLadybug().getPositionBlock().x()).isLessThan(start.x());
 	}
 
 	@Test
@@ -91,7 +91,7 @@ class KeyboardControllerTest {
 
 		press(KeyEvent.VK_P);
 		assertThat(game.model().getCurrentProgramStatus().isGameInPause()).isTrue();
-		var frozen = new Point(game.model().getLadybug().getPosition());
+		var frozen = game.model().getLadybug().getPosition();
 		game.beats(50);
 		assertThat(game.model().getLadybug().getPosition()).isEqualTo(frozen);
 

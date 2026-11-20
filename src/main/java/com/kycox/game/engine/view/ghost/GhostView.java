@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.view.ghost;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.GhostEyesImages;
@@ -36,7 +37,7 @@ public class GhostView {
 		this.gameProperties = gameProperties;
 	}
 
-	private Image addEyes(Point direction) {
+	private Image addEyes(Position direction) {
 		if (direction.equals(GameMainConstants.POINT_LEFT)) {
 			return GhostEyesImages.GHOST_LEFT_EYES.getImage();
 		}
@@ -49,7 +50,7 @@ public class GhostView {
 		return GhostEyesImages.GHOST_RIGHT_EYES.getImage();
 	}
 
-	private Image addHeadband(Point direction) {
+	private Image addHeadband(Position direction) {
 		if (direction.equals(GameMainConstants.POINT_LEFT)) {
 			return GhostHeadbandImages.HEADBAND_LEFT.getImage();
 		}

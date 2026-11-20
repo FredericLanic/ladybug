@@ -16,19 +16,19 @@
  */
 package com.kycox.game.body;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.engine.screendata.ScreenBlock;
 import com.kycox.game.engine.screendata.ScreenData;
 import com.kycox.game.tools.Utils;
 import lombok.Setter;
 
-import java.awt.*;
 
 @Setter
 public abstract class UserBody extends Body {
-	protected Point userRequest = GameMainConstants.POINT_ZERO;
+	protected Position userRequest = GameMainConstants.POINT_ZERO;
 
-	protected boolean canMove(Point direction, ScreenBlock screenBlock) {
+	protected boolean canMove(Position direction, ScreenBlock screenBlock) {
 		return ((!direction.equals(GameMainConstants.POINT_LEFT) || !screenBlock.isBorderLeft())
 		        && (!direction.equals(GameMainConstants.POINT_RIGHT) || !screenBlock.isBorderRight())
 		        && (!direction.equals(GameMainConstants.POINT_UP) || !screenBlock.isBorderUp())
@@ -52,12 +52,12 @@ public abstract class UserBody extends Body {
 			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
 			var destinationPoint = Utils.convertBlockPointToGraphicPoint(currentScreenBlock.getDestinationPoint());
 			setPosition(destinationPoint);
-			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+			setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 		}
 	}
 
 	private boolean userRequestHasChanged() {
-		return userRequest.x != 0 || userRequest.y != 0;
+		return userRequest.x() != 0 || userRequest.y() != 0;
 	}
 
 	public String getName() {

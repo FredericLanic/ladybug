@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.view.map;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.level.LevelImages492;
@@ -54,7 +55,7 @@ public class ScreenBlockView {
 	}
 
 	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getScreenBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
+		var screenBlock = screenData.getScreenBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
 
 		// affichage du point de survie des fantômes
 		if (screenBlock.isGhostReviver()) {
@@ -73,7 +74,7 @@ public class ScreenBlockView {
 	}
 
 	private void displayTeleportation(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
+		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
 		if (screenBlock.isTeleportation()) {
 			g2d.setColor(teleportationPointColor);
 			g2d.fillOval(x + GameMainConstants.BLOCK_SIZE / 2 - 4, y + GameMainConstants.BLOCK_SIZE / 2 - 4, 10, 10);
@@ -82,7 +83,7 @@ public class ScreenBlockView {
 	}
 
 	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Point(x, y)));
+		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
 		if (screenBlock.getIdRefFruit() != GameMainConstants.NOFRUITID) {
 			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
 		}

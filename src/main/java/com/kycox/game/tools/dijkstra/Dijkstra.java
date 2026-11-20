@@ -16,7 +16,7 @@
  */
 package com.kycox.game.tools.dijkstra;
 
-import java.awt.Point;
+import com.kycox.game.tools.Position;
 import java.util.List;
 
 import com.kycox.game.engine.screendata.ScreenData;
@@ -35,9 +35,9 @@ public class Dijkstra {
 	 * @param screenData      : jeu en cours
 	 * @param startCoordinate : coordonnées de départ
 	 * @param endCoordinate   : coordonnées d'arrivée
-	 * @return List<Point>
+	 * @return List<Position>
 	 */
-	public static List<Point> getShorterWay(Point startCoordinate, Point endCoordinate, ScreenData screenData) {
+	public static List<Position> getShorterWay(Position startCoordinate, Position endCoordinate, ScreenData screenData) {
 		var dijkstra = new Dijkstra(screenData);
 		dijkstra.init(startCoordinate, screenData);
 		// Lancement de la recherche
@@ -75,14 +75,14 @@ public class Dijkstra {
 	 *                   au genericData
 	 * @return
 	 */
-	private int getPos(Point coordinate, ScreenData screenData) {
-		return coordinate.x + coordinate.y * screenData.getCurrentLevel().getNbrBlocksByLine();
+	private int getPos(Position coordinate, ScreenData screenData) {
+		return coordinate.x() + coordinate.y() * screenData.getCurrentLevel().getNbrBlocksByLine();
 	}
 
 	/*
 	 * Initialisation de Dijkstra
 	 */
-	private void init(Point startCoordinate, ScreenData screenData) {
+	private void init(Position startCoordinate, ScreenData screenData) {
 		// Initialisation du block de début
 		var posStart = getPos(startCoordinate, screenData);
 		listUnitDijkstra.get(posStart).setDistance(0);
@@ -95,7 +95,7 @@ public class Dijkstra {
 	 *                             genericData)
 	 * @param previousUnitDijkstra
 	 */
-	private void search(Point currentCoordinate, UnitDijkstra previousUnitDijkstra, ScreenData screenData) {
+	private void search(Position currentCoordinate, UnitDijkstra previousUnitDijkstra, ScreenData screenData) {
 		// on rcupère la position
 		var currentPos = getPos(currentCoordinate, screenData);
 		// on initialise le flag weightHasChanged
@@ -118,10 +118,10 @@ public class Dijkstra {
 		// On récupère le Block courant
 		var screenBlockCurrent = currentUnitDijkstra.getScreenBlock();
 		// Définition des prochains points
-		var coordinateUp = new Point(currentCoordinate.x, currentCoordinate.y - 1);
-		var coordinateLeft = new Point(currentCoordinate.x - 1, currentCoordinate.y);
-		var coordinateRight = new Point(currentCoordinate.x + 1, currentCoordinate.y);
-		var coordinateDown = new Point(currentCoordinate.x, currentCoordinate.y + 1);
+		var coordinateUp = new Position(currentCoordinate.x(), currentCoordinate.y() - 1);
+		var coordinateLeft = new Position(currentCoordinate.x() - 1, currentCoordinate.y());
+		var coordinateRight = new Position(currentCoordinate.x() + 1, currentCoordinate.y());
+		var coordinateDown = new Position(currentCoordinate.x(), currentCoordinate.y() + 1);
 		// Lancement de la recherche en haut quand c'est possible
 		if (weightHasChanged && !screenBlockCurrent.isBorderUp()) {
 			search(coordinateUp, currentUnitDijkstra, screenData);

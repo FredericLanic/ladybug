@@ -16,8 +16,8 @@
  */
 package com.kycox.game.engine.score;
 
-import java.awt.Point;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.tools.timer.TickCountdown;
 
 import lombok.Getter;
@@ -40,14 +40,14 @@ public class Message {
 	private final MessageType messageType;
 	/** Position dans la fenêtre où le score est affiché */
 	@Getter
-	private final Point position;
+	private final Position position;
 	/** Battements d'affichage restants */
 	private final TickCountdown displayCountdown = new TickCountdown();
 	/** Valeur à afficher */
 	@Getter
 	private final String value;
 
-	public Message(Point position, String value, MessageType messageType) {
+	public Message(Position position, String value, MessageType messageType) {
 		this.position = position;
 		this.value = value;
 		this.messageType = messageType;

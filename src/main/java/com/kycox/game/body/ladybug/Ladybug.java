@@ -16,8 +16,8 @@
  */
 package com.kycox.game.body.ladybug;
 
-import java.awt.Point;
 
+import com.kycox.game.tools.Position;
 import com.kycox.game.engine.bodyaction.ladybug.LadybugActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.constant.game.GameMainConstants;
@@ -38,7 +38,7 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 	private LadybugActions ladybugActions = new LadybugActions();
 	@Setter
 	private LadybugStatus status = LadybugStatus.NORMAL;
-	private Point viewDirection = GameMainConstants.POINT_UP;
+	private Position viewDirection = GameMainConstants.POINT_UP;
 
 	public int getEatenAIdRefFruit() {
 		return ladybugActions.getEatenAIdRefFruit();
@@ -77,7 +77,7 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 			}
 			move(currentScreenBlock);
 		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+		setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 	}
 
 	public LadybugActions setActions(ScreenData screenData) {
@@ -85,7 +85,7 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 		if (getStatus() == LadybugStatus.DEAD) {
 			return ladybugActions;
 		}
-		if (userRequest.equals(new Point(getDirection().x, -getDirection().y))) {
+		if (userRequest.equals(new Position(getDirection().x(), -getDirection().y()))) {
 			setDirection(userRequest);
 			viewDirection = getDirection();
 		}
@@ -101,7 +101,7 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 		return ladybugActions;
 	}
 
-	public void settingsForNewLevel(int numLevel, Point startPosition) {
+	public void settingsForNewLevel(int numLevel, Position startPosition) {
 		setPosition(startPosition);
 		setDirection(GameMainConstants.POINT_ZERO);
 		viewDirection = GameMainConstants.POINT_ZERO;
