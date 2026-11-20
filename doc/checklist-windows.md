@@ -7,15 +7,15 @@
 | # | À faire | OK ? | Remarque |
 |---|---|---|---|
 | 0.1 | Java **21** installé : `java -version` affiche 21 | | |
-| 0.2 | Récupérer le jar (`mvn clean package`, ou une copie de `target/ladybug-0.6.0-SNAPSHOT.jar`) | | |
+| 0.2 | Récupérer le jar (`mvn clean package`, ou une copie de `target/ladybug-0.8.0-SNAPSHOT.jar`) | | |
 | 0.3 | Ouvrir une invite de commandes **dans le dossier du jar** | | |
-| 0.4 | Lancer : `java -jar ladybug-0.6.0-SNAPSHOT.jar` | | |
+| 0.4 | Lancer : `java -jar ladybug-0.8.0-SNAPSHOT.jar` | | |
 
 ## 1. Démarrage (lire la console)
 
 | # | À vérifier | OK ? | Remarque |
 |---|---|---|---|
-| 1.1 | La bannière affiche **« Ladybug by Kykox 0.6.0-SNAPSHOT »** | | |
+| 1.1 | La bannière affiche **« Ladybug by Kykox 0.8.0-SNAPSHOT »** | | |
 | 1.2 | `Sounds preloaded: 16/16` (sinon : quels sons manquent ?) | | |
 | 1.3 | `Gamepad support enabled (… controller(s) connected)` ; **aucune** ligne « Manette Xbox désactivée » | | |
 | 1.4 | `Spring XML configuration: classpath:application-context.xml` et `Launch mode: LOCAL` | | |
@@ -83,4 +83,4 @@
 
 ---
 
-**En cas de problème** : copier la console dans un fichier (`java -jar ladybug-0.6.0-SNAPSHOT.jar > ladybug.log 2>&1`) et le donner à Claude.
+**En cas de problème** : copier la console dans un fichier (`java -jar ladybug-0.8.0-SNAPSHOT.jar > ladybug.log 2>&1`) et le donner à Claude.

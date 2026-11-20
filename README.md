@@ -93,6 +93,8 @@ La branche **master** est en théorie la branche qui contient les versions (rele
 
 La branche **develop** est la branche en développement ; en bref, elle contient la prochaine version en mode draft : le développement en cours, et potentiellement aussi, quelques nouveaux bugs restant à corriger.
 
+Depuis novembre 2026, **develop** est la branche par défaut du dépôt : les PR y arrivent, et les tests de mutation (PIT) y tournent chaque nuit.
+
 ## Builder et exécuter Ladybug
 Le build de ladybug est réalisé par "maven" par la commande "mvn clean package" (ou "mvn clean verify" pour lancer aussi les tests).
 
@@ -102,7 +104,7 @@ En résumé, le build génère un fat jar Spring Boot : un jar qui contient tout
 
 La commande pour lancer le jeu est :
 
-**java -jar target/ladybug-0.6.0-SNAPSHOT.jar**
+**java -jar target/ladybug-0.8.0-SNAPSHOT.jar**
 
 Le jeu s'ouvre sur l'écran où se trouve la souris.
 
@@ -121,8 +123,8 @@ Game properties: /Users/moi/ladybug/ladybug.properties (external, overrides the 
 Ce fichier Spring décrit les fantômes : leur classe, leur couleur, leur comportement (`CALM`, `AGGRESSIVE`, `SMART`), leur vitesse et la liste du groupe (`GroupGhost`). Pour le modifier, récupérez celui du jar, puis lancez le jeu depuis le même dossier :
 
 ```
-unzip -p target/ladybug-0.6.0-SNAPSHOT.jar BOOT-INF/classes/application-context.xml > application-context.xml
-java -jar target/ladybug-0.6.0-SNAPSHOT.jar
+unzip -p target/ladybug-0.8.0-SNAPSHOT.jar BOOT-INF/classes/application-context.xml > application-context.xml
+java -jar target/ladybug-0.8.0-SNAPSHOT.jar
 ```
 
 Exemple : retirer `<ref bean="Clyde" />` de la liste `GroupGhost` pour jouer contre trois fantômes. Pour utiliser un fichier placé ailleurs : `--ladybug.config=file:/chemin/vers/mon-context.xml`.
@@ -151,6 +153,16 @@ Un `application.properties` posé à côté du jeu accepte tous les réglages de
 | `-Dladybug.loop.autostart=false` (avant `-jar`) | pour les tests : la boucle du jeu ne démarre pas seule |
 
 Pour en savoir plus : [doc/patterns/configuration-externalisee.md](doc/patterns/configuration-externalisee.md).
+
+## Publier une version
+Une version se publie depuis GitHub, sans rien installer : onglet **Actions**, workflow **Maven Release**, bouton **Run workflow**.
+
+1. Ramener d'abord `develop` dans `master` (une PR de `develop` vers `master`, fusionnée en merge commit).
+2. Lancer le workflow **sur `master`**, avec la version à publier (ex. `0.8.0`) et la suivante (ex. `0.9.0-SNAPSHOT`).
+3. Laisser coché **« Essai à blanc »** pour un premier passage : tout est simulé, rien n'est poussé. Le décocher ensuite pour publier pour de vrai.
+4. Ramener `master` dans `develop` : le pom y passe à la version suivante.
+
+Le workflow lance les tests, pose le tag `v0.8.0`, puis crée la page de la version dans **Releases**, avec le jar à télécharger. Les joueurs n'ont besoin que de Java 21 : `java -jar ladybug-0.8.0.jar`.
 
 ## Pour développer Ladybug
 Je l'ai développé sous Eclipse ; actuellement, j'utilise la version 2022-03. Je ne pense pas que la version soit très importante en fait.
