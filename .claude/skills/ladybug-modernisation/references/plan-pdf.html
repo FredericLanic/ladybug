@@ -47,7 +47,7 @@
   <tr><td>0</td><td>Outillage et état de référence</td><td>Créer la branche depuis <code>develop</code>, voir le code avant d'y toucher, figer le comportement « avant », travailler avec la documentation à jour</td><td>Graphify, Context7, checklist et captures</td></tr>
   <tr><td>1</td><td>Socle</td><td>Faire compiler et démarrer, aligner les versions</td><td>–</td></tr>
   <tr><td>2</td><td>Lanceur et XML externe <i>(fait le 19/11/2026)</i></td><td>Un démarrage clair, une configuration modifiable sans recompiler</td><td>Spring Boot, configuration externalisée</td></tr>
-  <tr><td>3</td><td>Tests <i>(3.1, 3.2, 3.4 et 3.5.1 avant l'étape 2, 3.3 après)</i></td><td>Un filet de sécurité avant de refactoriser</td><td>JUnit 5</td></tr>
+  <tr><td>3</td><td>Tests <i>(terminée le 20/11/2026)</i></td><td>Un filet de sécurité avant de refactoriser</td><td>JUnit 5</td></tr>
   <tr><td>4</td><td>Découplage du modèle</td><td>Un modèle indépendant de Swing, base du réseau</td><td>Observer, State, Snapshot</td></tr>
   <tr><td>5</td><td><code>PlayerInput</code></td><td>Un contrôleur par personnage, plusieurs fantômes joueurs</td><td>Strategy</td></tr>
   <tr><td>6</td><td>Fantômes configurables</td><td>Un fantôme = assemblage de capacités, perception</td><td>Composition, Strategy</td></tr>
@@ -283,7 +283,7 @@
   <li><b>3.5.2 Golden master — fait le 19/11/2026</b> : <code>GameDriver</code> (jeu sans écran), <code>GameJournal</code>, preuve du déterminisme, trois références validées par Frédéric (solo, 2 joueurs, bot jusqu'au niveau 2), <code>AimingBot</code> et règles vérifiées à chaque battement ; fiche <code>doc/patterns/golden-master.md</code> ;</li>
   <li><b>3.5.3 Touches, manette et son — fait le 19/11/2026</b> : sons dans le journal, durées lues dans les fichiers, touche P pour la pause, aide F1 complète, un test par touche ; manette par composition (D19) avec Jamepad 2.30 : <b>la manette Xbox marche sur Mac Apple Silicon</b>, Linux et Windows ; checklist d'essai sous Windows ;</li>
   <li><b>3.5.4 CI sur Ubuntu, Windows et macOS — fait le 19/11/2026</b> : vert sur les trois, golden master identique partout ;</li>
-  <li>3.5.5 PIT dans Maven, seuil de 60 % dans la CI.</li>
+  <li><b>3.5.5 PIT — fait le 20/11/2026</b> : score de mutation 68 % (seuil 60 %), PIT chaque nuit sur <code>develop</code> et à la demande ; <code>develop</code> devient la branche par défaut.</li>
 </ul>
 <p class="sub"><b class="id">3.3</b> Test de chargement du contexte Spring en mode headless : XML valide et fantômes créés. <b>Après l'étape 2</b>, qui sépare la construction du contexte de l'affichage de la fenêtre.</p>
 
