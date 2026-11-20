@@ -326,7 +326,12 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		draw(g);
+		// avant le premier battement, le modèle n'est pas encore connu : fond noir seul.
+		// Une exception ici interromprait tout le dessin de la fenêtre, et les zones
+		// qui ne se redessinent jamais (haut, droite) resteraient blanches (4.1)
+		if (gameModelForViews != null) {
+			draw(g);
+		}
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public class StatusGameView extends JPanel {
 		return Math.max(1, Math.min(bandHeight - 2 * delta, MAX_IMAGE_SIZE));
 	}
 
-	private void display(Graphics g) {
+	void display(Graphics g) {
 		var delta = 2;
 		var imageBorderSize = imageSize(getHeight(), delta);
 		// number ladybug lifes
@@ -93,6 +93,11 @@ public class StatusGameView extends JPanel {
 	}
 
 	private void displayMessageToRight(Graphics g, String message) {
+		// rien à afficher avant le premier battement du jeu : depuis l'étape 4.1, la
+		// fenêtre est dessinée une première fois avant que la boucle ne démarre
+		if (message == null) {
+			return;
+		}
 		g.setFont(smallFont);
 		g.setColor(Color.WHITE);
 		var metr = getFontMetrics(smallFont);

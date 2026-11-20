@@ -35,13 +35,13 @@ public class PageLeftView extends JPanel implements ApplicationListener<EventGam
 
 	@Override
 	public void paintComponent(Graphics g) {
-		if (gameModelForViews != null) {
-			setFocusable(false);
-			setBackground(Color.BLACK);
-			super.paintComponent(g);
-			if (gameModelForViews.isDebugMode()) {
-				draw(g);
-			}
+		// le fond noir est toujours peint, même avant le premier battement : sinon la
+		// zone restait blanche tant que rien ne la redessinait (4.1)
+		setFocusable(false);
+		setBackground(Color.BLACK);
+		super.paintComponent(g);
+		if (gameModelForViews != null && gameModelForViews.isDebugMode()) {
+			draw(g);
 		}
 	}
 

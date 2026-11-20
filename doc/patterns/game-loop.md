@@ -1,6 +1,6 @@
 # Game Loop / Update Method : une seule horloge fait avancer tout le jeu
 
-> Source : Robert Nystrom, *Game Programming Patterns*, chapitres « Game Loop » et « Update Method ». Introduit dans Ladybug à l'étape 3.5.1 (novembre 2026).
+> Source : Robert Nystrom, *Game Programming Patterns*, chapitres « Game Loop » et « Update Method ». Introduit dans Ladybug à l'étape 3.5.1 (novembre 2026) ; la boucle est sortie du modèle à l'étape 4.1.
 
 **🟢 L'idée en une image (junior)**
 
@@ -24,7 +24,7 @@ scoreTimer.launch(1000);
 
 Conséquence vue au robot le 19/11/2026 (dette D22) : une touche du clavier et une minuterie changeaient le statut **à la même milliseconde**, et l'ordre `GAME_START` / `LEVEL_START` dépendait du hasard. Impossible, aussi, de rejouer une partie à l'identique dans un test.
 
-*Après* : un seul battement, [`GameModel.beat()`](../../src/main/java/com/kycox/game/engine/model/GameModel.java#L161), qui fait avancer chacun dans un ordre fixe (c'est l'**Update Method** : chaque objet a sa méthode `tick()`).
+*Après* : un seul battement, [`GameModel.beat()`](../../src/main/java/com/kycox/game/engine/model/GameModel.java#L166), qui fait avancer chacun dans un ordre fixe (c'est l'**Update Method** : chaque objet a sa méthode `tick()`).
 
 ```java
 public void beat() {
@@ -57,7 +57,7 @@ public TimerStatus getStatus() {
 
 ```mermaid
 flowchart LR
-    T["Timer Swing<br/>(toutes les 20 ms)"] --> P["BeatPacer<br/>combien de battements ?"]
+    T["SwingGameLoop<br/>timer Swing toutes les 20 ms"] --> P["BeatPacer<br/>combien de battements ?"]
     P -->|0, 1 ou 2| B["GameModel.beat()"]
     Test["Un test JUnit"] -->|"beat() × N"| B
     B --> S["TickScheduler.tick()"]
@@ -67,10 +67,26 @@ flowchart LR
     B --> V["vues et sons"]
 ```
 
+**Étape 4.1 : la boucle sort du modèle.** Jusque-là, le timer Swing et le `BeatPacer` vivaient **dans** `GameModel`. Le modèle dépendait donc de Swing, et les tests devaient l'empêcher de démarrer avec une propriété spéciale (`-Dladybug.loop.autostart=false`). Désormais, le modèle n'expose que `beat()` ; **qui** le fait battre est décidé dehors :
+
+```java
+@GuiComponent                       // n'existe qu'avec l'interface : jamais dans les tests
+public class SwingGameLoop {
+    private final BeatPacer beatPacer = new BeatPacer(PACE, MAX_CATCH_UP);
+    private final Timer timer = new Timer(PACE / 2, event -> wakeUp(System.nanoTime()));
+
+    void wakeUp(long nowNanos) {
+        for (var i = 0; i < beatPacer.beatsDue(nowNanos); i++) { … gameModel.beat(); }
+    }
+}
+```
+
+Elle démarre dans `MainLadybug.launchTheGame()`, une fois la fenêtre affichée. Bonus : avant, le timer partait pendant la construction du contexte Spring, et ses premiers battements créaient des beans depuis le fil Swing (avertissement « Obtaining singleton bean … while other thread holds singleton lock » dans les logs) ; c'est fini. Demain, un hôte réseau sans fenêtre aura sa propre boucle, sans toucher au modèle.
+
 **Le piège qu'on a rencontré : le pas fixe.** Le timer Swing ne se réveille pas exactement toutes les 40 ms ; sur le Mac de Frédéric, c'était plutôt 43 ms. Comptées en battements, les attentes duraient donc 7 % de trop, et la musique du début de niveau (4,2 s) finissait avant la fin de l'attente, puis repartait. Frédéric l'a entendue deux fois. La correction est le cœur du pattern Game Loop : la boucle **rattrape son retard**. [`BeatPacer`](../../src/main/java/com/kycox/game/tools/timer/BeatPacer.java#L39) regarde l'heure réelle et dit combien de battements jouer (en général 0 ou 1, parfois 2), pour que le jeu avance de 25 battements par seconde, quelle que soit la machine.
 
 Où le trouver dans le code :
-- [`GameModel.beat()`](../../src/main/java/com/kycox/game/engine/model/GameModel.java#L161) et [`createProgramTimer()`](../../src/main/java/com/kycox/game/engine/model/GameModel.java#L180)
+- [`GameModel.beat()`](../../src/main/java/com/kycox/game/engine/model/GameModel.java#L166) et [`SwingGameLoop`](../../src/main/java/com/kycox/game/engine/loop/SwingGameLoop.java) (étape 4.1)
 - [`BeatPacer.beatsDue()`](../../src/main/java/com/kycox/game/tools/timer/BeatPacer.java#L39)
 - [`TickScheduler`](../../src/main/java/com/kycox/game/tools/timer/TickScheduler.java#L40) et [`TickCountdown`](../../src/main/java/com/kycox/game/tools/timer/TickCountdown.java)
 - [`SuperPowerTimer`](../../src/main/java/com/kycox/game/tools/timer/SuperPowerTimer.java#L62)
