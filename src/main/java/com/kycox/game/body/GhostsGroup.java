@@ -27,6 +27,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -100,15 +101,27 @@ public class GhostsGroup {
 	}
 
 	/**
-	 * Le fantôme de cette couleur est joué par le deuxième joueur (étape 4.2). Sa
-	 * boîte aux lettres est vidée : il ne garde aucun ordre d'une ancienne partie
-	 * (étape 5.2).
+	 * Ce fantôme précis est joué par un humain (étape 5.4 : un joueur, un fantôme,
+	 * et non plus tous les fantômes d'une couleur). Sa boîte aux lettres est
+	 * vidée : il ne garde aucun ordre d'une ancienne partie (étape 5.2).
 	 */
-	public void setHumanPlayer(GhostColor color) {
-		ghosts.stream().filter(ghost -> ghost.getColor() == color).forEach(ghost -> {
-			ghost.setComputed(false);
-			ghost.getPlayerInput().reset();
-		});
+	public void setHumanPlayer(Ghost ghost) {
+		ghost.setComputed(false);
+		ghost.getPlayerInput().reset();
+	}
+
+	/**
+	 * Le fantôme donné au deuxième joueur à partir de la couleur tirée au hasard :
+	 * le premier de cette couleur (même résultat qu'avant 5.4 pour une même
+	 * graine) ; s'il n'y en a pas (XML sans cette couleur), un autre fantôme, au
+	 * lieu d'aucun.
+	 */
+	public Optional<Ghost> chooseHumanGhost(GhostColor drawnColor) {
+		if (ghosts.isEmpty()) {
+			return Optional.empty();
+		}
+		return ghosts.stream().filter(ghost -> ghost.getColor() == drawnColor).findFirst()
+		        .or(() -> Optional.of(ghosts.get(drawnColor.ordinal() % ghosts.size())));
 	}
 
 	public void setActions(Ladybug ladybug, Maze maze) {

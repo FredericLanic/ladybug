@@ -44,7 +44,7 @@ class PlayerInputsTest {
 	@Test
 	@DisplayName("en 2 joueurs, la boîte est celle du fantôme choisi")
 	void theHumanGhostInputIsTheChosenGhostOne() {
-		ghosts.setHumanPlayer(GhostColor.PINK);
+		ghosts.setHumanPlayer(pinky);
 		assertThat(inputs.humanGhost()).containsSame(pinky.getPlayerInput());
 	}
 
@@ -52,7 +52,7 @@ class PlayerInputsTest {
 	@DisplayName("un fantôme qui devient humain ne garde aucun ordre d'une ancienne partie")
 	void aNewHumanGhostStartsWithoutOrders() {
 		pinky.getPlayerInput().request(GameMainConstants.POINT_LEFT);
-		ghosts.setHumanPlayer(GhostColor.PINK);
+		ghosts.setHumanPlayer(pinky);
 		assertThat(pinky.getPlayerInput().hasRequest()).isFalse();
 	}
 }

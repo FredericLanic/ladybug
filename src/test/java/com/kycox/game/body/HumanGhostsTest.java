@@ -40,8 +40,8 @@ class HumanGhostsTest {
 	@Test
 	@DisplayName("deux fantômes humains, chacun avec sa boîte aux lettres")
 	void twoHumanGhostsHaveTheirOwnInputs() {
-		ghosts.setHumanPlayer(GhostColor.PINK);
-		ghosts.setHumanPlayer(GhostColor.CYAN);
+		ghosts.setHumanPlayer(pinky);
+		ghosts.setHumanPlayer(inky);
 		var inputs = new PlayerInputs(mock(Ladybug.class), ghosts);
 
 		assertThat(ghosts.getHumanGhosts()).containsExactly(pinky, inky);
@@ -53,8 +53,8 @@ class HumanGhostsTest {
 	@Test
 	@DisplayName("un fantôme humain éliminé est rendu à l'ordinateur, la partie continue")
 	void anEliminatedHumanGhostGoesBackToTheComputer() {
-		ghosts.setHumanPlayer(GhostColor.PINK);
-		ghosts.setHumanPlayer(GhostColor.CYAN);
+		ghosts.setHumanPlayer(pinky);
+		ghosts.setHumanPlayer(inky);
 		pinky.setLeftLifes(0);
 
 		ghosts.releaseEliminatedHumanGhosts();
@@ -67,7 +67,7 @@ class HumanGhostsTest {
 	@Test
 	@DisplayName("le dernier fantôme humain éliminé termine la partie, sans être rendu")
 	void theLastHumanGhostEndsTheGame() {
-		ghosts.setHumanPlayer(GhostColor.PINK);
+		ghosts.setHumanPlayer(pinky);
 		pinky.setLeftLifes(0);
 
 		ghosts.releaseEliminatedHumanGhosts();
@@ -79,14 +79,33 @@ class HumanGhostsTest {
 	@Test
 	@DisplayName("deux fantômes humains éliminés au même battement : la partie s'arrête")
 	void twoEliminatedAtOnceEndTheGame() {
-		ghosts.setHumanPlayer(GhostColor.PINK);
-		ghosts.setHumanPlayer(GhostColor.CYAN);
+		ghosts.setHumanPlayer(pinky);
+		ghosts.setHumanPlayer(inky);
 		pinky.setLeftLifes(0);
 		inky.setLeftLifes(0);
 
 		ghosts.releaseEliminatedHumanGhosts();
 
 		assertThat(ghosts.allHumanGhostsEliminated()).isTrue();
+	}
+
+	@Test
+	@DisplayName("le tirage d'une couleur désigne le premier fantôme de cette couleur, et lui seul (5.4)")
+	void theDrawnColorDesignatesOneGhost() {
+		var secondRed = new Blinky();
+		secondRed.setColor(GhostColor.RED);
+		ghosts.setGhosts(List.of(blinky, pinky, inky, secondRed));
+		ghosts.setAllComputed();
+
+		ghosts.chooseHumanGhost(GhostColor.RED).ifPresent(ghosts::setHumanPlayer);
+
+		assertThat(ghosts.getHumanGhosts()).containsExactly(blinky);
+	}
+
+	@Test
+	@DisplayName("une couleur absente du XML donne quand même un fantôme humain (avant : aucun)")
+	void aMissingColorStillGivesAHumanGhost() {
+		assertThat(ghosts.chooseHumanGhost(GhostColor.ORANGE)).isPresent();
 	}
 
 	@Test

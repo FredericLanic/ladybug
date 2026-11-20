@@ -253,8 +253,9 @@ public class GameModel implements GameModelForController {
 		groupGhosts.setAllComputed();
 		if (isMuliPlayers) {
 			// même tirage qu'avant 4.2 (une couleur parmi quatre, dans le même ordre) :
-			// les parties rejouées avec une même graine restent identiques
-			groupGhosts.setHumanPlayer(Utils.randomEnum(GhostColor.class));
+			// les parties rejouées avec une même graine restent identiques ; depuis 5.4,
+			// il désigne un seul fantôme précis
+			groupGhosts.chooseHumanGhost(Utils.randomEnum(GhostColor.class)).ifPresent(groupGhosts::setHumanPlayer);
 		}
 		gameMessaging.addPlayerMode(isMuliPlayers);
 	}
