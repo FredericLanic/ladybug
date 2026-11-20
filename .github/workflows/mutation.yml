@@ -1,0 +1,46 @@
+# Tests de mutation (étape 3.5.5) : PIT glisse de petites erreurs dans le code et
+# vérifie que les tests les détectent ; échec sous 60 % (seuil dans le pom).
+#
+# Trop long pour chaque pull request (~36 min sur GitHub) : il tourne chaque nuit
+# sur develop, et à la demande avec le bouton « Run workflow » de l'onglet Actions
+# (décision de Frédéric, 20/11/2026). Les pull requests gardent leurs tests rapides
+# (build.yml : tests, golden master, bot, sur trois systèmes).
+#
+# Réglages pour GitHub, mesurés le 20/11/2026 : 2 processus et délai x2. Avec 4
+# processus, les tests se gênent sur la machine (4 cœurs), dépassent leur délai,
+# et PIT les compte à tort comme des mutants détectés (score gonflé, 60 min).
+name: Mutation (PIT)
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # chaque nuit à 2 h UTC (3 h ou 4 h à Paris)
+  workflow_dispatch:       # bouton manuel, sur la branche de son choix
+
+jobs:
+  mutation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        # la nuit : develop ; à la main : la branche choisie
+        ref: ${{ github.event_name == 'schedule' && 'develop' || github.ref }}
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v6
+      with:
+        distribution: temurin
+        java-version: '21'
+        cache: maven
+        cache-dependency-path: '**/pom.xml'
+
+    - name: Mutation testing with PIT
+      run: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage -Dpit.threads=2 -Dpit.timeoutFactor=2
+
+    - name: Keep the PIT report
+      if: always()
+      uses: actions/upload-artifact@v7
+      with:
+        name: pit-report
+        path: target/pit-reports/

@@ -61,7 +61,7 @@ Points forts existants à reconnaître, sans les dénigrer :
 2. Lanceur et XML externe
 3. Tests. Le point 3.5, « tests autonomes » (golden master, scénarios, bot qui vise, son, PIT ≥ 60 %), vient du doc de Frédéric https://claude.ai/artifact/4mXUqpsGiwLczZzegYUyUP (C23 à C26)
 
-**Ordre de réalisation (décidé le 18/11/2026, complété le 19/11/2026)** : 1 → 3.1, 3.2 et 3.4 (tests unitaires, sondes de log ; faits) → 3.5.1 (horloge unique en battements) → 2 (avec Spring Boot) → 3.3 (fait avec 2.7) ; tout cela est fait au 19/11/2026 (test du contexte Spring, possible seulement une fois le lanceur en place, car le `component-scan` crée aujourd'hui les vues Swing). La numérotation est conservée.
+**Ordre de réalisation (décidé le 18/11/2026, complété le 19/11/2026)** : 1 → 3.1, 3.2 et 3.4 (tests unitaires, sondes de log ; faits) → 3.5.1 (horloge unique en battements) → 2 (avec Spring Boot) → 3.3 (fait avec 2.7) → 3.5.2 à 3.5.5 ; **l'étape 3 est terminée le 20/11/2026**. Prochaine : étape 4. `develop` est la branche par défaut du dépôt depuis le 20/11 (PIT nocturne : `mutation.yml`) (test du contexte Spring, possible seulement une fois le lanceur en place, car le `component-scan` crée aujourd'hui les vues Swing). La numérotation est conservée.
 
 4. Découplage du modèle
 5. `PlayerInput`

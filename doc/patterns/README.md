@@ -13,3 +13,4 @@ Chaque fiche se termine par un petit exercice facultatif.
 | [Game Loop / Update Method](game-loop.md) | Une seule horloge, la boucle du jeu, fait avancer tout ce qui dépend du temps, battement par battement. | 3 (3.5.1) |
 | [Configuration externalisée](configuration-externalisee.md) | Régler le jeu (fantômes, apparence) avec des fichiers posés à côté, sans recompiler ; profil « gui » pour charger le jeu sans écran. | 2 |
 | [Golden master](golden-master.md) | Figer le journal d'une partie de référence pour voir tout changement de comportement, au battement près. | 3 (3.5.2) |
+| [Test de mutation](test-de-mutation.md) | Glisser de petites erreurs dans le code pour vérifier que les tests les détectent : tester les tests. | 3 (3.5.5) |

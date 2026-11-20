@@ -1,15 +1,22 @@
 package com.kycox.game.engine.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.kycox.game.body.ghost.Blinky;
+import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.game.GameMainConstants;
+import com.kycox.game.constant.xbox.XboxOneConstants;
+import com.kycox.game.engine.controller.xboxone.Pad;
 import com.kycox.game.engine.controller.xboxone.PadState;
 import com.kycox.game.engine.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.engine.controller.xboxone.XboxRequest;
@@ -17,85 +24,167 @@ import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
 
 /**
- * Boutons de la manette → actions sur le jeu (étape 3.5.3d), avec une fausse
- * manette ({@link PadState}) : aucune manette n'a besoin d'être branchée.
+ * Boutons de la manette → actions sur le jeu (étapes 3.5.3d et 3.5.5), avec de
+ * fausses manettes : aucune manette n'a besoin d'être branchée.
  */
 class XboxOneControllerTest {
 	private final XboxRequest ladybugPad = new XboxRequest();
 	private final XboxRequest ghostPad = new XboxRequest();
 	private final GameModelForController model = mock(GameModelForController.class);
+	private final XBoxOneControllerManager padManager = mock(XBoxOneControllerManager.class);
+	private final GameMessaging messaging = mock(GameMessaging.class);
+	private final GameProperties properties = mock(GameProperties.class);
+	private final Ladybug ladybug = mock(Ladybug.class);
 	private XboxOneController controller;
 
 	@BeforeEach
 	void setUp() {
-		controller = new XboxOneController(mock(XBoxOneControllerManager.class), mock(GameMessaging.class),
-		        mock(GameProperties.class), ladybugPad, ghostPad);
+		controller = new XboxOneController(padManager, messaging, properties, ladybugPad, ghostPad);
+		when(model.getLadybug()).thenReturn(ladybug);
+		when(model.getUnComputedGhost()).thenReturn(Optional.empty());
 	}
 
-	/** Une manette branchée, avec seulement les boutons ou le stick indiqués. */
-	private static PadState pad(boolean a, boolean b, boolean x, boolean y, boolean start, float leftX, float leftY) {
-		return new PadState(true, leftX, leftY, 0, 0, a, b, x, y, false, false, false, false, false, start, false,
-		        false);
-	}
-
-	private void press(PadState ladybug) {
-		ladybugPad.readCurrentState(ladybug);
-		ghostPad.readCurrentState(PadState.disconnected());
+	private void press(PadState ladybugState, PadState ghostState) {
+		ladybugPad.readCurrentState(ladybugState);
+		ghostPad.readCurrentState(ghostState);
 		controller.handleRequests(model);
 	}
 
+	private void press(Pad ladybugState) {
+		press(ladybugState.build(), PadState.disconnected());
+	}
+
+	// --- écran de présentation
+
 	@Test
-	void aStartsTheGameOnThePresentationScreen() {
+	void presentationButtons() {
 		when(model.isProgramPresentation()).thenReturn(true);
-		press(pad(true, false, false, false, false, 0, 0));
+		press(Pad.connected().a().x().back());
 		verify(model).startGame();
+		verify(model).setMultiPlayers(false);
+		verify(model).setShowHelpForXboxes(true);
 	}
 
 	@Test
-	void yChoosesTwoPlayersOnThePresentationScreen() {
+	void presentationYChoosesTwoPlayersAndBQuits() {
 		when(model.isProgramPresentation()).thenReturn(true);
-		press(pad(false, false, false, true, false, 0, 0));
+		press(Pad.connected().y().b());
 		verify(model).setMultiPlayers(true);
+		verify(model).programForceExit();
+		verify(model).setShowHelpForXboxes(false);
 	}
 
+	// --- question « reprendre le niveau ? »
+
 	@Test
-	void leftStickMovesLadybugInGame() {
+	void keepPreviousLevelQuestion() {
+		when(model.isProgramAskKeepPreviousGameLevel()).thenReturn(true);
+		press(Pad.connected().x());
+		verify(model).initializeLevelNumAndStartGame(true);
+
+		press(Pad.connected().y());
+		verify(model).initializeLevelNumAndStartGame(false);
+	}
+
+	// --- en partie
+
+	@Test
+	void leftStickMovesLadybugInEveryDirection() {
 		when(model.isInGame()).thenReturn(true);
-		when(model.getLadybug()).thenReturn(mock(com.kycox.game.body.ladybug.Ladybug.class));
-		when(model.getUnComputedGhost()).thenReturn(java.util.Optional.empty());
-		press(pad(false, false, false, false, false, -1f, 0));
+		press(Pad.connected().leftStick(-1f, 0));
 		verify(model).setLadybugRequest(GameMainConstants.POINT_LEFT);
+		press(Pad.connected().leftStick(1f, 0));
+		verify(model).setLadybugRequest(GameMainConstants.POINT_RIGHT);
+		press(Pad.connected().leftStick(0, 1f)); // convention de PadState : positif = haut
+		verify(model).setLadybugRequest(GameMainConstants.POINT_UP);
+		press(Pad.connected().leftStick(0, -1f));
+		verify(model).setLadybugRequest(GameMainConstants.POINT_DOWN);
 	}
 
 	@Test
-	void stickPushedUpMovesLadybugUp() {
-		// convention de PadState : positif = vers le haut (Jamepad 2.x donne l'inverse)
+	void secondPadMovesTheHumanGhost() {
 		when(model.isInGame()).thenReturn(true);
-		when(model.getLadybug()).thenReturn(mock(com.kycox.game.body.ladybug.Ladybug.class));
-		when(model.getUnComputedGhost()).thenReturn(java.util.Optional.empty());
-		press(pad(false, false, false, false, false, 0, 1f));
-		verify(model).setLadybugRequest(GameMainConstants.POINT_UP);
+		press(PadState.disconnected(), Pad.connected().rightStick(-1f, 0).build());
+		verify(model).setGhostRequest(GameMainConstants.POINT_LEFT);
+		press(PadState.disconnected(), Pad.connected().leftStick(1f, 0).build());
+		verify(model).setGhostRequest(GameMainConstants.POINT_RIGHT);
+		press(PadState.disconnected(), Pad.connected().leftStick(0, 1f).build());
+		verify(model).setGhostRequest(GameMainConstants.POINT_UP);
+		press(PadState.disconnected(), Pad.connected().leftStick(0, -1f).build());
+		verify(model).setGhostRequest(GameMainConstants.POINT_DOWN);
 	}
 
 	@Test
 	void startPausesAndXAsksToEndTheGame() {
 		when(model.isInGame()).thenReturn(true);
-		when(model.getLadybug()).thenReturn(mock(com.kycox.game.body.ladybug.Ladybug.class));
-		when(model.getUnComputedGhost()).thenReturn(java.util.Optional.empty());
-		press(pad(false, false, true, false, true, 0, 0));
+		press(Pad.connected().x().start());
 		verify(model).setGameInPause();
 		verify(model).askForceEndGame();
 	}
 
 	@Test
+	void endGameQuestion() {
+		when(model.isGameAskForceEndGame()).thenReturn(true);
+		press(Pad.connected().b());
+		verify(model).setInGame();
+		press(Pad.connected().y());
+		verify(model).forceStopGame();
+	}
+
+	@Test
+	void vibrationsOnMegaPointAndTeleport() {
+		when(model.isInGame()).thenReturn(true);
+		when(ladybug.isEatenAMegaPoint()).thenReturn(true);
+		when(ladybug.isToBeTeleported()).thenReturn(true);
+		var ghost = mock(Blinky.class);
+		when(ghost.isToBeTeleported()).thenReturn(true);
+		when(ghost.isDying()).thenReturn(true);
+		when(model.getUnComputedGhost()).thenReturn(Optional.of(ghost));
+
+		press(Pad.connected());
+
+		verify(padManager).vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 100);
+		verify(padManager).vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 50);
+		verify(padManager).vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 50);
+		verify(padManager).vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 100);
+	}
+
+	// --- partout
+
+	@Test
+	void dpadChangesSoundAndLooks() {
+		press(Pad.connected().dpadUp().dpadDown().dpadLeft().dpadRight().rightStickClick());
+		verify(model).startStopSoundActive();
+		verify(properties).changeLadybugSkin();
+		verify(properties).changeGhostHeadBand();
+		verify(properties).changeGhostHat();
+		verify(messaging).addIamLadybug();
+	}
+
+	@Test
+	void ghostPadRightStickClickSaysIAmTheGhost() {
+		press(PadState.disconnected(), Pad.connected().rightStickClick().build());
+		verify(messaging).addIamGhost();
+	}
+
+	@Test
+	void connectionMessages() {
+		press(Pad.connected().build(), Pad.connected().build());
+		verify(messaging).addXboxLadybugConnected();
+		verify(messaging).addXboxGhostConnected();
+		verify(model).setAtLeastOneXboxOneConnected(true);
+
+		press(PadState.disconnected(), PadState.disconnected());
+		verify(messaging).addXboxLadybugDisconnected();
+		verify(messaging).addXboxGhostDisconnected();
+	}
+
+	@Test
 	void noPadMeansNoAction() {
 		when(model.isInGame()).thenReturn(true);
-		when(model.getLadybug()).thenReturn(mock(com.kycox.game.body.ladybug.Ladybug.class));
-		when(model.getUnComputedGhost()).thenReturn(java.util.Optional.empty());
-		ladybugPad.readCurrentState(PadState.disconnected());
-		ghostPad.readCurrentState(PadState.disconnected());
-		controller.handleRequests(model);
+		press(PadState.disconnected(), PadState.disconnected());
 		verify(model).setAtLeastOneXboxOneConnected(false);
-		verify(model, never()).setLadybugRequest(org.mockito.ArgumentMatchers.any());
+		verify(model, never()).setLadybugRequest(any());
+		verify(model, never()).setGhostRequest(any());
 	}
 }
