@@ -21,7 +21,8 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.level.LevelImages492;
 import com.kycox.game.constant.fruits.Fruits;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.constant.level.LevelRendering;
+import com.kycox.game.snapshot.MazeSnapshot;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.engine.view.map.rendering.DisplayRendering;
 import lombok.Setter;
@@ -33,7 +34,7 @@ import java.awt.*;
 public class ScreenBlockView {
 
 	@Setter
-	private Color colorMaze = GameMainConstants.BLUE_LADYBUG;
+	private Color colorMaze = MazeColors.BLUE_LADYBUG;
 
 	private final Fruits fruits;
 
@@ -46,46 +47,46 @@ public class ScreenBlockView {
 		this.displayRendering = displayRendering;
 	}
 
-	public void display(Graphics2D g2d, ScreenData screenData, int x, int y) {
+	public void display(Graphics2D g2d, MazeSnapshot maze, LevelRendering levelRendering, int x, int y) {
 		g2d.setColor(colorMaze);
-		displayRendering.display(g2d, screenData, x, y);
-		displayTeleportation(g2d, screenData, x, y);
-		displayPoints(g2d, screenData, x, y);
-		displayFruit(g2d, screenData, x, y);
+		displayRendering.display(g2d, maze, levelRendering, x, y);
+		displayTeleportation(g2d, maze, x, y);
+		displayPoints(g2d, maze, x, y);
+		displayFruit(g2d, maze, x, y);
 	}
 
-	private void displayPoints(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getScreenBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
+	private void displayPoints(Graphics2D g2d, MazeSnapshot maze, int x, int y) {
+		var screenBlock = maze.cellAt(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
 
 		// affichage du point de survie des fantômes
-		if (screenBlock.isGhostReviver()) {
+		if (screenBlock.ghostReviver()) {
 			g2d.setColor(revivorPointColor);
 			g2d.fillOval(x + GameMainConstants.BLOCK_SIZE / 2 - 7, y + GameMainConstants.BLOCK_SIZE / 2 - 7 , 14, 14);
 		}
 
 		// affichage du mégapoint
-		if (screenBlock.isPoint() && screenBlock.isMegaPoint()) {
+		if (screenBlock.point() && screenBlock.megaPoint()) {
 			Image coin = LevelImages492.MEGA_GOLD.getImage();
 			g2d.drawImage(coin, x + (GameMainConstants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (GameMainConstants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
-		} else if (screenBlock.isPoint()) {
+		} else if (screenBlock.point()) {
 			Image coin = LevelImages492.GOLD.getImage();
 			g2d.drawImage(coin, x + (GameMainConstants.BLOCK_SIZE - coin.getWidth(null) ) / 2, y + (GameMainConstants.BLOCK_SIZE - coin.getHeight(null) ) / 2, null);
 		}
 	}
 
-	private void displayTeleportation(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
-		if (screenBlock.isTeleportation()) {
+	private void displayTeleportation(Graphics2D g2d, MazeSnapshot maze, int x, int y) {
+		var screenBlock = maze.cellAt(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
+		if (screenBlock.teleportation()) {
 			g2d.setColor(teleportationPointColor);
 			g2d.fillOval(x + GameMainConstants.BLOCK_SIZE / 2 - 4, y + GameMainConstants.BLOCK_SIZE / 2 - 4, 10, 10);
 			g2d.drawImage(GameImages.TELEPORTATION.getImage(), x, y, null);
 		}
 	}
 
-	private void displayFruit(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
-		if (screenBlock.getIdRefFruit() != GameMainConstants.NOFRUITID) {
-			g2d.drawImage(fruits.getFruitImgById(screenBlock.getIdRefFruit()), x, y, null);
+	private void displayFruit(Graphics2D g2d, MazeSnapshot maze, int x, int y) {
+		var screenBlock = maze.cellAt(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
+		if (screenBlock.idRefFruit() != GameMainConstants.NOFRUITID) {
+			g2d.drawImage(fruits.getFruitImgById(screenBlock.idRefFruit()), x, y, null);
 		}
 	}
 }

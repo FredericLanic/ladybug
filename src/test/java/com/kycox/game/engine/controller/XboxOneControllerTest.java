@@ -1,17 +1,18 @@
 package com.kycox.game.engine.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.kycox.game.body.ghost.Blinky;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.game.GameMainConstants;
@@ -21,7 +22,10 @@ import com.kycox.game.engine.controller.xboxone.PadState;
 import com.kycox.game.engine.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
+import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.snapshot.GameSnapshot;
+import com.kycox.game.testutil.Snapshots;
 
 /**
  * Boutons de la manette → actions sur le jeu (étapes 3.5.3d et 3.5.5), avec de
@@ -34,12 +38,15 @@ class XboxOneControllerTest {
 	private final XBoxOneControllerManager padManager = mock(XBoxOneControllerManager.class);
 	private final GameMessaging messaging = mock(GameMessaging.class);
 	private final GameProperties properties = mock(GameProperties.class);
+	private final LocalPreferences preferences = new LocalPreferences();
 	private final Ladybug ladybug = mock(Ladybug.class);
 	private XboxOneController controller;
+	/** La photo de la partie que reçoit la manette (4.6) : rien de spécial par défaut. */
+	private GameSnapshot snapshot = Snapshots.inGame(Snapshots.ladybug(false, false), List.of());
 
 	@BeforeEach
 	void setUp() {
-		controller = new XboxOneController(padManager, messaging, properties, ladybugPad, ghostPad);
+		controller = new XboxOneController(padManager, messaging, properties, preferences, ladybugPad, ghostPad);
 		when(model.getLadybug()).thenReturn(ladybug);
 		when(model.getUnComputedGhost()).thenReturn(Optional.empty());
 	}
@@ -47,7 +54,7 @@ class XboxOneControllerTest {
 	private void press(PadState ladybugState, PadState ghostState) {
 		ladybugPad.readCurrentState(ladybugState);
 		ghostPad.readCurrentState(ghostState);
-		controller.handleRequests(model);
+		controller.handleRequests(model, snapshot);
 	}
 
 	private void press(Pad ladybugState) {
@@ -62,7 +69,7 @@ class XboxOneControllerTest {
 		press(Pad.connected().a().x().back());
 		verify(model).startGame();
 		verify(model).setMultiPlayers(false);
-		verify(model).setShowHelpForXboxes(true);
+		assertThat(preferences.isShowHelpForXboxes()).isTrue();
 	}
 
 	@Test
@@ -71,7 +78,7 @@ class XboxOneControllerTest {
 		press(Pad.connected().y().b());
 		verify(model).setMultiPlayers(true);
 		verify(model).programForceExit();
-		verify(model).setShowHelpForXboxes(false);
+		assertThat(preferences.isShowHelpForXboxes()).isFalse();
 	}
 
 	// --- question « reprendre le niveau ? »
@@ -134,12 +141,7 @@ class XboxOneControllerTest {
 	@Test
 	void vibrationsOnMegaPointAndTeleport() {
 		when(model.isInGame()).thenReturn(true);
-		when(ladybug.isEatenAMegaPoint()).thenReturn(true);
-		when(ladybug.isToBeTeleported()).thenReturn(true);
-		var ghost = mock(Blinky.class);
-		when(ghost.isToBeTeleported()).thenReturn(true);
-		when(ghost.isDying()).thenReturn(true);
-		when(model.getUnComputedGhost()).thenReturn(Optional.of(ghost));
+		snapshot = Snapshots.inGame(Snapshots.ladybug(true, true), List.of(Snapshots.humanGhost(true, true)));
 
 		press(Pad.connected());
 
@@ -154,7 +156,8 @@ class XboxOneControllerTest {
 	@Test
 	void dpadChangesSoundAndLooks() {
 		press(Pad.connected().dpadUp().dpadDown().dpadLeft().dpadRight().rightStickClick());
-		verify(model).startStopSoundActive();
+		assertThat(preferences.isSoundActive()).isFalse();
+		verify(messaging).addSoundMode(false);
 		verify(properties).changeLadybugSkin();
 		verify(properties).changeGhostHeadBand();
 		verify(properties).changeGhostHat();
@@ -172,7 +175,7 @@ class XboxOneControllerTest {
 		press(Pad.connected().build(), Pad.connected().build());
 		verify(messaging).addXboxLadybugConnected();
 		verify(messaging).addXboxGhostConnected();
-		verify(model).setAtLeastOneXboxOneConnected(true);
+		assertThat(preferences.isAtLeastOneXboxOneConnected()).isTrue();
 
 		press(PadState.disconnected(), PadState.disconnected());
 		verify(messaging).addXboxLadybugDisconnected();
@@ -183,7 +186,7 @@ class XboxOneControllerTest {
 	void noPadMeansNoAction() {
 		when(model.isInGame()).thenReturn(true);
 		press(PadState.disconnected(), PadState.disconnected());
-		verify(model).setAtLeastOneXboxOneConnected(false);
+		assertThat(preferences.isAtLeastOneXboxOneConnected()).isFalse();
 		verify(model, never()).setLadybugRequest(any());
 		verify(model, never()).setGhostRequest(any());
 	}

@@ -17,7 +17,6 @@
 package com.kycox.game.engine.view.ladybug;
 
 import com.kycox.game.tools.Position;
-import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.ladybug.LadybugImages;
@@ -35,7 +34,8 @@ import java.awt.*;
 public class LadybugDyingView extends LadybugCommun {
 	private int deltaBips;
 	private final BodyImg empty = new BodyImg(GameImages.EMPTY.getImage());
-	private final LadybugDying ladybugDying;
+	/** Durée de l'agonie, lue dans la photo de la partie (4.6c). */
+	private long agonyDuration;
 	private final BodyImg ladybugFull = new BodyImg(LadybugImages.LADYBUG_UP_FULL.getImage());
 	private final BodyImg ladybugUp1 = new BodyImg(LadybugImages.LADYBUG_UP_1.getImage());
 	private final BodyImg ladybugUp2 = new BodyImg(LadybugImages.LADYBUG_UP_2.getImage());
@@ -46,10 +46,6 @@ public class LadybugDyingView extends LadybugCommun {
 	private final BodyImg ladybugUp7 = new BodyImg(LadybugImages.LADYBUG_UP_7.getImage());
 	private final BodyImg ladybugUp8 = new BodyImg(LadybugImages.LADYBUG_UP_8.getImage());
 	private final BodyImg ladybugUp9 = new BodyImg(LadybugImages.LADYBUG_UP_9.getImage());
-
-	public LadybugDyingView(LadybugDying ladybugDying) {
-		this.ladybugDying = ladybugDying;
-	}
 
 	@Override
 	public Image getImage(Position direction) {
@@ -83,12 +79,18 @@ public class LadybugDyingView extends LadybugCommun {
 		empty.setNext(empty);
 	}
 
-	public void inProgress() {
+	/**
+	 * Un dessin de plus pendant l'agonie.
+	 *
+	 * @param agonyDuration durée de l'agonie (photo de la partie), en millisecondes
+	 */
+	public void inProgress(long agonyDuration) {
+		this.agonyDuration = agonyDuration;
 		deltaBips++;
 	}
 
 	private boolean mustShowNextImage() {
-		var nbrBips = ladybugDying.getAgonyDuration() / GameMainConstants.PACE;
+		var nbrBips = agonyDuration / GameMainConstants.PACE;
 		int nbrImages = 19;
 		var nbrBitPerImage = nbrBips / nbrImages;
 		return deltaBips > nbrBitPerImage;

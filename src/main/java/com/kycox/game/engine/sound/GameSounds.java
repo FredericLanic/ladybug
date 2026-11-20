@@ -17,11 +17,11 @@
 package com.kycox.game.engine.sound;
 
 import com.kycox.game.constant.sounds.Sounds;
-import com.kycox.game.constant.contract.GameModelForSounds;
-import com.kycox.game.constant.contract.NewSoundsForGameSounds;
 import com.kycox.game.engine.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
+import com.kycox.game.preferences.LocalPreferences;
+import com.kycox.game.snapshot.GameSnapshot;
 
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -36,7 +36,14 @@ import java.util.Objects;
 @GuiComponent
 public class GameSounds implements ApplicationListener<EventGameModel> {
 	private static final Logger logger = LoggerFactory.getLogger(GameSounds.class);
-	private NewSoundsForGameSounds newSounds;
+	/** La photo du dernier battement : les sons qu'il demande (4.6). */
+	private GameSnapshot snapshot;
+	/** Réglages de ce poste : son coupé ou non (4.5). */
+	private final LocalPreferences localPreferences;
+
+	public GameSounds(LocalPreferences localPreferences) {
+		this.localPreferences = localPreferences;
+	}
 
 	/**
 	 * Précharge tous les sons au démarrage du jeu, pour qu'aucun chargement ne
@@ -51,18 +58,18 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 	}
 
 	public void playSounds() {
-		if (newSounds.hasSound(Sounds.LADYBUG_IS_DYING)) {
+		if (snapshot.hasSound(Sounds.LADYBUG_IS_DYING)) {
 			stopAllSounds();
 		}
 		// FIXME : je pense qu'on n'en a plus besoin
-		if (newSounds.hasSound(Sounds.GAME_BEGIN_LEVEL)) {
+		if (snapshot.hasSound(Sounds.GAME_BEGIN_LEVEL)) {
 			stopAllSoundsExcept(Sounds.GAME_BEGIN_LEVEL);
 		}
-		if (newSounds.hasSound(Sounds.LADYBUG_INTERMISSION)) {
+		if (snapshot.hasSound(Sounds.LADYBUG_INTERMISSION)) {
 			stopAllSoundsExcept(Sounds.LADYBUG_INTERMISSION);
 		}
 
-		Arrays.stream(Sounds.values()).filter(soundsEnum -> newSounds.hasSound(soundsEnum))
+		Arrays.stream(Sounds.values()).filter(snapshot::hasSound)
 				.map(Sounds::getClip)
 				.filter(Objects::nonNull) // pas de sortie audio : on reste muet
 				.forEach(clip -> new ListenSound(clip).start());
@@ -80,14 +87,11 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
-		Object obj = event.getSource();
-		if (obj instanceof GameModelForSounds gameModelForSounds) {
-			newSounds = gameModelForSounds.getNewSounds();
-			if (gameModelForSounds.isSoundActive()) {
-				playSounds();
-			} else {
-				stopAllSounds();
-			}
+		snapshot = event.getSnapshot();
+		if (localPreferences.isSoundActive()) {
+			playSounds();
+		} else {
+			stopAllSounds();
 		}
 	}
 }

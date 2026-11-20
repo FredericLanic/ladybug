@@ -20,7 +20,7 @@ import com.kycox.game.tools.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kycox.game.engine.screendata.ScreenBlock;
+import com.kycox.game.engine.maze.ScreenBlock;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -62,9 +62,9 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	}
 
 	private void addNewFruit() {
-		if (fruits.getActivationPercent() < screenData.getPercentageEatenPoint()) {
+		if (fruits.getActivationPercent() < maze.getPercentageEatenPoint()) {
 			logger.info("Fruit {} appears", fruits.getCurrentIdFruit());
-			screenData.addNewFruit(fruits.getCurrentIdFruit());
+			maze.addNewFruit(fruits.getCurrentIdFruit());
 			fruits.next();
 		}
 	}
@@ -104,7 +104,7 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	}
 
 	private void checkEndMaze() {
-		if (screenData.getNbrBlocksWithPoint() == 0) {
+		if (maze.getNbrBlocksWithPoint() == 0) {
 			gameScore.addScore(GameMainConstants.SCORE_END_LEVEL);
 			gameScore.initIncrementScore();
 			currentGameStatus.setLevelEnd();
@@ -170,8 +170,8 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	}
 
 	private void moveBodies() {
-		ladybug.move(screenData);
-		groupGhosts.move(ladybug, screenData, ghostRequest);
+		ladybug.move(maze);
+		groupGhosts.move(ladybug, maze, ghostRequest);
 	}
 
 
@@ -190,15 +190,15 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 	}
 
 	private void setBodiesActions() {
-		ladybug.setActions(screenData);
-		groupGhosts.setActions(ladybug, screenData);
+		ladybug.setActions(maze);
+		groupGhosts.setActions(ladybug, maze);
 	}
 
 	private void updateGhostSeetings() {
-		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), screenData);
+		groupGhosts.updateSeetings(currentGameStatus.getNumLevel(), maze);
 	}
 
 	private void updateScreenBlock() {
-		screenData.updateScreenBlock(ladybug);
+		maze.updateScreenBlock(ladybug);
 	}
 }

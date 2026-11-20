@@ -2,8 +2,8 @@ package com.kycox.game.engine.view.map.rendering;
 
 import com.kycox.game.tools.Position;
 import com.kycox.game.constant.level.LevelImagesRedLines;
-import com.kycox.game.engine.screendata.ScreenBlock;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.view.map.OutlineBlock;
+import com.kycox.game.engine.view.map.MazeOutline;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.launcher.GuiComponent;
 
@@ -13,12 +13,12 @@ import java.awt.*;
 public class TilesRenderingRedLines implements Rendering {
 
 	@Override
-	public void displayScreenBlockBorders(Graphics2D g2d, ScreenData screenData, int x, int y) {
-		var screenBlock = screenData.getViewBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
+	public void displayScreenBlockBorders(Graphics2D g2d, MazeOutline outline, int x, int y) {
+		var screenBlock = outline.getBlock(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
 		displayScreenBlock(g2d, screenBlock, x, y);
 	}
 
-	private void displayScreenBlock(Graphics2D g2d, ScreenBlock screenBlock, int x, int y) {
+	private void displayScreenBlock(Graphics2D g2d, OutlineBlock screenBlock, int x, int y) {
 		if (!screenBlock.isBorderRight() && screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {
 			g2d.drawImage(LevelImagesRedLines.NO_RIGHT_LEFT_UP_DOWN.getImage(), x, y, null);
 		} else if (screenBlock.isBorderRight() && !screenBlock.isBorderLeft() && screenBlock.isBorderUp()  && screenBlock.isBorderDown()) {

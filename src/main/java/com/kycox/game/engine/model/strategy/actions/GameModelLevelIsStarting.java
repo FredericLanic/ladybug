@@ -2,7 +2,6 @@ package com.kycox.game.engine.model.strategy.actions;
 
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.constant.fruits.Fruits;
-import com.kycox.game.tools.maths.LitLampMode;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.IGameModelAction;
@@ -35,17 +34,15 @@ public class GameModelLevelIsStarting extends AbstratGameModel implements IGameM
 		currentGameStatus.getStoredNumLevel();;
 		currentGameStatus.updateNextLevel();
 		// recopie les paramètres du niveau dans les données flottantes du niveau
-		screenData.setLevelMap(currentGameStatus.getNumLevel(), true);
+		prepareMaze(currentGameStatus.getNumLevel(), true);
 		// initialisation du super power
 		groupGhosts.setFear(false);
-		// son activé
-		setSoundActive(true);
 		// ladybug est vivant
 		ladybug.setStatus(LadybugStatus.NORMAL);
 		// initialise les fruits
 		fruits.init();
 		// init litLampMode
-		screenData.setLitLampMode(LitLampMode.isLitLampMode(currentGameStatus.getNumLevel()));
+		levelState.drawLitLampMode(currentGameStatus.getNumLevel());
 		// on continue le level
 		continueLevel();
 	}

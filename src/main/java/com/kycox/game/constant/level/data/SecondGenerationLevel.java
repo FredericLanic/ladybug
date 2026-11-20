@@ -27,7 +27,7 @@ import java.util.Map;
 
 import com.kycox.game.constant.level.LevelConstruct;
 import com.kycox.game.constant.contract.LevelStructure;
-import com.kycox.game.engine.screendata.ScreenBlock;
+import com.kycox.game.engine.maze.ScreenBlock;
 
 public abstract class SecondGenerationLevel implements LevelStructure {
 	private static final int DOWN = 8;

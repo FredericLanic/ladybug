@@ -15,6 +15,7 @@ import com.kycox.game.engine.view.map.ScreenBlockView;
 import com.kycox.game.engine.view.ghost.GhostView;
 import com.kycox.game.engine.view.ladybug.LadybugDyingView;
 import com.kycox.game.engine.view.ladybug.LadybugView;
+import com.kycox.game.preferences.LocalPreferences;
 
 /**
  * Étape 4.1 : la fenêtre est dessinée avant le premier battement du jeu. La vue
@@ -28,7 +29,7 @@ class ViewsBeforeFirstBeatTest {
 	void theCentralViewPaintsABlackBackgroundBeforeTheFirstBeat() {
 		var view = new CentralView(mock(GhostView.class), mock(KeyboardController.class),
 		        mock(LadybugDyingView.class), mock(LadybugView.class), mock(ScreenBlockView.class),
-		        mock(LadybugMessagesBundle.class));
+		        mock(LadybugMessagesBundle.class), new LocalPreferences());
 		view.setBackground(Color.BLACK);
 		view.setSize(100, 100);
 		var image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);

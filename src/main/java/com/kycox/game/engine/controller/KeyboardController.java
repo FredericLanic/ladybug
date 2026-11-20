@@ -18,7 +18,9 @@ package com.kycox.game.engine.controller;
 
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.contract.GameModelForController;
+import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.launcher.GuiComponent;
 
 import java.awt.event.KeyAdapter;
@@ -28,10 +30,16 @@ import java.awt.event.KeyEvent;
 public class KeyboardController extends KeyAdapter {
 	private final GameModelForController gameModelForController;
 	private final GameProperties gameProperties;
+	/** Réglages de ce poste (aide, son, debug), écrits sans passer par le modèle (4.5). */
+	private final LocalPreferences localPreferences;
+	private final GameMessaging gameMessaging;
 
-	public KeyboardController(GameModelForController gameModelForController, GameProperties gameProperties) {
+	public KeyboardController(GameModelForController gameModelForController, GameProperties gameProperties,
+	        LocalPreferences localPreferences, GameMessaging gameMessaging) {
 		this.gameModelForController = gameModelForController;
 		this.gameProperties = gameProperties;
+		this.localPreferences = localPreferences;
+		this.gameMessaging = gameMessaging;
 	}
 
 	@Override
@@ -66,16 +74,16 @@ public class KeyboardController extends KeyAdapter {
 	@Override
 	public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_F1) {
-            gameModelForController.setShowHelpForKeys(false);
+            localPreferences.setShowHelpForKeys(false);
         }
 	}
 
 	private void manageCommonKeys(int keyCode) {
 		switch (keyCode) {
-			case KeyEvent.VK_F1 -> gameModelForController.setShowHelpForKeys(true);
-			case KeyEvent.VK_F2 -> gameModelForController.startStopSoundActive();
+			case KeyEvent.VK_F1 -> localPreferences.setShowHelpForKeys(true);
+			case KeyEvent.VK_F2 -> gameMessaging.addSoundMode(localPreferences.toggleSound());
 			// Mode débug
-			case KeyEvent.VK_ENTER -> gameModelForController.changeDebugMode();
+			case KeyEvent.VK_ENTER -> localPreferences.toggleDebugMode();
 			case KeyEvent.VK_F3 -> gameProperties.changeLadybugSkin();
 			case KeyEvent.VK_F4 -> gameProperties.changeGhostHeadBand();
 			case KeyEvent.VK_F5 -> gameProperties.changeGhostHat();

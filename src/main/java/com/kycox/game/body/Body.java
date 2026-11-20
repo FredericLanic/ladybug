@@ -18,7 +18,7 @@ package com.kycox.game.body;
 
 import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.tools.maths.SpeedFunction;
 import com.kycox.game.tools.Utils;
 import lombok.Getter;
@@ -41,9 +41,9 @@ public abstract class Body {
 	private int speedIndex = 0;
 	private int startSpeedIndex = 0;
 
-	public Position getFrontPositionBlock(ScreenData screenData) {
+	public Position getFrontPositionBlock(Maze maze) {
 		var positionBlock = getPositionBlock();
-		var screenBlock = screenData.getScreenBlock(positionBlock);
+		var screenBlock = maze.getScreenBlock(positionBlock);
 		if (direction.equals(GameMainConstants.POINT_UP) && !screenBlock.isBorderUp()) {
 			return positionBlock.translate(0, -1);
 		} else if (direction.equals(GameMainConstants.POINT_DOWN) && !screenBlock.isBorderDown()) {

@@ -19,12 +19,12 @@ package com.kycox.game.tools.dijkstra;
 import com.kycox.game.tools.Position;
 import java.util.List;
 
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 
 import lombok.Getter;
 
 /**
- * Algorithme Dijkstra pour trouver un plus court chemin dans un ScreenData
+ * Algorithme Dijkstra pour trouver un plus court chemin dans un Maze
  *
  */
 public class Dijkstra {
@@ -32,18 +32,18 @@ public class Dijkstra {
 	 * Retourne une liste de point en coordonnées (unité block) pour aller du point
 	 * A au point B
 	 *
-	 * @param screenData      : jeu en cours
+	 * @param maze      : jeu en cours
 	 * @param startCoordinate : coordonnées de départ
 	 * @param endCoordinate   : coordonnées d'arrivée
 	 * @return List<Position>
 	 */
-	public static List<Position> getShorterWay(Position startCoordinate, Position endCoordinate, ScreenData screenData) {
-		var dijkstra = new Dijkstra(screenData);
-		dijkstra.init(startCoordinate, screenData);
+	public static List<Position> getShorterWay(Position startCoordinate, Position endCoordinate, Maze maze) {
+		var dijkstra = new Dijkstra(maze);
+		dijkstra.init(startCoordinate, maze);
 		// Lancement de la recherche
-		dijkstra.search(startCoordinate, null, screenData);
+		dijkstra.search(startCoordinate, null, maze);
 		// Récupération de l'unité final
-		var idx = dijkstra.getPos(endCoordinate, screenData);
+		var idx = dijkstra.getPos(endCoordinate, maze);
 		var unitDijstraEnd = dijkstra.getListUnitDijkstra().get(idx);
 
 		// FIXME : peut être des vérifications ? / capture d'exceptions au cas de Level
@@ -61,11 +61,11 @@ public class Dijkstra {
 	 * level a été vérifié : - tous les blocks ont les bonnes bordures
 	 * INDIVIDUELLEMENT
 	 *
-	 * @param screenData      : jeu en cours
+	 * @param maze      : jeu en cours
 	 */
-	private Dijkstra(ScreenData screenData) {
+	private Dijkstra(Maze maze) {
 		// Création de la list des unités Dijkstra
-		listUnitDijkstra = screenData.convertToDjistraList();
+		listUnitDijkstra = maze.convertToDjistraList();
 	}
 
 	/**
@@ -75,16 +75,16 @@ public class Dijkstra {
 	 *                   au genericData
 	 * @return
 	 */
-	private int getPos(Position coordinate, ScreenData screenData) {
-		return coordinate.x() + coordinate.y() * screenData.getCurrentLevel().getNbrBlocksByLine();
+	private int getPos(Position coordinate, Maze maze) {
+		return coordinate.x() + coordinate.y() * maze.getCurrentLevel().getNbrBlocksByLine();
 	}
 
 	/*
 	 * Initialisation de Dijkstra
 	 */
-	private void init(Position startCoordinate, ScreenData screenData) {
+	private void init(Position startCoordinate, Maze maze) {
 		// Initialisation du block de début
-		var posStart = getPos(startCoordinate, screenData);
+		var posStart = getPos(startCoordinate, maze);
 		listUnitDijkstra.get(posStart).setDistance(0);
 	}
 
@@ -95,9 +95,9 @@ public class Dijkstra {
 	 *                             genericData)
 	 * @param previousUnitDijkstra
 	 */
-	private void search(Position currentCoordinate, UnitDijkstra previousUnitDijkstra, ScreenData screenData) {
+	private void search(Position currentCoordinate, UnitDijkstra previousUnitDijkstra, Maze maze) {
 		// on rcupère la position
-		var currentPos = getPos(currentCoordinate, screenData);
+		var currentPos = getPos(currentCoordinate, maze);
 		// on initialise le flag weightHasChanged
 		var weightHasChanged = false;
 		var currentUnitDijkstra = listUnitDijkstra.get(currentPos);
@@ -124,19 +124,19 @@ public class Dijkstra {
 		var coordinateDown = new Position(currentCoordinate.x(), currentCoordinate.y() + 1);
 		// Lancement de la recherche en haut quand c'est possible
 		if (weightHasChanged && !screenBlockCurrent.isBorderUp()) {
-			search(coordinateUp, currentUnitDijkstra, screenData);
+			search(coordinateUp, currentUnitDijkstra, maze);
 		}
 		// Lancement de la recherche à gauche quand c'est possible
 		if (weightHasChanged && !screenBlockCurrent.isBorderLeft()) {
-			search(coordinateLeft, currentUnitDijkstra, screenData);
+			search(coordinateLeft, currentUnitDijkstra, maze);
 		}
 		// Lancement de la recherche à droite quand c'est possible
 		if (weightHasChanged && !screenBlockCurrent.isBorderRight()) {
-			search(coordinateRight, currentUnitDijkstra, screenData);
+			search(coordinateRight, currentUnitDijkstra, maze);
 		}
 		// Lancement de la recherche en bas quand c'est possible
 		if (weightHasChanged && !screenBlockCurrent.isBorderDown()) {
-			search(coordinateDown, currentUnitDijkstra, screenData);
+			search(coordinateDown, currentUnitDijkstra, maze);
 		}
 	}
 }

@@ -18,7 +18,7 @@ package com.kycox.game.engine.view.ghost;
 
 import com.kycox.game.constant.ghost.GhostsBodyImages;
 import com.kycox.game.constant.ghost.GhostsColorImages;
-import com.kycox.game.constant.contract.GhostForView;
+import com.kycox.game.snapshot.GhostSnapshot;
 
 import java.awt.*;
 
@@ -35,11 +35,11 @@ public class GhostDefaultView {
 	private GhostDefaultView() {
 	}
 
-	public Image getImage(GhostForView ghostForView) {
-		if (ghostForView.isCamouflage()) {
+	public Image getImage(GhostSnapshot ghost) {
+		if (ghost.camouflage()) {
 			return GhostsColorImages.GHOST_CAMOUFLAGE_COLOR.getImage();
 		} else {
-			return GhostsBodyImages.of(ghostForView.getColor()).getImage();
+			return GhostsBodyImages.of(ghost.color()).getImage();
 		}
 	}
 }

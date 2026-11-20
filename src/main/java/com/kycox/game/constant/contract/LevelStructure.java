@@ -20,7 +20,7 @@ import com.kycox.game.tools.Position;
 import java.util.List;
 import java.util.Map;
 
-import com.kycox.game.engine.screendata.ScreenBlock;
+import com.kycox.game.engine.maze.ScreenBlock;
 
 public interface LevelStructure {
 	Position getGhostRegenerateBlockPoint();

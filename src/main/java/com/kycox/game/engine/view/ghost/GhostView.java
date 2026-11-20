@@ -22,7 +22,7 @@ import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.ghost.GhostEyesImages;
 import com.kycox.game.constant.ghost.GhostHatImages;
 import com.kycox.game.constant.ghost.GhostHeadbandImages;
-import com.kycox.game.constant.contract.GhostForView;
+import com.kycox.game.snapshot.GhostSnapshot;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.tools.ImageUtils;
 import com.kycox.game.launcher.GuiComponent;
@@ -63,22 +63,22 @@ public class GhostView {
 		return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
 	}
 
-	public Image getImage(GhostForView ghostForView) {
+	public Image getImage(GhostSnapshot ghost) {
 		Image ghostImg;
 		// ajout le corps
-		switch (ghostForView.getStatus()) {
-			case FLASH -> ghostImg = GhostFlashView.getInstance().getImage(ghostForView);
-			case SCARED -> ghostImg = GhostScaredView.getInstance().getImage(ghostForView);
+		switch (ghost.status()) {
+			case FLASH -> ghostImg = GhostFlashView.getInstance().getImage(ghost);
+			case SCARED -> ghostImg = GhostScaredView.getInstance().getImage(ghost);
 			case DYING -> ghostImg = GhostDyingView.getInstance().getImage();
-			default -> ghostImg = GhostDefaultView.getInstance().getImage(ghostForView);
+			default -> ghostImg = GhostDefaultView.getInstance().getImage(ghost);
 		}
 		// ajout les yeux en fonction de la direction
-		if (ghostForView.getStatus() != GhostStatus.DYING) {
-			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghostForView.getDirection()));
+		if (ghost.status() != GhostStatus.DYING) {
+			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.direction()));
 		}
 		// ajout du bandeau
-		if (ghostForView.getStatus() != GhostStatus.DYING && gameProperties.hasGhostHeadBand()) {
-			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghostForView.getDirection()));
+		if (ghost.status() != GhostStatus.DYING && gameProperties.hasGhostHeadBand()) {
+			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.direction()));
 		}
 		if (gameProperties.hasGhostHat()) {
 			ghostImg = ImageUtils.appendImages(ghostImg, GhostHatImages.GHOST_HAT.getImage());

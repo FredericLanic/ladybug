@@ -35,7 +35,6 @@ public interface GameModelForController extends GameCommon {
 
 	void programForceExit();
 
-	void setAtLeastOneXboxOneConnected(boolean pasConnected);
 
 	void setGameInPause();
 
@@ -45,13 +44,10 @@ public interface GameModelForController extends GameCommon {
 
 	void setMultiPlayers(boolean isMuliPlayers);
 
-	void setShowHelpForKeys(boolean showHelp);
 
-	void setShowHelpForXboxes(boolean showHelp);
 
 	void startGame();
 
-	void startStopSoundActive();
 
     void initNumLevel();
 
@@ -65,7 +61,6 @@ public interface GameModelForController extends GameCommon {
 
 	void setInGame();
 
-	void changeDebugMode();
 
 	void manageGhostCamouflage();
 }

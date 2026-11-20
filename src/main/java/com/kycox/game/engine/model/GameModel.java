@@ -23,9 +23,7 @@ import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.constant.contract.GameModelForController;
-import com.kycox.game.constant.contract.GameModelForSounds;
-import com.kycox.game.constant.contract.GameModelForViews;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.strategy.GameModelManageAction;
 import com.kycox.game.engine.model.strategy.ManageActionContext;
@@ -39,7 +37,6 @@ import com.kycox.game.tools.timer.SuperPowerTimer;
 import com.kycox.game.tools.timer.TickScheduler;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -57,7 +54,7 @@ import java.util.Optional;
  * ({@code GameDriver}). Le modèle ne dépend donc plus de Swing.
  */
 @Component
-public class GameModel implements GameModelForViews, GameModelForSounds, GameModelForController {
+public class GameModel implements GameModelForController {
 	private static final Logger logger = LoggerFactory.getLogger(GameModel.class);
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
@@ -78,20 +75,10 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	@Getter
 	private final NewSounds newSounds;
 	@Getter
-	private final ScreenData screenData;
+	private final Maze maze;
+	/** Mode lampe et style de dessin du niveau (4.5). */
 	@Getter
-	@Setter
-	private boolean showHelpForKeys = false;
-	@Getter
-	@Setter
-	private boolean showHelpForXboxes = false;
-	@Getter
-	private boolean soundActive = true;
-	@Setter
-	@Getter
-	private boolean atLeastOneXboxOneConnected;
-	@Getter
-	boolean debugMode = false;
+	private final LevelState levelState;
 	private final ApplicationEventPublisher applicationEventPublisher;
 	private final TickScheduler tickScheduler;
 	private final SuperPowerTimer superPowerTimer;
@@ -108,7 +95,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 					 Ladybug ladybug,
 					 LadybugDying ladybugDying,
 					 NewSounds newSounds,
-					 ScreenData screenData,
+					 Maze maze,
+					 LevelState levelState,
 					 ManageActionContext manageActionContext,
 					 ApplicationEventPublisher applicationEventPublisher,
 					 TickScheduler tickScheduler,
@@ -125,7 +113,8 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		this.ladybug = ladybug;
 		this.ladybugDying = ladybugDying;
 		this.newSounds = newSounds;
-		this.screenData = screenData;
+		this.maze = maze;
+		this.levelState = levelState;
 		// pour envoyer aux autres vues l'état courant du jeu
 		this.applicationEventPublisher = applicationEventPublisher;
 		this.tickScheduler = tickScheduler;
@@ -168,12 +157,12 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		groupMessages.tick();
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
-		applicationEventPublisher.publishEvent(new EventGameModel(this));
+		applicationEventPublisher.publishEvent(new EventGameModel(this, GameSnapshotFactory.of(this)));
 	}
 
 	@Override
 	public void changeLitLampMode() {
-		screenData.setLitLampMode(!screenData.isLitLampMode());
+		levelState.toggleLitLampMode();
 	}
 
 	@Override
@@ -193,12 +182,10 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		currentProgramStatus.setGameAskForceEndGame();
 	}
 
-	@Override
 	public int getGhostLeftLives() {
 		return groupGhosts.getLeftLives();
 	}
 
-	@Override
 	public int getNbrPlayers() {
 		if (groupGhosts.hasGhostUser()) {
 			return 2;
@@ -291,13 +278,6 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 	}
 
 	@Override
-	public void startStopSoundActive() {
-		logger.info("startStopSoundActive : " + soundActive);
-		soundActive = !soundActive;
-		gameMessaging.addSoundMode(soundActive);
-	}
-
-	@Override
 	public void initNumLevel() {
 		currentProgramStatus.initNumLevel();
 	}
@@ -309,10 +289,6 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		}
 		currentProgramStatus.getStoredNumLevel();
 		currentProgramStatus.setGameStart();
-	}
-
-	public void changeDebugMode() {
-		debugMode = !debugMode;
 	}
 
 	public void manageGhostCamouflage() {

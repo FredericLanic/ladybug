@@ -18,8 +18,8 @@ package com.kycox.game.body;
 
 import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
-import com.kycox.game.engine.screendata.ScreenBlock;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.ScreenBlock;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.tools.Utils;
 import lombok.Setter;
 
@@ -47,9 +47,9 @@ public abstract class UserBody extends Body {
 		}
 	}
 
-	public void teleport(ScreenData screenData) {
+	public void teleport(Maze maze) {
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 			var destinationPoint = Utils.convertBlockPointToGraphicPoint(currentScreenBlock.getDestinationPoint());
 			setPosition(destinationPoint);
 			setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));

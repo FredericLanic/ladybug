@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.engine.model.GameModel;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 
 /**
  * Bot qui vise (étape 3.5.2e) : il joue Ladybug à la place d'un humain, à
@@ -33,7 +33,7 @@ public final class AimingBot {
 
 	/** Direction à demander pour Ladybug à ce battement (ou {@code null} : rien à faire). */
 	public Position decide(GameModel model) {
-		var screen = model.getScreenData();
+		var screen = model.getMaze();
 		var ladybug = model.getLadybug().getPositionBlock();
 		if (screen.getScreenBlock(ladybug) == null) {
 			return null;
@@ -68,7 +68,7 @@ public final class AimingBot {
 	}
 
 	/** Case voisine la plus éloignée du fantôme dangereux le plus proche. */
-	private static Position flee(Position ladybug, List<Position> dangerous, ScreenData screen) {
+	private static Position flee(Position ladybug, List<Position> dangerous, Maze screen) {
 		var fromGhosts = dangerous.stream().map(g -> paths(g, screen)).toList();
 		Position best = null;
 		var bestDistance = -1;
@@ -85,7 +85,7 @@ public final class AimingBot {
 	}
 
 	/** Plus courts chemins depuis une case (parcours en largeur, ordre de voisins fixe). */
-	private static Paths paths(Position start, ScreenData screen) {
+	private static Paths paths(Position start, Maze screen) {
 		var paths = new Paths();
 		var queue = new ArrayDeque<Position>();
 		paths.distances.put(start, 0);
@@ -105,7 +105,7 @@ public final class AimingBot {
 	}
 
 	/** Voisins accessibles, dans le labyrinthe (les sorties de téléporteur sont ignorées). */
-	private static List<Position> openNeighbours(Position point, ScreenData screen) {
+	private static List<Position> openNeighbours(Position point, Maze screen) {
 		var block = screen.getScreenBlock(point);
 		var neighbours = new ArrayList<Position>();
 		if (block == null) {

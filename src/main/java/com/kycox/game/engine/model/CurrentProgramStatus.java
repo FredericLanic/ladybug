@@ -17,8 +17,7 @@
 package com.kycox.game.engine.model;
 
 import com.kycox.game.constant.game.GameStatus;
-import com.kycox.game.constant.contract.GameStatusForGameView;
-import com.kycox.game.engine.screendata.repo.LevelRepository;
+import com.kycox.game.engine.maze.repo.LevelRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -26,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CurrentProgramStatus implements GameStatusForGameView {
+public class CurrentProgramStatus {
 	private static final Logger logger = LoggerFactory.getLogger(CurrentProgramStatus.class);
 
 	@Setter
@@ -63,12 +62,10 @@ public class CurrentProgramStatus implements GameStatusForGameView {
 		numLevel++;
 	}
 
-	@Override
 	public boolean isGameEnd() {
 		return gameStatus == GameStatus.GAME_END;
 	}
 
-	@Override
 	public boolean isGameEnding() {
 		return gameStatus == GameStatus.GAME_ENDING;
 	}
@@ -77,12 +74,10 @@ public class CurrentProgramStatus implements GameStatusForGameView {
 		return gameStatus == GameStatus.GAME_START;
 	}
 
-	@Override
 	public boolean isGameStarting() {
 		return gameStatus == GameStatus.GAME_STARTING;
 	}
 
-	@Override
 	public boolean isInGame() {
 		return gameStatus == GameStatus.IN_GAME;
 	}
@@ -91,7 +86,6 @@ public class CurrentProgramStatus implements GameStatusForGameView {
 		return gameStatus == GameStatus.LEVEL_END;
 	}
 
-	@Override
 	public boolean isLevelEnding() {
 		return gameStatus == GameStatus.LEVEL_ENDING;
 	}
@@ -100,15 +94,12 @@ public class CurrentProgramStatus implements GameStatusForGameView {
 		return gameStatus == GameStatus.LEVEL_START;
 	}
 
-	@Override
 	public boolean isLevelStarting() {
 		return gameStatus == GameStatus.LEVEL_STARTING;
 	}
 
-	@Override
 	public boolean isProgramAskKeepPreviousGameLevel() { return gameStatus == GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL;}
 
-	@Override
 	public boolean isProgramPresentation() {
 		return gameStatus == GameStatus.PROGRAM_PRESENTATION;
 	}
@@ -116,7 +107,6 @@ public class CurrentProgramStatus implements GameStatusForGameView {
 		return gameStatus == GameStatus.PROGRAM_START;
 	}
 
-	@Override
 	public boolean isProgramStarting() {
 		return gameStatus == GameStatus.PROGRAM_STARTING;
 	}
@@ -151,7 +141,6 @@ public class CurrentProgramStatus implements GameStatusForGameView {
 		logger.info("Passage du status en " + gameStatus);
 	}
 
-	@Override
 	public boolean isGameAskForceEndGame() {
 		return gameStatus == GameStatus.ASK_FORCE_END_GAME;
 	}

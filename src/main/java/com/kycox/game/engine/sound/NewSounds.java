@@ -17,7 +17,6 @@
 package com.kycox.game.engine.sound;
 
 import com.kycox.game.constant.sounds.Sounds;
-import com.kycox.game.constant.contract.NewSoundsForGameSounds;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class NewSounds implements NewSoundsForGameSounds {
+public class NewSounds {
 	@Getter
 	private final List<Sounds> sounds = new ArrayList<>();
 
@@ -91,7 +90,6 @@ public class NewSounds implements NewSoundsForGameSounds {
 		addSounds(Sounds.COMMON_TELEPORT, mustBeAdded);
 	}
 
-	@Override
 	public boolean hasSound(Sounds soundsEnum) {
 		return sounds.contains(soundsEnum);
 	}

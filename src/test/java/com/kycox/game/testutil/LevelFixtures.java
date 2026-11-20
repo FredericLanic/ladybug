@@ -15,14 +15,14 @@ import com.kycox.game.constant.level.data.SecondGenerationLevel5;
 import com.kycox.game.constant.level.data.SecondGenerationLevel6;
 import com.kycox.game.constant.level.data.SecondGenerationLevel7;
 import com.kycox.game.constant.level.data.SecondGenerationLevel8;
-import com.kycox.game.engine.screendata.ManageLevel;
-import com.kycox.game.engine.screendata.ScreenBlock;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.ManageLevel;
+import com.kycox.game.engine.maze.ScreenBlock;
+import com.kycox.game.engine.maze.Maze;
 
 /**
  * Outils partagés par les tests qui ont besoin d'un vrai labyrinthe.
  * <p>
- * Aucun besoin de Spring : un {@link ScreenData} se construit à la main à
+ * Aucun besoin de Spring : un {@link Maze} se construit à la main à
  * partir d'un niveau.
  */
 public final class LevelFixtures {
@@ -37,10 +37,10 @@ public final class LevelFixtures {
 	}
 
 	/** Labyrinthe chargé comme au début d'une partie, sans l'aléatoire (méga-gommes, rendu). */
-	public static ScreenData screenDataOf(LevelStructure level) {
-		var screenData = new ScreenData(new ManageLevel(List.of(level)));
-		screenData.setLevelMap(1, false);
-		return screenData;
+	public static Maze mazeOf(LevelStructure level) {
+		var maze = new Maze(new ManageLevel(List.of(level)));
+		maze.setLevelMap(1, false);
+		return maze;
 	}
 
 	/**
@@ -48,14 +48,14 @@ public final class LevelFixtures {
 	 * largeur. Volontairement écrit sans rien reprendre de {@code Dijkstra} : il
 	 * sert de référence indépendante. Les téléporteurs ne sont pas suivis.
 	 */
-	public static Map<Position, Integer> distancesFrom(Position start, ScreenData screenData) {
+	public static Map<Position, Integer> distancesFrom(Position start, Maze maze) {
 		Map<Position, Integer> distances = new HashMap<>();
 		var queue = new ArrayDeque<Position>();
 		distances.put(start, 0);
 		queue.add(start);
 		while (!queue.isEmpty()) {
 			var current = queue.poll();
-			for (var next : openNeighbours(current, screenData)) {
+			for (var next : openNeighbours(current, maze)) {
 				if (!distances.containsKey(next)) {
 					distances.put(next, distances.get(current) + 1);
 					queue.add(next);
@@ -66,8 +66,8 @@ public final class LevelFixtures {
 	}
 
 	/** Cases voisines atteignables en un pas (pas de mur entre les deux). */
-	public static List<Position> openNeighbours(Position point, ScreenData screenData) {
-		ScreenBlock block = screenData.getScreenBlock(point);
+	public static List<Position> openNeighbours(Position point, Maze maze) {
+		ScreenBlock block = maze.getScreenBlock(point);
 		var neighbours = new java.util.ArrayList<Position>();
 		if (!block.isBorderUp()) {
 			neighbours.add(new Position(point.x(), point.y() - 1));

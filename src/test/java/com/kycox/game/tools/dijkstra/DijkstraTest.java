@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import com.kycox.game.constant.contract.LevelStructure;
 import com.kycox.game.constant.level.data.SecondGenerationLevel1;
-import com.kycox.game.engine.screendata.ScreenBlock;
+import com.kycox.game.engine.maze.ScreenBlock;
 import com.kycox.game.testutil.LevelFixtures;
 
 /**
@@ -35,18 +35,18 @@ class DijkstraTest {
 	@MethodSource("levels")
 	@DisplayName("Du point de régénération vers chaque case : chemin le plus court et sans traverser de mur")
 	void shortestValidPathToEveryReachableBlock(String name, LevelStructure level) {
-		var screenData = LevelFixtures.screenDataOf(level);
+		var maze = LevelFixtures.mazeOf(level);
 		var start = level.getGhostRegenerateBlockPoint();
-		var expectedDistances = LevelFixtures.distancesFrom(start, screenData);
+		var expectedDistances = LevelFixtures.distancesFrom(start, maze);
 
 		expectedDistances.forEach((target, expectedDistance) -> {
-			var path = Dijkstra.getShorterWay(start, target, screenData);
+			var path = Dijkstra.getShorterWay(start, target, maze);
 
 			assertThat(path).as("chemin vers %s", target).startsWith(start).endsWith(target);
 			// un chemin de N pas contient N + 1 cases
 			assertThat(path).as("longueur du chemin vers %s", target).hasSize(expectedDistance + 1);
 			for (var i = 0; i + 1 < path.size(); i++) {
-				assertThat(LevelFixtures.openNeighbours(path.get(i), screenData))
+				assertThat(LevelFixtures.openNeighbours(path.get(i), maze))
 				        .as("pas de %s à %s sans mur", path.get(i), path.get(i + 1)).contains(path.get(i + 1));
 			}
 		});
@@ -56,10 +56,10 @@ class DijkstraTest {
 	@DisplayName("Vers la case de départ : un chemin d'une seule case")
 	void pathToItselfIsSingleBlock() {
 		var level = new SecondGenerationLevel1();
-		var screenData = LevelFixtures.screenDataOf(level);
+		var maze = LevelFixtures.mazeOf(level);
 		var start = level.getInitLadybugBlockPos();
 
-		assertThat(Dijkstra.getShorterWay(start, start, screenData)).containsExactly(start);
+		assertThat(Dijkstra.getShorterWay(start, start, maze)).containsExactly(start);
 	}
 
 	@Test
@@ -67,11 +67,11 @@ class DijkstraTest {
 	void teleportsAreIgnored() {
 		// SecondGenerationLevel1 : téléporteurs en (0, 7) et (14, 7)
 		var level = new SecondGenerationLevel1();
-		var screenData = LevelFixtures.screenDataOf(level);
+		var maze = LevelFixtures.mazeOf(level);
 		var left = new Position(0, 7);
 		var right = new Position(14, 7);
 
-		var path = Dijkstra.getShorterWay(left, right, screenData);
+		var path = Dijkstra.getShorterWay(left, right, maze);
 
 		// Limite connue : un fantôme traverse tout le labyrinthe au lieu de prendre
 		// le téléporteur (1 pas)
@@ -82,14 +82,14 @@ class DijkstraTest {
 	@DisplayName("Limite connue : une case inaccessible comme cible fait planter le calcul")
 	void unreachableTargetThrows() {
 		var level = new SecondGenerationLevel1();
-		var screenData = LevelFixtures.screenDataOf(level);
+		var maze = LevelFixtures.mazeOf(level);
 		var wall = level.getLstBlocks().stream().map(ScreenBlock::getCoordinate)
-		        .filter(p -> screenData.getScreenBlock(p).isNotAccessible()).findFirst().orElseThrow();
+		        .filter(p -> maze.getScreenBlock(p).isNotAccessible()).findFirst().orElseThrow();
 
 		// Comportement actuel documenté : NullPointerException dans
 		// UnitDijkstra.getShorterWay (aucune case précédente). Dans le jeu, la cible
 		// est toujours Ladybug ou le point de régénération, donc toujours accessible.
-		assertThatThrownBy(() -> Dijkstra.getShorterWay(level.getInitLadybugBlockPos(), wall, screenData))
+		assertThatThrownBy(() -> Dijkstra.getShorterWay(level.getInitLadybugBlockPos(), wall, maze))
 		        .isInstanceOf(NullPointerException.class);
 	}
 }

@@ -22,15 +22,13 @@ import com.kycox.game.engine.bodyaction.ladybug.LadybugActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.constant.contract.LadybugForController;
-import com.kycox.game.constant.contract.LadybugForGameView;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-public final class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
+public final class Ladybug extends UserBody {
 	/**
 	 * Actions du dernier battement. Jamais nulles depuis l'étape 4.2 (D23) : avant,
 	 * elles n'existaient qu'après le premier battement de l'écran de présentation.
@@ -65,12 +63,12 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 		return ladybugActions.isToBeTeleported();
 	}
 
-	public void move(ScreenData screenData) {
+	public void move(Maze maze) {
 		if (ladybugActions.isToBeTeleported()) {
-			teleport(screenData);
+			teleport(maze);
 			return;
 		}
-		var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+		var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 		if (isPerfectOnABlock()) {
 			if (canMove(userRequest, currentScreenBlock)) {
 				viewDirection = userRequest;
@@ -80,7 +78,7 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 		setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 	}
 
-	public LadybugActions setActions(ScreenData screenData) {
+	public LadybugActions setActions(Maze maze) {
 		ladybugActions = new LadybugActions();
 		if (getStatus() == LadybugStatus.DEAD) {
 			return ladybugActions;
@@ -91,7 +89,7 @@ public final class Ladybug extends UserBody implements LadybugForController, Lad
 		}
 		// calcule uniquement lorsque ladybug rempli le block
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
 			ladybugActions.setEatenAMegaPoint(currentScreenBlock.isMegaPoint());

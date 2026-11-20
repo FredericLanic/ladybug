@@ -1,5 +1,6 @@
 package com.kycox.game.engine.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.context.ApplicationEventPublisher;
 
 import com.kycox.game.body.GhostsGroup;
@@ -21,7 +23,7 @@ import com.kycox.game.engine.model.strategy.IGameModelAction;
 import com.kycox.game.engine.model.strategy.ManageActionContext;
 import com.kycox.game.engine.score.GroupMessages;
 import com.kycox.game.engine.score.Score;
-import com.kycox.game.engine.screendata.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.sound.NewSounds;
 import com.kycox.game.tools.timer.SuperPowerTimer;
 import com.kycox.game.tools.timer.TickScheduler;
@@ -58,7 +60,7 @@ class GameModelBeatTest {
 
 		gameModel = new GameModel(currentProgramStatus, mock(GameMessaging.class), gameModelManageAction,
 		        mock(Score.class), mock(GhostsGroup.class), groupMessages, mock(Ladybug.class),
-		        mock(LadybugDying.class), mock(NewSounds.class), mock(ScreenData.class), manageActionContext,
+		        mock(LadybugDying.class), mock(NewSounds.class), mock(Maze.class), mock(LevelState.class), manageActionContext,
 		        publisher, tickScheduler, superPowerTimer, mock(com.kycox.game.engine.sound.SoundDurations.class));
 	}
 
@@ -73,6 +75,17 @@ class GameModelBeatTest {
 		order.verify(gameModelManageAction).changeStrategy(inGameAction);
 		order.verify(gameModelManageAction).execute();
 		order.verify(publisher).publishEvent(any(EventGameModel.class));
+	}
+
+	@Test
+	void theEventCarriesTheSnapshotOfTheBeat() {
+		gameModel.beat();
+
+		var event = ArgumentCaptor.forClass(EventGameModel.class);
+		verify(publisher).publishEvent(event.capture());
+		assertThat(event.getValue().getSource()).isSameAs(gameModel);
+		assertThat(event.getValue().getSnapshot()).isNotNull();
+		assertThat(event.getValue().getSnapshot().status()).isEqualTo(GameStatus.IN_GAME);
 	}
 
 	@Test

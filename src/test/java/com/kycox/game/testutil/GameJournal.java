@@ -9,13 +9,16 @@ import java.util.Objects;
 
 import com.kycox.game.constant.sounds.Sounds;
 import com.kycox.game.engine.model.GameModel;
+import com.kycox.game.engine.model.GameSnapshotFactory;
+import com.kycox.game.snapshot.GameSnapshot;
 
 /**
  * Journal d'une partie (étape 3.5.2b, décision C31) : ce qui change, battement
  * par battement, en texte lisible, pour comparer deux parties ligne à ligne.
  *
- * <p>Le journal n'ajoute rien au jeu : il observe le modèle après chaque
- * battement et note les différences avec le battement précédent :
+ * <p>Le journal n'ajoute rien au jeu : il lit la photo de la partie
+ * ({@link GameSnapshot}, étape 4.6) après chaque battement et note les
+ * différences avec le battement précédent :
  * <pre>
  * b0064 STATUS PROGRAM_PRESENTATION
  * b0233 SCORE 1 (+1)
@@ -41,7 +44,7 @@ public final class GameJournal {
 
 	/** Note ce qui a changé au battement {@code beat}. */
 	void record(int beat, GameModel model) {
-		var current = Snapshot.of(model);
+		var current = Snapshot.of(GameSnapshotFactory.of(model));
 		var prefix = String.format("b%04d ", beat);
 		var before = previous != null ? previous : Snapshot.EMPTY;
 		if (!Objects.equals(before.status, current.status)) {
@@ -81,27 +84,28 @@ public final class GameJournal {
 		return String.join("\n", lines) + "\n";
 	}
 
-	/** Ce que le journal regarde dans le modèle, à un battement donné. */
+	/**
+	 * Ce que le journal retient de la photo de la partie, à un battement donné.
+	 * Depuis 4.6, il est tiré du {@link GameSnapshot} : un golden master identique
+	 * prouve que le snapshot contient tout ce que le journal regardait.
+	 */
 	private record Snapshot(String status, int level, int score, int lives, String ladybugStatus,
 	        Position ladybugBlock, Map<String, String> ghostStatus, Map<String, Position> ghostBlock, List<Sounds> sounds) {
 
 		static final Snapshot EMPTY = new Snapshot(null, -1, 0, -1, null, null, Map.of(), Map.of(), List.of());
 
-		static Snapshot of(GameModel model) {
+		static Snapshot of(GameSnapshot game) {
 			var ghostStatus = new LinkedHashMap<String, String>();
 			var ghostBlock = new LinkedHashMap<String, Position>();
-			model.getGroupGhosts().getGhosts().forEach(ghost -> {
+			game.ghosts().forEach(ghost -> {
 				// un fantôme joué par un humain (mode 2 joueurs) est marqué « (human) »
-				ghostStatus.put(ghost.getName(), ghost.getStatus() + (ghost.isComputed() ? "" : " (human)"));
-				ghostBlock.put(ghost.getName(), ghost.getPositionBlock());
+				ghostStatus.put(ghost.name(), ghost.status() + (ghost.computed() ? "" : " (human)"));
+				ghostBlock.put(ghost.name(), ghost.block());
 			});
 			// sons demandés à ce battement (3.5.3a), dans l'ordre de l'énumération
-			var sounds = java.util.Arrays.stream(Sounds.values()).filter(model.getNewSounds()::hasSound).toList();
-			var ladybug = model.getLadybug();
-			return new Snapshot(String.valueOf(model.getCurrentProgramStatus().getGameStatus()),
-			        model.getCurrentProgramStatus().getNumLevel(), model.getGameScore().getScore(),
-			        ladybug.getLeftLifes(), String.valueOf(ladybug.getStatus()), ladybug.getPositionBlock(),
-			        ghostStatus, ghostBlock, sounds);
+			var ladybug = game.ladybug();
+			return new Snapshot(String.valueOf(game.status()), game.numLevel(), game.score(), ladybug.leftLifes(),
+			        String.valueOf(ladybug.status()), ladybug.block(), ghostStatus, ghostBlock, game.sounds());
 		}
 
 		String state() {
