@@ -20,7 +20,7 @@ import java.awt.Image;
 
 import javax.swing.Timer;
 
-import com.kycox.game.constant.contract.GhostForView;
+import com.kycox.game.snapshot.GhostSnapshot;
 import com.kycox.game.tools.timer.TimerView;
 
 public class GhostFlashView implements TimerView {
@@ -42,10 +42,10 @@ public class GhostFlashView implements TimerView {
 		showScared = !showScared;
 	}
 
-	public Image getImage(GhostForView ghostForView) {
+	public Image getImage(GhostSnapshot ghost) {
 		if (showScared) {
-			return GhostScaredView.getInstance().getImage(ghostForView);
+			return GhostScaredView.getInstance().getImage(ghost);
 		}
-		return GhostDefaultView.getInstance().getImage(ghostForView);
+		return GhostDefaultView.getInstance().getImage(ghost);
 	}
 }

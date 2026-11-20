@@ -1,20 +1,19 @@
 package com.kycox.game.engine.controller;
 
-import com.kycox.game.constant.contract.LadybugForController;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.xbox.XboxOneConstants;
 import com.kycox.game.constant.contract.GameModelForController;
-import com.kycox.game.constant.contract.GhostForController;
 import com.kycox.game.engine.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.EventGameModel;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.preferences.LocalPreferences;
+import com.kycox.game.snapshot.GameSnapshot;
+import com.kycox.game.snapshot.GhostSnapshot;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
 
-import java.util.Optional;
 
 /**
  * La manette Xbox pilote le jeu (comme le clavier, mais avec les boutons).
@@ -50,21 +49,19 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		this.xboxOneUnComputedGhost = xboxOneUnComputedGhost;
 	}
 
-	private void doVibrationsInGame() {
-		Optional.of(gameModelForController.getLadybug())
-				.filter(LadybugForController::isEatenAMegaPoint)
-				.ifPresent(ladybug -> padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 100));
-
-		Optional.of(gameModelForController.getLadybug())
-				.filter(LadybugForController::isToBeTeleported)
-				.ifPresent(ladybug -> padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 50));
-
-		gameModelForController.getUnComputedGhost()
-				.filter(GhostForController::isToBeTeleported)
+	/** Vibrations lues dans la photo de la partie (4.6), et non dans le modèle. */
+	private void doVibrationsInGame(GameSnapshot snapshot) {
+		if (snapshot.ladybug().eatenAMegaPoint()) {
+			padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 100);
+		}
+		if (snapshot.ladybug().toBeTeleported()) {
+			padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 50);
+		}
+		snapshot.humanGhost()
+				.filter(GhostSnapshot::toBeTeleported)
 				.ifPresent(ghost -> padManager.vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 50));
-
-		gameModelForController.getUnComputedGhost()
-				.filter(GhostForController::isDying)
+		snapshot.humanGhost()
+				.filter(GhostSnapshot::dying)
 				.ifPresent(ghost -> padManager.vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 100));
 	}
 
@@ -166,9 +163,11 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 
 	/**
 	 * Traduit l'état des deux manettes (déjà lu) en actions sur le jeu. Séparé de
-	 * la lecture du matériel pour être testé avec une fausse manette.
+	 * la lecture du matériel pour être testé avec une fausse manette. Les
+	 * commandes passent par le modèle ; ce qui est lu (vibrations) vient de la
+	 * photo de la partie (4.6).
 	 */
-	void handleRequests(GameModelForController model) {
+	void handleRequests(GameModelForController model, GameSnapshot snapshot) {
 		gameModelForController = model;
 		localPreferences.setAtLeastOneXboxOneConnected(isOneXboxOneConnected());
 		setProgramMessagesAccordingXboxOneConnectionOrDisconnection();
@@ -181,7 +180,7 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 			manageBothXboxesOneInGame();
 			manageLadybugXboxOneInGame();
 			manageUnComputedGhostXboxOneInGame();
-			doVibrationsInGame();
+			doVibrationsInGame(snapshot);
 		} else if(gameModelForController.isGameAskForceEndGame()) {
 			manageBothXboxesOneInAskForceEndGame();
 		}
@@ -226,7 +225,7 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		Object obj = event.getSource();
 		if (obj instanceof GameModelForController eventGameModelForController) {
 			readXboxOneStates();
-			handleRequests(eventGameModelForController);
+			handleRequests(eventGameModelForController, event.getSnapshot());
 		}
 	}
 }

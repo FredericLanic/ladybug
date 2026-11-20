@@ -23,7 +23,6 @@ import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.constant.contract.GameModelForController;
-import com.kycox.game.constant.contract.GameModelForSounds;
 import com.kycox.game.constant.contract.GameModelForViews;
 import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.message.GameMessaging;
@@ -56,7 +55,7 @@ import java.util.Optional;
  * ({@code GameDriver}). Le modèle ne dépend donc plus de Swing.
  */
 @Component
-public class GameModel implements GameModelForViews, GameModelForSounds, GameModelForController {
+public class GameModel implements GameModelForViews, GameModelForController {
 	private static final Logger logger = LoggerFactory.getLogger(GameModel.class);
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
@@ -159,7 +158,7 @@ public class GameModel implements GameModelForViews, GameModelForSounds, GameMod
 		groupMessages.tick();
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
-		applicationEventPublisher.publishEvent(new EventGameModel(this));
+		applicationEventPublisher.publishEvent(new EventGameModel(this, GameSnapshotFactory.of(this)));
 	}
 
 	@Override

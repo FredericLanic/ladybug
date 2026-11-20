@@ -17,7 +17,6 @@
 package com.kycox.game.engine.view;
 
 import com.kycox.game.tools.Position;
-import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.font.GameFont;
 import com.kycox.game.constant.ladybug.LadybugStatus;
@@ -42,6 +41,8 @@ import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
 import com.kycox.game.engine.view.map.MazeColors;
 import com.kycox.game.preferences.LocalPreferences;
+import com.kycox.game.snapshot.GameSnapshot;
+import com.kycox.game.snapshot.GhostSnapshot;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,6 +58,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	@Setter
 	private long durationLadybugNewLife;
 	private transient GameModelForViews gameModelForViews;
+	/** La photo du dernier battement : les fantômes en 4.6b, tout le reste en 4.6c. */
+	private transient GameSnapshot snapshot;
 	private final transient GhostView ghostView;
 	private final transient KeyboardController keyboardController;
 	private final transient LadybugDyingView ladybugDyingView;
@@ -212,27 +215,25 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		return gameModelForViews.getMaze().getNbrLines() * GameMainConstants.BLOCK_SIZE;
 	}
 
+	/** Les fantômes sont lus dans la photo du dernier battement (4.6b). */
 	private void drawGhosts(Graphics2D g2d) {
-		var ladybugPosition = gameModelForViews.getLadybug().getPosition();
-		gameModelForViews.getGroupGhosts()
-				.getGhosts()
-				.stream()
-		        .filter(ghost -> ghost.getPosition().distance(ladybugPosition) <= 4 * GameMainConstants.BLOCK_SIZE || !ghost.isComputed()
-		                || gameModelForViews.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed() && ghost.getPosition().distance(gc.getPosition()) <= 4 * GameMainConstants.BLOCK_SIZE)
-		                || !gameModelForViews.getCurrentProgramStatus().isInGame()
-		                || !gameModelForViews.getLevelState().isLitLampMode())
-		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x() + 1, g.getPosition().y() + 1, this));
+		var ladybugPosition = snapshot.ladybug().position();
+		var ghosts = snapshot.ghosts();
+		ghosts.stream()
+		        .filter(ghost -> ghost.position().distance(ladybugPosition) <= 4 * GameMainConstants.BLOCK_SIZE || !ghost.computed()
+		                || ghosts.stream().anyMatch(gc -> !gc.computed() && ghost.position().distance(gc.position()) <= 4 * GameMainConstants.BLOCK_SIZE)
+		                || !snapshot.isInGame()
+		                || !snapshot.litLampMode())
+		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.position().x() + 1, g.position().y() + 1, this));
 
 		if (localPreferences.isDebugMode()) {
 			g2d.setColor(Color.RED);
-			gameModelForViews.getGroupGhosts()
-					.getGhosts()
-					.stream()
-					.filter(ghost -> ghost.getMaximumAttackDist() > 0)
-					.forEach(ghost -> g2d.drawOval(ghost.getPosition().x() + 1 - ghost.getMaximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
-							, ghost.getPosition().y() + 1 - ghost.getMaximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
-							, ghost.getMaximumAttackDist() * 2
-							, ghost.getMaximumAttackDist() * 2));
+			ghosts.stream()
+					.filter(ghost -> ghost.maximumAttackDist() > 0)
+					.forEach(ghost -> g2d.drawOval(ghost.position().x() + 1 - ghost.maximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
+							, ghost.position().y() + 1 - ghost.maximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
+							, ghost.maximumAttackDist() * 2
+							, ghost.maximumAttackDist() * 2));
 		}
 	}
 
@@ -278,8 +279,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	private void drawPresentationGhosts(Graphics2D g2d) {
 		var x = widthInPixels() / 2 - (7 * GameMainConstants.BLOCK_SIZE) / 2;
 		var y = heightInPixels() / 2;
-		var ghosts = gameModelForViews.getGroupGhosts().getGhosts().stream().toList();
-		for (Ghost ghost : ghosts) {
+		for (GhostSnapshot ghost : snapshot.ghosts()) {
 			g2d.drawImage(ghostView.getImage(ghost), x, y, this);
 			x += 2 * GameMainConstants.BLOCK_SIZE;
 		}
@@ -357,6 +357,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		Object obj = event.getSource();
 		if (obj instanceof GameModelForViews eventGameModelForViews) {
 			gameModelForViews = eventGameModelForViews;
+			snapshot = event.getSnapshot();
 			repaint();
 		}
 	}

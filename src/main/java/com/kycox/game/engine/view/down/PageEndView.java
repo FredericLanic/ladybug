@@ -16,10 +16,10 @@
  */
 package com.kycox.game.engine.view.down;
 
-import com.kycox.game.constant.contract.GameModelForViews;
 import com.kycox.game.constant.contract.MainGraphicStructure;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.EventGameModel;
+import com.kycox.game.snapshot.GameSnapshot;
 import com.kycox.game.tools.timer.SimpleTimer;
 import com.kycox.game.tools.Screen;
 import com.kycox.game.engine.view.ghost.GhostView;
@@ -39,7 +39,8 @@ public class PageEndView extends JPanel implements ApplicationListener<EventGame
 	private final transient LadybugView ladybugView;
 	private final transient Screen screen;
 	private final StatusGameView statusGameView;
-	private transient GameModelForViews gameModelForViews;
+	/** La photo du dernier battement (4.6). */
+	private transient GameSnapshot snapshot;
 	private final JPanel jPanelLadybugKinematique = new JPanel();
 	private final JPanel jPanelMainScore = new JPanel();
 	private final transient SimpleTimer simpleTimer = new SimpleTimer();
@@ -86,14 +87,13 @@ public class PageEndView extends JPanel implements ApplicationListener<EventGame
 	}
 
 	private void setVariableToScoreView() {
-		statusGameView.setGhostNbrLifes(gameModelForViews.getGhostLeftLives());
-		var ghostUnComputed = gameModelForViews.getUnComputedGhost();
-		ghostUnComputed.ifPresent(ghost -> statusGameView.setImageGhostPlayer(ghostView.getImage(ghost)));
+		statusGameView.setGhostNbrLifes(snapshot.ghostLeftLives());
+		snapshot.humanGhost().ifPresent(ghost -> statusGameView.setImageGhostPlayer(ghostView.getImage(ghost)));
 		statusGameView.setImageLadybugPlayer(ladybugView.getStaticView());
-		statusGameView.setInGame(gameModelForViews.isInGame());
-		statusGameView.setLadybugNbrLifes(gameModelForViews.getLadybug().getLeftLifes());
-		statusGameView.setNbrPlayers(gameModelForViews.getNbrPlayers());
-		statusGameView.setScore(gameModelForViews.getGameScore().getScore());
+		statusGameView.setInGame(snapshot.isInGame());
+		statusGameView.setLadybugNbrLifes(snapshot.ladybug().leftLifes());
+		statusGameView.setNbrPlayers(snapshot.nbrPlayers());
+		statusGameView.setScore(snapshot.score());
 		if (!simpleTimer.isRunning()) {
 			var newMessage = gameMessaging.get();
 			statusGameView.setCurrentProgramMessage(newMessage);
@@ -103,12 +103,9 @@ public class PageEndView extends JPanel implements ApplicationListener<EventGame
 
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
-		Object obj = event.getSource();
-		if (obj instanceof GameModelForViews eventGameModelForViews) {
-			gameModelForViews = eventGameModelForViews;
-			setVariableToScoreView();
-			repaint();
-		}
+		snapshot = event.getSnapshot();
+		setVariableToScoreView();
+		repaint();
 	}
 }
 

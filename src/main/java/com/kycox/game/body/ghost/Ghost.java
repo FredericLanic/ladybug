@@ -24,7 +24,6 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostBehaviour;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.constant.contract.GhostForController;
-import com.kycox.game.constant.contract.GhostForView;
 import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.tools.maths.GhostSensitiveBehaviour;
 import com.kycox.game.tools.Utils;
@@ -37,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract sealed class Ghost extends UserBody implements GhostForController, GhostForView permits Blinky, Clyde, Inky, Pinky {
+public abstract sealed class Ghost extends UserBody implements GhostForController permits Blinky, Clyde, Inky, Pinky {
 	private static final Logger logger = LoggerFactory.getLogger(Ghost.class);
 	@Getter
 	@Setter
@@ -143,7 +142,6 @@ public abstract sealed class Ghost extends UserBody implements GhostForControlle
 		return getPosition().distance(ladybug.getPosition()) < ((double) GameMainConstants.BLOCK_SIZE / 2);
 	}
 
-	@Override
 	public boolean isCamouflage() {
 		return camouflage;
 	}

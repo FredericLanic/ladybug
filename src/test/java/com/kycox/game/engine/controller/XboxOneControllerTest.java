@@ -7,12 +7,12 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.kycox.game.body.ghost.Blinky;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.game.GameMainConstants;
@@ -24,6 +24,8 @@ import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.snapshot.GameSnapshot;
+import com.kycox.game.testutil.Snapshots;
 
 /**
  * Boutons de la manette → actions sur le jeu (étapes 3.5.3d et 3.5.5), avec de
@@ -39,6 +41,8 @@ class XboxOneControllerTest {
 	private final LocalPreferences preferences = new LocalPreferences();
 	private final Ladybug ladybug = mock(Ladybug.class);
 	private XboxOneController controller;
+	/** La photo de la partie que reçoit la manette (4.6) : rien de spécial par défaut. */
+	private GameSnapshot snapshot = Snapshots.inGame(Snapshots.ladybug(false, false), List.of());
 
 	@BeforeEach
 	void setUp() {
@@ -50,7 +54,7 @@ class XboxOneControllerTest {
 	private void press(PadState ladybugState, PadState ghostState) {
 		ladybugPad.readCurrentState(ladybugState);
 		ghostPad.readCurrentState(ghostState);
-		controller.handleRequests(model);
+		controller.handleRequests(model, snapshot);
 	}
 
 	private void press(Pad ladybugState) {
@@ -137,12 +141,7 @@ class XboxOneControllerTest {
 	@Test
 	void vibrationsOnMegaPointAndTeleport() {
 		when(model.isInGame()).thenReturn(true);
-		when(ladybug.isEatenAMegaPoint()).thenReturn(true);
-		when(ladybug.isToBeTeleported()).thenReturn(true);
-		var ghost = mock(Blinky.class);
-		when(ghost.isToBeTeleported()).thenReturn(true);
-		when(ghost.isDying()).thenReturn(true);
-		when(model.getUnComputedGhost()).thenReturn(Optional.of(ghost));
+		snapshot = Snapshots.inGame(Snapshots.ladybug(true, true), List.of(Snapshots.humanGhost(true, true)));
 
 		press(Pad.connected());
 

@@ -1,5 +1,6 @@
 package com.kycox.game.engine.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.context.ApplicationEventPublisher;
 
 import com.kycox.game.body.GhostsGroup;
@@ -73,6 +75,17 @@ class GameModelBeatTest {
 		order.verify(gameModelManageAction).changeStrategy(inGameAction);
 		order.verify(gameModelManageAction).execute();
 		order.verify(publisher).publishEvent(any(EventGameModel.class));
+	}
+
+	@Test
+	void theEventCarriesTheSnapshotOfTheBeat() {
+		gameModel.beat();
+
+		var event = ArgumentCaptor.forClass(EventGameModel.class);
+		verify(publisher).publishEvent(event.capture());
+		assertThat(event.getValue().getSource()).isSameAs(gameModel);
+		assertThat(event.getValue().getSnapshot()).isNotNull();
+		assertThat(event.getValue().getSnapshot().status()).isEqualTo(GameStatus.IN_GAME);
 	}
 
 	@Test
