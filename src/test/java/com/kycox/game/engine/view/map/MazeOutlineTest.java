@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.kycox.game.constant.level.data.SecondGenerationLevel1;
-import com.kycox.game.engine.maze.ScreenBlock;
+import com.kycox.game.engine.model.GameSnapshotFactory;
 import com.kycox.game.testutil.LevelFixtures;
 import com.kycox.game.tools.Position;
 
@@ -27,14 +27,14 @@ class MazeOutlineTest {
 
 	@ParameterizedTest(name = "{0}")
 	@MethodSource("levels")
-	@DisplayName("le contour couvre chaque case du labyrinthe, avec des copies et non les cases du jeu")
+	@DisplayName("le contour couvre chaque case du labyrinthe, avec la même forme (mur ou pas)")
 	void theOutlineCopiesEveryBlock(String name, com.kycox.game.constant.contract.LevelStructure level) {
 		var maze = LevelFixtures.mazeOf(level);
-		var outline = new MazeOutline().of(maze);
+		var outline = new MazeOutline().of(GameSnapshotFactory.mazeOf(maze));
 
 		assertThat(maze.getScreenBlocks()).allSatisfy(block -> {
 			var drawn = outline.getBlock(block.getCoordinate());
-			assertThat(drawn).isNotNull().isNotSameAs(block);
+			assertThat(drawn).isNotNull();
 			assertThat(drawn.isNotAccessible()).isEqualTo(block.isNotAccessible());
 		});
 	}
@@ -44,7 +44,7 @@ class MazeOutlineTest {
 	@DisplayName("les bords extérieurs n'ont pas de bordure (ils sont dessinés à part)")
 	void outerBordersAreRemoved(String name, com.kycox.game.constant.contract.LevelStructure level) {
 		var maze = LevelFixtures.mazeOf(level);
-		var outline = new MazeOutline().of(maze);
+		var outline = new MazeOutline().of(GameSnapshotFactory.mazeOf(maze));
 		var lastX = outline.getNbrBlocksByLine() - 1;
 		var lastY = outline.getNbrLines() - 1;
 
@@ -61,7 +61,7 @@ class MazeOutlineTest {
 	@Test
 	@DisplayName("hors du labyrinthe, il n'y a pas de case")
 	void noBlockOutsideTheMaze() {
-		var outline = new MazeOutline().of(LevelFixtures.mazeOf(new SecondGenerationLevel1()));
+		var outline = new MazeOutline().of(GameSnapshotFactory.mazeOf(LevelFixtures.mazeOf(new SecondGenerationLevel1())));
 
 		assertThat(outline.getBlock(new Position(-1, 0))).isNull();
 		assertThat(outline.getBlock(new Position(0, outline.getNbrLines()))).isNull();
@@ -73,12 +73,12 @@ class MazeOutlineTest {
 		var maze = LevelFixtures.mazeOf(new SecondGenerationLevel1());
 		var outline = new MazeOutline();
 		var origin = new Position(0, 0);
-		ScreenBlock before = outline.of(maze).getBlock(origin);
+		OutlineBlock before = outline.of(GameSnapshotFactory.mazeOf(maze)).getBlock(origin);
 
 		maze.getScreenBlock(origin).removePoint();
-		assertThat(outline.of(maze).getBlock(origin)).isSameAs(before);
+		assertThat(outline.of(GameSnapshotFactory.mazeOf(maze)).getBlock(origin)).isSameAs(before);
 
 		maze.setLevelMap(1, false);
-		assertThat(outline.of(maze).getBlock(origin)).isNotSameAs(before);
+		assertThat(outline.of(GameSnapshotFactory.mazeOf(maze)).getBlock(origin)).isNotSameAs(before);
 	}
 }

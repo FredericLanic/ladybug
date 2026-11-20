@@ -23,7 +23,6 @@ import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.body.ladybug.LadybugDying;
 import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.constant.contract.GameModelForController;
-import com.kycox.game.constant.contract.GameModelForViews;
 import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.strategy.GameModelManageAction;
@@ -55,7 +54,7 @@ import java.util.Optional;
  * ({@code GameDriver}). Le modèle ne dépend donc plus de Swing.
  */
 @Component
-public class GameModel implements GameModelForViews, GameModelForController {
+public class GameModel implements GameModelForController {
 	private static final Logger logger = LoggerFactory.getLogger(GameModel.class);
 	@Getter
 	private final CurrentProgramStatus currentProgramStatus;
@@ -183,12 +182,10 @@ public class GameModel implements GameModelForViews, GameModelForController {
 		currentProgramStatus.setGameAskForceEndGame();
 	}
 
-	@Override
 	public int getGhostLeftLives() {
 		return groupGhosts.getLeftLives();
 	}
 
-	@Override
 	public int getNbrPlayers() {
 		if (groupGhosts.hasGhostUser()) {
 			return 2;

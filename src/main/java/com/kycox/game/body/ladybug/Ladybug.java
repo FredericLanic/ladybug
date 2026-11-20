@@ -22,15 +22,13 @@ import com.kycox.game.engine.bodyaction.ladybug.LadybugActions;
 import com.kycox.game.body.UserBody;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.constant.contract.LadybugForController;
-import com.kycox.game.constant.contract.LadybugForGameView;
 import com.kycox.game.engine.maze.Maze;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-public final class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
+public final class Ladybug extends UserBody {
 	/**
 	 * Actions du dernier battement. Jamais nulles depuis l'étape 4.2 (D23) : avant,
 	 * elles n'existaient qu'après le premier battement de l'écran de présentation.

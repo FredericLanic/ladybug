@@ -16,9 +16,8 @@
  */
 package com.kycox.game.engine.view.map;
 
-import com.kycox.game.engine.maze.Maze;
-import com.kycox.game.engine.maze.ScreenBlock;
 import com.kycox.game.launcher.GuiComponent;
+import com.kycox.game.snapshot.MazeSnapshot;
 import com.kycox.game.tools.Position;
 import lombok.Getter;
 
@@ -26,20 +25,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Le contour du labyrinthe, tel qu'il est dessiné : une copie des cases du
- * {@link Maze} dont les bordures sont « nettoyées » pour un beau tracé (pas de
- * double trait entre un mur et son voisin, pas de trait sur le bord extérieur).
+ * Le contour du labyrinthe, tel qu'il est dessiné : les cases de la photo du
+ * labyrinthe ({@link MazeSnapshot}) dont les bordures sont « nettoyées » pour un
+ * beau tracé (pas de double trait entre un mur et son voisin, pas de trait sur
+ * le bord extérieur).
  *
  * <p>Étape 4.4 (« Extract Class ») : cette copie vivait dans {@code ScreenData}
  * et devait être tenue à jour à la main à chaque gomme ou fruit mangé. Elle ne
  * sert plus qu'à la <b>forme</b> des murs ; le contenu des cases (gommes,
- * fruits, téléportations) est lu directement dans le {@link Maze}. Le contour
- * est reconstruit dès que le labyrinthe change de forme (nouveau niveau). Voir
- * {@code doc/patterns/extract-class.md}.</p>
+ * fruits, téléportations) est lu dans la photo du labyrinthe. Le contour est
+ * reconstruit dès que le labyrinthe change de forme (nouveau niveau). Depuis
+ * 4.6c, il est construit à partir du snapshot, avec ses propres cases
+ * ({@link OutlineBlock}). Voir {@code doc/patterns/extract-class.md}.</p>
  */
 @GuiComponent
 public class MazeOutline {
-	private final Map<Position, ScreenBlock> blocks = new HashMap<>();
+	private final Map<Position, OutlineBlock> blocks = new HashMap<>();
 	@Getter
 	private int nbrBlocksByLine;
 	@Getter
@@ -50,8 +51,8 @@ public class MazeOutline {
 	/**
 	 * Met le contour à jour si le labyrinthe a changé de forme, puis le renvoie.
 	 */
-	public MazeOutline of(Maze maze) {
-		if (maze.getLayoutVersion() != builtFromLayoutVersion) {
+	public MazeOutline of(MazeSnapshot maze) {
+		if (maze.layoutVersion() != builtFromLayoutVersion) {
 			rebuild(maze);
 		}
 		return this;
@@ -61,15 +62,15 @@ public class MazeOutline {
 	 * La case dessinée à cette position (en cases, pas en pixels), ou
 	 * {@code null} hors du labyrinthe.
 	 */
-	public ScreenBlock getBlock(Position blockPosition) {
+	public OutlineBlock getBlock(Position blockPosition) {
 		return blocks.get(blockPosition);
 	}
 
-	private void rebuild(Maze maze) {
+	private void rebuild(MazeSnapshot maze) {
 		blocks.clear();
-		maze.getScreenBlocks().forEach(sb -> blocks.put(sb.getCoordinate(), sb.clone()));
-		nbrBlocksByLine = maze.getCurrentLevel().getNbrBlocksByLine();
-		nbrLines = maze.getCurrentLevel().getNbrLines();
+		maze.cells().forEach(cell -> blocks.put(cell.coordinate(), new OutlineBlock(cell)));
+		nbrBlocksByLine = maze.nbrBlocksByLine();
+		nbrLines = maze.nbrLines();
 		for (var x = 0; x < nbrBlocksByLine; x++) {
 			for (var y = 0; y < nbrLines; y++) {
 				var coord = new Position(x, y);
@@ -77,7 +78,7 @@ public class MazeOutline {
 				removeOuterBorders(coord);
 			}
 		}
-		builtFromLayoutVersion = maze.getLayoutVersion();
+		builtFromLayoutVersion = maze.layoutVersion();
 	}
 
 	/**
@@ -104,7 +105,7 @@ public class MazeOutline {
 	 */
 	private void removeBordersSharedWithAWall(Position point) {
 		var screenBlock = getBlock(point);
-		ScreenBlock otherScreenBlock;
+		OutlineBlock otherScreenBlock;
 		if (!screenBlock.isNotAccessible()) {
 			return;
 		}

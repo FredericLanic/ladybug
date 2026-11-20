@@ -21,7 +21,6 @@ import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.constant.contract.GroupGhostForGameView;
 import com.kycox.game.engine.maze.Maze;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +29,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class GhostsGroup implements GroupGhostForGameView {
+public class GhostsGroup {
 	private List<Ghost> ghosts;
 
 	public boolean eatLadybug() {

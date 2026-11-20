@@ -21,11 +21,10 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.font.GameFont;
 import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.constant.contract.DoActionAfterTimer;
-import com.kycox.game.constant.contract.GameModelForViews;
 import com.kycox.game.engine.controller.KeyboardController;
 import com.kycox.game.engine.message.LadybugMessagesBundle;
 import com.kycox.game.engine.model.EventGameModel;
-import com.kycox.game.engine.score.Message;
+import com.kycox.game.constant.game.GameStatus;
 import com.kycox.game.tools.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.engine.view.ghost.GhostView;
@@ -43,6 +42,7 @@ import com.kycox.game.engine.view.map.MazeColors;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.snapshot.GameSnapshot;
 import com.kycox.game.snapshot.GhostSnapshot;
+import com.kycox.game.snapshot.ScoreMessageSnapshot;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,8 +57,10 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
 	@Setter
 	private long durationLadybugNewLife;
-	private transient GameModelForViews gameModelForViews;
-	/** La photo du dernier battement : les fantômes en 4.6b, tout le reste en 4.6c. */
+	/**
+	 * La photo du dernier battement (4.6) : la vue ne voit jamais le modèle
+	 * vivant. {@code null} avant le premier battement.
+	 */
 	private transient GameSnapshot snapshot;
 	private final transient GhostView ghostView;
 	private final transient KeyboardController keyboardController;
@@ -100,35 +102,35 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	private void draw(Graphics g) {
 		var g2d = (Graphics2D) g;
 		drawMaze(g2d);
-		if (gameModelForViews.getLadybug().isNewLife()) {
+		if (snapshot.ladybug().newLife()) {
 			screenBlockView.setColorMaze(MazeColors.COLOR_EXTRA_PAC_LADYBUG);
 			var newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
 
-		if (gameModelForViews.getCurrentProgramStatus().isProgramStarting()) {
+		if (snapshot.is(GameStatus.PROGRAM_STARTING)) {
 			drawOneCenterTextLine(g2d, ladybugMessagesBundle.getMessage("welcome"));
 			drawPresentationGhosts(g2d);
-		} else if (gameModelForViews.getCurrentProgramStatus().isGameAskForceEndGame()) {
+		} else if (snapshot.is(GameStatus.ASK_FORCE_END_GAME)) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
 			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("exitGame")
 					, ladybugMessagesBundle.getMessage("yesNo"));
-		} else if (gameModelForViews.getCurrentProgramStatus().isProgramAskKeepPreviousGameLevel()) {
+		} else if (snapshot.is(GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL)) {
 			drawGhosts(g2d);
 			drawThreeCenterTextLines(g2d, ladybugMessagesBundle.getMessage("continue")
 					, ladybugMessagesBundle.getMessage("previousGame")
 					, ladybugMessagesBundle.getMessage("yesNo"));
-		} else if (gameModelForViews.getCurrentProgramStatus().isGameStarting()) {
+		} else if (snapshot.is(GameStatus.GAME_STARTING)) {
 			drawOneCenterTextLine(g2d, ladybugMessagesBundle.getMessage("getReady"));
-		} else if (gameModelForViews.getCurrentProgramStatus().isLevelStarting()) {
+		} else if (snapshot.is(GameStatus.LEVEL_STARTING)) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
 			var text = ladybugMessagesBundle.getMessage("level")
 					+ " "
-					+ Utils.integerToRoman(gameModelForViews.getCurrentProgramStatus().getNumLevel()).toLowerCase();
+					+ Utils.integerToRoman(snapshot.numLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
-		} else if (gameModelForViews.getCurrentProgramStatus().isProgramPresentation()) {
+		} else if (snapshot.is(GameStatus.PROGRAM_PRESENTATION)) {
 			drawGhosts(g2d);
 			if (localPreferences.isShowHelpForKeys()) {
 				drawCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.keyboard.title")
@@ -159,28 +161,28 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sToStart")
 						, ladybugMessagesBundle.getMessage("f1ForHelp"));
 			}
-		} else if (gameModelForViews.getCurrentProgramStatus().isGameEnding()
-		        || gameModelForViews.getCurrentProgramStatus().isGameEnd()) {
+		} else if (snapshot.is(GameStatus.GAME_ENDING)
+		        || snapshot.is(GameStatus.GAME_END)) {
 			drawGhosts(g2d);
 			var levelText = ladybugMessagesBundle.getMessage("endLevel")
 					+ " "
-			        + Utils.integerToRoman(gameModelForViews.getCurrentProgramStatus().getNumLevel()).toLowerCase();
+			        + Utils.integerToRoman(snapshot.numLevel()).toLowerCase();
 			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("gameOver"), levelText);
-		} else if (gameModelForViews.getCurrentProgramStatus().isLevelEnding()) {
+		} else if (snapshot.is(GameStatus.LEVEL_ENDING)) {
 			drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("nextLevel")
 					, ladybugMessagesBundle.getMessage("getReady"));
-		} else if (gameModelForViews.getLadybug().getStatus() == LadybugStatus.DYING) {
-			ladybugDyingView.inProgress();
+		} else if (snapshot.ladybug().status() == LadybugStatus.DYING) {
+			ladybugDyingView.inProgress(snapshot.ladybug().agonyDuration());
 			drawGhosts(g2d);
 			drawLadybug(g2d, ladybugDyingView);
-		} else if (gameModelForViews.getLadybug().getStatus() == LadybugStatus.DEAD) {
+		} else if (snapshot.ladybug().status() == LadybugStatus.DEAD) {
 			ladybugDyingView.init();
-		} else if (gameModelForViews.getLadybug().getStatus() != LadybugStatus.DEAD) {
+		} else if (snapshot.ladybug().status() != LadybugStatus.DEAD) {
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
 		} else {
-			var msg = "NO DISPLAY FOR STATUS " + gameModelForViews.getCurrentProgramStatus();
+			var msg = "NO DISPLAY FOR STATUS " + snapshot.status();
 			drawOneCenterTextLine(g2d, msg);
 			logger.error(msg);
 		}
@@ -207,15 +209,14 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 
 	/** Largeur du labyrinthe en pixels (étape 4.4 : calculée par la vue). */
 	private int widthInPixels() {
-		return gameModelForViews.getMaze().getCurrentLevel().getNbrBlocksByLine() * GameMainConstants.BLOCK_SIZE;
+		return snapshot.maze().nbrBlocksByLine() * GameMainConstants.BLOCK_SIZE;
 	}
 
 	/** Hauteur du labyrinthe en pixels (étape 4.4 : calculée par la vue). */
 	private int heightInPixels() {
-		return gameModelForViews.getMaze().getNbrLines() * GameMainConstants.BLOCK_SIZE;
+		return snapshot.maze().nbrLines() * GameMainConstants.BLOCK_SIZE;
 	}
 
-	/** Les fantômes sont lus dans la photo du dernier battement (4.6b). */
 	private void drawGhosts(Graphics2D g2d) {
 		var ladybugPosition = snapshot.ladybug().position();
 		var ghosts = snapshot.ghosts();
@@ -238,26 +239,25 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	}
 
 	private void drawLadybug(Graphics2D g2d, LadybugCommun ladybugCommon) {
-		var viewDirection = gameModelForViews.getLadybug().getViewDirection();
-		var getPosition = gameModelForViews.getLadybug().getPosition();
+		var viewDirection = snapshot.ladybug().viewDirection();
+		var getPosition = snapshot.ladybug().position();
 		var image = ladybugCommon.getImage(viewDirection);
 		g2d.drawImage(image, getPosition.x() + 1, getPosition.y() + 1, this);
 	}
 
 	private void drawMaze(Graphics2D g2d) {
-		var ladybugPosition = gameModelForViews.getLadybug().getPosition();
+		var ladybugPosition = snapshot.ladybug().position();
 		for (var y = 0; y < heightInPixels(); y += GameMainConstants.BLOCK_SIZE) {
-			for (var x = 0; x < gameModelForViews.getMaze().getCurrentLevel().getNbrBlocksByLine()
+			for (var x = 0; x < snapshot.maze().nbrBlocksByLine()
 			        * GameMainConstants.BLOCK_SIZE; x += GameMainConstants.BLOCK_SIZE) {
 				var positionScreenBlock = new Position(x, y);
 
 				if ((ladybugPosition.distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
-				        || gameModelForViews.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).anyMatch(
-				                g -> g.getPosition().distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
-				        || !gameModelForViews.getCurrentProgramStatus().isInGame()
-				        || !gameModelForViews.getLevelState().isLitLampMode()) {
-					screenBlockView.display(g2d, gameModelForViews.getMaze(),
-					        gameModelForViews.getLevelState().getLevelRendering(), x, y);
+				        || snapshot.ghosts().stream().filter(g -> !g.computed()).anyMatch(
+				                g -> g.position().distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
+				        || !snapshot.isInGame()
+				        || !snapshot.litLampMode()) {
+					screenBlockView.display(g2d, snapshot.maze(), snapshot.levelRendering(), x, y);
 				}
 
 			}
@@ -290,10 +290,10 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		g2d.setFont(scoreFont);
 		var metr = getFontMetrics(scoreFont);
 		// Affichage des scores incréments
-		for (Message message : gameModelForViews.getGroupMessages().getMessages()) {
-			var x = message.getPosition().x() + GameMainConstants.BLOCK_SIZE / 2 - metr.stringWidth(message.getValue()) / 2;
-			var y = message.getPosition().y() + GameMainConstants.BLOCK_SIZE / 2;
-			g2d.drawString(message.getValue() + message.getMessageType().getEndMessage(), x, y);
+		for (ScoreMessageSnapshot message : snapshot.scoreMessages()) {
+			var x = message.position().x() + GameMainConstants.BLOCK_SIZE / 2 - metr.stringWidth(message.value()) / 2;
+			var y = message.position().y() + GameMainConstants.BLOCK_SIZE / 2;
+			g2d.drawString(message.value() + message.messageType().getEndMessage(), x, y);
 		}
 	}
 
@@ -347,19 +347,15 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		// avant le premier battement, le modèle n'est pas encore connu : fond noir seul.
 		// Une exception ici interromprait tout le dessin de la fenêtre, et les zones
 		// qui ne se redessinent jamais (haut, droite) resteraient blanches (4.1)
-		if (gameModelForViews != null) {
+		if (snapshot != null) {
 			draw(g);
 		}
 	}
 
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
-		Object obj = event.getSource();
-		if (obj instanceof GameModelForViews eventGameModelForViews) {
-			gameModelForViews = eventGameModelForViews;
-			snapshot = event.getSnapshot();
-			repaint();
-		}
+		snapshot = event.getSnapshot();
+		repaint();
 	}
 
 

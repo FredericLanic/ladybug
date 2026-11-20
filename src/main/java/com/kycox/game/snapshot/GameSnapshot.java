@@ -64,7 +64,12 @@ public record GameSnapshot(GameStatus status, int numLevel, int score, int nbrPl
 
 	/** Vrai pendant une partie (et non pendant la présentation ou un changement de niveau). */
 	public boolean isInGame() {
-		return status == GameStatus.IN_GAME;
+		return is(GameStatus.IN_GAME);
+	}
+
+	/** Vrai si la partie est dans ce statut. */
+	public boolean is(GameStatus expected) {
+		return status == expected;
 	}
 
 	/** Vrai si ce son a été demandé pendant ce battement. */

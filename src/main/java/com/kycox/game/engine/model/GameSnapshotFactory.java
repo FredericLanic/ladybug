@@ -66,7 +66,8 @@ public final class GameSnapshotFactory {
 		        ghost.isToBeTeleported(), ghost.getSpeedIndex(), ghost.getMoveStyle(), ghost.getMaximumAttackDist());
 	}
 
-	static MazeSnapshot mazeOf(Maze maze) {
+	/** La photo du labyrinthe seul (sert aussi aux tests du contour des murs). */
+	public static MazeSnapshot mazeOf(Maze maze) {
 		if (maze.getCurrentLevel() == null) {
 			// avant le tout premier niveau préparé
 			return new MazeSnapshot(maze.getLayoutVersion(), 0, 0, java.util.List.of());

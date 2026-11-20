@@ -23,7 +23,6 @@ import com.kycox.game.engine.bodyaction.ghost.GhostActions;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostBehaviour;
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.constant.contract.GhostForController;
 import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.tools.maths.GhostSensitiveBehaviour;
 import com.kycox.game.tools.Utils;
@@ -36,7 +35,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract sealed class Ghost extends UserBody implements GhostForController permits Blinky, Clyde, Inky, Pinky {
+public abstract sealed class Ghost extends UserBody permits Blinky, Clyde, Inky, Pinky {
 	private static final Logger logger = LoggerFactory.getLogger(Ghost.class);
 	@Getter
 	@Setter
@@ -125,7 +124,6 @@ public abstract sealed class Ghost extends UserBody implements GhostForControlle
 		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATED;
 	}
 
-	@Override
 	public boolean isDying() {
 		return getStatus() == GhostStatus.DYING;
 	}
