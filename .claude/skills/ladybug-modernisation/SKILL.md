@@ -49,6 +49,7 @@ Points forts existants à reconnaître, sans les dénigrer :
 - **Rendu du labyrinthe : garder le style à l'identique** (contours bleus fins, coins arrondis, pointillés de gommes) et refaire l'implémentation : autotiling par table, image pré-rendue, `MazeTheme`.
 - **Labyrinthe dynamique** (idée de Hammed, 18/11/2026) : les **quatre variantes** sont retenues (A. portes, B. murs mobiles, C. murs déclenchés par les joueurs, D. labyrinthe généré). Un socle commun (`MutableMaze`, `MazeChangeEvent`, `MazeChange`, `ReachabilityChecker`, `OccupancyRule`) est construit une fois, et les variantes ne diffèrent que par **qui décide** du changement. Prérequis : l'étape 7. La variante C devient un pouvoir configurable (6.7), puis passe par l'hôte en réseau (9.6).
 - **Publier une version** (20/11/2026, C39 à C42) : workflow `maven-release.yml` lancé à la main sur `master` (après une PR `develop` → `master`), `release:prepare` seul, tag `vX.Y.Z`, jar joint à une GitHub Release ; pas de dépôt Maven. « Essai à blanc » coché par défaut. Prochaine version : 0.8.0. Mode d'emploi dans le README.
+- **Étape 4** (20/11/2026) : un `record Position` à nous remplace `java.awt.Point` dans le modèle (C44) ; un `GameSnapshot` dès l'étape 4 (C45) ; deux PR, 4.1–4.3 puis 4.4–4.6 (C46). Chaque sous-étape est un refactoring pur : golden master identique.
 - **Le mode réseau vient en dernier** (étape 9). Il suit une architecture d'**hôte qui fait autorité** : les clients n'envoient que leurs entrées, l'hôte renvoie un `GameSnapshot`. Les étapes précédentes le préparent : listener typé, snapshot, `PlayerInput` par personnage.
 
 ## Ordre des étapes
@@ -161,7 +162,7 @@ Réseau et accès GitHub : la clé `id_ed25519` est enregistrée sur GitHub depu
 - Jamepad (manette Xbox) plante avec `UnsatisfiedLinkError` sur Mac Apple Silicon et fait tomber tout le contexte Spring. Il faut le rendre optionnel (étape 1).
 - Les versions sont incohérentes : pom en Java 16, `MainLadybug` exige 19+, bannière en v0.6.0, CI en JDK 17.
 - Le flag « fantôme joué par un humain » est stocké dans l'enum d'images `GhostsBodyImages` (état global, backlog CTEC1).
-- `GameModel` dépend de Swing (`javax.swing.Timer`) et de `java.util.Observable`, qui est déprécié.
+- `GameModel` ne dépend plus de Swing depuis 4.1 (boucle dans `SwingGameLoop`, démarrée après l'affichage de la fenêtre). Les vues doivent savoir se dessiner **avant le premier battement** (fond noir, rien d'autre) : une exception pendant le dessin interrompt toute la fenêtre et laisse des zones blanches.
 - Le backlog de l'auteur se trouve dans `doc/backlog.txt` (CTEC pour la technique, CFCT pour les fonctionnalités), et ses idées pour le mode 2 joueurs dans `doc/idéePourJeux2Joueurs.txt`.
 
 ## Mettre ce skill à jour
