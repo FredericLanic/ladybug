@@ -49,4 +49,13 @@ public class PlayerInputs {
 	public Optional<PlayerInput> humanGhost() {
 		return ghostsGroup.getHumanGhosts().stream().findFirst().map(ghost -> ghost.getPlayerInput());
 	}
+
+	/**
+	 * Les ordres donnés à ce fantôme, s'il est joué par un humain (étape 5.3).
+	 * Avec plusieurs fantômes humains, chaque joueur écrit dans la boîte du sien.
+	 */
+	public Optional<PlayerInput> ghost(String name) {
+		return ghostsGroup.getHumanGhosts().stream().filter(ghost -> ghost.getName().equals(name)).findFirst()
+		        .map(ghost -> ghost.getPlayerInput());
+	}
 }

@@ -52,10 +52,6 @@ public class GhostsGroup {
 		return (ghosts.stream().anyMatch(g -> g.getStatus() == GhostStatus.DYING));
 	}
 
-	public boolean hasGhostUser() {
-		return ghosts.stream().anyMatch(g -> !g.isComputed());
-	}
-
 	public boolean hasRegeneratedGhost() {
 		return (ghosts.stream().anyMatch(g -> g.getStatus() == GhostStatus.REGENERATED));
 	}
@@ -200,8 +196,26 @@ public class GhostsGroup {
 		setGhostPositionAfterTeleportation(maze);
 	}
 
-	public boolean userGhostHasNoLife() {
-		return ghosts.stream().anyMatch(g -> !g.isComputed() && g.getLeftLifes() <= 0);
+	/**
+	 * Règle C50 (étape 5.3) : un fantôme humain qui n'a plus de vie est rendu à
+	 * l'ordinateur, tant qu'il reste d'autres fantômes humains en vie. Le dernier
+	 * n'est pas rendu : c'est lui qui termine la partie des fantômes.
+	 */
+	public void releaseEliminatedHumanGhosts() {
+		var humans = getHumanGhosts();
+		var eliminated = humans.stream().filter(g -> g.getLeftLifes() <= 0).toList();
+		if (!eliminated.isEmpty() && eliminated.size() < humans.size()) {
+			eliminated.forEach(ghost -> ghost.setComputed(true));
+		}
+	}
+
+	/**
+	 * Vrai quand tous les fantômes joués par des humains sont éliminés (règle C50).
+	 * Avec un seul fantôme humain : dès qu'il n'a plus de vie, comme avant 5.3.
+	 */
+	public boolean allHumanGhostsEliminated() {
+		var humans = getHumanGhosts();
+		return !humans.isEmpty() && humans.stream().allMatch(g -> g.getLeftLifes() <= 0);
 	}
 
 	public void changeGhostCamouflage() {

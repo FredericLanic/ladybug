@@ -37,7 +37,7 @@ import java.util.Optional;
  * @param status         statut de la partie (présentation, en jeu, fin de niveau…)
  * @param numLevel       numéro du niveau
  * @param score          score de la partie
- * @param nbrPlayers     1, ou 2 si un fantôme est joué par un humain
+ * @param nbrPlayers     1 (Ladybug) plus un par fantôme joué par un humain
  * @param ghostLeftLives vies du fantôme humain
  * @param ladybug        Ladybug
  * @param ghosts         les fantômes, dans l'ordre du groupe

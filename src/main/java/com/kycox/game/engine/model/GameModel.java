@@ -186,11 +186,9 @@ public class GameModel implements GameModelForController {
 		return groupGhosts.getLeftLives();
 	}
 
+	/** Ladybug, plus un joueur par fantôme joué par un humain (étape 5.3). */
 	public int getNbrPlayers() {
-		if (groupGhosts.hasGhostUser()) {
-			return 2;
-		}
-		return 1;
+		return 1 + groupGhosts.getHumanGhosts().size();
 	}
 
 	@Override
