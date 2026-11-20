@@ -37,6 +37,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
 import com.kycox.game.engine.view.map.MazeColors;
+import com.kycox.game.engine.view.ghost.GhostPalette;
+import com.kycox.game.constant.ghost.GhostsBodyImages;
+import java.util.List;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.snapshot.GameSnapshot;
 import com.kycox.game.snapshot.GhostSnapshot;
@@ -67,6 +70,11 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	private long newLifeTotalBeats;
 	/** Les murs restent dorés 4 battements, puis normaux 4 battements, etc. */
 	private static final int BLINK_BEATS = 4;
+	/** Trait pointillé entre un fantôme et sa destination (mode debug). */
+	private static final Stroke TARGET_LINE = new BasicStroke(2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0,
+	        new float[] { 6, 6 }, 0);
+	/** Opacité du petit fantôme posé sur la destination (mode debug). */
+	private static final float TARGET_GHOST_OPACITY = 0.75f;
 	/** Le texte « +1 VIE » monte de ce nombre de pixels par battement. */
 	private static final int NEW_LIFE_TEXT_RISE = 1;
 	/**
@@ -235,7 +243,35 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 							, ghost.position().y() + 1 - ghost.maximumAttackDist() + GameMainConstants.BLOCK_SIZE / 2
 							, ghost.maximumAttackDist() * 2
 							, ghost.maximumAttackDist() * 2));
+			drawGhostTargets(g2d, ghosts);
 		}
+	}
+
+	/**
+	 * Mode debug : pour chaque fantôme qui vise une case, un trait pointillé de
+	 * sa couleur jusqu'à cette case, et un petit fantôme de sa couleur posé dessus.
+	 */
+	void drawGhostTargets(Graphics2D g2d, List<GhostSnapshot> ghosts) {
+		var previousStroke = g2d.getStroke();
+		var previousComposite = g2d.getComposite();
+		var half = GameMainConstants.BLOCK_SIZE / 2;
+		var miniSize = GameMainConstants.BLOCK_SIZE / 2;
+		for (var ghost : ghosts) {
+			ghost.targetBlock().ifPresent(block -> {
+				var target = Utils.convertBlockPointToGraphicPoint(block);
+				var targetX = target.x() + half;
+				var targetY = target.y() + half;
+				g2d.setComposite(previousComposite);
+				g2d.setColor(GhostPalette.of(ghost.color()));
+				g2d.setStroke(TARGET_LINE);
+				g2d.drawLine(ghost.position().x() + 1 + half, ghost.position().y() + 1 + half, targetX, targetY);
+				g2d.setComposite(AlphaComposite.SrcOver.derive(TARGET_GHOST_OPACITY));
+				g2d.drawImage(GhostsBodyImages.of(ghost.color()).getImage(), targetX - miniSize / 2,
+				        targetY - miniSize / 2, miniSize, miniSize, this);
+			});
+		}
+		g2d.setStroke(previousStroke);
+		g2d.setComposite(previousComposite);
 	}
 
 	private void drawLadybug(Graphics2D g2d, LadybugCommun ladybugCommon) {
