@@ -174,15 +174,18 @@ public abstract sealed class Ghost extends UserBody permits Blinky, Clyde, Inky,
 		}
 	}
 
+	/**
+	 * Déplacement d'un fantôme joué par un humain, selon cette direction demandée
+	 * (celle de sa boîte aux lettres en jeu, aucune pendant la présentation).
+	 */
 	public void moveGhostUser(Ladybug ladybug, Maze maze, Position ghostRequest) {
-		setUserRequest(ghostRequest);
 		target = null;
 
 		switch (getStatus()) {
 			case DYING -> moveComputedGhost(ladybug, maze);
 			case REGENERATED -> { /* Do nothing */ }
 			case FLASH, SCARED, NORMAL -> {
-				move(maze.getScreenBlock(getPositionBlock()));
+				move(maze.getScreenBlock(getPositionBlock()), ghostRequest);
 				setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 			}
 			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");

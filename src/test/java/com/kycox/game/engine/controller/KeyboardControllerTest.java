@@ -15,6 +15,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import com.kycox.game.constant.game.GameStatus;
 import com.kycox.game.engine.message.GameMessaging;
+import com.kycox.game.input.InputSource;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.testutil.GameDriver;
@@ -37,7 +38,7 @@ class KeyboardControllerTest {
 	void startGame() {
 		game = GameDriver.start(42, saveDirectory);
 		keyboard = new KeyboardController(game.keys(), game.bean(GameProperties.class),
-		        game.bean(LocalPreferences.class), game.bean(GameMessaging.class));
+		        game.bean(LocalPreferences.class), game.bean(GameMessaging.class), game.inputs());
 		game.beatsUntil(GameStatus.PROGRAM_PRESENTATION, 200);
 		game.beat();
 	}
@@ -89,6 +90,7 @@ class KeyboardControllerTest {
 		press(KeyEvent.VK_LEFT);
 		game.beats(30);
 		assertThat(game.model().getLadybug().getPositionBlock().x()).isLessThan(start.x());
+		assertThat(game.inputs().ladybug().lastSource()).contains(InputSource.KEYBOARD_ARROWS);
 	}
 
 	@Test

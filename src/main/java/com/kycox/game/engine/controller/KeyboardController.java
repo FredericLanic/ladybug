@@ -20,6 +20,8 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.input.InputSource;
+import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.launcher.GuiComponent;
 
@@ -33,9 +35,12 @@ public class KeyboardController extends KeyAdapter {
 	/** Réglages de ce poste (aide, son, debug), écrits sans passer par le modèle (4.5). */
 	private final LocalPreferences localPreferences;
 	private final GameMessaging gameMessaging;
+	/** Les ordres de déplacement vont directement au joueur concerné (5.1). */
+	private final PlayerInputs playerInputs;
 
 	public KeyboardController(GameModelForController gameModelForController, GameProperties gameProperties,
-	        LocalPreferences localPreferences, GameMessaging gameMessaging) {
+	        LocalPreferences localPreferences, GameMessaging gameMessaging, PlayerInputs playerInputs) {
+		this.playerInputs = playerInputs;
 		this.gameModelForController = gameModelForController;
 		this.gameProperties = gameProperties;
 		this.localPreferences = localPreferences;
@@ -94,15 +99,15 @@ public class KeyboardController extends KeyAdapter {
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
 			// Mouvement L
-			case KeyEvent.VK_LEFT -> gameModelForController.setLadybugRequest(GameMainConstants.POINT_LEFT);
-			case KeyEvent.VK_RIGHT -> gameModelForController.setLadybugRequest(GameMainConstants.POINT_RIGHT);
-			case KeyEvent.VK_UP -> gameModelForController.setLadybugRequest(GameMainConstants.POINT_UP);
-			case KeyEvent.VK_DOWN -> gameModelForController.setLadybugRequest(GameMainConstants.POINT_DOWN);
+			case KeyEvent.VK_LEFT -> playerInputs.ladybug().request(GameMainConstants.POINT_LEFT, InputSource.KEYBOARD_ARROWS);
+			case KeyEvent.VK_RIGHT -> playerInputs.ladybug().request(GameMainConstants.POINT_RIGHT, InputSource.KEYBOARD_ARROWS);
+			case KeyEvent.VK_UP -> playerInputs.ladybug().request(GameMainConstants.POINT_UP, InputSource.KEYBOARD_ARROWS);
+			case KeyEvent.VK_DOWN -> playerInputs.ladybug().request(GameMainConstants.POINT_DOWN, InputSource.KEYBOARD_ARROWS);
 			// Mouvement du fantôme (joueur 2)
-			case KeyEvent.VK_Z -> gameModelForController.setGhostRequest(GameMainConstants.POINT_UP);
-			case KeyEvent.VK_S -> gameModelForController.setGhostRequest(GameMainConstants.POINT_DOWN);
-			case KeyEvent.VK_Q -> gameModelForController.setGhostRequest(GameMainConstants.POINT_LEFT);
-			case KeyEvent.VK_D -> gameModelForController.setGhostRequest(GameMainConstants.POINT_RIGHT);
+			case KeyEvent.VK_Z -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_UP, InputSource.KEYBOARD_ZQSD));
+			case KeyEvent.VK_S -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_DOWN, InputSource.KEYBOARD_ZQSD));
+			case KeyEvent.VK_Q -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_LEFT, InputSource.KEYBOARD_ZQSD));
+			case KeyEvent.VK_D -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_RIGHT, InputSource.KEYBOARD_ZQSD));
 			// Partie en pause
 			// P en plus de Pause : la touche Pause n'existe pas sur un clavier Mac (C33)
 			case KeyEvent.VK_PAUSE, KeyEvent.VK_P -> gameModelForController.setGameInPause();

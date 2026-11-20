@@ -34,7 +34,7 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 			gameModelManageAction.changeStrategy(gameModeLadybugIsDead);
 		} else if (ladybug.getStatus() == LadybugStatus.DYING) {
 			gameModelManageAction.changeStrategy(gameModeLadybugIsDying);
-		} else if (groupGhosts.userGhostHasNoLife()) {
+		} else if (releaseEliminatedHumanGhostsThenCheck()) {
 			gameModelManageAction.changeStrategy(gameModeGhostIsDead);
 		} else {
 			gameModelManageAction.changeStrategy(gameModeGameIsPlaying);
@@ -42,7 +42,12 @@ public class GameModelGameIsInGame extends AbstratGameModel implements IGameMode
 		gameModelManageAction.execute();
 	}
 
-	public void setGhostRequest(Position ghostRequest) {
-		gameModeGameIsPlaying.setGhostRequest(ghostRequest);
+	/**
+	 * Rend à l'ordinateur les fantômes humains éliminés (s'il en reste d'autres),
+	 * puis dit si tous sont éliminés (règle C50, étape 5.3).
+	 */
+	private boolean releaseEliminatedHumanGhostsThenCheck() {
+		groupGhosts.releaseEliminatedHumanGhosts();
+		return groupGhosts.allHumanGhostsEliminated();
 	}
 }

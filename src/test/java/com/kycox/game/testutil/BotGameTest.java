@@ -37,7 +37,7 @@ class BotGameTest {
 				if (game.status() == GameStatus.IN_GAME) {
 					var direction = bot.decide(game.model());
 					if (direction != null) {
-						game.keys().setLadybugRequest(direction);
+						game.inputs().ladybug().request(direction);
 					}
 				}
 				game.beat();

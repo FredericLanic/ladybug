@@ -11,7 +11,6 @@ import com.kycox.game.engine.model.strategy.AbstratGameModel;
 import com.kycox.game.engine.model.strategy.IGameModelAction;
 import com.kycox.game.tools.GameRandom;
 import com.kycox.game.tools.Utils;
-import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -21,8 +20,6 @@ import org.springframework.stereotype.Component;
 public class GameModelGameIsPlaying extends AbstratGameModel implements IGameModelAction {
 	private static final Logger logger = LoggerFactory.getLogger(GameModelGameIsPlaying.class);
 	private final Fruits fruits;
-	@Setter
-	private Position ghostRequest = GameMainConstants.POINT_ZERO;
 
 	public GameModelGameIsPlaying(Fruits fruits) {
 		this.fruits = fruits;
@@ -171,7 +168,7 @@ public class GameModelGameIsPlaying extends AbstratGameModel implements IGameMod
 
 	private void moveBodies() {
 		ladybug.move(maze);
-		groupGhosts.move(ladybug, maze, ghostRequest);
+		groupGhosts.move(ladybug, maze);
 	}
 
 

@@ -20,7 +20,7 @@ class GameJournalTest {
 	void journalFollowsTheGame() {
 		try (var game = GameDriver.start(42, saveDirectory)) {
 			GameDriverTest.startLevelOne(game);
-			game.keys().setLadybugRequest(GameMainConstants.POINT_LEFT);
+			game.inputs().ladybug().request(GameMainConstants.POINT_LEFT);
 			game.beats(100);
 
 			var lines = game.journal().lines();

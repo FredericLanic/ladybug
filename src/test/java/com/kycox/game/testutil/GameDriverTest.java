@@ -58,7 +58,7 @@ class GameDriverTest {
 			startLevelOne(game);
 			var before = game.model().getLadybug().getPositionBlock();
 
-			game.keys().setLadybugRequest(GameMainConstants.POINT_LEFT); // flèche gauche
+			game.inputs().ladybug().request(GameMainConstants.POINT_LEFT); // flèche gauche
 			game.beats(30);
 
 			assertThat(game.model().getLadybug().getPositionBlock()).isNotEqualTo(before);

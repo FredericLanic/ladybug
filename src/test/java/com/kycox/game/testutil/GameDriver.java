@@ -1,5 +1,6 @@
 package com.kycox.game.testutil;
 
+import com.kycox.game.input.PlayerInputs;
 import java.nio.file.Path;
 
 import org.springframework.boot.Banner;
@@ -56,6 +57,11 @@ public final class GameDriver implements AutoCloseable {
 	/** Les « touches » du jeu, comme les utilise le clavier. */
 	public GameModelForController keys() {
 		return gameModel;
+	}
+
+	/** Les ordres de déplacement des joueurs (étape 5.1), comme les utilisent clavier et manette. */
+	public PlayerInputs inputs() {
+		return context.getBean(PlayerInputs.class);
 	}
 
 	/** Un composant du jeu (par exemple {@code GameProperties}). */

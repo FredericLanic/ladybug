@@ -49,7 +49,8 @@
   <tr><td>2</td><td>Lanceur et XML externe <i>(fait le 19/11/2026)</i></td><td>Un démarrage clair, une configuration modifiable sans recompiler</td><td>Spring Boot, configuration externalisée</td></tr>
   <tr><td>3</td><td>Tests <i>(terminée le 20/11/2026)</i></td><td>Un filet de sécurité avant de refactoriser</td><td>JUnit 5</td></tr>
   <tr><td>4</td><td>Découplage du modèle</td><td>Un modèle indépendant de Swing, base du réseau</td><td>Game Loop, Value Object, Snapshot</td></tr>
-  <tr><td>5</td><td><code>PlayerInput</code></td><td>Un contrôleur par personnage, plusieurs fantômes joueurs</td><td>Strategy</td></tr>
+  <tr><td>5</td><td><code>PlayerInput</code></td><td>Un contrôleur par personnage, plusieurs fantômes joueurs (fait)</td><td>Command / boîte aux lettres</td></tr>
+  <tr><td>5 bis</td><td>Outils de qualité</td><td>ArchUnit, JaCoCo, SonarQube Cloud</td><td>Tests d'architecture</td></tr>
   <tr><td>6</td><td>Fantômes configurables</td><td>Un fantôme = assemblage de capacités, perception</td><td>Composition, Strategy</td></tr>
   <tr><td>7</td><td>Niveaux et rendu du labyrinthe</td><td>Niveaux en fichiers, rendu lisible et thématisable</td><td>Builder, autotiling, Flyweight</td></tr>
   <tr><td>7 bis</td><td><b>Labyrinthe dynamique</b> (idée de Hammed)</td><td>Portes, murs mobiles, niveaux générés ; murs déclenchés par les joueurs avec les pouvoirs (6.7, 9.6)</td><td>Observer, Command, Strategy, Builder</td></tr>
@@ -301,15 +302,17 @@
 <div class="box"><b>Étape terminée le 20/11/2026.</b> Le modèle n'importe plus ni AWT ni Swing ; les vues ne lisent plus que la photo de chaque battement (Graphify : 23 liens des vues vers le modèle → 1) ; 215 tests ; golden master identique à chaque sous-étape. Dette ouverte : D25 (clignotement de la vie gagnée), D26 (blocage intermittent au lancement).</div>
 
 <h2><span class="num">5</span>Un contrôleur par personnage (<code>PlayerInput</code>)</h2>
-<p class="sub"><b class="id">5.1</b> Interface <code>PlayerInput</code> (« quelle direction veut prendre ce personnage »), avec trois implémentations :</p>
-<ul>
-  <li><code>KeyboardInput</code> (flèches ou ZQSD) ;</li>
-  <li><code>XboxInput</code> ;</li>
-  <li><code>AiInput</code> (les déplacements IA actuels).</li>
-</ul>
-<p class="sub"><b class="id">5.2</b> Chaque <code>Ladybug</code>/<code>Ghost</code> porte son <code>PlayerInput</code>. Ce changement <b>supprime</b> le flag <code>computed</code> stocké sur l'enum <code>GhostsBodyImages</code> (CTEC1), ainsi que la <code>ghostRequest</code> unique de <code>GhostsGroup</code>.</p>
-<p class="sub"><b class="id">5.3</b> Possibilité d'avoir <b>plusieurs fantômes joués par des humains</b> en local (préparation du réseau).</p>
-<p class="sub"><b class="id">5.4</b> Un joueur est associé à <b>un fantôme précis</b>, pas à un type.</p>
+<div class="box"><b>Analyse du 20/11/2026</b> : la demande de Ladybug était portée par Ladybug ; celle du fantôme humain traversait 4 classes de stratégie et valait pour tous les fantômes humains. Décisions : IA laissée dans <code>Ghost</code> jusqu'à l'étape 6 ; un seul fantôme jouable en local pendant l'étape 5 ; règle C50 ; golden master identique à chaque sous-étape.</div>
+<p class="sub"><b class="id">5.1</b> <code>PlayerInput</code>, la boîte aux lettres d'un joueur ; clavier et manette y écrivent sans passer par le modèle ; l'appareil qui pilote (<code>InputSource</code>) est noté dans le journal du jeu. <b>Fait le 20/11/2026.</b></p>
+<p class="sub"><b class="id">5.2</b> Chaque fantôme a sa boîte ; la demande unique qui traversait les stratégies disparaît. <b>Fait le 20/11/2026.</b></p>
+<p class="sub"><b class="id">5.3</b> Plusieurs fantômes humains possibles dans le modèle ; règle C50 : un fantôme humain éliminé revient à l'ordinateur, la partie s'arrête quand tous sont éliminés. <b>Fait le 20/11/2026.</b></p>
+<p class="sub"><b class="id">5.4</b> Un joueur est associé à <b>un fantôme précis</b> (même tirage au hasard qu'avant). <b>Fait le 20/11/2026.</b></p>
+<div class="box"><b>Étape terminée le 20/11/2026.</b> 247 tests ; robot : 174 statuts, aucune exception ; Graphify : package <code>input</code>, aucun cycle. D26 (blocage au lancement) élucidée et corrigée en route. Suite : étape 5 bis (outils de qualité), puis I20 (choisir son fantôme, plusieurs fantômes en local).</div>
+
+<h2><span class="num">5 bis</span>Outils de qualité du code</h2>
+<p class="sub"><b class="id">5b.1</b> <b>ArchUnit</b> : les règles d'architecture des étapes 4 et 5 deviennent des tests (vues = snapshot, modèle sans AWT ni Swing, boîtes aux lettres, pas de cycle).</p>
+<p class="sub"><b class="id">5b.2</b> <b>JaCoCo + SonarQube Cloud</b> (gratuit pour un dépôt public) : couverture, bugs, duplication, dette, commentaire sur chaque PR.</p>
+<p class="sub"><b class="id">5b.3</b> Plus tard ou à l'étape 8 : Spotless + <code>.editorconfig</code>, SpotBugs ou PMD, CodeQL, Error Prone, OpenRewrite.</p>
 
 <h2><span class="num">6</span>Fantômes 100 % configurables (assemblage de capacités)</h2>
 <p class="sub"><b class="id">6.1</b> <code>GhostMoveStrategy</code> : <code>ChaseStrategy</code> (ex-AGGRESSIVE), <code>AmbushStrategy</code> (ex-SMART), <code>WanderStrategy</code> (ex-CALM). Le code est repris de <code>Ghost</code>.</p>

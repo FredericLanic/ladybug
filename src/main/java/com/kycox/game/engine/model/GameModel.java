@@ -186,11 +186,9 @@ public class GameModel implements GameModelForController {
 		return groupGhosts.getLeftLives();
 	}
 
+	/** Ladybug, plus un joueur par fantôme joué par un humain (étape 5.3). */
 	public int getNbrPlayers() {
-		if (groupGhosts.hasGhostUser()) {
-			return 2;
-		}
-		return 1;
+		return 1 + groupGhosts.getHumanGhosts().size();
 	}
 
 	@Override
@@ -251,22 +249,13 @@ public class GameModel implements GameModelForController {
 	}
 
 	@Override
-	public void setGhostRequest(Position ghostRequest) {
-		manageActionContext.setGhostRequest(ghostRequest);
-	}
-
-	@Override
-	public void setLadybugRequest(Position point) {
-		ladybug.setUserRequest(point);
-	}
-
-	@Override
 	public void setMultiPlayers(boolean isMuliPlayers) {
 		groupGhosts.setAllComputed();
 		if (isMuliPlayers) {
 			// même tirage qu'avant 4.2 (une couleur parmi quatre, dans le même ordre) :
-			// les parties rejouées avec une même graine restent identiques
-			groupGhosts.setHumanPlayer(Utils.randomEnum(GhostColor.class));
+			// les parties rejouées avec une même graine restent identiques ; depuis 5.4,
+			// il désigne un seul fantôme précis
+			groupGhosts.chooseHumanGhost(Utils.randomEnum(GhostColor.class)).ifPresent(groupGhosts::setHumanPlayer);
 		}
 		gameMessaging.addPlayerMode(isMuliPlayers);
 	}

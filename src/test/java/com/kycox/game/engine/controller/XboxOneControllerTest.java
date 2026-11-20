@@ -13,6 +13,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.kycox.game.body.GhostsGroup;
+import com.kycox.game.body.ghost.Blinky;
 import com.kycox.game.body.ladybug.Ladybug;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.constant.game.GameMainConstants;
@@ -22,6 +24,9 @@ import com.kycox.game.engine.controller.xboxone.PadState;
 import com.kycox.game.engine.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
+import com.kycox.game.input.InputSource;
+import com.kycox.game.input.PlayerInput;
+import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.snapshot.GameSnapshot;
@@ -40,13 +45,23 @@ class XboxOneControllerTest {
 	private final GameProperties properties = mock(GameProperties.class);
 	private final LocalPreferences preferences = new LocalPreferences();
 	private final Ladybug ladybug = mock(Ladybug.class);
+	/** La boîte aux lettres de Ladybug (5.1) : la manette y écrit directement. */
+	private final PlayerInput ladybugInput = new PlayerInput(() -> "Ladybug");
+	/** La boîte aux lettres du fantôme humain (5.2) : la manette 2 y écrit directement. */
+	private final PlayerInput ghostInput = new PlayerInput(() -> "Blinky");
+	private final GhostsGroup ghostsGroup = mock(GhostsGroup.class);
 	private XboxOneController controller;
 	/** La photo de la partie que reçoit la manette (4.6) : rien de spécial par défaut. */
 	private GameSnapshot snapshot = Snapshots.inGame(Snapshots.ladybug(false, false), List.of());
 
 	@BeforeEach
 	void setUp() {
-		controller = new XboxOneController(padManager, messaging, properties, preferences, ladybugPad, ghostPad);
+		when(ladybug.getPlayerInput()).thenReturn(ladybugInput);
+		var humanGhost = mock(Blinky.class);
+		when(humanGhost.getPlayerInput()).thenReturn(ghostInput);
+		when(ghostsGroup.getHumanGhosts()).thenReturn(List.of(humanGhost));
+		controller = new XboxOneController(padManager, messaging, properties, preferences,
+		        new PlayerInputs(ladybug, ghostsGroup), ladybugPad, ghostPad);
 		when(model.getLadybug()).thenReturn(ladybug);
 		when(model.getUnComputedGhost()).thenReturn(Optional.empty());
 	}
@@ -99,26 +114,29 @@ class XboxOneControllerTest {
 	void leftStickMovesLadybugInEveryDirection() {
 		when(model.isInGame()).thenReturn(true);
 		press(Pad.connected().leftStick(-1f, 0));
-		verify(model).setLadybugRequest(GameMainConstants.POINT_LEFT);
+		assertThat(ladybugInput.requested()).isEqualTo(GameMainConstants.POINT_LEFT);
 		press(Pad.connected().leftStick(1f, 0));
-		verify(model).setLadybugRequest(GameMainConstants.POINT_RIGHT);
+		assertThat(ladybugInput.requested()).isEqualTo(GameMainConstants.POINT_RIGHT);
 		press(Pad.connected().leftStick(0, 1f)); // convention de PadState : positif = haut
-		verify(model).setLadybugRequest(GameMainConstants.POINT_UP);
+		assertThat(ladybugInput.requested()).isEqualTo(GameMainConstants.POINT_UP);
 		press(Pad.connected().leftStick(0, -1f));
-		verify(model).setLadybugRequest(GameMainConstants.POINT_DOWN);
+		assertThat(ladybugInput.requested()).isEqualTo(GameMainConstants.POINT_DOWN);
+		assertThat(ladybugInput.lastSource()).contains(InputSource.XBOX_PAD_1);
 	}
 
 	@Test
 	void secondPadMovesTheHumanGhost() {
 		when(model.isInGame()).thenReturn(true);
 		press(PadState.disconnected(), Pad.connected().rightStick(-1f, 0).build());
-		verify(model).setGhostRequest(GameMainConstants.POINT_LEFT);
+		assertThat(ghostInput.requested()).isEqualTo(GameMainConstants.POINT_LEFT);
 		press(PadState.disconnected(), Pad.connected().leftStick(1f, 0).build());
-		verify(model).setGhostRequest(GameMainConstants.POINT_RIGHT);
+		assertThat(ghostInput.requested()).isEqualTo(GameMainConstants.POINT_RIGHT);
 		press(PadState.disconnected(), Pad.connected().leftStick(0, 1f).build());
-		verify(model).setGhostRequest(GameMainConstants.POINT_UP);
+		assertThat(ghostInput.requested()).isEqualTo(GameMainConstants.POINT_UP);
 		press(PadState.disconnected(), Pad.connected().leftStick(0, -1f).build());
-		verify(model).setGhostRequest(GameMainConstants.POINT_DOWN);
+		assertThat(ghostInput.requested()).isEqualTo(GameMainConstants.POINT_DOWN);
+		assertThat(ghostInput.lastSource()).contains(InputSource.XBOX_PAD_2);
+		assertThat(ladybugInput.hasRequest()).as("la manette 2 ne pilote pas Ladybug").isFalse();
 	}
 
 	@Test
@@ -187,7 +205,7 @@ class XboxOneControllerTest {
 		when(model.isInGame()).thenReturn(true);
 		press(PadState.disconnected(), PadState.disconnected());
 		assertThat(preferences.isAtLeastOneXboxOneConnected()).isFalse();
-		verify(model, never()).setLadybugRequest(any());
-		verify(model, never()).setGhostRequest(any());
+		assertThat(ladybugInput.hasRequest()).isFalse();
+		assertThat(ghostInput.hasRequest()).isFalse();
 	}
 }

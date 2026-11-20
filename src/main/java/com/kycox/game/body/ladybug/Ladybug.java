@@ -70,8 +70,8 @@ public final class Ladybug extends UserBody {
 		}
 		var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 		if (isPerfectOnABlock()) {
-			if (canMove(userRequest, currentScreenBlock)) {
-				viewDirection = userRequest;
+			if (canMove(userRequest(), currentScreenBlock)) {
+				viewDirection = userRequest();
 			}
 			move(currentScreenBlock);
 		}
@@ -83,8 +83,8 @@ public final class Ladybug extends UserBody {
 		if (getStatus() == LadybugStatus.DEAD) {
 			return ladybugActions;
 		}
-		if (userRequest.equals(new Position(getDirection().x(), -getDirection().y()))) {
-			setDirection(userRequest);
+		if (userRequest().equals(new Position(getDirection().x(), -getDirection().y()))) {
+			setDirection(userRequest());
 			viewDirection = getDirection();
 		}
 		// calcule uniquement lorsque ladybug rempli le block
@@ -103,7 +103,7 @@ public final class Ladybug extends UserBody {
 		setPosition(startPosition);
 		setDirection(GameMainConstants.POINT_ZERO);
 		viewDirection = GameMainConstants.POINT_ZERO;
-		setUserRequest(GameMainConstants.POINT_ZERO);
+		playerInput.reset();
 		setStatus(LadybugStatus.NORMAL);
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}

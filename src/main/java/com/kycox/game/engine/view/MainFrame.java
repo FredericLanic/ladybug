@@ -82,9 +82,12 @@ public class MainFrame extends JFrame implements MainGraphicStructure {
 	private void init() {
 		setTitle("Ladybug by Kycox");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		// sur l'écran de la souris, dans la place disponible (2.8)
+		// sur l'écran de la souris, dans la place disponible (2.8). Pas de
+		// setExtendedState(MAXIMIZED_BOTH) : redondant avec ces bornes, il faisait
+		// mesurer les marges de l'écran par macOS pendant l'affichage, sous le verrou
+		// de la fenêtre ; un mouvement de souris au même instant bloquait le jeu
+		// (interblocage AWT / AppKit, D26).
 		setBounds(screen.getUsableBounds());
-		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setUndecorated(true);
 		var monIcone = new ImageIcon(getClass().getResource("/images/ghosts/color/oxiane.png"));
 		setIconImage(monIcone.getImage());

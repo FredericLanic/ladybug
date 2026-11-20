@@ -20,12 +20,14 @@ import com.kycox.game.tools.Position;
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.body.ghost.GhostColor;
 import com.kycox.game.body.ladybug.Ladybug;
+import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.engine.maze.Maze;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -51,10 +53,6 @@ public class GhostsGroup {
 		return (ghosts.stream().anyMatch(g -> g.getStatus() == GhostStatus.DYING));
 	}
 
-	public boolean hasGhostUser() {
-		return ghosts.stream().anyMatch(g -> !g.isComputed());
-	}
-
 	public boolean hasRegeneratedGhost() {
 		return (ghosts.stream().anyMatch(g -> g.getStatus() == GhostStatus.REGENERATED));
 	}
@@ -71,9 +69,30 @@ public class GhostsGroup {
 		ghosts.stream().filter(g -> !g.isComputed()).forEach(Ghost::manageNewLife);
 	}
 
-	public void move(Ladybug ladybug, Maze maze, Position ghostRequest) {
+	/**
+	 * En jeu : l'ordinateur déplace ses fantômes, chaque fantôme humain suit les
+	 * ordres de sa boîte aux lettres (étape 5.2).
+	 */
+	public void move(Ladybug ladybug, Maze maze) {
 		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, maze));
-		ghosts.stream().filter(g -> !g.isComputed()).forEach(g -> g.moveGhostUser(ladybug, maze, ghostRequest));
+		ghosts.stream().filter(g -> !g.isComputed())
+		        .forEach(g -> g.moveGhostUser(ladybug, maze, g.getPlayerInput().requested()));
+	}
+
+	/**
+	 * Présentation et question « reprendre l'ancien niveau ? » : les fantômes
+	 * humains bougent sans suivre d'ordre, mais leurs ordres sont gardés pour la
+	 * partie.
+	 */
+	public void moveWithoutPlayerRequests(Ladybug ladybug, Maze maze) {
+		ghosts.stream().filter(Ghost::isComputed).forEach(g -> g.moveComputedGhost(ladybug, maze));
+		ghosts.stream().filter(g -> !g.isComputed())
+		        .forEach(g -> g.moveGhostUser(ladybug, maze, GameMainConstants.POINT_ZERO));
+	}
+
+	/** Les fantômes joués par des humains, dans l'ordre du groupe. */
+	public List<Ghost> getHumanGhosts() {
+		return ghosts.stream().filter(g -> !g.isComputed()).toList();
 	}
 
 	/** Tous les fantômes sont joués par l'ordinateur (mode un joueur). */
@@ -81,9 +100,28 @@ public class GhostsGroup {
 		ghosts.forEach(ghost -> ghost.setComputed(true));
 	}
 
-	/** Le fantôme de cette couleur est joué par le deuxième joueur (étape 4.2). */
-	public void setHumanPlayer(GhostColor color) {
-		ghosts.stream().filter(ghost -> ghost.getColor() == color).forEach(ghost -> ghost.setComputed(false));
+	/**
+	 * Ce fantôme précis est joué par un humain (étape 5.4 : un joueur, un fantôme,
+	 * et non plus tous les fantômes d'une couleur). Sa boîte aux lettres est
+	 * vidée : il ne garde aucun ordre d'une ancienne partie (étape 5.2).
+	 */
+	public void setHumanPlayer(Ghost ghost) {
+		ghost.setComputed(false);
+		ghost.getPlayerInput().reset();
+	}
+
+	/**
+	 * Le fantôme donné au deuxième joueur à partir de la couleur tirée au hasard :
+	 * le premier de cette couleur (même résultat qu'avant 5.4 pour une même
+	 * graine) ; s'il n'y en a pas (XML sans cette couleur), un autre fantôme, au
+	 * lieu d'aucun.
+	 */
+	public Optional<Ghost> chooseHumanGhost(GhostColor drawnColor) {
+		if (ghosts.isEmpty()) {
+			return Optional.empty();
+		}
+		return ghosts.stream().filter(ghost -> ghost.getColor() == drawnColor).findFirst()
+		        .or(() -> Optional.of(ghosts.get(drawnColor.ordinal() % ghosts.size())));
 	}
 
 	public void setActions(Ladybug ladybug, Maze maze) {
@@ -171,8 +209,26 @@ public class GhostsGroup {
 		setGhostPositionAfterTeleportation(maze);
 	}
 
-	public boolean userGhostHasNoLife() {
-		return ghosts.stream().anyMatch(g -> !g.isComputed() && g.getLeftLifes() <= 0);
+	/**
+	 * Règle C50 (étape 5.3) : un fantôme humain qui n'a plus de vie est rendu à
+	 * l'ordinateur, tant qu'il reste d'autres fantômes humains en vie. Le dernier
+	 * n'est pas rendu : c'est lui qui termine la partie des fantômes.
+	 */
+	public void releaseEliminatedHumanGhosts() {
+		var humans = getHumanGhosts();
+		var eliminated = humans.stream().filter(g -> g.getLeftLifes() <= 0).toList();
+		if (!eliminated.isEmpty() && eliminated.size() < humans.size()) {
+			eliminated.forEach(ghost -> ghost.setComputed(true));
+		}
+	}
+
+	/**
+	 * Vrai quand tous les fantômes joués par des humains sont éliminés (règle C50).
+	 * Avec un seul fantôme humain : dès qu'il n'a plus de vie, comme avant 5.3.
+	 */
+	public boolean allHumanGhostsEliminated() {
+		var humans = getHumanGhosts();
+		return !humans.isEmpty() && humans.stream().allMatch(g -> g.getLeftLifes() <= 0);
 	}
 
 	public void changeGhostCamouflage() {
