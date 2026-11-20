@@ -10,6 +10,7 @@ import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.EventGameModel;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.preferences.LocalPreferences;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
 
@@ -32,15 +33,19 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	private final GameProperties gameProperties;
 	private final XboxRequest xboxOneLadybug;
 	private final XboxRequest xboxOneUnComputedGhost;
+	/** Réglages de ce poste (aide, son, manette branchée), écrits sans passer par le modèle (4.5). */
+	private final LocalPreferences localPreferences;
 
 	public XboxOneController(XBoxOneControllerManager padManager,
 							 GameMessaging gameMessaging,
 							 GameProperties gameProperties,
+							 LocalPreferences localPreferences,
 							 XboxRequest xboxOneLadybug,
 							 XboxRequest xboxOneUnComputedGhost) {
 		this.padManager = padManager;
 		this.gameMessaging = gameMessaging;
 		this.gameProperties = gameProperties;
+		this.localPreferences = localPreferences;
 		this.xboxOneLadybug = xboxOneLadybug;
 		this.xboxOneUnComputedGhost = xboxOneUnComputedGhost;
 	}
@@ -69,7 +74,7 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 
 	private void manageBothXboxesOneCommon() {
 		if (xboxOneLadybug.isDpadUp() || xboxOneUnComputedGhost.isDpadUp()) {
-			gameModelForController.startStopSoundActive();
+			gameMessaging.addSoundMode(localPreferences.toggleSound());
 		}
 		if (xboxOneLadybug.isDpadDown() || xboxOneUnComputedGhost.isDpadDown()) {
 			gameProperties.changeLadybugSkin();
@@ -119,7 +124,7 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		if (xboxOneLadybug.isYButton() || xboxOneUnComputedGhost.isYButton()) {
 			gameModelForController.setMultiPlayers(true);
 		}
-		gameModelForController
+		localPreferences
 		        .setShowHelpForXboxes(xboxOneLadybug.isBackButton() || xboxOneUnComputedGhost.isBackButton());
 	}
 
@@ -165,7 +170,7 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	 */
 	void handleRequests(GameModelForController model) {
 		gameModelForController = model;
-		gameModelForController.setAtLeastOneXboxOneConnected(isOneXboxOneConnected());
+		localPreferences.setAtLeastOneXboxOneConnected(isOneXboxOneConnected());
 		setProgramMessagesAccordingXboxOneConnectionOrDisconnection();
 		manageBothXboxesOneCommon();
 		if (gameModelForController.isProgramPresentation()) {

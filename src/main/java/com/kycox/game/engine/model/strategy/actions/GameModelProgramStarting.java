@@ -10,7 +10,6 @@ public class GameModelProgramStarting extends AbstratGameModel implements IGameM
 	@Override
 	public void programBeat() {
 		initGame();
-		setSoundActive(false);
 		currentGameStatus.setProgramStarting();
 		tickScheduler.schedule(GameMainConstants.PROGRAM_STARTING_MILLISECONDS,
 		        currentGameStatus::setProgramPresentationStart);

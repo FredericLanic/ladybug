@@ -9,6 +9,7 @@ import com.kycox.game.constant.ladybug.LadybugStatus;
 import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.CurrentProgramStatus;
+import com.kycox.game.engine.model.LevelState;
 import com.kycox.game.engine.score.GroupMessages;
 import com.kycox.game.engine.score.Score;
 import com.kycox.game.engine.sound.NewSounds;
@@ -16,7 +17,6 @@ import com.kycox.game.tools.GameRandom;
 import com.kycox.game.tools.timer.SuperPowerTimer;
 import com.kycox.game.tools.timer.TickScheduler;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class AbstratGameModel {
@@ -46,9 +46,10 @@ public class AbstratGameModel {
 	@Getter
 	@Autowired
 	protected Maze maze;
+	/** Mode lampe et style de dessin du niveau (4.5). */
 	@Getter
-	@Setter
-	protected boolean soundActive = true;
+	@Autowired
+	protected LevelState levelState;
 	@Autowired
 	protected SuperPowerTimer superPowerTimer;
 	/** Actions différées, décomptées en battements par la boucle du jeu (3.5.1b). */
@@ -68,13 +69,23 @@ public class AbstratGameModel {
 	}
 
 	/**
+	 * Prépare le labyrinthe du niveau, puis tire le style de dessin des murs. Le
+	 * tirage vient juste après les méga-gommes, comme avant 4.5 : l'ordre des
+	 * tirages au hasard ne change pas.
+	 */
+	protected void prepareMaze(int numLevel, boolean isInGame) {
+		maze.setLevelMap(numLevel, isInGame);
+		levelState.drawLevelRendering(isInGame);
+	}
+
+	/**
 	 * Initialise les variables au lancement du programme
 	 */
 	protected void initGame() {
 		// initialisation du numéro du niveau; incrémenté dans initLevel
 		currentGameStatus.setNumLevel(1);
 		// utilisé juste pour l'affichage de la fenêtre d'initialisation
-		maze.setLevelMap(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
+		prepareMaze(currentGameStatus.getNumLevel(), currentGameStatus.isInGame());
 		// 3 vies par défaut
 		ladybug.setLeftLifes(GameMainConstants.NBR_INIT_LIFE);
 		// ladybug n'est pas en vie lors de l'initialisation du jeu

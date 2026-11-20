@@ -22,6 +22,7 @@ import com.kycox.game.constant.contract.NewSoundsForGameSounds;
 import com.kycox.game.engine.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
+import com.kycox.game.preferences.LocalPreferences;
 
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -37,6 +38,12 @@ import java.util.Objects;
 public class GameSounds implements ApplicationListener<EventGameModel> {
 	private static final Logger logger = LoggerFactory.getLogger(GameSounds.class);
 	private NewSoundsForGameSounds newSounds;
+	/** Réglages de ce poste : son coupé ou non (4.5). */
+	private final LocalPreferences localPreferences;
+
+	public GameSounds(LocalPreferences localPreferences) {
+		this.localPreferences = localPreferences;
+	}
 
 	/**
 	 * Précharge tous les sons au démarrage du jeu, pour qu'aucun chargement ne
@@ -83,7 +90,7 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 		Object obj = event.getSource();
 		if (obj instanceof GameModelForSounds gameModelForSounds) {
 			newSounds = gameModelForSounds.getNewSounds();
-			if (gameModelForSounds.isSoundActive()) {
+			if (localPreferences.isSoundActive()) {
 				playSounds();
 			} else {
 				stopAllSounds();

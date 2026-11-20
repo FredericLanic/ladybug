@@ -18,6 +18,7 @@ package com.kycox.game.constant.contract;
 
 import com.kycox.game.body.ghost.Ghost;
 import com.kycox.game.engine.maze.Maze;
+import com.kycox.game.engine.model.LevelState;
 import com.kycox.game.engine.score.GroupMessages;
 import com.kycox.game.engine.score.Score;
 
@@ -40,13 +41,11 @@ public interface GameModelForViews extends GameCommon {
 
 	Maze getMaze();
 
+	LevelState getLevelState();
+
 	Optional<Ghost> getUnComputedGhost();
 
-	boolean isAtLeastOneXboxOneConnected();
 
-	boolean isShowHelpForKeys();
 
-	boolean isShowHelpForXboxes();
 
-	boolean isDebugMode();
 }

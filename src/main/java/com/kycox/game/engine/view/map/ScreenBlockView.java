@@ -21,6 +21,7 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.level.LevelImages492;
 import com.kycox.game.constant.fruits.Fruits;
+import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.engine.view.map.rendering.DisplayRendering;
@@ -33,7 +34,7 @@ import java.awt.*;
 public class ScreenBlockView {
 
 	@Setter
-	private Color colorMaze = GameMainConstants.BLUE_LADYBUG;
+	private Color colorMaze = MazeColors.BLUE_LADYBUG;
 
 	private final Fruits fruits;
 
@@ -46,9 +47,9 @@ public class ScreenBlockView {
 		this.displayRendering = displayRendering;
 	}
 
-	public void display(Graphics2D g2d, Maze maze, int x, int y) {
+	public void display(Graphics2D g2d, Maze maze, LevelRendering levelRendering, int x, int y) {
 		g2d.setColor(colorMaze);
-		displayRendering.display(g2d, maze, x, y);
+		displayRendering.display(g2d, maze, levelRendering, x, y);
 		displayTeleportation(g2d, maze, x, y);
 		displayPoints(g2d, maze, x, y);
 		displayFruit(g2d, maze, x, y);

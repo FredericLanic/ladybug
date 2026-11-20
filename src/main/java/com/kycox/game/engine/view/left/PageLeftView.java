@@ -24,6 +24,7 @@ import com.kycox.game.constant.contract.MainGraphicStructure;
 import com.kycox.game.engine.model.EventGameModel;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
+import com.kycox.game.preferences.LocalPreferences;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +33,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 @GuiComponent
 public class PageLeftView extends JPanel implements ApplicationListener<EventGameModel>, MainGraphicStructure {
 	private transient GameModelForViews gameModelForViews;
+	/** Réglages de ce poste : le mode debug (4.5). */
+	private final transient LocalPreferences localPreferences;
+
+	public PageLeftView(LocalPreferences localPreferences) {
+		this.localPreferences = localPreferences;
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -40,7 +47,7 @@ public class PageLeftView extends JPanel implements ApplicationListener<EventGam
 		setFocusable(false);
 		setBackground(Color.BLACK);
 		super.paintComponent(g);
-		if (gameModelForViews != null && gameModelForViews.isDebugMode()) {
+		if (gameModelForViews != null && localPreferences.isDebugMode()) {
 			draw(g);
 		}
 	}

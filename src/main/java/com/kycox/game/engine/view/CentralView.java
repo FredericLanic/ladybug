@@ -40,6 +40,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
+import com.kycox.game.engine.view.map.MazeColors;
+import com.kycox.game.preferences.LocalPreferences;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,13 +63,17 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	private final transient LadybugView ladybugView;
 	private final transient ScreenBlockView screenBlockView;
 	private final transient LadybugMessagesBundle ladybugMessagesBundle;
+	/** Réglages de ce poste (aide, manette, debug), lus sans passer par le modèle (4.5). */
+	private final transient LocalPreferences localPreferences;
 
 	public CentralView(GhostView ghostView,
 					   KeyboardController keyboardController,
 					   LadybugDyingView ladybugDyingView,
 					   LadybugView ladybugView,
 					   ScreenBlockView screenBlockView,
-					   LadybugMessagesBundle ladybugMessagesBundle)  {
+					   LadybugMessagesBundle ladybugMessagesBundle,
+					   LocalPreferences localPreferences)  {
+		this.localPreferences = localPreferences;
 		this.ghostView = ghostView;
 		this.keyboardController = keyboardController;
 		this.ladybugDyingView = ladybugDyingView;
@@ -79,7 +85,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	@Override
 	public void doActionAfterTimer(int nbrAction) {
 		switch (nbrAction) {
-			case 0 -> screenBlockView.setColorMaze(GameMainConstants.BLUE_LADYBUG);
+			case 0 -> screenBlockView.setColorMaze(MazeColors.BLUE_LADYBUG);
 			default -> logger.debug("no number " + nbrAction + " action");
 		}
 	}
@@ -92,7 +98,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		var g2d = (Graphics2D) g;
 		drawMaze(g2d);
 		if (gameModelForViews.getLadybug().isNewLife()) {
-			screenBlockView.setColorMaze(GameMainConstants.COLOR_EXTRA_PAC_LADYBUG);
+			screenBlockView.setColorMaze(MazeColors.COLOR_EXTRA_PAC_LADYBUG);
 			var newLiveTimer = new WaitAndDoActionAfterTimer();
 			newLiveTimer.launch(durationLadybugNewLife, this, 0);
 		}
@@ -121,7 +127,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 			drawOneCenterTextLine(g2d, text);
 		} else if (gameModelForViews.getCurrentProgramStatus().isProgramPresentation()) {
 			drawGhosts(g2d);
-			if (gameModelForViews.isShowHelpForKeys()) {
+			if (localPreferences.isShowHelpForKeys()) {
 				drawCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.keyboard.title")
 						, ladybugMessagesBundle.getMessage("help.keyboard.sound")
 						, ladybugMessagesBundle.getMessage("help.keyboard.ladybug.skin")
@@ -134,7 +140,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 						, ladybugMessagesBundle.getMessage("help.keyboard.multi.player")
 						, ladybugMessagesBundle.getMessage("help.keyboard.pause")
 						, ladybugMessagesBundle.getMessage("help.keyboard.escape"));
-			} else if (gameModelForViews.isShowHelpForXboxes()) {
+			} else if (localPreferences.isShowHelpForXboxes()) {
 				drawCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.xbox.title")
 						, ladybugMessagesBundle.getMessage("help.xbox.sound")
 						, ladybugMessagesBundle.getMessage("help.xbox.ladybug.skin")
@@ -143,7 +149,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 						, ladybugMessagesBundle.getMessage("help.xbox.ladybug.move")
 						, ladybugMessagesBundle.getMessage("help.xbox.ghost.move")
 						, ladybugMessagesBundle.getMessage("help.xbox.multi.player"));
-			} else if (gameModelForViews.isAtLeastOneXboxOneConnected()) {
+			} else if (localPreferences.isAtLeastOneXboxOneConnected()) {
 				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sOrAToStart")
 						, ladybugMessagesBundle.getMessage("f1OrViewForHelp"));
 			} else {
@@ -214,10 +220,10 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		        .filter(ghost -> ghost.getPosition().distance(ladybugPosition) <= 4 * GameMainConstants.BLOCK_SIZE || !ghost.isComputed()
 		                || gameModelForViews.getGroupGhosts().getGhosts().stream().anyMatch(gc -> !gc.isComputed() && ghost.getPosition().distance(gc.getPosition()) <= 4 * GameMainConstants.BLOCK_SIZE)
 		                || !gameModelForViews.getCurrentProgramStatus().isInGame()
-		                || !gameModelForViews.getMaze().isLitLampMode())
+		                || !gameModelForViews.getLevelState().isLitLampMode())
 		        .forEach(g -> g2d.drawImage(ghostView.getImage(g), g.getPosition().x() + 1, g.getPosition().y() + 1, this));
 
-		if (gameModelForViews.isDebugMode()) {
+		if (localPreferences.isDebugMode()) {
 			g2d.setColor(Color.RED);
 			gameModelForViews.getGroupGhosts()
 					.getGhosts()
@@ -248,8 +254,9 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 				        || gameModelForViews.getGroupGhosts().getGhosts().stream().filter(g -> !g.isComputed()).anyMatch(
 				                g -> g.getPosition().distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
 				        || !gameModelForViews.getCurrentProgramStatus().isInGame()
-				        || !gameModelForViews.getMaze().isLitLampMode()) {
-					screenBlockView.display(g2d, gameModelForViews.getMaze(), x, y);
+				        || !gameModelForViews.getLevelState().isLitLampMode()) {
+					screenBlockView.display(g2d, gameModelForViews.getMaze(),
+					        gameModelForViews.getLevelState().getLevelRendering(), x, y);
 				}
 
 			}

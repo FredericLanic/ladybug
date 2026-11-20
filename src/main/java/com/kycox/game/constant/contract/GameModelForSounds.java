@@ -19,5 +19,4 @@ package com.kycox.game.constant.contract;
 public interface GameModelForSounds {
 	NewSoundsForGameSounds getNewSounds();
 
-	boolean isSoundActive();
 }

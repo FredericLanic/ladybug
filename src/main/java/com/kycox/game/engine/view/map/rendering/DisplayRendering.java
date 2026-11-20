@@ -2,6 +2,7 @@ package com.kycox.game.engine.view.map.rendering;
 
 import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.engine.maze.Maze;
+import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.engine.view.map.MazeOutline;
 import com.kycox.game.launcher.GuiComponent;
 
@@ -23,8 +24,8 @@ public class DisplayRendering {
 		renderings.put(LevelRendering.TILES_RENDERING_REDLINES, tilesRenderingRedLines);
 	}
 
-	public void display(Graphics2D g2d, Maze maze, int x, int y) {
-		renderings.get(maze.getLevelRendering()).displayScreenBlockBorders(g2d, mazeOutline.of(maze), x, y);
+	public void display(Graphics2D g2d, Maze maze, LevelRendering levelRendering, int x, int y) {
+		renderings.get(levelRendering).displayScreenBlockBorders(g2d, mazeOutline.of(maze), x, y);
 	}
 
 }

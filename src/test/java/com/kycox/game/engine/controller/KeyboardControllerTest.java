@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import com.kycox.game.constant.game.GameStatus;
+import com.kycox.game.engine.message.GameMessaging;
+import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.properties.GameProperties;
 import com.kycox.game.testutil.GameDriver;
 
@@ -34,9 +36,15 @@ class KeyboardControllerTest {
 	@BeforeEach
 	void startGame() {
 		game = GameDriver.start(42, saveDirectory);
-		keyboard = new KeyboardController(game.keys(), game.bean(GameProperties.class));
+		keyboard = new KeyboardController(game.keys(), game.bean(GameProperties.class),
+		        game.bean(LocalPreferences.class), game.bean(GameMessaging.class));
 		game.beatsUntil(GameStatus.PROGRAM_PRESENTATION, 200);
 		game.beat();
+	}
+
+	/** Réglages de ce poste : depuis 4.5, hors du modèle. */
+	private LocalPreferences preferences() {
+		return game.bean(LocalPreferences.class);
 	}
 
 	@AfterEach
@@ -124,16 +132,16 @@ class KeyboardControllerTest {
 	@Test
 	void f1ShowsTheHelpWhileHeldDown() {
 		press(KeyEvent.VK_F1);
-		assertThat(game.model().isShowHelpForKeys()).isTrue();
+		assertThat(preferences().isShowHelpForKeys()).isTrue();
 		release(KeyEvent.VK_F1);
-		assertThat(game.model().isShowHelpForKeys()).isFalse();
+		assertThat(preferences().isShowHelpForKeys()).isFalse();
 	}
 
 	@Test
 	void f2SwitchesTheSound() {
-		var before = game.model().isSoundActive();
+		var before = preferences().isSoundActive();
 		press(KeyEvent.VK_F2);
-		assertThat(game.model().isSoundActive()).isNotEqualTo(before);
+		assertThat(preferences().isSoundActive()).isNotEqualTo(before);
 	}
 
 	@Test
@@ -155,9 +163,9 @@ class KeyboardControllerTest {
 	@Test
 	void f6SwitchesTheLampModeInGame() {
 		startLevelOne();
-		var before = game.model().getMaze().isLitLampMode();
+		var before = game.model().getLevelState().isLitLampMode();
 		press(KeyEvent.VK_F6);
-		assertThat(game.model().getMaze().isLitLampMode()).isNotEqualTo(before);
+		assertThat(game.model().getLevelState().isLitLampMode()).isNotEqualTo(before);
 	}
 
 	@Test
@@ -170,8 +178,8 @@ class KeyboardControllerTest {
 
 	@Test
 	void enterSwitchesTheDebugMode() {
-		var before = game.model().isDebugMode();
+		var before = preferences().isDebugMode();
 		press(KeyEvent.VK_ENTER);
-		assertThat(game.model().isDebugMode()).isNotEqualTo(before);
+		assertThat(preferences().isDebugMode()).isNotEqualTo(before);
 	}
 }

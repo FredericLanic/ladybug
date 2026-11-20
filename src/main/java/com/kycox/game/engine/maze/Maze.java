@@ -18,13 +18,11 @@ package com.kycox.game.engine.maze;
 
 import com.kycox.game.tools.Position;
 import com.kycox.game.body.ladybug.Ladybug;
-import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.constant.contract.LevelStructure;
 import com.kycox.game.engine.maze.utils.CheckScreenBlockBorders;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.UnitDijkstra;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -40,7 +38,8 @@ import java.util.stream.IntStream;
  * <p>Étape 4.4 : ancien {@code ScreenData}, découpé par un « Extract Class ».
  * Il ne connaît plus ni les pixels ni la copie des cases servant au dessin des
  * murs : c'est {@code MazeOutline}, côté vue, qui la construit. Voir
- * {@code doc/patterns/extract-class.md}.</p>
+ * {@code doc/patterns/extract-class.md}. Depuis 4.5, le mode lampe et le style
+ * de dessin sont dans {@code LevelState}.</p>
  */
 @Component
 public final class Maze {
@@ -48,9 +47,6 @@ public final class Maze {
 	private LevelStructure currentLevel;
 	private List<ScreenBlock> dataScreenBlocks = new ArrayList<>();
 	private int initNbrBlocksWithPoint = 0;
-	@Getter
-	@Setter
-	private boolean litLampMode = false;
 	private final ManageLevel manageLevel;
 
 	/**
@@ -59,9 +55,6 @@ public final class Maze {
 	 */
 	@Getter
 	private int layoutVersion = 0;
-
-	@Getter
-	private LevelRendering levelRendering;
 
 	public Maze(ManageLevel manageLevel) {
 		this.manageLevel = manageLevel;
@@ -172,10 +165,6 @@ public final class Maze {
 						.filter(b -> b.getCoordinate().equals(m.getKey()))
 				        .forEach(sb -> sb.addTeleportation(m.getValue()));
 			}
-
-			levelRendering = LevelRendering.getRandomizeLevelRendering();
-		} else {
-			levelRendering = LevelRendering.getDefaultLevelRendering();
 		}
 		initNbrBlocksWithPoint = getNbrBlocksWithPoint();
 		layoutVersion++;
