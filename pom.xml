@@ -17,6 +17,10 @@
 
 	<properties>
 		<java.version>21</java.version>
+		<!-- PIT (3.5.5) : réglables en ligne de commande, par exemple -Dpit.threads=2 pour la CI -->
+		<pit.threads>4</pit.threads>
+		<pit.timeoutFactor>1.25</pit.timeoutFactor>
+		<pit.excludedTests>com.kycox.game.NoTestExcluded</pit.excludedTests>
 		<application.name>Ladybug by Kykox</application.name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>com.kycox.game.Application</start-class>
@@ -120,7 +124,11 @@
 						<jvmArg>-Xshare:off</jvmArg>
 						<jvmArg>-javaagent:${org.mockito:mockito-core:jar}</jvmArg>
 					</jvmArgs>
-					<threads>4</threads>
+					<threads>${pit.threads}</threads>
+					<timeoutFactor>${pit.timeoutFactor}</timeoutFactor>
+					<excludedTestClasses>
+						<param>${pit.excludedTests}</param>
+					</excludedTestClasses>
 					<timestampedReports>false</timestampedReports>
 					<outputFormats>
 						<format>HTML</format>
