@@ -381,6 +381,7 @@ Les variantes ne diffèrent que par **qui décide** du changement, sur le même 
 - `images/_inWork` déplacé hors de `src`.
 
 8.4 **Documentation finale** : `ARCHITECTURE.md` complet, `package-info.java`, README technique (« pour les contributeurs »). Relecture du point de vue d'un développeur qui découvre le projet (le test « Jeff »). Le graphe Graphify final, comparé à celui de l'étape 0, illustre le chemin parcouru.
+8.5 *(idée I18, 20/11/2026, à décider)* **Un cœur sans Spring, en modules Maven**, pour préparer une version Android : `ladybug-core` (Java pur : règles, modèle, `Position`, Dijkstra, `GameSnapshot`, tests et golden master), `ladybug-desktop` (Spring Boot, XML, Swing ou JavaFX), plus tard `ladybug-android` (libGDX). Le Spring du modèle est surtout cosmétique : 39 fichiers sur 42 n'ont qu'un `@Component` ; restent `ApplicationEventPublisher` (remplacé par le snapshot en 4.6), `MessageSource`, deux `@Value`, deux `@PostConstruct`.
 
 ## Étape 9 : mode réseau (plus tard, progressivement)
 Architecture : **un hôte qui fait autorité**.
@@ -397,7 +398,8 @@ Architecture : **un hôte qui fait autorité**.
 
 ## Étape 10 : optionnel
 - Packaging natif avec `jpackage`.
-- Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4.
+- Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4 (**idée I17**, Frédéric, 20/11/2026). Depuis 4.3, le modèle n'importe plus ni AWT ni Swing ; resteraient à refaire les vues (24 fichiers, ~2 000 lignes), les images et la police, le clavier, la boucle, l'écran et la fenêtre. Avec le `GameSnapshot` (4.6), une vue se résume à « dessiner un snapshot » ; le profil Spring permettrait de faire cohabiter deux interfaces pendant la migration.
+- **Version Android** (**idée I18**, Frédéric, 20/11/2026) : avec libGDX (même code d'affichage pour PC et Android), sur le cœur sans Spring de 8.5 ; écran tactile, sons Android, langage Java 17 côté Android (à vérifier le moment venu). Question pour l'étape 6 : lire la configuration des fantômes sur Android, le XML Spring restant le format PC (C01).
 
 ---
 

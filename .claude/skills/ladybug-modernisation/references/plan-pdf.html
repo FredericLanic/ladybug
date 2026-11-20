@@ -375,6 +375,7 @@
   <li><code>images/_inWork</code> déplacé hors de <code>src</code>.</li>
 </ul>
 <p class="sub"><b class="id">8.4</b> <b>Documentation finale</b> : <code>ARCHITECTURE.md</code> complet, <code>package-info.java</code>, README technique (« pour les contributeurs »). Relecture du point de vue d'un développeur qui découvre le projet (le test « Jeff »). Le graphe Graphify final, comparé à celui de l'étape 0, illustre le chemin parcouru.</p>
+<p class="sub"><b class="id">8.5</b> <i>(idée I18, à décider)</i> Un cœur sans Spring, en modules Maven (<code>ladybug-core</code>, <code>ladybug-desktop</code>, plus tard <code>ladybug-android</code>) : 39 des 42 fichiers du modèle n'ont qu'un <code>@Component</code>.</p>
 
 <h2><span class="num">9</span>Mode réseau <span class="tag">plus tard, progressivement</span></h2>
 <div class="box net">
@@ -390,7 +391,8 @@ Architecture : <b>un hôte qui fait autorité</b>. L'hôte fait tourner le seul 
 <h2><span class="num">10</span>Optionnel</h2>
 <ul>
   <li>Packaging natif avec <code>jpackage</code>.</li>
-  <li>Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4.</li>
+  <li>Interface JavaFX ou libGDX, facilitée par le découplage de l'étape 4 (<b>I17</b>) : depuis 4.3, le modèle n'importe plus ni AWT ni Swing ; avec le <code>GameSnapshot</code>, une vue se résume à « dessiner un snapshot ».</li>
+  <li><b>Version Android</b> (<b>I18</b>) : libGDX sur le cœur sans Spring de 8.5 ; écran tactile ; configuration des fantômes à lire autrement que par le XML Spring (question pour l'étape 6).</li>
 </ul>
 
 <h2>Questions ouvertes <span class="tag">à reprendre plus tard, sans blocage</span></h2>
