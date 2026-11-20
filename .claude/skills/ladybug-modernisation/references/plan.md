@@ -312,7 +312,13 @@ Risques : le passage aux tics change le rythme ressenti (conversion exacte, robo
 - supprime la `ghostRequest` unique de `GhostsGroup`.
 
 5.3 **Fait le 20/11/2026** : le modèle accepte plusieurs fantômes humains (`getNbrPlayers`, `PlayerInputs.ghost(nom)`) ; règle **C50** : un fantôme humain sans vie revient à l'ordinateur, la partie des fantômes s'arrête quand tous sont éliminés. Écran et touches inchangés jusqu'à I20. Énoncé d'origine : possibilité d'avoir **plusieurs fantômes joués par des humains** en local (préparation du réseau).
-5.4 Un joueur est associé à **un fantôme précis**, pas à un type.
+5.4 **Fait le 20/11/2026** : `setHumanPlayer(Ghost)` ; le tirage d'une couleur (inchangé, golden master identique) désigne le premier fantôme de cette couleur, ou un autre si le XML n'en a pas (avant : aucun fantôme humain). Énoncé d'origine : un joueur est associé à **un fantôme précis**, pas à un type.
+
+## Étape 5 bis : outils de qualité du code (décidée le 20/11/2026)
+Après l'étape 5, avant I20 et l'étape 6. Existant : JUnit 5, golden master, robot, PIT (68 %), CI sur 3 systèmes, Graphify à la main, alertes Dependabot ; SonarQube utilisé en 2019 puis abandonné. Manquent : analyse statique, style commun (fins de ligne mélangées), couverture publiée à chaque PR, règles d'architecture vérifiées, analyse de sécurité.
+5b.1 **ArchUnit** : tests d'architecture (vues = snapshot + événement ; modèle sans `java.awt`/`javax.swing` ; seuls les contrôleurs et `input` écrivent dans les boîtes aux lettres ; pas de cycle).
+5b.2 **JaCoCo + SonarQube Cloud** (gratuit pour un dépôt public) : couverture, bugs, duplication, dette, commentaire sur chaque PR.
+5b.3 Plus tard ou à l'étape 8 : Spotless + `.editorconfig`, SpotBugs ou PMD, CodeQL, Error Prone, OpenRewrite.
 
 ## Étape 6 : fantômes 100 % configurables (assemblage de capacités)
 6.1 `GhostMoveStrategy` : `ChaseStrategy` (ex-AGGRESSIVE), `AmbushStrategy` (ex-SMART), `WanderStrategy` (ex-CALM). Le code est repris de `Ghost`.
