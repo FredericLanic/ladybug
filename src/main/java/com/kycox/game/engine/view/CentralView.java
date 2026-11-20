@@ -20,12 +20,10 @@ import com.kycox.game.tools.Position;
 import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.font.GameFont;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.constant.contract.DoActionAfterTimer;
 import com.kycox.game.engine.controller.KeyboardController;
 import com.kycox.game.engine.message.LadybugMessagesBundle;
 import com.kycox.game.engine.model.EventGameModel;
 import com.kycox.game.constant.game.GameStatus;
-import com.kycox.game.tools.timer.WaitAndDoActionAfterTimer;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.engine.view.ghost.GhostView;
 import com.kycox.game.engine.view.ladybug.LadybugCommun;
@@ -49,14 +47,28 @@ import java.awt.*;
 import java.io.Serial;
 
 @GuiComponent
-public class CentralView extends JPanel implements ApplicationListener<EventGameModel>, DoActionAfterTimer {
+public class CentralView extends JPanel implements ApplicationListener<EventGameModel> {
 	private static final Logger logger = LoggerFactory.getLogger(CentralView.class);
 	@Serial
 	private static final long serialVersionUID = 1L;
 	private final Font defaultFont = GameFont.PACFONT.getDefaultFont();
 	private final Font scoreFont = new Font("CrackMan", Font.BOLD, 14);
+	/** Durée de l'effet « vie gagnée » (celle du son), en millisecondes. */
 	@Setter
 	private long durationLadybugNewLife;
+	/**
+	 * Battements restants de l'effet « vie gagnée » (murs dorés qui clignotent,
+	 * texte « +1 VIE »). Décompté à la réception de chaque photo, et non au
+	 * dessin : le signal « vie gagnée » ne dure qu'un battement et pouvait tomber
+	 * entre deux dessins (D25).
+	 */
+	private long newLifeBeatsLeft;
+	/** Durée totale de l'effet en cours, en battements. */
+	private long newLifeTotalBeats;
+	/** Les murs restent dorés 4 battements, puis normaux 4 battements, etc. */
+	private static final int BLINK_BEATS = 4;
+	/** Le texte « +1 VIE » monte de ce nombre de pixels par battement. */
+	private static final int NEW_LIFE_TEXT_RISE = 1;
 	/**
 	 * La photo du dernier battement (4.6) : la vue ne voit jamais le modèle
 	 * vivant. {@code null} avant le premier battement.
@@ -87,14 +99,6 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		this.ladybugMessagesBundle = ladybugMessagesBundle;
 	}
 
-	@Override
-	public void doActionAfterTimer(int nbrAction) {
-		switch (nbrAction) {
-			case 0 -> screenBlockView.setColorMaze(MazeColors.BLUE_LADYBUG);
-			default -> logger.debug("no number " + nbrAction + " action");
-		}
-	}
-
 	/**
 	 * FIXME : même remarque que dans le modèle du jeu; appliquer un design pattern
 	 * strategy; ça devient un peu dificile à lire
@@ -102,11 +106,6 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 	private void draw(Graphics g) {
 		var g2d = (Graphics2D) g;
 		drawMaze(g2d);
-		if (snapshot.ladybug().newLife()) {
-			screenBlockView.setColorMaze(MazeColors.COLOR_EXTRA_PAC_LADYBUG);
-			var newLiveTimer = new WaitAndDoActionAfterTimer();
-			newLiveTimer.launch(durationLadybugNewLife, this, 0);
-		}
 
 		if (snapshot.is(GameStatus.PROGRAM_STARTING)) {
 			drawOneCenterTextLine(g2d, ladybugMessagesBundle.getMessage("welcome"));
@@ -181,6 +180,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 			drawLadybug(g2d, ladybugView);
 			drawGhosts(g2d);
 			drawScoresIncrement(g2d);
+			drawNewLifeText(g2d);
 		} else {
 			var msg = "NO DISPLAY FOR STATUS " + snapshot.status();
 			drawOneCenterTextLine(g2d, msg);
@@ -257,7 +257,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 				                g -> g.position().distance(positionScreenBlock) <= 3.5 * GameMainConstants.BLOCK_SIZE)
 				        || !snapshot.isInGame()
 				        || !snapshot.litLampMode()) {
-					screenBlockView.display(g2d, snapshot.maze(), snapshot.levelRendering(), x, y);
+					screenBlockView.display(g2d, snapshot.maze(), snapshot.levelRendering(), x, y, isWallHighlightOn());
 				}
 
 			}
@@ -352,9 +352,60 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		}
 	}
 
+	/**
+	 * Une vie gagnée lance l'effet pour la durée du son ; sinon, un battement de
+	 * moins (un battement = {@link GameMainConstants#PACE} ms).
+	 */
+	private void updateNewLifeEffect() {
+		if (snapshot.ladybug().newLife()) {
+			newLifeTotalBeats = Math.max(1, (durationLadybugNewLife + GameMainConstants.PACE - 1) / GameMainConstants.PACE);
+			newLifeBeatsLeft = newLifeTotalBeats;
+		} else if (newLifeBeatsLeft > 0) {
+			newLifeBeatsLeft--;
+		}
+	}
+
+	/** Vrai pendant toute la durée de l'effet « vie gagnée ». */
+	boolean isNewLifeEffectOn() {
+		return newLifeBeatsLeft > 0;
+	}
+
+	/** Battements écoulés depuis la vie gagnée. */
+	private long newLifeElapsedBeats() {
+		return newLifeTotalBeats - newLifeBeatsLeft;
+	}
+
+	/** Vrai pendant les phases allumées du clignotement : murs dorés. */
+	boolean isWallHighlightOn() {
+		return isNewLifeEffectOn() && (newLifeElapsedBeats() / BLINK_BEATS) % 2 == 0;
+	}
+
+	/**
+	 * Texte doré « +1 VIE » au-dessus de Ladybug, qui monte et s'efface pendant
+	 * l'effet, comme les messages de score (D25).
+	 */
+	private void drawNewLifeText(Graphics2D g2d) {
+		if (!isNewLifeEffectOn()) {
+			return;
+		}
+		var text = ladybugMessagesBundle.getMessage("newLife");
+		var opacity = (float) newLifeBeatsLeft / newLifeTotalBeats;
+		var position = snapshot.ladybug().position();
+		var metrics = getFontMetrics(scoreFont);
+		var x = position.x() + GameMainConstants.BLOCK_SIZE / 2 - metrics.stringWidth(text) / 2;
+		var y = position.y() - (int) (newLifeElapsedBeats() * NEW_LIFE_TEXT_RISE);
+		var previous = g2d.getComposite();
+		g2d.setComposite(AlphaComposite.SrcOver.derive(opacity));
+		g2d.setFont(scoreFont);
+		g2d.setColor(MazeColors.NEW_LIFE_GOLD);
+		g2d.drawString(text, x, y);
+		g2d.setComposite(previous);
+	}
+
 	@Override
 	public void onApplicationEvent(EventGameModel event) {
 		snapshot = event.getSnapshot();
+		updateNewLifeEffect();
 		repaint();
 	}
 
