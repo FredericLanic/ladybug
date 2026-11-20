@@ -295,9 +295,10 @@
 <p class="sub"><b class="id">4.1</b> Boucle du jeu sortie du modèle (<code>SwingGameLoop</code>). <b>Fait le 20/11/2026</b> : D07 corrigée ; fin des zones blanches au lancement.</p>
 <p class="sub"><b class="id">4.2</b> Couleur du fantôme sans image dans le modèle ; flag « humain » porté par le fantôme ; D23.</p>
 <p class="sub"><b class="id">4.3</b> <code>record Position</code> immuable à la place de <code>java.awt.Point</code> (D21).</p>
-<p class="sub"><b class="id">4.4</b> Couper <code>ScreenData</code> : terrain de jeu d'un côté, affichage de l'autre.</p>
-<p class="sub"><b class="id">4.5</b> État de jeu séparé des préférences d'affichage locales.</p>
-<p class="sub"><b class="id">4.6</b> <b><code>GameSnapshot</code></b> (records) lu par les vues, les sons et les tests : base du réseau.</p>
+<p class="sub"><b class="id">4.4</b> Couper <code>ScreenData</code> : <code>Maze</code> (le jeu) et <code>MazeOutline</code> (le contour des murs, côté vue). <b>Fait le 20/11/2026</b>.</p>
+<p class="sub"><b class="id">4.5</b> <code>LevelState</code> (lampe, style des murs) séparé de <code>LocalPreferences</code> (son, aide, debug, manette). <b>Fait le 20/11/2026</b>.</p>
+<p class="sub"><b class="id">4.6</b> <b><code>GameSnapshot</code></b> (records) lu par les vues, les sons, la manette et les tests : base du réseau. <b>Fait le 20/11/2026</b> (4.6a à 4.6c) : 9 contrats de lecture supprimés.</p>
+<div class="box"><b>Étape terminée le 20/11/2026.</b> Le modèle n'importe plus ni AWT ni Swing ; les vues ne lisent plus que la photo de chaque battement (Graphify : 23 liens des vues vers le modèle → 1) ; 215 tests ; golden master identique à chaque sous-étape. Dette ouverte : D25 (clignotement de la vie gagnée), D26 (blocage intermittent au lancement).</div>
 
 <h2><span class="num">5</span>Un contrôleur par personnage (<code>PlayerInput</code>)</h2>
 <p class="sub"><b class="id">5.1</b> Interface <code>PlayerInput</code> (« quelle direction veut prendre ce personnage »), avec trois implémentations :</p>
