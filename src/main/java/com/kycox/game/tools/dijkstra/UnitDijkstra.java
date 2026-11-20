@@ -16,11 +16,11 @@
  */
 package com.kycox.game.tools.dijkstra;
 
-import java.awt.Point;
+import com.kycox.game.tools.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kycox.game.level.ScreenBlock;
+import com.kycox.game.engine.maze.ScreenBlock;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,21 +29,15 @@ import lombok.Setter;
  * Valeur unitaire lors du parcours de l'algorithme Dijkstra
  *
  */
+@Setter
+@Getter
 public class UnitDijkstra {
-	@Getter
-	@Setter
-	private Point coordinate;
+	private Position coordinate;
 	/**
 	 * Valeurs des poids : 999_999_999 : jamais calculé à : initialisation
 	 */
-	@Getter
-	@Setter
 	private int distance;
-	@Getter
-	@Setter
 	UnitDijkstra previousUnitDijkstra;
-	@Getter
-	@Setter
 	ScreenBlock screenBlock;
 
 	/**
@@ -58,13 +52,13 @@ public class UnitDijkstra {
 	}
 
 	/**
-	 * D�tricote le résultat obtenu
+	 * Détricote le résultat obtenu
 	 *
 	 * @return une liste de point à suivre pour aller du point A au point B (unités
 	 *         GRAPHIQUE)
 	 */
-	public List<Point> getShorterWay() {
-		List<Point> lstPoint = new ArrayList<>();
+	public List<Position> getShorterWay() {
+		List<Position> lstPoint = new ArrayList<>();
 		if (getDistance() != 0) {
 			lstPoint.addAll(previousUnitDijkstra.getShorterWay());
 		}
@@ -77,7 +71,7 @@ public class UnitDijkstra {
 	 */
 	@Override
 	public String toString() {
-		var toString = new StringBuilder("coord: (").append(coordinate.x).append(",").append(coordinate.y)
+		var toString = new StringBuilder("coord: (").append(coordinate.x()).append(",").append(coordinate.y())
 		        .append(")\n");
 		if (getPreviousUnitDijkstra() != null) {
 			toString.append(getPreviousUnitDijkstra().toString());

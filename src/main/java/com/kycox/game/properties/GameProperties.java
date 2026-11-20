@@ -17,8 +17,9 @@
 package com.kycox.game.properties;
 
 import jakarta.annotation.PostConstruct;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -26,7 +27,7 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:ladybug.properties")
 public class GameProperties {
-	private static final Log logger = LogFactory.getLog(GameProperties.class);
+	private static final Logger logger = LoggerFactory.getLogger(GameProperties.class);
 	private static final String TRUE_PROPERTY = "1";
 	private static final String FALSE_PROPERTY = "0";
 
@@ -34,13 +35,14 @@ public class GameProperties {
 	private String ghostHat;
 	@Value( "${ghosts.headband}" )
 	private String ghostsHeadband;
+	@Getter
 	@Value( "${ladybug.color}" )
 	private String ladybugColor;
 	@Value( "${ladybug.skin}" )
 	private String ladybugSkin;
 
 	public void changeGhostHat() {
-		if (hasHatSkin()) {
+		if (hasGhostHat()) {
 			ghostHat = FALSE_PROPERTY;
 		} else {
 			ghostHat = TRUE_PROPERTY;
@@ -65,20 +67,17 @@ public class GameProperties {
 
 	private void displayPropertiesInLog() {
 		logger.info("Game Properties");
-		logger.info("Ladybug color:" + getLadybugColor());
-		logger.info("Ladybug skin:" + hasLadybugSkin());
-		logger.info("Ghost headband:" + hasGhostHeadBand());
-	}
-
-	public String getLadybugColor() {
-		return ladybugColor;
+		logger.info("Ladybug color (unused): " + getLadybugColor());
+		logger.info("Ladybug skin: " + hasLadybugSkin());
+		logger.info("Ghost headband: " + hasGhostHeadBand());
+		logger.info("Ghost hat: " + hasGhostHat());
 	}
 
 	public boolean hasGhostHeadBand() {
 		return ghostsHeadband.equals(TRUE_PROPERTY);
 	}
 
-	public boolean hasHatSkin() {
+	public boolean hasGhostHat() {
 		return ghostHat.equals(TRUE_PROPERTY);
 	}
 

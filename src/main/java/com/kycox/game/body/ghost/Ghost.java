@@ -16,38 +16,48 @@
  */
 package com.kycox.game.body.ghost;
 
-import com.kycox.game.action.ghost.GhostActions;
-import com.kycox.game.body.UserBody;
+import com.kycox.game.tools.Position;
 import com.kycox.game.body.ladybug.Ladybug;
-import com.kycox.game.constant.Constants;
+import com.kycox.game.body.UserBody;
+import com.kycox.game.engine.bodyaction.ghost.GhostActions;
+import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostBehaviour;
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.constant.ghost.image.GhostsBodyImages;
-import com.kycox.game.contract.GhostForController;
-import com.kycox.game.contract.GhostForView;
-import com.kycox.game.level.ScreenData;
-import com.kycox.game.maths.GhostSensitiveBehaviour;
+import com.kycox.game.engine.maze.Maze;
+import com.kycox.game.tools.maths.GhostSensitiveBehaviour;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.tools.dijkstra.Dijkstra;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Ghost extends UserBody implements GhostForController, GhostForView {
-	private static final Log logger = LogFactory.getLog(Ghost.class);
+public abstract sealed class Ghost extends UserBody permits Blinky, Clyde, Inky, Pinky {
+	private static final Logger logger = LoggerFactory.getLogger(Ghost.class);
 	@Getter
 	@Setter
 	private GhostBehaviour behaviour;
 	@Getter
 	@Setter
-	private GhostsBodyImages color;
+	private GhostColor color;
+	/**
+	 * Joué par l'ordinateur (vrai) ou par le deuxième joueur (faux). Porté par le
+	 * fantôme depuis l'étape 4.2 ; avant, il vivait dans l'énumération des images,
+	 * partagée par tout le programme.
+	 */
 	@Getter
-	private GhostActions ghostActions;
+	@Setter
+	private boolean computed = true;
+	/**
+	 * Actions du dernier battement. Jamais nulles depuis l'étape 4.2 (D23) : avant,
+	 * elles n'existaient qu'après le premier battement de l'écran de présentation,
+	 * et une touche pressée plus tôt faisait planter le jeu.
+	 */
+	@Getter
+	private GhostActions ghostActions = new GhostActions();
 	@Setter
 	@Getter
 	private GhostSensitiveBehaviour sensitiveBehaviour;
@@ -62,44 +72,56 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	@Getter
 	private MoveStyle moveStyle = MoveStyle.MOVE_DEFAULT;
 
+	/**
+	 * Case visée pendant ce battement : celle de Ladybug (attaque), celle devant
+	 * elle (comportement malin) ou le point de résurrection (fantôme mangé).
+	 * {@code null} quand le fantôme fuit, va au hasard ou est joué par un humain.
+	 * Ne sert qu'à l'affichage du mode debug : le déplacement ne la lit pas.
+	 */
+	@Getter
+	private Position target;
+
+	@Setter
+	private boolean camouflage;
+
 	// used only for debug view
 	public enum MoveStyle {
-		MOVE_TO, MOVE_SCARED, MOVE_DEFAULT, MOVE_REGENERATING;
+		MOVE_TO, MOVE_SCARED, MOVE_DEFAULT, MOVE_REGENERATING
 	}
 
 	// FIXME : c'est une fonction un peu alambiquée en fait; un refacto me semble
 	// nécessaire
-	private void defaultMoving(ScreenData screenData) {
-		List<Point> lstDirections = new ArrayList<>();
+	private void defaultMoving(Maze maze) {
+		List<Position> lstDirections = new ArrayList<>();
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
-			if (!currentScreenBlock.isBorderLeft() && getDirection().x != 1) {
-				lstDirections.add(Constants.POINT_LEFT);
+			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
+			if (!currentScreenBlock.isBorderLeft() && getDirection().x() != 1) {
+				lstDirections.add(GameMainConstants.POINT_LEFT);
 			}
-			if (!currentScreenBlock.isBorderUp() && getDirection().y != 1) {
-				lstDirections.add(Constants.POINT_UP);
+			if (!currentScreenBlock.isBorderUp() && getDirection().y() != 1) {
+				lstDirections.add(GameMainConstants.POINT_UP);
 			}
-			if (!currentScreenBlock.isBorderRight() && getDirection().x != -1) {
-				lstDirections.add(Constants.POINT_RIGHT);
+			if (!currentScreenBlock.isBorderRight() && getDirection().x() != -1) {
+				lstDirections.add(GameMainConstants.POINT_RIGHT);
 			}
-			if (!currentScreenBlock.isBorderDown() && getDirection().y != -1) {
-				lstDirections.add(Constants.POINT_DOWN);
+			if (!currentScreenBlock.isBorderDown() && getDirection().y() != -1) {
+				lstDirections.add(GameMainConstants.POINT_DOWN);
 			}
 			// mise à jour de la direction
 			if (lstDirections.isEmpty() && currentScreenBlock.isBlocked()) {
-				setDirection(Constants.POINT_ZERO);
+				setDirection(GameMainConstants.POINT_ZERO);
 			} else if (lstDirections.isEmpty() && currentScreenBlock.isDeadEnd()) {
 				setDirection(currentScreenBlock.getDirectionInDeadEnd());
 			} else if (lstDirections.isEmpty()) {
 				// NOTE : je ne sais pas si on arrive un jour ici
 				logger.info("On ne devrait pas passer par ici");
-				setDirection(new Point(getDirection().x, -getDirection().y));
+				setDirection(new Position(getDirection().x(), -getDirection().y()));
 			} else {
 				setDirection(lstDirections.get(Utils.generateRandomInt(lstDirections.size())));
 			}
 			moveStyle = MoveStyle.MOVE_DEFAULT;
 		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+		setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 	}
 
 	private boolean hasTouchedLadybug(Ladybug ladybug) {
@@ -111,11 +133,6 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 		return getStatus() != GhostStatus.DYING && getStatus() != GhostStatus.REGENERATED;
 	}
 
-	public boolean isComputed() {
-		return color.isComputed();
-	}
-
-	@Override
 	public boolean isDying() {
 		return getStatus() == GhostStatus.DYING;
 	}
@@ -129,143 +146,148 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 	}
 
 	private boolean isTooNearOfLadybug(Ladybug ladybug) {
-		return getPosition().distance(ladybug.getPosition()) < (Constants.BLOCK_SIZE / 2);
+		return getPosition().distance(ladybug.getPosition()) < ((double) GameMainConstants.BLOCK_SIZE / 2);
 	}
 
-	private void moveByBehaviour(Ladybug ladybug, ScreenData screenData) {
+	public boolean isCamouflage() {
+		return camouflage;
+	}
+
+	private void moveByBehaviour(Ladybug ladybug, Maze maze) {
 		switch (behaviour) {
-			case SMART -> smartMoving(ladybug, screenData);
-			case AGGRESSIVE -> moveTo(ladybug.getPositionBlock(), screenData);
-			default -> defaultMoving(screenData);
+			case SMART -> smartMoving(ladybug, maze);
+			case AGGRESSIVE -> moveTo(ladybug.getPositionBlock(), maze);
+			default -> defaultMoving(maze);
 		}
 	}
 
-	public void moveComputedGhost(Ladybug ladybug, ScreenData screenData) {
+	public void moveComputedGhost(Ladybug ladybug, Maze maze) {
+		// aucune destination tant qu'un déplacement ciblé ne la fixe pas
+		target = null;
 		// Déplacement en fonction du status du fantôme
 		switch (getStatus()) {
-			case DYING -> regeneratePointMoving(screenData);
-			case FLASH, SCARED -> scaredOrFlashedMoving(ladybug.getPositionBlock(), screenData);
-			case NORMAL -> normalMoving(ladybug, screenData);
+			case DYING -> regeneratePointMoving(maze);
+			case FLASH, SCARED -> scaredOrFlashedMoving(ladybug.getPositionBlock(), maze);
+			case NORMAL -> normalMoving(ladybug, maze);
 			case REGENERATED -> { /* Do nothing */ }
 			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
 		}
 	}
 
-	public void moveGhostUser(Ladybug ladybug, ScreenData screenData, Point ghostRequest) {
+	public void moveGhostUser(Ladybug ladybug, Maze maze, Position ghostRequest) {
 		setUserRequest(ghostRequest);
+		target = null;
 
 		switch (getStatus()) {
-			case DYING -> moveComputedGhost(ladybug, screenData);
-			case REGENERATED -> {
-				// Do nothing
-			}
+			case DYING -> moveComputedGhost(ladybug, maze);
+			case REGENERATED -> { /* Do nothing */ }
 			case FLASH, SCARED, NORMAL -> {
-				move(screenData.getScreenBlock(getPositionBlock()));
-				getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+				move(maze.getScreenBlock(getPositionBlock()));
+				setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 			}
 			default -> logger.error("Le statut " + getStatus() + " n'est pas reconnu, le fantôme est immobile !!");
 		}
 	}
 
-	private void moveScared(Point ladybugPosBlock, ScreenData screenData) {
+	private void moveScared(Position ladybugPosBlock, Maze maze) {
 		var canScaredMove = false;
-		var scaredDirection = Constants.POINT_ZERO;
+		var scaredDirection = GameMainConstants.POINT_ZERO;
 		if (isPerfectOnABlock()) {
 			var ptCurrentBlockGhost = getPositionBlock();
-			var currentBlockGhost = screenData.getScreenBlock(ptCurrentBlockGhost);
-			var shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
+			var currentBlockGhost = maze.getScreenBlock(ptCurrentBlockGhost);
+			var shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, maze);
 			if (shorterWay.size() != 1) {
 				var point0 = shorterWay.get(0);
 				var point1 = shorterWay.get(1);
-				scaredDirection = new Point(point0.x - point1.x, point0.y - point1.y);
+				scaredDirection = new Position(point0.x() - point1.x(), point0.y() - point1.y());
 				canScaredMove = canMove(scaredDirection, currentBlockGhost);
 			}
 			moveStyle = MoveStyle.MOVE_SCARED;
 		}
 		if (canScaredMove) {
 			setDirection(scaredDirection);
-			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+			setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 		} else {
-			defaultMoving(screenData);
+			defaultMoving(maze);
 		}
 	}
 
-	private void moveTo(Point ladybugPosBlock, ScreenData screenData) {
+	private void moveTo(Position ladybugPosBlock, Maze maze) {
+		target = ladybugPosBlock;
 		if (isPerfectOnABlock()) {
 			var ptCurrentBlockGhost = getPositionBlock();
-			var shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, screenData);
+			var shorterWay = Dijkstra.getShorterWay(ptCurrentBlockGhost, ladybugPosBlock, maze);
 			var point0 = shorterWay.get(0);
 			if (shorterWay.size() != 1) {
 				var point1 = shorterWay.get(1);
-				setDirection(new Point(point1.x - point0.x, point1.y - point0.y));
+				setDirection(new Position(point1.x() - point0.x(), point1.y() - point0.y()));
 			} else {
-				setDirection(new Point(ptCurrentBlockGhost.x - point0.x, ptCurrentBlockGhost.y - point0.y));
+				setDirection(new Position(ptCurrentBlockGhost.x() - point0.x(), ptCurrentBlockGhost.y() - point0.y()));
 			}
 			moveStyle = MoveStyle.MOVE_TO;
 		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+		setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 	}
 
-	private void normalMoving(Ladybug ladybug, ScreenData screenData) {
+	private void normalMoving(Ladybug ladybug, Maze maze) {
 		if (getPosition().distance(ladybug.getPosition()) < getMaximumAttackDist() && ladybug.isAllowedToDoActions()) {
-			moveTo(ladybug.getPositionBlock(), screenData);
+			moveTo(ladybug.getPositionBlock(), maze);
 		} else if (sensitiveBehaviour.isActive() && ladybug.isAllowedToDoActions()) {
-			moveByBehaviour(ladybug, screenData);
+			moveByBehaviour(ladybug, maze);
 		} else {
-			defaultMoving(screenData);
+			defaultMoving(maze);
 		}
 	}
 
-	private void regeneratePointMoving(ScreenData screenData) {
+	private void regeneratePointMoving(Maze maze) {
+		target = Utils.convertGraphicPointToBlockPoint(maze.getRevivorGhostPos());
 		// Le fantôme est arrivé au limite du block
 		if (isPerfectOnABlock()) {
 			// calcul du chemin le plus court :
 			var shorterWay = Dijkstra.getShorterWay(getPositionBlock(),
-			        Utils.convertGraphicPointToBlockPoint(screenData.getRevivorGhostPos()), screenData);
+			        Utils.convertGraphicPointToBlockPoint(maze.getRevivorGhostPos()), maze);
 			// S'il ne reste plus qu'un bloc, le fantôme est arrivé
 			if (shorterWay.size() == 1) {
 				// Le fantôme est arrivé au point de regénération, il redevient "normal" avec
 				// une vitesse "normale" aussi
-				setStatus(GhostStatus.TOBEREGERENATED);
+				setStatus(GhostStatus.AUTOGENERATED);
 			} else {
 				// On prend le premier block cible
 				var currentPoint = shorterWay.get(0);
 				// calcul du prochain endroit à déplacer le fantôme mangé
 				var nextPoint = shorterWay.get(1);
-				var moveX = nextPoint.x - currentPoint.x;
-				var moveY = nextPoint.y - currentPoint.y;
+				var moveX = nextPoint.x() - currentPoint.x();
+				var moveY = nextPoint.y() - currentPoint.y();
 				if (moveX > 0) {
-					setDirection(Constants.POINT_RIGHT);
+					setDirection(GameMainConstants.POINT_RIGHT);
 				} else if (moveX < 0) {
-					setDirection(Constants.POINT_LEFT);
+					setDirection(GameMainConstants.POINT_LEFT);
 				} else if (moveY > 0) {
-					setDirection(Constants.POINT_DOWN);
+					setDirection(GameMainConstants.POINT_DOWN);
 				} else if (moveY < 0) {
-					setDirection(Constants.POINT_UP);
+					setDirection(GameMainConstants.POINT_UP);
 				}
 			}
 			moveStyle = MoveStyle.MOVE_REGENERATING;
 		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+		setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 	}
 
-	private void scaredOrFlashedMoving(Point ladybugPosBlock, ScreenData screenData) {
-		if (Utils.convertBlockPointToGraphicPoint(ladybugPosBlock).distance(getPosition()) < 5 * Constants.BLOCK_SIZE) {
-			moveScared(ladybugPosBlock, screenData);
+	private void scaredOrFlashedMoving(Position ladybugPosBlock, Maze maze) {
+		if (Utils.convertBlockPointToGraphicPoint(ladybugPosBlock).distance(getPosition()) < 5 * GameMainConstants.BLOCK_SIZE) {
+			moveScared(ladybugPosBlock, maze);
 		} else {
-			defaultMoving(screenData);
+			defaultMoving(maze);
 		}
 	}
 
 	/**
 	 * Retourne les actions détectées issu du fantôme.
 	 *
-	 * @param ladybug
-	 * @return
-	 */
-	public void setGhostActions(Ladybug ladybug, ScreenData screenData) {
+	 * */
+	public void setGhostActions(Ladybug ladybug, Maze maze) {
 		ghostActions = new GhostActions();
-		ghostActions.setPosition((Point) getPosition().clone());
+		ghostActions.setPosition(getPosition());
 		// Détection de la collision avec un fantôme et ladybug
 		if (hasTouchedLadybug(ladybug)) {
 			if (isScaredOrFlashed()) {
@@ -276,7 +298,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 		}
 		// calcule uniquement lorsque ladybug rempli le block
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 			ghostActions.setToBeTeleported(currentScreenBlock.isTeleportation());
 		}
 	}
@@ -296,7 +318,7 @@ public abstract class Ghost extends UserBody implements GhostForController, Ghos
 
 	public abstract void setSpeed(int numLevel, int perCent);
 
-	private void smartMoving(Ladybug ladybug, ScreenData screenData) {
-		moveTo(ladybug.getFrontPositionBlock(screenData), screenData);
+	private void smartMoving(Ladybug ladybug, Maze maze) {
+		moveTo(ladybug.getFrontPositionBlock(maze), maze);
 	}
 }

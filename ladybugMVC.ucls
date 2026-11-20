@@ -20,7 +20,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.kycox.game.view.MainFrame" project="ladybug" 
+  <class id="3" language="java" name="com.kycox.game.engine.view.MainFrame" project="ladybug"
     file="/ladybug/src/main/java/com/kycox/game/view/MainFrame.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="140" y="143"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -29,7 +29,7 @@
       <operations public="true" package="false" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.kycox.game.model.GameModel" project="ladybug" 
+  <class id="4" language="java" name="com.kycox.game.engine.model.GameModel" project="ladybug"
     file="/ladybug/src/main/java/com/kycox/game/model/GameModel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="568" y="1151"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -38,7 +38,7 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.kycox.game.controller.KeyGameController" project="ladybug" 
+  <class id="5" language="java" name="com.kycox.game.engine.controller.KeyGameController" project="ladybug"
     file="/ladybug/src/main/java/com/kycox/game/controller/KeyGameController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1346" y="1460"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -47,7 +47,7 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.kycox.game.sound.GameSounds" project="ladybug" 
+  <class id="6" language="java" name="com.kycox.game.engine.sound.GameSounds" project="ladybug"
     file="/ladybug/src/main/java/com/kycox/game/sound/GameSounds.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="936" y="1184"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

@@ -1,0 +1,269 @@
+_    ____ ___  _   _ ___  _  _ ____    ___  _   _    _  _ _   _ ____ ____ _  _
+|    |__| |  \  \_/  |__] |  | | __    |__]  \_/     |_/   \_/  |    |  |  \/
+|___ |  | |__/   |   |__] |__| |__]    |__]   |      | \_   |   |___ |__| _/\_
+
+Ladybug by Kykox 0.6.0-SNAPSHOT
+Powered by Spring Boot 3.5.16
+16:24:07.927 [main] INFO  com.kycox.game.Application -- Starting Application v0.6.0-SNAPSHOT using Java 21.0.13.1 with PID 87829 (/Users/fredericlanic/Documents/perso/ladybug/target/ladybug-0.6.0-SNAPSHOT.jar started by fredericlanic in /Users/fredericlanic/Documents/perso/ladybug)
+16:24:07.928 [main] INFO  com.kycox.game.Application -- The following 1 profile is active: "gui"
+16:24:08.181 [main] INFO  com.kycox.game.properties.GameProperties -- Game Properties
+16:24:08.181 [main] INFO  com.kycox.game.properties.GameProperties -- Ladybug color (unused): blue
+16:24:08.181 [main] INFO  com.kycox.game.properties.GameProperties -- Ladybug skin: true
+16:24:08.181 [main] INFO  com.kycox.game.properties.GameProperties -- Ghost headband: false
+16:24:08.181 [main] INFO  com.kycox.game.properties.GameProperties -- Ghost hat: true
+16:24:08.376 [main] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_START
+16:24:08.409 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_STARTING
+16:24:08.410 [AWT-EventQueue-0] INFO  org.springframework.beans.factory.support.DefaultListableBeanFactory -- Obtaining singleton bean 'gameSounds' in thread "AWT-EventQueue-0" while other thread holds singleton lock for other beans [mainLadybug, centralView, mainFrame]
+16:24:08.410 [AWT-EventQueue-0] INFO  org.springframework.beans.factory.support.DefaultListableBeanFactory -- Obtaining singleton bean 'centralView' in thread "AWT-EventQueue-0" while other thread holds singleton lock for other beans [mainLadybug, centralView, mainFrame]
+16:24:08.418 [AWT-EventQueue-0] INFO  org.springframework.beans.factory.support.DefaultListableBeanFactory -- Obtaining singleton bean 'pageEndView' in thread "AWT-EventQueue-0" while other thread holds singleton lock for other beans [mainLadybug, mainFrame, pageEndView]
+16:24:08.419 [main] INFO  com.kycox.game.tools.Screen -- Game screen: usable area 1470x923 at (0,33)
+16:24:08.421 [AWT-EventQueue-0] INFO  org.springframework.beans.factory.support.DefaultListableBeanFactory -- Obtaining singleton bean 'pageLeftView' in thread "AWT-EventQueue-0" while other thread holds singleton lock for other beans [mainLadybug, mainFrame, pageLeftView]
+16:24:08.519 [main] INFO  com.kycox.game.launcher.StartupReport -- Launch mode: LOCAL
+16:24:08.519 [main] INFO  com.kycox.game.launcher.StartupReport -- Spring XML configuration: classpath:application-context.xml
+16:24:08.520 [main] INFO  com.kycox.game.launcher.StartupReport -- Game properties: classpath:ladybug.properties (jar)
+16:24:08.554 [main] INFO  com.kycox.game.Application -- Started Application in 0.796 seconds (process running for 0.967)
+16:24:08.555 [AWT-EventQueue-0] INFO  com.kycox.game.MainLadybug -- LadyBug 0.6.0-SNAPSHOT by Kycox, running on Java 21.0.13.1+2-LTS
+16:24:11.147 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:24:11.151 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:24:11.194 [AWT-EventQueue-0] INFO  com.kycox.game.tools.GameRandom -- Random seed -4129679894178613744 (to replay: -Dladybug.seed=-4129679894178613744)
+16:24:17.593 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:24:17.594 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:24:17.596 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:24:17.619 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:24:20.151 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:24:20.151 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:24:20.151 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:24:20.163 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:24:24.376 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:24:24.381 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:24:25.855 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (6,11), score 2
+16:24:26.189 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (5,11), score 3
+16:24:28.143 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (5,10), score 4
+16:24:28.465 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (5,9), score 5
+16:24:28.788 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (5,8), score 6
+16:24:29.116 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (5,7), score 7
+16:24:29.431 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (5,6), score 8
+16:24:29.502 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug is eaten by Pinky (computer)
+16:24:31.098 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLadybugIsDead -- Ladybug is dead
+16:24:34.944 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- startStopSoundActive : true
+16:24:36.744 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- startStopSoundActive : false
+16:24:52.776 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug is eaten by Pinky (computer)
+16:24:54.374 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLadybugIsDead -- Ladybug is dead
+16:25:03.310 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:25:04.393 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:25:05.193 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:25:06.026 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:25:06.027 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:25:06.063 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:25:07.587 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:25:07.592 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:25:08.560 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:25:08.560 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:25:08.594 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:08.617 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:25:11.143 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:25:11.143 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:25:11.143 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:11.149 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:25:15.374 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:25:15.375 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:25:16.461 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:25:17.276 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:25:17.277 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:25:17.306 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:25:18.818 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:25:18.822 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:25:19.810 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:25:19.810 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:25:19.835 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:19.860 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:25:22.385 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:25:22.385 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:25:22.385 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:22.389 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:25:26.634 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:25:26.635 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:25:27.710 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:25:28.526 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:25:28.526 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:25:28.551 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:25:30.067 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:25:30.073 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:25:31.076 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:25:31.076 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:25:31.102 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:31.148 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:25:33.659 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:25:33.660 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:25:33.660 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:33.666 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:25:37.913 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:25:37.913 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:25:39.043 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:25:39.860 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:25:39.860 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:25:39.901 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:25:41.426 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:25:41.430 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:25:42.443 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:25:42.443 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:25:42.459 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:42.508 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:25:45.030 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:25:45.031 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:25:45.031 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:45.036 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:25:49.268 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:25:49.269 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:25:50.376 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:25:51.176 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:25:51.176 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:25:51.178 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:25:52.706 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:25:52.711 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:25:53.693 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:25:53.693 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:25:53.700 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:53.740 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:25:56.273 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:25:56.274 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:25:56.274 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:25:56.279 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:26:00.507 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:26:00.508 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:26:01.577 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:26:02.393 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:26:02.393 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:26:02.425 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:26:03.957 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:26:03.963 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:26:04.976 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:26:04.976 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:26:04.990 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:05.034 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:26:07.551 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:26:07.551 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:26:07.551 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:07.555 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:26:11.784 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:26:11.784 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:26:12.843 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:26:13.643 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:26:13.643 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:26:13.674 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:26:15.176 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:26:15.180 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:26:16.193 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:26:16.193 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:26:16.218 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:16.264 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:26:18.777 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:26:18.777 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:26:18.777 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:18.782 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:26:23.023 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:26:23.023 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:26:24.093 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:26:24.893 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:26:24.893 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:26:24.907 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:26:26.427 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:26:26.432 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:26:27.426 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:26:27.426 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:26:27.462 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:27.506 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:26:30.025 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:26:30.026 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:26:30.026 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:30.031 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:26:34.266 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:26:34.267 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug has just eaten a mega point
+16:26:34.267 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Super power is up
+16:26:34.269 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 11
+16:26:35.392 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:26:36.209 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:26:36.209 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:26:36.218 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:26:37.733 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:26:37.741 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:26:38.726 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:26:38.726 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:26:38.745 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:38.793 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:26:41.295 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:26:41.295 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:26:41.296 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:41.300 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:26:45.542 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:26:45.542 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:26:46.626 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:26:47.442 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:26:47.442 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:26:47.463 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:26:48.980 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:26:48.983 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:26:49.992 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:26:49.993 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:26:50.021 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:50.066 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:26:52.586 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:26:52.587 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:26:52.587 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:26:52.592 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:26:56.824 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:26:56.824 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:26:57.909 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:26:58.726 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:26:58.726 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:26:58.751 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:27:00.253 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:27:00.260 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:27:01.276 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:27:01.276 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:27:01.304 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:27:01.346 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:27:03.853 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:27:03.854 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:27:03.854 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:27:03.858 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:27:08.101 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:27:08.101 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:27:09.209 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:27:10.026 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:27:10.026 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:27:10.066 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:27:11.579 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:27:11.585 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:27:12.559 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:27:12.559 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:27:12.588 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:27:12.636 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:27:15.150 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:27:15.150 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:27:15.150 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:27:15.156 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:27:19.374 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:27:19.375 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:27:20.442 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:27:21.259 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:27:21.259 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:27:21.259 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:27:22.775 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:27:22.778 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+16:27:24.542 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Initialize a new game
+16:27:24.542 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+16:27:24.583 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:27:24.628 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+16:27:27.147 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+16:27:27.147 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+16:27:27.147 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+16:27:27.152 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+16:27:31.383 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+16:27:31.383 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug eats a point at (7,11), score 1
+16:27:41.609 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+16:27:42.409 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.GameModel -- Force Stop Game
+16:27:42.409 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+16:27:42.416 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+16:27:43.937 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+16:27:43.940 [AWT-EventQueue-0] INFO  com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION

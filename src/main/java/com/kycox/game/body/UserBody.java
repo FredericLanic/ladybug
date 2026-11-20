@@ -16,23 +16,23 @@
  */
 package com.kycox.game.body;
 
-import com.kycox.game.constant.Constants;
-import com.kycox.game.level.ScreenBlock;
-import com.kycox.game.level.ScreenData;
+import com.kycox.game.tools.Position;
+import com.kycox.game.constant.game.GameMainConstants;
+import com.kycox.game.engine.maze.ScreenBlock;
+import com.kycox.game.engine.maze.Maze;
 import com.kycox.game.tools.Utils;
 import lombok.Setter;
 
-import java.awt.*;
 
+@Setter
 public abstract class UserBody extends Body {
-	@Setter
-	protected Point userRequest = Constants.POINT_ZERO;
+	protected Position userRequest = GameMainConstants.POINT_ZERO;
 
-	protected boolean canMove(Point direction, ScreenBlock screenBlock) {
-		return ((!direction.equals(Constants.POINT_LEFT) || !screenBlock.isBorderLeft())
-		        && (!direction.equals(Constants.POINT_RIGHT) || !screenBlock.isBorderRight())
-		        && (!direction.equals(Constants.POINT_UP) || !screenBlock.isBorderUp())
-		        && (!direction.equals(Constants.POINT_DOWN) || !screenBlock.isBorderDown()));
+	protected boolean canMove(Position direction, ScreenBlock screenBlock) {
+		return ((!direction.equals(GameMainConstants.POINT_LEFT) || !screenBlock.isBorderLeft())
+		        && (!direction.equals(GameMainConstants.POINT_RIGHT) || !screenBlock.isBorderRight())
+		        && (!direction.equals(GameMainConstants.POINT_UP) || !screenBlock.isBorderUp())
+		        && (!direction.equals(GameMainConstants.POINT_DOWN) || !screenBlock.isBorderDown()));
 	}
 
 	protected void move(ScreenBlock screenBlock) {
@@ -42,21 +42,26 @@ public abstract class UserBody extends Body {
 			}
 			// Quand le body est coincé : au début ou quand il butte sur un mur.
 			if (!canMove(getDirection(), screenBlock)) {
-				setDirection(Constants.POINT_ZERO);
+				setDirection(GameMainConstants.POINT_ZERO);
 			}
 		}
 	}
 
-	public void teleport(ScreenData screenData) {
+	public void teleport(Maze maze) {
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 			var destinationPoint = Utils.convertBlockPointToGraphicPoint(currentScreenBlock.getDestinationPoint());
 			setPosition(destinationPoint);
-			getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+			setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 		}
 	}
 
 	private boolean userRequestHasChanged() {
-		return userRequest.x != 0 || userRequest.y != 0;
+		return userRequest.x() != 0 || userRequest.y() != 0;
+	}
+
+	public String getName() {
+		var className = getClass().toString();
+		return className.substring(className.lastIndexOf(".") + 1);
 	}
 }

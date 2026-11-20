@@ -68,13 +68,15 @@ Voici les commandes du clavier que vous utiliserez
 | Les flèches        | Permet à Ladybug de changer de direction                         |
 | Z Q S D            | Permet au fantôme de changer de direction (en mode deux joueurs) |
 | 1 ou 2             | Définition du mode du jeu : 1 ou 2 joueurs - avant la partie     |
+| S                  | Lancer la partie (écran de présentation)                         |
 | F1                 | Affichage de l'aide                                              |
 | F2                 | Gestion du son (modes on/off)                                    |
 | F3                 | Retirer/ afficher le logo du TShirt de Ladybug                   |
 | F4                 | Porter / enlever le bandeau des fantômes                         |
 | F5                 | Porter / enlever le chapeau des fantômes                         |
 | F6                 | Gestion du mode "lampe allumée" (modes on/off) lors du jeu       |
-| Pause              | Mise en pause / Reprise du niveau                                |
+| F7                 | Camouflage des fantômes (modes on/off)                           |
+| P ou Pause         | Mise en pause / Reprise du niveau (P : pour les claviers Mac)    |
 | ESC                | Fin du niveau ou Sortie du jeu                                   |
 | Enter              | Passage du jeu en mode "debug"                                    |
 
@@ -91,18 +93,75 @@ La branche **master** est en théorie la branche qui contient les versions (rele
 
 La branche **develop** est la branche en développement ; en bref, elle contient la prochaine version en mode draft : le développement en cours, et potentiellement aussi, quelques nouveaux bugs restant à corriger.
 
+Depuis novembre 2026, **develop** est la branche par défaut du dépôt : les PR y arrivent, et les tests de mutation (PIT) y tournent chaque nuit.
+
 ## Builder et exécuter Ladybug
-Le build de ladybug est réalisé par "maven" par la commande "mvn clean package".
+Le build de ladybug est réalisé par "maven" par la commande "mvn clean package" (ou "mvn clean verify" pour lancer aussi les tests).
 
-En résumé, le build génère un fat jar : un jar qui contient toutes les dépendances décrites dans le fichier "pom.xml".
+En résumé, le build génère un fat jar Spring Boot : un jar qui contient toutes les dépendances décrites dans le fichier "pom.xml".
 
-À ce jour (12 Février 2023), j'utilise la version **maven 3.8.5** et la version **jdk 19**.
+À ce jour (19 novembre 2026), le projet utilise **Java 21**, **Spring Boot 3.5** et Maven 3.9 (les dépendances viennent de Maven Central, réglage dans `.mvn/`).
 
 La commande pour lancer le jeu est :
 
-**java -jar ladybug-0.5.0.jar**
+**java -jar target/ladybug-0.8.0-SNAPSHOT.jar**
 
-Pour le jeu en lui-même, je vous laisse trouver la gestion des propriétés et l'application-context pour gérer la configuration du jeu, l'affichage des plugins, la couleur de Ladybug ...
+Le jeu s'ouvre sur l'écran où se trouve la souris.
+
+## Personnaliser le jeu
+
+Tout se règle **sans recompiler**, en posant des fichiers à côté du jeu. Ladybug suit la convention de Spring Boot : un fichier posé dans le **dossier d'où l'on lance le jeu**, ou dans son sous-dossier `config/`, remplace celui du jar (`config/` passe en premier). Au démarrage, les logs indiquent les fichiers réellement utilisés :
+
+```
+Launch mode: LOCAL
+Spring XML configuration: file:/Users/moi/ladybug/application-context.xml
+Game properties: /Users/moi/ladybug/ladybug.properties (external, overrides the jar)
+```
+
+### Les fantômes : `application-context.xml`
+
+Ce fichier Spring décrit les fantômes : leur classe, leur couleur, leur comportement (`CALM`, `AGGRESSIVE`, `SMART`), leur vitesse et la liste du groupe (`GroupGhost`). Pour le modifier, récupérez celui du jar, puis lancez le jeu depuis le même dossier :
+
+```
+unzip -p target/ladybug-0.8.0-SNAPSHOT.jar BOOT-INF/classes/application-context.xml > application-context.xml
+java -jar target/ladybug-0.8.0-SNAPSHOT.jar
+```
+
+Exemple : retirer `<ref bean="Clyde" />` de la liste `GroupGhost` pour jouer contre trois fantômes. Pour utiliser un fichier placé ailleurs : `--ladybug.config=file:/chemin/vers/mon-context.xml`.
+
+Si le fichier contient une erreur (classe mal écrite, fantôme mal câblé), le jeu l'explique dans une fenêtre et dans les logs, puis s'arrête : il ne revient pas en silence à la configuration du jar.
+
+### L'apparence : `ladybug.properties`
+
+| Propriété | Valeurs | Effet |
+|---|---|---|
+| `ghosts.hat` | `1` / `0` | chapeau des fantômes |
+| `ghosts.headband` | `1` / `0` | bandeau des fantômes |
+| `ladybug.skin` | `1` / `0` | peau de Ladybug |
+
+Seules les propriétés à changer sont nécessaires, par exemple un fichier qui ne contient que `ghosts.hat=0`.
+
+### Le reste : `application.properties` et options de lancement
+
+Un `application.properties` posé à côté du jeu accepte tous les réglages de Spring Boot (par exemple le format des logs : `logging.pattern.console`).
+
+| Option | Rôle |
+|---|---|
+| `--ladybug.config=file:…` | impose un fichier `application-context.xml` |
+| `--ladybug.mode=LOCAL` | mode de lancement (seul mode pour l'instant ; héberger et rejoindre une partie viendront plus tard) |
+| `-Dladybug.seed=123` (avant `-jar`) | rejoue le même hasard : la graine est écrite dans les logs à chaque partie |
+
+Pour en savoir plus : [doc/patterns/configuration-externalisee.md](doc/patterns/configuration-externalisee.md).
+
+## Publier une version
+Une version se publie depuis GitHub, sans rien installer : onglet **Actions**, workflow **Maven Release**, bouton **Run workflow**.
+
+1. Ramener d'abord `develop` dans `master` (une PR de `develop` vers `master`, fusionnée en merge commit).
+2. Lancer le workflow **sur `master`**, avec la version à publier (ex. `0.8.0`) et la suivante (ex. `0.9.0-SNAPSHOT`).
+3. Laisser coché **« Essai à blanc »** pour un premier passage : tout est simulé, rien n'est poussé. Le décocher ensuite pour publier pour de vrai.
+4. Ramener `master` dans `develop` : le pom y passe à la version suivante.
+
+Le workflow lance les tests, pose le tag `v0.8.0`, puis crée la page de la version dans **Releases**, avec le jar à télécharger. Les joueurs n'ont besoin que de Java 21 : `java -jar ladybug-0.8.0.jar`.
 
 ## Pour développer Ladybug
 Je l'ai développé sous Eclipse ; actuellement, j'utilise la version 2022-03. Je ne pense pas que la version soit très importante en fait.
@@ -119,7 +178,7 @@ Voir aussi https://www.baeldung.com/intro-to-project-lombok
 
 ### Passage en mode "debug"
 
-Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages à gauche.
+Afin de vérifier les données au cours du jeu, j'ai rajouté un mode "debug". Vous pouvez ainsi avoir des inforrmations visuelles dans la map et des infos des données en temps réel sur les données des personnages.
 
 ![simple gum](/readme/mode_debug.png)
 
@@ -129,18 +188,18 @@ Pour rentrer dans le code de Ladybug, je vais vous donner mon point de vue.
 
 Le modèle MVC que j'ai essayé d'appliquer regroupe les classes suivantes :
 
-1. Le modèle : com.kycox.game.model.GameModel 
+1. Le modèle : com.kycox.game.engine.model.GameModel 
 
   C'est le cœur du jeu, son battement est défini par un timer.
   
-4. Le contrôleur : com.kycox.game.controller.key.KeyGameController 
+4. Le contrôleur : com.kycox.game.engine.controller.KeyboardController 
 
   C'est les commandes du clavier du joueur.
   
 4. Les views : 
-  * com.kycox.game.sound.GameSounds (les sons du jeu)
-  * com.kycox.game.view.GameView (l'affichage du niveau du jeu)
-  * com.kycox.game.view.down.PageEndView (l'affichage du statut du jeu)
+  * com.kycox.game.engine.sound.GameSounds (les sons du jeu)
+  * com.kycox.game.engine.view.GameView (l'affichage du niveau du jeu)
+  * com.kycox.game.engine.view.down.PageEndView (l'affichage du statut du jeu)
 
 La classe com.kycox.game.engine.Engine les relie ensemble par le design pattern Observer.
 
@@ -158,7 +217,7 @@ Voir mon application du design pattern [mvc](/readme/architecture/mvc.jpg) pour 
 * faire des tests unitaires avec JUnit
 
 ### Améliorations / Bugs détectés
-* J'ai défini dans le fichier backlog.txt les différentes améliorations  techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolutions. (c'est le Jira du pauvre ;) )
+* J'ai défini dans le fichier  [backlog.txt](/doc/backlog.txt) les différentes améliorations techniques et fonctionnelles du projet. Ce fichier me sert de base pour gérer les évolutions. (c'est le Jira du pauvre ;) )
 
 ## Les ressources extérieures utilisées
 * les sons : les sons utilisés dans ce jeu proviennent du site web https://www.classicgaming.cc/classics/pac-man/sounds
@@ -169,8 +228,10 @@ Voir mon application du design pattern [mvc](/readme/architecture/mvc.jpg) pour 
 # Remerciements
 Je remercie en premier Alex pour m'avoir apporté sa confiance en ma remise à niveau en java, Jean-Michel pour son aide à l'interconnexion des classes principales du projet, à Cyril pour m'avoir aidé à faciliter la création des nouveaux niveaux.
 
-Je tiens à apporter mes remerciements à Jim et à Christophe pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
+Je tiens à apporter mes remerciements à [Jim](https://github.com/jimetevenard) et à [Christophe](https://github.com/cmarchand) pour leurs actuelles précieuses aides; Jim pour le CI/CD avec les GitHub actions, Christophe pour ses remarques pertinentes.
 
-Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il passe pour réaliser les nombreuses parties dans le but de tester et de valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins pertinentes mais très intéressantes, pour ajouter de nouvelles fonctionnalités. Son aide m'est très précieuse.
+Un dernier remerciement, et par des moindres, à Kylian pour le temps qu'il investit à réaliser les nombreuses parties dans le but de tester et à valider les nouvelles versions du jeu. Il apporte également des idées, plus ou moins pertinentes mais toujours très intéressantes, pour ajouter de nouvelles fonctionnalités. 
+
+**Son aide m'est très précieuse.**
 
 Portez-vous bien !

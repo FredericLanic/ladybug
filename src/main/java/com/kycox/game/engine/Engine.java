@@ -16,49 +16,31 @@
  */
 package com.kycox.game.engine;
 
-import com.kycox.game.controller.xboxone.XboxOneController;
-import com.kycox.game.model.GameModel;
-import com.kycox.game.sound.GameSounds;
-import com.kycox.game.view.CentralView;
-import com.kycox.game.view.down.PageEndView;
-import com.kycox.game.view.left.PageLeftView;
+import com.kycox.game.constant.sounds.Sounds;
+import com.kycox.game.engine.sound.SoundDurations;
+import com.kycox.game.engine.view.CentralView;
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Component;
+import com.kycox.game.launcher.GuiComponent;
 
-@Component
+/**
+ * Réglages de l'interface liés à la durée des sons.
+ *
+ * <p>Depuis l'étape 3.5.3b, le modèle règle lui-même ses attentes (début de
+ * niveau, intermède, agonie) avec {@link SoundDurations} ; il ne reste ici que la
+ * couleur du labyrinthe après une vie gagnée, qui dure le temps de son son.
+ */
+@GuiComponent
 public class Engine {
 	private final CentralView centralView;
-	private final GameModel gameModel;
-	private final GameSounds gameSounds;
-	private final PageEndView pageEndView;
-	private final PageLeftView pageLeftView;
-	private final XboxOneController xboxOneController;
+	private final SoundDurations soundDurations;
 
-	public Engine(GameModel gameModel, GameSounds gameSounds, CentralView centralView, PageEndView pageEndView, PageLeftView pageLeftView, XboxOneController xboxOneController) {
-		this.gameModel = gameModel;
-		this.gameSounds = gameSounds;
+	public Engine(SoundDurations soundDurations, CentralView centralView) {
+		this.soundDurations = soundDurations;
 		this.centralView = centralView;
-		this.pageEndView = pageEndView;
-		this.pageLeftView = pageLeftView;
-		this.xboxOneController = xboxOneController;
 	}
 
-	/**
-	 * note : use PAD CONTROLLER PadController padController = new
-	 * PadController(gameModel) for joystick
-	 */
 	@PostConstruct
 	public void init() {
-		gameModel.addObserver(centralView);
-		gameModel.addObserver(gameSounds);
-		gameModel.addObserver(pageEndView);
-		gameModel.addObserver(pageLeftView);
-		gameModel.addObserver(xboxOneController);
-		// on récupère la longueur du son de la mort de ladybug et on l'affecte
-		gameModel.getLadybugDying().setMillisecondLenght(gameSounds.getMillisecondLadybugDeath());
-		gameModel.setBeginningMilliseconds(gameSounds.getMillisecondsBeginning());
-		gameModel.setTimeEndingMilliseconds(1500);
-		gameModel.setEndingLevelMilliseconds(gameSounds.getMillisecondsIntermission());
-		centralView.setDurationLadybugNewLife(gameSounds.getMillisecondNewLife());
+		centralView.setDurationLadybugNewLife(soundDurations.of(Sounds.LADYBUG_EXTRA_PAC));
 	}
 }

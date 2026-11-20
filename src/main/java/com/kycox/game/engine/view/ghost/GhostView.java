@@ -1,0 +1,88 @@
+/**
+  Copyright (C) 2021  Frédéric Lanic frederic.lanic@outlook.fr
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+package com.kycox.game.engine.view.ghost;
+
+import com.kycox.game.tools.Position;
+import com.kycox.game.constant.game.GameMainConstants;
+import com.kycox.game.constant.ghost.GhostStatus;
+import com.kycox.game.constant.ghost.GhostEyesImages;
+import com.kycox.game.constant.ghost.GhostHatImages;
+import com.kycox.game.constant.ghost.GhostHeadbandImages;
+import com.kycox.game.snapshot.GhostSnapshot;
+import com.kycox.game.properties.GameProperties;
+import com.kycox.game.tools.ImageUtils;
+import com.kycox.game.launcher.GuiComponent;
+
+import java.awt.*;
+
+@GuiComponent
+public class GhostView {
+	private final GameProperties gameProperties;
+
+	public GhostView(GameProperties gameProperties) {
+		this.gameProperties = gameProperties;
+	}
+
+	private Image addEyes(Position direction) {
+		if (direction.equals(GameMainConstants.POINT_LEFT)) {
+			return GhostEyesImages.GHOST_LEFT_EYES.getImage();
+		}
+		if (direction.equals(GameMainConstants.POINT_DOWN)) {
+			return GhostEyesImages.GHOST_DOWN_EYES.getImage();
+		}
+		if (direction.equals(GameMainConstants.POINT_UP)) {
+			return GhostEyesImages.GHOST_UP_EYES.getImage();
+		}
+		return GhostEyesImages.GHOST_RIGHT_EYES.getImage();
+	}
+
+	private Image addHeadband(Position direction) {
+		if (direction.equals(GameMainConstants.POINT_LEFT)) {
+			return GhostHeadbandImages.HEADBAND_LEFT.getImage();
+		}
+		if (direction.equals(GameMainConstants.POINT_DOWN)) {
+			return GhostHeadbandImages.HEADBAND_DOWN.getImage();
+		}
+		if (direction.equals(GameMainConstants.POINT_UP)) {
+			return GhostHeadbandImages.HEADBAND_UP.getImage();
+		}
+		return GhostHeadbandImages.HEADBAND_RIGHT.getImage();
+	}
+
+	public Image getImage(GhostSnapshot ghost) {
+		Image ghostImg;
+		// ajout le corps
+		switch (ghost.status()) {
+			case FLASH -> ghostImg = GhostFlashView.getInstance().getImage(ghost);
+			case SCARED -> ghostImg = GhostScaredView.getInstance().getImage(ghost);
+			case DYING -> ghostImg = GhostDyingView.getInstance().getImage();
+			default -> ghostImg = GhostDefaultView.getInstance().getImage(ghost);
+		}
+		// ajout les yeux en fonction de la direction
+		if (ghost.status() != GhostStatus.DYING) {
+			ghostImg = ImageUtils.appendImages(ghostImg, addEyes(ghost.direction()));
+		}
+		// ajout du bandeau
+		if (ghost.status() != GhostStatus.DYING && gameProperties.hasGhostHeadBand()) {
+			ghostImg = ImageUtils.appendImages(ghostImg, addHeadband(ghost.direction()));
+		}
+		if (gameProperties.hasGhostHat()) {
+			ghostImg = ImageUtils.appendImages(ghostImg, GhostHatImages.GHOST_HAT.getImage());
+		}
+		return ghostImg;
+	}
+}

@@ -16,7 +16,7 @@
  */
 package com.kycox.game.body.ladybug;
 
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.game.GameMainConstants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class LadybugDying {
 	private int bip;
 	@Setter
 	@Getter
-	private long millisecondLenght = 0;
+	private long agonyDuration = 0;
 
 	public void initBip() {
 		bip = 0;
@@ -37,7 +37,7 @@ public class LadybugDying {
 	}
 
 	public boolean isEnd() {
-		return bip * Constants.PACE >= millisecondLenght;
+		return (long) bip * GameMainConstants.PACE >= agonyDuration;
 	}
 
 	public boolean isInProgress() {

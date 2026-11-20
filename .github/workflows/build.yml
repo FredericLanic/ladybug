@@ -1,0 +1,33 @@
+# Vérification automatique : compilation et tests (unitaires, contexte Spring,
+# golden master, bot) à chaque pull request et à chaque push sur develop,
+# sur les trois systèmes où Ladybug doit tourner (étape 3.5.4).
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+    strategy:
+      # un système en échec n'arrête pas les autres : on voit tout d'un coup
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v6
+      with:
+        distribution: temurin
+        java-version: '21'
+        cache: maven
+        cache-dependency-path: '**/pom.xml'
+
+    # .mvn/maven.config est pris en compte automatiquement (Maven Central, sans miroir)
+    - name: Build with Maven
+      run: mvn -B clean verify

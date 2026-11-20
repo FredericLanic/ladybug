@@ -16,36 +16,68 @@
  */
 package com.kycox.game;
 
-import com.kycox.game.view.MainFrame;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.kycox.game.engine.loop.SwingGameLoop;
+import com.kycox.game.engine.view.MainFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import com.kycox.game.launcher.GuiComponent;
 
-public class MainLadybug {
-	private static final String cruxLine = "******************************";
-	private static final Log logger = LogFactory.getLog(MainLadybug.class);
+import javax.swing.SwingUtilities;
 
-	/** Lancement du jeu */
-	public static void main(String[] args) {
-		new MainLadybug().launchTheGame();
+/**
+ * Ouvre la fenêtre du jeu une fois le contexte Spring prêt (étape 2.1).
+ *
+ * <p>Spring Boot appelle {@link #run(ApplicationArguments)} à la fin du
+ * démarrage. La fenêtre est affichée sur le fil Swing (EDT) par
+ * {@link SwingUtilities#invokeLater(Runnable)}, comme le veut Swing.
+ */
+@GuiComponent
+public class MainLadybug implements ApplicationRunner {
+	/** Version affichée quand le jeu est lancé hors du jar (depuis l'IDE). */
+	static final String DEVELOPMENT_VERSION = "development";
+	private static final Logger logger = LoggerFactory.getLogger(MainLadybug.class);
+
+	private final MainFrame mainFrame;
+	private final SwingGameLoop gameLoop;
+
+	public MainLadybug(MainFrame mainFrame, SwingGameLoop gameLoop) {
+		this.mainFrame = mainFrame;
+		this.gameLoop = gameLoop;
 	}
 
-	/** lecture du contexte Spring de l'application */
-	private final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
-	private final MainFrame mainFrame = applicationContext.getBean("MainFrame", MainFrame.class);
+	@Override
+	public void run(ApplicationArguments args) {
+		SwingUtilities.invokeLater(this::launchTheGame);
+	}
 
+	/**
+	 * Version du jeu, lue dans le manifest du jar ({@code Implementation-Version},
+	 * écrite par Maven à partir du pom) : plus de numéro en dur (étape 2.2, D03).
+	 */
+	static String gameVersion() {
+		var version = MainLadybug.class.getPackage().getImplementationVersion();
+		return version != null ? version : DEVELOPMENT_VERSION;
+	}
+
+	/**
+	 * Affiche la fenêtre du jeu, puis démarre la boucle du jeu.
+	 *
+	 * <p>Depuis l'étape 4.1, la boucle démarre ici, une fois tout le contexte
+	 * Spring construit et la fenêtre affichée. Avant, le timer du modèle partait
+	 * pendant la construction du contexte, et ses premiers battements créaient
+	 * des beans depuis le fil Swing (avertissement « Obtaining singleton bean …
+	 * while other thread holds singleton lock »).
+	 *
+	 * <p>L'ancien contrôle « Java 19+ » a été retiré (étape 2.2) : le jeu est
+	 * compilé pour Java 21 (pom), et une JVM plus ancienne refuse de charger ses
+	 * classes ({@code UnsupportedClassVersionError}) avant même d'arriver ici. Le
+	 * test ne pouvait donc jamais échouer.
+	 */
 	public void launchTheGame() {
-		var javaVersion = Runtime.version();
-		logger.info(cruxLine);
-		logger.info("*  LadyBug v0.6.0-SNAPSHOT   *");
-		logger.info("*  for Java 19+ by Kycox     *");
-		if (javaVersion.feature() >= 19) {
-			logger.info(cruxLine);
-			mainFrame.setVisible(true);
-		} else {
-			logger.info("*   Please Check your JVM    *");
-			logger.info(cruxLine);
-		}
+		logger.info("LadyBug {} by Kycox, running on Java {}", gameVersion(), Runtime.version());
+		mainFrame.setVisible(true);
+		gameLoop.start();
 	}
 }

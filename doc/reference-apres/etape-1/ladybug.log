@@ -1,0 +1,235 @@
+22:48:14.296 [main] INFO com.kycox.game.properties.GameProperties -- Game Properties
+22:48:14.297 [main] INFO com.kycox.game.properties.GameProperties -- Ladybug color (unused): blue
+22:48:14.297 [main] INFO com.kycox.game.properties.GameProperties -- Ladybug skin: true
+22:48:14.297 [main] INFO com.kycox.game.properties.GameProperties -- Ghost headband: false
+22:48:14.297 [main] INFO com.kycox.game.properties.GameProperties -- Ghost hat: true
+22:48:14.464 [main] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_START
+22:48:14.521 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_STARTING
+22:48:14.522 [AWT-EventQueue-0] INFO org.springframework.beans.factory.support.DefaultListableBeanFactory -- Obtaining singleton bean 'gameSounds' in thread "AWT-EventQueue-0" while other thread holds singleton lock for other beans [mainLadybug, centralView, mainFrame]
+22:48:14.523 [AWT-EventQueue-0] INFO org.springframework.beans.factory.support.DefaultListableBeanFactory -- Obtaining singleton bean 'centralView' in thread "AWT-EventQueue-0" while other thread holds singleton lock for other beans [mainLadybug, centralView, mainFrame]
+22:48:14.537 [AWT-EventQueue-0] INFO org.springframework.beans.factory.support.DefaultListableBeanFactory -- Obtaining singleton bean 'pageEndView' in thread "AWT-EventQueue-0" while other thread holds singleton lock for other beans [mainLadybug, mainFrame, pageEndView]
+22:48:14.539 [AWT-EventQueue-0] INFO org.springframework.beans.factory.support.DefaultListableBeanFactory -- Obtaining singleton bean 'pageLeftView' in thread "AWT-EventQueue-0" while other thread holds singleton lock for other beans [mainLadybug, mainFrame, pageLeftView]
+22:48:14.634 [main] INFO com.kycox.game.MainLadybug -- ******************************
+22:48:14.634 [main] INFO com.kycox.game.MainLadybug -- *  LadyBug v0.6.0-SNAPSHOT   *
+22:48:14.634 [main] INFO com.kycox.game.MainLadybug -- *  for Java 19+ by Kycox     *
+22:48:14.634 [main] INFO com.kycox.game.MainLadybug -- ******************************
+22:48:17.026 [Timer-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:48:17.045 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:48:23.044 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:48:23.045 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:48:23.049 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:48:23.090 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:48:25.595 [Timer-7] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:48:25.634 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:48:25.634 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:48:25.646 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:48:29.864 [Timer-9] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:48:34.134 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Ladybug has just eaten a mega point
+22:48:34.134 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelGameIsPlaying -- Super power is up
+22:48:39.868 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- startStopSoundActive : true
+22:48:41.586 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- startStopSoundActive : false
+22:48:57.128 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLadybugIsDead -- Ladybug is dead
+22:49:06.754 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:49:07.765 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:49:08.460 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLadybugIsDead -- Ladybug is dead
+22:49:08.504 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:49:09.257 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:49:09.257 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:49:09.275 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:49:10.781 [Timer-42] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:49:10.822 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:49:11.769 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:49:11.769 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:49:11.772 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:11.811 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:49:14.316 [Timer-45] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:49:14.353 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:49:14.353 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:14.358 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:49:18.576 [Timer-47] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:49:19.601 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:49:20.372 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:49:20.372 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:49:20.400 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:49:21.905 [Timer-52] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:49:21.948 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:49:22.864 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:49:22.864 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:49:22.892 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:22.934 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:49:25.439 [Timer-54] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:49:25.467 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:49:25.467 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:25.473 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:49:29.692 [Timer-57] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:49:30.736 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:49:31.473 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:49:31.473 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:49:31.488 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:49:32.993 [Timer-62] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:49:33.000 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:49:33.969 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:49:33.969 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:49:33.988 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:34.028 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:49:36.533 [Timer-64] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:49:36.561 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:49:36.561 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:36.563 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:49:40.785 [Timer-67] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:49:41.775 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:49:42.515 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:49:42.515 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:49:42.527 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:49:44.032 [Timer-71] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:49:44.050 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:49:44.973 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:49:44.974 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:49:45.002 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:45.047 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:49:47.552 [Timer-74] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:49:47.568 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:49:47.568 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:47.573 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:49:51.794 [Timer-77] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:49:52.837 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:49:53.592 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:49:53.592 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:49:53.627 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:49:55.132 [Timer-81] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:49:55.164 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:49:56.120 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:49:56.120 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:49:56.157 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:56.196 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:49:58.702 [Timer-84] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:49:58.708 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:49:58.708 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:49:58.715 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:50:02.936 [Timer-86] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:50:03.965 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:50:04.704 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:50:04.704 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:50:04.734 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:50:06.239 [Timer-91] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:50:06.279 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:50:07.233 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:50:07.233 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:50:07.234 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:07.279 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:50:09.784 [Timer-94] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:50:09.800 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:50:09.800 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:09.805 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:50:14.025 [Timer-96] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:50:15.035 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:50:15.783 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:50:15.783 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:50:15.798 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:50:17.303 [Timer-101] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:50:17.344 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:50:18.291 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:50:18.291 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:50:18.301 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:18.345 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:50:20.851 [Timer-103] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:50:20.866 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:50:20.867 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:20.872 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:50:25.092 [Timer-106] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:50:26.059 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:50:26.805 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:50:26.805 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:50:26.841 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:50:28.346 [Timer-111] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:50:28.356 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:50:29.303 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:50:29.303 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:50:29.306 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:29.349 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:50:31.854 [Timer-113] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:50:31.883 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:50:31.883 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:31.887 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:50:36.108 [Timer-116] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:50:37.122 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:50:37.865 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:50:37.865 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:50:37.876 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:50:39.381 [Timer-120] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:50:39.421 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:50:40.349 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:50:40.349 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:50:40.376 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:40.421 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:50:42.926 [Timer-123] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:50:42.951 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:50:42.951 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:42.957 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:50:47.176 [Timer-126] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:50:48.184 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:50:48.952 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:50:48.952 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:50:48.977 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:50:50.482 [Timer-130] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:50:50.523 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:50:51.479 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:50:51.479 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:50:51.494 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:51.535 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:50:54.040 [Timer-133] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:50:54.063 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:50:54.063 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:50:54.068 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:50:58.289 [Timer-135] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:50:59.273 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:51:00.021 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:51:00.021 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:51:00.045 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:51:01.551 [Timer-140] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:51:01.568 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:51:02.505 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:51:02.505 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:51:02.543 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:51:02.584 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:51:05.089 [Timer-143] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:51:05.091 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:51:05.092 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:51:05.096 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:51:09.316 [Timer-145] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:51:10.336 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:51:11.089 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:51:11.090 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:51:11.124 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:51:12.629 [Timer-150] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:51:12.666 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:51:13.609 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:51:13.609 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:51:13.618 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:51:13.663 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:51:16.168 [Timer-152] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:51:16.190 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:51:16.190 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:51:16.194 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:51:20.412 [Timer-155] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:51:21.397 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:51:22.121 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:51:22.121 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:51:22.160 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:51:23.665 [Timer-160] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:51:23.678 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION
+22:51:25.324 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Initialize a new game
+22:51:25.324 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL
+22:51:25.365 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:51:25.410 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_STARTING
+22:51:27.910 [Timer-163] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_START
+22:51:27.913 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.strategy.actions.GameModelLevelIsStarting -- Initialize level
+22:51:27.913 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_START
+22:51:27.918 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en LEVEL_STARTING
+22:51:32.138 [Timer-165] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en IN_GAME
+22:51:42.020 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en ASK_FORCE_END_GAME
+22:51:42.800 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.GameModel -- Force Stop Game
+22:51:42.800 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_END
+22:51:42.833 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en GAME_ENDING
+22:51:44.338 [Timer-175] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION_START
+22:51:44.386 [AWT-EventQueue-0] INFO com.kycox.game.engine.model.CurrentProgramStatus -- Passage du status en PROGRAM_PRESENTATION

@@ -16,59 +16,53 @@
  */
 package com.kycox.game.body;
 
-import com.kycox.game.constant.Constants;
-import com.kycox.game.level.ScreenData;
-import com.kycox.game.maths.SpeedFunction;
+import com.kycox.game.tools.Position;
+import com.kycox.game.constant.game.GameMainConstants;
+import com.kycox.game.engine.maze.Maze;
+import com.kycox.game.tools.maths.SpeedFunction;
 import com.kycox.game.tools.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 
+@Getter
 public abstract class Body {
-	@Getter
 	@Setter
-	private Point direction = Constants.POINT_ZERO;
-	@Getter
+	private Position direction = GameMainConstants.POINT_ZERO;
 	@Setter
 	private int leftLifes = 0;
-	@Getter
 	@Setter
 	private boolean newLife = false;
-	@Getter
 	@Setter
-	private Point position = Constants.POINT_ZERO;
+	private Position position = GameMainConstants.POINT_ZERO;
 	@Setter
-	@Getter
 	private SpeedFunction speedFunction;
-	@Getter
 	@Setter
 	private int speedIndex = 0;
-	@Getter
 	private int startSpeedIndex = 0;
 
-	public Point getFrontPositionBlock(ScreenData screenData) {
-		var positionBlock = (Point) getPositionBlock().clone();
-		var screenBlock = screenData.getScreenBlock(positionBlock);
-		if (direction.equals(Constants.POINT_UP) && !screenBlock.isBorderUp()) {
-			positionBlock.y--;
-		} else if (direction.equals(Constants.POINT_DOWN) && !screenBlock.isBorderDown()) {
-			positionBlock.y++;
-		} else if (direction.equals(Constants.POINT_RIGHT) && !screenBlock.isBorderRight()) {
-			positionBlock.x++;
-		} else if (direction.equals(Constants.POINT_LEFT) && !screenBlock.isBorderLeft()) {
-			positionBlock.x--;
+	public Position getFrontPositionBlock(Maze maze) {
+		var positionBlock = getPositionBlock();
+		var screenBlock = maze.getScreenBlock(positionBlock);
+		if (direction.equals(GameMainConstants.POINT_UP) && !screenBlock.isBorderUp()) {
+			return positionBlock.translate(0, -1);
+		} else if (direction.equals(GameMainConstants.POINT_DOWN) && !screenBlock.isBorderDown()) {
+			return positionBlock.translate(0, 1);
+		} else if (direction.equals(GameMainConstants.POINT_RIGHT) && !screenBlock.isBorderRight()) {
+			return positionBlock.translate(1, 0);
+		} else if (direction.equals(GameMainConstants.POINT_LEFT) && !screenBlock.isBorderLeft()) {
+			return positionBlock.translate(-1, 0);
 		}
 		return positionBlock;
 	}
 
-	public Point getPositionBlock() {
+	public Position getPositionBlock() {
 		return Utils.convertGraphicPointToBlockPoint(getPosition());
 	}
 
 	public int getSpeed() {
-		return Constants.VALID_SPEEDS
-		        .get(speedIndex < Constants.VALID_SPEEDS.size() ? speedIndex : Constants.VALID_SPEEDS.size() - 1);
+		return GameMainConstants.VALID_SPEEDS
+		        .get(speedIndex < GameMainConstants.VALID_SPEEDS.size() ? speedIndex : GameMainConstants.VALID_SPEEDS.size() - 1);
 	}
 
 	public void initSpeedIndex(int speedIndex) {
@@ -80,7 +74,7 @@ public abstract class Body {
 
 	public boolean isPerfectOnABlock() {
 		var pointPos = getPosition();
-		return pointPos.x % Constants.BLOCK_SIZE == 0 && pointPos.y % Constants.BLOCK_SIZE == 0;
+		return pointPos.x() % GameMainConstants.BLOCK_SIZE == 0 && pointPos.y() % GameMainConstants.BLOCK_SIZE == 0;
 	}
 
 	public void lostsALife() {

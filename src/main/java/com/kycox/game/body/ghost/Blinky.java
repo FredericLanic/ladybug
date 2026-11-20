@@ -17,12 +17,12 @@
 package com.kycox.game.body.ghost;
 
 import com.kycox.game.constant.ghost.GhostStatus;
-import com.kycox.game.maths.BlinkySpeedIndex;
+import com.kycox.game.tools.maths.BlinkySpeedIndex;
 
 import lombok.Setter;
 
-public class Blinky extends Ghost {
-	@Setter
+@Setter
+public final class Blinky extends Ghost {
 	private BlinkySpeedIndex blinkySpeedIndex;
 
 	@Override

@@ -16,34 +16,34 @@
  */
 package com.kycox.game.body.ladybug;
 
-import java.awt.Point;
 
-import com.kycox.game.action.ladybug.LadybugActions;
+import com.kycox.game.tools.Position;
+import com.kycox.game.engine.bodyaction.ladybug.LadybugActions;
 import com.kycox.game.body.UserBody;
-import com.kycox.game.constant.Constants;
+import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ladybug.LadybugStatus;
-import com.kycox.game.contract.LadybugForController;
-import com.kycox.game.contract.LadybugForGameView;
-import com.kycox.game.level.ScreenData;
+import com.kycox.game.engine.maze.Maze;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class Ladybug extends UserBody implements LadybugForController, LadybugForGameView {
-	@Getter
-	private LadybugActions ladybugActions;
+@Getter
+public final class Ladybug extends UserBody {
+	/**
+	 * Actions du dernier battement. Jamais nulles depuis l'étape 4.2 (D23) : avant,
+	 * elles n'existaient qu'après le premier battement de l'écran de présentation.
+	 */
+	private LadybugActions ladybugActions = new LadybugActions();
 	@Setter
-	@Getter
 	private LadybugStatus status = LadybugStatus.NORMAL;
-	@Getter
-	private Point viewDirection = Constants.POINT_UP;
+	private Position viewDirection = GameMainConstants.POINT_UP;
 
 	public int getEatenAIdRefFruit() {
 		return ladybugActions.getEatenAIdRefFruit();
 	}
 
 	public boolean hasEatenAFruit() {
-		return getEatenAIdRefFruit() != Constants.NOFRUITID;
+		return getEatenAIdRefFruit() != GameMainConstants.NOFRUITID;
 	}
 
 	@Override
@@ -63,33 +63,33 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return ladybugActions.isToBeTeleported();
 	}
 
-	public void move(ScreenData screenData) {
+	public void move(Maze maze) {
 		if (ladybugActions.isToBeTeleported()) {
-			teleport(screenData);
+			teleport(maze);
 			return;
 		}
-		var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+		var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 		if (isPerfectOnABlock()) {
 			if (canMove(userRequest, currentScreenBlock)) {
 				viewDirection = userRequest;
 			}
 			move(currentScreenBlock);
 		}
-		getPosition().translate(getDirection().x * getSpeed(), getDirection().y * getSpeed());
+		setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 	}
 
-	public LadybugActions setActions(ScreenData screenData) {
+	public LadybugActions setActions(Maze maze) {
 		ladybugActions = new LadybugActions();
 		if (getStatus() == LadybugStatus.DEAD) {
 			return ladybugActions;
 		}
-		if (userRequest.equals(new Point(getDirection().x, -getDirection().y))) {
+		if (userRequest.equals(new Position(getDirection().x(), -getDirection().y()))) {
 			setDirection(userRequest);
 			viewDirection = getDirection();
 		}
 		// calcule uniquement lorsque ladybug rempli le block
 		if (isPerfectOnABlock()) {
-			var currentScreenBlock = screenData.getScreenBlock(getPositionBlock());
+			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 			ladybugActions.setCurrentScreenBlock(currentScreenBlock);
 			ladybugActions.setEatenAPoint(currentScreenBlock.isPoint());
 			ladybugActions.setEatenAMegaPoint(currentScreenBlock.isMegaPoint());
@@ -99,11 +99,11 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		return ladybugActions;
 	}
 
-	public void settingsForNewLevel(int numLevel, Point startPosition) {
+	public void settingsForNewLevel(int numLevel, Position startPosition) {
 		setPosition(startPosition);
-		setDirection(Constants.POINT_ZERO);
-		viewDirection = Constants.POINT_ZERO;
-		setUserRequest(Constants.POINT_ZERO);
+		setDirection(GameMainConstants.POINT_ZERO);
+		viewDirection = GameMainConstants.POINT_ZERO;
+		setUserRequest(GameMainConstants.POINT_ZERO);
 		setStatus(LadybugStatus.NORMAL);
 		initSpeedIndex(getSpeedFunction().getRealIndexSpeed(numLevel));
 	}
@@ -114,11 +114,5 @@ public class Ladybug extends UserBody implements LadybugForController, LadybugFo
 		sb.append("Ladybug ");
 		sb.append("position: " + getPosition());
 		return sb.toString();
-	}
-
-	// FIXME: hmmm, utilisé uniquement en debug
-	@Override
-	public int getSpeedIndex() {
-		return super.getSpeedIndex();
 	}
 }

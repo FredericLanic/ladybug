@@ -1,0 +1,91 @@
+package com.kycox.game.testutil;
+
+import com.kycox.game.tools.Position;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.kycox.game.constant.contract.LevelStructure;
+import com.kycox.game.constant.level.data.SecondGenerationLevel1;
+import com.kycox.game.constant.level.data.SecondGenerationLevel2;
+import com.kycox.game.constant.level.data.SecondGenerationLevel3;
+import com.kycox.game.constant.level.data.SecondGenerationLevel4;
+import com.kycox.game.constant.level.data.SecondGenerationLevel5;
+import com.kycox.game.constant.level.data.SecondGenerationLevel6;
+import com.kycox.game.constant.level.data.SecondGenerationLevel7;
+import com.kycox.game.constant.level.data.SecondGenerationLevel8;
+import com.kycox.game.engine.maze.ManageLevel;
+import com.kycox.game.engine.maze.ScreenBlock;
+import com.kycox.game.engine.maze.Maze;
+
+/**
+ * Outils partagés par les tests qui ont besoin d'un vrai labyrinthe.
+ * <p>
+ * Aucun besoin de Spring : un {@link Maze} se construit à la main à
+ * partir d'un niveau.
+ */
+public final class LevelFixtures {
+	private LevelFixtures() {
+	}
+
+	/** Les niveaux actifs du jeu (ceux annotés {@code @Component}). */
+	public static List<LevelStructure> activeLevels() {
+		return List.of(new SecondGenerationLevel1(), new SecondGenerationLevel2(), new SecondGenerationLevel3(),
+		        new SecondGenerationLevel4(), new SecondGenerationLevel5(), new SecondGenerationLevel6(),
+		        new SecondGenerationLevel7(), new SecondGenerationLevel8());
+	}
+
+	/** Labyrinthe chargé comme au début d'une partie, sans l'aléatoire (méga-gommes, rendu). */
+	public static Maze mazeOf(LevelStructure level) {
+		var maze = new Maze(new ManageLevel(List.of(level)));
+		maze.setLevelMap(1, false);
+		return maze;
+	}
+
+	/**
+	 * Distances (en nombre de cases) depuis {@code start}, par un parcours en
+	 * largeur. Volontairement écrit sans rien reprendre de {@code Dijkstra} : il
+	 * sert de référence indépendante. Les téléporteurs ne sont pas suivis.
+	 */
+	public static Map<Position, Integer> distancesFrom(Position start, Maze maze) {
+		Map<Position, Integer> distances = new HashMap<>();
+		var queue = new ArrayDeque<Position>();
+		distances.put(start, 0);
+		queue.add(start);
+		while (!queue.isEmpty()) {
+			var current = queue.poll();
+			for (var next : openNeighbours(current, maze)) {
+				if (!distances.containsKey(next)) {
+					distances.put(next, distances.get(current) + 1);
+					queue.add(next);
+				}
+			}
+		}
+		return distances;
+	}
+
+	/** Cases voisines atteignables en un pas (pas de mur entre les deux). */
+	public static List<Position> openNeighbours(Position point, Maze maze) {
+		ScreenBlock block = maze.getScreenBlock(point);
+		var neighbours = new java.util.ArrayList<Position>();
+		if (!block.isBorderUp()) {
+			neighbours.add(new Position(point.x(), point.y() - 1));
+		}
+		if (!block.isBorderDown()) {
+			neighbours.add(new Position(point.x(), point.y() + 1));
+		}
+		if (!block.isBorderLeft()) {
+			neighbours.add(new Position(point.x() - 1, point.y()));
+		}
+		if (!block.isBorderRight()) {
+			neighbours.add(new Position(point.x() + 1, point.y()));
+		}
+		return neighbours;
+	}
+
+	/** Nom court du niveau, pour l'affichage des tests paramétrés. */
+	public static String nameOf(LevelStructure level) {
+		return level.getClass().getSimpleName();
+	}
+}
