@@ -10,7 +10,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SimpleTimer {
-	private static class WaiterTimer extends TimerTask {
+	/** Visible du package pour les tests (interruption, S2142). */
+	static class WaiterTimer extends TimerTask {
 		private static final Logger logger = LoggerFactory.getLogger(WaiterTimer.class);
 		private final long duration;
 
@@ -20,7 +21,7 @@ public class SimpleTimer {
 		@Setter
 		private TimerStatus timerStatus;
 
-		private WaiterTimer(long time) {
+		WaiterTimer(long time) {
 			timer = new Timer(true);
 			timerStatus = TimerStatus.RUN;
 			duration = time;
@@ -33,7 +34,7 @@ public class SimpleTimer {
 			}
 		}
 
-		private boolean isRunning() {
+		boolean isRunning() {
 			return timerStatus == TimerStatus.RUN;
 		}
 

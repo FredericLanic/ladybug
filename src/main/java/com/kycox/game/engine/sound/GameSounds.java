@@ -72,7 +72,7 @@ public class GameSounds implements ApplicationListener<EventGameModel> {
 		Arrays.stream(Sounds.values()).filter(snapshot::hasSound)
 				.map(Sounds::getClip)
 				.filter(Objects::nonNull) // pas de sortie audio : on reste muet
-				.forEach(clip -> Thread.ofVirtual().name("sound").start(new ListenSound(clip)));
+				.forEach(ListenSound::play);
 	}
 
 	private void stopAllSounds() {

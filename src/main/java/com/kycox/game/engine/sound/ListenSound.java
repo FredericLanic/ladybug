@@ -31,6 +31,11 @@ public class ListenSound implements Runnable {
 	private final Clip clip;
 	private long microsecondLength = 0;
 
+	/** Joue le clip sur un nouveau fil virtuel, et rend ce fil. */
+	public static Thread play(Clip clip) {
+		return Thread.ofVirtual().name("sound").start(new ListenSound(clip));
+	}
+
 	public ListenSound(Clip clip) {
 		this.clip = clip;
 		microsecondLength = clip.getMicrosecondLength();
