@@ -7,6 +7,8 @@ Chaque fiche explique une technique introduite dans Ladybug, avec le vrai code d
 
 Chaque fiche se termine par un petit exercice facultatif.
 
+Les outils qui surveillent le code (ArchUnit, JaCoCo, SonarQube Cloud, CI, robot, Dependabot, Graphify) ont leurs propres fiches, au même format : [doc/qualite](../qualite/README.md).
+
 | Fiche | En une phrase | Étape |
 |---|---|---|
 | [Test unitaire](test-unitaire.md) | Vérifier automatiquement une petite partie du jeu, sans le lancer. | 3 |
