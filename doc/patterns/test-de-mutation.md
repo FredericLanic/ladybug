@@ -32,17 +32,19 @@ assertThat(request.isRightLeftStick()).isTrue();    // au-dessus : à droite
 | Sans le dessin Swing ni le démarrage (C34) | 60 % | — |
 | Après les tests de la manette et des images | **68 %** | **81 %** |
 
+Ces 81 % sont mesurés par PIT sur son seul périmètre (sans le dessin Swing ni le démarrage). [JaCoCo](../qualite/jacoco.md), qui compte tout le jeu, vues comprises, donne 65,7 % des lignes.
+
 Où le trouver :
 - la configuration : plugin `pitest-maven` dans le [pom](../../pom.xml) ;
 - le lancement : `mvn test-compile org.pitest:pitest-maven:mutationCoverage` (une dizaine de minutes), rapport dans `target/pit-reports/index.html` ;
-- la CI : job `mutation` de [`build.yml`](../../.github/workflows/build.yml), un passage sur Ubuntu à chaque PR, échec sous 60 %.
+- la CI : workflow [`mutation.yml`](../../.github/workflows/mutation.yml), chaque nuit sur `develop` et à la demande (≈ 36 min sur GitHub, trop long pour chaque PR), échec sous 60 % ; voir aussi la fiche [CI GitHub Actions](../qualite/ci-github-actions.md).
 
 **🟣 Le recul (senior / vétéran)**
 
 - *Couverture contre mutation* : la couverture dit « cette ligne a été exécutée », la mutation dit « si cette ligne était fausse, un test le verrait ». La seconde est bien plus exigeante. PIT appelle « force des tests » le score calculé sur le seul code exécuté (82 % dans Ladybug).
 - *Le périmètre* : mesurer du code qu'aucun test sans écran ne peut atteindre (le dessin Swing) fait baisser le score sans rien dire de la qualité des tests. Ladybug l'exclut jusqu'aux images clés (C30, C34), et le robot comme les parties de Frédéric le couvrent.
 - *Le seuil* : 60 % dans la CI, avec la marge d'un score à 68 %. Un seuil trop proche du score casse la CI au moindre ajout ; trop bas, il ne protège plus rien.
-- *Le coût* : chaque mutant relance les tests qui le concernent, soit ~14 000 exécutions et ~11 minutes ici. D'où un seul passage, sur un seul système, en parallèle des autres tests.
+- *Le coût* : chaque mutant relance les tests qui le concernent, soit ~14 000 exécutions, ~11 minutes en local et ≈ 36 minutes sur GitHub. D'où un seul passage, sur un seul système, la nuit plutôt qu'à chaque PR.
 - *Pièges* :
   - **les mutants équivalents** : certains changements ne modifient pas le comportement (par exemple un `>=` sur une valeur qui n'est jamais égale au seuil). Ils survivent toujours ; viser 100 % n'a pas de sens ;
   - **les boucles sans fin** : un mutant qui inverse une condition de sortie fait tourner un test indéfiniment ; PIT l'arrête au bout d'un délai et le compte comme détecté (`TIMED_OUT`) ;

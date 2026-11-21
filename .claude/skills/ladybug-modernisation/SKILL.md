@@ -33,6 +33,8 @@ Le plan détaillé est dans `references/plan.md`. Lisez-le avant de proposer ou 
 
 Chaque pattern introduit a sa fiche dans `doc/patterns/<pattern>.md`, lisible à trois niveaux (junior, confirmé, vétéran) et terminée par un exercice. Le format a été validé par Frédéric ; le modèle et un exemple complet (Strategy) sont dans `references/pattern-sheet.md`. Ajoutez la fiche au sommaire `doc/patterns/README.md`, et faites pointer la Javadoc des classes concernées vers la fiche.
 
+Les **outils de qualité** (ArchUnit, JaCoCo, SonarQube Cloud, CI, robot, Dependabot, Graphify) ont leurs fiches au même format dans `doc/qualite/` (demandé par Frédéric le 21/11/2026), avec le sommaire `doc/qualite/README.md` et le tableau « qui vérifie quoi ». Tout nouvel outil y reçoit sa fiche, et les chiffres cités (tests, couverture, statuts du robot) se tiennent à jour.
+
 Points forts existants à reconnaître, sans les dénigrer :
 - un pattern State dans `model/strategy` ;
 - des interfaces de contrat par couche (`contract/`) ;
