@@ -38,11 +38,6 @@ public abstract class UserBody extends Body {
 		return playerInput.requested();
 	}
 
-	/** Transmet une direction au joueur de ce personnage. */
-	public void setUserRequest(Position direction) {
-		playerInput.request(direction);
-	}
-
 	protected boolean canMove(Position direction, ScreenBlock screenBlock) {
 		return ((!direction.equals(GameMainConstants.POINT_LEFT) || !screenBlock.isBorderLeft())
 		        && (!direction.equals(GameMainConstants.POINT_RIGHT) || !screenBlock.isBorderRight())
