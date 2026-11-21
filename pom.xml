@@ -28,6 +28,12 @@
 		<start-class>com.kycox.game.Application</start-class>
 		<!-- Rempli par JaCoCo (agent de couverture) ; vide si JaCoCo ne tourne pas -->
 		<argLine></argLine>
+		<!-- SonarQube Cloud (étape 5 bis) : analyse lancée par la CI (build.yml) quand le
+		     secret SONAR_TOKEN existe. Clés à confirmer à la création du projet sur sonarcloud.io.
+		     La couverture vient du rapport JaCoCo (target/site/jacoco/jacoco.xml, lu par défaut). -->
+		<sonar.organization>fredericlanic</sonar.organization>
+		<sonar.projectKey>FredericLanic_ladybug</sonar.projectKey>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>
@@ -74,6 +80,18 @@
 				<!--filtering>true</filtering-->
 			</resource>
 		</resources>
+
+		<pluginManagement>
+			<plugins>
+				<!-- version du scanner SonarQube Cloud, lancé par la CI :
+				     mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -->
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>5.8.0.7211</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
 		<plugins>
 			<plugin>
