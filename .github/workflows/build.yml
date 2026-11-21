@@ -31,3 +31,12 @@ jobs:
     # .mvn/maven.config est pris en compte automatiquement (Maven Central, sans miroir)
     - name: Build with Maven
       run: mvn -B clean verify
+
+    # Couverture des tests (JaCoCo, étape 5 bis) : un seul rapport suffit, celui de Linux.
+    # À télécharger depuis la page du run, onglet « Artifacts » ; ouvrir index.html.
+    - name: Keep the coverage report
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v7
+      with:
+        name: jacoco-report
+        path: target/site/jacoco/
