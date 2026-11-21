@@ -43,6 +43,8 @@ public class SimpleTimer {
 				Thread.sleep(duration);
 			} catch (InterruptedException interruptedException) {
 				logger.error(String.valueOf(interruptedException));
+				// rend le signal d'interruption à qui l'attend (règle Java S2142)
+				Thread.currentThread().interrupt();
 			} finally {
 				timer.cancel();
 				timer.purge();
