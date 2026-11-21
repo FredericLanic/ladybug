@@ -52,7 +52,9 @@ jobs:
 
     - uses: actions/checkout@v7
 
-    - uses: fregante/setup-git-user@v2 # nom et e-mail Git du robot GitHub Actions pour les commits
+    # Actions externes épinglées par l'identifiant de leur commit (SHA), pas par une étiquette
+    # que leur auteur peut déplacer : un compte piraté ne peut pas changer ce qui tourne ici.
+    - uses: fregante/setup-git-user@024bc0b8e177d7e77203b48dab6fb45666854b35 # v2.0.2 : nom et e-mail Git du robot GitHub Actions pour les commits
 
     - name: Set up JDK 21
       uses: actions/setup-java@v6
@@ -62,13 +64,16 @@ jobs:
         cache: maven
 
     - name: Prepare release
+      env:
+        # le jeton passe par une variable, jamais recopié dans la commande elle-même
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: >
         mvn -B release:prepare
         -DreleaseVersion=$RELEASE_VERSION
         -DdevelopmentVersion=$DEV_VERSION
         -DdryRun=$DRY_RUN
         -Dusername=$GITHUB_ACTOR
-        -Dpassword=${{ secrets.GITHUB_TOKEN }}
+        -Dpassword=$GITHUB_TOKEN
 
     # Le jar publié est reconstruit depuis le tag : il correspond exactement à la version
     - name: Build jar from tag
@@ -80,7 +85,7 @@ jobs:
 
     - name: Publish GitHub Release
       if: ${{ !inputs.dryRun }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
       with:
         tag_name: v${{ inputs.releaseVersion }}
         name: Ladybug ${{ inputs.releaseVersion }}

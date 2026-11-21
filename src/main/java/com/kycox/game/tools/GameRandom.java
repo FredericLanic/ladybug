@@ -24,6 +24,11 @@ public final class GameRandom {
 	public static final String SEED_PROPERTY = "ladybug.seed";
 
 	private static final Logger logger = LoggerFactory.getLogger(GameRandom.class);
+	/**
+	 * Source des graines tirées au hasard : une seule, créée une fois (règle Java
+	 * S2119). Déclarée avant le bloc {@code static} qui s'en sert.
+	 */
+	private static final SecureRandom SEED_SOURCE = new SecureRandom();
 
 	private static long seed;
 	private static Random random;
@@ -38,7 +43,7 @@ public final class GameRandom {
 	 */
 	public static synchronized void reseed(long newSeed) {
 		seed = newSeed;
-		random = new Random(newSeed);
+		random = new Random(newSeed); // NOSONAR (S2245) : hasard du jeu, pas de la sécurité ; doit être rejouable à graine fixe
 		logger.info("Random seed {} (to replay: -D{}={})", newSeed, SEED_PROPERTY, newSeed);
 	}
 
@@ -72,7 +77,7 @@ public final class GameRandom {
 				logger.warn("Invalid {} '{}', a random seed is used", SEED_PROPERTY, property);
 			}
 		}
-		return new SecureRandom().nextLong();
+		return SEED_SOURCE.nextLong();
 	}
 
 	private GameRandom() {

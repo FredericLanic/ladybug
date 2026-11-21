@@ -21,10 +21,20 @@ import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.Clip;
 
-public class ListenSound extends Thread {
+/**
+ * Joue un clip et attend sa fin pour le rembobiner. Une tâche par son, lancée
+ * sur un fil virtuel (Java 21, règle S6881) : l'attente ne bloque plus un vrai
+ * fil du système à chaque son.
+ */
+public class ListenSound implements Runnable {
 	private static final Logger logger = LoggerFactory.getLogger(ListenSound.class);
 	private final Clip clip;
 	private long microsecondLength = 0;
+
+	/** Joue le clip sur un nouveau fil virtuel, et rend ce fil. */
+	public static Thread play(Clip clip) {
+		return Thread.ofVirtual().name("sound").start(new ListenSound(clip));
+	}
 
 	public ListenSound(Clip clip) {
 		this.clip = clip;
