@@ -51,6 +51,7 @@ Points forts existants à reconnaître, sans les dénigrer :
 - **Publier une version** (20/11/2026, C39 à C42) : workflow `maven-release.yml` lancé à la main sur `master` (après une PR `develop` → `master`), `release:prepare` seul, tag `vX.Y.Z`, jar joint à une GitHub Release ; pas de dépôt Maven. « Essai à blanc » coché par défaut. Prochaine version : 0.8.0. Mode d'emploi dans le README.
 - **Étape 4** (20/11/2026) : un `record Position` à nous remplace `java.awt.Point` dans le modèle (C44) ; un `GameSnapshot` dès l'étape 4 (C45) ; deux PR, 4.1–4.3 puis 4.4–4.6 (C46). Chaque sous-étape est un refactoring pur : golden master identique. **Terminée le 20/11/2026** : `Maze`/`MazeOutline` (4.4), `LevelState`/`LocalPreferences` (4.5), `GameSnapshot` transporté par `EventGameModel` et seul lu par les vues, les sons et la manette (4.6). Prochaine : étape 5 (`PlayerInput`), et D25 (clignotement de la vie gagnée) en petite sous-étape avant.
 - **Étape 5** (terminée le 20/11/2026) : `PlayerInput` (package `input`), une boîte aux lettres par personnage, écrite par clavier et manettes sans passer par le modèle, appareil noté dans le journal (`InputSource`) ; règle **C50** (fantôme humain éliminé → ordinateur) ; un joueur = un fantôme précis. IA encore dans `Ghost` (étape 6). Suite décidée (C51) : **étape 5 bis** (ArchUnit, puis JaCoCo + SonarQube Cloud), puis I20.
+- **Étape 5 bis** (faite le 21/11/2026, PR #32) : `ArchitectureTest` (ArchUnit) vérifie 4 règles à chaque build ; 53 boucles de packages existantes **gelées** dans `src/test/resources/archunit-store` (dette D29, étape 8) : ne jamais regénérer ce registre pour faire passer une nouvelle boucle. JaCoCo dans `mvn verify` (65,7 % des lignes). SonarQube Cloud prêt, inactif tant que Frédéric n'a pas créé le compte et le secret `SONAR_TOKEN`. Le robot peut s'interrompre au scénario Échap si Ladybug perd ses 3 vies pendant les tests de touches : relancer.
 - **Le mode réseau vient en dernier** (étape 9). Il suit une architecture d'**hôte qui fait autorité** : les clients n'envoient que leurs entrées, l'hôte renvoie un `GameSnapshot`. Les étapes précédentes le préparent : listener typé, snapshot, `PlayerInput` par personnage.
 
 ## Ordre des étapes
@@ -179,5 +180,13 @@ Frédéric a demandé que **tout ce qu'on se dit soit retenu**. Après chaque di
    - lancez `sh .claude/skills/ladybug-modernisation/scripts/sauvegarde.sh <dossier_export>` depuis la racine du dépôt, après l'export ci-dessous (copie du plan, du PDF, du skill, de la mémoire et des conversations en `.jsonl` et `.md`) ;
    - exportez les données du dashboard avec `read_db` (`list`) pour `datasets` et chaque collection `data/ladybug/*`, avec un `out_dir` **vide dans le scratchpad** (l'export refuse d'écraser un fichier existant), puis passez ce dossier à `sauvegarde.sh` : il le fusionne dans `~/Documents/Claude/ladybug/dashboard/donnees` sans rien supprimer, et régénère le **dashboard local**, la carte Ladybug et la page d'accueil `~/Documents/Claude/accueil/index.html` (skill utilisateur `dashboard-local`) ;
    - si la page a changé, copiez aussi `files/index.html` dans `dashboard/page-index.html`.
+
+6. **À chaque PR fusionnée** (règle de Frédéric, 20/11/2026), mettez à jour les **4 documents** :
+   - le dashboard « Ladybug Modernisation » (étapes, mesures de `metrics.py`, journal, plan, dette, décisions, idées) ;
+   - la page « Ladybug, côté technique » : https://claude.ai/artifact/Fa36n8xrck4G4DjcHbGK1K (pour Jeff et Alex, privée) ;
+   - la « Visite guidée de Ladybug » : https://claude.ai/artifact/EVZJcMjMnRfYiiqYR47wFF (pour Jeff, partagée) ;
+   - le document Claude Docs « Ladybug — Stratégie de tests autonomes » : https://claude.ai/artifact/4mXUqpsGiwLczZzegYUyUP (section « Bilan ») ;
+
+   puis les copies locales (`~/Documents/Claude/ladybug/pages/`) et la sauvegarde. Un hook de Claude Code (`.claude/settings.local.json`, PostToolUse sur `gh pr merge`) le rappelle automatiquement. Une PR fusionnée sans Claude (directement sur GitHub) ne déclenche rien : comparez en début de session le dernier commit de `develop` avec celui noté au dashboard (`data/ladybug/health/commit`).
 
 Lisez `references/journal.md` quand vous avez besoin du contexte d'une décision : pourquoi le XML est conservé, comment on a vérifié que le XML externe n'était pas lu, d'où vient l'idée de la perception, etc.

@@ -26,6 +26,14 @@
 		<application.name>Ladybug by Kykox</application.name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<start-class>com.kycox.game.Application</start-class>
+		<!-- Rempli par JaCoCo (agent de couverture) ; vide si JaCoCo ne tourne pas -->
+		<argLine></argLine>
+		<!-- SonarQube Cloud (étape 5 bis) : analyse lancée par la CI (build.yml) quand le
+		     secret SONAR_TOKEN existe. Clés à confirmer à la création du projet sur sonarcloud.io.
+		     La couverture vient du rapport JaCoCo (target/site/jacoco/jacoco.xml, lu par défaut). -->
+		<sonar.organization>fredericlanic</sonar.organization>
+		<sonar.projectKey>FredericLanic_ladybug</sonar.projectKey>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>
@@ -52,6 +60,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- ArchUnit (étape 5 bis) : règles d'architecture vérifiées comme des tests
+		     (qui a le droit de dépendre de qui) ; voir ArchitectureTest -->
+		<dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit-junit5</artifactId>
+			<version>1.5.1</version>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
 
 	<build>
@@ -64,6 +80,18 @@
 				<!--filtering>true</filtering-->
 			</resource>
 		</resources>
+
+		<pluginManagement>
+			<plugins>
+				<!-- version du scanner SonarQube Cloud, lancé par la CI :
+				     mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -->
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>5.8.0.7211</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
 		<plugins>
 			<plugin>
@@ -87,8 +115,34 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<argLine>-Xshare:off -javaagent:${org.mockito:mockito-core:jar}</argLine>
+					<!-- @{argLine} : l'agent JaCoCo, ajouté au moment de lancer les tests -->
+					<argLine>@{argLine} -Xshare:off -javaagent:${org.mockito:mockito-core:jar}</argLine>
 				</configuration>
+			</plugin>
+			<!-- JaCoCo (étape 5 bis) : mesure la couverture, c'est-à-dire les lignes et les
+			     branches réellement exécutées par les tests. Lancé par mvn verify.
+			     Rapport : target/site/jacoco/index.html (aussi en XML, lu par SonarQube Cloud).
+			     Complète PIT : JaCoCo dit « ce code a tourné », PIT dit « une erreur ici
+			     aurait été vue ». -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.16</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<!-- PIT, tests de mutation (étape 3.5.5) : glisse de petites erreurs dans le code
 			     (« mutants ») et vérifie que les tests les détectent. Lent : lancé à la demande,

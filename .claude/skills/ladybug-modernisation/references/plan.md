@@ -316,9 +316,12 @@ Risques : le passage aux tics change le rythme ressenti (conversion exacte, robo
 
 ## Étape 5 bis : outils de qualité du code (décidée le 20/11/2026)
 Après l'étape 5, avant I20 et l'étape 6. Existant : JUnit 5, golden master, robot, PIT (68 %), CI sur 3 systèmes, Graphify à la main, alertes Dependabot ; SonarQube utilisé en 2019 puis abandonné. Manquent : analyse statique, style commun (fins de ligne mélangées), couverture publiée à chaque PR, règles d'architecture vérifiées, analyse de sécurité.
-5b.1 **ArchUnit** : tests d'architecture (vues = snapshot + événement ; modèle sans `java.awt`/`javax.swing` ; seuls les contrôleurs et `input` écrivent dans les boîtes aux lettres ; pas de cycle).
-5b.2 **JaCoCo + SonarQube Cloud** (gratuit pour un dépôt public) : couverture, bugs, duplication, dette, commentaire sur chaque PR.
-5b.3 Plus tard ou à l'étape 8 : Spotless + `.editorconfig`, SpotBugs ou PMD, CodeQL, Error Prone, OpenRewrite.
+> **Faite en autonomie le 21/11/2026** (« peux-tu faire ces points en autonome ? je vais courir »), branche `etape-5bis-qualite`, PR #32 (CI verte sur 3 systèmes). Robot : 174 statuts, 0 exception (2 essais interrompus par une vraie fin de partie : 3 morts pendant les tests de touches, hasard). Graphify : 2 187 nœuds, aucun cycle d'import entre classes.
+
+5b.1 **ArchUnit** (commit `c2a9044`, `ArchitectureTest`, ArchUnit 1.5.1) : quatre règles, chacune vérifiée par sabotage. (1) le cœur du jeu (`engine.model`, `maze`, `bodyaction`, `score`, `body`, `input`, `snapshot`, `preferences`) sans `java.awt`/`javax.swing` ; (2) les vues ne dépendent pas du modèle vivant, sauf `EventGameModel`, `GhostColor`, `Ghost.MoveStyle`, `MessageType` (vocabulaire du snapshot) ; (3) seuls `engine.controller` et `input` appellent `PlayerInput.request` (`UserBody.setUserRequest`, plus appelée, supprimée) ; (4) **pas de nouvelle boucle entre grands packages** : 53 boucles existantes (surtout via `constant`, fourre-tout) **gelées** (`FreezingArchRule`, registre `src/test/resources/archunit-store`, reconnues par leur seul chemin) → dette **D29**, à résorber à l'étape 8. Graphify ne voit pas ces boucles : il regarde les imports entre classes, ArchUnit les dépendances entre packages.
+5b.2 **JaCoCo** (commit `fc5bd25`, 0.8.16) : `mvn verify` produit `target/site/jacoco` (HTML + XML), artefact CI `jacoco-report` (Linux). Départ : **65,7 % des lignes, 49,9 % des branches** ; modèle et personnages > 90 %, vues faibles (attendu, vérifiées par le robot). Surefire reçoit l'agent par `@{argLine}` ; PIT nocturne avec `-Djacoco.skip=true`.
+5b.3 **SonarQube Cloud** (commit `21917bd`) : prêt dans la CI (scanner 5.8.0.7211, étape sautée tant que le secret `SONAR_TOKEN` n'existe pas, checkout complet). **Reste à Frédéric** : compte sonarcloud.io avec GitHub, import du dépôt, désactiver l'analyse automatique, créer le secret `SONAR_TOKEN`, confirmer `sonar.organization` / `sonar.projectKey`.
+5b.4 Plus tard ou à l'étape 8 : Spotless + `.editorconfig`, SpotBugs ou PMD, CodeQL, Error Prone, OpenRewrite.
 
 ## Étape 6 : fantômes 100 % configurables (assemblage de capacités)
 6.1 `GhostMoveStrategy` : `ChaseStrategy` (ex-AGGRESSIVE), `AmbushStrategy` (ex-SMART), `WanderStrategy` (ex-CALM). Le code est repris de `Ghost`.
@@ -389,6 +392,7 @@ Les variantes ne diffèrent que par **qui décide** du changement, sur le même 
 - `TraceurAdvice` s'il n'est pas utilisé ;
 - `images/_inWork` déplacé hors de `src`.
 
+8.3 bis **Dette D29** : supprimer les boucles entre packages gelées par ArchUnit (5b.1), en commençant par vider `constant` (contrats vers leurs couches, images vers la vue, données de niveaux vers `maze`) ; le registre `archunit-store` doit finir vide.
 8.4 **Documentation finale** : `ARCHITECTURE.md` complet, `package-info.java`, README technique (« pour les contributeurs »). Relecture du point de vue d'un développeur qui découvre le projet (le test « Jeff »). Le graphe Graphify final, comparé à celui de l'étape 0, illustre le chemin parcouru.
 8.5 *(idée I18, 20/11/2026, à décider)* **Un cœur sans Spring, en modules Maven**, pour préparer une version Android : `ladybug-core` (Java pur : règles, modèle, `Position`, Dijkstra, `GameSnapshot`, tests et golden master), `ladybug-desktop` (Spring Boot, XML, Swing ou JavaFX), plus tard `ladybug-android` (libGDX). Le Spring du modèle est surtout cosmétique : 39 fichiers sur 42 n'ont qu'un `@Component` ; restent `ApplicationEventPublisher` (remplacé par le snapshot en 4.6), `MessageSource`, deux `@Value`, deux `@PostConstruct`.
 

@@ -310,9 +310,11 @@
 <div class="box"><b>Étape terminée le 20/11/2026.</b> 247 tests ; robot : 174 statuts, aucune exception ; Graphify : package <code>input</code>, aucun cycle. D26 (blocage au lancement) élucidée et corrigée en route. Suite : étape 5 bis (outils de qualité), puis I20 (choisir son fantôme, plusieurs fantômes en local).</div>
 
 <h2><span class="num">5 bis</span>Outils de qualité du code</h2>
-<p class="sub"><b class="id">5b.1</b> <b>ArchUnit</b> : les règles d'architecture des étapes 4 et 5 deviennent des tests (vues = snapshot, modèle sans AWT ni Swing, boîtes aux lettres, pas de cycle).</p>
-<p class="sub"><b class="id">5b.2</b> <b>JaCoCo + SonarQube Cloud</b> (gratuit pour un dépôt public) : couverture, bugs, duplication, dette, commentaire sur chaque PR.</p>
-<p class="sub"><b class="id">5b.3</b> Plus tard ou à l'étape 8 : Spotless + <code>.editorconfig</code>, SpotBugs ou PMD, CodeQL, Error Prone, OpenRewrite.</p>
+<p class="sub"><b class="id">5b.1</b> <b>ArchUnit</b> : quatre règles vérifiées à chaque build (cœur du jeu sans AWT ni Swing ; vues = snapshot ; seuls les contrôleurs écrivent dans les boîtes aux lettres ; pas de nouvelle boucle entre packages). Les 53 boucles existantes sont gelées (dette D29, étape 8).</p>
+<p class="sub"><b class="id">5b.2</b> <b>JaCoCo</b> : couverture mesurée par <code>mvn verify</code> et publiée par la CI. Départ : 65,7 % des lignes, 49,9 % des branches.</p>
+<p class="sub"><b class="id">5b.3</b> <b>SonarQube Cloud</b> : prêt dans la CI, actif dès que le compte et le secret <code>SONAR_TOKEN</code> existent.</p>
+<p class="sub"><b class="id">5b.4</b> Plus tard ou à l'étape 8 : Spotless + <code>.editorconfig</code>, SpotBugs ou PMD, CodeQL, Error Prone, OpenRewrite.</p>
+<div class="box"><b>Étape faite le 21/11/2026</b> (PR #32). 251 tests ; robot : 174 statuts, aucune exception ; Graphify : 2 187 nœuds, aucun cycle d'import entre classes.</div>
 
 <h2><span class="num">6</span>Fantômes 100 % configurables (assemblage de capacités)</h2>
 <p class="sub"><b class="id">6.1</b> <code>GhostMoveStrategy</code> : <code>ChaseStrategy</code> (ex-AGGRESSIVE), <code>AmbushStrategy</code> (ex-SMART), <code>WanderStrategy</code> (ex-CALM). Le code est repris de <code>Ghost</code>.</p>

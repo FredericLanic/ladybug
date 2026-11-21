@@ -36,7 +36,8 @@ jobs:
         cache-dependency-path: '**/pom.xml'
 
     - name: Mutation testing with PIT
-      run: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage -Dpit.threads=2 -Dpit.timeoutFactor=2
+      # jacoco.skip : la couverture se mesure dans Build ; ici elle ralentirait PIT pour rien
+      run: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage -Dpit.threads=2 -Dpit.timeoutFactor=2 -Djacoco.skip=true
 
     - name: Keep the PIT report
       if: always()
