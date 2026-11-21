@@ -22,6 +22,7 @@ import com.kycox.game.constant.game.GameImages;
 import com.kycox.game.constant.level.LevelImages492;
 import com.kycox.game.constant.fruits.Fruits;
 import com.kycox.game.constant.level.LevelRendering;
+import com.kycox.game.snapshot.CellSnapshot;
 import com.kycox.game.snapshot.MazeSnapshot;
 import com.kycox.game.tools.Utils;
 import com.kycox.game.engine.view.map.rendering.DisplayRendering;
@@ -69,15 +70,21 @@ public class ScreenBlockView {
 	 */
 	public void display(Graphics2D g2d, MazeSnapshot maze, LevelRendering levelRendering, int x, int y,
 	        boolean goldenWalls) {
+		// une seule lecture de la case ; hors du labyrinthe (cellAt renvoie null),
+		// rien à dessiner : ni murs ni décorations (alerte SonarQube Cloud)
+		var cell = maze.cellAt(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
+		if (cell == null) {
+			return;
+		}
 		if (goldenWalls) {
 			displayGoldenWalls(g2d, maze, levelRendering, x, y);
 		} else {
 			g2d.setColor(MazeColors.BLUE_LADYBUG);
 			displayRendering.display(g2d, maze, levelRendering, x, y);
 		}
-		displayTeleportation(g2d, maze, x, y);
-		displayPoints(g2d, maze, x, y);
-		displayFruit(g2d, maze, x, y);
+		displayTeleportation(g2d, cell, x, y);
+		displayPoints(g2d, cell, x, y);
+		displayFruit(g2d, cell, x, y);
 	}
 
 	/**
@@ -137,9 +144,7 @@ public class ScreenBlockView {
 		return (int) Math.min(255, Math.round(goldValue * factor));
 	}
 
-	private void displayPoints(Graphics2D g2d, MazeSnapshot maze, int x, int y) {
-		var screenBlock = maze.cellAt(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
-
+	private void displayPoints(Graphics2D g2d, CellSnapshot screenBlock, int x, int y) {
 		// affichage du point de survie des fantômes
 		if (screenBlock.ghostReviver()) {
 			g2d.setColor(revivorPointColor);
@@ -156,8 +161,7 @@ public class ScreenBlockView {
 		}
 	}
 
-	private void displayTeleportation(Graphics2D g2d, MazeSnapshot maze, int x, int y) {
-		var screenBlock = maze.cellAt(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
+	private void displayTeleportation(Graphics2D g2d, CellSnapshot screenBlock, int x, int y) {
 		if (screenBlock.teleportation()) {
 			g2d.setColor(teleportationPointColor);
 			g2d.fillOval(x + GameMainConstants.BLOCK_SIZE / 2 - 4, y + GameMainConstants.BLOCK_SIZE / 2 - 4, 10, 10);
@@ -165,8 +169,7 @@ public class ScreenBlockView {
 		}
 	}
 
-	private void displayFruit(Graphics2D g2d, MazeSnapshot maze, int x, int y) {
-		var screenBlock = maze.cellAt(Utils.convertGraphicPointToBlockPoint(new Position(x, y)));
+	private void displayFruit(Graphics2D g2d, CellSnapshot screenBlock, int x, int y) {
 		if (screenBlock.idRefFruit() != GameMainConstants.NOFRUITID) {
 			g2d.drawImage(fruits.getFruitImgById(screenBlock.idRefFruit()), x, y, null);
 		}

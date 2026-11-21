@@ -1,6 +1,7 @@
 package com.kycox.game.engine.view.map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.Mockito.mock;
 
 import java.awt.Color;
@@ -117,5 +118,19 @@ class ScreenBlockViewTest {
 	@DisplayName("un couloir reste noir pendant l'effet")
 	void aCorridorStaysBlack() {
 		assertThat(centerAfterDrawing(oneCell(false), true)).isEqualTo(Color.BLACK);
+	}
+
+	/**
+	 * Une case hors du labyrinthe ({@code cellAt} renvoie {@code null}) ne fait pas
+	 * planter le dessin : rien n'est décoré (alerte SonarQube Cloud, 21/11/2026).
+	 */
+	@ParameterizedTest(name = "{0}")
+	@EnumSource(LevelRendering.class)
+	void aCellOutsideTheMazeDrawsNothingAndDoesNotFail(LevelRendering rendering) {
+		var image = new BufferedImage(3 * SIZE, 3 * SIZE, BufferedImage.TYPE_INT_RGB);
+		var g2d = image.createGraphics();
+		assertThatCode(() -> view.display(g2d, oneCell(false), rendering, 2 * SIZE, 2 * SIZE, false))
+		        .doesNotThrowAnyException();
+		g2d.dispose();
 	}
 }
