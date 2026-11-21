@@ -180,4 +180,12 @@ Frédéric a demandé que **tout ce qu'on se dit soit retenu**. Après chaque di
    - exportez les données du dashboard avec `read_db` (`list`) pour `datasets` et chaque collection `data/ladybug/*`, avec un `out_dir` **vide dans le scratchpad** (l'export refuse d'écraser un fichier existant), puis passez ce dossier à `sauvegarde.sh` : il le fusionne dans `~/Documents/Claude/ladybug/dashboard/donnees` sans rien supprimer, et régénère le **dashboard local**, la carte Ladybug et la page d'accueil `~/Documents/Claude/accueil/index.html` (skill utilisateur `dashboard-local`) ;
    - si la page a changé, copiez aussi `files/index.html` dans `dashboard/page-index.html`.
 
+6. **À chaque PR fusionnée** (règle de Frédéric, 20/11/2026), mettez à jour les **4 documents** :
+   - le dashboard « Ladybug Modernisation » (étapes, mesures de `metrics.py`, journal, plan, dette, décisions, idées) ;
+   - la page « Ladybug, côté technique » : https://claude.ai/artifact/Fa36n8xrck4G4DjcHbGK1K (pour Jeff et Alex, privée) ;
+   - la « Visite guidée de Ladybug » : https://claude.ai/artifact/EVZJcMjMnRfYiiqYR47wFF (pour Jeff, partagée) ;
+   - le document Claude Docs « Ladybug — Stratégie de tests autonomes » : https://claude.ai/artifact/4mXUqpsGiwLczZzegYUyUP (section « Bilan ») ;
+
+   puis les copies locales (`~/Documents/Claude/ladybug/pages/`) et la sauvegarde. Un hook de Claude Code (`.claude/settings.local.json`, PostToolUse sur `gh pr merge`) le rappelle automatiquement. Une PR fusionnée sans Claude (directement sur GitHub) ne déclenche rien : comparez en début de session le dernier commit de `develop` avec celui noté au dashboard (`data/ladybug/health/commit`).
+
 Lisez `references/journal.md` quand vous avez besoin du contexte d'une décision : pourquoi le XML est conservé, comment on a vérifié que le XML externe n'était pas lu, d'où vient l'idée de la perception, etc.
