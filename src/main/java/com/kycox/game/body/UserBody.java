@@ -73,18 +73,34 @@ public abstract class UserBody extends Body {
 	 * <p>Dette D32 (22/11/2026) : avec un demi-tour demandé pile au centre du
 	 * téléporteur, la direction pouvait pointer vers l'extérieur depuis la case
 	 * d'arrivée (téléporteurs de coin) : le personnage sortait du labyrinthe et
-	 * n'y revenait plus. Il reste maintenant sur la case d'arrivée.
+	 * n'y revenait plus.
+	 *
+	 * <p>Si le pas vers l'extérieur est impossible, le personnage fait demi-tour et
+	 * entre dans le labyrinthe ; il ne reste sur la case d'arrivée que si les deux
+	 * côtés sont fermés. Rester sur place ne suffisait pas : avec des demi-tours
+	 * alternés (le bot de la démo, 22/11/2026), il repartait aussitôt par le même
+	 * téléporteur, en ping-pong sans fin entre les deux bouts d'un tunnel.
 	 */
 	public void teleport(Maze maze) {
 		if (isPerfectOnABlock()) {
 			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
 			var arrival = currentScreenBlock.getDestinationPoint();
 			setPosition(Utils.convertBlockPointToGraphicPoint(arrival));
-			var next = maze.getScreenBlock(arrival.translate(getDirection().x(), getDirection().y()));
-			if (next != null && !next.isNotAccessible()) {
-				setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
+			if (!entersTheMaze(maze, arrival, getDirection())) {
+				var backwards = new Position(-getDirection().x(), -getDirection().y());
+				if (!entersTheMaze(maze, arrival, backwards)) {
+					return;
+				}
+				setDirection(backwards);
 			}
+			setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
 		}
+	}
+
+	/** Vrai si un pas dans cette direction mène à une case accessible du labyrinthe. */
+	private static boolean entersTheMaze(Maze maze, Position from, Position direction) {
+		var next = maze.getScreenBlock(from.translate(direction.x(), direction.y()));
+		return next != null && !next.isNotAccessible();
 	}
 
 	public String getName() {

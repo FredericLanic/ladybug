@@ -30,6 +30,15 @@ class TeleportTest {
 	private static final List<Position> DIRECTIONS = List.of(GameMainConstants.POINT_UP,
 	        GameMainConstants.POINT_DOWN, GameMainConstants.POINT_LEFT, GameMainConstants.POINT_RIGHT);
 
+	private static Position opposite(Position direction) {
+		return new Position(-direction.x(), -direction.y());
+	}
+
+	private static boolean enters(Maze maze, Position from, Position direction) {
+		var block = maze.getScreenBlock(from.translate(direction.x(), direction.y()));
+		return block != null && !block.isNotAccessible();
+	}
+
 	static List<LevelStructure> levels() {
 		return LevelFixtures.activeLevels();
 	}
@@ -49,12 +58,21 @@ class TeleportTest {
 				ladybug.teleport(maze);
 
 				var arrival = Utils.convertBlockPointToGraphicPoint(to);
-				if (!ladybug.getPosition().equals(arrival)) {
-					var next = to.translate(direction.x(), direction.y());
+				if (ladybug.getPosition().equals(arrival)) {
+					// immobile sur l'arrivée : seulement si aucun des deux côtés n'entre dans le
+					// labyrinthe ; sinon, ping-pong sans fin entre deux téléporteurs (22/11/2026)
+					assertThat(enters(maze, to, direction) || enters(maze, to, opposite(direction)))
+					        .as("%s : de %s vers %s, direction %s, Ladybug reste sur l'arrivée alors qu'elle peut entrer",
+					                LevelFixtures.nameOf(level), from, to, direction)
+					        .isFalse();
+				} else {
+					// la direction réelle : Ladybug a pu faire demi-tour pour entrer
+					var heading = ladybug.getDirection();
+					var next = to.translate(heading.x(), heading.y());
 					var nextBlock = maze.getScreenBlock(next);
 					assertThat(nextBlock)
 					        .as("%s : de %s vers %s, direction %s, Ladybug part vers %s, hors du labyrinthe",
-					                LevelFixtures.nameOf(level), from, to, direction, next)
+					                LevelFixtures.nameOf(level), from, to, heading, next)
 					        .isNotNull();
 					assertThat(nextBlock.isNotAccessible()).as("case %s inaccessible", next).isFalse();
 				}

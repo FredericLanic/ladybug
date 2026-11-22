@@ -83,7 +83,9 @@ public final class Ladybug extends UserBody {
 		if (getStatus() == LadybugStatus.DEAD) {
 			return ladybugActions;
 		}
-		if (userRequest().equals(new Position(getDirection().x(), -getDirection().y()))) {
+		// demi-tour accepté à tout moment, même en cours de case, dans les deux sens :
+		// avant, (x, -y) n'inversait que le sens vertical (dette D31)
+		if (userRequest().equals(new Position(-getDirection().x(), -getDirection().y()))) {
 			setDirection(userRequest());
 			viewDirection = getDirection();
 		}
