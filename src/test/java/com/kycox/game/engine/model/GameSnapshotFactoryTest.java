@@ -103,4 +103,20 @@ class GameSnapshotFactoryTest {
 		assertThat(snapshot.humanGhost()).isEmpty();
 		assertThat(snapshot.nbrPlayers()).isEqualTo(1);
 	}
+
+	/** Le salon (20.2) arrive dans la photo : c'est elle que l'écran « rejoindre » lira. */
+	@Test
+	void theLobbyIsInTheSnapshot() {
+		var lobby = game.bean(Lobby.class);
+		lobby.join(com.kycox.game.input.InputSource.KEYBOARD_ZQSD);
+		lobby.confirm(com.kycox.game.input.InputSource.KEYBOARD_ZQSD);
+
+		var snapshot = GameSnapshotFactory.of(game.model());
+
+		// le premier fantôme libre est le premier déclaré dans le XML (Clyde aujourd'hui)
+		var firstGhost = game.model().getGroupGhosts().getGhosts().get(0).getName();
+		assertThat(snapshot.lobby().maxSeats()).isEqualTo(3);
+		assertThat(snapshot.lobby().seats()).containsExactly(
+		        new com.kycox.game.snapshot.LobbySnapshot.SeatSnapshot("KEYBOARD_ZQSD", firstGhost, true));
+	}
 }

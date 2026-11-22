@@ -23,8 +23,11 @@ package com.kycox.game.input;
 public enum InputSource {
 	KEYBOARD_ARROWS("the keyboard (arrows)"),
 	KEYBOARD_ZQSD("the keyboard (ZQSD)"),
+	KEYBOARD_IJKL("the keyboard (IJKL)"),
 	XBOX_PAD_1("the Xbox pad 1"),
-	XBOX_PAD_2("the Xbox pad 2");
+	XBOX_PAD_2("the Xbox pad 2"),
+	XBOX_PAD_3("the Xbox pad 3"),
+	XBOX_PAD_4("the Xbox pad 4");
 
 	private final String description;
 

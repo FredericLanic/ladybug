@@ -11,6 +11,7 @@ import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.snapshot.GameSnapshot;
 import com.kycox.game.snapshot.GhostSnapshot;
 import com.kycox.game.snapshot.LadybugSnapshot;
+import com.kycox.game.snapshot.LobbySnapshot;
 import com.kycox.game.snapshot.MazeSnapshot;
 import com.kycox.game.tools.Position;
 
@@ -28,7 +29,7 @@ public final class Snapshots {
 	public static GameSnapshot inGame(LadybugSnapshot ladybug, List<GhostSnapshot> ghosts) {
 		return new GameSnapshot(GameStatus.IN_GAME, 1, 0, ghosts.stream().anyMatch(g -> !g.computed()) ? 2 : 1, 3,
 		        ladybug, ghosts, new MazeSnapshot(0, 0, 0, List.of()), false, LevelRendering.getDefaultLevelRendering(),
-		        List.of(), List.of());
+		        List.of(), List.of(), LobbySnapshot.empty());
 	}
 
 	/** Une Ladybug ordinaire, sauf pour la méga-gomme et la téléportation. */

@@ -49,7 +49,8 @@ import java.util.Optional;
  */
 public record GameSnapshot(GameStatus status, int numLevel, int score, int nbrPlayers, int ghostLeftLives,
         LadybugSnapshot ladybug, List<GhostSnapshot> ghosts, MazeSnapshot maze, boolean litLampMode,
-        LevelRendering levelRendering, List<ScoreMessageSnapshot> scoreMessages, List<Sounds> sounds) {
+        LevelRendering levelRendering, List<ScoreMessageSnapshot> scoreMessages, List<Sounds> sounds,
+        LobbySnapshot lobby) {
 
 	public GameSnapshot {
 		ghosts = List.copyOf(ghosts);

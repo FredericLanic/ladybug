@@ -83,6 +83,9 @@ public class GameModel implements GameModelForController {
 	private final TickScheduler tickScheduler;
 	private final SuperPowerTimer superPowerTimer;
 	private final SoundDurations soundDurations;
+	/** Le salon : qui joue quel fantôme avant une partie à plusieurs (20.2). */
+	@Getter
+	private final Lobby lobby;
 	/** Durée de la fin de partie, avant le retour à l'écran de présentation. */
 	private static final long TIME_ENDING_MILLISECONDS = 1500;
 
@@ -101,7 +104,8 @@ public class GameModel implements GameModelForController {
 					 ApplicationEventPublisher applicationEventPublisher,
 					 TickScheduler tickScheduler,
 					 SuperPowerTimer superPowerTimer,
-					 SoundDurations soundDurations
+					 SoundDurations soundDurations,
+					 Lobby lobby
 	) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
@@ -120,6 +124,7 @@ public class GameModel implements GameModelForController {
 		this.tickScheduler = tickScheduler;
 		this.superPowerTimer = superPowerTimer;
 		this.soundDurations = soundDurations;
+		this.lobby = lobby;
 	}
 
 	@PostConstruct

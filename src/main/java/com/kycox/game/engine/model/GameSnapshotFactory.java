@@ -25,6 +25,7 @@ import com.kycox.game.snapshot.CellSnapshot;
 import com.kycox.game.snapshot.GameSnapshot;
 import com.kycox.game.snapshot.GhostSnapshot;
 import com.kycox.game.snapshot.LadybugSnapshot;
+import com.kycox.game.snapshot.LobbySnapshot;
 import com.kycox.game.snapshot.MazeSnapshot;
 import com.kycox.game.snapshot.ScoreMessageSnapshot;
 
@@ -51,7 +52,15 @@ public final class GameSnapshotFactory {
 		        model.getGroupMessages().getMessages().stream()
 		                .map(m -> new ScoreMessageSnapshot(m.getPosition(), m.getValue(), m.getMessageType()))
 		                .toList(),
-		        Arrays.stream(Sounds.values()).filter(model.getNewSounds()::hasSound).toList());
+		        Arrays.stream(Sounds.values()).filter(model.getNewSounds()::hasSound).toList(),
+		        lobbyOf(model.getLobby()));
+	}
+
+	/** La photo du salon (20.2) : l'appareil par son nom, pour ne pas lier la photo aux entrées. */
+	static LobbySnapshot lobbyOf(Lobby lobby) {
+		return new LobbySnapshot(lobby.maxSeats(), lobby.seats().stream()
+		        .map(seat -> new LobbySnapshot.SeatSnapshot(seat.device().name(), seat.ghost(), seat.confirmed()))
+		        .toList());
 	}
 
 	static LadybugSnapshot ladybugOf(Ladybug ladybug, long agonyDuration) {
