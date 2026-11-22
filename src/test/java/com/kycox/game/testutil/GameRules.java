@@ -34,6 +34,12 @@ final class GameRules {
 				fail(beat, "score decreased from " + lastScore + " to " + score);
 			}
 			var block = model.getMaze().getScreenBlock(ladybug);
+			// dette D32 : ne jamais sortir du labyrinthe (une position négative
+			// tomberait encore, par arrondi, sur une case du bord)
+			var pixels = model.getLadybug().getPosition();
+			if (block == null || pixels.x() < 0 || pixels.y() < 0) {
+				fail(beat, "Ladybug is outside the maze at " + pixels);
+			}
 			if (block != null && block.isNotAccessible()) {
 				fail(beat, "Ladybug is inside a wall at " + ladybug);
 			}
