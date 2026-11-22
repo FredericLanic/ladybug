@@ -49,6 +49,16 @@ Un extrait de `rapport.md` :
 - *Pourquoi pas en CI* : les machines de GitHub n'ont pas d'écran. On pourrait en simuler un (Xvfb sous Linux), mais sans macOS ni manette réelle. Le robot reste un outil local, relancé à la fin de chaque étape.
 - *Ce qu'il ne remplace pas* : le son, le plaisir de jeu. D'où les parties de contrôle de Frédéric.
 
+**🎮 Voir le bot jouer : `BotDemo`**
+
+Le robot appuie sur des touches à l'aveugle. Pour voir un vrai joueur automatique, il y a la démo [`BotDemo`](../../src/test/java/com/kycox/game/testutil/BotDemo.java) : le vrai jeu, avec sa fenêtre, où Ladybug est jouée par le bot des tests (`AimingBot` : fuir, chasser, manger). Elle démarre seule une partie après 4 secondes de présentation, et recommence à chaque fin de partie.
+
+```bash
+mvn -q test-compile exec:java -Dexec.mainClass=com.kycox.game.testutil.BotDemo -Dexec.classpathScope=test
+```
+
+Elle reste dans les tests : le jar livré n'a pas de mode « bot ». Elle a déjà servi : regardée par Frédéric, elle a montré un bot qui dansait sur place (il décidait entre deux cases ; corrigé : il ne décide plus qu'au centre d'une case), puis, laissée toute une nuit, un vrai bug du jeu : un demi-tour pile sur un téléporteur faisait sortir Ladybug du labyrinthe (dette D32).
+
 **✏️ Exercice**
 
 Relancez le robot sur le jar actuel vers un dossier d'essai, puis comparez son `rapport.md` à celui de `doc/reference-apres/etape-5bis-qualite/`. Les nombres de statuts sont-ils égaux ? Quelles touches ont le plus grand écart de pixels, et pourquoi ?
