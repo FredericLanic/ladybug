@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import com.kycox.game.body.ghost.Ghost;
+import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.ghost.GhostStatus;
 import com.kycox.game.engine.model.GameModel;
 import com.kycox.game.engine.maze.Maze;
@@ -72,8 +73,12 @@ public final class AimingBot {
 		// case, là où le jeu mange la gomme et accepte un virage (sinon, le bot
 		// visait une autre gomme avant d'avoir mangé celle de la case, et faisait
 		// demi-tour : haut, bas, haut, bas)
-		if (!model.getLadybug().isPerfectOnABlock() && lastDirection != null) {
-			return lastDirection;
+		// le cap réel de Ladybug, pas la dernière demande : à la sortie d'un tunnel,
+		// le jeu peut l'avoir retournée vers l'intérieur ; répéter l'ancienne demande
+		// la renvoyait au téléporteur, en ping-pong (22/11/2026)
+		var heading = model.getLadybug().getDirection();
+		if (!model.getLadybug().isPerfectOnABlock() && !heading.equals(GameMainConstants.POINT_ZERO)) {
+			return heading;
 		}
 		var screen = model.getMaze();
 		var ladybug = model.getLadybug().getPositionBlock();
