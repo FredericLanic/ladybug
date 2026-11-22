@@ -104,18 +104,21 @@ class GameSnapshotFactoryTest {
 		assertThat(snapshot.nbrPlayers()).isEqualTo(1);
 	}
 
-	/** Le salon (20.2) arrive dans la photo : c'est elle que l'écran « rejoindre » lira. */
+	/** Le salon (20.3) arrive dans la photo : c'est elle que l'écran du salon lira. */
 	@Test
 	void theLobbyIsInTheSnapshot() {
 		var lobby = game.bean(Lobby.class);
-		lobby.join(com.kycox.game.input.InputSource.KEYBOARD_ZQSD);
-		lobby.confirm(com.kycox.game.input.InputSource.KEYBOARD_ZQSD);
+		lobby.apply(new LobbyCommand.MoveRow(1));
+		lobby.apply(new LobbyCommand.ChangeValue(1)); // ligne 2 : le premier fantôme du XML, ZQSD
+		var firstGhost = game.model().getGroupGhosts().getGhosts().get(0).getName();
 
 		var snapshot = GameSnapshotFactory.of(game.model());
 
-		// le premier joueur prend Ladybug (C56) ; 4 places : Ladybug et 3 fantômes (C52)
-		assertThat(snapshot.lobby().maxSeats()).isEqualTo(4);
-		assertThat(snapshot.lobby().seats()).containsExactly(
-		        new com.kycox.game.snapshot.LobbySnapshot.SeatSnapshot("KEYBOARD_ZQSD", "Ladybug", true));
+		assertThat(snapshot.lobby().rows()).hasSize(4); // Cox et 3 fantômes au plus (C52)
+		assertThat(snapshot.lobby().rows().subList(0, 2)).containsExactly(
+		        new com.kycox.game.snapshot.LobbySnapshot.RowSnapshot("Ladybug", "KEYBOARD_ARROWS", false),
+		        new com.kycox.game.snapshot.LobbySnapshot.RowSnapshot(firstGhost, "KEYBOARD_ZQSD", false));
+		assertThat(snapshot.lobby().activeRow()).isEqualTo(1);
+		assertThat(snapshot.lobby().ready()).isTrue();
 	}
 }

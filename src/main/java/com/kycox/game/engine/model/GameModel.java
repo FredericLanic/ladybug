@@ -266,6 +266,40 @@ public class GameModel implements GameModelForController {
 	}
 
 	@Override
+	public void openLobby() {
+		lobby.resetCursor(); // la configuration précédente est gardée
+		currentProgramStatus.setProgramLobby();
+	}
+
+	@Override
+	public boolean isProgramLobby() {
+		return currentProgramStatus.isProgramLobby();
+	}
+
+	@Override
+	public void leaveLobby() {
+		currentProgramStatus.setProgramPresentation();
+	}
+
+	/**
+	 * Lance la partie choisie dans le salon (20.3) : les fantômes pris par un joueur
+	 * deviennent humains, les autres restent à l'ordinateur ; ensuite, même suite
+	 * qu'avec S (« reprendre l'ancien niveau ? »). L'orientation de chaque appareil
+	 * vers son personnage vient en 20.4.
+	 */
+	@Override
+	public void startFromLobby() {
+		if (!lobby.isReady()) {
+			return;
+		}
+		groupGhosts.setAllComputed();
+		lobby.rows().stream().filter(row -> row.isComplete() && !row.isLadybug())
+		        .forEach(row -> groupGhosts.getGhosts().stream().filter(g -> g.getName().equals(row.character()))
+		                .findFirst().ifPresent(groupGhosts::setHumanPlayer));
+		startGame();
+	}
+
+	@Override
 	public void startGame() {
 		logger.info("Initialize a new game");
 		currentProgramStatus.setProgramAskKeepPreviousGameLevel();

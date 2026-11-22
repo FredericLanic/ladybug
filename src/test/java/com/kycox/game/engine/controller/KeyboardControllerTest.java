@@ -70,11 +70,56 @@ class KeyboardControllerTest {
 	}
 
 	@Test
-	void twoThenOneChooseTheNumberOfPlayers() {
-		press(KeyEvent.VK_2);
-		assertThat(game.model().getUnComputedGhost()).isPresent();
+	void oneKeepsTheSoloGame() {
 		press(KeyEvent.VK_1);
 		assertThat(game.model().getUnComputedGhost()).isEmpty();
+	}
+
+	/** C53 (20.3) : la touche 2 ouvre le salon, où chacun choisit son personnage. */
+	@Test
+	void twoOpensTheLobby() {
+		press(KeyEvent.VK_2);
+		assertThat(game.status()).isEqualTo(GameStatus.PROGRAM_LOBBY);
+	}
+
+	/**
+	 * Le salon au clavier (20.3) : haut / bas pour la ligne, gauche / droite pour
+	 * la valeur, Espace pour passer aux commandes ; Entrée lance la partie, avec les
+	 * fantômes choisis joués par des humains ; Entrée n'y bascule pas le debug.
+	 */
+	@Test
+	void theLobbyWithTheKeyboard() {
+		press(KeyEvent.VK_2);
+		var lobby = game.model().getLobby();
+		press(KeyEvent.VK_DOWN); // ligne 2
+		press(KeyEvent.VK_RIGHT); // premier fantôme, ZQSD
+		press(KeyEvent.VK_RIGHT); // fantôme suivant
+		var chosen = lobby.rows().get(1).character();
+		press(KeyEvent.VK_SPACE); // colonne « commandes »
+		press(KeyEvent.VK_RIGHT); // ZQSD -> IJKL
+		assertThat(lobby.rows().get(1).device()).isEqualTo(InputSource.KEYBOARD_IJKL);
+
+		press(KeyEvent.VK_ENTER);
+		assertThat(preferences().isDebugMode()).as("Entrée ne bascule pas le debug dans le salon").isFalse();
+		game.beat();
+		assertThat(game.status()).isNotEqualTo(GameStatus.PROGRAM_LOBBY);
+		assertThat(game.model().getGroupGhosts().getHumanGhosts()).extracting(g -> g.getName()).containsExactly(chosen);
+	}
+
+	@Test
+	void enterDoesNothingUntilTheLobbyIsReady() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_RIGHT); // Cox -> un fantôme : plus de joueur Cox
+		press(KeyEvent.VK_ENTER);
+		game.beat();
+		assertThat(game.status()).isEqualTo(GameStatus.PROGRAM_LOBBY);
+	}
+
+	@Test
+	void escapeLeavesTheLobby() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_ESCAPE);
+		assertThat(game.status()).isEqualTo(GameStatus.PROGRAM_PRESENTATION);
 	}
 
 	@Test

@@ -56,11 +56,12 @@ public final class GameSnapshotFactory {
 		        lobbyOf(model.getLobby()));
 	}
 
-	/** La photo du salon (20.2) : l'appareil par son nom, pour ne pas lier la photo aux entrées. */
+	/** La photo du salon (20.3) : l'appareil par son nom, pour ne pas lier la photo aux entrées. */
 	static LobbySnapshot lobbyOf(Lobby lobby) {
-		return new LobbySnapshot(lobby.maxSeats(), lobby.seats().stream()
-		        .map(seat -> new LobbySnapshot.SeatSnapshot(seat.device().name(), seat.character(), seat.confirmed()))
-		        .toList());
+		return new LobbySnapshot(lobby.rows().stream()
+		        .map(row -> new LobbySnapshot.RowSnapshot(row.character(),
+		                row.device() == null ? null : row.device().name(), row.waitingForPad()))
+		        .toList(), lobby.activeRow(), lobby.activeColumn().name(), lobby.isReady());
 	}
 
 	static LadybugSnapshot ladybugOf(Ladybug ladybug, long agonyDuration) {

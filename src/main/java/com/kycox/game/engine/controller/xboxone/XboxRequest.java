@@ -38,6 +38,33 @@ public class XboxRequest {
 	/** Back vient d'être appuyé (en jeu : « quitter la partie ? ») ; {@code backButton} reste « tenu ». */
 	@Getter
 	private boolean backPressed;
+	/** Stick gauche tout juste poussé à gauche / à droite (une fois par poussée). */
+	@Getter
+	private boolean leftStickPushedLeft;
+	@Getter
+	private boolean leftStickPushedRight;
+	@Getter
+	private boolean leftStickPushedUp;
+	@Getter
+	private boolean leftStickPushedDown;
+	private boolean wasStickLeft;
+	private boolean wasStickRight;
+	private boolean wasStickUp;
+	private boolean wasStickDown;
+	/** Stick droit tout juste poussé à gauche / à droite (une fois par poussée). */
+	@Getter
+	private boolean rightStickPushedLeft;
+	@Getter
+	private boolean rightStickPushedRight;
+	private boolean wasRightStickLeft;
+	private boolean wasRightStickRight;
+	/** Stick droit tout juste poussé en haut / en bas (salon : changer de ligne). */
+	@Getter
+	private boolean rightStickPushedUp;
+	@Getter
+	private boolean rightStickPushedDown;
+	private boolean wasRightStickUp;
+	private boolean wasRightStickDown;
 	/** État brut du battement précédent, pour reconnaître un appui. */
 	private PadState previous;
 	@Getter
@@ -128,6 +155,32 @@ public class XboxRequest {
 		start = pressed(controllerState.start(), previous.start());
 		rightStick = pressed(controllerState.rightStickClick(), previous.rightStickClick());
 		leftStick = pressed(controllerState.leftStickClick(), previous.leftStickClick());
+		// stick gauche poussé à gauche ou à droite : un seul « appui » par poussée (salon, 20.3)
+		var stickLeft = isLeftLeftStick();
+		var stickRight = isRightLeftStick();
+		var stickUp = isUpLeftStick();
+		var stickDown = isDownLeftStick();
+		leftStickPushedLeft = stickLeft && !wasStickLeft;
+		leftStickPushedRight = stickRight && !wasStickRight;
+		leftStickPushedUp = stickUp && !wasStickUp;
+		leftStickPushedDown = stickDown && !wasStickDown;
+		wasStickLeft = stickLeft;
+		wasStickRight = stickRight;
+		wasStickUp = stickUp;
+		wasStickDown = stickDown;
+		// stick droit à gauche / à droite : une fois par poussée (salon : changer de colonne)
+		var rightStickLeft = isLeftRightStick();
+		var rightStickRight = isRightRightStick();
+		rightStickPushedLeft = rightStickLeft && !wasRightStickLeft;
+		rightStickPushedRight = rightStickRight && !wasRightStickRight;
+		wasRightStickLeft = rightStickLeft;
+		wasRightStickRight = rightStickRight;
+		var rightStickUp = isUpRightStick();
+		var rightStickDown = isDownRightStick();
+		rightStickPushedUp = rightStickUp && !wasRightStickUp;
+		rightStickPushedDown = rightStickDown && !wasRightStickDown;
+		wasRightStickUp = rightStickUp;
+		wasRightStickDown = rightStickDown;
 		this.previous = controllerState;
 	}
 

@@ -186,6 +186,16 @@ public class CurrentProgramStatus {
 		logger.info("Passage du status en " + gameStatus);
 	}
 
+	/** Le salon : les joueurs rejoignent et choisissent leur personnage (20.3). */
+	public void setProgramLobby() {
+		gameStatus = GameStatus.PROGRAM_LOBBY;
+		logger.info("Passage du status en " + gameStatus);
+	}
+
+	public boolean isProgramLobby() {
+		return gameStatus == GameStatus.PROGRAM_LOBBY;
+	}
+
 	public void setProgramAskKeepPreviousGameLevel() {
 		gameStatus = GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL;
 		logger.info("Passage du status en " + gameStatus);

@@ -19,28 +19,31 @@ package com.kycox.game.snapshot;
 import java.util.List;
 
 /**
- * La photo du salon (étape 20.2) : les joueurs qui ont rejoint, leur personnage,
- * validé ou non. L'écran « rejoindre » (20.3) ne lit que cette photo.
+ * La photo du salon (étape 20.3) : une ligne par joueur (personnage et
+ * commandes), la ligne et la colonne actives. L'écran du salon ne lit que cette
+ * photo ; demain, un poste du réseau l'affichera de la même façon (étape 9).
  *
- * @param maxSeats places possibles (Ladybug et 3 fantômes au plus, C52, C56)
- * @param seats    les places prises, dans l'ordre d'arrivée
+ * @param rows         les lignes, dans l'ordre
+ * @param activeRow    la ligne active (surlignée)
+ * @param activeColumn {@code CHARACTER} ou {@code CONTROLS}
+ * @param ready        la partie peut partir (Cox a un joueur, chaque ligne a ses commandes)
  */
-public record LobbySnapshot(int maxSeats, List<SeatSnapshot> seats) {
+public record LobbySnapshot(List<RowSnapshot> rows, int activeRow, String activeColumn, boolean ready) {
 
 	/**
-	 * Une place : l'appareil (nom de {@code InputSource}, par exemple
-	 * {@code KEYBOARD_ZQSD}), le personnage choisi (Ladybug ou un fantôme), validé
-	 * ou non.
+	 * Une ligne : le personnage ({@code null} : pas de joueur), les commandes (nom de
+	 * {@code InputSource}, par exemple {@code XBOX_PAD_2} ; {@code null} si pas
+	 * encore choisies) et l'attente d'une manette (« appuie sur A »).
 	 */
-	public record SeatSnapshot(String device, String character, boolean confirmed) {
+	public record RowSnapshot(String character, String device, boolean waitingForPad) {
 	}
 
 	public LobbySnapshot {
-		seats = List.copyOf(seats);
+		rows = List.copyOf(rows);
 	}
 
-	/** Un salon vide : partie solo, ou personne n'a encore rejoint. */
+	/** Pas de salon : hors de l'écran de configuration. */
 	public static LobbySnapshot empty() {
-		return new LobbySnapshot(0, List.of());
+		return new LobbySnapshot(List.of(), 0, "CHARACTER", false);
 	}
 }

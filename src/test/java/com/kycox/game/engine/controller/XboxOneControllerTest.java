@@ -92,10 +92,10 @@ class XboxOneControllerTest {
 	}
 
 	@Test
-	void presentationYChoosesTwoPlayersAndBQuits() {
+	void presentationYOpensTheLobbyAndBQuits() {
 		when(model.isProgramPresentation()).thenReturn(true);
 		press(Pad.connected().y().b());
-		verify(model).setMultiPlayers(true);
+		verify(model).openLobby(); // C53 : Y ouvre le salon
 		verify(model).programForceExit();
 		assertThat(preferences.isShowHelpForXboxes()).isFalse();
 	}
@@ -222,6 +222,61 @@ class XboxOneControllerTest {
 		press(Pad.connected()); // A relâché…
 		press(aHeld); // … puis appuyé : là, oui
 		verify(model).forceStopGame();
+	}
+
+	/**
+	 * Le salon à la manette (20.3), une ligne en deux temps : personnage au stick
+	 * gauche, A ; commandes au stick gauche, A ; le stick droit change de ligne et de
+	 * colonne ; la croix n'y sert pas. Sur « appuie sur A », la manette qui appuie prend
+	 * la ligne et vibre. B revient en arrière ; ≡ lance la partie ; la croix n'y
+	 * change ni le son ni les apparences.
+	 */
+	@Test
+	void theLobbyWithAPad() {
+		// les deux manettes restent branchées : l'une agit, l'autre est au repos
+		var lobby = new com.kycox.game.engine.model.Lobby(() -> List.of("Clyde", "Blinky", "Inky", "Pinky"));
+		when(model.isProgramLobby()).thenReturn(true);
+		when(model.getLobby()).thenReturn(lobby);
+		var rest = Pad.connected().build();
+
+		press(Pad.connected().rightStick(0, -1f).build(), rest); // stick droit en bas : ligne 2
+		press(Pad.connected().dpadDown().build(), rest); // la croix n'agit pas dans le salon
+		assertThat(lobby.activeRow()).isEqualTo(1);
+		press(Pad.connected().leftStick(1f, 0).build(), rest); // stick gauche à droite : Clyde, ZQSD
+		press(Pad.connected().a().build(), rest); // personnage validé : place aux commandes
+		assertThat(lobby.activeColumn()).isEqualTo(com.kycox.game.engine.model.Lobby.Column.CONTROLS);
+		press(Pad.connected().b().build(), rest); // B : retour au personnage
+		assertThat(lobby.activeColumn()).isEqualTo(com.kycox.game.engine.model.Lobby.Column.CHARACTER);
+		press(Pad.connected().a().build(), rest); // de nouveau : commandes
+		press(Pad.connected().leftStick(-1f, 0).build(), rest); // ZQSD -> (flèches prises) -> « appuie sur A »
+		assertThat(lobby.rows().get(1).waitingForPad()).isTrue();
+
+		press(rest, Pad.connected().a().build()); // la manette 2 prend la ligne
+		assertThat(lobby.rows().get(1).device()).isEqualTo(InputSource.XBOX_PAD_2);
+		verify(padManager, org.mockito.Mockito.atLeastOnce()).vibrate(org.mockito.ArgumentMatchers.eq(1),
+		        org.mockito.ArgumentMatchers.anyFloat(), org.mockito.ArgumentMatchers.anyFloat(),
+		        org.mockito.ArgumentMatchers.anyInt());
+		press(Pad.connected().a().build(), rest); // commandes validées : ligne suivante
+		assertThat(lobby.activeRow()).isEqualTo(2);
+		verify(messaging, never()).addSoundMode(org.mockito.ArgumentMatchers.anyBoolean());
+
+		// stick droit : à droite les commandes, à gauche le personnage
+		press(Pad.connected().rightStick(1f, 0).build(), rest);
+		assertThat(lobby.activeColumn()).isEqualTo(com.kycox.game.engine.model.Lobby.Column.CONTROLS);
+		press(rest, rest);
+		press(Pad.connected().rightStick(-1f, 0).build(), rest);
+		assertThat(lobby.activeColumn()).isEqualTo(com.kycox.game.engine.model.Lobby.Column.CHARACTER);
+
+		// stick droit en haut / en bas : la ligne, comme la croix (convention PadState : positif = haut)
+		var row = lobby.activeRow();
+		press(Pad.connected().rightStick(0, -1f).build(), rest);
+		assertThat(lobby.activeRow()).isEqualTo(row + 1);
+		press(rest, rest);
+		press(Pad.connected().rightStick(0, 1f).build(), rest);
+		assertThat(lobby.activeRow()).isEqualTo(row);
+
+		press(Pad.connected().start().build(), rest);
+		verify(model).startFromLobby();
 	}
 
 	@Test

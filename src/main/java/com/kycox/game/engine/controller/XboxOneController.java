@@ -8,6 +8,8 @@ import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.engine.model.EventGameModel;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.engine.model.Lobby;
+import com.kycox.game.engine.model.LobbyCommand;
 import com.kycox.game.input.InputSource;
 import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.preferences.LocalPreferences;
@@ -29,6 +31,8 @@ import com.kycox.game.launcher.GuiComponent;
 public class XboxOneController implements ApplicationListener<EventGameModel> {
 
 	private final XBoxOneControllerManager padManager;
+	/** La manette affichée sur la ligne active du salon, pour ne la faire vibrer qu'une fois. */
+	private InputSource lastHighlightedDevice;
 	private final GameMessaging gameMessaging;
 	private GameModelForController gameModelForController;
 	private final GameProperties gameProperties;
@@ -129,8 +133,9 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		if (xboxOneLadybug.isXButton() || xboxOneUnComputedGhost.isXButton()) {
 			gameModelForController.setMultiPlayers(false);
 		}
+		// plusieurs joueurs : le salon (C53)
 		if (xboxOneLadybug.isYButton() || xboxOneUnComputedGhost.isYButton()) {
-			gameModelForController.setMultiPlayers(true);
+			gameModelForController.openLobby();
 		}
 		localPreferences
 		        .setShowHelpForXboxes(xboxOneLadybug.isBackButton() || xboxOneUnComputedGhost.isBackButton());
@@ -182,6 +187,14 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		gameModelForController = model;
 		localPreferences.setAtLeastOneXboxOneConnected(isOneXboxOneConnected());
 		setProgramMessagesAccordingXboxOneConnectionOrDisconnection();
+		// dans le salon, la croix choisit un personnage : pas de son ni d'apparence
+		if (gameModelForController.isProgramLobby()) {
+			signalConnectedPads();
+			manageXboxInLobby(xboxOneLadybug, InputSource.XBOX_PAD_1);
+			manageXboxInLobby(xboxOneUnComputedGhost, InputSource.XBOX_PAD_2);
+			vibrateTheHighlightedPad();
+			return;
+		}
 		manageBothXboxesOneCommon();
 		if (gameModelForController.isProgramPresentation()) {
 			manageBothXboxesOneInPresentation();
@@ -194,6 +207,86 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 			doVibrationsInGame(snapshot);
 		} else if(gameModelForController.isGameAskForceEndGame()) {
 			manageBothXboxesOneInAskForceEndGame();
+		}
+	}
+
+	/**
+	 * Le salon (20.3), pour une manette (schéma choisi par Frédéric) : une ligne en
+	 * deux temps, le personnage puis les commandes. Le stick gauche (gauche /
+	 * droite) choisit la valeur de l'étape en cours ; A
+	 * valide l'étape (sur « appuie sur A », la manette qui appuie prend la ligne) ;
+	 * B revient en arrière ; le stick droit passe du personnage (à gauche) aux
+	 * commandes (à droite) et change de ligne (en haut / en bas) ; la croix n'y sert
+	 * pas ; ≡ lance la partie, ⧉ revient à la présentation. Chaque
+	 * appui devient une commande du salon. Les manettes 3 et 4 viendront avec 20.5.
+	 */
+	private void manageXboxInLobby(XboxRequest pad, InputSource device) {
+		if (!pad.isConnected()) {
+			return;
+		}
+		var lobby = gameModelForController.getLobby();
+		if (pad.isStart()) {
+			gameModelForController.startFromLobby();
+		} else if (pad.isBackPressed()) {
+			gameModelForController.leaveLobby();
+		} else if (pad.isAButton()) {
+			var rows = lobby.rows();
+			var activeWaits = lobby.activeRow() < rows.size() && rows.get(lobby.activeRow()).waitingForPad();
+			if (activeWaits) {
+				lobby.apply(new LobbyCommand.Claim(device));
+				vibrate(device); // « c'est bien cette manette »
+			} else {
+				lobby.apply(new LobbyCommand.Confirm());
+			}
+		} else if (pad.isBButton()) {
+			lobby.apply(new LobbyCommand.Back());
+		} else if (pad.isRightStickPushedUp()) {
+			lobby.apply(new LobbyCommand.MoveRow(-1));
+		} else if (pad.isRightStickPushedDown()) {
+			lobby.apply(new LobbyCommand.MoveRow(1));
+		} else if (pad.isRightStickPushedRight() && lobby.activeColumn() == Lobby.Column.CHARACTER) {
+			lobby.apply(new LobbyCommand.SwitchColumn()); // stick droit à droite : les commandes
+		} else if (pad.isRightStickPushedLeft() && lobby.activeColumn() == Lobby.Column.CONTROLS) {
+			lobby.apply(new LobbyCommand.SwitchColumn()); // stick droit à gauche : le personnage
+		} else if (pad.isLeftStickPushedLeft()) {
+			lobby.apply(new LobbyCommand.ChangeValue(-1));
+		} else if (pad.isLeftStickPushedRight()) {
+			lobby.apply(new LobbyCommand.ChangeValue(1));
+		}
+	}
+
+	/** Le salon ne propose que les manettes branchées (les manettes 3 et 4 viendront avec 20.5). */
+	private void signalConnectedPads() {
+		var connected = new java.util.HashSet<InputSource>();
+		if (xboxOneLadybug.isConnected()) {
+			connected.add(InputSource.XBOX_PAD_1);
+		}
+		if (xboxOneUnComputedGhost.isConnected()) {
+			connected.add(InputSource.XBOX_PAD_2);
+		}
+		gameModelForController.getLobby().setConnectedPads(connected);
+	}
+
+	/**
+	 * Quand la ligne active affiche une manette, celle-ci vibre brièvement : son
+	 * joueur sait que c'est la sienne (les manettes Xbox n'ont pas de voyant de
+	 * numéro de joueur).
+	 */
+	private void vibrateTheHighlightedPad() {
+		var lobby = gameModelForController.getLobby();
+		var rows = lobby.rows();
+		var highlighted = lobby.activeRow() < rows.size() ? rows.get(lobby.activeRow()).device() : null;
+		if (highlighted != lastHighlightedDevice) {
+			lastHighlightedDevice = highlighted;
+			vibrate(highlighted);
+		}
+	}
+
+	private void vibrate(InputSource device) {
+		if (device == InputSource.XBOX_PAD_1) {
+			padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0.4f, 0.4f, 150);
+		} else if (device == InputSource.XBOX_PAD_2) {
+			padManager.vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0.4f, 0.4f, 150);
 		}
 	}
 

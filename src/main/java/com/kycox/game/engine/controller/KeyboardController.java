@@ -20,6 +20,7 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.engine.model.LobbyCommand;
 import com.kycox.game.input.InputSource;
 import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.preferences.LocalPreferences;
@@ -50,6 +51,11 @@ public class KeyboardController extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		var keyCode = e.getKeyCode();
+		// dans le salon, Entrée lance la partie : elle n'y bascule pas le mode debug
+		if (gameModelForController.isProgramLobby()) {
+			manageKeysInLobby(keyCode);
+			return;
+		}
 		manageCommonKeys(keyCode);
 		if (gameModelForController.isProgramPresentation()) {
 			manageKeysInPresentation(keyCode);
@@ -123,8 +129,35 @@ public class KeyboardController extends KeyAdapter {
 		switch (keyCode) {
 			case KeyEvent.VK_S -> gameModelForController.startGame();
 			case KeyEvent.VK_1 -> gameModelForController.setMultiPlayers(false);
-			case KeyEvent.VK_2 -> gameModelForController.setMultiPlayers(true);
+			// plusieurs joueurs : le salon, où chacun choisit son appareil et son personnage (C53, C56)
+			case KeyEvent.VK_2 -> gameModelForController.openLobby();
 			case KeyEvent.VK_ESCAPE -> gameModelForController.programForceExit();
 		}
+	}
+
+	/**
+	 * Le salon (20.3) : flèches (ou ZQSD, ou IJKL) haut / bas pour la ligne,
+	 * gauche / droite pour la valeur ; Espace valide l'étape (personnage, puis
+	 * commandes), Retour arrière revient en arrière ; Entrée lance la
+	 * partie (si le salon est prêt), Échap revient à la présentation. Chaque touche devient une commande du salon.
+	 */
+	private void manageKeysInLobby(int keyCode) {
+		switch (keyCode) {
+			case KeyEvent.VK_ENTER -> gameModelForController.startFromLobby();
+			case KeyEvent.VK_ESCAPE -> gameModelForController.leaveLobby();
+			default -> lobbyCommandOf(keyCode).ifPresent(gameModelForController.getLobby()::apply);
+		}
+	}
+
+	private static java.util.Optional<LobbyCommand> lobbyCommandOf(int keyCode) {
+		return java.util.Optional.ofNullable(switch (keyCode) {
+			case KeyEvent.VK_UP, KeyEvent.VK_Z, KeyEvent.VK_I -> new LobbyCommand.MoveRow(-1);
+			case KeyEvent.VK_DOWN, KeyEvent.VK_S, KeyEvent.VK_K -> new LobbyCommand.MoveRow(1);
+			case KeyEvent.VK_LEFT, KeyEvent.VK_Q, KeyEvent.VK_J -> new LobbyCommand.ChangeValue(-1);
+			case KeyEvent.VK_RIGHT, KeyEvent.VK_D, KeyEvent.VK_L -> new LobbyCommand.ChangeValue(1);
+			case KeyEvent.VK_SPACE -> new LobbyCommand.Confirm(); // comme A à la manette
+			case KeyEvent.VK_BACK_SPACE -> new LobbyCommand.Back(); // comme B à la manette
+			default -> null;
+		});
 	}
 }

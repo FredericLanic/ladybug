@@ -35,6 +35,8 @@ public class ManageActionContext {
 		mapGameContext.put(GameStatus.PROGRAM_START, gameModelProgramStarting);
 		mapGameContext.put(GameStatus.PROGRAM_PRESENTATION_START, gameModelPresentationStarting);
 		mapGameContext.put(GameStatus.PROGRAM_PRESENTATION, gameModelPresentation);
+		// le salon (20.3) : même fond que la présentation, les fantômes se promènent
+		mapGameContext.put(GameStatus.PROGRAM_LOBBY, gameModelPresentation);
 		mapGameContext.put(GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL, gameModelAskKeepPreviousGameLevel);
 		mapGameContext.put(GameStatus.GAME_START, gameModelGameIsStarting);
 		mapGameContext.put(GameStatus.LEVEL_START, gameModelLevelIsStarting);

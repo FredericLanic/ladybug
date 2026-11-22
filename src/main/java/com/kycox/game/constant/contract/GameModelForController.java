@@ -22,6 +22,8 @@ import com.kycox.game.body.ladybug.Ladybug;
 
 import java.util.Optional;
 
+import com.kycox.game.engine.model.Lobby;
+
 public interface GameModelForController extends GameCommon {
 	void changeLitLampMode();
 
@@ -41,6 +43,20 @@ public interface GameModelForController extends GameCommon {
 
 
 	void setMultiPlayers(boolean isMuliPlayers);
+
+	/** Le salon (20.3) : les contrôleurs lui envoient des commandes ({@code LobbyCommand}). */
+	Lobby getLobby();
+
+	/** Ouvre le salon depuis la présentation (touche 2, Y à la manette, C53). */
+	void openLobby();
+
+	boolean isProgramLobby();
+
+	/** Quitte le salon : retour à la présentation (la configuration est gardée). */
+	void leaveLobby();
+
+	/** Lance la partie si le salon est prêt (Cox a un joueur, chaque ligne a ses commandes). */
+	void startFromLobby();
 
 
 

@@ -137,6 +137,9 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 					+ " "
 					+ Utils.integerToRoman(snapshot.numLevel()).toLowerCase();
 			drawOneCenterTextLine(g2d, text);
+		} else if (snapshot.is(GameStatus.PROGRAM_LOBBY)) {
+			drawGhosts(g2d);
+			drawLobby(g2d);
 		} else if (snapshot.is(GameStatus.PROGRAM_PRESENTATION)) {
 			drawGhosts(g2d);
 			if (localPreferences.isShowHelpForKeys()) {
@@ -218,6 +221,21 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		for (var i = 0; i < lines.length; i++) {
 			PadIcons.draw(g2d, lines[i], (x - PadIcons.width(lines[i], metr)) / 2, (int) (top + i * gap), metr);
 		}
+	}
+
+	/** Le salon (20.3), dessiné à partir de sa seule photo. */
+	private void drawLobby(Graphics2D g2d) {
+		LobbyDrawing.draw(g2d, snapshot.lobby(), ladybugMessagesBundle::getMessage, this::characterImage,
+		        widthInPixels(), heightInPixels(), getFontMetrics(defaultFont));
+	}
+
+	/** Le dessin d'un personnage du salon : Ladybug, ou le fantôme dans sa couleur. */
+	private Image characterImage(String character) {
+		if ("Ladybug".equals(character)) {
+			return ladybugView.getImage(GameMainConstants.POINT_RIGHT);
+		}
+		return snapshot.ghosts().stream().filter(g -> g.name().equals(character)).findFirst()
+		        .map(g -> GhostsBodyImages.of(g.color()).getImage()).orElse(null);
 	}
 
 	/** Largeur du labyrinthe en pixels (étape 4.4 : calculée par la vue). */

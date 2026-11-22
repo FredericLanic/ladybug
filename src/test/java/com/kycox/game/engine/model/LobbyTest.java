@@ -3,141 +3,234 @@ package com.kycox.game.engine.model;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import com.kycox.game.engine.model.Lobby.Column;
+import com.kycox.game.engine.model.LobbyCommand.ChangeValue;
+import com.kycox.game.engine.model.LobbyCommand.Claim;
+import com.kycox.game.engine.model.LobbyCommand.MoveRow;
+import com.kycox.game.engine.model.LobbyCommand.SwitchColumn;
 import com.kycox.game.input.InputSource;
 
 /**
- * Le salon (étape 20.2) : qui a rejoint, avec quel appareil, quel personnage.
- * Les règles sont ici, sans écran (C56, C52) : tout appareil peut jouer tout
- * personnage ; Ladybug a toujours un joueur ; au plus 3 fantômes humains ; un
- * personnage par joueur, un appareil ne rejoint qu'une fois.
+ * Le salon (étape 20.3) : une ligne par joueur, avec son personnage et ses
+ * commandes ; une ligne active, surlignée à l'écran. Les règles sont ici, sans
+ * écran : Cox doit avoir un joueur ; au plus 3 fantômes humains (C52) ; un
+ * personnage et des commandes ne servent qu'une fois ; une manette s'attribue en
+ * appuyant sur A.
  */
 class LobbyTest {
 	private static final List<String> FOUR_GHOSTS = List.of("Clyde", "Blinky", "Inky", "Pinky");
 
 	private final Lobby lobby = new Lobby(() -> FOUR_GHOSTS);
 
-	@Test
-	void theFirstPlayerGetsLadybugTheNextOnesTheFirstFreeGhost() {
-		assertThat(lobby.join(InputSource.XBOX_PAD_2)).isTrue();
-		assertThat(lobby.join(InputSource.KEYBOARD_ARROWS)).isTrue();
-		assertThat(lobby.seats()).containsExactly(new Lobby.Seat(InputSource.XBOX_PAD_2, "Ladybug", false),
-		        new Lobby.Seat(InputSource.KEYBOARD_ARROWS, "Clyde", false));
+	@org.junit.jupiter.api.BeforeEach
+	void twoPadsAreConnected() {
+		lobby.setConnectedPads(java.util.Set.of(InputSource.XBOX_PAD_1, InputSource.XBOX_PAD_2));
 	}
 
 	@Test
-	void anyDeviceCanJoin() {
-		for (var device : InputSource.values()) {
-			assertThat(new Lobby(() -> FOUR_GHOSTS).join(device)).as(device.name()).isTrue();
-		}
-	}
-
-	@Test
-	void aDeviceJoinsOnlyOnce() {
-		lobby.join(InputSource.KEYBOARD_ZQSD);
-		assertThat(lobby.join(InputSource.KEYBOARD_ZQSD)).isFalse();
-		assertThat(lobby.seats()).hasSize(1);
-	}
-
-	@Test
-	void ladybugAndAtMostThreeHumanGhosts() {
-		assertThat(lobby.join(InputSource.KEYBOARD_ARROWS)).isTrue(); // Ladybug
-		assertThat(lobby.join(InputSource.KEYBOARD_ZQSD)).isTrue();
-		assertThat(lobby.join(InputSource.KEYBOARD_IJKL)).isTrue();
-		assertThat(lobby.join(InputSource.XBOX_PAD_1)).isTrue();
-		assertThat(lobby.join(InputSource.XBOX_PAD_2)).as("un fantôme reste à l'ordinateur").isFalse();
-		assertThat(lobby.seats()).extracting(Lobby.Seat::character).containsExactly("Ladybug", "Clyde", "Blinky",
-		        "Inky");
-		assertThat(lobby.maxSeats()).isEqualTo(4);
-	}
-
-	@Test
-	void withTwoGhostsOnlyOneCanBeHuman() {
-		var small = new Lobby(() -> List.of("Blinky", "Pinky"));
-		assertThat(small.join(InputSource.KEYBOARD_ARROWS)).isTrue(); // Ladybug
-		assertThat(small.join(InputSource.KEYBOARD_ZQSD)).isTrue(); // Blinky
-		assertThat(small.join(InputSource.KEYBOARD_IJKL)).isFalse();
-		assertThat(small.maxHumanGhosts()).isEqualTo(1);
-	}
-
-	@Test
-	void choosingSkipsTheCharactersTakenByOthers() {
-		lobby.join(InputSource.KEYBOARD_ARROWS); // Ladybug
-		lobby.join(InputSource.KEYBOARD_ZQSD); // Clyde
-		lobby.next(InputSource.KEYBOARD_ZQSD); // Blinky
-		lobby.next(InputSource.KEYBOARD_ZQSD); // Inky
-		lobby.next(InputSource.KEYBOARD_ZQSD); // Pinky
-		lobby.next(InputSource.KEYBOARD_ZQSD); // (Ladybug prise) -> Clyde
-		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::character).contains("Clyde");
-		lobby.previous(InputSource.KEYBOARD_ZQSD); // (Ladybug prise) -> Pinky
-		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::character).contains("Pinky");
-	}
-
-	@Test
-	void ladybugCanBeChosenWhenFree() {
-		lobby.join(InputSource.KEYBOARD_ARROWS); // Ladybug
-		lobby.join(InputSource.XBOX_PAD_1); // Clyde
-		lobby.cancel(InputSource.KEYBOARD_ARROWS); // les flèches quittent : Ladybug est libre
-		lobby.previous(InputSource.XBOX_PAD_1); // Clyde -> Ladybug
-		assertThat(lobby.seatOf(InputSource.XBOX_PAD_1)).map(Lobby.Seat::character).contains("Ladybug");
-	}
-
-	@Test
-	void aGhostCannotBeChosenWhenAllGhostSeatsAreTaken() {
-		var small = new Lobby(() -> List.of("Blinky", "Pinky")); // 1 fantôme humain au plus
-		small.join(InputSource.KEYBOARD_ZQSD); // Ladybug
-		small.join(InputSource.KEYBOARD_IJKL); // Blinky
-		small.next(InputSource.KEYBOARD_ZQSD); // Ladybug -> pas de fantôme possible : reste Ladybug
-		assertThat(small.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::character).contains("Ladybug");
-		small.next(InputSource.KEYBOARD_IJKL); // Blinky -> Pinky (un fantôme pour un autre : permis)
-		assertThat(small.seatOf(InputSource.KEYBOARD_IJKL)).map(Lobby.Seat::character).contains("Pinky");
-	}
-
-	@Test
-	void aConfirmedPlayerKeepsHisCharacter() {
-		lobby.join(InputSource.KEYBOARD_ZQSD);
-		lobby.confirm(InputSource.KEYBOARD_ZQSD);
-		lobby.next(InputSource.KEYBOARD_ZQSD);
-		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD))
-		        .contains(new Lobby.Seat(InputSource.KEYBOARD_ZQSD, "Ladybug", true));
-	}
-
-	@Test
-	void readyWhenLadybugHasAPlayerAndEveryoneHasConfirmed() {
-		assertThat(lobby.isReady()).as("salon vide : pas de Ladybug").isFalse();
-		lobby.join(InputSource.KEYBOARD_ARROWS); // Ladybug
-		lobby.join(InputSource.XBOX_PAD_2); // Clyde
-		lobby.confirm(InputSource.KEYBOARD_ARROWS);
-		assertThat(lobby.isReady()).isFalse();
-		lobby.confirm(InputSource.XBOX_PAD_2);
+	void byDefaultCoxWithTheArrowsAndThreeFreeRows() {
+		assertThat(lobby.rows()).hasSize(4);
+		assertThat(lobby.rows().get(0)).isEqualTo(new Lobby.Row(Lobby.LADYBUG, InputSource.KEYBOARD_ARROWS, false));
+		assertThat(lobby.rows().subList(1, 4)).allMatch(Lobby.Row::isEmpty);
+		assertThat(lobby.activeRow()).isZero();
+		assertThat(lobby.activeColumn()).isEqualTo(Column.CHARACTER);
 		assertThat(lobby.isReady()).isTrue();
 	}
 
 	@Test
-	void notReadyWithoutLadybug() {
-		lobby.join(InputSource.KEYBOARD_ARROWS); // Ladybug
-		lobby.join(InputSource.XBOX_PAD_2); // Clyde
-		lobby.cancel(InputSource.KEYBOARD_ARROWS); // Ladybug libre
-		lobby.confirm(InputSource.XBOX_PAD_2);
+	void movingBetweenRowsWrapsAround() {
+		lobby.apply(new MoveRow(-1));
+		assertThat(lobby.activeRow()).isEqualTo(3);
+		lobby.apply(new MoveRow(1));
+		assertThat(lobby.activeRow()).isZero();
+	}
+
+	@Test
+	void choosingACharacterSkipsTheTakenOnes() {
+		lobby.apply(new MoveRow(1)); // ligne 2, vide
+		lobby.apply(new ChangeValue(1)); // --- -> (Cox pris) -> Clyde
+		assertThat(lobby.rows().get(1).character()).isEqualTo("Clyde");
+		lobby.apply(new ChangeValue(-1)); // Clyde -> (Cox pris) -> ---
+		assertThat(lobby.rows().get(1).character()).isNull();
+	}
+
+	@Test
+	void choosingAGhostGivesTheRowFreeControls() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new ChangeValue(1)); // Clyde
+		assertThat(lobby.rows().get(1).device()).as("des commandes libres, pas les flèches de Cox")
+		        .isEqualTo(InputSource.KEYBOARD_ZQSD);
+	}
+
+	@Test
+	void choosingControlsSkipsTheTakenOnes() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new ChangeValue(1)); // Clyde, ZQSD
+		lobby.apply(new SwitchColumn());
+		lobby.apply(new ChangeValue(1)); // ZQSD -> IJKL
+		assertThat(lobby.rows().get(1).device()).isEqualTo(InputSource.KEYBOARD_IJKL);
+		lobby.apply(new ChangeValue(-1)); // IJKL -> ZQSD
+		lobby.apply(new ChangeValue(-1)); // ZQSD -> (flèches prises) -> « appuie sur A »
+		assertThat(lobby.rows().get(1).waitingForPad()).isTrue();
+	}
+
+	@Test
+	void aPadPressingAClaimsTheWaitingRow() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new ChangeValue(1)); // Clyde
+		lobby.apply(new SwitchColumn());
+		lobby.apply(new ChangeValue(-1)); // « appuie sur A »
+		assertThat(lobby.isReady()).as("une ligne attend sa manette").isFalse();
+
+		lobby.apply(new Claim(InputSource.XBOX_PAD_2));
+		assertThat(lobby.rows().get(1)).isEqualTo(new Lobby.Row("Clyde", InputSource.XBOX_PAD_2, false));
+		assertThat(lobby.isReady()).isTrue();
+	}
+
+	@Test
+	void aClaimWithoutAWaitingRowDoesNothing() {
+		lobby.apply(new Claim(InputSource.XBOX_PAD_2));
+		assertThat(lobby.rows().get(0).device()).isEqualTo(InputSource.KEYBOARD_ARROWS);
+	}
+
+	@Test
+	void aPadAlreadyUsedMovesToTheWaitingRow() {
+		// Cox à la manette 1, puis la manette 1 réclame la ligne de Clyde : elle quitte Cox
+		lobby.apply(new SwitchColumn());
+		lobby.apply(new ChangeValue(-1)); // flèches -> « appuie sur A »
+		lobby.apply(new Claim(InputSource.XBOX_PAD_1));
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new SwitchColumn()); // colonne personnage
+		lobby.apply(new ChangeValue(1)); // Clyde, ZQSD
+		lobby.apply(new SwitchColumn());
+		lobby.apply(new ChangeValue(-1)); // « appuie sur A »
+		lobby.apply(new Claim(InputSource.XBOX_PAD_1));
+		assertThat(lobby.rows().get(1).device()).isEqualTo(InputSource.XBOX_PAD_1);
+		assertThat(lobby.rows().get(0).waitingForPad()).as("Cox attend de nouvelles commandes").isTrue();
+	}
+
+	@Test
+	void atMostThreeHumanGhosts() {
+		for (var row = 1; row <= 3; row++) {
+			lobby.apply(new MoveRow(1));
+			lobby.apply(new ChangeValue(1)); // le premier fantôme libre
+		}
+		assertThat(lobby.rows()).extracting(Lobby.Row::character).containsExactly("Ladybug", "Clyde", "Blinky",
+		        "Inky");
+		lobby.apply(new ChangeValue(1)); // Inky -> Pinky : permis (un fantôme pour un autre)
+		assertThat(lobby.rows().get(3).character()).isEqualTo("Pinky");
+	}
+
+	@Test
+	void withTwoGhostsOnlyTwoRows() {
+		var small = new Lobby(() -> List.of("Blinky", "Pinky"));
+		assertThat(small.rows()).hasSize(2); // Cox et un fantôme humain au plus
+	}
+
+	@Test
+	void coxIsRequired() {
+		lobby.apply(new ChangeValue(1)); // Cox -> Clyde
+		assertThat(lobby.isReady()).isFalse();
+		lobby.apply(new ChangeValue(-1)); // Clyde -> Cox
+		assertThat(lobby.isReady()).isTrue();
+	}
+
+	@Test
+	void assignmentsTellWhichDeviceDrivesWhichCharacter() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new ChangeValue(1)); // Clyde, ZQSD
+		assertThat(lobby.assignments()).isEqualTo(
+		        Map.of(InputSource.KEYBOARD_ARROWS, Lobby.LADYBUG, InputSource.KEYBOARD_ZQSD, "Clyde"));
+	}
+
+	@Test
+	void theStickChangesCharacterOrControlsWhateverTheColumn() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new LobbyCommand.ChangeCharacter(1)); // Clyde, ZQSD
+		lobby.apply(new LobbyCommand.ChangeControls(1)); // ZQSD -> IJKL, sans changer de colonne
+		assertThat(lobby.rows().get(1)).isEqualTo(new Lobby.Row("Clyde", InputSource.KEYBOARD_IJKL, false));
+		assertThat(lobby.activeColumn()).isEqualTo(Column.CHARACTER);
+	}
+
+	@Test
+	void undoCancelsTheLastChoiceOfTheActiveRow() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new LobbyCommand.ChangeCharacter(1)); // Clyde, ZQSD
+		lobby.apply(new LobbyCommand.ChangeControls(1)); // IJKL
+		lobby.apply(new LobbyCommand.Undo());
+		assertThat(lobby.rows().get(1)).isEqualTo(new Lobby.Row("Clyde", InputSource.KEYBOARD_ZQSD, false));
+		lobby.apply(new LobbyCommand.Undo());
+		assertThat(lobby.rows().get(1).isEmpty()).isTrue();
+		lobby.apply(new LobbyCommand.Undo()); // plus rien à annuler
+		assertThat(lobby.rows().get(1).isEmpty()).isTrue();
+		assertThat(lobby.rows().get(0).isLadybug()).as("les autres lignes ne bougent pas").isTrue();
+	}
+
+	@Test
+	void onlyConnectedPadsAreOffered() {
+		lobby.setConnectedPads(java.util.Set.of(InputSource.XBOX_PAD_2));
+		lobby.apply(new SwitchColumn());
+		lobby.apply(new ChangeValue(1)); // flèches -> ZQSD
+		lobby.apply(new ChangeValue(1)); // IJKL
+		lobby.apply(new ChangeValue(1)); // (manette 1 débranchée) -> manette 2
+		assertThat(lobby.rows().get(0).device()).isEqualTo(InputSource.XBOX_PAD_2);
+		lobby.apply(new ChangeValue(1)); // (manettes 3 et 4 débranchées) -> « appuie sur A »
+		assertThat(lobby.rows().get(0).waitingForPad()).isTrue();
+	}
+
+	@Test
+	void withoutAnyPadNeitherPadsNorPressAAreOffered() {
+		lobby.setConnectedPads(java.util.Set.of());
+		lobby.apply(new SwitchColumn());
+		lobby.apply(new ChangeValue(-1)); // flèches -> (rien d'autre que le clavier) -> IJKL
+		assertThat(lobby.rows().get(0).device()).isEqualTo(InputSource.KEYBOARD_IJKL);
+	}
+
+	@Test
+	void aRowWhosePadIsUnpluggedWaitsAgain() {
+		lobby.apply(new SwitchColumn());
+		lobby.apply(new ChangeValue(-1)); // « appuie sur A »
+		lobby.apply(new Claim(InputSource.XBOX_PAD_1));
+		lobby.setConnectedPads(java.util.Set.of(InputSource.XBOX_PAD_2)); // manette 1 débranchée
+		assertThat(lobby.rows().get(0).waitingForPad()).isTrue();
 		assertThat(lobby.isReady()).isFalse();
 	}
 
 	@Test
-	void cancelingFirstUnconfirmsThenLeaves() {
-		lobby.join(InputSource.KEYBOARD_ZQSD);
-		lobby.confirm(InputSource.KEYBOARD_ZQSD);
-		lobby.cancel(InputSource.KEYBOARD_ZQSD);
-		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::confirmed).contains(false);
-		lobby.cancel(InputSource.KEYBOARD_ZQSD);
-		assertThat(lobby.seats()).isEmpty();
+	void aRowIsDoneInTwoStepsCharacterThenControls() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new ChangeValue(1)); // Clyde
+		lobby.apply(new LobbyCommand.Confirm()); // personnage validé
+		assertThat(lobby.activeColumn()).isEqualTo(Column.CONTROLS);
+		lobby.apply(new ChangeValue(1)); // ZQSD -> IJKL
+		lobby.apply(new LobbyCommand.Confirm()); // commandes validées : ligne suivante
+		assertThat(lobby.activeRow()).isEqualTo(2);
+		assertThat(lobby.activeColumn()).isEqualTo(Column.CHARACTER);
+		assertThat(lobby.rows().get(1)).isEqualTo(new Lobby.Row("Clyde", InputSource.KEYBOARD_IJKL, false));
 	}
 
 	@Test
-	void clearEmptiesTheLobby() {
-		lobby.join(InputSource.KEYBOARD_ZQSD);
-		lobby.clear();
-		assertThat(lobby.seats()).isEmpty();
+	void confirmingWhileWaitingForAPadWaits() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new ChangeValue(1)); // Clyde
+		lobby.apply(new LobbyCommand.Confirm());
+		lobby.apply(new ChangeValue(-1)); // ZQSD -> (flèches prises) -> « appuie sur A »
+		lobby.apply(new LobbyCommand.Confirm());
+		assertThat(lobby.activeRow()).as("la ligne attend sa manette").isEqualTo(1);
+	}
+
+	@Test
+	void backGoesFromControlsToCharacterThenUndoes() {
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new ChangeValue(1)); // Clyde
+		lobby.apply(new LobbyCommand.Confirm());
+		lobby.apply(new LobbyCommand.Back());
+		assertThat(lobby.activeColumn()).isEqualTo(Column.CHARACTER);
+		lobby.apply(new LobbyCommand.Back()); // annule Clyde
+		assertThat(lobby.rows().get(1).isEmpty()).isTrue();
 	}
 }
