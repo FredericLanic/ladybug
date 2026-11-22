@@ -9,19 +9,29 @@ import org.junit.jupiter.api.Test;
 import com.kycox.game.input.InputSource;
 
 /**
- * Le salon (étape 20.2) : qui a rejoint, avec quel appareil, quel fantôme. Les
- * règles sont ici, sans écran : au plus 3 fantômes humains (C52), un fantôme
- * par joueur, un appareil ne rejoint qu'une fois.
+ * Le salon (étape 20.2) : qui a rejoint, avec quel appareil, quel personnage.
+ * Les règles sont ici, sans écran (C56, C52) : tout appareil peut jouer tout
+ * personnage ; Ladybug a toujours un joueur ; au plus 3 fantômes humains ; un
+ * personnage par joueur, un appareil ne rejoint qu'une fois.
  */
 class LobbyTest {
-	private static final List<String> FOUR_GHOSTS = List.of("Blinky", "Pinky", "Inky", "Clyde");
+	private static final List<String> FOUR_GHOSTS = List.of("Clyde", "Blinky", "Inky", "Pinky");
 
 	private final Lobby lobby = new Lobby(() -> FOUR_GHOSTS);
 
 	@Test
-	void aPlayerJoinsWithTheFirstFreeGhost() {
-		assertThat(lobby.join(InputSource.KEYBOARD_ZQSD)).isTrue();
-		assertThat(lobby.seats()).containsExactly(new Lobby.Seat(InputSource.KEYBOARD_ZQSD, "Blinky", false));
+	void theFirstPlayerGetsLadybugTheNextOnesTheFirstFreeGhost() {
+		assertThat(lobby.join(InputSource.XBOX_PAD_2)).isTrue();
+		assertThat(lobby.join(InputSource.KEYBOARD_ARROWS)).isTrue();
+		assertThat(lobby.seats()).containsExactly(new Lobby.Seat(InputSource.XBOX_PAD_2, "Ladybug", false),
+		        new Lobby.Seat(InputSource.KEYBOARD_ARROWS, "Clyde", false));
+	}
+
+	@Test
+	void anyDeviceCanJoin() {
+		for (var device : InputSource.values()) {
+			assertThat(new Lobby(() -> FOUR_GHOSTS).join(device)).as(device.name()).isTrue();
+		}
 	}
 
 	@Test
@@ -32,65 +42,96 @@ class LobbyTest {
 	}
 
 	@Test
-	void atMostThreeHumanGhosts() {
+	void ladybugAndAtMostThreeHumanGhosts() {
+		assertThat(lobby.join(InputSource.KEYBOARD_ARROWS)).isTrue(); // Ladybug
 		assertThat(lobby.join(InputSource.KEYBOARD_ZQSD)).isTrue();
 		assertThat(lobby.join(InputSource.KEYBOARD_IJKL)).isTrue();
-		assertThat(lobby.join(InputSource.XBOX_PAD_2)).isTrue();
-		assertThat(lobby.join(InputSource.XBOX_PAD_3)).isFalse();
-		assertThat(lobby.seats()).extracting(Lobby.Seat::ghost).containsExactly("Blinky", "Pinky", "Inky");
-		assertThat(lobby.maxSeats()).isEqualTo(3);
+		assertThat(lobby.join(InputSource.XBOX_PAD_1)).isTrue();
+		assertThat(lobby.join(InputSource.XBOX_PAD_2)).as("un fantôme reste à l'ordinateur").isFalse();
+		assertThat(lobby.seats()).extracting(Lobby.Seat::character).containsExactly("Ladybug", "Clyde", "Blinky",
+		        "Inky");
+		assertThat(lobby.maxSeats()).isEqualTo(4);
 	}
 
 	@Test
 	void withTwoGhostsOnlyOneCanBeHuman() {
 		var small = new Lobby(() -> List.of("Blinky", "Pinky"));
-		assertThat(small.join(InputSource.KEYBOARD_ZQSD)).isTrue();
+		assertThat(small.join(InputSource.KEYBOARD_ARROWS)).isTrue(); // Ladybug
+		assertThat(small.join(InputSource.KEYBOARD_ZQSD)).isTrue(); // Blinky
 		assertThat(small.join(InputSource.KEYBOARD_IJKL)).isFalse();
-		assertThat(small.maxSeats()).isEqualTo(1);
+		assertThat(small.maxHumanGhosts()).isEqualTo(1);
 	}
 
 	@Test
-	void choosingSkipsTheGhostsTakenByOthers() {
-		lobby.join(InputSource.KEYBOARD_ZQSD); // Blinky
-		lobby.join(InputSource.KEYBOARD_IJKL); // Pinky
-		lobby.next(InputSource.KEYBOARD_ZQSD); // Blinky -> (Pinky pris) -> Inky
-		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::ghost).contains("Inky");
-		lobby.next(InputSource.KEYBOARD_ZQSD); // Clyde
-		lobby.next(InputSource.KEYBOARD_ZQSD); // (Blinky libre) -> Blinky
-		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::ghost).contains("Blinky");
-		lobby.previous(InputSource.KEYBOARD_ZQSD); // Clyde
-		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::ghost).contains("Clyde");
+	void choosingSkipsTheCharactersTakenByOthers() {
+		lobby.join(InputSource.KEYBOARD_ARROWS); // Ladybug
+		lobby.join(InputSource.KEYBOARD_ZQSD); // Clyde
+		lobby.next(InputSource.KEYBOARD_ZQSD); // Blinky
+		lobby.next(InputSource.KEYBOARD_ZQSD); // Inky
+		lobby.next(InputSource.KEYBOARD_ZQSD); // Pinky
+		lobby.next(InputSource.KEYBOARD_ZQSD); // (Ladybug prise) -> Clyde
+		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::character).contains("Clyde");
+		lobby.previous(InputSource.KEYBOARD_ZQSD); // (Ladybug prise) -> Pinky
+		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::character).contains("Pinky");
 	}
 
 	@Test
-	void aConfirmedPlayerKeepsHisGhost() {
+	void ladybugCanBeChosenWhenFree() {
+		lobby.join(InputSource.KEYBOARD_ARROWS); // Ladybug
+		lobby.join(InputSource.XBOX_PAD_1); // Clyde
+		lobby.cancel(InputSource.KEYBOARD_ARROWS); // les flèches quittent : Ladybug est libre
+		lobby.previous(InputSource.XBOX_PAD_1); // Clyde -> Ladybug
+		assertThat(lobby.seatOf(InputSource.XBOX_PAD_1)).map(Lobby.Seat::character).contains("Ladybug");
+	}
+
+	@Test
+	void aGhostCannotBeChosenWhenAllGhostSeatsAreTaken() {
+		var small = new Lobby(() -> List.of("Blinky", "Pinky")); // 1 fantôme humain au plus
+		small.join(InputSource.KEYBOARD_ZQSD); // Ladybug
+		small.join(InputSource.KEYBOARD_IJKL); // Blinky
+		small.next(InputSource.KEYBOARD_ZQSD); // Ladybug -> pas de fantôme possible : reste Ladybug
+		assertThat(small.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::character).contains("Ladybug");
+		small.next(InputSource.KEYBOARD_IJKL); // Blinky -> Pinky (un fantôme pour un autre : permis)
+		assertThat(small.seatOf(InputSource.KEYBOARD_IJKL)).map(Lobby.Seat::character).contains("Pinky");
+	}
+
+	@Test
+	void aConfirmedPlayerKeepsHisCharacter() {
 		lobby.join(InputSource.KEYBOARD_ZQSD);
 		lobby.confirm(InputSource.KEYBOARD_ZQSD);
 		lobby.next(InputSource.KEYBOARD_ZQSD);
-		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).contains(new Lobby.Seat(InputSource.KEYBOARD_ZQSD, "Blinky", true));
+		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD))
+		        .contains(new Lobby.Seat(InputSource.KEYBOARD_ZQSD, "Ladybug", true));
 	}
 
 	@Test
-	void readyWhenEveryoneHasConfirmed() {
-		assertThat(lobby.isReady()).as("salon vide : partie solo").isTrue();
-		lobby.join(InputSource.KEYBOARD_ZQSD);
-		lobby.join(InputSource.XBOX_PAD_2);
-		lobby.confirm(InputSource.KEYBOARD_ZQSD);
+	void readyWhenLadybugHasAPlayerAndEveryoneHasConfirmed() {
+		assertThat(lobby.isReady()).as("salon vide : pas de Ladybug").isFalse();
+		lobby.join(InputSource.KEYBOARD_ARROWS); // Ladybug
+		lobby.join(InputSource.XBOX_PAD_2); // Clyde
+		lobby.confirm(InputSource.KEYBOARD_ARROWS);
 		assertThat(lobby.isReady()).isFalse();
 		lobby.confirm(InputSource.XBOX_PAD_2);
 		assertThat(lobby.isReady()).isTrue();
 	}
 
 	@Test
-	void leavingFreesTheGhostAndCancelingAConfirmation() {
+	void notReadyWithoutLadybug() {
+		lobby.join(InputSource.KEYBOARD_ARROWS); // Ladybug
+		lobby.join(InputSource.XBOX_PAD_2); // Clyde
+		lobby.cancel(InputSource.KEYBOARD_ARROWS); // Ladybug libre
+		lobby.confirm(InputSource.XBOX_PAD_2);
+		assertThat(lobby.isReady()).isFalse();
+	}
+
+	@Test
+	void cancelingFirstUnconfirmsThenLeaves() {
 		lobby.join(InputSource.KEYBOARD_ZQSD);
 		lobby.confirm(InputSource.KEYBOARD_ZQSD);
-		lobby.cancel(InputSource.KEYBOARD_ZQSD); // d'abord : annule la validation
+		lobby.cancel(InputSource.KEYBOARD_ZQSD);
 		assertThat(lobby.seatOf(InputSource.KEYBOARD_ZQSD)).map(Lobby.Seat::confirmed).contains(false);
-		lobby.cancel(InputSource.KEYBOARD_ZQSD); // ensuite : quitte le salon
+		lobby.cancel(InputSource.KEYBOARD_ZQSD);
 		assertThat(lobby.seats()).isEmpty();
-		lobby.join(InputSource.KEYBOARD_IJKL);
-		assertThat(lobby.seats()).extracting(Lobby.Seat::ghost).containsExactly("Blinky");
 	}
 
 	@Test
@@ -98,11 +139,5 @@ class LobbyTest {
 		lobby.join(InputSource.KEYBOARD_ZQSD);
 		lobby.clear();
 		assertThat(lobby.seats()).isEmpty();
-	}
-
-	@Test
-	void onlyGhostDevicesCanJoin() {
-		assertThat(lobby.join(InputSource.KEYBOARD_ARROWS)).as("les flèches restent à Ladybug (C54)").isFalse();
-		assertThat(lobby.join(InputSource.XBOX_PAD_1)).as("la manette 1 reste à Ladybug (C54)").isFalse();
 	}
 }

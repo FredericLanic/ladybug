@@ -59,7 +59,7 @@ public final class GameSnapshotFactory {
 	/** La photo du salon (20.2) : l'appareil par son nom, pour ne pas lier la photo aux entrées. */
 	static LobbySnapshot lobbyOf(Lobby lobby) {
 		return new LobbySnapshot(lobby.maxSeats(), lobby.seats().stream()
-		        .map(seat -> new LobbySnapshot.SeatSnapshot(seat.device().name(), seat.ghost(), seat.confirmed()))
+		        .map(seat -> new LobbySnapshot.SeatSnapshot(seat.device().name(), seat.character(), seat.confirmed()))
 		        .toList());
 	}
 

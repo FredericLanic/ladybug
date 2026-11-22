@@ -19,19 +19,20 @@ package com.kycox.game.snapshot;
 import java.util.List;
 
 /**
- * La photo du salon (étape 20.2) : les joueurs qui ont rejoint, leur fantôme,
+ * La photo du salon (étape 20.2) : les joueurs qui ont rejoint, leur personnage,
  * validé ou non. L'écran « rejoindre » (20.3) ne lit que cette photo.
  *
- * @param maxSeats places possibles (3 au plus, C52)
+ * @param maxSeats places possibles (Ladybug et 3 fantômes au plus, C52, C56)
  * @param seats    les places prises, dans l'ordre d'arrivée
  */
 public record LobbySnapshot(int maxSeats, List<SeatSnapshot> seats) {
 
 	/**
 	 * Une place : l'appareil (nom de {@code InputSource}, par exemple
-	 * {@code KEYBOARD_ZQSD}), le fantôme choisi, validé ou non.
+	 * {@code KEYBOARD_ZQSD}), le personnage choisi (Ladybug ou un fantôme), validé
+	 * ou non.
 	 */
-	public record SeatSnapshot(String device, String ghost, boolean confirmed) {
+	public record SeatSnapshot(String device, String character, boolean confirmed) {
 	}
 
 	public LobbySnapshot {
