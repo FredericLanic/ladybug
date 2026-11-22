@@ -35,6 +35,11 @@ public class XboxRequest {
 	@Getter
 	private boolean start;
 	private boolean wasConnected = false;
+	/** Back vient d'être appuyé (en jeu : « quitter la partie ? ») ; {@code backButton} reste « tenu ». */
+	@Getter
+	private boolean backPressed;
+	/** État brut du battement précédent, pour reconnaître un appui. */
+	private PadState previous;
 	@Getter
 	private boolean xButton;
 	private float xLeftStick;
@@ -108,18 +113,31 @@ public class XboxRequest {
 		yRightStick = controllerState.rightStickY();
 		xLeftStick = controllerState.leftStickX();
 		yLeftStick = controllerState.leftStickY();
-		aButton = controllerState.a();
-		bButton = controllerState.b();
-		xButton = controllerState.xJustPressed();
-		yButton = controllerState.yJustPressed();
-		backButton = controllerState.back();
-		dpadDown = controllerState.dpadDownJustPressed();
-		dpadUp = controllerState.dpadUpJustPressed();
-		dpadLeft = controllerState.dpadLeftJustPressed();
-		dpadRight = controllerState.dpadRightJustPressed();
-		start = controllerState.startJustPressed();
-		rightStick = controllerState.rightStickJustClicked();
-		leftStick = controllerState.leftStickJustClicked();
+		// branchement : ce qui est déjà enfoncé ne compte pas comme un appui
+		var previous = hasBeenConnected || this.previous == null ? controllerState : this.previous;
+		aButton = pressed(controllerState.a(), previous.a());
+		bButton = pressed(controllerState.b(), previous.b());
+		xButton = pressed(controllerState.x(), previous.x());
+		yButton = pressed(controllerState.y(), previous.y());
+		backButton = controllerState.back(); // tenu : l'aide reste affichée tant qu'on appuie
+		backPressed = pressed(controllerState.back(), previous.back()); // en jeu : « quitter ? »
+		dpadDown = pressed(controllerState.dpadDown(), previous.dpadDown());
+		dpadUp = pressed(controllerState.dpadUp(), previous.dpadUp());
+		dpadLeft = pressed(controllerState.dpadLeft(), previous.dpadLeft());
+		dpadRight = pressed(controllerState.dpadRight(), previous.dpadRight());
+		start = pressed(controllerState.start(), previous.start());
+		rightStick = pressed(controllerState.rightStickClick(), previous.rightStickClick());
+		leftStick = pressed(controllerState.leftStickClick(), previous.leftStickClick());
+		this.previous = controllerState;
+	}
+
+	/**
+	 * Un appui = enfoncé maintenant, pas au battement précédent (front montant).
+	 * D28 (étape 20.1) : un bouton tenu d'un écran à l'autre ne redéclenche plus
+	 * l'action de l'écran suivant.
+	 */
+	private static boolean pressed(boolean now, boolean before) {
+		return now && !before;
 	}
 
 	private void setEventOnConnection() {

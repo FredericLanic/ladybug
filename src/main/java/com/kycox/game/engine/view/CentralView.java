@@ -153,14 +153,19 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 						, ladybugMessagesBundle.getMessage("help.keyboard.pause")
 						, ladybugMessagesBundle.getMessage("help.keyboard.escape"));
 			} else if (localPreferences.isShowHelpForXboxes()) {
+				// convention Xbox (20.1) : A = oui, B = non ; Menu (≡) et Affichage (⧉) dessinés
 				drawCenterTextLines(g2d, ladybugMessagesBundle.getMessage("help.xbox.title")
+						, ladybugMessagesBundle.getMessage("help.xbox.yes")
+						, ladybugMessagesBundle.getMessage("help.xbox.no")
+						, ladybugMessagesBundle.getMessage("help.xbox.multi.player")
+						, ladybugMessagesBundle.getMessage("help.xbox.pause")
+						, ladybugMessagesBundle.getMessage("help.xbox.escape")
 						, ladybugMessagesBundle.getMessage("help.xbox.sound")
 						, ladybugMessagesBundle.getMessage("help.xbox.ladybug.skin")
 						, ladybugMessagesBundle.getMessage("help.xbox.ghost.headband")
 						, ladybugMessagesBundle.getMessage("help.xbox.ghost.hat")
 						, ladybugMessagesBundle.getMessage("help.xbox.ladybug.move")
-						, ladybugMessagesBundle.getMessage("help.xbox.ghost.move")
-						, ladybugMessagesBundle.getMessage("help.xbox.multi.player"));
+						, ladybugMessagesBundle.getMessage("help.xbox.ghost.move"));
 			} else if (localPreferences.isAtLeastOneXboxOneConnected()) {
 				drawTwoCenterTextLines(g2d, ladybugMessagesBundle.getMessage("sOrAToStart")
 						, ladybugMessagesBundle.getMessage("f1OrViewForHelp"));
@@ -211,7 +216,7 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		var top = y / 2.0 - 6.5 * GameMainConstants.BLOCK_SIZE;
 		var gap = lines.length > 1 ? 13.0 * GameMainConstants.BLOCK_SIZE / (lines.length - 1) : 0;
 		for (var i = 0; i < lines.length; i++) {
-			g2d.drawString(lines[i], (x - metr.stringWidth(lines[i])) / 2, (int) (top + i * gap));
+			PadIcons.draw(g2d, lines[i], (x - PadIcons.width(lines[i], metr)) / 2, (int) (top + i * gap), metr);
 		}
 	}
 
@@ -366,8 +371,8 @@ public class CentralView extends JPanel implements ApplicationListener<EventGame
 		var metr = getFontMetrics(defaultFont);
 		g2d.setColor(Color.white);
 		g2d.setFont(defaultFont);
-		g2d.drawString(line1, (x - metr.stringWidth(line1)) / 2, y / 2 - GameMainConstants.BLOCK_SIZE);
-		g2d.drawString(line2, (x - metr.stringWidth(line2)) / 2, y / 2 + GameMainConstants.BLOCK_SIZE);
+		PadIcons.draw(g2d, line1, (x - PadIcons.width(line1, metr)) / 2, y / 2 - GameMainConstants.BLOCK_SIZE, metr);
+		PadIcons.draw(g2d, line2, (x - PadIcons.width(line2, metr)) / 2, y / 2 + GameMainConstants.BLOCK_SIZE, metr);
 	}
 
 	@PostConstruct

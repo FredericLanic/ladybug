@@ -96,8 +96,12 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		}
 	}
 
+	/**
+	 * Convention des jeux Xbox (étape 20.1, choisie par Frédéric) : A = oui,
+	 * B = non ; Start = pause ; Back (« Affichage ») = « quitter la partie ? ».
+	 */
 	private void manageBothXboxesOneInGame() {
-		if (xboxOneLadybug.isXButton() || xboxOneUnComputedGhost.isXButton()) {
+		if (xboxOneLadybug.isBackPressed() || xboxOneUnComputedGhost.isBackPressed()) {
 			gameModelForController.askForceEndGame();
 		}
 		if (xboxOneLadybug.isStart() || xboxOneUnComputedGhost.isStart()) {
@@ -105,12 +109,13 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		}
 	}
 
+	/** « Reprendre l'ancien niveau ? » : A = oui, reprendre ; B = non, nouvelle partie. */
 	private void manageBothXboxesOneInAskKeepPreviousGameLevel() {
-		if (xboxOneLadybug.isXButton() || xboxOneUnComputedGhost.isXButton()) {
-			gameModelForController.initializeLevelNumAndStartGame(true);
-		}
-		if (xboxOneLadybug.isYButton() || xboxOneUnComputedGhost.isYButton()) {
+		if (xboxOneLadybug.isAButton() || xboxOneUnComputedGhost.isAButton()) {
 			gameModelForController.initializeLevelNumAndStartGame(false);
+		}
+		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
+			gameModelForController.initializeLevelNumAndStartGame(true);
 		}
 	}
 
@@ -192,11 +197,12 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		}
 	}
 
+	/** « Quitter la partie ? » : A = oui, quitter ; B = non, continuer. */
 	private void manageBothXboxesOneInAskForceEndGame() {
 		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
 			gameModelForController.setInGame();
 		}
-		if (xboxOneLadybug.isYButton() || xboxOneUnComputedGhost.isYButton()) {
+		if (xboxOneLadybug.isAButton() || xboxOneUnComputedGhost.isAButton()) {
 			gameModelForController.forceStopGame();
 		}
 	}

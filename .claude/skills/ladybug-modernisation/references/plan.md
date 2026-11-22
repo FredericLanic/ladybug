@@ -324,6 +324,15 @@ Après l'étape 5, avant I20 et l'étape 6. Existant : JUnit 5, golden master, r
 5b.5 **Fiches des outils de qualité** (21/11/2026, à la demande de Frédéric) : `doc/qualite/` au format des patterns (junior, confirmé, vétéran, exercice) : ArchUnit, JaCoCo, SonarQube Cloud, CI GitHub Actions, robot, Dependabot, Graphify ; sommaire avec « qui vérifie quoi ». Enquête au passage : les 87 alertes Dependabot viennent d'une liste de dépendances envoyée le 12/03/2024 par l'ancien workflow `maven-test-fla.yml` de `master` (action `maven-dependency-submission-action`), jamais remplacée : elles décrivent le Ladybug de 2024 (Tomcat, Spring Web), à marquer non pertinentes.
 5b.4 **Outils de qualité en réserve** (21/11/2026, « garde ça au chaud », idée I23) : proposition d'une étape **5 ter** avant ou après I20 : SonarQube for IDE (plugin IntelliJ connecté à Sonar, installé par Frédéric), **Spotless + `.editorconfig`** (format unique : fins de ligne, tabulations, imports), **mises à jour Dependabot** (`.github/dependabot.yml` : PR de montée de version, actions comprises). Ensuite, au fil des étapes : **Error Prone** et **jqwik** (tests par propriétés : Dijkstra, `Position`, labyrinthe généré) aux étapes 6-7 ; **NullAway** et **OpenRewrite** à l'étape 8 ; **CodeQL** à l'étape 9 (réseau). Déconseillés : Checkstyle, PMD, SpotBugs (doublons de Sonar et Error Prone). Chaque outil adopté reçoit sa fiche dans `doc/qualite/`.
 
+## I20 : choisir son fantôme, plusieurs fantômes humains en local (décidée le 22/11/2026)
+Après l'étape 5 bis et les PR #32 à #38 (outils de qualité, démo du bot). Décisions de Frédéric : **C52** au plus 3 fantômes humains (au moins un reste à l'ordinateur) ; **C53** la touche 2 (Y à la manette) ouvre l'écran « rejoindre » au lieu du tirage au hasard ; **C54** appareils des fantômes : ZQSD, IJKL, manettes 2 à 4 (flèches et manette 1 restent à Ladybug).
+20.1 **D28** : la manette ne réagit qu'à l'appui (front montant), plus au bouton tenu d'un écran à l'autre.
+20.2 **Le salon dans le modèle** : qui a rejoint, avec quel appareil, quel fantôme ; transmis dans le `GameSnapshot` (le réseau, étape 9, réutilisera le même salon).
+20.3 **Écran « rejoindre »** : appuyer pour rejoindre, gauche/droite pour choisir son fantôme, valider ; la vue ne lit que le snapshot.
+20.4 **En jeu** : chaque appareil pilote son fantôme (`PlayerInputs.ghost(nom)`, `InputSource` par appareil) ; bandeau à plusieurs fantômes humains ; règle C50 inchangée.
+20.5 **I22, manettes Bluetooth** : manette reconnue par son identité (SDL) et non par son numéro ; pause automatique si la manette d'un joueur décroche en jeu ; peut éclairer D27.
+Critères : golden master identique là où le comportement ne change pas ; partie de contrôle de Frédéric à chaque sous-étape visible ; démo du bot toujours fonctionnelle.
+
 ## Étape 6 : fantômes 100 % configurables (assemblage de capacités)
 6.1 `GhostMoveStrategy` : `ChaseStrategy` (ex-AGGRESSIVE), `AmbushStrategy` (ex-SMART), `WanderStrategy` (ex-CALM). Le code est repris de `Ghost`.
 6.2 `GhostSpeedPolicy` : `StandardSpeed` (modes NORMAL et MINUS) et `RageSpeed` (logique de Blinky).

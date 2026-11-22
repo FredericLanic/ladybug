@@ -15,10 +15,9 @@ import com.studiohartman.jamepad.ControllerState;
  * retourne donc les axes Y (constaté par Frédéric : haut et bas étaient inversés).
  */
 public record PadState(boolean connected, float leftStickX, float leftStickY, float rightStickX,
-        float rightStickY, boolean a, boolean b, boolean xJustPressed, boolean yJustPressed, boolean back,
-        boolean dpadUpJustPressed, boolean dpadDownJustPressed, boolean dpadLeftJustPressed,
-        boolean dpadRightJustPressed, boolean startJustPressed, boolean leftStickJustClicked,
-        boolean rightStickJustClicked) {
+        float rightStickY, boolean a, boolean b, boolean x, boolean y, boolean back, boolean dpadUp,
+        boolean dpadDown, boolean dpadLeft, boolean dpadRight, boolean start, boolean leftStickClick,
+        boolean rightStickClick) {
 
 	/** Manette absente. */
 	public static PadState disconnected() {
@@ -26,12 +25,14 @@ public record PadState(boolean connected, float leftStickX, float leftStickY, fl
 		        false, false);
 	}
 
-	/** Recopie l'état lu par Jamepad, axes verticaux retournés (positif = haut). */
+	/**
+	 * Recopie l'état brut lu par Jamepad (bouton enfoncé ou non), axes verticaux
+	 * retournés (positif = haut). L'appui (front montant) est calculé par
+	 * {@link XboxRequest} (D28, étape 20.1).
+	 */
 	public static PadState from(ControllerState state) {
 		return new PadState(state.isConnected, state.leftStickX, -state.leftStickY, state.rightStickX,
-		        -state.rightStickY, state.a, state.b, state.xJustPressed, state.yJustPressed, state.back,
-		        state.dpadUpJustPressed, state.dpadDownJustPressed, state.dpadLeftJustPressed,
-		        state.dpadRightJustPressed, state.startJustPressed, state.leftStickJustClicked,
-		        state.rightStickJustClicked);
+		        -state.rightStickY, state.a, state.b, state.x, state.y, state.back, state.dpadUp, state.dpadDown,
+		        state.dpadLeft, state.dpadRight, state.start, state.leftStickClick, state.rightStickClick);
 	}
 }

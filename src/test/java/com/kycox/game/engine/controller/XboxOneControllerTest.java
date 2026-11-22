@@ -64,6 +64,10 @@ class XboxOneControllerTest {
 		        new PlayerInputs(ladybug, ghostsGroup), ladybugPad, ghostPad);
 		when(model.getLadybug()).thenReturn(ladybug);
 		when(model.getUnComputedGhost()).thenReturn(Optional.empty());
+		// comme au démarrage du jeu : les manettes sont lues une première fois au repos ;
+		// depuis D28 (20.1), un bouton déjà enfoncé au branchement ne compte pas
+		ladybugPad.readCurrentState(Pad.connected().build());
+		ghostPad.readCurrentState(Pad.connected().build());
 	}
 
 	private void press(PadState ladybugState, PadState ghostState) {
@@ -100,12 +104,13 @@ class XboxOneControllerTest {
 
 	@Test
 	void keepPreviousLevelQuestion() {
+		// convention Xbox (20.1) : A = oui, reprendre ; B = non, nouvelle partie
 		when(model.isProgramAskKeepPreviousGameLevel()).thenReturn(true);
-		press(Pad.connected().x());
-		verify(model).initializeLevelNumAndStartGame(true);
-
-		press(Pad.connected().y());
+		press(Pad.connected().a());
 		verify(model).initializeLevelNumAndStartGame(false);
+
+		press(Pad.connected().b());
+		verify(model).initializeLevelNumAndStartGame(true);
 	}
 
 	// --- en partie
@@ -140,19 +145,20 @@ class XboxOneControllerTest {
 	}
 
 	@Test
-	void startPausesAndXAsksToEndTheGame() {
+	void startPausesAndBackAsksToEndTheGame() {
 		when(model.isInGame()).thenReturn(true);
-		press(Pad.connected().x().start());
+		press(Pad.connected().back().start());
 		verify(model).setGameInPause();
 		verify(model).askForceEndGame();
 	}
 
 	@Test
 	void endGameQuestion() {
+		// convention Xbox (20.1) : A = oui, quitter ; B = non, continuer
 		when(model.isGameAskForceEndGame()).thenReturn(true);
 		press(Pad.connected().b());
 		verify(model).setInGame();
-		press(Pad.connected().y());
+		press(Pad.connected().a());
 		verify(model).forceStopGame();
 	}
 
@@ -188,8 +194,41 @@ class XboxOneControllerTest {
 		verify(messaging).addIamGhost();
 	}
 
+	/**
+	 * D28 (20.1) : un bouton tenu d'un écran à l'autre n'agit qu'une fois. Avec la
+	 * convention Xbox, A sert à « reprendre » puis à « oui, quitter » : A tenu
+	 * depuis la question ne doit pas confirmer la sortie demandée plus tard.
+	 */
+	@Test
+	void aButtonHeldFromOneScreenToTheNextDoesNotActAgain() {
+		var aHeld = Pad.connected().a();
+		when(model.isProgramAskKeepPreviousGameLevel()).thenReturn(true);
+		press(aHeld);
+		verify(model).initializeLevelNumAndStartGame(false);
+
+		// écrans de transition, puis en jeu : A toujours tenu
+		when(model.isProgramAskKeepPreviousGameLevel()).thenReturn(false);
+		press(aHeld);
+		when(model.isInGame()).thenReturn(true);
+		press(aHeld);
+		press(Pad.connected().a().back()); // Back : « quitter la partie ? »
+		verify(model).askForceEndGame();
+
+		when(model.isInGame()).thenReturn(false);
+		when(model.isGameAskForceEndGame()).thenReturn(true);
+		press(aHeld);
+		verify(model, never()).forceStopGame();
+
+		press(Pad.connected()); // A relâché…
+		press(aHeld); // … puis appuyé : là, oui
+		verify(model).forceStopGame();
+	}
+
 	@Test
 	void connectionMessages() {
+		// manettes d'abord débranchées : ce test vérifie justement le branchement
+		ladybugPad.readCurrentState(PadState.disconnected());
+		ghostPad.readCurrentState(PadState.disconnected());
 		press(Pad.connected().build(), Pad.connected().build());
 		verify(messaging).addXboxLadybugConnected();
 		verify(messaging).addXboxGhostConnected();
