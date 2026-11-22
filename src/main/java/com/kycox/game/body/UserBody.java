@@ -66,12 +66,24 @@ public abstract class UserBody extends Body {
 		}
 	}
 
+	/**
+	 * Téléporte le personnage sur la case d'arrivée, puis le fait repartir d'un pas
+	 * dans sa direction, seulement si ce pas mène à une case du labyrinthe.
+	 *
+	 * <p>Dette D32 (22/11/2026) : avec un demi-tour demandé pile au centre du
+	 * téléporteur, la direction pouvait pointer vers l'extérieur depuis la case
+	 * d'arrivée (téléporteurs de coin) : le personnage sortait du labyrinthe et
+	 * n'y revenait plus. Il reste maintenant sur la case d'arrivée.
+	 */
 	public void teleport(Maze maze) {
 		if (isPerfectOnABlock()) {
 			var currentScreenBlock = maze.getScreenBlock(getPositionBlock());
-			var destinationPoint = Utils.convertBlockPointToGraphicPoint(currentScreenBlock.getDestinationPoint());
-			setPosition(destinationPoint);
-			setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
+			var arrival = currentScreenBlock.getDestinationPoint();
+			setPosition(Utils.convertBlockPointToGraphicPoint(arrival));
+			var next = maze.getScreenBlock(arrival.translate(getDirection().x(), getDirection().y()));
+			if (next != null && !next.isNotAccessible()) {
+				setPosition(getPosition().translate(getDirection().x() * getSpeed(), getDirection().y() * getSpeed()));
+			}
 		}
 	}
 
