@@ -1,7 +1,6 @@
 package com.kycox.game.engine.controller;
 
 import com.kycox.game.constant.game.GameMainConstants;
-import com.kycox.game.constant.xbox.XboxOneConstants;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.engine.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.engine.controller.xboxone.XboxRequest;
@@ -14,6 +13,9 @@ import com.kycox.game.input.InputSource;
 import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.snapshot.GameSnapshot;
+import java.util.List;
+import java.util.function.Predicate;
+
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
 
@@ -28,6 +30,9 @@ import com.kycox.game.launcher.GuiComponent;
  */
 @GuiComponent
 public class XboxOneController implements ApplicationListener<EventGameModel> {
+	/** L'appareil de chaque manette, dans l'ordre des numéros SDL. */
+	private static final List<InputSource> PAD_DEVICES = List.of(InputSource.XBOX_PAD_1, InputSource.XBOX_PAD_2,
+	        InputSource.XBOX_PAD_3, InputSource.XBOX_PAD_4);
 
 	private final XBoxOneControllerManager padManager;
 	/** La manette affichée sur la ligne active du salon, pour ne la faire vibrer qu'une fois. */
@@ -37,6 +42,8 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	private final GameProperties gameProperties;
 	private final XboxRequest xboxOneLadybug;
 	private final XboxRequest xboxOneUnComputedGhost;
+	/** Les quatre manettes, dans l'ordre : l'indice est le numéro SDL et celui de {@link #PAD_DEVICES} (20.5.2). */
+	private final List<XboxRequest> pads;
 	/** Réglages de ce poste (aide, son, manette branchée), écrits sans passer par le modèle (4.5). */
 	private final LocalPreferences localPreferences;
 	/** Les ordres de déplacement vont directement au joueur concerné (5.1). */
@@ -56,6 +63,13 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		this.localPreferences = localPreferences;
 		this.xboxOneLadybug = xboxOneLadybug;
 		this.xboxOneUnComputedGhost = xboxOneUnComputedGhost;
+		// les manettes 3 et 4 n'ont pas de rôle fixe : elles n'existent que par le salon
+		this.pads = List.of(xboxOneLadybug, xboxOneUnComputedGhost, new XboxRequest(), new XboxRequest());
+	}
+
+	/** Vrai si au moins une manette branchée satisfait ce critère (appui sur un bouton de menu). */
+	private boolean anyPad(Predicate<XboxRequest> criterion) {
+		return pads.stream().anyMatch(criterion);
 	}
 
 	/**
@@ -63,8 +77,9 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	 * manette vibre pour le personnage qu'elle pilote (table du salon, 20.4).
 	 */
 	private void doVibrationsInGame(GameSnapshot snapshot) {
-		doVibrationsInGame(snapshot, InputSource.XBOX_PAD_1, XboxOneConstants.LADYBUG_XBOXONE_INDEX);
-		doVibrationsInGame(snapshot, InputSource.XBOX_PAD_2, XboxOneConstants.GHOST_XBOXONE_INDEX);
+		for (var i = 0; i < PAD_DEVICES.size(); i++) {
+			doVibrationsInGame(snapshot, PAD_DEVICES.get(i), i);
+		}
 	}
 
 	private void doVibrationsInGame(GameSnapshot snapshot, InputSource device, int padIndex) {
@@ -93,20 +108,20 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	}
 
 	private boolean isOneXboxOneConnected() {
-		return (xboxOneUnComputedGhost.isConnected() || xboxOneLadybug.isConnected());
+		return anyPad(XboxRequest::isConnected);
 	}
 
 	private void manageBothXboxesOneCommon() {
-		if (xboxOneLadybug.isDpadUp() || xboxOneUnComputedGhost.isDpadUp()) {
+		if (anyPad(XboxRequest::isDpadUp)) {
 			gameMessaging.addSoundMode(localPreferences.toggleSound());
 		}
-		if (xboxOneLadybug.isDpadDown() || xboxOneUnComputedGhost.isDpadDown()) {
+		if (anyPad(XboxRequest::isDpadDown)) {
 			gameProperties.changeLadybugSkin();
 		}
-		if (xboxOneLadybug.isDpadRight() || xboxOneUnComputedGhost.isDpadRight()) {
+		if (anyPad(XboxRequest::isDpadRight)) {
 			gameProperties.changeGhostHeadBand();
 		}
-		if (xboxOneLadybug.isDpadLeft() || xboxOneUnComputedGhost.isDpadLeft()) {
+		if (anyPad(XboxRequest::isDpadLeft)) {
 			gameProperties.changeGhostHat();
 		}
 		if (xboxOneLadybug.isRightStick()) {
@@ -122,40 +137,40 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	 * B = non ; Start = pause ; Back (« Affichage ») = « quitter la partie ? ».
 	 */
 	private void manageBothXboxesOneInGame() {
-		if (xboxOneLadybug.isBackPressed() || xboxOneUnComputedGhost.isBackPressed()) {
+		if (anyPad(XboxRequest::isBackPressed)) {
 			gameModelForController.askForceEndGame();
 		}
-		if (xboxOneLadybug.isStart() || xboxOneUnComputedGhost.isStart()) {
+		if (anyPad(XboxRequest::isStart)) {
 			gameModelForController.setGameInPause();
 		}
 	}
 
 	/** « Reprendre l'ancien niveau ? » : A = oui, reprendre ; B = non, nouvelle partie. */
 	private void manageBothXboxesOneInAskKeepPreviousGameLevel() {
-		if (xboxOneLadybug.isAButton() || xboxOneUnComputedGhost.isAButton()) {
+		if (anyPad(XboxRequest::isAButton)) {
 			gameModelForController.initializeLevelNumAndStartGame(false);
 		}
-		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
+		if (anyPad(XboxRequest::isBButton)) {
 			gameModelForController.initializeLevelNumAndStartGame(true);
 		}
 	}
 
 	private void manageBothXboxesOneInPresentation() {
-		if (xboxOneLadybug.isAButton() || xboxOneUnComputedGhost.isAButton()) {
+		if (anyPad(XboxRequest::isAButton)) {
 			gameModelForController.startGame();
 		}
-		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
+		if (anyPad(XboxRequest::isBButton)) {
 			gameModelForController.programForceExit();
 		}
-		if (xboxOneLadybug.isXButton() || xboxOneUnComputedGhost.isXButton()) {
+		if (anyPad(XboxRequest::isXButton)) {
 			gameModelForController.setMultiPlayers(false);
 		}
 		// plusieurs joueurs : le salon (C53)
-		if (xboxOneLadybug.isYButton() || xboxOneUnComputedGhost.isYButton()) {
+		if (anyPad(XboxRequest::isYButton)) {
 			gameModelForController.openLobby();
 		}
 		localPreferences
-		        .setShowHelpForXboxes(xboxOneLadybug.isBackButton() || xboxOneUnComputedGhost.isBackButton());
+		        .setShowHelpForXboxes(anyPad(XboxRequest::isBackButton));
 	}
 
 	/**
@@ -195,8 +210,9 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		// dans le salon, la croix choisit un personnage : pas de son ni d'apparence
 		if (gameModelForController.isProgramLobby()) {
 			signalConnectedPads();
-			manageXboxInLobby(xboxOneLadybug, InputSource.XBOX_PAD_1);
-			manageXboxInLobby(xboxOneUnComputedGhost, InputSource.XBOX_PAD_2);
+			for (var i = 0; i < pads.size(); i++) {
+				manageXboxInLobby(pads.get(i), PAD_DEVICES.get(i));
+			}
 			vibrateTheHighlightedPad();
 			return;
 		}
@@ -207,8 +223,9 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 			manageBothXboxesOneInAskKeepPreviousGameLevel();
 		} else if (gameModelForController.isInGame()) {
 			manageBothXboxesOneInGame();
-			managePadInGame(xboxOneLadybug, InputSource.XBOX_PAD_1);
-			managePadInGame(xboxOneUnComputedGhost, InputSource.XBOX_PAD_2);
+			for (var i = 0; i < pads.size(); i++) {
+				managePadInGame(pads.get(i), PAD_DEVICES.get(i));
+			}
 			doVibrationsInGame(snapshot);
 		} else if(gameModelForController.isGameAskForceEndGame()) {
 			manageBothXboxesOneInAskForceEndGame();
@@ -223,7 +240,7 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	 * B revient en arrière ; le stick droit passe du personnage (à gauche) aux
 	 * commandes (à droite) et change de ligne (en haut / en bas) ; la croix n'y sert
 	 * pas ; ≡ lance la partie, ⧉ revient à la présentation. Chaque
-	 * appui devient une commande du salon. Les manettes 3 et 4 viendront avec 20.5.
+	 * appui devient une commande du salon.
 	 */
 	private void manageXboxInLobby(XboxRequest pad, InputSource device) {
 		if (!pad.isConnected()) {
@@ -265,14 +282,13 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		return column == Lobby.Column.CHARACTER || column == Lobby.Column.PLAY;
 	}
 
-	/** Le salon ne propose que les manettes branchées (les manettes 3 et 4 viendront avec 20.5). */
+	/** Le salon ne propose que les manettes branchées (de 1 à 4). */
 	private void signalConnectedPads() {
 		var connected = new java.util.HashSet<InputSource>();
-		if (xboxOneLadybug.isConnected()) {
-			connected.add(InputSource.XBOX_PAD_1);
-		}
-		if (xboxOneUnComputedGhost.isConnected()) {
-			connected.add(InputSource.XBOX_PAD_2);
+		for (var i = 0; i < pads.size(); i++) {
+			if (pads.get(i).isConnected()) {
+				connected.add(PAD_DEVICES.get(i));
+			}
 		}
 		gameModelForController.getLobby().setConnectedPads(connected);
 	}
@@ -293,27 +309,27 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	}
 
 	private void vibrate(InputSource device) {
-		if (device == InputSource.XBOX_PAD_1) {
-			padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0.4f, 0.4f, 150);
-		} else if (device == InputSource.XBOX_PAD_2) {
-			padManager.vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0.4f, 0.4f, 150);
+		var index = device == null ? -1 : PAD_DEVICES.indexOf(device);
+		if (index >= 0) {
+			padManager.vibrate(index, 0.4f, 0.4f, 150);
 		}
 	}
 
 	/** « Quitter la partie ? » : A = oui, quitter ; B = non, continuer. */
 	private void manageBothXboxesOneInAskForceEndGame() {
-		if (xboxOneLadybug.isBButton() || xboxOneUnComputedGhost.isBButton()) {
+		if (anyPad(XboxRequest::isBButton)) {
 			gameModelForController.setInGame();
 		}
-		if (xboxOneLadybug.isAButton() || xboxOneUnComputedGhost.isAButton()) {
+		if (anyPad(XboxRequest::isAButton)) {
 			gameModelForController.forceStopGame();
 		}
 	}
 
 	private void readXboxOneStates() {
 		padManager.update();
-		xboxOneLadybug.readCurrentState(padManager.state(XboxOneConstants.LADYBUG_XBOXONE_INDEX));
-		xboxOneUnComputedGhost.readCurrentState(padManager.state(XboxOneConstants.GHOST_XBOXONE_INDEX));
+		for (var i = 0; i < pads.size(); i++) {
+			pads.get(i).readCurrentState(padManager.state(i));
+		}
 	}
 
 	private void setProgramMessagesAccordingXboxOneConnectionOrDisconnection() {

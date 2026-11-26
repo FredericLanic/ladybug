@@ -24,6 +24,7 @@ import com.kycox.game.engine.controller.xboxone.PadState;
 import com.kycox.game.engine.controller.xboxone.XBoxOneControllerManager;
 import com.kycox.game.engine.controller.xboxone.XboxRequest;
 import com.kycox.game.engine.message.GameMessaging;
+import com.kycox.game.engine.model.EventGameModel;
 import com.kycox.game.input.InputSource;
 import com.kycox.game.input.PlayerInput;
 import com.kycox.game.input.PlayerInputs;
@@ -316,5 +317,42 @@ class XboxOneControllerTest {
 		assertThat(preferences.isAtLeastOneXboxOneConnected()).isFalse();
 		assertThat(ladybugInput.hasRequest()).isFalse();
 		assertThat(ghostInput.hasRequest()).isFalse();
+	}
+
+	/**
+	 * Les manettes 3 et 4 sont lues comme les deux premières et peuvent prendre
+	 * une ligne du salon (20.5.2). Le test passe par la lecture du matériel
+	 * ({@code onApplicationEvent}), seul chemin vers les manettes 3 et 4.
+	 */
+	@Test
+	void theThirdPadClaimsALobbyRow() {
+		var lobby = new com.kycox.game.engine.model.Lobby(() -> List.of("Clyde", "Blinky", "Inky", "Pinky"));
+		when(model.isProgramLobby()).thenReturn(true);
+		when(model.getLobby()).thenReturn(lobby);
+		org.mockito.Mockito.doCallRealMethod().when(model).applyLobbyCommand(any());
+		when(padManager.isAvailable()).thenReturn(true);
+		var rest = Pad.connected().build();
+
+		readPads(rest, rest); // branchement : un bouton déjà enfoncé ne compterait pas (D28)
+		readPads(Pad.connected().rightStick(0, -1f).build(), rest); // la manette 1 descend à la ligne 2
+		readPads(Pad.connected().leftStick(1f, 0).build(), rest); // Clyde
+		readPads(Pad.connected().a().build(), rest); // personnage validé : place aux commandes
+		readPads(Pad.connected().leftStick(-1f, 0).build(), rest); // « appuie sur A »
+		assertThat(lobby.rows().get(1).waitingForPad()).isTrue();
+
+		readPads(rest, Pad.connected().a().build()); // la manette 3 prend la ligne
+		assertThat(lobby.rows().get(1).device()).isEqualTo(InputSource.XBOX_PAD_3);
+		verify(padManager, org.mockito.Mockito.atLeastOnce()).vibrate(org.mockito.ArgumentMatchers.eq(2),
+		        org.mockito.ArgumentMatchers.anyFloat(), org.mockito.ArgumentMatchers.anyFloat(),
+		        org.mockito.ArgumentMatchers.anyInt());
+	}
+
+	/** Un battement complet : Jamepad (simulé) donne l'état des manettes 1 et 3 ; 2 et 4 sont débranchées. */
+	private void readPads(PadState pad1, PadState pad3) {
+		when(padManager.state(0)).thenReturn(pad1);
+		when(padManager.state(1)).thenReturn(PadState.disconnected());
+		when(padManager.state(2)).thenReturn(pad3);
+		when(padManager.state(3)).thenReturn(PadState.disconnected());
+		controller.onApplicationEvent(new EventGameModel(model, snapshot));
 	}
 }
