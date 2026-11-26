@@ -7,8 +7,6 @@ import com.kycox.game.launcher.GuiComponent;
 import com.studiohartman.jamepad.Configuration;
 import com.studiohartman.jamepad.ControllerManager;
 
-import jakarta.annotation.PostConstruct;
-
 /**
  * Accès aux manettes par Jamepad (fork libGDX 2.x, étape 3.5.3d) : Windows,
  * Linux et macOS, y compris Apple Silicon.
@@ -31,9 +29,20 @@ public class XBoxOneControllerManager {
 	private ControllerManager controllerManager;
 	/** Vrai si Jamepad a pu être initialisé ; faux sinon (jeu au clavier seulement). */
 	private boolean available;
+	/** Vrai dès que l'initialisation a été tentée (réussie ou non). */
+	private boolean initialized;
 
-	@PostConstruct
-	public void initialize() {
+	/**
+	 * Démarre Jamepad à la première utilisation, et non au lancement de Spring :
+	 * SDL (surtout sur Mac) n'apprend les manettes branchées plus tard que sur le
+	 * fil qui l'a démarré. Il doit donc être le même que celui qui appelle
+	 * {@link #update()} à chaque battement (étape 20.5.1).
+	 */
+	private void ensureInitialized() {
+		if (initialized) {
+			return;
+		}
+		initialized = true;
 		try {
 			controllerManager = new ControllerManager(new Configuration(), MAPPINGS);
 			controllerManager.initSDLGamepad();
@@ -49,11 +58,13 @@ public class XBoxOneControllerManager {
 	}
 
 	public boolean isAvailable() {
+		ensureInitialized();
 		return available;
 	}
 
 	/** Relit les manettes (Jamepad 2.x : à appeler à chaque battement, avant {@link #state(int)}). */
 	public void update() {
+		ensureInitialized();
 		if (available) {
 			controllerManager.update();
 		}
