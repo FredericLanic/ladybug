@@ -237,6 +237,7 @@ class XboxOneControllerTest {
 		var lobby = new com.kycox.game.engine.model.Lobby(() -> List.of("Clyde", "Blinky", "Inky", "Pinky"));
 		when(model.isProgramLobby()).thenReturn(true);
 		when(model.getLobby()).thenReturn(lobby);
+		org.mockito.Mockito.doCallRealMethod().when(model).applyLobbyCommand(any());
 		var rest = Pad.connected().build();
 
 		press(Pad.connected().rightStick(0, -1f).build(), rest); // stick droit en bas : ligne 2
@@ -277,6 +278,19 @@ class XboxOneControllerTest {
 
 		press(Pad.connected().start().build(), rest);
 		verify(model).startFromLobby();
+
+		// la ligne des boutons : stick droit à droite pour « retour », A le valide
+		press(rest, rest);
+		for (var i = 0; i < lobby.rows().size() && !lobby.isOnButtons(); i++) { // stick droit en bas jusqu'aux boutons
+			press(Pad.connected().rightStick(0, -1f).build(), rest);
+			press(rest, rest);
+		}
+		assertThat(lobby.activeColumn()).isEqualTo(com.kycox.game.engine.model.Lobby.Column.PLAY);
+		press(Pad.connected().rightStick(1f, 0).build(), rest);
+		assertThat(lobby.activeColumn()).isEqualTo(com.kycox.game.engine.model.Lobby.Column.BACK);
+		press(rest, rest);
+		press(Pad.connected().a().build(), rest);
+		verify(model).leaveLobby();
 	}
 
 	@Test

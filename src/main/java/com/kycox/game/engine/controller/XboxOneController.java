@@ -233,26 +233,31 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 			var rows = lobby.rows();
 			var activeWaits = lobby.activeRow() < rows.size() && rows.get(lobby.activeRow()).waitingForPad();
 			if (activeWaits) {
-				lobby.apply(new LobbyCommand.Claim(device));
+				gameModelForController.applyLobbyCommand(new LobbyCommand.Claim(device));
 				vibrate(device); // « c'est bien cette manette »
 			} else {
-				lobby.apply(new LobbyCommand.Confirm());
+				gameModelForController.applyLobbyCommand(new LobbyCommand.Confirm()); // ou le bouton choisi
 			}
 		} else if (pad.isBButton()) {
-			lobby.apply(new LobbyCommand.Back());
+			gameModelForController.applyLobbyCommand(new LobbyCommand.Back());
 		} else if (pad.isRightStickPushedUp()) {
-			lobby.apply(new LobbyCommand.MoveRow(-1));
+			gameModelForController.applyLobbyCommand(new LobbyCommand.MoveRow(-1));
 		} else if (pad.isRightStickPushedDown()) {
-			lobby.apply(new LobbyCommand.MoveRow(1));
-		} else if (pad.isRightStickPushedRight() && lobby.activeColumn() == Lobby.Column.CHARACTER) {
-			lobby.apply(new LobbyCommand.SwitchColumn()); // stick droit à droite : les commandes
-		} else if (pad.isRightStickPushedLeft() && lobby.activeColumn() == Lobby.Column.CONTROLS) {
-			lobby.apply(new LobbyCommand.SwitchColumn()); // stick droit à gauche : le personnage
+			gameModelForController.applyLobbyCommand(new LobbyCommand.MoveRow(1));
+		} else if (pad.isRightStickPushedRight() && isLeftColumn(lobby.activeColumn())) {
+			gameModelForController.applyLobbyCommand(new LobbyCommand.SwitchColumn()); // à droite : commandes, ou « retour »
+		} else if (pad.isRightStickPushedLeft() && !isLeftColumn(lobby.activeColumn())) {
+			gameModelForController.applyLobbyCommand(new LobbyCommand.SwitchColumn()); // à gauche : personnage, ou « jouer »
 		} else if (pad.isLeftStickPushedLeft()) {
-			lobby.apply(new LobbyCommand.ChangeValue(-1));
+			gameModelForController.applyLobbyCommand(new LobbyCommand.ChangeValue(-1));
 		} else if (pad.isLeftStickPushedRight()) {
-			lobby.apply(new LobbyCommand.ChangeValue(1));
+			gameModelForController.applyLobbyCommand(new LobbyCommand.ChangeValue(1));
 		}
+	}
+
+	/** La colonne de gauche : le personnage, ou le bouton « jouer » sur la ligne des boutons. */
+	private static boolean isLeftColumn(Lobby.Column column) {
+		return column == Lobby.Column.CHARACTER || column == Lobby.Column.PLAY;
 	}
 
 	/** Le salon ne propose que les manettes branchées (les manettes 3 et 4 viendront avec 20.5). */

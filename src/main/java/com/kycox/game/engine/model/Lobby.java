@@ -40,7 +40,10 @@ import com.kycox.game.input.InputSource;
  * première manette sur laquelle on appuie sur A prend la ligne (C56) ;</li>
  * <li>un personnage et des commandes ne servent qu'à une ligne ;</li>
  * <li>au plus 3 fantômes humains, et toujours au moins un fantôme pour
- * l'ordinateur (C52) ; les fantômes sans ligne sont joués par l'ordinateur.</li>
+ * l'ordinateur (C52) ; les fantômes sans ligne sont joués par l'ordinateur ;</li>
+ * <li>sous les joueurs, une dernière ligne de deux boutons, « jouer » et
+ * « retour » (20.3 ter) : les valider ne lance rien ici, le salon le dit au jeu
+ * par son {@link Outcome}.</li>
  * </ul>
  */
 @Component
@@ -54,9 +57,20 @@ public class Lobby {
 	        InputSource.KEYBOARD_ZQSD, InputSource.KEYBOARD_IJKL, InputSource.XBOX_PAD_1, InputSource.XBOX_PAD_2,
 	        InputSource.XBOX_PAD_3, InputSource.XBOX_PAD_4, null);
 
-	/** La colonne active de la ligne active. */
+	/**
+	 * La colonne active de la ligne active : personnage ou commandes sur une ligne
+	 * de joueur, bouton « jouer » ou « retour » sur la ligne des boutons.
+	 */
 	public enum Column {
-		CHARACTER, CONTROLS
+		CHARACTER, CONTROLS, PLAY, BACK
+	}
+
+	/**
+	 * Ce que le jeu doit faire après une commande : rien, lancer la partie ou
+	 * quitter le salon. Le salon ne fait que décider ; c'est le jeu qui agit.
+	 */
+	public enum Outcome {
+		NONE, PLAY, BACK
 	}
 
 	/**
@@ -123,6 +137,27 @@ public class Lobby {
 		return activeColumn;
 	}
 
+	/** Le curseur est sur la ligne des boutons « jouer » / « retour » (la dernière). */
+	public boolean isOnButtons() {
+		ensureRows();
+		return activeRow == rows.size();
+	}
+
+	/** Les lignes des joueurs, plus celle des boutons. */
+	private int lineCount() {
+		return rows.size() + 1;
+	}
+
+	/**
+	 * Va sur une ligne : une ligne de fantôme se commence par le personnage (choix
+	 * en deux temps), la ligne des boutons par « jouer ».
+	 */
+	private void moveTo(int line) {
+		activeRow = Math.floorMod(line, lineCount());
+		activeColumn = isOnButtons() ? Column.PLAY : Column.CHARACTER;
+		keepCoxOnControls();
+	}
+
 	/** Revient sur la première ligne, celle de Cox (à l'ouverture du salon). */
 	public void resetCursor() {
 		activeRow = 0;
@@ -139,16 +174,18 @@ public class Lobby {
 		}
 	}
 
-	/** Applique une modification : la seule porte d'entrée du salon. */
-	public void apply(LobbyCommand command) {
+	/**
+	 * Applique une modification : la seule porte d'entrée du salon.
+	 *
+	 * @return ce que le jeu doit faire ensuite ({@link Outcome#NONE} le plus souvent)
+	 */
+	public Outcome apply(LobbyCommand command) {
 		ensureRows();
+		if (isOnButtons()) {
+			return applyOnButtons(command);
+		}
 		switch (command) {
-			case MoveRow move -> {
-				// une ligne de fantôme se commence par le personnage (choix en deux temps)
-				activeRow = Math.floorMod(activeRow + move.step(), rows.size());
-				activeColumn = Column.CHARACTER;
-				keepCoxOnControls();
-			}
+			case MoveRow move -> moveTo(activeRow + move.step());
 			case SwitchColumn switchColumn -> {
 				activeColumn = activeColumn == Column.CHARACTER ? Column.CONTROLS : Column.CHARACTER;
 				keepCoxOnControls();
@@ -167,6 +204,35 @@ public class Lobby {
 			case LobbyCommand.Back back -> back();
 			case Claim claim -> claim(claim.device());
 		}
+		return Outcome.NONE;
+	}
+
+	/**
+	 * Sur la ligne des boutons : gauche / droite passent d'un bouton à l'autre,
+	 * valider rend le bouton choisi (« jouer » seulement si le salon est prêt :
+	 * sinon le bouton est grisé et ne fait rien).
+	 */
+	private Outcome applyOnButtons(LobbyCommand command) {
+		switch (command) {
+			case MoveRow move -> moveTo(activeRow + move.step());
+			case SwitchColumn switchColumn -> toggleButton();
+			case ChangeValue change -> toggleButton();
+			case LobbyCommand.Confirm confirm -> {
+				if (activeColumn == Column.BACK) {
+					return Outcome.BACK;
+				}
+				return isReady() ? Outcome.PLAY : Outcome.NONE;
+			}
+			case Claim claim -> claim(claim.device());
+			default -> {
+				// changer un personnage, des commandes, annuler : rien sur les boutons
+			}
+		}
+		return Outcome.NONE;
+	}
+
+	private void toggleButton() {
+		activeColumn = activeColumn == Column.PLAY ? Column.BACK : Column.PLAY;
 	}
 
 	/** Remplace une ligne en gardant son état précédent, pour pouvoir l'annuler. */
@@ -178,16 +244,14 @@ public class Lobby {
 		}
 	}
 
-	/** Le personnage d'abord, puis les commandes, puis la ligne suivante. */
+	/** Le personnage d'abord, puis les commandes, puis la ligne suivante (après la dernière : « jouer »). */
 	private void confirm() {
 		var row = rows.get(activeRow);
 		if (activeColumn == Column.CHARACTER && !row.isEmpty()) {
 			activeColumn = Column.CONTROLS;
 		} else if (activeColumn == Column.CHARACTER || !row.waitingForPad()) {
 			// ligne sans joueur, ou commandes choisies : ligne suivante
-			activeRow = Math.floorMod(activeRow + 1, rows.size());
-			activeColumn = Column.CHARACTER;
-			keepCoxOnControls();
+			moveTo(activeRow + 1);
 		}
 		// commandes en attente d'une manette : c'est la manette qui appuie qui doit la prendre
 	}
@@ -323,7 +387,7 @@ public class Lobby {
 
 	/** Un appareil s'annonce : il prend la ligne active si elle attend, sinon la première qui attend. */
 	private void claim(InputSource device) {
-		var target = rows.get(activeRow).waitingForPad() ? activeRow : firstWaitingRow();
+		var target = !isOnButtons() && rows.get(activeRow).waitingForPad() ? activeRow : firstWaitingRow();
 		if (target < 0) {
 			return;
 		}

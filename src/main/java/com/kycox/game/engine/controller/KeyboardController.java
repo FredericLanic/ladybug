@@ -138,14 +138,15 @@ public class KeyboardController extends KeyAdapter {
 	/**
 	 * Le salon (20.3) : flèches (ou ZQSD, ou IJKL) haut / bas pour la ligne,
 	 * gauche / droite pour la valeur ; Espace valide l'étape (personnage, puis
-	 * commandes), Retour arrière revient en arrière ; Entrée lance la
-	 * partie (si le salon est prêt), Échap revient à la présentation. Chaque touche devient une commande du salon.
+	 * commandes, ou le bouton de la dernière ligne), Retour arrière revient en
+	 * arrière ; raccourcis : Entrée lance la partie (si le salon est prêt), Échap
+	 * revient à la présentation. Chaque touche devient une commande du salon.
 	 */
 	private void manageKeysInLobby(int keyCode) {
 		switch (keyCode) {
 			case KeyEvent.VK_ENTER -> gameModelForController.startFromLobby();
 			case KeyEvent.VK_ESCAPE -> gameModelForController.leaveLobby();
-			default -> lobbyCommandOf(keyCode).ifPresent(gameModelForController.getLobby()::apply);
+			default -> lobbyCommandOf(keyCode).ifPresent(gameModelForController::applyLobbyCommand);
 		}
 	}
 

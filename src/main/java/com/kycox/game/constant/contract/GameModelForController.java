@@ -58,6 +58,21 @@ public interface GameModelForController extends GameCommon {
 	/** Lance la partie si le salon est prêt (Cox a un joueur, chaque ligne a ses commandes). */
 	void startFromLobby();
 
+	/**
+	 * Envoie une commande au salon, puis fait ce qu'il demande (20.3 ter) : les
+	 * boutons « jouer » et « retour » lancent la partie ou ramènent à la
+	 * présentation. Le salon décide, le jeu agit.
+	 */
+	default void applyLobbyCommand(com.kycox.game.engine.model.LobbyCommand command) {
+		switch (getLobby().apply(command)) {
+			case PLAY -> startFromLobby();
+			case BACK -> leaveLobby();
+			case NONE -> {
+				// rien d'autre à faire
+			}
+		}
+	}
+
 
 
 	void startGame();

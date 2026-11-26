@@ -43,10 +43,62 @@ class LobbyTest {
 
 	@Test
 	void movingBetweenRowsWrapsAround() {
-		lobby.apply(new MoveRow(-1));
-		assertThat(lobby.activeRow()).isEqualTo(3);
+		lobby.apply(new MoveRow(-1)); // au-dessus de Cox : la ligne des boutons, la dernière
+		assertThat(lobby.activeRow()).isEqualTo(4);
+		assertThat(lobby.isOnButtons()).isTrue();
 		lobby.apply(new MoveRow(1));
 		assertThat(lobby.activeRow()).isZero();
+	}
+
+	@Test
+	void theButtonsLineStartsOnPlayAndLeftRightSwitchesButton() {
+		lobby.apply(new MoveRow(4));
+		assertThat(lobby.activeColumn()).isEqualTo(Column.PLAY);
+		lobby.apply(new ChangeValue(1));
+		assertThat(lobby.activeColumn()).isEqualTo(Column.BACK);
+		lobby.apply(new SwitchColumn());
+		assertThat(lobby.activeColumn()).isEqualTo(Column.PLAY);
+	}
+
+	@Test
+	void confirmingTheLastRowGoesToPlay() {
+		lobby.apply(new MoveRow(3)); // dernière ligne de joueur, vide
+		lobby.apply(new LobbyCommand.Confirm());
+		assertThat(lobby.isOnButtons()).isTrue();
+		assertThat(lobby.activeColumn()).isEqualTo(Column.PLAY);
+	}
+
+	@Test
+	void playIsGreyedUntilTheLobbyIsReady() {
+		lobby.setConnectedPads(java.util.Set.of(InputSource.XBOX_PAD_2));
+		lobby.apply(new MoveRow(1));
+		lobby.apply(new LobbyCommand.ChangeCharacter(1)); // Clyde, ZQSD
+		lobby.apply(new LobbyCommand.ChangeControls(-1)); // ZQSD -> (flèches de Cox) -> « appuie sur A »
+		assertThat(lobby.isReady()).isFalse();
+
+		lobby.apply(new MoveRow(3)); // les boutons, sur « jouer »
+		assertThat(lobby.apply(new LobbyCommand.Confirm())).as("jouer grisé").isEqualTo(Lobby.Outcome.NONE);
+		lobby.apply(new Claim(InputSource.XBOX_PAD_2)); // la manette prend la ligne qui attend
+		assertThat(lobby.apply(new LobbyCommand.Confirm())).isEqualTo(Lobby.Outcome.PLAY);
+	}
+
+	@Test
+	void theBackButtonAsksToLeave() {
+		lobby.apply(new MoveRow(-1));
+		lobby.apply(new SwitchColumn());
+		assertThat(lobby.apply(new LobbyCommand.Confirm())).isEqualTo(Lobby.Outcome.BACK);
+	}
+
+	@Test
+	void onTheButtonsNothingElseChanges() {
+		lobby.apply(new MoveRow(-1));
+		var before = lobby.rows();
+		lobby.apply(new LobbyCommand.ChangeCharacter(1));
+		lobby.apply(new LobbyCommand.ChangeControls(1));
+		lobby.apply(new LobbyCommand.Undo());
+		assertThat(lobby.apply(new LobbyCommand.Back())).isEqualTo(Lobby.Outcome.NONE);
+		assertThat(lobby.rows()).isEqualTo(before);
+		assertThat(lobby.isOnButtons()).isTrue();
 	}
 
 	@Test

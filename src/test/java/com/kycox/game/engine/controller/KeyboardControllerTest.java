@@ -106,6 +106,26 @@ class KeyboardControllerTest {
 		assertThat(game.model().getGroupGhosts().getHumanGhosts()).extracting(g -> g.getName()).containsExactly(chosen);
 	}
 
+	/** Les boutons du salon (20.3 ter) : au-dessus de Cox, « jouer », que valide Espace. */
+	@Test
+	void thePlayButtonStartsTheGame() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_UP); // au-dessus de Cox : la ligne des boutons, sur « jouer »
+		press(KeyEvent.VK_SPACE);
+		game.beat();
+		assertThat(game.status()).isNotEqualTo(GameStatus.PROGRAM_LOBBY);
+	}
+
+	@Test
+	void theBackButtonLeavesTheLobby() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_UP);
+		press(KeyEvent.VK_RIGHT); // « retour »
+		press(KeyEvent.VK_SPACE);
+		game.beat();
+		assertThat(game.status()).isNotEqualTo(GameStatus.PROGRAM_LOBBY);
+	}
+
 	@Test
 	void enterDoesNothingUntilTheLobbyIsReady() {
 		press(KeyEvent.VK_2);
