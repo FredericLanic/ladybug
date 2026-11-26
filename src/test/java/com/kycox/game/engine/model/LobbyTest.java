@@ -37,7 +37,7 @@ class LobbyTest {
 		assertThat(lobby.rows().get(0)).isEqualTo(new Lobby.Row(Lobby.LADYBUG, InputSource.KEYBOARD_ARROWS, false));
 		assertThat(lobby.rows().subList(1, 4)).allMatch(Lobby.Row::isEmpty);
 		assertThat(lobby.activeRow()).isZero();
-		assertThat(lobby.activeColumn()).isEqualTo(Column.CHARACTER);
+		assertThat(lobby.activeColumn()).as("Cox : seules ses commandes se choisissent").isEqualTo(Column.CONTROLS);
 		assertThat(lobby.isReady()).isTrue();
 	}
 
@@ -100,11 +100,9 @@ class LobbyTest {
 	@Test
 	void aPadAlreadyUsedMovesToTheWaitingRow() {
 		// Cox à la manette 1, puis la manette 1 réclame la ligne de Clyde : elle quitte Cox
-		lobby.apply(new SwitchColumn());
-		lobby.apply(new ChangeValue(-1)); // flèches -> « appuie sur A »
+		lobby.apply(new ChangeValue(-1)); // Cox (colonne commandes) : flèches -> « appuie sur A »
 		lobby.apply(new Claim(InputSource.XBOX_PAD_1));
-		lobby.apply(new MoveRow(1));
-		lobby.apply(new SwitchColumn()); // colonne personnage
+		lobby.apply(new MoveRow(1)); // ligne 2, colonne personnage
 		lobby.apply(new ChangeValue(1)); // Clyde, ZQSD
 		lobby.apply(new SwitchColumn());
 		lobby.apply(new ChangeValue(-1)); // « appuie sur A »
@@ -132,11 +130,21 @@ class LobbyTest {
 	}
 
 	@Test
-	void coxIsRequired() {
-		lobby.apply(new ChangeValue(1)); // Cox -> Clyde
-		assertThat(lobby.isReady()).isFalse();
-		lobby.apply(new ChangeValue(-1)); // Clyde -> Cox
-		assertThat(lobby.isReady()).isTrue();
+	void coxStaysOnTheFirstRowOnlyHisControlsChange() {
+		lobby.apply(new LobbyCommand.ChangeCharacter(1));
+		lobby.apply(new SwitchColumn());
+		lobby.apply(new ChangeValue(1)); // sur la ligne de Cox : les commandes
+		assertThat(lobby.rows().get(0)).isEqualTo(new Lobby.Row(Lobby.LADYBUG, InputSource.KEYBOARD_ZQSD, false));
+		assertThat(lobby.activeColumn()).isEqualTo(Column.CONTROLS);
+	}
+
+	@Test
+	void theOtherRowsOfferOnlyGhosts() {
+		lobby.apply(new MoveRow(1));
+		for (var i = 0; i < 6; i++) {
+			lobby.apply(new ChangeValue(1));
+			assertThat(lobby.rows().get(1).character()).isNotEqualTo(Lobby.LADYBUG);
+		}
 	}
 
 	@Test

@@ -34,7 +34,8 @@ import com.kycox.game.input.InputSource;
  *
  * <p>Les règles :
  * <ul>
- * <li>personnages : Cox (Ladybug) ou un fantôme ; Cox doit avoir un joueur ;</li>
+ * <li>la première ligne est toujours Cox (Ladybug), flèches par défaut : seules
+ * ses commandes se choisissent ; les autres lignes sont des fantômes ;</li>
  * <li>commandes : flèches, ZQSD, IJKL, manettes 1 à 4, ou « appuie sur A » : la
  * première manette sur laquelle on appuie sur A prend la ligne (C56) ;</li>
  * <li>un personnage et des commandes ne servent qu'à une ligne ;</li>
@@ -89,7 +90,8 @@ public class Lobby {
 	private int activeRow;
 	/** Les manettes branchées (aucune tant que le contrôleur n'en a pas signalé). */
 	private java.util.Set<InputSource> connectedPads = java.util.Set.of();
-	private Column activeColumn = Column.CHARACTER;
+	/** Au départ, la ligne de Cox : seules ses commandes se choisissent. */
+	private Column activeColumn = Column.CONTROLS;
 
 	/** Le salon du jeu : les fantômes sont ceux du XML, lus à chaque fois. */
 	@Autowired
@@ -121,19 +123,36 @@ public class Lobby {
 		return activeColumn;
 	}
 
-	/** Revient sur la première ligne, colonne « personnage » (à l'ouverture du salon). */
+	/** Revient sur la première ligne, celle de Cox (à l'ouverture du salon). */
 	public void resetCursor() {
 		activeRow = 0;
-		activeColumn = Column.CHARACTER;
+		keepCoxOnControls();
+	}
+
+	/**
+	 * La ligne de Cox (la première) a un personnage fixe : seule sa colonne
+	 * « commandes » se choisit (demande de Frédéric).
+	 */
+	private void keepCoxOnControls() {
+		if (activeRow == 0) {
+			activeColumn = Column.CONTROLS;
+		}
 	}
 
 	/** Applique une modification : la seule porte d'entrée du salon. */
 	public void apply(LobbyCommand command) {
 		ensureRows();
 		switch (command) {
-			case MoveRow move -> activeRow = Math.floorMod(activeRow + move.step(), rows.size());
-			case SwitchColumn switchColumn ->
+			case MoveRow move -> {
+				// une ligne de fantôme se commence par le personnage (choix en deux temps)
+				activeRow = Math.floorMod(activeRow + move.step(), rows.size());
+				activeColumn = Column.CHARACTER;
+				keepCoxOnControls();
+			}
+			case SwitchColumn switchColumn -> {
 				activeColumn = activeColumn == Column.CHARACTER ? Column.CONTROLS : Column.CHARACTER;
+				keepCoxOnControls();
+			}
 			case ChangeValue change -> {
 				if (activeColumn == Column.CHARACTER) {
 					changeCharacter(change.step());
@@ -168,12 +187,13 @@ public class Lobby {
 			// ligne sans joueur, ou commandes choisies : ligne suivante
 			activeRow = Math.floorMod(activeRow + 1, rows.size());
 			activeColumn = Column.CHARACTER;
+			keepCoxOnControls();
 		}
 		// commandes en attente d'une manette : c'est la manette qui appuie qui doit la prendre
 	}
 
 	private void back() {
-		if (activeColumn == Column.CONTROLS) {
+		if (activeColumn == Column.CONTROLS && activeRow != 0) {
 			activeColumn = Column.CHARACTER;
 		} else {
 			undo();
@@ -215,14 +235,17 @@ public class Lobby {
 		}
 		rows.forEach(row -> history.add(new java.util.ArrayDeque<>()));
 		activeRow = 0;
+		keepCoxOnControls();
 	}
 
 	private void changeCharacter(int step) {
+		if (activeRow == 0) {
+			return; // Cox, toujours sur la première ligne
+		}
 		var row = rows.get(activeRow);
 		var choices = new ArrayList<String>();
 		choices.add(null); // pas de joueur
-		choices.add(LADYBUG);
-		choices.addAll(ghostNames.get());
+		choices.addAll(ghostNames.get()); // les autres lignes : des fantômes
 		var index = choices.indexOf(row.character());
 		for (var tries = 1; tries < choices.size(); tries++) {
 			var candidate = choices.get(Math.floorMod(index + step * tries, choices.size()));

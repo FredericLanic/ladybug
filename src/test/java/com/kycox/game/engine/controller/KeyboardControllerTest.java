@@ -109,7 +109,13 @@ class KeyboardControllerTest {
 	@Test
 	void enterDoesNothingUntilTheLobbyIsReady() {
 		press(KeyEvent.VK_2);
-		press(KeyEvent.VK_RIGHT); // Cox -> un fantôme : plus de joueur Cox
+		// une ligne de fantôme attend sa manette (« appuie sur A ») : le salon n'est pas prêt
+		game.model().getLobby().setConnectedPads(java.util.Set.of(InputSource.XBOX_PAD_2));
+		press(KeyEvent.VK_DOWN); // ligne 2
+		press(KeyEvent.VK_RIGHT); // un fantôme, ZQSD
+		press(KeyEvent.VK_SPACE); // colonne « commandes »
+		press(KeyEvent.VK_LEFT); // ZQSD -> (flèches de Cox) -> « appuie sur A »
+		assertThat(game.model().getLobby().rows().get(1).waitingForPad()).isTrue();
 		press(KeyEvent.VK_ENTER);
 		game.beat();
 		assertThat(game.status()).isEqualTo(GameStatus.PROGRAM_LOBBY);
