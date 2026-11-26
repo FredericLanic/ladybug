@@ -87,14 +87,12 @@ public class PageEndView extends JPanel implements ApplicationListener<EventGame
 	}
 
 	private void setVariableToScoreView() {
-		snapshot.humanGhosts().stream().findFirst().ifPresent(ghost -> {
-			statusGameView.setGhostNbrLifes(ghost.leftLifes());
-			statusGameView.setImageGhostPlayer(ghostView.getImage(ghost));
-		});
+		statusGameView.setGhostPlayers(snapshot.humanGhosts().stream()
+		        .map(ghost -> new StatusGameView.PlayerLives(ghostView.getImage(ghost), ghost.leftLifes()))
+		        .toList());
 		statusGameView.setImageLadybugPlayer(ladybugView.getStaticView());
 		statusGameView.setInGame(snapshot.isInGame());
 		statusGameView.setLadybugNbrLifes(snapshot.ladybug().leftLifes());
-		statusGameView.setNbrPlayers(snapshot.nbrPlayers());
 		statusGameView.setScore(snapshot.score());
 		if (!simpleTimer.isRunning()) {
 			var newMessage = gameMessaging.get();
