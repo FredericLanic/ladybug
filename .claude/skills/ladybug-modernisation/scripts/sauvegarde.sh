@@ -13,7 +13,7 @@ CC="$HOME/.claude/projects/-Users-fredericlanic-Documents-perso-ladybug"
 T="$HOME/Documents/Claude/ladybug"
 
 mkdir -p "$T/plan" "$T/skill" "$T/memoire" "$T/dashboard" "$T/conversation"
-cp "$HOME/.claude/plans/linked-cooking-valley.md" "$T/plan/plan-modernisation.md"
+cat "$SKILL"/references/plan/*.md > "$T/plan/plan-modernisation.md"
 cp "$P/doc/plan-modernisation-ladybug.pdf" "$T/plan/"
 rsync -a --delete "$SKILL/" "$T/skill/"
 cp "$CC"/memory/*.md "$T/memoire/"

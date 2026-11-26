@@ -1,6 +1,7 @@
 ---
 name: context7-mcp
 description: This skill should be used when the user asks about libraries, frameworks, API references, or needs code examples. Activates for setup questions, code generation involving libraries, or mentions of specific frameworks like React, Vue, Next.js, Prisma, Supabase, etc.
+disable-model-invocation: true
 ---
 
 When the user asks about libraries, frameworks, or needs code examples, use Context7 to fetch current documentation instead of relying on training data.
