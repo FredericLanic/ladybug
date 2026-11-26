@@ -20,7 +20,8 @@ Le skill `ladybug-modernisation` donne l'état du chantier et où trouver le dé
 
 ## Choix du modèle (règle de Frédéric, 26/11/2026)
 Toujours le modèle **le moins cher qui fait bien la tâche** :
-- **Haiku** : recherche dans le code, lecture de logs, lancement des builds et des tests → déléguer aux sous-agents `explorateur` et `verificateur` (`.claude/agents/`), qui ne renvoient qu'un résumé court.
+- **Haiku** : déléguer aux sous-agents `explorateur` et `verificateur` (`.claude/agents/`) **seulement si la tâche produirait une longue sortie** (build complet, robot, exploration de plusieurs packages). Une recherche de 1 ou 2 `grep` ou un test ciblé se fait directement : un sous-agent démarre à vide et coûterait plus cher.
+- Ne jamais changer de modèle ni déléguer « pour voir » : chaque changement doit économiser des tokens.
 - **Sonnet** (modèle par défaut du projet) : refactoring, écriture de code et de tests, fiches de patterns, clôture.
 - **Opus** : seulement pour une conception difficile (architecture du réseau, perception, labyrinthe dynamique) ou un bug que Sonnet n'a pas résolu. Dans ce cas, proposer à Frédéric `/model opus` en une phrase, puis revenir à `/model sonnet` une fois la décision prise.
 
