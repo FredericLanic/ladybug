@@ -18,6 +18,12 @@ Le skill `ladybug-modernisation` donne l'état du chantier et où trouver le dé
 - Dashboard, pages, PDF et sauvegarde : **seulement** quand Frédéric lance `/ladybug-cloture`.
 - Graphify et Context7 : seulement sur demande, ou Context7 avant une montée de version.
 
+## Choix du modèle (règle de Frédéric, 26/11/2026)
+Toujours le modèle **le moins cher qui fait bien la tâche** :
+- **Haiku** : recherche dans le code, lecture de logs, lancement des builds et des tests → déléguer aux sous-agents `explorateur` et `verificateur` (`.claude/agents/`), qui ne renvoient qu'un résumé court.
+- **Sonnet** (modèle par défaut du projet) : refactoring, écriture de code et de tests, fiches de patterns, clôture.
+- **Opus** : seulement pour une conception difficile (architecture du réseau, perception, labyrinthe dynamique) ou un bug que Sonnet n'a pas résolu. Dans ce cas, proposer à Frédéric `/model opus` en une phrase, puis revenir à `/model sonnet` une fois la décision prise.
+
 ## Build
 - `export JAVA_HOME=$(/usr/libexec/java_home -v 21)` avant `mvn` (Java 25 par défaut casse Lombok).
 - Graphify : toujours `GRAPHIFY_BACKEND=none graphify …`.
