@@ -33,6 +33,7 @@ import java.util.Optional;
  * @param direction         direction du déplacement (pour le bandeau)
  * @param status            statut (normal, effrayé, mourant…)
  * @param computed          vrai si l'ordinateur le joue, faux pour un joueur humain
+ * @param leftLifes         vies restantes (affichées dans le bandeau pour un fantôme humain)
  * @param camouflage        vrai s'il est camouflé (touche F7)
  * @param dying             vrai s'il vient d'être mangé
  * @param toBeTeleported    vrai juste avant une téléportation
@@ -43,7 +44,7 @@ import java.util.Optional;
  *                          fuit, va au hasard ou est joué par un humain
  */
 public record GhostSnapshot(String name, GhostColor color, Position position, Position block, Position direction,
-        GhostStatus status, boolean computed, boolean camouflage, boolean dying, boolean toBeTeleported,
+        GhostStatus status, boolean computed, int leftLifes, boolean camouflage, boolean dying, boolean toBeTeleported,
         int speedIndex, MoveStyle moveStyle, int maximumAttackDist, Position target) {
 
 	/** La case visée, s'il y en a une. */

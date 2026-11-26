@@ -21,7 +21,6 @@ import com.kycox.game.constant.level.LevelRendering;
 import com.kycox.game.constant.sounds.Sounds;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Une photo figée de la partie, prise à la fin de chaque battement : tout ce
@@ -38,7 +37,6 @@ import java.util.Optional;
  * @param numLevel       numéro du niveau
  * @param score          score de la partie
  * @param nbrPlayers     1 (Ladybug) plus un par fantôme joué par un humain
- * @param ghostLeftLives vies du fantôme humain
  * @param ladybug        Ladybug
  * @param ghosts         les fantômes, dans l'ordre du groupe
  * @param maze           le labyrinthe
@@ -47,10 +45,9 @@ import java.util.Optional;
  * @param scoreMessages  messages de score affichés dans le labyrinthe
  * @param sounds         sons demandés pendant ce battement, dans l'ordre de l'énumération
  */
-public record GameSnapshot(GameStatus status, int numLevel, int score, int nbrPlayers, int ghostLeftLives,
-        LadybugSnapshot ladybug, List<GhostSnapshot> ghosts, MazeSnapshot maze, boolean litLampMode,
-        LevelRendering levelRendering, List<ScoreMessageSnapshot> scoreMessages, List<Sounds> sounds,
-        LobbySnapshot lobby) {
+public record GameSnapshot(GameStatus status, int numLevel, int score, int nbrPlayers, LadybugSnapshot ladybug,
+        List<GhostSnapshot> ghosts, MazeSnapshot maze, boolean litLampMode, LevelRendering levelRendering,
+        List<ScoreMessageSnapshot> scoreMessages, List<Sounds> sounds, LobbySnapshot lobby) {
 
 	public GameSnapshot {
 		ghosts = List.copyOf(ghosts);
@@ -58,9 +55,9 @@ public record GameSnapshot(GameStatus status, int numLevel, int score, int nbrPl
 		sounds = List.copyOf(sounds);
 	}
 
-	/** Le fantôme joué par un humain, s'il y en a un. */
-	public Optional<GhostSnapshot> humanGhost() {
-		return ghosts.stream().filter(ghost -> !ghost.computed()).findFirst();
+	/** Les fantômes joués par des humains, dans l'ordre du groupe (vide en solo). */
+	public List<GhostSnapshot> humanGhosts() {
+		return ghosts.stream().filter(ghost -> !ghost.computed()).toList();
 	}
 
 	/** Vrai pendant une partie (et non pendant la présentation ou un changement de niveau). */

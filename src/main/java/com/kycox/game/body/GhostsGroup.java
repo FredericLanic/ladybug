@@ -38,13 +38,6 @@ public class GhostsGroup {
 		return ghosts.stream().anyMatch(g -> g.getGhostActions().isEatLadybug());
 	}
 
-	public int getLeftLives() {
-		return ghosts.stream().filter(g -> !g.isComputed())
-		        .findFirst()
-		        .map(Ghost::getLeftLifes)
-		        .orElse(0);
-	}
-
 	public int getNbrEatenGhosts() {
 		return (int) ghosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).count();
 	}

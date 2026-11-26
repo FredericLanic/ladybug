@@ -27,8 +27,8 @@ public final class Snapshots {
 
 	/** Une partie en cours, avec cette Ladybug et ces fantômes ; labyrinthe vide. */
 	public static GameSnapshot inGame(LadybugSnapshot ladybug, List<GhostSnapshot> ghosts) {
-		return new GameSnapshot(GameStatus.IN_GAME, 1, 0, ghosts.stream().anyMatch(g -> !g.computed()) ? 2 : 1, 3,
-		        ladybug, ghosts, new MazeSnapshot(0, 0, 0, List.of()), false, LevelRendering.getDefaultLevelRendering(),
+		return new GameSnapshot(GameStatus.IN_GAME, 1, 0, ghosts.stream().anyMatch(g -> !g.computed()) ? 2 : 1, ladybug,
+		        ghosts, new MazeSnapshot(0, 0, 0, List.of()), false, LevelRendering.getDefaultLevelRendering(),
 		        List.of(), List.of(), LobbySnapshot.empty());
 	}
 
@@ -46,7 +46,7 @@ public final class Snapshots {
 
 	/** Un fantôme joué par un humain, sauf pour la téléportation et la mort. */
 	public static GhostSnapshot humanGhost(boolean toBeTeleported, boolean dying) {
-		return new GhostSnapshot("Blinky", GhostColor.RED, ORIGIN, ORIGIN, ORIGIN, GhostStatus.NORMAL, false, false,
-		        dying, toBeTeleported, 0, MoveStyle.MOVE_DEFAULT, 0, null);
+		return new GhostSnapshot("Blinky", GhostColor.RED, ORIGIN, ORIGIN, ORIGIN, GhostStatus.NORMAL, false, 3,
+		        false, dying, toBeTeleported, 0, MoveStyle.MOVE_DEFAULT, 0, null);
 	}
 }

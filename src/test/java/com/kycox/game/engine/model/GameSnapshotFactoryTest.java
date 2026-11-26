@@ -2,6 +2,7 @@ package com.kycox.game.engine.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
 
 import java.nio.file.Path;
 
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import com.kycox.game.constant.game.GameStatus;
+import com.kycox.game.snapshot.GhostSnapshot;
 import com.kycox.game.testutil.GameDriver;
 import com.kycox.game.tools.Position;
 
@@ -100,7 +102,7 @@ class GameSnapshotFactoryTest {
 	@DisplayName("en solo, aucun fantôme n'est joué par un humain")
 	void noHumanGhostInSoloMode() {
 		var snapshot = GameSnapshotFactory.of(game.model());
-		assertThat(snapshot.humanGhost()).isEmpty();
+		assertThat(snapshot.humanGhosts()).isEmpty();
 		assertThat(snapshot.nbrPlayers()).isEqualTo(1);
 	}
 
@@ -120,5 +122,20 @@ class GameSnapshotFactoryTest {
 		        new com.kycox.game.snapshot.LobbySnapshot.RowSnapshot(firstGhost, "KEYBOARD_ZQSD", false));
 		assertThat(snapshot.lobby().activeRow()).isEqualTo(1);
 		assertThat(snapshot.lobby().ready()).isTrue();
+	}
+
+	@Test
+	@DisplayName("la photo donne les vies de chaque fantôme joué par un humain, dans l'ordre du groupe")
+	void everyHumanGhostKeepsItsOwnLives() {
+		var group = game.model().getGroupGhosts();
+		var first = group.getGhosts().get(0);
+		var third = group.getGhosts().get(2);
+		group.setHumanPlayer(first);
+		group.setHumanPlayer(third);
+		first.setLeftLifes(2);
+		third.setLeftLifes(1);
+		var humans = GameSnapshotFactory.of(game.model()).humanGhosts();
+		assertThat(humans).extracting(GhostSnapshot::name, GhostSnapshot::leftLifes)
+		        .containsExactly(tuple(first.getName(), 2), tuple(third.getName(), 1));
 	}
 }

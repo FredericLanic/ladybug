@@ -45,7 +45,7 @@ public final class GameSnapshotFactory {
 		var status = model.getCurrentProgramStatus();
 		var levelState = model.getLevelState();
 		return new GameSnapshot(status.getGameStatus(), status.getNumLevel(), model.getGameScore().getScore(),
-		        model.getNbrPlayers(), model.getGhostLeftLives(),
+		        model.getNbrPlayers(),
 		        ladybugOf(model.getLadybug(), model.getLadybugDying().getAgonyDuration()),
 		        model.getGroupGhosts().getGhosts().stream().map(GameSnapshotFactory::ghostOf).toList(),
 		        mazeOf(model.getMaze()), levelState.isLitLampMode(), levelState.getLevelRendering(),
@@ -72,9 +72,9 @@ public final class GameSnapshotFactory {
 
 	static GhostSnapshot ghostOf(Ghost ghost) {
 		return new GhostSnapshot(ghost.getName(), ghost.getColor(), ghost.getPosition(), ghost.getPositionBlock(),
-		        ghost.getDirection(), ghost.getStatus(), ghost.isComputed(), ghost.isCamouflage(), ghost.isDying(),
-		        ghost.isToBeTeleported(), ghost.getSpeedIndex(), ghost.getMoveStyle(), ghost.getMaximumAttackDist(),
-		        ghost.getTarget());
+		        ghost.getDirection(), ghost.getStatus(), ghost.isComputed(), ghost.getLeftLifes(), ghost.isCamouflage(),
+		        ghost.isDying(), ghost.isToBeTeleported(), ghost.getSpeedIndex(), ghost.getMoveStyle(),
+		        ghost.getMaximumAttackDist(), ghost.getTarget());
 	}
 
 	/** La photo du labyrinthe seul (sert aussi aux tests du contour des murs). */
