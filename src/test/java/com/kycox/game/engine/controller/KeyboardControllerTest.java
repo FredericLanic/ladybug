@@ -104,6 +104,29 @@ class KeyboardControllerTest {
 		game.beat();
 		assertThat(game.status()).isNotEqualTo(GameStatus.PROGRAM_LOBBY);
 		assertThat(game.model().getGroupGhosts().getHumanGhosts()).extracting(g -> g.getName()).containsExactly(chosen);
+		// 20.4 : chaque groupe de touches pilote le personnage choisi dans le salon
+		assertThat(game.inputs().characterOf(InputSource.KEYBOARD_ARROWS)).contains("Ladybug");
+		assertThat(game.inputs().characterOf(InputSource.KEYBOARD_IJKL)).contains(chosen);
+		assertThat(game.inputs().characterOf(InputSource.KEYBOARD_ZQSD)).isEmpty();
+	}
+
+	/** 20.4 : Cox en ZQSD dans le salon ; en jeu, les flèches ne font plus rien, Q la fait aller à gauche. */
+	@Test
+	void ladybugFollowsTheKeysChosenInTheLobby() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_RIGHT); // Cox : flèches -> ZQSD
+		press(KeyEvent.VK_ENTER);
+		game.beatsUntil(GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL, 10);
+		press(KeyEvent.VK_N);
+		game.beatsUntil(GameStatus.IN_GAME, 500);
+
+		press(KeyEvent.VK_LEFT);
+		assertThat(game.inputs().ladybug().hasRequest()).as("les flèches ne pilotent plus Cox").isFalse();
+		var start = game.model().getLadybug().getPositionBlock();
+		press(KeyEvent.VK_Q);
+		game.beats(30);
+		assertThat(game.model().getLadybug().getPositionBlock().x()).isLessThan(start.x());
+		assertThat(game.inputs().ladybug().lastSource()).contains(InputSource.KEYBOARD_ZQSD);
 	}
 
 	/** Les boutons du salon (20.3 ter) : au-dessus de Cox, « jouer », que valide Espace. */

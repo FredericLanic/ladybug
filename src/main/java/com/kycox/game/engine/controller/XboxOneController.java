@@ -14,7 +14,6 @@ import com.kycox.game.input.InputSource;
 import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.preferences.LocalPreferences;
 import com.kycox.game.snapshot.GameSnapshot;
-import com.kycox.game.snapshot.GhostSnapshot;
 import org.springframework.context.ApplicationListener;
 import com.kycox.game.launcher.GuiComponent;
 
@@ -59,20 +58,38 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		this.xboxOneUnComputedGhost = xboxOneUnComputedGhost;
 	}
 
-	/** Vibrations lues dans la photo de la partie (4.6), et non dans le modèle. */
+	/**
+	 * Vibrations lues dans la photo de la partie (4.6), et non dans le modèle. Chaque
+	 * manette vibre pour le personnage qu'elle pilote (table du salon, 20.4).
+	 */
 	private void doVibrationsInGame(GameSnapshot snapshot) {
-		if (snapshot.ladybug().eatenAMegaPoint()) {
-			padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 100);
+		doVibrationsInGame(snapshot, InputSource.XBOX_PAD_1, XboxOneConstants.LADYBUG_XBOXONE_INDEX);
+		doVibrationsInGame(snapshot, InputSource.XBOX_PAD_2, XboxOneConstants.GHOST_XBOXONE_INDEX);
+	}
+
+	private void doVibrationsInGame(GameSnapshot snapshot, InputSource device, int padIndex) {
+		var character = playerInputs.characterOf(device);
+		if (character.isEmpty()) {
+			return;
 		}
-		if (snapshot.ladybug().toBeTeleported()) {
-			padManager.vibrate(XboxOneConstants.LADYBUG_XBOXONE_INDEX, 0f, 0.5f, 50);
+		if (PlayerInputs.LADYBUG.equals(character.get())) {
+			if (snapshot.ladybug().eatenAMegaPoint()) {
+				padManager.vibrate(padIndex, 0f, 0.5f, 100);
+			}
+			if (snapshot.ladybug().toBeTeleported()) {
+				padManager.vibrate(padIndex, 0f, 0.5f, 50);
+			}
+			return;
 		}
-		snapshot.humanGhost()
-				.filter(GhostSnapshot::toBeTeleported)
-				.ifPresent(ghost -> padManager.vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 50));
-		snapshot.humanGhost()
-				.filter(GhostSnapshot::dying)
-				.ifPresent(ghost -> padManager.vibrate(XboxOneConstants.GHOST_XBOXONE_INDEX, 0f, 0.5f, 100));
+		snapshot.ghosts().stream().filter(ghost -> ghost.name().equals(character.get()) && !ghost.computed())
+		        .findFirst().ifPresent(ghost -> {
+			        if (ghost.toBeTeleported()) {
+				        padManager.vibrate(padIndex, 0f, 0.5f, 50);
+			        }
+			        if (ghost.dying()) {
+				        padManager.vibrate(padIndex, 0f, 0.5f, 100);
+			        }
+		        });
 	}
 
 	private boolean isOneXboxOneConnected() {
@@ -141,40 +158,28 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		        .setShowHelpForXboxes(xboxOneLadybug.isBackButton() || xboxOneUnComputedGhost.isBackButton());
 	}
 
-	private void manageLadybugXboxOneInGame() {
-		if (!xboxOneLadybug.isConnected()) {
+	/**
+	 * Les déplacements d'une manette (les deux sticks), envoyés au personnage
+	 * qu'elle pilote d'après la table du salon (20.4).
+	 */
+	private void managePadInGame(XboxRequest pad, InputSource device) {
+		if (!pad.isConnected()) {
 			return;
 		}
-		if (xboxOneLadybug.isRightLeftStick() || xboxOneLadybug.isRightRightStick()) {
-			playerInputs.ladybug().request(GameMainConstants.POINT_RIGHT, InputSource.XBOX_PAD_1);
-		}
-		if (xboxOneLadybug.isLeftLeftStick() || xboxOneLadybug.isLeftRightStick()	) {
-			playerInputs.ladybug().request(GameMainConstants.POINT_LEFT, InputSource.XBOX_PAD_1);
-		}
-		if (xboxOneLadybug.isUpLeftStick() || xboxOneLadybug.isUpRightStick()) {
-			playerInputs.ladybug().request(GameMainConstants.POINT_UP, InputSource.XBOX_PAD_1);
-		}
-		if (xboxOneLadybug.isDownLeftStick() || xboxOneLadybug.isDownRightStick()) {
-			playerInputs.ladybug().request(GameMainConstants.POINT_DOWN, InputSource.XBOX_PAD_1);
-		}
-	}
-
-	private void manageUnComputedGhostXboxOneInGame() {
-		if (!xboxOneUnComputedGhost.isConnected()) {
-			return;
-		}
-		if (xboxOneUnComputedGhost.isRightRightStick() || xboxOneUnComputedGhost.isRightLeftStick()) {
-			playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_RIGHT, InputSource.XBOX_PAD_2));
-		}
-		if (xboxOneUnComputedGhost.isLeftRightStick() || xboxOneUnComputedGhost.isLeftLeftStick()) {
-			playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_LEFT, InputSource.XBOX_PAD_2));
-		}
-		if (xboxOneUnComputedGhost.isUpRightStick() || xboxOneUnComputedGhost.isUpLeftStick()) {
-			playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_UP, InputSource.XBOX_PAD_2));
-		}
-		if (xboxOneUnComputedGhost.isDownRightStick() || xboxOneUnComputedGhost.isDownLeftStick()) {
-			playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_DOWN, InputSource.XBOX_PAD_2));
-		}
+		playerInputs.of(device).ifPresent(input -> {
+			if (pad.isRightLeftStick() || pad.isRightRightStick()) {
+				input.request(GameMainConstants.POINT_RIGHT, device);
+			}
+			if (pad.isLeftLeftStick() || pad.isLeftRightStick()) {
+				input.request(GameMainConstants.POINT_LEFT, device);
+			}
+			if (pad.isUpLeftStick() || pad.isUpRightStick()) {
+				input.request(GameMainConstants.POINT_UP, device);
+			}
+			if (pad.isDownLeftStick() || pad.isDownRightStick()) {
+				input.request(GameMainConstants.POINT_DOWN, device);
+			}
+		});
 	}
 
 	/**
@@ -202,8 +207,8 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 			manageBothXboxesOneInAskKeepPreviousGameLevel();
 		} else if (gameModelForController.isInGame()) {
 			manageBothXboxesOneInGame();
-			manageLadybugXboxOneInGame();
-			manageUnComputedGhostXboxOneInGame();
+			managePadInGame(xboxOneLadybug, InputSource.XBOX_PAD_1);
+			managePadInGame(xboxOneUnComputedGhost, InputSource.XBOX_PAD_2);
 			doVibrationsInGame(snapshot);
 		} else if(gameModelForController.isGameAskForceEndGame()) {
 			manageBothXboxesOneInAskForceEndGame();

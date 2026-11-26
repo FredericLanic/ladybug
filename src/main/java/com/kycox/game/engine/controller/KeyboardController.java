@@ -104,16 +104,19 @@ public class KeyboardController extends KeyAdapter {
 
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
-			// Mouvement L
-			case KeyEvent.VK_LEFT -> playerInputs.ladybug().request(GameMainConstants.POINT_LEFT, InputSource.KEYBOARD_ARROWS);
-			case KeyEvent.VK_RIGHT -> playerInputs.ladybug().request(GameMainConstants.POINT_RIGHT, InputSource.KEYBOARD_ARROWS);
-			case KeyEvent.VK_UP -> playerInputs.ladybug().request(GameMainConstants.POINT_UP, InputSource.KEYBOARD_ARROWS);
-			case KeyEvent.VK_DOWN -> playerInputs.ladybug().request(GameMainConstants.POINT_DOWN, InputSource.KEYBOARD_ARROWS);
-			// Mouvement du fantôme (joueur 2)
-			case KeyEvent.VK_Z -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_UP, InputSource.KEYBOARD_ZQSD));
-			case KeyEvent.VK_S -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_DOWN, InputSource.KEYBOARD_ZQSD));
-			case KeyEvent.VK_Q -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_LEFT, InputSource.KEYBOARD_ZQSD));
-			case KeyEvent.VK_D -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_RIGHT, InputSource.KEYBOARD_ZQSD));
+			// déplacements : chaque groupe de touches pilote le personnage que lui donne la table (20.4)
+			case KeyEvent.VK_UP -> move(InputSource.KEYBOARD_ARROWS, GameMainConstants.POINT_UP);
+			case KeyEvent.VK_DOWN -> move(InputSource.KEYBOARD_ARROWS, GameMainConstants.POINT_DOWN);
+			case KeyEvent.VK_LEFT -> move(InputSource.KEYBOARD_ARROWS, GameMainConstants.POINT_LEFT);
+			case KeyEvent.VK_RIGHT -> move(InputSource.KEYBOARD_ARROWS, GameMainConstants.POINT_RIGHT);
+			case KeyEvent.VK_Z -> move(InputSource.KEYBOARD_ZQSD, GameMainConstants.POINT_UP);
+			case KeyEvent.VK_S -> move(InputSource.KEYBOARD_ZQSD, GameMainConstants.POINT_DOWN);
+			case KeyEvent.VK_Q -> move(InputSource.KEYBOARD_ZQSD, GameMainConstants.POINT_LEFT);
+			case KeyEvent.VK_D -> move(InputSource.KEYBOARD_ZQSD, GameMainConstants.POINT_RIGHT);
+			case KeyEvent.VK_I -> move(InputSource.KEYBOARD_IJKL, GameMainConstants.POINT_UP);
+			case KeyEvent.VK_K -> move(InputSource.KEYBOARD_IJKL, GameMainConstants.POINT_DOWN);
+			case KeyEvent.VK_J -> move(InputSource.KEYBOARD_IJKL, GameMainConstants.POINT_LEFT);
+			case KeyEvent.VK_L -> move(InputSource.KEYBOARD_IJKL, GameMainConstants.POINT_RIGHT);
 			// Partie en pause
 			// P en plus de Pause : la touche Pause n'existe pas sur un clavier Mac (C33)
 			case KeyEvent.VK_PAUSE, KeyEvent.VK_P -> gameModelForController.setGameInPause();
@@ -122,6 +125,11 @@ public class KeyboardController extends KeyAdapter {
 			// Mode lampe allumée
 			case KeyEvent.VK_F6 -> gameModelForController.changeLitLampMode();
 		}
+	}
+
+	/** Un déplacement, envoyé au personnage que pilote ce groupe de touches (s'il en pilote un). */
+	private void move(InputSource keys, com.kycox.game.tools.Position direction) {
+		playerInputs.of(keys).ifPresent(input -> input.request(direction, keys));
 	}
 
 	private void manageKeysInPresentation(int keyCode) {

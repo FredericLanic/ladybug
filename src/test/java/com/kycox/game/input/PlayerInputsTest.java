@@ -55,4 +55,32 @@ class PlayerInputsTest {
 		ghosts.setHumanPlayer(pinky);
 		assertThat(pinky.getPlayerInput().hasRequest()).isFalse();
 	}
+
+	@Test
+	@DisplayName("sans table du salon : flèches et manette 1 pour Ladybug, ZQSD et manette 2 pour le fantôme humain")
+	void withoutTableTheDefaultRouting() {
+		ghosts.setHumanPlayer(pinky);
+		assertThat(inputs.characterOf(InputSource.KEYBOARD_ARROWS)).contains(PlayerInputs.LADYBUG);
+		assertThat(inputs.characterOf(InputSource.XBOX_PAD_1)).contains(PlayerInputs.LADYBUG);
+		assertThat(inputs.of(InputSource.KEYBOARD_ZQSD)).containsSame(pinky.getPlayerInput());
+		assertThat(inputs.of(InputSource.XBOX_PAD_2)).containsSame(pinky.getPlayerInput());
+		assertThat(inputs.of(InputSource.KEYBOARD_IJKL)).isEmpty();
+	}
+
+	@Test
+	@DisplayName("avec la table du salon, chaque appareil pilote le personnage choisi, les autres rien")
+	void theLobbyTableRoutesEachDevice() {
+		ghosts.setHumanPlayer(blinky);
+		ghosts.setHumanPlayer(pinky);
+		inputs.assign(java.util.Map.of(InputSource.XBOX_PAD_2, PlayerInputs.LADYBUG, InputSource.KEYBOARD_IJKL,
+		        blinky.getName(), InputSource.KEYBOARD_ARROWS, pinky.getName()));
+		assertThat(inputs.characterOf(InputSource.XBOX_PAD_2)).contains(PlayerInputs.LADYBUG);
+		assertThat(inputs.of(InputSource.KEYBOARD_IJKL)).containsSame(blinky.getPlayerInput());
+		assertThat(inputs.of(InputSource.KEYBOARD_ARROWS)).containsSame(pinky.getPlayerInput());
+		assertThat(inputs.of(InputSource.XBOX_PAD_1)).as("appareil hors de la table").isEmpty();
+		assertThat(inputs.of(InputSource.KEYBOARD_ZQSD)).isEmpty();
+
+		inputs.useDefaultAssignments();
+		assertThat(inputs.characterOf(InputSource.KEYBOARD_ARROWS)).contains(PlayerInputs.LADYBUG);
+	}
 }

@@ -20,21 +20,65 @@ import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ladybug.Ladybug;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * Où trouver la boîte aux lettres de chaque joueur (étape 5). Les contrôleurs
  * (clavier, manette) et les tests passent par ici pour donner leurs ordres,
  * sans connaître le modèle du jeu.
+ *
+ * <p>Depuis 20.4, une <b>table de routage</b> « appareil → personnage » dit à
+ * qui va chaque appareil : le salon la remplit au lancement d'une partie à
+ * plusieurs ({@link #assign}). Sans table (solo, ou ancien mode deux joueurs),
+ * la répartition d'avant reste : flèches et manette 1 pour Ladybug, ZQSD et
+ * manette 2 pour le fantôme humain.
  */
 @Component
 public class PlayerInputs {
+	/** Le nom de Ladybug dans la table (les fantômes y sont par leur nom du XML). */
+	public static final String LADYBUG = "Ladybug";
+
 	private final Ladybug ladybug;
 	private final GhostsGroup ghostsGroup;
+	/** La table remplie par le salon ; vide : répartition par défaut. */
+	private Map<InputSource, String> assignments = Map.of();
 
 	public PlayerInputs(Ladybug ladybug, GhostsGroup ghostsGroup) {
 		this.ladybug = ladybug;
 		this.ghostsGroup = ghostsGroup;
+	}
+
+	/** La table du salon : chaque appareil pilote ce personnage, les autres ne pilotent rien. */
+	public void assign(Map<InputSource, String> table) {
+		assignments = Map.copyOf(table);
+	}
+
+	/** Retour à la répartition par défaut (solo, ou ancien mode deux joueurs). */
+	public void useDefaultAssignments() {
+		assignments = Map.of();
+	}
+
+	/**
+	 * Le personnage piloté par cet appareil ({@link #LADYBUG} ou le nom d'un
+	 * fantôme), s'il en pilote un.
+	 */
+	public Optional<String> characterOf(InputSource device) {
+		if (assignments.isEmpty()) {
+			return switch (device) {
+				case KEYBOARD_ARROWS, XBOX_PAD_1 -> Optional.of(LADYBUG);
+				case KEYBOARD_ZQSD, XBOX_PAD_2 -> ghostsGroup.getHumanGhosts().stream().findFirst()
+				        .map(ghost -> ghost.getName());
+				default -> Optional.empty();
+			};
+		}
+		return Optional.ofNullable(assignments.get(device));
+	}
+
+	/** La boîte aux lettres du personnage piloté par cet appareil, s'il en pilote un. */
+	public Optional<PlayerInput> of(InputSource device) {
+		return characterOf(device).flatMap(character -> LADYBUG.equals(character) ? Optional.of(ladybug())
+		        : ghost(character));
 	}
 
 	/** Les ordres donnés à Ladybug. */

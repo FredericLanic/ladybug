@@ -49,7 +49,7 @@ import com.kycox.game.input.InputSource;
 @Component
 public class Lobby {
 	/** Le nom de Ladybug parmi les personnages. */
-	public static final String LADYBUG = "Ladybug";
+	public static final String LADYBUG = com.kycox.game.input.PlayerInputs.LADYBUG;
 	/** Au plus 3 fantômes joués par des humains (C52). */
 	static final int MAX_HUMAN_GHOSTS = 3;
 	/** Les commandes possibles, dans l'ordre de la liste ; {@code null} : « appuie sur A ». */

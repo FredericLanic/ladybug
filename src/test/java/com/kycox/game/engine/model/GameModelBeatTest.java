@@ -62,7 +62,8 @@ class GameModelBeatTest {
 		        mock(Score.class), mock(GhostsGroup.class), groupMessages, mock(Ladybug.class),
 		        mock(LadybugDying.class), mock(NewSounds.class), mock(Maze.class), mock(LevelState.class), manageActionContext,
 		        publisher, tickScheduler, superPowerTimer, mock(com.kycox.game.engine.sound.SoundDurations.class),
-		        new Lobby(java.util.List::of)); // un vrai salon, sans fantôme : il répond toujours
+		        new Lobby(java.util.List::of), // un vrai salon, sans fantôme : il répond toujours
+		        mock(com.kycox.game.input.PlayerInputs.class));
 	}
 
 	@Test

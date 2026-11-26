@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.model;
 
+import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.tools.Position;
 import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ghost.Ghost;
@@ -86,6 +87,8 @@ public class GameModel implements GameModelForController {
 	/** Le salon : qui joue quel fantôme avant une partie à plusieurs (20.2). */
 	@Getter
 	private final Lobby lobby;
+	/** Les boîtes aux lettres des joueurs : le salon y dépose sa table « appareil → personnage » (20.4). */
+	private final PlayerInputs playerInputs;
 	/** Durée de la fin de partie, avant le retour à l'écran de présentation. */
 	private static final long TIME_ENDING_MILLISECONDS = 1500;
 
@@ -105,7 +108,8 @@ public class GameModel implements GameModelForController {
 					 TickScheduler tickScheduler,
 					 SuperPowerTimer superPowerTimer,
 					 SoundDurations soundDurations,
-					 Lobby lobby
+					 Lobby lobby,
+					 PlayerInputs playerInputs
 	) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
@@ -125,6 +129,7 @@ public class GameModel implements GameModelForController {
 		this.superPowerTimer = superPowerTimer;
 		this.soundDurations = soundDurations;
 		this.lobby = lobby;
+		this.playerInputs = playerInputs;
 	}
 
 	@PostConstruct
@@ -256,6 +261,7 @@ public class GameModel implements GameModelForController {
 	@Override
 	public void setMultiPlayers(boolean isMuliPlayers) {
 		groupGhosts.setAllComputed();
+		playerInputs.useDefaultAssignments(); // flèches et manette 1 pour Ladybug, ZQSD et manette 2 pour le fantôme
 		if (isMuliPlayers) {
 			// même tirage qu'avant 4.2 (une couleur parmi quatre, dans le même ordre) :
 			// les parties rejouées avec une même graine restent identiques ; depuis 5.4,
@@ -284,8 +290,8 @@ public class GameModel implements GameModelForController {
 	/**
 	 * Lance la partie choisie dans le salon (20.3) : les fantômes pris par un joueur
 	 * deviennent humains, les autres restent à l'ordinateur ; ensuite, même suite
-	 * qu'avec S (« reprendre l'ancien niveau ? »). L'orientation de chaque appareil
-	 * vers son personnage vient en 20.4.
+	 * qu'avec S (« reprendre l'ancien niveau ? »). Chaque appareil choisi pilote
+	 * son personnage (20.4) : le salon donne sa table aux boîtes aux lettres.
 	 */
 	@Override
 	public void startFromLobby() {
@@ -296,6 +302,7 @@ public class GameModel implements GameModelForController {
 		lobby.rows().stream().filter(row -> row.isComplete() && !row.isLadybug())
 		        .forEach(row -> groupGhosts.getGhosts().stream().filter(g -> g.getName().equals(row.character()))
 		                .findFirst().ifPresent(groupGhosts::setHumanPlayer));
+		playerInputs.assign(lobby.assignments());
 		startGame();
 	}
 

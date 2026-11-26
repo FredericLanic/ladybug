@@ -59,6 +59,7 @@ class XboxOneControllerTest {
 		when(ladybug.getPlayerInput()).thenReturn(ladybugInput);
 		var humanGhost = mock(Blinky.class);
 		when(humanGhost.getPlayerInput()).thenReturn(ghostInput);
+		when(humanGhost.getName()).thenReturn("Blinky"); // la table du salon trouve les fantômes par leur nom (20.4)
 		when(ghostsGroup.getHumanGhosts()).thenReturn(List.of(humanGhost));
 		controller = new XboxOneController(padManager, messaging, properties, preferences,
 		        new PlayerInputs(ladybug, ghostsGroup), ladybugPad, ghostPad);
