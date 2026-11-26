@@ -1,0 +1,13 @@
+## Étape 1 : remettre le socle d'aplomb
+1.1 Faire passer le build (`mvn compile`) **via Maven Central**, avec un réglage propre au projet, sans toucher à `~/.m2/settings.xml` (décidé le 18/11/2026 ; le Nexus local n'est pas relancé).
+1.2 Mettre à jour `pom.xml` :
+- Java 21 (LTS), décidé le 18/11/2026 (Java 25 éventuellement à l'étape 8) ;
+- Spring Boot 3.5.x ;
+- Lombok récent ;
+- `spring-boot-starter-web` remplacé par `spring-boot-starter` ;
+- suppression du dépôt jcenter.
+
+1.3 Rendre la manette optionnelle : `XBoxOneControllerManager` attrape l'échec du chargement natif, écrit un avertissement dans les logs et désactive la manette. Le jeu démarre au clavier.
+1.4 CI : JDK 21, actions GitHub en v4, `::set-output` remplacé par `$GITHUB_OUTPUT`. **Nouvelle CI `build.yml`** (décidée le 18/11/2026) : `mvn verify` à chaque PR et à chaque push sur `develop`.
+1.5 Publication d'une version (`maven-release.yml`), revue en avance le 20/11/2026 (branche `etape-1-release`, commit `54b13cd`, numéroté « 1.6 » par erreur). L'ancien workflow aurait échoué : pas de `<scm>` dans le pom de `develop`, pas de destination Maven, versions incohérentes (`develop` en 0.6.0-SNAPSHOT, `ladybug-0.7.0` déjà publiée depuis `master`). Décisions : **pas de dépôt Maven** (GitHub Packages), seulement une GitHub Release avec le jar (C39) ; **publication depuis `master`** après une PR `develop` → `master` (C40) ; **tags `vX.Y.Z`** (C41) ; **prochaine version 0.8.0**, pom en `0.8.0-SNAPSHOT` (C42). Workflow : `release:prepare` seul (plugin 3.3.1), garde-fous (vraie publication sur `master` uniquement, numéros vérifiés), « essai à blanc » coché par défaut, jar reconstruit depuis le tag, `action-gh-release@v2`, `permissions: contents: write`. Mode d'emploi dans le README (« Publier une version »). Essais à blanc réussis en local et sur GitHub (175 tests, tag simulé `v0.8.0`). Restent à vérifier à la première vraie publication : le push des commits et du tag, la Release.
+1.6 Dépôt GitHub rangé (20/11/2026, C43) : branches `SCS` et `macos` archivées en tags (`archive/SCS`, `archive/macos`), 7 anciennes branches supprimées (restent `develop` et `master`) ; merge commit seul, suppression automatique des branches fusionnées ; **`develop` protégée** (ruleset : PR obligatoire, Build vert sur les 3 systèmes, ni suppression ni force push ; `master` libre pour le workflow de release). Sécurité : 87 alertes Dependabot, presque toutes sur l'ancien pom de `master` (Tomcat, Jackson, Spring Web, absents de `develop`) ; seule réelle : log4j-api 2.24.3 → **2.25.5** forcé dans le pom (branche `etape-1-log4j`). Mises à jour automatiques Dependabot reportées à l'étape 8.

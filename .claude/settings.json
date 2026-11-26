@@ -1,0 +1,18 @@
+{
+  "model": "sonnet",
+  "permissions": {
+    "deny": [
+      "Read(./releases/**)",
+      "Read(./lib/**)",
+      "Read(./target/**)",
+      "Read(./graphify-out/**)",
+      "Read(./doc/**/*.png)",
+      "Read(./doc/**/*.jpg)",
+      "Read(./doc/*.pdf)",
+      "Read(./doc/*.odt)",
+      "Read(./doc/*.ods)",
+      "Read(./*.jpg)",
+      "Read(./.claude/skills/ladybug-modernisation/references/plan-pdf.html)"
+    ]
+  }
+}
