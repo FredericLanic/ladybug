@@ -181,10 +181,27 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		if (!pads.get(padIndex).isHasBeenDisConnected()) {
 			return;
 		}
-		playerInputs.characterOf(PAD_DEVICES.get(padIndex)).ifPresent(character -> {
+		var device = PAD_DEVICES.get(padIndex);
+		playerInputs.characterOf(device).filter(character -> !playerInputs.hasOtherDevice(character, device))
+		        .ifPresent(character -> {
+			playerInputs.waitFor(character, device, System.currentTimeMillis());
 			gameModelForController.pauseGame();
 			gameMessaging.addPadLost(padIndex + 1, character);
 		});
+	}
+
+	/** C57 : pendant l'attente, la manette qui agit (libre, ou la perdue rebranchée) prend le personnage. */
+	private void resumeIfPadActs(int padIndex) {
+		var pad = pads.get(padIndex);
+		if (pad.isConnected() && hasActivity(pad) && playerInputs.resume(PAD_DEVICES.get(padIndex))) {
+			gameModelForController.resumeGame();
+		}
+	}
+
+	private static boolean hasActivity(XboxRequest pad) {
+		return pad.isAButton() || pad.isBButton() || pad.isXButton() || pad.isYButton() || pad.isStart()
+		        || pad.isRightLeftStick() || pad.isRightRightStick() || pad.isUpRightStick() || pad.isDownRightStick()
+		        || pad.isLeftLeftStick() || pad.isLeftRightStick() || pad.isUpLeftStick() || pad.isDownLeftStick();
 	}
 
 	/**
@@ -239,6 +256,7 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 			manageBothXboxesOneInGame();
 			for (var i = 0; i < pads.size(); i++) {
 				pauseIfPadLost(i);
+				resumeIfPadActs(i);
 				managePadInGame(pads.get(i), PAD_DEVICES.get(i));
 			}
 			doVibrationsInGame(snapshot);

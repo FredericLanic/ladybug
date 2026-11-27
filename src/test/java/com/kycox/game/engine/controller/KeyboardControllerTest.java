@@ -278,4 +278,14 @@ class KeyboardControllerTest {
 		press(KeyEvent.VK_ENTER);
 		assertThat(preferences().isDebugMode()).isNotEqualTo(before);
 	}
+
+	@Test
+	void aFreeKeyGroupTakesTheCharacterWaitingForItsPad() {
+		startLevelOne();
+		game.inputs().assign(java.util.Map.of(InputSource.XBOX_PAD_1, "Ladybug"));
+		game.inputs().waitFor("Ladybug", InputSource.XBOX_PAD_1, 0); // C57 : sa manette est perdue
+		press(KeyEvent.VK_UP); // les flèches sont libres : elles reprennent Ladybug
+		assertThat(game.inputs().waiting()).isEmpty();
+		assertThat(game.inputs().characterOf(InputSource.KEYBOARD_ARROWS)).contains("Ladybug");
+	}
 }

@@ -51,6 +51,7 @@ class XboxOneControllerTest {
 	/** La boîte aux lettres du fantôme humain (5.2) : la manette 2 y écrit directement. */
 	private final PlayerInput ghostInput = new PlayerInput(() -> "Blinky");
 	private final GhostsGroup ghostsGroup = mock(GhostsGroup.class);
+	private final PlayerInputs playerInputs = new PlayerInputs(ladybug, ghostsGroup);
 	private XboxOneController controller;
 	/** La photo de la partie que reçoit la manette (4.6) : rien de spécial par défaut. */
 	private GameSnapshot snapshot = Snapshots.inGame(Snapshots.ladybug(false, false), List.of());
@@ -63,7 +64,7 @@ class XboxOneControllerTest {
 		when(humanGhost.getName()).thenReturn("Blinky"); // la table du salon trouve les fantômes par leur nom (20.4)
 		when(ghostsGroup.getHumanGhosts()).thenReturn(List.of(humanGhost));
 		controller = new XboxOneController(padManager, messaging, properties, preferences,
-		        new PlayerInputs(ladybug, ghostsGroup), ladybugPad, ghostPad);
+		        playerInputs, ladybugPad, ghostPad);
 		when(model.getLadybug()).thenReturn(ladybug);
 		when(model.getUnComputedGhost()).thenReturn(Optional.empty());
 		// comme au démarrage du jeu : les manettes sont lues une première fois au repos ;
@@ -360,6 +361,8 @@ class XboxOneControllerTest {
 
 	@Test
 	void aLostPadThatDrivesACharacterPausesTheGame() {
+		playerInputs.assign(java.util.Map.of(InputSource.XBOX_PAD_1, PlayerInputs.LADYBUG, InputSource.XBOX_PAD_2,
+		        "Blinky"));
 		when(model.isInGame()).thenReturn(true);
 		press(PadState.disconnected(), Pad.connected().build()); // la manette 1 pilote Ladybug
 		verify(model).pauseGame();
@@ -368,6 +371,38 @@ class XboxOneControllerTest {
 		press(Pad.connected().build(), Pad.connected().build()); // rebranchée
 		press(Pad.connected().build(), PadState.disconnected()); // la manette 2 (Blinky) part
 		verify(messaging).addPadLost(2, "Blinky");
+	}
+
+	@Test
+	void aLostPadWhoseCharacterHasAnotherDeviceDoesNotPause() {
+		when(model.isInGame()).thenReturn(true);
+		press(PadState.disconnected(), Pad.connected().build()); // par défaut : les flèches pilotent aussi Ladybug
+		verify(model, never()).pauseGame();
+	}
+
+	@Test
+	void aFreePadTakesTheCharacterWhoWaits() {
+		playerInputs.assign(java.util.Map.of(InputSource.XBOX_PAD_1, PlayerInputs.LADYBUG));
+		when(model.isInGame()).thenReturn(true);
+		press(PadState.disconnected(), Pad.connected().build());
+		verify(model).pauseGame();
+		verify(model, never()).resumeGame();
+
+		press(PadState.disconnected(), Pad.connected().a().build()); // la manette 2, libre, appuie
+		verify(model).resumeGame();
+		assertThat(playerInputs.characterOf(InputSource.XBOX_PAD_2)).contains(PlayerInputs.LADYBUG);
+	}
+
+	@Test
+	void theSamePadComingBackResumesTheGame() {
+		playerInputs.assign(java.util.Map.of(InputSource.XBOX_PAD_1, PlayerInputs.LADYBUG));
+		when(model.isInGame()).thenReturn(true);
+		press(PadState.disconnected(), PadState.disconnected());
+		press(Pad.connected().build(), PadState.disconnected()); // rebranchée, au repos
+		verify(model, never()).resumeGame();
+		press(Pad.connected().b().build(), PadState.disconnected());
+		verify(model).resumeGame();
+		assertThat(playerInputs.characterOf(InputSource.XBOX_PAD_1)).contains(PlayerInputs.LADYBUG);
 	}
 
 	@Test

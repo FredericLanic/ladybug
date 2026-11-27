@@ -162,12 +162,28 @@ public class GameModel implements GameModelForController {
 	 */
 	public void beat() {
 		newSounds.initSounds();
+		releaseGhostWhoseHumanDidNotComeBack();
 		tickScheduler.tick();
 		superPowerTimer.tick();
 		groupMessages.tick();
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
 		applicationEventPublisher.publishEvent(new EventGameModel(this, GameSnapshotFactory.of(this)));
+	}
+
+	/** Délai avant qu'un fantôme dont la manette est perdue soit rendu à l'ordinateur (C57). */
+	private static final long LOST_PAD_WAIT_MILLIS = 60_000;
+
+	/** C57 : au bout de 60 s sans nouvel appareil, le fantôme revient à l'ordinateur et la partie reprend. */
+	private void releaseGhostWhoseHumanDidNotComeBack() {
+		if (!currentProgramStatus.isInGame()) {
+			playerInputs.clearWaiting(); // partie arrêtée pendant l'attente
+			return;
+		}
+		playerInputs.releaseExpiredGhost(System.currentTimeMillis(), LOST_PAD_WAIT_MILLIS).ifPresent(name -> {
+			groupGhosts.giveBackToComputer(name);
+			resumeGame();
+		});
 	}
 
 	@Override
@@ -250,6 +266,9 @@ public class GameModel implements GameModelForController {
 
 	@Override
 	public void setGameInPause() {
+		if (playerInputs.waiting().isPresent()) {
+			return; // un personnage attend sa manette (C57) : seule la reprise relance la partie
+		}
 		currentProgramStatus.setGameInPause(!currentProgramStatus.isGameInPause());
 		gameMessaging.addGameInPause(currentProgramStatus.isGameInPause());
 	}
@@ -257,6 +276,12 @@ public class GameModel implements GameModelForController {
 	@Override
 	public void pauseGame() {
 		currentProgramStatus.setGameInPause(true);
+	}
+
+	@Override
+	public void resumeGame() {
+		currentProgramStatus.setGameInPause(false);
+		gameMessaging.addGameInPause(false);
 	}
 
 	@Override

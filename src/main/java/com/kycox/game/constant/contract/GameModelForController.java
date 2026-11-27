@@ -43,6 +43,9 @@ public interface GameModelForController extends GameCommon {
 	/** Met la partie en pause (sans basculer) : une manette a été perdue (C57). */
 	void pauseGame();
 
+	/** Reprend la partie après une manette perdue : un appareil a pris le personnage (C57). */
+	void resumeGame();
+
 
 
 	void setMultiPlayers(boolean isMuliPlayers);

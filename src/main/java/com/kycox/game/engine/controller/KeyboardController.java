@@ -129,6 +129,9 @@ public class KeyboardController extends KeyAdapter {
 
 	/** Un déplacement, envoyé au personnage que pilote ce groupe de touches (s'il en pilote un). */
 	private void move(InputSource keys, com.kycox.game.tools.Position direction) {
+		if (playerInputs.resume(keys)) {
+			gameModelForController.resumeGame(); // C57 : un appareil libre prend le personnage qui attend
+		}
 		playerInputs.of(keys).ifPresent(input -> input.request(direction, keys));
 	}
 

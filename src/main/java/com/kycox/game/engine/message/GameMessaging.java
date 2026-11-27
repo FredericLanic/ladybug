@@ -34,8 +34,9 @@ public class GameMessaging {
 
 	/** « manette 2 deconnectee : inky attend » (C57) : la partie est mise en pause. */
 	public void addPadLost(int padNumber, String character) {
-		messages.add(java.text.MessageFormat.format(ladybugMessagesBundle.getMessage("msg.padLost"), padNumber,
-		        character.toLowerCase()));
+		// dans le jeu, Ladybug s'appelle « cox » (comme dans « je suis cox »)
+		var name = "Ladybug".equals(character) ? "cox" : character.toLowerCase();
+		messages.add(java.text.MessageFormat.format(ladybugMessagesBundle.getMessage("msg.padLost"), padNumber, name));
 	}
 
 	public void addPlayerMode(boolean isMultiPlayer) {

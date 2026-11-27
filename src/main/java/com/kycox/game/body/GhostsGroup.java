@@ -88,6 +88,11 @@ public class GhostsGroup {
 		return ghosts.stream().filter(g -> !g.isComputed()).toList();
 	}
 
+	/** Ce fantôme (par son nom) est rendu à l'ordinateur : son joueur n'est pas revenu (C57). */
+	public void giveBackToComputer(String name) {
+		ghosts.stream().filter(ghost -> ghost.getName().equals(name)).forEach(ghost -> ghost.setComputed(true));
+	}
+
 	/** Tous les fantômes sont joués par l'ordinateur (mode un joueur). */
 	public void setAllComputed() {
 		ghosts.forEach(ghost -> ghost.setComputed(true));
