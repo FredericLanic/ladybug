@@ -174,6 +174,20 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 	}
 
 	/**
+	 * Règle C57 : une manette qui pilote un personnage vient d'être débranchée en
+	 * partie → pause et message « manette 2 deconnectee : inky attend ».
+	 */
+	private void pauseIfPadLost(int padIndex) {
+		if (!pads.get(padIndex).isHasBeenDisConnected()) {
+			return;
+		}
+		playerInputs.characterOf(PAD_DEVICES.get(padIndex)).ifPresent(character -> {
+			gameModelForController.pauseGame();
+			gameMessaging.addPadLost(padIndex + 1, character);
+		});
+	}
+
+	/**
 	 * Les déplacements d'une manette (les deux sticks), envoyés au personnage
 	 * qu'elle pilote d'après la table du salon (20.4).
 	 */
@@ -224,6 +238,7 @@ public class XboxOneController implements ApplicationListener<EventGameModel> {
 		} else if (gameModelForController.isInGame()) {
 			manageBothXboxesOneInGame();
 			for (var i = 0; i < pads.size(); i++) {
+				pauseIfPadLost(i);
 				managePadInGame(pads.get(i), PAD_DEVICES.get(i));
 			}
 			doVibrationsInGame(snapshot);

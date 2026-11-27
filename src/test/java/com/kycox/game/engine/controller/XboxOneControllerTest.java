@@ -355,4 +355,33 @@ class XboxOneControllerTest {
 		when(padManager.state(3)).thenReturn(PadState.disconnected());
 		controller.onApplicationEvent(new EventGameModel(model, snapshot));
 	}
+
+	// --- manette perdue en partie (C57, 20.5.3a)
+
+	@Test
+	void aLostPadThatDrivesACharacterPausesTheGame() {
+		when(model.isInGame()).thenReturn(true);
+		press(PadState.disconnected(), Pad.connected().build()); // la manette 1 pilote Ladybug
+		verify(model).pauseGame();
+		verify(messaging).addPadLost(1, PlayerInputs.LADYBUG);
+
+		press(Pad.connected().build(), Pad.connected().build()); // rebranchée
+		press(Pad.connected().build(), PadState.disconnected()); // la manette 2 (Blinky) part
+		verify(messaging).addPadLost(2, "Blinky");
+	}
+
+	@Test
+	void aLostPadOutsideTheGameDoesNotPause() {
+		when(model.isInGame()).thenReturn(false);
+		press(PadState.disconnected(), Pad.connected().build());
+		verify(model, never()).pauseGame();
+	}
+
+	@Test
+	void aPadThatDrivesNobodyDoesNotPauseTheGame() {
+		when(model.isInGame()).thenReturn(true);
+		press(Pad.connected().build(), Pad.connected().build());
+		press(Pad.connected().build(), Pad.connected().build());
+		verify(model, never()).pauseGame();
+	}
 }

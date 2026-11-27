@@ -255,6 +255,11 @@ public class GameModel implements GameModelForController {
 	}
 
 	@Override
+	public void pauseGame() {
+		currentProgramStatus.setGameInPause(true);
+	}
+
+	@Override
 	public void setMultiPlayers(boolean isMuliPlayers) {
 		groupGhosts.setAllComputed();
 		playerInputs.useDefaultAssignments(); // flèches et manette 1 pour Ladybug, ZQSD et manette 2 pour le fantôme

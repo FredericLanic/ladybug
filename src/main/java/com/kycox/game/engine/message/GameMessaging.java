@@ -32,6 +32,12 @@ public class GameMessaging {
 		addMessage(gameInPause ? "msg.gameInPause" : "msg.heyWeGo");
 	}
 
+	/** « manette 2 deconnectee : inky attend » (C57) : la partie est mise en pause. */
+	public void addPadLost(int padNumber, String character) {
+		messages.add(java.text.MessageFormat.format(ladybugMessagesBundle.getMessage("msg.padLost"), padNumber,
+		        character.toLowerCase()));
+	}
+
 	public void addPlayerMode(boolean isMultiPlayer) {
 		addMessage(isMultiPlayer ? "msg.twoPlayersMode" : "msg.onePlayerMode");
 	}
