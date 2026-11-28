@@ -76,3 +76,6 @@ Un fichier par jour (`AAAA-MM-JJ.md`). Cherchez avec `grep -rn "mot" journal/` p
 - 22/11/2026 — démo du bot, bug du téléporteur
 - 22-23/11/2026 — I20 : le salon (20.1 à 20.3)
 
+- 26/11/2026 — I20 : 20.3 ter, 20.4 (appareil → personnage, bandeau), 20.5.1-2
+- 27/11/2026 — I20 : 20.5.3, règle C57 (manette perdue en partie)
+- 28/11/2026 — I20 : bilan, démo du bot, PR #40 fusionnée
