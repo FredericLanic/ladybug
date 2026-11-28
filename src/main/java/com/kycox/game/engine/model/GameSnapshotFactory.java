@@ -25,6 +25,7 @@ import com.kycox.game.snapshot.CellSnapshot;
 import com.kycox.game.snapshot.GameSnapshot;
 import com.kycox.game.snapshot.GhostSnapshot;
 import com.kycox.game.snapshot.LadybugSnapshot;
+import com.kycox.game.snapshot.LobbySnapshot;
 import com.kycox.game.snapshot.MazeSnapshot;
 import com.kycox.game.snapshot.ScoreMessageSnapshot;
 
@@ -44,14 +45,23 @@ public final class GameSnapshotFactory {
 		var status = model.getCurrentProgramStatus();
 		var levelState = model.getLevelState();
 		return new GameSnapshot(status.getGameStatus(), status.getNumLevel(), model.getGameScore().getScore(),
-		        model.getNbrPlayers(), model.getGhostLeftLives(),
+		        model.getNbrPlayers(),
 		        ladybugOf(model.getLadybug(), model.getLadybugDying().getAgonyDuration()),
 		        model.getGroupGhosts().getGhosts().stream().map(GameSnapshotFactory::ghostOf).toList(),
 		        mazeOf(model.getMaze()), levelState.isLitLampMode(), levelState.getLevelRendering(),
 		        model.getGroupMessages().getMessages().stream()
 		                .map(m -> new ScoreMessageSnapshot(m.getPosition(), m.getValue(), m.getMessageType()))
 		                .toList(),
-		        Arrays.stream(Sounds.values()).filter(model.getNewSounds()::hasSound).toList());
+		        Arrays.stream(Sounds.values()).filter(model.getNewSounds()::hasSound).toList(),
+		        lobbyOf(model.getLobby()));
+	}
+
+	/** La photo du salon (20.3) : l'appareil par son nom, pour ne pas lier la photo aux entrées. */
+	static LobbySnapshot lobbyOf(Lobby lobby) {
+		return new LobbySnapshot(lobby.rows().stream()
+		        .map(row -> new LobbySnapshot.RowSnapshot(row.character(),
+		                row.device() == null ? null : row.device().name(), row.waitingForPad()))
+		        .toList(), lobby.activeRow(), lobby.activeColumn().name(), lobby.isReady());
 	}
 
 	static LadybugSnapshot ladybugOf(Ladybug ladybug, long agonyDuration) {
@@ -62,9 +72,9 @@ public final class GameSnapshotFactory {
 
 	static GhostSnapshot ghostOf(Ghost ghost) {
 		return new GhostSnapshot(ghost.getName(), ghost.getColor(), ghost.getPosition(), ghost.getPositionBlock(),
-		        ghost.getDirection(), ghost.getStatus(), ghost.isComputed(), ghost.isCamouflage(), ghost.isDying(),
-		        ghost.isToBeTeleported(), ghost.getSpeedIndex(), ghost.getMoveStyle(), ghost.getMaximumAttackDist(),
-		        ghost.getTarget());
+		        ghost.getDirection(), ghost.getStatus(), ghost.isComputed(), ghost.getLeftLifes(), ghost.isCamouflage(),
+		        ghost.isDying(), ghost.isToBeTeleported(), ghost.getSpeedIndex(), ghost.getMoveStyle(),
+		        ghost.getMaximumAttackDist(), ghost.getTarget());
 	}
 
 	/** La photo du labyrinthe seul (sert aussi aux tests du contour des murs). */

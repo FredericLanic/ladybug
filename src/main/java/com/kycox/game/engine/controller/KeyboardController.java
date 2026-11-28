@@ -20,6 +20,7 @@ import com.kycox.game.constant.game.GameMainConstants;
 import com.kycox.game.constant.contract.GameModelForController;
 import com.kycox.game.engine.message.GameMessaging;
 import com.kycox.game.properties.GameProperties;
+import com.kycox.game.engine.model.LobbyCommand;
 import com.kycox.game.input.InputSource;
 import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.preferences.LocalPreferences;
@@ -50,6 +51,11 @@ public class KeyboardController extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		var keyCode = e.getKeyCode();
+		// dans le salon, Entrée lance la partie : elle n'y bascule pas le mode debug
+		if (gameModelForController.isProgramLobby()) {
+			manageKeysInLobby(keyCode);
+			return;
+		}
 		manageCommonKeys(keyCode);
 		if (gameModelForController.isProgramPresentation()) {
 			manageKeysInPresentation(keyCode);
@@ -98,16 +104,19 @@ public class KeyboardController extends KeyAdapter {
 
 	private void manageKeysInGame(int keyCode) {
 		switch (keyCode) {
-			// Mouvement L
-			case KeyEvent.VK_LEFT -> playerInputs.ladybug().request(GameMainConstants.POINT_LEFT, InputSource.KEYBOARD_ARROWS);
-			case KeyEvent.VK_RIGHT -> playerInputs.ladybug().request(GameMainConstants.POINT_RIGHT, InputSource.KEYBOARD_ARROWS);
-			case KeyEvent.VK_UP -> playerInputs.ladybug().request(GameMainConstants.POINT_UP, InputSource.KEYBOARD_ARROWS);
-			case KeyEvent.VK_DOWN -> playerInputs.ladybug().request(GameMainConstants.POINT_DOWN, InputSource.KEYBOARD_ARROWS);
-			// Mouvement du fantôme (joueur 2)
-			case KeyEvent.VK_Z -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_UP, InputSource.KEYBOARD_ZQSD));
-			case KeyEvent.VK_S -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_DOWN, InputSource.KEYBOARD_ZQSD));
-			case KeyEvent.VK_Q -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_LEFT, InputSource.KEYBOARD_ZQSD));
-			case KeyEvent.VK_D -> playerInputs.humanGhost().ifPresent(ghost -> ghost.request(GameMainConstants.POINT_RIGHT, InputSource.KEYBOARD_ZQSD));
+			// déplacements : chaque groupe de touches pilote le personnage que lui donne la table (20.4)
+			case KeyEvent.VK_UP -> move(InputSource.KEYBOARD_ARROWS, GameMainConstants.POINT_UP);
+			case KeyEvent.VK_DOWN -> move(InputSource.KEYBOARD_ARROWS, GameMainConstants.POINT_DOWN);
+			case KeyEvent.VK_LEFT -> move(InputSource.KEYBOARD_ARROWS, GameMainConstants.POINT_LEFT);
+			case KeyEvent.VK_RIGHT -> move(InputSource.KEYBOARD_ARROWS, GameMainConstants.POINT_RIGHT);
+			case KeyEvent.VK_Z -> move(InputSource.KEYBOARD_ZQSD, GameMainConstants.POINT_UP);
+			case KeyEvent.VK_S -> move(InputSource.KEYBOARD_ZQSD, GameMainConstants.POINT_DOWN);
+			case KeyEvent.VK_Q -> move(InputSource.KEYBOARD_ZQSD, GameMainConstants.POINT_LEFT);
+			case KeyEvent.VK_D -> move(InputSource.KEYBOARD_ZQSD, GameMainConstants.POINT_RIGHT);
+			case KeyEvent.VK_I -> move(InputSource.KEYBOARD_IJKL, GameMainConstants.POINT_UP);
+			case KeyEvent.VK_K -> move(InputSource.KEYBOARD_IJKL, GameMainConstants.POINT_DOWN);
+			case KeyEvent.VK_J -> move(InputSource.KEYBOARD_IJKL, GameMainConstants.POINT_LEFT);
+			case KeyEvent.VK_L -> move(InputSource.KEYBOARD_IJKL, GameMainConstants.POINT_RIGHT);
 			// Partie en pause
 			// P en plus de Pause : la touche Pause n'existe pas sur un clavier Mac (C33)
 			case KeyEvent.VK_PAUSE, KeyEvent.VK_P -> gameModelForController.setGameInPause();
@@ -118,13 +127,49 @@ public class KeyboardController extends KeyAdapter {
 		}
 	}
 
+	/** Un déplacement, envoyé au personnage que pilote ce groupe de touches (s'il en pilote un). */
+	private void move(InputSource keys, com.kycox.game.tools.Position direction) {
+		if (playerInputs.resume(keys)) {
+			gameModelForController.resumeGame(); // C57 : un appareil libre prend le personnage qui attend
+		}
+		playerInputs.of(keys).ifPresent(input -> input.request(direction, keys));
+	}
+
 	private void manageKeysInPresentation(int keyCode) {
 		// Gestion des touches durant la présentation
 		switch (keyCode) {
 			case KeyEvent.VK_S -> gameModelForController.startGame();
 			case KeyEvent.VK_1 -> gameModelForController.setMultiPlayers(false);
-			case KeyEvent.VK_2 -> gameModelForController.setMultiPlayers(true);
+			// plusieurs joueurs : le salon, où chacun choisit son appareil et son personnage (C53, C56)
+			case KeyEvent.VK_2 -> gameModelForController.openLobby();
 			case KeyEvent.VK_ESCAPE -> gameModelForController.programForceExit();
 		}
+	}
+
+	/**
+	 * Le salon (20.3) : flèches (ou ZQSD, ou IJKL) haut / bas pour la ligne,
+	 * gauche / droite pour la valeur ; Espace valide l'étape (personnage, puis
+	 * commandes, ou le bouton de la dernière ligne), Retour arrière revient en
+	 * arrière ; raccourcis : Entrée lance la partie (si le salon est prêt), Échap
+	 * revient à la présentation. Chaque touche devient une commande du salon.
+	 */
+	private void manageKeysInLobby(int keyCode) {
+		switch (keyCode) {
+			case KeyEvent.VK_ENTER -> gameModelForController.startFromLobby();
+			case KeyEvent.VK_ESCAPE -> gameModelForController.leaveLobby();
+			default -> lobbyCommandOf(keyCode).ifPresent(gameModelForController::applyLobbyCommand);
+		}
+	}
+
+	private static java.util.Optional<LobbyCommand> lobbyCommandOf(int keyCode) {
+		return java.util.Optional.ofNullable(switch (keyCode) {
+			case KeyEvent.VK_UP, KeyEvent.VK_Z, KeyEvent.VK_I -> new LobbyCommand.MoveRow(-1);
+			case KeyEvent.VK_DOWN, KeyEvent.VK_S, KeyEvent.VK_K -> new LobbyCommand.MoveRow(1);
+			case KeyEvent.VK_LEFT, KeyEvent.VK_Q, KeyEvent.VK_J -> new LobbyCommand.ChangeValue(-1);
+			case KeyEvent.VK_RIGHT, KeyEvent.VK_D, KeyEvent.VK_L -> new LobbyCommand.ChangeValue(1);
+			case KeyEvent.VK_SPACE -> new LobbyCommand.Confirm(); // comme A à la manette
+			case KeyEvent.VK_BACK_SPACE -> new LobbyCommand.Back(); // comme B à la manette
+			default -> null;
+		});
 	}
 }

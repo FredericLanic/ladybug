@@ -16,6 +16,7 @@
  */
 package com.kycox.game.engine.model;
 
+import com.kycox.game.input.PlayerInputs;
 import com.kycox.game.tools.Position;
 import com.kycox.game.body.GhostsGroup;
 import com.kycox.game.body.ghost.Ghost;
@@ -83,6 +84,11 @@ public class GameModel implements GameModelForController {
 	private final TickScheduler tickScheduler;
 	private final SuperPowerTimer superPowerTimer;
 	private final SoundDurations soundDurations;
+	/** Le salon : qui joue quel fantôme avant une partie à plusieurs (20.2). */
+	@Getter
+	private final Lobby lobby;
+	/** Les boîtes aux lettres des joueurs : le salon y dépose sa table « appareil → personnage » (20.4). */
+	private final PlayerInputs playerInputs;
 	/** Durée de la fin de partie, avant le retour à l'écran de présentation. */
 	private static final long TIME_ENDING_MILLISECONDS = 1500;
 
@@ -101,7 +107,9 @@ public class GameModel implements GameModelForController {
 					 ApplicationEventPublisher applicationEventPublisher,
 					 TickScheduler tickScheduler,
 					 SuperPowerTimer superPowerTimer,
-					 SoundDurations soundDurations
+					 SoundDurations soundDurations,
+					 Lobby lobby,
+					 PlayerInputs playerInputs
 	) {
 		this.currentProgramStatus = currentProgramStatus;
 		this.gameMessaging = gameMessaging;
@@ -120,6 +128,8 @@ public class GameModel implements GameModelForController {
 		this.tickScheduler = tickScheduler;
 		this.superPowerTimer = superPowerTimer;
 		this.soundDurations = soundDurations;
+		this.lobby = lobby;
+		this.playerInputs = playerInputs;
 	}
 
 	@PostConstruct
@@ -152,12 +162,28 @@ public class GameModel implements GameModelForController {
 	 */
 	public void beat() {
 		newSounds.initSounds();
+		releaseGhostWhoseHumanDidNotComeBack();
 		tickScheduler.tick();
 		superPowerTimer.tick();
 		groupMessages.tick();
 		gameModelManageAction.changeStrategy(manageActionContext.getStrategyStatusAction(currentProgramStatus.getGameStatus()));
 		gameModelManageAction.execute();
 		applicationEventPublisher.publishEvent(new EventGameModel(this, GameSnapshotFactory.of(this)));
+	}
+
+	/** Délai avant qu'un fantôme dont la manette est perdue soit rendu à l'ordinateur (C57). */
+	private static final long LOST_PAD_WAIT_MILLIS = 60_000;
+
+	/** C57 : au bout de 60 s sans nouvel appareil, le fantôme revient à l'ordinateur et la partie reprend. */
+	private void releaseGhostWhoseHumanDidNotComeBack() {
+		if (!currentProgramStatus.isInGame()) {
+			playerInputs.clearWaiting(); // partie arrêtée pendant l'attente
+			return;
+		}
+		playerInputs.releaseExpiredGhost(System.currentTimeMillis(), LOST_PAD_WAIT_MILLIS).ifPresent(name -> {
+			groupGhosts.giveBackToComputer(name);
+			resumeGame();
+		});
 	}
 
 	@Override
@@ -180,10 +206,6 @@ public class GameModel implements GameModelForController {
 	@Override
 	public void askForceEndGame() {
 		currentProgramStatus.setGameAskForceEndGame();
-	}
-
-	public int getGhostLeftLives() {
-		return groupGhosts.getLeftLives();
 	}
 
 	/** Ladybug, plus un joueur par fantôme joué par un humain (étape 5.3). */
@@ -244,13 +266,28 @@ public class GameModel implements GameModelForController {
 
 	@Override
 	public void setGameInPause() {
+		if (playerInputs.waiting().isPresent()) {
+			return; // un personnage attend sa manette (C57) : seule la reprise relance la partie
+		}
 		currentProgramStatus.setGameInPause(!currentProgramStatus.isGameInPause());
 		gameMessaging.addGameInPause(currentProgramStatus.isGameInPause());
 	}
 
 	@Override
+	public void pauseGame() {
+		currentProgramStatus.setGameInPause(true);
+	}
+
+	@Override
+	public void resumeGame() {
+		currentProgramStatus.setGameInPause(false);
+		gameMessaging.addGameInPause(false);
+	}
+
+	@Override
 	public void setMultiPlayers(boolean isMuliPlayers) {
 		groupGhosts.setAllComputed();
+		playerInputs.useDefaultAssignments(); // flèches et manette 1 pour Ladybug, ZQSD et manette 2 pour le fantôme
 		if (isMuliPlayers) {
 			// même tirage qu'avant 4.2 (une couleur parmi quatre, dans le même ordre) :
 			// les parties rejouées avec une même graine restent identiques ; depuis 5.4,
@@ -258,6 +295,41 @@ public class GameModel implements GameModelForController {
 			groupGhosts.chooseHumanGhost(Utils.randomEnum(GhostColor.class)).ifPresent(groupGhosts::setHumanPlayer);
 		}
 		gameMessaging.addPlayerMode(isMuliPlayers);
+	}
+
+	@Override
+	public void openLobby() {
+		lobby.resetCursor(); // la configuration précédente est gardée
+		currentProgramStatus.setProgramLobby();
+	}
+
+	@Override
+	public boolean isProgramLobby() {
+		return currentProgramStatus.isProgramLobby();
+	}
+
+	@Override
+	public void leaveLobby() {
+		currentProgramStatus.setProgramPresentation();
+	}
+
+	/**
+	 * Lance la partie choisie dans le salon (20.3) : les fantômes pris par un joueur
+	 * deviennent humains, les autres restent à l'ordinateur ; ensuite, même suite
+	 * qu'avec S (« reprendre l'ancien niveau ? »). Chaque appareil choisi pilote
+	 * son personnage (20.4) : le salon donne sa table aux boîtes aux lettres.
+	 */
+	@Override
+	public void startFromLobby() {
+		if (!lobby.isReady()) {
+			return;
+		}
+		groupGhosts.setAllComputed();
+		lobby.rows().stream().filter(row -> row.isComplete() && !row.isLadybug())
+		        .forEach(row -> groupGhosts.getGhosts().stream().filter(g -> g.getName().equals(row.character()))
+		                .findFirst().ifPresent(groupGhosts::setHumanPlayer));
+		playerInputs.assign(lobby.assignments());
+		startGame();
 	}
 
 	@Override

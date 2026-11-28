@@ -38,8 +38,8 @@ class GhostTargetDrawingTest {
 
 	private static GhostSnapshot redGhostAtOrigin(Position target) {
 		var origin = new Position(0, 0);
-		return new GhostSnapshot("Blinky", GhostColor.RED, origin, origin, origin, GhostStatus.NORMAL, true, false,
-		        false, false, 0, MoveStyle.MOVE_TO, 0, target);
+		return new GhostSnapshot("Blinky", GhostColor.RED, origin, origin, origin, GhostStatus.NORMAL, true, 0,
+		        false, false, false, 0, MoveStyle.MOVE_TO, 0, target);
 	}
 
 	private static BufferedImage draw(CentralView view, GhostSnapshot ghost) {

@@ -70,11 +70,105 @@ class KeyboardControllerTest {
 	}
 
 	@Test
-	void twoThenOneChooseTheNumberOfPlayers() {
-		press(KeyEvent.VK_2);
-		assertThat(game.model().getUnComputedGhost()).isPresent();
+	void oneKeepsTheSoloGame() {
 		press(KeyEvent.VK_1);
 		assertThat(game.model().getUnComputedGhost()).isEmpty();
+	}
+
+	/** C53 (20.3) : la touche 2 ouvre le salon, où chacun choisit son personnage. */
+	@Test
+	void twoOpensTheLobby() {
+		press(KeyEvent.VK_2);
+		assertThat(game.status()).isEqualTo(GameStatus.PROGRAM_LOBBY);
+	}
+
+	/**
+	 * Le salon au clavier (20.3) : haut / bas pour la ligne, gauche / droite pour
+	 * la valeur, Espace pour passer aux commandes ; Entrée lance la partie, avec les
+	 * fantômes choisis joués par des humains ; Entrée n'y bascule pas le debug.
+	 */
+	@Test
+	void theLobbyWithTheKeyboard() {
+		press(KeyEvent.VK_2);
+		var lobby = game.model().getLobby();
+		press(KeyEvent.VK_DOWN); // ligne 2
+		press(KeyEvent.VK_RIGHT); // premier fantôme, ZQSD
+		press(KeyEvent.VK_RIGHT); // fantôme suivant
+		var chosen = lobby.rows().get(1).character();
+		press(KeyEvent.VK_SPACE); // colonne « commandes »
+		press(KeyEvent.VK_RIGHT); // ZQSD -> IJKL
+		assertThat(lobby.rows().get(1).device()).isEqualTo(InputSource.KEYBOARD_IJKL);
+
+		press(KeyEvent.VK_ENTER);
+		assertThat(preferences().isDebugMode()).as("Entrée ne bascule pas le debug dans le salon").isFalse();
+		game.beat();
+		assertThat(game.status()).isNotEqualTo(GameStatus.PROGRAM_LOBBY);
+		assertThat(game.model().getGroupGhosts().getHumanGhosts()).extracting(g -> g.getName()).containsExactly(chosen);
+		// 20.4 : chaque groupe de touches pilote le personnage choisi dans le salon
+		assertThat(game.inputs().characterOf(InputSource.KEYBOARD_ARROWS)).contains("Ladybug");
+		assertThat(game.inputs().characterOf(InputSource.KEYBOARD_IJKL)).contains(chosen);
+		assertThat(game.inputs().characterOf(InputSource.KEYBOARD_ZQSD)).isEmpty();
+	}
+
+	/** 20.4 : Cox en ZQSD dans le salon ; en jeu, les flèches ne font plus rien, Q la fait aller à gauche. */
+	@Test
+	void ladybugFollowsTheKeysChosenInTheLobby() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_RIGHT); // Cox : flèches -> ZQSD
+		press(KeyEvent.VK_ENTER);
+		game.beatsUntil(GameStatus.PROGRAM_ASK_KEEP_PREVIOUS_GAME_LEVEL, 10);
+		press(KeyEvent.VK_N);
+		game.beatsUntil(GameStatus.IN_GAME, 500);
+
+		press(KeyEvent.VK_LEFT);
+		assertThat(game.inputs().ladybug().hasRequest()).as("les flèches ne pilotent plus Cox").isFalse();
+		var start = game.model().getLadybug().getPositionBlock();
+		press(KeyEvent.VK_Q);
+		game.beats(30);
+		assertThat(game.model().getLadybug().getPositionBlock().x()).isLessThan(start.x());
+		assertThat(game.inputs().ladybug().lastSource()).contains(InputSource.KEYBOARD_ZQSD);
+	}
+
+	/** Les boutons du salon (20.3 ter) : au-dessus de Cox, « jouer », que valide Espace. */
+	@Test
+	void thePlayButtonStartsTheGame() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_UP); // au-dessus de Cox : la ligne des boutons, sur « jouer »
+		press(KeyEvent.VK_SPACE);
+		game.beat();
+		assertThat(game.status()).isNotEqualTo(GameStatus.PROGRAM_LOBBY);
+	}
+
+	@Test
+	void theBackButtonLeavesTheLobby() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_UP);
+		press(KeyEvent.VK_RIGHT); // « retour »
+		press(KeyEvent.VK_SPACE);
+		game.beat();
+		assertThat(game.status()).isNotEqualTo(GameStatus.PROGRAM_LOBBY);
+	}
+
+	@Test
+	void enterDoesNothingUntilTheLobbyIsReady() {
+		press(KeyEvent.VK_2);
+		// une ligne de fantôme attend sa manette (« appuie sur A ») : le salon n'est pas prêt
+		game.model().getLobby().setConnectedPads(java.util.Set.of(InputSource.XBOX_PAD_2));
+		press(KeyEvent.VK_DOWN); // ligne 2
+		press(KeyEvent.VK_RIGHT); // un fantôme, ZQSD
+		press(KeyEvent.VK_SPACE); // colonne « commandes »
+		press(KeyEvent.VK_LEFT); // ZQSD -> (flèches de Cox) -> « appuie sur A »
+		assertThat(game.model().getLobby().rows().get(1).waitingForPad()).isTrue();
+		press(KeyEvent.VK_ENTER);
+		game.beat();
+		assertThat(game.status()).isEqualTo(GameStatus.PROGRAM_LOBBY);
+	}
+
+	@Test
+	void escapeLeavesTheLobby() {
+		press(KeyEvent.VK_2);
+		press(KeyEvent.VK_ESCAPE);
+		assertThat(game.status()).isEqualTo(GameStatus.PROGRAM_PRESENTATION);
 	}
 
 	@Test
@@ -183,5 +277,15 @@ class KeyboardControllerTest {
 		var before = preferences().isDebugMode();
 		press(KeyEvent.VK_ENTER);
 		assertThat(preferences().isDebugMode()).isNotEqualTo(before);
+	}
+
+	@Test
+	void aFreeKeyGroupTakesTheCharacterWaitingForItsPad() {
+		startLevelOne();
+		game.inputs().assign(java.util.Map.of(InputSource.XBOX_PAD_1, "Ladybug"));
+		game.inputs().waitFor("Ladybug", InputSource.XBOX_PAD_1, 0); // C57 : sa manette est perdue
+		press(KeyEvent.VK_UP); // les flèches sont libres : elles reprennent Ladybug
+		assertThat(game.inputs().waiting()).isEmpty();
+		assertThat(game.inputs().characterOf(InputSource.KEYBOARD_ARROWS)).contains("Ladybug");
 	}
 }

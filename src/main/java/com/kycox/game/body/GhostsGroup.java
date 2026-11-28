@@ -38,13 +38,6 @@ public class GhostsGroup {
 		return ghosts.stream().anyMatch(g -> g.getGhostActions().isEatLadybug());
 	}
 
-	public int getLeftLives() {
-		return ghosts.stream().filter(g -> !g.isComputed())
-		        .findFirst()
-		        .map(Ghost::getLeftLifes)
-		        .orElse(0);
-	}
-
 	public int getNbrEatenGhosts() {
 		return (int) ghosts.stream().filter(g -> g.getGhostActions().isEatenByLadybug()).count();
 	}
@@ -93,6 +86,11 @@ public class GhostsGroup {
 	/** Les fantômes joués par des humains, dans l'ordre du groupe. */
 	public List<Ghost> getHumanGhosts() {
 		return ghosts.stream().filter(g -> !g.isComputed()).toList();
+	}
+
+	/** Ce fantôme (par son nom) est rendu à l'ordinateur : son joueur n'est pas revenu (C57). */
+	public void giveBackToComputer(String name) {
+		ghosts.stream().filter(ghost -> ghost.getName().equals(name)).forEach(ghost -> ghost.setComputed(true));
 	}
 
 	/** Tous les fantômes sont joués par l'ordinateur (mode un joueur). */

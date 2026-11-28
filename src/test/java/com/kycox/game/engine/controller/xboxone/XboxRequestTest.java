@@ -53,6 +53,7 @@ class XboxRequestTest {
 
 	@Test
 	void buttonsAreCopied() {
+		request.readCurrentState(Pad.connected().build()); // branchée, au repos (D28)
 		request.readCurrentState(Pad.connected().a().b().x().y().back().start().dpadUp().dpadDown().dpadLeft()
 		        .dpadRight().rightStickClick().build());
 
@@ -85,5 +86,45 @@ class XboxRequestTest {
 
 		request.readCurrentState(Pad.disconnected());
 		assertThat(request.isHasBeenDisConnected()).isTrue();
+	}
+
+	/**
+	 * D28 (étape 20.1) : un bouton tenu enfoncé ne compte qu'une fois, au moment de
+	 * l'appui. Avant, la manette relue à chaque battement redéclenchait l'action à
+	 * l'écran suivant (une partie quittée 7 ms après son début).
+	 */
+	@Test
+	void aHeldButtonCountsOnlyOnceWhenPressed() {
+		var held = Pad.connected().a().b().x().y().start().dpadUp().rightStickClick().build();
+		request.readCurrentState(Pad.connected().build()); // branchée, au repos
+
+		request.readCurrentState(held);
+		assertThat(request.isAButton() && request.isBButton() && request.isXButton() && request.isYButton()
+		        && request.isStart() && request.isDpadUp() && request.isRightStick()).isTrue();
+
+		request.readCurrentState(held);
+		assertThat(request.isAButton() || request.isBButton() || request.isXButton() || request.isYButton()
+		        || request.isStart() || request.isDpadUp() || request.isRightStick()).isFalse();
+
+		request.readCurrentState(Pad.connected().build()); // relâché
+		request.readCurrentState(Pad.connected().a().build()); // de nouveau appuyé
+		assertThat(request.isAButton()).isTrue();
+	}
+
+	/** Back affiche l'aide tant qu'il est tenu : lui reste « enfoncé », pas « appuyé ». */
+	@Test
+	void backStaysTrueWhileHeld() {
+		var held = Pad.connected().back().build();
+		request.readCurrentState(held);
+		request.readCurrentState(held);
+		assertThat(request.isBackButton()).isTrue();
+	}
+
+	/** Une manette branchée avec un bouton déjà enfoncé ne déclenche rien. */
+	@Test
+	void aButtonHeldWhileConnectingIsNotAPress() {
+		request.readCurrentState(Pad.disconnected());
+		request.readCurrentState(Pad.connected().a().build());
+		assertThat(request.isAButton()).isFalse();
 	}
 }

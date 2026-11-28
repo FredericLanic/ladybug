@@ -25,6 +25,7 @@ import com.kycox.game.launcher.GuiComponent;
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serial;
+import java.util.List;
 
 @GuiComponent
 public class StatusGameView extends JPanel {
@@ -32,10 +33,8 @@ public class StatusGameView extends JPanel {
 	private static final long serialVersionUID = 4546077700634533519L;
 	@Setter
 	private String currentProgramMessage;
-	@Setter
-	private int ghostNbrLifes;
-	@Setter
-	private transient Image imageGhostPlayer;
+	/** Les fantômes joués par des humains, dans l'ordre du groupe (vide en solo). */
+	private transient List<PlayerLives> ghostPlayers = List.of();
 	@Setter
 	private transient Image imageLadybugPlayer;
 	@Setter
@@ -43,10 +42,20 @@ public class StatusGameView extends JPanel {
 	@Setter
 	private int ladybugNbrLifes;
 	@Setter
-	private int nbrPlayers;
-	@Setter
 	private int score;
 	private final Font smallFont = new Font("CrackMan", Font.BOLD, 14);
+
+	/** Écart entre la fin d'un dessin et le début du joueur suivant (place du « x 3 »). */
+	static final int SLOT_GAP = 30;
+
+	/**
+	 * Un joueur dans le bandeau : son dessin et ses vies restantes (20.4.3).
+	 *
+	 * @param image dessin du personnage
+	 * @param lives vies restantes
+	 */
+	public record PlayerLives(Image image, int lives) {
+	}
 
 	/**
 	 * Taille maximale du dessin de Ladybug (et du fantôme joueur) à côté des vies :
@@ -63,17 +72,30 @@ public class StatusGameView extends JPanel {
 		return Math.max(1, Math.min(bandHeight - 2 * delta, MAX_IMAGE_SIZE));
 	}
 
+	/**
+	 * Abscisse du joueur numéro {@code index} : Ladybug en 0, puis chaque fantôme
+	 * humain à sa suite (20.4.3, jusqu'à 3 fantômes).
+	 */
+	static int slotX(int index, int imageSize, int delta) {
+		return delta + index * (imageSize + SLOT_GAP);
+	}
+
+	/** Les fantômes humains à dessiner après Ladybug ; une liste vide en solo. */
+	public void setGhostPlayers(List<PlayerLives> ghostPlayers) {
+		this.ghostPlayers = List.copyOf(ghostPlayers);
+	}
+
 	void display(Graphics g) {
 		var delta = 2;
 		var imageBorderSize = imageSize(getHeight(), delta);
 		// number ladybug lifes
 		displayNbrLifes(g, ImageUtils.resizeImage(imageLadybugPlayer, imageBorderSize, imageBorderSize),
-		        ladybugNbrLifes, delta, 0);
-		// number ghost lifes
-		if (nbrPlayers > 1) {
-			var ghost = ImageUtils.resizeImage(imageGhostPlayer, imageBorderSize, imageBorderSize);
-			displayNbrLifes(g, ghost, ghostNbrLifes, delta + ghost.getWidth(null) + 30, 0);
-
+		        ladybugNbrLifes, slotX(0, imageBorderSize, delta), 0);
+		// vies de chaque fantôme humain, à la suite de Ladybug
+		for (var index = 0; index < ghostPlayers.size(); index++) {
+			var ghost = ghostPlayers.get(index);
+			displayNbrLifes(g, ImageUtils.resizeImage(ghost.image(), imageBorderSize, imageBorderSize), ghost.lives(),
+			        slotX(index + 1, imageBorderSize, delta), 0);
 		}
 		if (inGame) {
 			displayCentralMessage(g, "Score: " + score);

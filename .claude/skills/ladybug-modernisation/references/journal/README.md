@@ -74,4 +74,5 @@ Un fichier par jour (`AAAA-MM-JJ.md`). Cherchez avec `grep -rn "mot" journal/` p
 
 ## 2026-11-22.md
 - 22/11/2026 — démo du bot, bug du téléporteur
+- 22-23/11/2026 — I20 : le salon (20.1 à 20.3)
 
