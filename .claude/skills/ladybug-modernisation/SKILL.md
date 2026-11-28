@@ -11,8 +11,8 @@ Les règles de travail sont dans `CLAUDE.md`. Ce fichier ne donne que l'état et
 ≈140 classes, `com.kycox.game`. Écrit par Frédéric pour se perfectionner en Java ; niveau qu'il estime « moyen ». Objectif : un code qu'un développeur extérieur (Jeff) comprend vite, avec des patterns que Frédéric comprend lui-même.
 
 ## État (à tenir à jour en une ligne)
-- Étapes 0 à 5 bis terminées (dernière PR : #38, 22/11/2026). **Prochaine : étape 6** (fantômes configurables et perception) → `references/plan/10-etape-06.md`.
-- SonarQube Cloud prêt, inactif tant que le secret `SONAR_TOKEN` n'existe pas.
+- Étapes 0 à 5 bis et idée I20 (choisir son fantôme) terminées (dernière PR : #40, 28/11/2026 ; reste le test Windows D27). **Prochaine : étape 6** (fantômes configurables et perception) → `references/plan/10-etape-06.md`.
+- SonarQube Cloud actif (secret `SONAR_TOKEN` créé le 21/11/2026), Quality Gate : couverture du nouveau code ≥ 80 %.
 
 ## Pédagogie (à chaque refactoring)
 Nommer le pattern, dire pourquoi, montrer un avant / après avec le vrai code. Chaque nouveau pattern a sa fiche `doc/patterns/<pattern>.md` (modèle : `references/pattern-sheet.md`), chaque outil de qualité sa fiche dans `doc/qualite/`.
